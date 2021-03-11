@@ -1,7 +1,6 @@
 ---
 layout:     post
 title:      "Semaphore"
-subtitle:   ""
 author:     "Iceberg"
 catalog:    true
 header-img: "assets/images/squirrel1.jpg"

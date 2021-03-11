@@ -1,7 +1,6 @@
 ---
 layout:     post
 title:      "Analyze the library and system calls"
-subtitle:   ""
 date:       2021-02-18 12:00:00
 author:     "Iceberg"
 header-img: "assets/images/yellowstone1.jpg"

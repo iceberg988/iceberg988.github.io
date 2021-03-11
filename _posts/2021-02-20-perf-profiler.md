@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      "Perf - the official Linux profiler"
-subtitle:   ""
+title:      "Perf"
+subtitle:   "The official Linux profiler"
 date:       2021-02-20 12:00:00
 author:     "Iceberg"
 header-img: "assets/images/dog.jpg"
