@@ -4,7 +4,7 @@ title:      "How is iowait measured"
 subtitle:   ""
 author:     "Iceberg"
 catalog:    true
-header-img: "assets/images/parasailing.jpg"
+header-img: "assets/images/idaho1.jpg"
 tags:
   - Linux/Kernel
 ---

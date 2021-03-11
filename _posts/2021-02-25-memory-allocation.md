@@ -4,7 +4,7 @@ title:      "kmalloc and vmalloc"
 subtitle:   ""
 date:       2021-02-25 12:00:00
 author:     "Iceberg"
-header-img: "assets/images/parasailing.jpg"
+header-img: "assets/images/parasailing2.jpg"
 catalog:    true
 tags:
   - Linux/Kernel

@@ -5,7 +5,7 @@ subtitle:   ""
 date:       2021-02-28 12:00:00
 author:     "Iceberg"
 catalog:    true
-header-img: "assets/images/parasailing.jpg"
+header-img: "assets/images/carmel2.jpg"
 tags:
   - Distributed System
   - Kubernetes

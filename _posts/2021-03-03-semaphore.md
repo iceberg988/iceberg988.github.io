@@ -4,7 +4,7 @@ title:      "Semaphore"
 subtitle:   ""
 author:     "Iceberg"
 catalog:    true
-header-img: "assets/images/parasailing.jpg"
+header-img: "assets/images/squirrel1.jpg"
 tags:
   - Linux/Kernel
   - Performance Tuning
