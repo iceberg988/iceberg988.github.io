@@ -8,7 +8,7 @@ catalog:    true
 header-style: text
 tags:
   - Performance
-  - Tracing
+  - Profiling/Tracing
 ---
 
 When the application source code is not available, we can trace the function calls during its runtime in order to understand how the application code works. 

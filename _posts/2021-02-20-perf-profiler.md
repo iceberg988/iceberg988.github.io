@@ -8,8 +8,7 @@ catalog:    true
 header-style: text
 tags:
   - Performance
-  - Profiling
-  - Tracing
+  - Profiling/Tracing
 ---
 
 ## Introduction

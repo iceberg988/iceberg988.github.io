@@ -8,7 +8,7 @@ catalog:    true
 header-style: text
 tags:
   - Performance
-  - DistributedSystem
+  - Distributed System
   - Kubernetes
   - Gluster
 ---

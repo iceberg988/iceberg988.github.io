@@ -7,7 +7,7 @@ catalog:    true
 header-style: text
 tags:
   - Performance
-  - Linux
+  - Linux/Kernel
   - Tuning
 ---
 
