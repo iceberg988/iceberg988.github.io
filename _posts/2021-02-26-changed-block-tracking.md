@@ -8,6 +8,7 @@ catalog:    true
 header-style: text
 tags:
   - Virtualization
+  - VMware
 ---
 
 ## Introduction

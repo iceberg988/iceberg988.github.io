@@ -7,7 +7,7 @@ catalog:    true
 header-style: text
 tags:
   - Performance
-  - Tuning
+  - Performance Tuning
 ---
 
 ## System wide open files limit

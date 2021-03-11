@@ -8,7 +8,7 @@ header-style: text
 tags:
   - Performance
   - Linux/Kernel
-  - Tuning
+  - Performance Tuning
 ---
 
 ## What is semaphore

@@ -7,8 +7,9 @@ author:     "Iceberg"
 header-img: "img/post-bg-2015.jpg"
 catalog: true
 tags:
-    - Performance 
-    - Memory Management
+  - Performance 
+  - Linux/Kernel    
+  - Memory Management
 ---
 
 ## Memory fragmentation
