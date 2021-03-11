@@ -3,7 +3,7 @@ layout:     post
 title:      "Memory overcommit"
 date:       2020-11-19 12:00:00
 author:     "Iceberg"
-header-img: "assets/images/parasailing1.jpg"
+header-img: "assets/images/beach1.jpg"
 catalog: true
 tags:
   - Linux/Kernel	
