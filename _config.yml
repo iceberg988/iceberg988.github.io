@@ -3,8 +3,8 @@ title: FlamingBytes
 SEOTitle: Blog | FlamingBytes
 header-img: assets/images/parasailing.jpg
 email: vbing118@gmail.com
-description: "aa | myname，bb, cc | dd"
-keyword: "a , b, c, d, e"
+#description: "aa | myname，bb, cc | dd"
+#keyword: "a , b, c, d, e"
 url: "https://www.flamingbytes.com"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
@@ -78,7 +78,7 @@ disqus_username: www-flamingbytes-com
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "aaa, bbb <br> test"
+#sidebar-about-description: "aaa, bbb <br> test"
 #sidebar-avatar: /img/avatar-hux-ny.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
