@@ -5,7 +5,7 @@ subtitle:   ""
 date:       2021-02-28 12:00:00
 author:     "Iceberg"
 catalog:    true
-header-style: text
+header-img: "assets/images/parasailing.jpg"
 tags:
   - Distributed System
   - Kubernetes

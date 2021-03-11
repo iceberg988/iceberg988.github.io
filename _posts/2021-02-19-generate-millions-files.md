@@ -4,8 +4,8 @@ title:      "Generate millions of files"
 subtitle:   ""
 date:       2021-02-19 12:00:00
 author:     "Iceberg"
+header-img: "assets/images/parasailing.jpg"
 catalog:    true
-header-style: text
 tags:
   - Simulation
 ---

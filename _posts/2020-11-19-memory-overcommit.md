@@ -4,7 +4,7 @@ title:      "Memory overcommit"
 subtitle:   " \"\""
 date:       2020-11-19 12:00:00
 author:     "Iceberg"
-header-img: "img/post-bg-2015.jpg"
+header-img: "assets/images/parasailing.jpg"
 catalog: true
 tags:
   - Linux/Kernel	

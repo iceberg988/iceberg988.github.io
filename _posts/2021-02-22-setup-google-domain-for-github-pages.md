@@ -4,8 +4,8 @@ title:      "Setup google domain for github pages"
 subtitle:   ""
 date:       2021-02-22 14:00:00
 author:     "Iceberg"
-catalog:    true
 header-style: text
+catalog:    true
 tags:
   - WebApp
 ---

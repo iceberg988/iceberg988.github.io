@@ -4,8 +4,8 @@ title:      "Perf - the official Linux profiler"
 subtitle:   ""
 date:       2021-02-20 12:00:00
 author:     "Iceberg"
+header-img: "assets/images/parasailing.jpg"
 catalog:    true
-header-style: text
 tags:
   - Profiling/Tracing
 ---
