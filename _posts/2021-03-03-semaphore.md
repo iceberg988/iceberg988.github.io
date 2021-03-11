@@ -6,7 +6,6 @@ author:     "Iceberg"
 catalog:    true
 header-style: text
 tags:
-  - Performance
   - Linux/Kernel
   - Performance Tuning
 ---

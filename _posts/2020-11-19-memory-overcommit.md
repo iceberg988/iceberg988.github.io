@@ -7,7 +7,6 @@ author:     "Iceberg"
 header-img: "img/post-bg-2015.jpg"
 catalog: true
 tags:
-  - Performance 
   - Linux/Kernel	
   - Memory Management
 ---

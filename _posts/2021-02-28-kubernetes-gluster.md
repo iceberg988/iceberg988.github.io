@@ -7,7 +7,6 @@ author:     "Iceberg"
 catalog:    true
 header-style: text
 tags:
-  - Performance
   - Distributed System
   - Kubernetes
   - Gluster
