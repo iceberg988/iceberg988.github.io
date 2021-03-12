@@ -196,6 +196,15 @@ $  grep -Hv "zz" /sys/class/fc_host/host*/speed
 /sys/class/fc_host/host3/speed:16 Gbit
 ```
 
+## Collect QLogic HBA stats
+
+```
+$  pwd
+/opt/QLogic_Corporation/QConvergeConsoleCLI
+
+$  ./qaucli -gs 8 SetRate 10 LogToFile /tmp/fs.stat.csv
+```
+
 ## Reference
 
 * <https://linoxide.com/storage/scandetect-luns-redhat-linux-outputs-remember/>
