@@ -23,12 +23,12 @@ layout: default
                 <!-- Multi-Lingual -->
                 {% if page.multilingual %}
                     {% include multilingual-sel.html %}
-                {% endif %}
-
+                {% endif %}          
+                      
 				{{ content }}
 
                 <hr style="visibility: hidden;">
-                <ul class="pager">
+                <ul class="pager"></ul>
                     {% if page.previous.url %}
                     <li class="previous">
                         <a href="{{ page.previous.url | prepend: site.baseurl | replace: '//', '/' }}" data-toggle="tooltip" data-placement="top" title="{{page.previous.title}}">
