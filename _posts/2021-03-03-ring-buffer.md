@@ -19,11 +19,11 @@ These ring buffers reside at the bottom of the stack and are a crucial point at 
 
 You can increase the size of the Ethernet device RX ring buffer if the packet drop rate causes applications to report:
 
-* a loss of data,
-* cluster fence,
-* slow performance,
-* timeouts, and
-* failed backups.
+* a loss of data
+* cluster fence
+* slow performance
+* timeouts
+* failed backups
 
 ## Interrupts and Interrupt Handlers
 
