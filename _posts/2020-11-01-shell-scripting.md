@@ -20,6 +20,18 @@ Special variables in Shell:
 * $$ - The process number of the current shell. For shell scripts, this is the process ID under which they are executing.
 * $! - The process number of the last background command.
 
+
+Enable ssh passwordless login for multiple servers:
+
+```shell
+$ rpm -ivh sshpass-1.06-1.el7.x86_64.rpm
+
+$ for i in `seq 0 239`
+do
+    sshpass -p "password" ssh-copy-id -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no server$i
+done
+```
+
 ## Sed
 
 Print specific line from a file:
