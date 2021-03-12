@@ -265,7 +265,7 @@ lrwx------ 1 root root 64 Feb 18 15:49 2 -> socket:[39812186]
 
 Now, we understand it actually writes to a socket but rather a real file. This makes sense because the application is a data generator which produce data in memory and send to remote server through network.
 
-## Source
+## References
 
 * <https://en.wikipedia.org/wiki/Ptrace>
 * <https://man7.org/linux/man-pages/man2/syscalls.2.html>

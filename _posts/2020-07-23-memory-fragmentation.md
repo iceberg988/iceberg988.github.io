@@ -70,6 +70,6 @@ Node 0, zone   Normal 1134904 1124019 975094 1027980 973525 755862 528091 316182
 Node 1, zone   Normal 864976 1041246 994760 895916 726438 565284 415625 266573 118000      0      0
 ```
 
-## Resource
+## References
 
 * <https://www.kernel.org/doc/Documentation/sysctl/vm.txt>

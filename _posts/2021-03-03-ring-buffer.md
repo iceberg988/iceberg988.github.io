@@ -30,7 +30,8 @@ You can increase the size of the Ethernet device RX ring buffer if the packet dr
 Interrupts from the hardware are known as “top-half” interrupts. When a NIC receives incoming data, it copies the data into kernel buffers using DMA. The NIC notifies the kernel of this data by raising a hard interrupt. These interrupts are processed by interrupt handlers which do minimal work, as they have already interrupted another task and cannot be interrupted themselves. Hard interrupts can be expensive in terms of CPU usage, especially when holding kernel locks. The hard interrupt handler then leaves the majority of packet reception to a software interrupt, or SoftIRQ, process which can be scheduled more fairly.
 
 Hard interrupts can be seen in /proc/interrupts where each queue has an interrupt vector in the 1st column assigned to it. These are initialized when the system boots or when the NIC device driver module is loaded. Each RX and TX queue is assigned a unique vector, which informs the interrupt handler as to which NIC/queue the interrupt is coming from. The columns represent the number of incoming interrupts as a counter value:
-```
+
+```shell
 $ egrep “CPU0|eth2” /proc/interrupts
  CPU0 CPU1 CPU2 CPU3 CPU4 CPU5
  105: 141606 0 0 0 0 0 IR-PCI-MSI-edge eth2-rx-0
@@ -47,7 +48,8 @@ purpose is to drain the network adapter receive ring buffers. These routines run
 in process monitoring tools such as ps and top.
 
 The following call stack, read from the bottom up, is an example of a SoftIRQ polling a Mellanox card. The functions marked [mlx4_en] are the Mellanox polling routines in the mlx4_en.ko driver kernel module, called by the kernel's generic polling routines such as net_rx_action. After moving from the driver to the kernel, the traffic being received will then move up to the socket, ready for the application to consume:
-```
+
+```shell
  mlx4_en_complete_rx_desc [mlx4_en]
  mlx4_en_process_rx_cq [mlx4_en]
  mlx4_en_poll_rx_cq [mlx4_en]
@@ -62,7 +64,8 @@ The following call stack, read from the bottom up, is an example of a SoftIRQ po
 ```
 
 SoftIRQs can be monitored as follows. Each column represents a CPU:
-```
+
+```shell
 $ watch -n1 grep RX /proc/softirqs
 $ watch -n1 grep TX /proc/softirqs
 ```
@@ -74,7 +77,8 @@ The ethtool utility enables administrators to query, configure, or control netwo
 The exhaustion of the RX ring buffer causes an increment in the counters, such as "discard" or "drop" in the output of ethtool -S interface_name. The discarded packets indicate that the available buffer is filling up faster than the kernel can process the packets.
 
 To display drop counters for the enp1s0 interface, enter:
-```
+
+```shell
 $ ethtool -S enp1s0
 ```
 
@@ -83,7 +87,8 @@ $ ethtool -S enp1s0
 The ethtool utility helps to increase the RX buffer to reduce a high packet drop rate.
 
 1. To view the maximum RX ring buffer size:
-```
+
+```shell
 $ ethtool -g nic0
  Ring parameters for nic0:
  Pre-set maximums:
@@ -101,29 +106,33 @@ $ ethtool -g nic0
 2. If the values in the Pre-set maximums section are higher than in the Current hardware settings section, increase RX ring buffer:
 
    * To temporary change the RX ring buffer of the nic0 device to 4078, enter:
-```
-$ ethtool -G nic0 rx 4078
-```
-   * To permanently change the RX ring buffer create a NetworkManager dispatcher script. For details, see the How to make NIC ethtool settings persistent (apply automatically at boot) article and create a dispatcher script.
+
+     ```shell
+     $ ethtool -G nic0 rx 4078
+     ```
+
+   * To permanently change the RX ring buffer create a NetworkManager dispatcher script. 
 
 ## Understanding the maximum RX/TX ring buffer
 
 From [ethtool](https://elixir.bootlin.com/linux/latest/source/include/linux/ethtool.h) source code, we can find the following function which is used by command "ethtool -g [nic]"
-```
-* @get_ringparam: Report ring sizes
 
+```shell
+* @get_ringparam: Report ring sizes
 ```
 
 For different NIC vender, the [driver](https://elixir.bootlin.com/linux/latest/C/ident/get_ringparam) may be implemented differently.
 
 In this example, the NIC driver is bnx2x.
-```
+
+```shell
 $ ethtool -i nic0
 driver: bnx2x
 ```
 
 So, we can check the [source code](https://elixir.bootlin.com/linux/latest/source/drivers/net/ethernet/broadcom/bnx2x/bnx2x_ethtool.c#L3677) as below.
-```
+
+```shell
 static void bnx2x_get_ringparam(struct net_device *dev,
 				struct ethtool_ringparam *ering)
 {
@@ -150,7 +159,8 @@ static void bnx2x_get_ringparam(struct net_device *dev,
 ```
 
 MAX_RX_AVAIL is the place to define the maximum RX ring buffer. We can further check the formula as below.
-```
+
+```shell
 #define MAX_RX_AVAIL		(MAX_RX_DESC_CNT * NUM_RX_RINGS - 2)
 
 #define NUM_RX_RINGS		8
@@ -172,7 +182,8 @@ struct eth_rx_bd {
 ```
 
 So, based on the formula above, we can calculate the maximum RX ring buffer as below.
-```
+
+```shell
 rx_max = MAX_RX_AVAIL 
        = MAX_RX_DESC_CNT * NUM_RX_RINGS - 2
        = (RX_DESC_CNT - NEXT_PAGE_RX_DESC_CNT) * NUM_RX_RINGS - 2
@@ -183,7 +194,7 @@ rx_max = MAX_RX_AVAIL
 ```
 
 
-## Resource
+## References
 
 * [Red Hat Enterprise Linux Network Performance Tuning Guide](/assets/docs/20150325_network_performance_tuning.pdf)
 * [MONITORING AND TUNING THE RX RING BUFFER](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/monitoring-and-tuning-the-rx-ring-buffer_configuring-and-managing-networking)

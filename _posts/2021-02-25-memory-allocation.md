@@ -124,7 +124,7 @@ void *vmalloc(unsigned long size)
 }
 ```
 
-## Resource
+## References
 
 * <https://www.oreilly.com/library/view/linux-device-drivers/0596005903/ch08.html>
 * <https://elixir.bootlin.com/linux/latest/source/include/linux/slab.h#L538>

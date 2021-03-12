@@ -582,7 +582,7 @@ If the system has debuginfo for the target library, the variable information inc
 $ perf probe -x /usr/lib64/libc.so.6 --vars fopen
 ```
 
-## Resource
+## References
 
 * <https://elixir.bootlin.com/linux/latest/source/tools/perf>
 * <https://www.kernel.org/doc/html/latest/trace/>
