@@ -14,17 +14,6 @@ rpm is a powerful Package Manager for Red Hat, Suse and Fedora Linux. It can be 
 
 ![Image](/assets/images/posts/rpm-command-cheat-sheet.png){:.shadow}
 
-## Enable passwordless ssh login
-
-```shell
-$rpm -ivh sshpass-1.06-1.el7.x86_64.rpm
-
-$ for i in `seq 0 239`
-do
-    sshpass -p "password" ssh-copy-id -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no server$i
-done
-```
-
 # Network Bonding
 
 Configure LACP bonding without reboot:
