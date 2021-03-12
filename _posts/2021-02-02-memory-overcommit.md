@@ -2,7 +2,7 @@
 layout:     post
 title:      "Memory overcommit"
 author:     "Iceberg"
-header-img: "assets/images/beach1.jpg"
+header-img: "assets/images/header/beach1.jpg"
 catalog: true
 tags:
   - Linux/Kernel	

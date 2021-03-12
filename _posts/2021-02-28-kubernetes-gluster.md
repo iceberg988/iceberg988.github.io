@@ -3,7 +3,7 @@ layout:     post
 title:      "Kubernetes and Gluster performance"
 author:     "Iceberg"
 catalog:    true
-header-img: "assets/images/gate1.jpg"
+header-img: "assets/images/header/gate1.jpg"
 tags:
   - Distributed System
   - Kubernetes

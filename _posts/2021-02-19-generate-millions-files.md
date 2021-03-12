@@ -2,7 +2,7 @@
 layout:     post
 title:      "Generate millions of files"
 author:     "Iceberg"
-header-img: "assets/images/yellowstone2.jpg"
+header-img: "assets/images/header/yellowstone2.jpg"
 catalog:    true
 tags:
   - Simulation

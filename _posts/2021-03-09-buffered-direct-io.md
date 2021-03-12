@@ -3,7 +3,7 @@ layout:     post
 title:      "Buffered and Direct IO"
 author:     "Iceberg"
 catalog:    true
-header-img: "assets/images/yellowstone2.jpg"
+header-img: "assets/images/header/yellowstone2.jpg"
 tags:
   - Filesystem
 ---

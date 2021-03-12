@@ -2,7 +2,7 @@
 layout:     post
 title:      "Memory fragmentation"
 author:     "Iceberg"
-header-img: "assets/images/parasailing.jpg"
+header-img: "assets/images/header/parasailing.jpg"
 catalog: true
 tags:
   - Linux/Kernel    

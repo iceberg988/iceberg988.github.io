@@ -3,7 +3,7 @@ layout:     post
 title:      "Semaphore"
 author:     "Iceberg"
 catalog:    true
-header-img: "assets/images/squirrel1.jpg"
+header-img: "assets/images/header/squirrel1.jpg"
 tags:
   - Linux/Kernel
   - Performance Tuning

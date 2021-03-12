@@ -2,7 +2,7 @@
 layout:     post
 title:      "Linux Administration"
 author:     "Iceberg"
-header-img: "assets/images/yellowstone5.jpg"
+header-img: "assets/images/header/yellowstone5.jpg"
 catalog:    true
 tags:
   - Linux/Kernel
@@ -14,7 +14,7 @@ rpm is a powerful Package Manager for Red Hat, Suse and Fedora Linux. It can be 
 
 ![Image](/assets/images/posts/rpm-command-cheat-sheet.png){:.shadow}
 
-To download a package and its dependencies:
+Download a package and its dependencies:
 
 ```shell
 $ yum install yum-utils

@@ -2,7 +2,7 @@
 layout:     post
 title:      "RMAN backup set, pieces, and datafiles"
 author:     "Iceberg"
-header-img: "assets/images/yellowstone6.jpg"
+header-img: "assets/images/header/yellowstone6.jpg"
 catalog: true
 tags:
   - Database

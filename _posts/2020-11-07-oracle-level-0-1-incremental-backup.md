@@ -2,7 +2,7 @@
 layout:     post
 title:      "Level 0 and Level 1 Incremental Backups"
 author:     "Iceberg"
-header-img: "assets/images/yellowstone4.jpg"
+header-img: "assets/images/header/yellowstone4.jpg"
 catalog: true
 tags:
   - Database

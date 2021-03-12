@@ -2,7 +2,7 @@
 layout:     post
 title:      "Shell, sed and awk scripting"
 author:     "Iceberg"
-header-img: "assets/images/yellowstone5.jpg"
+header-img: "assets/images/header/yellowstone5.jpg"
 catalog:    true
 tags:
   - Shell

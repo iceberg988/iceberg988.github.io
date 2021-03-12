@@ -3,7 +3,7 @@ layout:     post
 title:      "Perf"
 subtitle:   "The official Linux profiler"
 author:     "Iceberg"
-header-img: "assets/images/dog.jpg"
+header-img: "assets/images/header/dog.jpg"
 catalog:    true
 tags:
   - Profiling/Tracing

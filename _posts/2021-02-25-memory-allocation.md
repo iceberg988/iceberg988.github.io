@@ -2,7 +2,7 @@
 layout:     post
 title:      "kmalloc and vmalloc"
 author:     "Iceberg"
-header-img: "assets/images/parasailing2.jpg"
+header-img: "assets/images/header/parasailing2.jpg"
 catalog:    true
 tags:
   - Linux/Kernel

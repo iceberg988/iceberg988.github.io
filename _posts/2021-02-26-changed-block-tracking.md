@@ -3,7 +3,7 @@ layout:     post
 title:      "Changed Block Tracking(CBT)"
 author:     "Iceberg"
 catalog:    true
-header-img: "assets/images/jackson1.jpg"
+header-img: "assets/images/header/jackson1.jpg"
 tags:
   - Virtualization
   - VMware

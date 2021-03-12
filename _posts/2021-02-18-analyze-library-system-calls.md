@@ -2,7 +2,7 @@
 layout:     post
 title:      "Analyze the library and system calls"
 author:     "Iceberg"
-header-img: "assets/images/yellowstone1.jpg"
+header-img: "assets/images/header/yellowstone1.jpg"
 catalog:    true
 tags:
   - Profiling/Tracing

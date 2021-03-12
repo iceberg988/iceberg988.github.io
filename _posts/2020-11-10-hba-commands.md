@@ -2,7 +2,7 @@
 layout:     post
 title:      "Useful HBA commands"
 author:     "Iceberg"
-header-img: "assets/images/yellowstone8.jpg"
+header-img: "assets/images/header/yellowstone8.jpg"
 catalog: true
 tags:
   - Fibre Channel

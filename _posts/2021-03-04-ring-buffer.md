@@ -3,7 +3,7 @@ layout:     post
 title:      "Network ring buffer"
 author:     "Iceberg"
 catalog:    true
-header-img: "assets/images/yellowstone1.jpg"
+header-img: "assets/images/header/yellowstone1.jpg"
 tags:
   - Network
 ---

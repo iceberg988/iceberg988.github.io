@@ -2,7 +2,7 @@
 layout:     post
 title:      "Monitor RMAN backup and restore progress"
 author:     "Iceberg"
-header-img: "assets/images/yellowstone7.jpg"
+header-img: "assets/images/header/yellowstone7.jpg"
 catalog: true
 tags:
   - Database
