@@ -91,14 +91,19 @@ where
 a.sid=s.sid and
 open_time > to_date('&1', 'dd-mon-rr hh24:mi:ss') ;
 REM 
+```
 
 From RMAN log, you can see the follwoing timestamp.
+
+```shell
 Starting restore at 16-DEC-2019 12:38:04
-‌
+‌```
+
 You can run this script at any time if you suspect that rman is taking longer than expected - simply spool the results to a file and rerun the script periodically to check that the job is progressing.
 
 Sample output:
 
+```shell
 $ sqlplus / as sysdba
 
 SQL*Plus: Release 12.2.0.1.0 Production on Mon Dec 16 14:08:34 2019
