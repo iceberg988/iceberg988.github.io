@@ -87,4 +87,4 @@ $ docker run --cap-add=SYS_ADMIN ...
 
 ## References
 
-* <https://docs.docker.com/engine/reference/run/>
+* https://docs.docker.com/engine/reference/run/
