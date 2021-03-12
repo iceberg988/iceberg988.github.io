@@ -14,7 +14,7 @@ rpm is a powerful Package Manager for Red Hat, Suse and Fedora Linux. It can be 
 
 ![Image](/assets/images/posts/rpm-command-cheat-sheet.png){:.shadow}
 
-## Network Bonding
+## Network bonding
 
 Configure LACP bonding without reboot:
 
