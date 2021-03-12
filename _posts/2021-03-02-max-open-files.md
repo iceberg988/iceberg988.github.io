@@ -1,9 +1,10 @@
 ---
 layout:     post
-title:      "Max open files limit"
+title:      "Semaphore1"
 author:     "Iceberg"
 catalog:    true
-header-img: "assets/images/sky1.jpg"
+header-img: "assets/images/squirrel1.jpg"
 tags:
+  - Linux/Kernel
   - Performance Tuning
 ---
