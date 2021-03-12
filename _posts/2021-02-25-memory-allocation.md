@@ -1,7 +1,6 @@
 ---
 layout:     post
 title:      "kmalloc and vmalloc"
-date:       2021-02-25 12:00:00
 author:     "Iceberg"
 header-img: "assets/images/parasailing2.jpg"
 catalog:    true

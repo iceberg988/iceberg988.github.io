@@ -1,7 +1,6 @@
 ---
 layout:     post
 title:      "Changed Block Tracking(CBT)"
-date:       2021-02-26 12:00:00
 author:     "Iceberg"
 catalog:    true
 header-img: "assets/images/jackson1.jpg"

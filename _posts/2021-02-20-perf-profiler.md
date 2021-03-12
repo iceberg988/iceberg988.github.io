@@ -2,7 +2,6 @@
 layout:     post
 title:      "Perf"
 subtitle:   "The official Linux profiler"
-date:       2021-02-20 12:00:00
 author:     "Iceberg"
 header-img: "assets/images/dog.jpg"
 catalog:    true

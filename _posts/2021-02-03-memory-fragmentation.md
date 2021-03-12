@@ -1,7 +1,6 @@
 ---
 layout:     post
 title:      "Memory fragmentation"
-date:       2020-07-23 12:00:00
 author:     "Iceberg"
 header-img: "assets/images/parasailing.jpg"
 catalog: true

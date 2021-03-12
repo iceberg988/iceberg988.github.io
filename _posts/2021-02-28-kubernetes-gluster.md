@@ -1,7 +1,6 @@
 ---
 layout:     post
 title:      "Kubernetes and Gluster performance"
-date:       2021-02-28 12:00:00
 author:     "Iceberg"
 catalog:    true
 header-img: "assets/images/gate1.jpg"

@@ -1,7 +1,6 @@
 ---
 layout:     post
 title:      "Generate millions of files"
-date:       2021-02-19 12:00:00
 author:     "Iceberg"
 header-img: "assets/images/yellowstone2.jpg"
 catalog:    true
