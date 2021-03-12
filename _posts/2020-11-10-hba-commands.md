@@ -198,7 +198,7 @@ $  grep -Hv "zz" /sys/class/fc_host/host*/speed
 
 ## Collect QLogic HBA stats
 
-```
+```shell
 $  pwd
 /opt/QLogic_Corporation/QConvergeConsoleCLI
 
