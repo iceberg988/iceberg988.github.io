@@ -69,7 +69,7 @@ Like direct I/O, the data synchronous I/O feature can provide significant applic
 
 If the file is being extended or storage is allocated, data synchronous I/O must write the inode change before returning to the application. This case eliminates the performance advantage of data synchronous I/O.
 
-## Reference
+## References
 
 * <https://sort.veritas.com/public/documents/sf/5.0/aix/html/fs_admin/ag_ch_interface_fs4.html>
 

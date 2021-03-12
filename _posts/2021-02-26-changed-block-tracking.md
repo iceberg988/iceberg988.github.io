@@ -20,7 +20,7 @@ Block changes are tracked in the virtualization layer, outside the virtual machi
 
 Veritas NetBackup Accelerator reduces the backup time for VMware backups. NetBackup uses VMware Changed Block Tracking (CBT) to identify the changes that were made within a virtual machine. Only the changed data blocks are sent to the NetBackup media server, to significantly reduce the I/O and backup time. The media server combines the new data with previous backup data and produces a traditional full NetBackup image that includes the complete virtual machine files.
 
-## Resource
+## References
 
 * <https://kb.vmware.com/s/article/1020128>
 * <https://www.ibm.com/support/knowledgecenter/SSERB6_8.1.2/ve.hv/c_ve_hv_ovw_rct.html>
