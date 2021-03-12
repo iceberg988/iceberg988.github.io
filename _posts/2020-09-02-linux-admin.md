@@ -32,7 +32,7 @@ $ rpm -ev --nodeps blktrace
 Display the installed package info:
 
 ```shell
-$rpm -qi blktrace
+$ rpm -qi blktrace
 Name        : blktrace                     Relocations: (not relocatable)
 Version     : 1.0.1                             Vendor: Red Hat, Inc.
 Release     : 6.el6                         Build Date: Wed 07 Sep 2011 12:51:04 PM PDT
