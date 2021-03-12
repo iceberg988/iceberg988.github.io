@@ -18,7 +18,7 @@ A level 1 incremental backup can be either of the following types:
 Incremental backups are differential by default.
 The size of the backup file depends solely upon the number of blocks modified and the incremental backup level.
 
-![Image](assets/images/posts/oracle-incremental-0.png){:.shadow}
+![Image](/assets/images/posts/oracle-incremental-0.png){:.shadow}
 
 In the example shown above, the following occurs:
 
@@ -28,7 +28,7 @@ In the example shown above, the following occurs:
   On each day from Monday through Saturday, a differential incremental level 1 backup backs up all blocks that have changed since the most recent incremental backup at level 1 or 0. So, the Monday backup copies blocks changed since Sunday level 0 backup, the Tuesday backup copies blocks changed since the Monday level 1 backup, and so forth.
 * The cycle is repeated for the next week.
 
-![Image](assets/images/posts/oracle-incremental-1.png){:.shadow}
+![Image](/assets/images/posts/oracle-incremental-1.png){:.shadow}
 
 In the example shown above, the following occurs:
 
