@@ -85,6 +85,6 @@ We can pass this option to the target docker container.
 $ docker run --cap-add=SYS_ADMIN ...
 ```
 
-## Resource
+## References
 
 * <https://docs.docker.com/engine/reference/run/>

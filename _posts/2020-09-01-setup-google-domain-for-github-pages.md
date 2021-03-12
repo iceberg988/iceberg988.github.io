@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "Setup google domain for github pages"
-date:       2021-02-22 14:00:00
+date:       2020-09-01 14:00:00
 author:     "Iceberg"
 header-style: text
 catalog:    true

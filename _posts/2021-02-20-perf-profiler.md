@@ -2,7 +2,6 @@
 layout:     post
 title:      "Perf"
 subtitle:   "The official Linux profiler"
-date:       2021-02-20 12:00:00
 author:     "Iceberg"
 header-img: "assets/images/dog.jpg"
 catalog:    true
@@ -582,7 +581,7 @@ If the system has debuginfo for the target library, the variable information inc
 $ perf probe -x /usr/lib64/libc.so.6 --vars fopen
 ```
 
-## Resource
+## References
 
 * <https://elixir.bootlin.com/linux/latest/source/tools/perf>
 * <https://www.kernel.org/doc/html/latest/trace/>
