@@ -163,6 +163,31 @@ $  for x in `ls /sys/class/scsi_host`
 > done
 ```
 
+## Check number of LUNs
+
+```
+$  pwd
+/opt/QLogic_Corporation/QConvergeConsoleCLI
+
+$ ./scli -t 
+HBA Instance 1: QLE2692 Port 2 WWPN 21-00-34-80-0D-6B-AA-71 PortID 02-1D-00
+Link: Online
+
+Path                           : 0
+Target                         : 0
+Device ID                      : 0xffff
+Product Vendor                 : PURE
+Product ID                     : FlashArray
+Product Revision               : 8888
+Serial Number                  : 7CA43045E3514BF700011025
+Node Name                      : 52-4A-93-77-BB-B4-74-03
+Port Name                      : 52-4A-93-77-BB-B4-74-03
+Port ID                        : 02-2C-00
+Product Type                   : FCP Disk
+LUN Count(s)                   : 16
+Status                         : Online
+```
+
 ## Check HBA speed
 
 ```shell
