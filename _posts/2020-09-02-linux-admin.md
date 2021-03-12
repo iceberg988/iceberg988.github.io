@@ -14,6 +14,13 @@ rpm is a powerful Package Manager for Red Hat, Suse and Fedora Linux. It can be 
 
 ![Image](/assets/images/posts/rpm-command-cheat-sheet.png){:.shadow}
 
+To download a package and its dependencies:
+
+```shell
+$ yum install yum-utils
+$ yumdownloader --destdir=./ --resolve blktrace
+```
+
 ## Network bonding
 
 Configure LACP bonding without reboot:
