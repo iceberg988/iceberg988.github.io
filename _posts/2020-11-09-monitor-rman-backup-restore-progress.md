@@ -95,9 +95,7 @@ REM
 
 From RMAN log, you can see the follwoing timestamp.
 
-```shell
-Starting restore at 16-DEC-2019 12:38:04
-‌```
+*Starting restore at 16-DEC-2019 12:38:04*
 
 You can run this script at any time if you suspect that rman is taking longer than expected - simply spool the results to a file and rerun the script periodically to check that the job is progressing.
 
