@@ -5,7 +5,8 @@ author:     "Iceberg"
 header-img: "assets/images/yellowstone6.jpg"
 catalog: true
 tags:
-  - Database	
+  - Database
+  - Oracle	
 ---
 
 RMAN backs up the datafiles, control file, archived log files, and server parameter files in a RMAN specific format called a backup piece. In a nutshell, a backup set is a bundle of dbf, ctl and redo file that can restore a database. A set of one or more such backup pieces makes up a backup set. A backup set is created using the BACKUP command.

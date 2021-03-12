@@ -5,7 +5,8 @@ author:     "Iceberg"
 header-img: "assets/images/yellowstone4.jpg"
 catalog: true
 tags:
-  - Database	
+  - Database
+  - Oracle
 ---
 
 Incremental backups can be either level 0 or level 1. A level 0 incremental backup, which is the base for subsequent incremental backups, copies all blocks containing data, backing the datafile up into a backup set just as a full backup would. The only difference between a level 0 incremental backup and a full backup is that a full backup is never included in an incremental strategy.
