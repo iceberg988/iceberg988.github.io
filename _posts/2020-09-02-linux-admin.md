@@ -24,3 +24,26 @@ do
     sshpass -p "password" ssh-copy-id -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no server$i
 done
 ```
+
+# Network Bonding
+
+Configure LACP bonding without reboot:
+
+```shell
+$  cat /sys/class/net/bond0/bonding/mode
+802.3ad 4
+$  cat /sys/class/net/bond0/bonding/xmit_hash_policy
+layer2 0
+$  echo 1 > /sys/class/net/bond0/bonding/xmit_hash_policy
+$  cat /sys/class/net/bond0/bonding/xmit_hash_policy
+layer3+4 1
+```
+
+Configure LACP bonding permanent to reboot:
+
+```shell
+$ vi /etc/sysconfig/network-scripts/ifcfg-bond0
+BONDING_OPTS="mode=802.3ad xmit_hash_policy=layer3+4"
+
+$ service network restart
+```
