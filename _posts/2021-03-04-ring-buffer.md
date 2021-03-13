@@ -88,20 +88,20 @@ The ethtool utility helps to increase the RX buffer to reduce a high packet drop
 
 1. To view the maximum RX ring buffer size:
 
-```shell
-$ ethtool -g nic0
- Ring parameters for nic0:
- Pre-set maximums:
- RX:             4078
- RX Mini:        0
- RX Jumbo:       0
- TX:             4078
- Current hardware settings:
- RX:             2048
- RX Mini:        0
- RX Jumbo:       0
- TX:             2048
-```
+   ```shell
+   $ ethtool -g nic0
+   Ring parameters for nic0:
+   Pre-set maximums:
+   RX:             4078
+   RX Mini:        0
+   RX Jumbo:       0
+   TX:             4078
+   Current hardware settings:
+   RX:             2048
+   RX Mini:        0
+   RX Jumbo:       0
+   TX:             2048
+   ```
 
 2. If the values in the Pre-set maximums section are higher than in the Current hardware settings section, increase RX ring buffer:
 
