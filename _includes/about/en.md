@@ -27,7 +27,7 @@ I would be glad if you find anything useful.
 **Performance Engineering**
 
 * 2011-2014 : Performance benchmark and analysis, performance testing automation, shell/awk
-* 2014-2016 : Performance analysis and optimization, python, NodeJS, MongoDB
-* 2016-present: Performance PoC/RCA, Linux/Kernel, VMware, Docker, Kubernetes, Gluster, Grafana, Prometheous
+* 2014-2016 : Performance analysis and optimization, python, NodeJS, MongoDB, Grafana, Prometheous
+* 2016-present: Performance PoC/RCA, Linux/Kernel, VMware, Docker, Kubernetes, Gluster
 
 ### And, the journey continues..
