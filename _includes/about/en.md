@@ -8,10 +8,13 @@ I am a Software **Performance Engineer** and I have great passion to optimize pr
 * Automate the performance work to improve efficiency
 * Create performance tools including workload profiler, performance tracer and data visualization
 
-### The site is created to 
+### The site is created to share
 
-* Share the learning process on performance engineering
-* Share the helpful resources and handy tools
+* the learning process on performance engineering
+* the helpful resources and handy tools
+
+and
+
 * Note personal growth and thoughts from daily work
 
 I would be glad if you find anything useful.
