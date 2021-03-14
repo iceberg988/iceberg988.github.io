@@ -1,4 +1,4 @@
-I am a Software **Performance Engineer** and I have great passion to optimize product performance and make it **faster**, **reliable** and **scalable**.
+I am a Software **Performance Engineer** and passionate in performance optimization to make things **faster**, **reliable** and **scalable**.
 
 ### I am mostly dedicated in the following areas.
 
@@ -10,12 +10,12 @@ I am a Software **Performance Engineer** and I have great passion to optimize pr
 
 ### The site is created to share
 
-* the learning process on performance engineering
-* the helpful resources and handy tools
+* learning process on performance engineering
+* helpful resources and handy tools
 
-and
+and note
 
-* Note personal growth and thoughts from daily work
+* personal growth and thoughts from daily work
 
 I would be glad if you find anything useful.
 
@@ -34,3 +34,5 @@ I would be glad if you find anything useful.
 * 2016-present: Performance PoC/RCA, Linux/Kernel, VMware, Docker, Kubernetes, Gluster, flash array
 
 ### And, the journey continues..
+
+I can be contacted by [email](vbing118@gmail.com) for any questions or personal messages.
