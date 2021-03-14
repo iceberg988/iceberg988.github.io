@@ -35,4 +35,4 @@ I would be glad if you find anything useful.
 
 ### And, the journey continues..
 
-I can be contacted by [email](vbing118@gmail.com) for any questions or personal messages.
+I can be contacted by [email](mailto:vbing118@gmail.com) for any questions or personal messages.
