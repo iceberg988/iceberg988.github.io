@@ -16,7 +16,7 @@ I am a Software **Performance Engineer** and I have great passion to optimize pr
 
 I would be glad if you find anything useful.
 
-### I enjoy learning new technology and the following the tech track in past years.
+### I enjoy learning new technology and the following are the tech track in recent years.
 
 * 2000-2006 : C, C++, ASP.NET, C#, web application development
 * 2006-2007 : Java, backend development
