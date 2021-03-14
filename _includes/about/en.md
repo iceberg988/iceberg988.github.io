@@ -22,7 +22,7 @@ I would be glad if you find anything useful.
 
 * 2000-2006 : C, C++, ASP.NET, C#, web application development
 * 2006-2007 : Java, backend development
-* 2007-2011 : Storage, LAN/SAN, AIX/Linux/Solaris/Windows, Oracle/DB2/MS-SQL/MS-Exchange
+* 2007-2011 : Storage, LAN/SAN, AIX/Linux/Solaris/Windows, Oracle/DB2/MS-SQL/MS-Exchange, filesystem/volume manager/high availability
 
 **Performance Engineering**
 
