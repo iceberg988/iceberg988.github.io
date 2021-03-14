@@ -1,6 +1,6 @@
 I am a Software **Performance Engineer** and I have great passion to optimize product performance and make it **faster**, **reliable** and **scalable**.
 
-### I am mostly dedicated in the following areas
+### I am mostly dedicated in the following areas.
 
 * Provide performance PoC(proof of concept) to help design high performance product
 * Root cause analysis for performance issue
