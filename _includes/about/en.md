@@ -18,11 +18,16 @@ I would be glad if you find anything useful.
 
 ### I enjoy learning new technology and the following are the tech track in recent years.
 
+**Software Development and Testing**
+
 * 2000-2006 : C, C++, ASP.NET, C#, web application development
 * 2006-2007 : Java, backend development
 * 2007-2011 : Storage, LAN/SAN, AIX/Linux/Solaris/Windows, Oracle/DB2/MS-SQL/MS-Exchange
-* 2011-2014 : Performance engineering, competitive benchmark and analysis, automation
-* 2014-2016 : Performance engineering, PoC, RCA, automation, shell/awk, python, NodeJS, MongoDB
-* 2016-present: Performance engineering, PoC, RCA, Linux/Kernel, VMware, Docker, Kubernetes, Gluster, Grafana, Prometheous
+
+**Performance Engineering**
+
+* 2011-2014 : Performance benchmark and analysis, performance testing automation, shell/awk
+* 2014-2016 : Performance analysis and optimization, python, NodeJS, MongoDB
+* 2016-present: Performance PoC/RCA, Linux/Kernel, VMware, Docker, Kubernetes, Gluster, Grafana, Prometheous
 
 ### And, the journey continues..
