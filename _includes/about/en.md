@@ -16,7 +16,7 @@ I am a Software **Performance Engineer** and I have great passion to optimize pr
 
 I would be glad if you find anything useful.
 
-### I enjoy learning new technology and the following are the tech track in recent years.
+### I enjoy learning new technology and the following are the technical skill track in recent years.
 
 **Software Development and Testing**
 
