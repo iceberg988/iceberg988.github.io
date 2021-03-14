@@ -1,7 +1,12 @@
 ---
 layout: page
-title: "About"
+title: "About Me"
 description: ""
 header-img: "assets/images/header/yellowstone8.jpg"
-multilingual: true
+multilingual: false
 ---
+
+<div class="en post-container">
+    {% capture about_en %}{% include about/en.md %}{% endcapture %}
+    {{ about_en | markdownify }}
+</div>
