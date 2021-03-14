@@ -14,7 +14,7 @@ I am a Software **Performance Engineer** and I have great passion to optimize pr
 * Share the helpful resources and handy tools
 * Note personal growth and thoughts from daily work
 
-I would be glad if you find anyting useful.
+I would be glad if you find anything useful.
 
 ### I enjoy learning new technology and the following the tech track in past years.
 
