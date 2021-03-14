@@ -1,4 +1,4 @@
-I am a Software **Performance Engineer** and passionate in performance optimization to make things **faster**, **reliable** and **scalable**.
+I am a Software **Performance Engineer** and passionate in performance optimization to make things **faster**, **reliable** and **scalable**. I can be contacted by [email](mailto:vbing118@gmail.com) for any questions or personal messages.
 
 ### I am mostly dedicated in the following areas.
 
@@ -34,5 +34,3 @@ I would be glad if you find anything useful.
 * 2016-present: Performance PoC/RCA, Linux/Kernel, VMware, Docker, Kubernetes, Gluster, flash array
 
 ### And, the journey continues..
-
-I can be contacted by [email](mailto:vbing118@gmail.com) for any questions or personal messages.
