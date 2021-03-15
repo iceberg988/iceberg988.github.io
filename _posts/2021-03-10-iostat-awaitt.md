@@ -1,11 +1,11 @@
 ---
 layout:     post
-title:      "How is iowait measured"
+title:      "Understanding await in iostat"
 author:     "Iceberg"
 catalog:    true
 header-img: "assets/images/header/idaho1.jpg"
 tags:
-  - Linux/Kernel
+  - Observability Tools
 ---
 
 
