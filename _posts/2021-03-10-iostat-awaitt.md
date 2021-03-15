@@ -33,14 +33,14 @@ The I/O path mainly includes the following footprints from block layer to undern
 * Multipathing if any
 * Hardware handling
   * HBA driver
-  * Transportation(bus), 
+  * Transportation(bus)
   * FC switch routing if any
   * Storage controller queuing, caching and processing 
-  * Actual disk latency(service time)
+  * Actual disk latency
 
 ## How the await time is calculated?
 
-The await is the average time on a per I/O basis, measured in milliseconds. It mainly includes the time spent in I/O scheduler queue and time spent on storage service it if the HBA/SAN latency is relatively marginal.
+The await is the average time on a per I/O basis, measured in milliseconds. It mainly includes the time spent in I/O scheduler queue and time spent on storage servicing it if the HBA/SAN latency is relatively marginal.
 
 There are two queues involved in the I/O processing path.
 
