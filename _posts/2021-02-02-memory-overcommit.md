@@ -7,6 +7,7 @@ catalog: true
 tags:
   - Linux/Kernel	
   - Memory Management
+  - Performance  
 ---
 
 The Linux kernel supports the following overcommit handling modes

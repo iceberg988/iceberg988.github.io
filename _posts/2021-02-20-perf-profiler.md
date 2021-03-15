@@ -7,6 +7,7 @@ header-img: "assets/images/header/dog.jpg"
 catalog:    true
 tags:
   - Profiling/Tracing
+  - Performance  
 ---
 
 ## Introduction

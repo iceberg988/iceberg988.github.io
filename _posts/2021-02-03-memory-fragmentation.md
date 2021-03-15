@@ -7,6 +7,7 @@ catalog: true
 tags:
   - Linux/Kernel    
   - Memory Management
+  - Performance  
 ---
 
 ## Memory fragmentation

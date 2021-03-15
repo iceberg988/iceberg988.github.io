@@ -6,6 +6,7 @@ header-img: "assets/images/header/yellowstone2.jpg"
 catalog:    true
 tags:
   - Simulation
+  - Performance  
 ---
 
 [fio](https://fio.readthedocs.io/en/latest/fio_doc.html#) is the acronym for Flexible IO Tester and is a tool for I/O performance measurement. 

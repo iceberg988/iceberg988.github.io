@@ -5,7 +5,9 @@ author:     "Iceberg"
 header-img: "assets/images/header/yellowstone1.jpg"
 catalog:    true
 tags:
-  - Profiling/Tracing
+  - Profiling/Tracing  
+  - Performance
+
 ---
 
 When the application source code is not available, we can trace the function calls during its runtime in order to understand how the application code works. 

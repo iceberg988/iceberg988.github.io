@@ -6,6 +6,7 @@ header-img: "assets/images/header/yellowstone8.jpg"
 catalog: true
 tags:
   - Fibre Channel
+  - Linux/Kernel
 ---
 
 ## Check HBA card type

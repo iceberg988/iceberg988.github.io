@@ -8,6 +8,7 @@ tags:
   - Distributed System
   - Kubernetes
   - Gluster
+  - Performance  
 ---
 
 ## Kubernetes and Gluster Intro

@@ -7,6 +7,7 @@ header-img: "assets/images/header/squirrel1.jpg"
 tags:
   - Linux/Kernel
   - Performance Tuning
+  - Performance
 ---
 
 ## What is semaphore

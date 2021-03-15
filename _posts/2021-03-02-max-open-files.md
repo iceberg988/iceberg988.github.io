@@ -6,6 +6,7 @@ catalog:    true
 header-img: "assets/images/header/sky1.jpg"
 tags:
   - Performance Tuning
+  - Performance  
 ---
 
 ## System wide open files limit
