@@ -17,7 +17,7 @@ The following is the description provided for await field in iostat man page.
 ```shell
 $ man iostat
 await
-    The  average  time (in milliseconds) for I/O requests issued to the device to be served. This includes the time spent by the requests in queue and the time spent servicing them.
+    The average time (in milliseconds) for I/O requests issued to the device to be served. This includes the time spent by the requests in queue and the time spent servicing them.
 ```    
 
 It is a measure of disk I/O latency in milliseconds. The latency is from the front of the I/O scheduler to the I/O completion time.
