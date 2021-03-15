@@ -1,6 +1,7 @@
 ---
 layout:     post
 title:      "Linux Administration"
+date:       2020-09-02 14:00:00
 author:     "Iceberg"
 header-img: "assets/images/header/yellowstone5.jpg"
 catalog:    true
