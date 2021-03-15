@@ -58,4 +58,4 @@ await measures the I/O latency on a per I/O basis while svctm take into account 
 
 ## Conclusion
 
-Since await includes the time spent in I/O scheduler and storage queue servicing. We may want to see a breakdown for the two parts by using blktrace. It would tell us the overheads on disk queue(I2D) and actual I/O service latency(D2C). For furhter study of blktrace, you can read this [article]({ post_url 2021-03-11-blktrace %}).
+Since await includes the time spent in I/O scheduler and storage queue servicing. We may want to see a breakdown for the two parts by using blktrace. It would tell us the overheads on disk queue(I2D) and actual I/O service latency(D2C). For furhter study of blktrace, you can read this [article]({% post_url 2021-03-11-blktrace %}).
