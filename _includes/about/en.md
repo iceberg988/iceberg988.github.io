@@ -1,4 +1,4 @@
-I am a Software **Performance Engineer** and passionate in performance optimization to make things **faster**, **reliable** and **scalable**. 
+I am a **System Performance Engineer** and passionate in performance optimization to make things **faster**, **reliable** and **scalable**. 
 
 ### I am mostly dedicated in the following areas.
 
