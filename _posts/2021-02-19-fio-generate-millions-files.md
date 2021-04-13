@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Generate millions of files"
+title:      "Using fio to generate millions of files"
 author:     "Iceberg"
 header-img: "assets/images/header/yellowstone2.jpg"
 catalog:    true
