@@ -11,8 +11,7 @@ tags:
 
 ## Introduction
 
-Receive ring buffers are shared between the device driver and NIC. The card assigns a transmit (TX) and receive (RX) ring buffer. As the name implies, the ring buffer is a circular buffer where an
-overflow simply overwrites existing data. It should be noted that there are two ways to move data from the NIC to the kernel, hardware interrupts and software interrupts, also called SoftIRQs.
+Receive ring buffers are shared between the device driver and NIC. The card assigns a transmit (TX) and receive (RX) ring buffer. As the name implies, the ring buffer is a circular buffer where an overflow simply overwrites existing data. It should be noted that there are two ways to move data from the NIC to the kernel, hardware interrupts and software interrupts, also called SoftIRQs.
 
 The RX ring buffer is used to store incoming packets until they can be processed by the device driver. The device driver drains the RX ring, typically via SoftIRQs, which puts the incoming packets into a kernel data structure called an sk_buff or “skb” to begin its journey through the kernel and up to the application which owns the relevant socket. The TX ring buffer is used to hold outgoing packets which are destined for the wire.
 
@@ -44,9 +43,7 @@ $ egrep “CPU0|eth2” /proc/interrupts
 
 ## SoftIRQs
 
-Also known as “bottom-half” interrupts, software interrupt requests (SoftIRQs) are kernel routines which are scheduled to run at a time when other tasks will not be interrupted. The SoftIRQ's
-purpose is to drain the network adapter receive ring buffers. These routines run in the form of ksoftirqd/cpu-number processes and call driver-specific code functions. They can be seen
-in process monitoring tools such as ps and top.
+Also known as “bottom-half” interrupts, software interrupt requests (SoftIRQs) are kernel routines which are scheduled to run at a time when other tasks will not be interrupted. The SoftIRQ's purpose is to drain the network adapter receive ring buffers. These routines run in the form of ksoftirqd/cpu-number processes and call driver-specific code functions. They can be seen in process monitoring tools such as ps and top.
 
 The following call stack, read from the bottom up, is an example of a SoftIRQ polling a Mellanox card. The functions marked [mlx4_en] are the Mellanox polling routines in the mlx4_en.ko driver kernel module, called by the kernel's generic polling routines such as net_rx_action. After moving from the driver to the kernel, the traffic being received will then move up to the socket, ready for the application to consume:
 
