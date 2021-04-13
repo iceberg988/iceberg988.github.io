@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Gluster"
+title:      "GlusterFS"
 subtitle:   "A distributed file system"
 author:     "Iceberg"
 catalog:    true
