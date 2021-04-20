@@ -9,13 +9,17 @@ tags:
   - Linux/Kernel
 ---
 
-* Install sshpass package on the source server from which to enable ssh passwordless login to remote servers
+# Install sshpass package
+
+To install sshpass package on the source server from which to enable ssh passwordless login to remote servers:
 
 ```shell
 -bash-4.2# rpm -ivh sshpass-1.06-1.el7.x86_64.rpm
 ```
 
-* Enable ssh passworkless login to remote servers
+# Enable ssh passwordless login to remote servers
+
+To enable ssh passwordless login to a large amount of remote servers, we can use the following command to automate without needs of providing password for each server.
 
 ```shell
 -bash-4.2# for n in `seq 0 239`
