@@ -9,7 +9,7 @@ tags:
   - Programming
 ---
 
-In this post, it includes the following sorting algorithms.
+In this post, it includes the following sorting algorithms. The code is self explained.
 
 * selection sort
 * insert sort
