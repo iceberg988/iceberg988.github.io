@@ -38,8 +38,7 @@ the system. Values tending towards 0 imply allocations would fail due to lack
 of memory, values towards 1000 imply failures are due to fragmentation and -1
 implies that the allocation will succeed as long as watermarks are met.
 
-The kernel will not compact memory in a zone if the
-fragmentation index is <= extfrag_threshold. The default value is 500.
+The kernel will not compact memory in a zone if the fragmentation index is <= extfrag_threshold. The default value is 500.
 
 Example output:
 

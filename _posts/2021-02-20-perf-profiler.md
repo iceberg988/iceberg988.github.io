@@ -62,7 +62,7 @@ Performance counter stats for 'fio fio_job_file.ini':
 
 ## perf events
 
-perf events can be listed using *perf list*. I only list a few of them for example. It includes hardware event, hardware cache event, software event, PMU event tracepoint event and SDT event.
+perf events can be listed using *perf list*. I only list a few of them for example. It includes hardware event, hardware cache event, software event, PMU event, tracepoint event and SDT event.
 
 ```shell
 $ perf list
@@ -449,6 +449,7 @@ $ perf stat -e kmem:kmem_cache_alloc -p `pidof fio` -a -- sleep 5
 
        5.003282238 seconds time elapsed
 ```
+
 ## Dynamic tracing with probe events
 
 Except for tracing the predefined perf events which are present in *perf list* command, *perf* is capable of creating more probe events dynamically.
