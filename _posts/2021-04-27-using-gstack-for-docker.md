@@ -65,7 +65,7 @@ To print the stack trace for a process running inside container, we can do the f
    ```
 
 
-nsenter
+We use nsenter to get the stack trace of the target process in contaienr namespace.
 
 ```shell
 $ man nsenter
