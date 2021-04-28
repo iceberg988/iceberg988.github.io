@@ -65,7 +65,7 @@ To print the stack trace for a process running inside container, we can do the f
    ```
 
 
-* nsenter
+nsenter
 
 ```shell
 $ man nsenter
