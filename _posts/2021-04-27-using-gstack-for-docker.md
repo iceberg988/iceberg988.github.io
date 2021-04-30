@@ -47,7 +47,7 @@ To print the stack trace for a process running inside container, we can do the f
 2. Get the container instance pid
 
    ```shell
-   $  /bin/docker inspect --format '{{ \.State\.Pid }}' e2590333640e
+   $  /bin/docker inspect --format '\{\{ \.State\.Pid \}\}' e2590333640e
    167977
    ```
 
