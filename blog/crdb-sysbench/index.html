@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="IntroCockroach uses TPC-C as the official OLTP workload benchmark since it’s a more realistic measurement by modeling the real world applications. However, sysbench is a straight-forward throughput&amp;#x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Use sysbench for CockroachDB performance benchmarking">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/crdb-sysbench/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="IntroCockroach uses TPC-C as the official OLTP workload benchmark since it’s a more realistic measurement by modeling the real world applications. However, sysbench is a straight-forward throughput&amp;#x">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-12-08T20:08:00.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="CockroachDB">
+<meta property="article:tag" content="Sysbench">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/crdb-sysbench/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/crdb-sysbench/","path":"blog/crdb-sysbench/","title":"Use sysbench for CockroachDB performance benchmarking"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Use sysbench for CockroachDB performance benchmarking | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-the-CockroachDB-cluster"><span class="nav-number">2.</span> <span class="nav-text">Install the CockroachDB cluster</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Interact-with-the-CockroachDB"><span class="nav-number">3.</span> <span class="nav-text">Interact with the CockroachDB</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Use-the-CockroachDB-built-in-client"><span class="nav-number">3.1.</span> <span class="nav-text">Use the CockroachDB built-in client</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Use-the-Postgres-client"><span class="nav-number">3.2.</span> <span class="nav-text">Use the Postgres client</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-sysbench"><span class="nav-number">4.</span> <span class="nav-text">Install sysbench</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prepare-for-the-benchmark"><span class="nav-number">5.</span> <span class="nav-text">Prepare for the benchmark</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Run-sysbench"><span class="nav-number">6.</span> <span class="nav-text">Run sysbench</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cleanup-the-database"><span class="nav-number">7.</span> <span class="nav-text">Cleanup the database</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">8.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/backup-and-restore-mysql-database/" rel="bookmark">
+        <time class="popular-posts-time">2021-09-28</time>
+        <br>
+      Backup and restore MySQL database
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/hash-table-implementation-in-python/" rel="bookmark">
+        <time class="popular-posts-time">2023-04-16</time>
+        <br>
+      Hash Table implementation in Python
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-sysbench-for-oltp-workload-performance-benchmark/" rel="bookmark">
+        <time class="popular-posts-time">2021-09-07</time>
+        <br>
+      Using sysbench for OLTP workload performance benchmark
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/how-to-deploy-mysql-and-phpmyadmin-with-docker/" rel="bookmark">
+        <time class="popular-posts-time">2022-04-12</time>
+        <br>
+      How to deploy MySQL and phpMyAdmin with Docker
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/run-pgbench-on-postgresql/" rel="bookmark">
+        <time class="popular-posts-time">2023-05-23</time>
+        <br>
+      Run pgbench on PostgreSQL
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/crdb-sysbench/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Use sysbench for CockroachDB performance benchmarking | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Use sysbench for CockroachDB performance benchmarking
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-08 12:08:00" itemprop="dateCreated datePublished" datetime="2022-12-08T12:08:00-08:00">2022-12-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>Cockroach uses TPC-C as the official OLTP workload benchmark since it’s a more realistic measurement by modeling the real world applications.</p>
+<p>However, <a target="_blank" rel="noopener" href="https://github.com/akopytov/sysbench">sysbench</a> is a straight-forward throughput&#x2F;latency benchmarking tool. It is a scriptable multi-threaded benchmark tool based on LuaJIT. It is most frequently used for database benchmarks, but can also be used to create arbitrarily complex workloads that do not involve a database server.</p>
+<ul>
+<li>oltp_*.lua: a collection of OLTP-like database benchmarks</li>
+<li>fileio: a filesystem-level benchmark</li>
+<li>cpu: a simple CPU benchmark</li>
+<li>memory: a memory access benchmark</li>
+<li>threads: a thread-based scheduler benchmark</li>
+<li>mutex: a POSIX mutex benchmark</li>
+</ul>
+<p>This Cockroach <a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/blog/unpacking-competitive-benchmarks/">blog</a> explains why we use sysbench for competitive benchmarks.</p>
+<p>Sysbench contains a collection of simple SQL workloads. These workloads perform low-level SQL operations. For example, they run concurrent INSERT or UPDATE statements on rows as fast as possible. It gives us a picture on the system performance under different access patterns. Unlike TPC-C, Sysbench does not attempt to model a real application.</p>
+<p>Sysbench includes the following workloads:</p>
+<ul>
+<li>oltp_point_select: single-row point selects</li>
+<li>oltp_insert: single-row inserts</li>
+<li>oltp_delete: single-row deletes</li>
+<li>oltp_update_index: single-row update on column that requires update to secondary index</li>
+<li>oltp_update_non_index single-row: update on column that does not require update to secondary index</li>
+<li>oltp_read_only: transactions that run collection of small scans</li>
+<li>oltp_read_write: transactions that run collection of small scans and writes</li>
+<li>oltp_write_only: transactions that run collection of writes</li>
+</ul>
+<p>Sysbench supports the following two database drivers.</p>
+<ul>
+<li>mysql - MySQL driver</li>
+<li>pgsql - PostgreSQL driver</li>
+</ul>
+<p>From this Cockroach <a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/blog/why-postgres/">blog</a>, CockroachDB is compatible with PostgreSQL.</p>
+<p>In this article, we will explore how to run sysbench with CockroachDB using pqsql driver.</p>
+<h2 id="Install-the-CockroachDB-cluster"><a href="#Install-the-CockroachDB-cluster" class="headerlink" title="Install the CockroachDB cluster"></a>Install the CockroachDB cluster</h2><p>Refer to this <a href="https://www.flamingbytes.com/blog/cockroachdb-performance-benchmarking/">post</a> on how to deploy CockroachDB cluster.</p>
+<pre><code>[root@crdb_node1 ~]# cockroach version
+Build Tag:        v22.1.6
+Build Time:       2022/08/23 17:05:04
+Distribution:     CCL
+Platform:         linux amd64 (x86_64-pc-linux-gnu)
+Go Version:       go1.17.11
+C Compiler:       gcc 6.5.0
+Build Commit ID:  760a8253ae6478d69da0330133e3efec8e950e4e
+Build Type:       release
+</code></pre>
+<h2 id="Interact-with-the-CockroachDB"><a href="#Interact-with-the-CockroachDB" class="headerlink" title="Interact with the CockroachDB"></a>Interact with the CockroachDB</h2><h3 id="Use-the-CockroachDB-built-in-client"><a href="#Use-the-CockroachDB-built-in-client" class="headerlink" title="Use the CockroachDB built-in client"></a>Use the CockroachDB built-in client</h3><p>CockroachDB comes with a built-in client for executing SQL statements from an interactive shell or directly from the command line.</p>
+<p>To use this client, run the cockroach sql command as following:</p>
+<pre><code>[root@node0 ~]# cockroach sql --insecure --host=node1:26257 -e &#39;create database testdb&#39;
+
+[root@node0 ~]# cockroach sql --insecure --host=node1:26257 -e &#39;show databases&#39;
+  database_name | owner | primary_region | regions | survival_goal
+----------------+-------+----------------+---------+----------------
+  defaultdb     | root  | NULL           | &#123;&#125;      | NULL
+  postgres      | root  | NULL           | &#123;&#125;      | NULL
+  system        | node  | NULL           | &#123;&#125;      | NULL
+  testdb        | root  | NULL           | &#123;&#125;      | NULL
+(4 rows)
+
+[root@node0 ~]# cockroach sql --insecure --host=node1:26257 -e &#39;show tables from testdb&#39;
+SHOW TABLES 0
+
+[root@node0 ~]# cockroach sql --insecure --host=node1:26257 -e &#39;drop database testdb&#39;
+</code></pre>
+<h3 id="Use-the-Postgres-client"><a href="#Use-the-Postgres-client" class="headerlink" title="Use the Postgres client"></a>Use the Postgres client</h3><p>The cockroachDB can also be interacted by using Postgres client.</p>
+<p>To install the Postgres client:</p>
+<pre><code>[root@node0 ~]# yum -y install postgresql postgresql-libs
+Installed:
+  postgresql.x86_64 0:9.2.24-8.el7_9
+</code></pre>
+<p>To create the database and user:</p>
+<pre><code>[root@node0 ~]# psql -h node1 -U root -p 26257
+psql (9.2.24, server 13.0.0)
+
+root=&gt; create database testdb;
+root=&gt; create user tester;
+root=&gt; grant all on database testdb to tester;
+
+root=&gt; show databases;
+ database_name | owner | primary_region | regions | survival_goal
+---------------+-------+----------------+---------+---------------
+ defaultdb     | root  |                | &#123;&#125;      |
+ postgres      | root  |                | &#123;&#125;      |
+ system        | node  |                | &#123;&#125;      |
+ testdb        | root  |                | &#123;&#125;      |
+(4 rows)
+
+root=&gt; show users;
+ username | options | member_of
+----------+---------+-----------
+ admin    |         | &#123;&#125;
+ root     |         | &#123;admin&#125;
+ tester   |         | &#123;&#125;
+(3 rows)
+
+root=&gt; \c testdb;
+psql (9.2.24, server 13.0.0)
+WARNING: psql version 9.2, server version 13.0.
+         Some psql features might not work.
+You are now connected to database &quot;testdb&quot; as user &quot;root&quot;.
+
+testdb=&gt; \dt;
+                          List of relations
+    Schema    |       Name        | Type  |          Owner
+--------------+-------------------+-------+--------------------------
+ pg_extension | geography_columns | table | unknown (OID=3233629770)
+ pg_extension | geometry_columns  | table | unknown (OID=3233629770)
+ pg_extension | spatial_ref_sys   | table | unknown (OID=3233629770)
+(3 rows)
+
+testdb=&gt;  SELECT * FROM pg_catalog.pg_tables where schemaname != &#39;pg_catalog&#39; AND schemaname != &#39;information_schema&#39; and schemaname != &#39;crdb_internal&#39;;
+  schemaname  |     tablename     | tableowner | tablespace | hasindexes | hasrules | hastriggers | rowsecurity
+--------------+-------------------+------------+------------+------------+----------+-------------+-------------
+ pg_extension | geography_columns | node       |            | f          | f        | f           | f
+ pg_extension | geometry_columns  | node       |            | f          | f        | f           | f
+ pg_extension | spatial_ref_sys   | node       |            | f          | f        | f           | f
+(3 rows)
+</code></pre>
+<h2 id="Install-sysbench"><a href="#Install-sysbench" class="headerlink" title="Install sysbench"></a>Install sysbench</h2><p>To install sysbench:</p>
+<pre><code>[root@node0 ~]# curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.rpm.sh | sudo bash^C
+[root@node0 ~]# sudo yum -y install sysbench
+[root@node0 ~]# sysbench --version
+sysbench 1.0.20
+</code></pre>
+<p>To get familiar with the sysbench parameters:</p>
+<pre><code>[root@node0 ~]# sysbench --help
+Usage:
+  sysbench [options]... [testname] [command]
+
+Commands implemented by most tests: prepare run cleanup help
+
+General options:
+  --threads=N                     number of threads to use [1]
+  --events=N                      limit for total number of events [0]
+  --time=N                        limit for total execution time in seconds [10]
+  --forced-shutdown=STRING        number of seconds to wait after the --time limit before forcing shutdown, or &#39;off&#39; to disable [off]
+  --thread-stack-size=SIZE        size of stack per thread [64K]
+  --rate=N                        average transactions rate. 0 for unlimited rate [0]
+  --report-interval=N             periodically report intermediate statistics with a specified interval in seconds. 0 disables intermediate reports [0]
+  --report-checkpoints=[LIST,...] dump full statistics and reset all counters at specified points in time. The argument is a list of comma-separated values representing the amount of time in seconds elapsed from start of test when report checkpoint(s) must be performed. Report checkpoints are off by default. []
+  --debug[=on|off]                print more debugging info [off]
+  --validate[=on|off]             perform validation checks where possible [off]
+  --help[=on|off]                 print help and exit [off]
+  --version[=on|off]              print version and exit [off]
+  --config-file=FILENAME          File containing command line options
+  --tx-rate=N                     deprecated alias for --rate [0]
+  --max-requests=N                deprecated alias for --events [0]
+  --max-time=N                    deprecated alias for --time [0]
+  --num-threads=N                 deprecated alias for --threads [1]
+
+Pseudo-Random Numbers Generator options:
+  --rand-type=STRING random numbers distribution &#123;uniform,gaussian,special,pareto&#125; [special]
+  --rand-spec-iter=N number of iterations used for numbers generation [12]
+  --rand-spec-pct=N  percentage of values to be treated as &#39;special&#39; (for special distribution) [1]
+  --rand-spec-res=N  percentage of &#39;special&#39; values to use (for special distribution) [75]
+  --rand-seed=N      seed for random number generator. When 0, the current time is used as a RNG seed. [0]
+  --rand-pareto-h=N  parameter h for pareto distribution [0.2]
+
+Log options:
+  --verbosity=N verbosity level &#123;5 - debug, 0 - only critical messages&#125; [3]
+
+  --percentile=N       percentile to calculate in latency statistics (1-100). Use the special value of 0 to disable percentile calculations [95]
+  --histogram[=on|off] print latency histogram in report [off]
+
+General database options:
+
+  --db-driver=STRING  specifies database driver to use (&#39;help&#39; to get list of available drivers) [mysql]
+  --db-ps-mode=STRING prepared statements usage mode &#123;auto, disable&#125; [auto]
+  --db-debug[=on|off] print database-specific debug information [off]
+
+
+Compiled-in database drivers:
+  mysql - MySQL driver
+  pgsql - PostgreSQL driver
+
+mysql options:
+  --mysql-host=[LIST,...]          MySQL server host [localhost]
+  --mysql-port=[LIST,...]          MySQL server port [3306]
+  --mysql-socket=[LIST,...]        MySQL socket
+  --mysql-user=STRING              MySQL user [sbtest]
+  --mysql-password=STRING          MySQL password []
+  --mysql-db=STRING                MySQL database name [sbtest]
+  --mysql-ssl[=on|off]             use SSL connections, if available in the client library [off]
+  --mysql-ssl-cipher=STRING        use specific cipher for SSL connections []
+  --mysql-compression[=on|off]     use compression, if available in the client library [off]
+  --mysql-debug[=on|off]           trace all client library calls [off]
+  --mysql-ignore-errors=[LIST,...] list of errors to ignore, or &quot;all&quot; [1213,1020,1205]
+  --mysql-dry-run[=on|off]         Dry run, pretend that all MySQL client API calls are successful without executing them [off]
+
+pgsql options:
+  --pgsql-host=STRING     PostgreSQL server host [localhost]
+  --pgsql-port=N          PostgreSQL server port [5432]
+  --pgsql-user=STRING     PostgreSQL user [sbtest]
+  --pgsql-password=STRING PostgreSQL password []
+  --pgsql-db=STRING       PostgreSQL database name [sbtest]
+
+Compiled-in tests:
+  fileio - File I/O test
+  cpu - CPU performance test
+  memory - Memory functions speed test
+  threads - Threads subsystem performance test
+  mutex - Mutex performance test
+
+See &#39;sysbench &lt;testname&gt; help&#39; for a list of options for each test.
+</code></pre>
+<p>Sysbench includes the following lua scripts to simulate OLTP workloads.</p>
+<pre><code>[root@node0 ~]# ls -l /usr/share/sysbench/
+total 60
+-rwxr-xr-x   1 root root  1452 Apr 24  2020 bulk_insert.lua
+-rw-r--r--   1 root root 14369 Apr 24  2020 oltp_common.lua
+-rwxr-xr-x   1 root root  1290 Apr 24  2020 oltp_delete.lua
+-rwxr-xr-x   1 root root  2415 Apr 24  2020 oltp_insert.lua
+-rwxr-xr-x   1 root root  1265 Apr 24  2020 oltp_point_select.lua
+-rwxr-xr-x   1 root root  1649 Apr 24  2020 oltp_read_only.lua
+-rwxr-xr-x   1 root root  1824 Apr 24  2020 oltp_read_write.lua
+-rwxr-xr-x   1 root root  1118 Apr 24  2020 oltp_update_index.lua
+-rwxr-xr-x   1 root root  1127 Apr 24  2020 oltp_update_non_index.lua
+-rwxr-xr-x   1 root root  1440 Apr 24  2020 oltp_write_only.lua
+-rwxr-xr-x   1 root root  1919 Apr 24  2020 select_random_points.lua
+-rwxr-xr-x   1 root root  2118 Apr 24  2020 select_random_ranges.lua
+drwxr-xr-x   4 root root    49 Dec  8 20:39 tests
+
+[root@node0 ~]# ls -l /usr/share/sysbench/tests/include/oltp_legacy/
+total 52
+-rw-r--r-- 1 root root 1195 Apr 24  2020 bulk_insert.lua
+-rw-r--r-- 1 root root 4696 Apr 24  2020 common.lua
+-rw-r--r-- 1 root root  366 Apr 24  2020 delete.lua
+-rw-r--r-- 1 root root 1171 Apr 24  2020 insert.lua
+-rw-r--r-- 1 root root 3004 Apr 24  2020 oltp.lua
+-rw-r--r-- 1 root root  368 Apr 24  2020 oltp_simple.lua
+-rw-r--r-- 1 root root  527 Apr 24  2020 parallel_prepare.lua
+-rw-r--r-- 1 root root  369 Apr 24  2020 select.lua
+-rw-r--r-- 1 root root 1448 Apr 24  2020 select_random_points.lua
+-rw-r--r-- 1 root root 1556 Apr 24  2020 select_random_ranges.lua
+-rw-r--r-- 1 root root  369 Apr 24  2020 update_index.lua
+-rw-r--r-- 1 root root  578 Apr 24  2020 update_non_index.lua
+</code></pre>
+<p>To get more options for each specific lua workload:</p>
+<pre><code>[root@node0 ~]# sysbench /usr/share/sysbench/oltp_insert.lua help
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+oltp_insert.lua options:
+  --auto_inc[=on|off]           Use AUTO_INCREMENT column as Primary Key (for MySQL), or its alternatives in other DBMS. When disabled, use client-generated IDs [on]
+  --create_secondary[=on|off]   Create a secondary index in addition to the PRIMARY KEY [on]
+  --delete_inserts=N            Number of DELETE/INSERT combinations per transaction [1]
+  --distinct_ranges=N           Number of SELECT DISTINCT queries per transaction [1]
+  --index_updates=N             Number of UPDATE index queries per transaction [1]
+  --mysql_storage_engine=STRING Storage engine, if MySQL is used [innodb]
+  --non_index_updates=N         Number of UPDATE non-index queries per transaction [1]
+  --order_ranges=N              Number of SELECT ORDER BY queries per transaction [1]
+  --pgsql_variant=STRING        Use this PostgreSQL variant when running with the PostgreSQL driver. The only currently supported variant is &#39;redshift&#39;. When enabled, create_secondary is automatically disabled, and delete_inserts is set to 0
+  --point_selects=N             Number of point SELECT queries per transaction [10]
+  --range_selects[=on|off]      Enable/disable all range SELECT queries [on]
+  --range_size=N                Range size for range SELECT queries [100]
+  --secondary[=on|off]          Use a secondary index in place of the PRIMARY KEY [off]
+  --simple_ranges=N             Number of simple range SELECT queries per transaction [1]
+  --skip_trx[=on|off]           Don&#39;t start explicit transactions and execute all queries in the AUTOCOMMIT mode [off]
+  --sum_ranges=N                Number of SELECT SUM() queries per transaction [1]
+  --table_size=N                Number of rows per table [10000]
+  --tables=N                    Number of tables [1]
+
+[root@node0 ~]# sysbench /usr/share/sysbench/oltp_write_only.lua help
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+oltp_write_only.lua options:
+  --auto_inc[=on|off]           Use AUTO_INCREMENT column as Primary Key (for MySQL), or its alternatives in other DBMS. When disabled, use client-generated IDs [on]
+  --create_secondary[=on|off]   Create a secondary index in addition to the PRIMARY KEY [on]
+  --delete_inserts=N            Number of DELETE/INSERT combinations per transaction [1]
+  --distinct_ranges=N           Number of SELECT DISTINCT queries per transaction [1]
+  --index_updates=N             Number of UPDATE index queries per transaction [1]
+  --mysql_storage_engine=STRING Storage engine, if MySQL is used [innodb]
+  --non_index_updates=N         Number of UPDATE non-index queries per transaction [1]
+  --order_ranges=N              Number of SELECT ORDER BY queries per transaction [1]
+  --pgsql_variant=STRING        Use this PostgreSQL variant when running with the PostgreSQL driver. The only currently supported variant is &#39;redshift&#39;. When enabled, create_secondary is automatically disabled, and delete_inserts is set to 0
+  --point_selects=N             Number of point SELECT queries per transaction [10]
+  --range_selects[=on|off]      Enable/disable all range SELECT queries [on]
+  --range_size=N                Range size for range SELECT queries [100]
+  --secondary[=on|off]          Use a secondary index in place of the PRIMARY KEY [off]
+  --simple_ranges=N             Number of simple range SELECT queries per transaction [1]
+  --skip_trx[=on|off]           Don&#39;t start explicit transactions and execute all queries in the AUTOCOMMIT mode [off]
+  --sum_ranges=N                Number of SELECT SUM() queries per transaction [1]
+  --table_size=N                Number of rows per table [10000]
+  --tables=N                    Number of tables [1]
+
+[root@node0 ~]# sysbench /usr/share/sysbench/oltp_read_only.lua help
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+oltp_read_only.lua options:
+  --auto_inc[=on|off]           Use AUTO_INCREMENT column as Primary Key (for MySQL), or its alternatives in other DBMS. When disabled, use client-generated IDs [on]
+  --create_secondary[=on|off]   Create a secondary index in addition to the PRIMARY KEY [on]
+  --delete_inserts=N            Number of DELETE/INSERT combinations per transaction [1]
+  --distinct_ranges=N           Number of SELECT DISTINCT queries per transaction [1]
+  --index_updates=N             Number of UPDATE index queries per transaction [1]
+  --mysql_storage_engine=STRING Storage engine, if MySQL is used [innodb]
+  --non_index_updates=N         Number of UPDATE non-index queries per transaction [1]
+  --order_ranges=N              Number of SELECT ORDER BY queries per transaction [1]
+  --pgsql_variant=STRING        Use this PostgreSQL variant when running with the PostgreSQL driver. The only currently supported variant is &#39;redshift&#39;. When enabled, create_secondary is automatically disabled, and delete_inserts is set to 0
+  --point_selects=N             Number of point SELECT queries per transaction [10]
+  --range_selects[=on|off]      Enable/disable all range SELECT queries [on]
+  --range_size=N                Range size for range SELECT queries [100]
+  --secondary[=on|off]          Use a secondary index in place of the PRIMARY KEY [off]
+  --simple_ranges=N             Number of simple range SELECT queries per transaction [1]
+  --skip_trx[=on|off]           Don&#39;t start explicit transactions and execute all queries in the AUTOCOMMIT mode [off]
+  --sum_ranges=N                Number of SELECT SUM() queries per transaction [1]
+  --table_size=N                Number of rows per table [10000]
+  --tables=N                    Number of tables [1]
+
+[root@node0 ~]# sysbench /usr/share/sysbench/oltp_point_select.lua help
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+oltp_point_select.lua options:
+  --auto_inc[=on|off]           Use AUTO_INCREMENT column as Primary Key (for MySQL), or its alternatives in other DBMS. When disabled, use client-generated IDs [on]
+  --create_secondary[=on|off]   Create a secondary index in addition to the PRIMARY KEY [on]
+  --delete_inserts=N            Number of DELETE/INSERT combinations per transaction [1]
+  --distinct_ranges=N           Number of SELECT DISTINCT queries per transaction [1]
+  --index_updates=N             Number of UPDATE index queries per transaction [1]
+  --mysql_storage_engine=STRING Storage engine, if MySQL is used [innodb]
+  --non_index_updates=N         Number of UPDATE non-index queries per transaction [1]
+  --order_ranges=N              Number of SELECT ORDER BY queries per transaction [1]
+  --pgsql_variant=STRING        Use this PostgreSQL variant when running with the PostgreSQL driver. The only currently supported variant is &#39;redshift&#39;. When enabled, create_secondary is automatically disabled, and delete_inserts is set to 0
+  --point_selects=N             Number of point SELECT queries per transaction [10]
+  --range_selects[=on|off]      Enable/disable all range SELECT queries [on]
+  --range_size=N                Range size for range SELECT queries [100]
+  --secondary[=on|off]          Use a secondary index in place of the PRIMARY KEY [off]
+  --simple_ranges=N             Number of simple range SELECT queries per transaction [1]
+  --skip_trx[=on|off]           Don&#39;t start explicit transactions and execute all queries in the AUTOCOMMIT mode [off]
+  --sum_ranges=N                Number of SELECT SUM() queries per transaction [1]
+  --table_size=N                Number of rows per table [10000]
+  --tables=N                    Number of tables [1]
+</code></pre>
+<h2 id="Prepare-for-the-benchmark"><a href="#Prepare-for-the-benchmark" class="headerlink" title="Prepare for the benchmark"></a>Prepare for the benchmark</h2><p>Before running the benchmark, the database should be created and the data tables should be populated.</p>
+<p>To create the database:</p>
+<pre><code>[root@node0 ~]# cockroach sql --insecure --host=node1:26257 -e &#39;create database testdb;&#39;
+</code></pre>
+<p>To populate the database:</p>
+<pre><code>[root@node0 ~]# sysbench /usr/share/sysbench/oltp_write_only.lua --pgsql-host=node1 --pgsql-port=26257 --pgsql-db=testdb --pgsql-user=tester --pgsql-password= --table_size=100000 --tables=24 --threads=1 --db-driver=pgsql prepare
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+Creating table &#39;sbtest1&#39;...
+Inserting 100000 records into &#39;sbtest1&#39;
+Creating a secondary index on &#39;sbtest1&#39;...
+Creating table &#39;sbtest2&#39;...
+Inserting 100000 records into &#39;sbtest2&#39;
+Creating a secondary index on &#39;sbtest2&#39;...
+Creating table &#39;sbtest3&#39;...
+Inserting 100000 records into &#39;sbtest3&#39;
+Creating a secondary index on &#39;sbtest3&#39;...
+Creating table &#39;sbtest4&#39;...
+Inserting 100000 records into &#39;sbtest4&#39;
+Creating a secondary index on &#39;sbtest4&#39;...
+Creating table &#39;sbtest5&#39;...
+Inserting 100000 records into &#39;sbtest5&#39;
+Creating a secondary index on &#39;sbtest5&#39;...
+Creating table &#39;sbtest6&#39;...
+Inserting 100000 records into &#39;sbtest6&#39;
+Creating a secondary index on &#39;sbtest6&#39;...
+Creating table &#39;sbtest7&#39;...
+Inserting 100000 records into &#39;sbtest7&#39;
+Creating a secondary index on &#39;sbtest7&#39;...
+Creating table &#39;sbtest8&#39;...
+Inserting 100000 records into &#39;sbtest8&#39;
+Creating a secondary index on &#39;sbtest8&#39;...
+Creating table &#39;sbtest9&#39;...
+Inserting 100000 records into &#39;sbtest9&#39;
+Creating a secondary index on &#39;sbtest9&#39;...
+Creating table &#39;sbtest10&#39;...
+Inserting 100000 records into &#39;sbtest10&#39;
+Creating a secondary index on &#39;sbtest10&#39;...
+Creating table &#39;sbtest11&#39;...
+Inserting 100000 records into &#39;sbtest11&#39;
+Creating a secondary index on &#39;sbtest11&#39;...
+Creating table &#39;sbtest12&#39;...
+Inserting 100000 records into &#39;sbtest12&#39;
+Creating a secondary index on &#39;sbtest12&#39;...
+Creating table &#39;sbtest13&#39;...
+Inserting 100000 records into &#39;sbtest13&#39;
+Creating a secondary index on &#39;sbtest13&#39;...
+Creating table &#39;sbtest14&#39;...
+Inserting 100000 records into &#39;sbtest14&#39;
+Creating a secondary index on &#39;sbtest14&#39;...
+Creating table &#39;sbtest15&#39;...
+Inserting 100000 records into &#39;sbtest15&#39;
+Creating a secondary index on &#39;sbtest15&#39;...
+Creating table &#39;sbtest16&#39;...
+Inserting 100000 records into &#39;sbtest16&#39;
+Creating a secondary index on &#39;sbtest16&#39;...
+Creating table &#39;sbtest17&#39;...
+Inserting 100000 records into &#39;sbtest17&#39;
+Creating a secondary index on &#39;sbtest17&#39;...
+Creating table &#39;sbtest18&#39;...
+Inserting 100000 records into &#39;sbtest18&#39;
+Creating a secondary index on &#39;sbtest18&#39;...
+Creating table &#39;sbtest19&#39;...
+Inserting 100000 records into &#39;sbtest19&#39;
+Creating a secondary index on &#39;sbtest19&#39;...
+Creating table &#39;sbtest20&#39;...
+Inserting 100000 records into &#39;sbtest20&#39;
+Creating a secondary index on &#39;sbtest20&#39;...
+Creating table &#39;sbtest21&#39;...
+Inserting 100000 records into &#39;sbtest21&#39;
+Creating a secondary index on &#39;sbtest21&#39;...
+Creating table &#39;sbtest22&#39;...
+Inserting 100000 records into &#39;sbtest22&#39;
+Creating a secondary index on &#39;sbtest22&#39;...
+Creating table &#39;sbtest23&#39;...
+Inserting 100000 records into &#39;sbtest23&#39;
+Creating a secondary index on &#39;sbtest23&#39;...
+Creating table &#39;sbtest24&#39;...
+Inserting 100000 records into &#39;sbtest24&#39;
+
+testdb=&gt;  show tables from testdb;
+ schema_name | table_name | type  | owner  | estimated_row_count | locality
+-------------+------------+-------+--------+---------------------+----------
+ public      | sbtest1    | table | tester |              100000 |
+ public      | sbtest10   | table | tester |              100000 |
+ public      | sbtest11   | table | tester |              100000 |
+ public      | sbtest12   | table | tester |              100000 |
+ public      | sbtest13   | table | tester |              100000 |
+ public      | sbtest14   | table | tester |              100000 |
+ public      | sbtest15   | table | tester |              100000 |
+ public      | sbtest16   | table | tester |              100000 |
+ public      | sbtest17   | table | tester |              100000 |
+ public      | sbtest18   | table | tester |              100000 |
+ public      | sbtest19   | table | tester |              100000 |
+ public      | sbtest2    | table | tester |              100000 |
+ public      | sbtest20   | table | tester |              100000 |
+ public      | sbtest21   | table | tester |              100000 |
+ public      | sbtest22   | table | tester |              100000 |
+ public      | sbtest23   | table | tester |              100000 |
+ public      | sbtest24   | table | tester |              100000 |
+ public      | sbtest3    | table | tester |              100000 |
+ public      | sbtest4    | table | tester |              100000 |
+ public      | sbtest5    | table | tester |              100000 |
+ public      | sbtest6    | table | tester |              100000 |
+ public      | sbtest7    | table | tester |              100000 |
+ public      | sbtest8    | table | tester |              100000 |
+ public      | sbtest9    | table | tester |              100000 |
+(24 rows)
+
+testdb=&gt; select sum(range_size)/1000 from crdb_internal.ranges where database_name=&#39;testdb&#39;;
+       ?column?
+-----------------------
+ 602418.53400000000000
+(1 row)
+</code></pre>
+<p>To populate the database with 2 or more threads:</p>
+<pre><code>[root@node0 ~]# sysbench /usr/share/sysbench/oltp_write_only.lua --pgsql-host=node1 --pgsql-port=26257 --pgsql-db=testdb --pgsql-user=root --pgsql-password= --table_size=1000000 --tables=24 --threads=2 --db-driver=pgsql prepare
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+Initializing worker threads...
+
+Creating table &#39;sbtest2&#39;...
+Creating table &#39;sbtest1&#39;...
+Inserting 1000000 records into &#39;sbtest1&#39;
+Inserting 1000000 records into &#39;sbtest2&#39;
+Creating a secondary index on &#39;sbtest2&#39;...
+Creating table &#39;sbtest4&#39;...
+Inserting 1000000 records into &#39;sbtest4&#39;
+Creating a secondary index on &#39;sbtest1&#39;...
+Creating table &#39;sbtest3&#39;...
+Inserting 1000000 records into &#39;sbtest3&#39;
+Creating a secondary index on &#39;sbtest4&#39;...
+Creating a secondary index on &#39;sbtest3&#39;...
+Creating table &#39;sbtest6&#39;...
+Inserting 1000000 records into &#39;sbtest6&#39;
+Creating table &#39;sbtest5&#39;...
+Inserting 1000000 records into &#39;sbtest5&#39;
+Creating a secondary index on &#39;sbtest5&#39;...
+Creating a secondary index on &#39;sbtest6&#39;...
+Creating table &#39;sbtest7&#39;...
+Inserting 1000000 records into &#39;sbtest7&#39;
+Creating table &#39;sbtest8&#39;...
+Inserting 1000000 records into &#39;sbtest8&#39;
+Creating a secondary index on &#39;sbtest7&#39;...
+Creating a secondary index on &#39;sbtest8&#39;...
+Creating table &#39;sbtest9&#39;...
+Inserting 1000000 records into &#39;sbtest9&#39;
+Creating table &#39;sbtest10&#39;...
+Inserting 1000000 records into &#39;sbtest10&#39;
+Creating a secondary index on &#39;sbtest10&#39;...
+Creating table &#39;sbtest12&#39;...
+Inserting 1000000 records into &#39;sbtest12&#39;
+Creating a secondary index on &#39;sbtest9&#39;...
+Creating table &#39;sbtest11&#39;...
+Inserting 1000000 records into &#39;sbtest11&#39;
+Creating a secondary index on &#39;sbtest12&#39;...
+Creating table &#39;sbtest14&#39;...
+Inserting 1000000 records into &#39;sbtest14&#39;
+Creating a secondary index on &#39;sbtest11&#39;...
+Creating table &#39;sbtest13&#39;...
+Inserting 1000000 records into &#39;sbtest13&#39;
+Creating a secondary index on &#39;sbtest14&#39;...
+Creating table &#39;sbtest16&#39;...
+Inserting 1000000 records into &#39;sbtest16&#39;
+Creating a secondary index on &#39;sbtest13&#39;...
+Creating table &#39;sbtest15&#39;...
+Inserting 1000000 records into &#39;sbtest15&#39;
+Creating a secondary index on &#39;sbtest16&#39;...
+Creating table &#39;sbtest18&#39;...
+Inserting 1000000 records into &#39;sbtest18&#39;
+Creating a secondary index on &#39;sbtest15&#39;...
+Creating table &#39;sbtest17&#39;...
+Inserting 1000000 records into &#39;sbtest17&#39;
+Creating a secondary index on &#39;sbtest18&#39;...
+Creating table &#39;sbtest20&#39;...
+Inserting 1000000 records into &#39;sbtest20&#39;
+Creating a secondary index on &#39;sbtest17&#39;...
+Creating table &#39;sbtest19&#39;...
+Inserting 1000000 records into &#39;sbtest19&#39;
+Creating a secondary index on &#39;sbtest20&#39;...
+Creating table &#39;sbtest22&#39;...
+Inserting 1000000 records into &#39;sbtest22&#39;
+Creating a secondary index on &#39;sbtest19&#39;...
+Creating table &#39;sbtest21&#39;...
+Inserting 1000000 records into &#39;sbtest21&#39;
+Creating a secondary index on &#39;sbtest22&#39;...
+Creating table &#39;sbtest24&#39;...
+Inserting 1000000 records into &#39;sbtest24&#39;
+Creating a secondary index on &#39;sbtest21&#39;...
+Creating table &#39;sbtest23&#39;...
+Inserting 1000000 records into &#39;sbtest23&#39;
+Creating a secondary index on &#39;sbtest24&#39;...
+Creating a secondary index on &#39;sbtest23&#39;...
+</code></pre>
+<h2 id="Run-sysbench"><a href="#Run-sysbench" class="headerlink" title="Run sysbench"></a>Run sysbench</h2><p>Now we can run sysbench on the populated database. We can increase the threads to stress the database with more workloads in order to measure the system performance limit.</p>
+<pre><code>[root@node0 ~]# sysbench /usr/share/sysbench/oltp_write_only.lua --pgsql-host=node1 --pgsql-port=26257 --pgsql-db=testdb --pgsql-user=tester --pgsql-password= --table_size=100000 --tables=24 --threads=1 --time=60 --report-interval=10 --db-driver=pgsql run
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+Running the test with following options:
+Number of threads: 1
+Report intermediate results every 10 second(s)
+Initializing random number generator from current time
+
+Initializing worker threads...
+
+Threads started!
+
+[ 10s ] thds: 1 tps: 80.86 qps: 485.66 (r/w/o: 0.00/84.66/401.00) lat (ms,95%): 20.37 err/s: 0.00 reconn/s: 0.00
+[ 20s ] thds: 1 tps: 82.60 qps: 495.41 (r/w/o: 0.00/92.00/403.41) lat (ms,95%): 20.74 err/s: 0.00 reconn/s: 0.00
+[ 30s ] thds: 1 tps: 81.00 qps: 485.79 (r/w/o: 0.00/94.10/391.69) lat (ms,95%): 20.74 err/s: 0.00 reconn/s: 0.00
+[ 40s ] thds: 1 tps: 81.00 qps: 486.21 (r/w/o: 0.00/102.90/383.31) lat (ms,95%): 20.37 err/s: 0.00 reconn/s: 0.00
+[ 50s ] thds: 1 tps: 79.20 qps: 474.90 (r/w/o: 0.00/103.10/371.80) lat (ms,95%): 21.50 err/s: 0.00 reconn/s: 0.00
+[ 60s ] thds: 1 tps: 78.20 qps: 469.39 (r/w/o: 0.00/107.30/362.09) lat (ms,95%): 21.11 err/s: 0.00 reconn/s: 0.00
+SQL statistics:
+    queries performed:
+        read:                            0
+        write:                           5842
+        other:                           23138
+        total:                           28980
+    transactions:                        4830   (80.48 per sec.)
+    queries:                             28980  (482.90 per sec.)
+    ignored errors:                      0      (0.00 per sec.)
+    reconnects:                          0      (0.00 per sec.)
+
+General statistics:
+    total time:                          60.0081s
+    total number of events:              4830
+
+Latency (ms):
+         min:                                    6.87
+         avg:                                   12.42
+         max:                                   32.90
+         95th percentile:                       21.11
+         sum:                                59978.07
+
+Threads fairness:
+    events (avg/stddev):           4830.0000/0.00
+    execution time (avg/stddev):   59.9781/0.00
+</code></pre>
+<h2 id="Cleanup-the-database"><a href="#Cleanup-the-database" class="headerlink" title="Cleanup the database"></a>Cleanup the database</h2><p>Once the sysbench is done, we can cleanup the test data as below.</p>
+<pre><code>[root@node0 ~]# sysbench /usr/share/sysbench/oltp_write_only.lua --pgsql-host=node1 --pgsql-port=26257 --pgsql-db=testdb --pgsql-user=tester --pgsql-password= --table_size=100000 --tables=24 --threads=1 --db-driver=pgsql cleanup
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+Dropping table &#39;sbtest1&#39;...
+Dropping table &#39;sbtest2&#39;...
+Dropping table &#39;sbtest3&#39;...
+Dropping table &#39;sbtest4&#39;...
+Dropping table &#39;sbtest5&#39;...
+Dropping table &#39;sbtest6&#39;...
+Dropping table &#39;sbtest7&#39;...
+Dropping table &#39;sbtest8&#39;...
+Dropping table &#39;sbtest9&#39;...
+Dropping table &#39;sbtest10&#39;...
+Dropping table &#39;sbtest11&#39;...
+Dropping table &#39;sbtest12&#39;...
+Dropping table &#39;sbtest13&#39;...
+Dropping table &#39;sbtest14&#39;...
+Dropping table &#39;sbtest15&#39;...
+Dropping table &#39;sbtest16&#39;...
+Dropping table &#39;sbtest17&#39;...
+Dropping table &#39;sbtest18&#39;...
+Dropping table &#39;sbtest19&#39;...
+Dropping table &#39;sbtest20&#39;...
+Dropping table &#39;sbtest21&#39;...
+Dropping table &#39;sbtest22&#39;...
+Dropping table &#39;sbtest23&#39;...
+Dropping table &#39;sbtest24&#39;...
+
+testdb=&gt; show tables from testdb;
+ schema_name | table_name | type | owner | estimated_row_count | locality
+-------------+------------+------+-------+---------------------+----------
+(0 rows)
+
+[root@node0 ~]# cockroach sql --insecure --host=node1:26257 -e &quot;drop database testdb&quot;
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/akopytov/sysbench">https://github.com/akopytov/sysbench</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/blog/why-postgres/">https://www.cockroachlabs.com/blog/why-postgres/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/compare/cockroachdb-vs-postgresql/">https://www.cockroachlabs.com/compare/cockroachdb-vs-postgresql/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/blog/postgresql-vs-cockroachdb/">https://www.cockroachlabs.com/blog/postgresql-vs-cockroachdb/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/blog/unpacking-competitive-benchmarks/">https://www.cockroachlabs.com/blog/unpacking-competitive-benchmarks/</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.purestorage.com/purely-informational/how-to-benchmark-mysql-performance/">https://blog.purestorage.com/purely-informational/how-to-benchmark-mysql-performance/</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CockroachDB/" rel="tag"><i class="fa fa-tag"></i> CockroachDB</a>
+              <a href="/tags/Sysbench/" rel="tag"><i class="fa fa-tag"></i> Sysbench</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/cgroups-limit-io/" rel="prev" title="Using cgroups to limit block device bandwidth">
+                  <i class="fa fa-angle-left"></i> Using cgroups to limit block device bandwidth
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/reachthestars/" rel="next" title="Reach the Stars!">
+                  Reach the Stars! <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

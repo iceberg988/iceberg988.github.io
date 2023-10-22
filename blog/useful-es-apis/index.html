@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Useful Elastic cluster APIs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Useful Elastic cluster APIs">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/useful-es-apis/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="Useful Elastic cluster APIs">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-28T19:37:00.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="Elastic Search">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/useful-es-apis/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/useful-es-apis/","path":"blog/useful-es-apis/","title":"Useful Elastic cluster APIs"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Useful Elastic cluster APIs | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cluster-settings"><span class="nav-number">1.</span> <span class="nav-text">Cluster settings</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-stats"><span class="nav-number">2.</span> <span class="nav-text">Node stats</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shards-and-Replicas"><span class="nav-number">3.</span> <span class="nav-text">Shards and Replicas</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Task-management"><span class="nav-number">4.</span> <span class="nav-text">Task management</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/benchmark-es-cluster-with-rally/" rel="bookmark">
+        <time class="popular-posts-time">2022-10-26</time>
+        <br>
+      Benchmarking Elasticsearch cluster with Rally
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/overwrite-esrally-track-params/" rel="bookmark">
+        <time class="popular-posts-time">2022-10-24</time>
+        <br>
+      Overwrite the Elastic Rally track parameters
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/getting-started-with-esrally/" rel="bookmark">
+        <time class="popular-posts-time">2022-10-25</time>
+        <br>
+      Getting started with Elastic Rally benchmark
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/key-concepts-in-esrally/" rel="bookmark">
+        <time class="popular-posts-time">2022-10-23</time>
+        <br>
+      Key concepts in Elastic Rally
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/cgroups-limit-memory/" rel="bookmark">
+        <time class="popular-posts-time">2022-12-04</time>
+        <br>
+      Using cgroups to limit Memory usage
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/useful-es-apis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Useful Elastic cluster APIs | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Useful Elastic cluster APIs
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-28 12:37:00" itemprop="dateCreated datePublished" datetime="2022-10-28T12:37:00-07:00">2022-10-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Cluster-settings"><a href="#Cluster-settings" class="headerlink" title="Cluster settings"></a>Cluster settings</h2><pre><code>$ curl -q -s http://10.10.10.1:39200/_cluster/health
+&#123;
+  &quot;cluster_name&quot;: &quot;rally-benchmark&quot;,
+  &quot;status&quot;: &quot;green&quot;,
+  &quot;timed_out&quot;: false,
+  &quot;number_of_nodes&quot;: 3,
+  &quot;number_of_data_nodes&quot;: 3,
+  &quot;active_primary_shards&quot;: 8,
+  &quot;active_shards&quot;: 16,
+  &quot;relocating_shards&quot;: 0,
+  &quot;initializing_shards&quot;: 0,
+  &quot;unassigned_shards&quot;: 0,
+  &quot;delayed_unassigned_shards&quot;: 0,
+  &quot;number_of_pending_tasks&quot;: 0,
+  &quot;number_of_in_flight_fetch&quot;: 0,
+  &quot;task_max_waiting_in_queue_millis&quot;: 0,
+  &quot;active_shards_percent_as_number&quot;: 100
+&#125;
+
+
+$ curl -q -s http://10.10.10.1:39200/_cluster/settings| jq -r
+&#123;
+  &quot;persistent&quot;: &#123;&#125;,
+  &quot;transient&quot;: &#123;&#125;
+&#125;
+
+
+$ curl -q -s http://10.10.10.1:39200/_cluster/stats| jq -r
+&#123;
+  &quot;_nodes&quot;: &#123;
+    &quot;total&quot;: 3,
+    &quot;successful&quot;: 3,
+    &quot;failed&quot;: 0
+  &#125;,
+  &quot;cluster_name&quot;: &quot;rally-benchmark&quot;,
+  &quot;cluster_uuid&quot;: &quot;_aPIWBOCS0Gtyo4fTp3Wrg&quot;,
+  &quot;timestamp&quot;: 1667177008901,
+  &quot;status&quot;: &quot;green&quot;,
+  &quot;indices&quot;: &#123;
+    &quot;count&quot;: 4,
+    &quot;shards&quot;: &#123;
+      &quot;total&quot;: 16,
+      &quot;primaries&quot;: 8,
+      &quot;replication&quot;: 1,
+      &quot;index&quot;: &#123;
+        &quot;shards&quot;: &#123;
+          &quot;min&quot;: 2,
+          &quot;max&quot;: 10,
+          &quot;avg&quot;: 4
+        &#125;,
+        &quot;primaries&quot;: &#123;
+          &quot;min&quot;: 1,
+          &quot;max&quot;: 5,
+          &quot;avg&quot;: 2
+        &#125;,
+        &quot;replication&quot;: &#123;
+          &quot;min&quot;: 1,
+          &quot;max&quot;: 1,
+          &quot;avg&quot;: 1
+        &#125;
+      &#125;
+    &#125;,
+    &quot;docs&quot;: &#123;
+      &quot;count&quot;: 11396556,
+      &quot;deleted&quot;: 0
+    &#125;,
+    &quot;store&quot;: &#123;
+      &quot;size_in_bytes&quot;: 6443644350,
+      &quot;total_data_set_size_in_bytes&quot;: 6443644350,
+      &quot;reserved_in_bytes&quot;: 0
+    &#125;,
+    &quot;fielddata&quot;: &#123;
+      &quot;memory_size_in_bytes&quot;: 14072,
+      &quot;evictions&quot;: 0
+    &#125;,
+    &quot;query_cache&quot;: &#123;
+      &quot;memory_size_in_bytes&quot;: 0,
+      &quot;total_count&quot;: 3883795,
+      &quot;hit_count&quot;: 0,
+      &quot;miss_count&quot;: 3883795,
+      &quot;cache_size&quot;: 0,
+      &quot;cache_count&quot;: 0,
+      &quot;evictions&quot;: 0
+    &#125;,
+    &quot;completion&quot;: &#123;
+      &quot;size_in_bytes&quot;: 0
+    &#125;,
+    &quot;segments&quot;: &#123;
+      &quot;count&quot;: 219,
+      &quot;memory_in_bytes&quot;: 1526988,
+      &quot;terms_memory_in_bytes&quot;: 1189120,
+      &quot;stored_fields_memory_in_bytes&quot;: 115320,
+      &quot;term_vectors_memory_in_bytes&quot;: 0,
+      &quot;norms_memory_in_bytes&quot;: 155520,
+      &quot;points_memory_in_bytes&quot;: 0,
+      &quot;doc_values_memory_in_bytes&quot;: 67028,
+      &quot;index_writer_memory_in_bytes&quot;: 0,
+      &quot;version_map_memory_in_bytes&quot;: 0,
+      &quot;fixed_bit_set_memory_in_bytes&quot;: 0,
+      &quot;max_unsafe_auto_id_timestamp&quot;: 1667016435644,
+      &quot;file_sizes&quot;: &#123;&#125;
+    &#125;,
+    &quot;mappings&quot;: &#123;
+      &quot;field_types&quot;: [
+        &#123;
+          &quot;name&quot;: &quot;boolean&quot;,
+          &quot;count&quot;: 1,
+          &quot;index_count&quot;: 1,
+          &quot;script_count&quot;: 0
+        &#125;,
+        &#123;
+          &quot;name&quot;: &quot;constant_keyword&quot;,
+          &quot;count&quot;: 3,
+          &quot;index_count&quot;: 1,
+          &quot;script_count&quot;: 0
+        &#125;,
+        &#123;
+          &quot;name&quot;: &quot;date&quot;,
+          &quot;count&quot;: 6,
+          &quot;index_count&quot;: 2,
+          &quot;script_count&quot;: 0
+        &#125;,
+        &#123;
+          &quot;name&quot;: &quot;geo_point&quot;,
+          &quot;count&quot;: 1,
+          &quot;index_count&quot;: 1,
+          &quot;script_count&quot;: 0
+        &#125;,
+        &#123;
+          &quot;name&quot;: &quot;integer&quot;,
+          &quot;count&quot;: 1,
+          &quot;index_count&quot;: 1,
+          &quot;script_count&quot;: 0
+        &#125;,
+        &#123;
+          &quot;name&quot;: &quot;ip&quot;,
+          &quot;count&quot;: 1,
+          &quot;index_count&quot;: 1,
+          &quot;script_count&quot;: 0
+        &#125;,
+        &#123;
+          &quot;name&quot;: &quot;keyword&quot;,
+          &quot;count&quot;: 32,
+          &quot;index_count&quot;: 3,
+          &quot;script_count&quot;: 0
+        &#125;,
+        &#123;
+          &quot;name&quot;: &quot;long&quot;,
+          &quot;count&quot;: 3,
+          &quot;index_count&quot;: 2,
+          &quot;script_count&quot;: 0
+        &#125;,
+        &#123;
+          &quot;name&quot;: &quot;object&quot;,
+          &quot;count&quot;: 13,
+          &quot;index_count&quot;: 2,
+          &quot;script_count&quot;: 0
+        &#125;,
+        &#123;
+          &quot;name&quot;: &quot;text&quot;,
+          &quot;count&quot;: 17,
+          &quot;index_count&quot;: 3,
+          &quot;script_count&quot;: 0
+        &#125;
+      ],
+      &quot;runtime_field_types&quot;: []
+    &#125;,
+    &quot;analysis&quot;: &#123;
+      &quot;char_filter_types&quot;: [],
+      &quot;tokenizer_types&quot;: [],
+      &quot;filter_types&quot;: [],
+      &quot;analyzer_types&quot;: [],
+      &quot;built_in_char_filters&quot;: [],
+      &quot;built_in_tokenizers&quot;: [],
+      &quot;built_in_filters&quot;: [],
+      &quot;built_in_analyzers&quot;: []
+    &#125;,
+    &quot;versions&quot;: [
+      &#123;
+        &quot;version&quot;: &quot;7.17.0&quot;,
+        &quot;index_count&quot;: 4,
+        &quot;primary_shard_count&quot;: 8,
+        &quot;total_primary_bytes&quot;: 3221823908
+      &#125;
+    ]
+  &#125;,
+  &quot;nodes&quot;: &#123;
+    &quot;count&quot;: &#123;
+      &quot;total&quot;: 3,
+      &quot;coordinating_only&quot;: 0,
+      &quot;data&quot;: 3,
+      &quot;data_cold&quot;: 3,
+      &quot;data_content&quot;: 3,
+      &quot;data_frozen&quot;: 3,
+      &quot;data_hot&quot;: 3,
+      &quot;data_warm&quot;: 3,
+      &quot;ingest&quot;: 3,
+      &quot;master&quot;: 3,
+      &quot;ml&quot;: 0,
+      &quot;remote_cluster_client&quot;: 3,
+      &quot;transform&quot;: 3,
+      &quot;voting_only&quot;: 0
+    &#125;,
+    &quot;versions&quot;: [
+      &quot;7.17.0&quot;
+    ],
+    &quot;os&quot;: &#123;
+      &quot;available_processors&quot;: 24,
+      &quot;allocated_processors&quot;: 24,
+      &quot;names&quot;: [
+        &#123;
+          &quot;name&quot;: &quot;Linux&quot;,
+          &quot;count&quot;: 3
+        &#125;
+      ],
+      &quot;pretty_names&quot;: [
+        &#123;
+          &quot;pretty_name&quot;: &quot;CentOS Linux 7 (Core)&quot;,
+          &quot;count&quot;: 3
+        &#125;
+      ],
+      &quot;architectures&quot;: [
+        &#123;
+          &quot;arch&quot;: &quot;amd64&quot;,
+          &quot;count&quot;: 3
+        &#125;
+      ],
+      &quot;mem&quot;: &#123;
+        &quot;total_in_bytes&quot;: 100700000256,
+        &quot;free_in_bytes&quot;: 68239511552,
+        &quot;used_in_bytes&quot;: 32460488704,
+        &quot;free_percent&quot;: 68,
+        &quot;used_percent&quot;: 32
+      &#125;
+    &#125;,
+    &quot;process&quot;: &#123;
+      &quot;cpu&quot;: &#123;
+        &quot;percent&quot;: 0
+      &#125;,
+      &quot;open_file_descriptors&quot;: &#123;
+        &quot;min&quot;: 460,
+        &quot;max&quot;: 493,
+        &quot;avg&quot;: 474
+      &#125;
+    &#125;,
+    &quot;jvm&quot;: &#123;
+      &quot;max_uptime_in_millis&quot;: 169991344,
+      &quot;versions&quot;: [
+        &#123;
+          &quot;version&quot;: &quot;1.8.0_352&quot;,
+          &quot;vm_name&quot;: &quot;OpenJDK 64-Bit Server VM&quot;,
+          &quot;vm_version&quot;: &quot;25.352-b08&quot;,
+          &quot;vm_vendor&quot;: &quot;Red Hat, Inc.&quot;,
+          &quot;bundled_jdk&quot;: true,
+          &quot;using_bundled_jdk&quot;: false,
+          &quot;count&quot;: 3
+        &#125;
+      ],
+      &quot;mem&quot;: &#123;
+        &quot;heap_used_in_bytes&quot;: 1671452984,
+        &quot;heap_max_in_bytes&quot;: 3113877504
+      &#125;,
+      &quot;threads&quot;: 197
+    &#125;,
+    &quot;fs&quot;: &#123;
+      &quot;total_in_bytes&quot;: 126144983040,
+      &quot;free_in_bytes&quot;: 115344986112,
+      &quot;available_in_bytes&quot;: 115344986112
+    &#125;,
+    &quot;plugins&quot;: [],
+    &quot;network_types&quot;: &#123;
+      &quot;transport_types&quot;: &#123;
+        &quot;netty4&quot;: 3
+      &#125;,
+      &quot;http_types&quot;: &#123;
+        &quot;netty4&quot;: 3
+      &#125;
+    &#125;,
+    &quot;discovery_types&quot;: &#123;
+      &quot;zen&quot;: 3
+    &#125;,
+    &quot;packaging_types&quot;: [
+      &#123;
+        &quot;flavor&quot;: &quot;default&quot;,
+        &quot;type&quot;: &quot;tar&quot;,
+        &quot;count&quot;: 3
+      &#125;
+    ],
+    &quot;ingest&quot;: &#123;
+      &quot;number_of_pipelines&quot;: 2,
+      &quot;processor_stats&quot;: &#123;
+        &quot;gsub&quot;: &#123;
+          &quot;count&quot;: 0,
+          &quot;failed&quot;: 0,
+          &quot;current&quot;: 0,
+          &quot;time_in_millis&quot;: 0
+        &#125;,
+        &quot;script&quot;: &#123;
+          &quot;count&quot;: 0,
+          &quot;failed&quot;: 0,
+          &quot;current&quot;: 0,
+          &quot;time_in_millis&quot;: 0
+        &#125;
+      &#125;
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<h2 id="Node-stats"><a href="#Node-stats" class="headerlink" title="Node stats"></a>Node stats</h2><pre><code>$ curl -q -s http://10.10.10.1:39200/_nodes
+$ curl -q -s http://10.10.10.1:39200/_nodes/usage
+$ curl -q -s http://10.10.10.2:39200/_nodes/stats/fs?pretty
+&#123;
+  &quot;_nodes&quot; : &#123;
+    &quot;total&quot; : 3,
+    &quot;successful&quot; : 3,
+    &quot;failed&quot; : 0
+  &#125;,
+  &quot;cluster_name&quot; : &quot;rally-benchmark&quot;,
+  &quot;nodes&quot; : &#123;
+    &quot;Zyv-MlSUQeOpU-__o2NblA&quot; : &#123;
+      &quot;timestamp&quot; : 1667082588000,
+      &quot;name&quot; : &quot;rally-node-1&quot;,
+      &quot;transport_address&quot; : &quot;10.10.10.2:39300&quot;,
+      &quot;host&quot; : &quot;10.10.10.2&quot;,
+      &quot;ip&quot; : &quot;10.10.10.2:39300&quot;,
+      &quot;roles&quot; : [
+        &quot;data&quot;,
+        &quot;data_cold&quot;,
+        &quot;data_content&quot;,
+        &quot;data_frozen&quot;,
+        &quot;data_hot&quot;,
+        &quot;data_warm&quot;,
+        &quot;ingest&quot;,
+        &quot;master&quot;,
+        &quot;remote_cluster_client&quot;,
+        &quot;transform&quot;
+      ],
+      &quot;attributes&quot; : &#123;
+        &quot;xpack.installed&quot; : &quot;true&quot;,
+        &quot;transform.node&quot; : &quot;true&quot;
+      &#125;,
+      &quot;fs&quot; : &#123;
+        &quot;timestamp&quot; : 1667082588001,
+        &quot;total&quot; : &#123;
+          &quot;total_in_bytes&quot; : 42048327680,
+          &quot;free_in_bytes&quot; : 39852097536,
+          &quot;available_in_bytes&quot; : 39852097536
+        &#125;,
+        &quot;data&quot; : [
+          &#123;
+            &quot;path&quot; : &quot;/home/es/.rally/benchmarks/races/53e2ac0b-c648-4153-97d4-46749f90daed/rally-node-1/install/elasticsearch-7.17.0/data/nodes/0&quot;,
+            &quot;mount&quot; : &quot;/home (/dev/mapper/centos-home)&quot;,
+            &quot;type&quot; : &quot;xfs&quot;,
+            &quot;total_in_bytes&quot; : 42048327680,
+            &quot;free_in_bytes&quot; : 39852097536,
+            &quot;available_in_bytes&quot; : 39852097536
+          &#125;
+        ],
+        &quot;io_stats&quot; : &#123;
+          &quot;devices&quot; : [
+            &#123;
+              &quot;device_name&quot; : &quot;dm-2&quot;,
+              &quot;operations&quot; : 52115,
+              &quot;read_operations&quot; : 0,
+              &quot;write_operations&quot; : 52115,
+              &quot;read_kilobytes&quot; : 0,
+              &quot;write_kilobytes&quot; : 7926721,
+              &quot;io_time_in_millis&quot; : 8549
+            &#125;
+          ],
+          &quot;total&quot; : &#123;
+            &quot;operations&quot; : 52115,
+            &quot;read_operations&quot; : 0,
+            &quot;write_operations&quot; : 52115,
+            &quot;read_kilobytes&quot; : 0,
+            &quot;write_kilobytes&quot; : 7926721,
+            &quot;io_time_in_millis&quot; : 8549
+          &#125;
+        &#125;
+      &#125;
+    &#125;,
+    [..]
+  &#125;
+&#125;
+</code></pre>
+<p>The data path can also be checked in node-config.json.</p>
+<pre><code>$ cat races/aa826112-d371-4f09-9b68-f9084e7c9e0b/node-config.json
+&#123;
+  &quot;build-type&quot;: &quot;tar&quot;,
+  &quot;car-runtime-jdks&quot;: &quot;17,16,15,14,13,12,11,8&quot;,
+  &quot;car-provides-bundled-jdk&quot;: true,
+  &quot;ip&quot;: &quot;10.10.10.1&quot;,
+  &quot;node-name&quot;: &quot;rally-node-0&quot;,
+  &quot;node-root-path&quot;: &quot;/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0&quot;,
+  &quot;binary-path&quot;: &quot;/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/install/elasticsearch-7.17.0&quot;,
+  &quot;data-paths&quot;: [
+    &quot;/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/install/elasticsearch-7.17.0/data&quot;
+  ]
+&#125;
+</code></pre>
+<h2 id="Shards-and-Replicas"><a href="#Shards-and-Replicas" class="headerlink" title="Shards and Replicas"></a>Shards and Replicas</h2><p>List all the available shards</p>
+<pre><code>$ curl -q -s http://10.10.10.1:39200/_cat/shards
+.geoip_databases                                              0 p STARTED      41  39.1mb 10.10.10.2 rally-node-1
+.geoip_databases                                              0 r STARTED      41  39.1mb 10.10.10.3 rally-node-2
+geonames                                                      4 p STARTED 2279907 610.1mb 10.10.10.1  rally-node-0
+geonames                                                      3 p STARTED 2282121 605.1mb 10.10.10.2 rally-node-1
+geonames                                                      2 p STARTED 2280777 603.3mb 10.10.10.3 rally-node-2
+geonames                                                      1 p STARTED 2277042 609.3mb 10.10.10.1  rally-node-0
+geonames                                                      0 p STARTED 2276656 605.3mb 10.10.10.2 rally-node-1
+.ds-.logs-deprecation.elasticsearch-default-2022.10.29-000001 0 r STARTED                 10.10.10.1  rally-node-0
+.ds-.logs-deprecation.elasticsearch-default-2022.10.29-000001 0 p STARTED                 10.10.10.3 rally-node-2
+.ds-ilm-history-5-2022.10.29-000001                           0 r STARTED                 10.10.10.2 rally-node-1
+.ds-ilm-history-5-2022.10.29-000001                           0 p STARTED                 10.10.10.1  rally-node-0                        0 p STARTED                 10.10.10.1  rally-node-0
+</code></pre>
+<p>List all the available shards for the target index</p>
+<p>By default, there are 5 primary shards for the target index.</p>
+<pre><code>$ curl -q -s http://10.10.10.1:39200/_cat/shards/geonames
+geonames 4 p STARTED 2279907 610.1mb 10.10.10.1 rally-node-0
+geonames 3 p STARTED 2282121 605.1mb 10.10.10.2 rally-node-1
+geonames 2 p STARTED 2280777 603.3mb 10.10.10.3 rally-node-2
+geonames 1 p STARTED 2277042 609.3mb 10.10.10.1 rally-node-0
+geonames 0 p STARTED 2276656 605.3mb 10.10.10.2 rally-node-1
+</code></pre>
+<p>Check the settings of target index</p>
+<p>By default, there are 5 primary shards and no replica shards for the target index.</p>
+<pre><code>$ curl -q -s http://10.10.10.1:39200/geonames/_settings | jq -r
+&#123;
+  &quot;geonames&quot;: &#123;
+    &quot;settings&quot;: &#123;
+      &quot;index&quot;: &#123;
+        &quot;routing&quot;: &#123;
+          &quot;allocation&quot;: &#123;
+            &quot;include&quot;: &#123;
+              &quot;_tier_preference&quot;: &quot;data_content&quot;
+            &#125;
+          &#125;
+        &#125;,
+        &quot;number_of_shards&quot;: &quot;5&quot;,
+        &quot;provided_name&quot;: &quot;geonames&quot;,
+        &quot;creation_date&quot;: &quot;1667016351070&quot;,
+        &quot;requests&quot;: &#123;
+          &quot;cache&quot;: &#123;
+            &quot;enable&quot;: &quot;false&quot;
+          &#125;
+        &#125;,
+        &quot;store&quot;: &#123;
+          &quot;type&quot;: &quot;fs&quot;
+        &#125;,
+        &quot;number_of_replicas&quot;: &quot;0&quot;,
+        &quot;uuid&quot;: &quot;ecaI9RlcSvqu0Lwo4f3nOA&quot;,
+        &quot;version&quot;: &#123;
+          &quot;created&quot;: &quot;7170099&quot;
+        &#125;
+      &#125;
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<p>Change number_of_replicas for the target index</p>
+<pre><code>$ curl -X PUT -H &quot;Content-Type: application/json&quot; &quot;http://10.10.10.1:39200/geonames/_settings&quot; -d &#39;&#123;&quot;number_of_replicas&quot;:1&#125;&#39;
+&#123;&quot;acknowledged&quot;:true&#125;
+
+$ curl -q -s http://10.10.10.1:39200/geonames/_settings | jq -r
+&#123;
+  &quot;geonames&quot;: &#123;
+    &quot;settings&quot;: &#123;
+      &quot;index&quot;: &#123;
+        &quot;routing&quot;: &#123;
+          &quot;allocation&quot;: &#123;
+            &quot;include&quot;: &#123;
+              &quot;_tier_preference&quot;: &quot;data_content&quot;
+            &#125;
+          &#125;
+        &#125;,
+        &quot;number_of_shards&quot;: &quot;5&quot;,
+        &quot;provided_name&quot;: &quot;geonames&quot;,
+        &quot;creation_date&quot;: &quot;1667016351070&quot;,
+        &quot;requests&quot;: &#123;
+          &quot;cache&quot;: &#123;
+            &quot;enable&quot;: &quot;false&quot;
+          &#125;
+        &#125;,
+        &quot;store&quot;: &#123;
+          &quot;type&quot;: &quot;fs&quot;
+        &#125;,
+        &quot;number_of_replicas&quot;: &quot;1&quot;,
+        &quot;uuid&quot;: &quot;ecaI9RlcSvqu0Lwo4f3nOA&quot;,
+        &quot;version&quot;: &#123;
+          &quot;created&quot;: &quot;7170099&quot;
+        &#125;
+      &#125;
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<p>Verify the index replicas</p>
+<p>After changing number_of_replicas from 0 to 1, one replica shard is created for each primary shard. The primary shard and replica shard are located on different nodes. If a node goes down, the replica shards will automatically become primary shards and the cluster still works properly.</p>
+<pre><code>$ curl -q -s http://10.10.10.1:39200/_cat/shards/geonames
+geonames 3 p STARTED 2282121 605.1mb 10.10.10.2 rally-node-1
+geonames 3 r STARTED 2282121 605.1mb 10.10.10.1 rally-node-0
+geonames 4 r STARTED 2279907 610.1mb 10.10.10.2 rally-node-1
+geonames 4 p STARTED 2279907 610.1mb 10.10.10.1 rally-node-0
+geonames 2 r STARTED 2280777 603.3mb 10.10.10.2 rally-node-1
+geonames 2 p STARTED 2280777 603.3mb 10.10.10.3 rally-node-2
+geonames 1 p STARTED 2277042 609.3mb 10.10.10.1 rally-node-0
+geonames 1 r STARTED 2277042 609.3mb 10.10.10.3 rally-node-2
+geonames 0 p STARTED 2276656 605.3mb 10.10.10.2 rally-node-1
+geonames 0 r STARTED 2276656 605.3mb 10.10.10.3 rally-node-2
+</code></pre>
+<h2 id="Task-management"><a href="#Task-management" class="headerlink" title="Task management"></a>Task management</h2><pre><code>$ curl -q -s http://10.10.10.1:39200/_tasks
+&#123;
+  &quot;nodes&quot;: &#123;
+    &quot;Zyv-MlSUQeOpU-__o2NblA&quot;: &#123;
+      &quot;name&quot;: &quot;rally-node-1&quot;,
+      &quot;transport_address&quot;: &quot;10.10.10.2:39300&quot;,
+      &quot;host&quot;: &quot;10.10.10.2&quot;,
+      &quot;ip&quot;: &quot;10.10.10.2:39300&quot;,
+      &quot;roles&quot;: [
+        &quot;data&quot;,
+        &quot;data_cold&quot;,
+        &quot;data_content&quot;,
+        &quot;data_frozen&quot;,
+        &quot;data_hot&quot;,
+        &quot;data_warm&quot;,
+        &quot;ingest&quot;,
+        &quot;master&quot;,
+        &quot;remote_cluster_client&quot;,
+        &quot;transform&quot;
+      ],
+      &quot;attributes&quot;: &#123;
+        &quot;xpack.installed&quot;: &quot;true&quot;,
+        &quot;transform.node&quot;: &quot;true&quot;
+      &#125;,
+      &quot;tasks&quot;: &#123;
+        &quot;Zyv-MlSUQeOpU-__o2NblA:500850&quot;: &#123;
+          &quot;node&quot;: &quot;Zyv-MlSUQeOpU-__o2NblA&quot;,
+          &quot;id&quot;: 500850,
+          &quot;type&quot;: &quot;transport&quot;,
+          &quot;action&quot;: &quot;cluster:monitor/tasks/lists[n]&quot;,
+          &quot;start_time_in_millis&quot;: 1667176733761,
+          &quot;running_time_in_nanos&quot;: 125953,
+          &quot;cancellable&quot;: false,
+          &quot;parent_task_id&quot;: &quot;viZm_2hlQbib6qqccdXgNA:324323&quot;,
+          &quot;headers&quot;: &#123;&#125;
+        &#125;
+      &#125;
+    &#125;,
+    [..]
+  &#125;
+&#125;
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/rest-apis.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/rest-apis.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/15694724/shards-and-replicas-in-elasticsearch">Shards and replics in Elasticsearch</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Elastic-Search/" rel="tag"><i class="fa fa-tag"></i> Elastic Search</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/benchmark-es-cluster-with-rally/" rel="prev" title="Benchmarking Elasticsearch cluster with Rally">
+                  <i class="fa fa-angle-left"></i> Benchmarking Elasticsearch cluster with Rally
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/how-to-delete-partition-in-linux/" rel="next" title="How to delete partition in Linux">
+                  How to delete partition in Linux <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

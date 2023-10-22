@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="pingPing is one of the most basic commands in network management, verifying network connectivity through the roundtrip times taken by the ICMP protocol packets sent to a target host. ping - send ICMP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Useful tools to analyze network latency">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/useful-tools-to-analyze-network-latency/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="pingPing is one of the most basic commands in network management, verifying network connectivity through the roundtrip times taken by the ICMP protocol packets sent to a target host. ping - send ICMP">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-08-13T14:00:00.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="Network">
+<meta property="article:tag" content="Observability">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/useful-tools-to-analyze-network-latency/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/useful-tools-to-analyze-network-latency/","path":"blog/useful-tools-to-analyze-network-latency/","title":"Useful tools to analyze network latency"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Useful tools to analyze network latency | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ping"><span class="nav-number">1.</span> <span class="nav-text">ping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#traceroute"><span class="nav-number">2.</span> <span class="nav-text">traceroute</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#netperf"><span class="nav-number">3.</span> <span class="nav-text">netperf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iperf"><span class="nav-number">4.</span> <span class="nav-text">iperf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lldp"><span class="nav-number">5.</span> <span class="nav-text">lldp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">6.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/capture-and-analyze-network-packets-with-tcpdump/" rel="bookmark">
+        <time class="popular-posts-time">2021-08-20</time>
+        <br>
+      Capture and analyze network packets with tcpdump
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/network-concepts-you-should-know/" rel="bookmark">
+        <time class="popular-posts-time">2022-02-13</time>
+        <br>
+      Network concepts you should know
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/tcp-3-way-handshake-syn-syn-ack-ack/" rel="bookmark">
+        <time class="popular-posts-time">2023-05-27</time>
+        <br>
+      TCP 3-way handshake (SYN, SYN-ACK,ACK)
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/network-ring-buffer/" rel="bookmark">
+        <time class="popular-posts-time">2021-03-04</time>
+        <br>
+      Network ring buffer
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-iperf-to-measure-the-network-bandwidth/" rel="bookmark">
+        <time class="popular-posts-time">2022-04-19</time>
+        <br>
+      Using iperf to measure the network bandwidth
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/useful-tools-to-analyze-network-latency/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Useful tools to analyze network latency | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Useful tools to analyze network latency
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-13 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-13T07:00:00-07:00">2021-08-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h2><p>Ping is one of the most basic commands in network management, verifying network connectivity through the roundtrip times taken by the ICMP protocol packets sent to a target host.</p>
+<p>ping - send ICMP ECHO_REQUEST to network hosts</p>
+<ul>
+<li>-c count</li>
+</ul>
+<p>Stop after sending <em>count</em> ECHO_REQUEST packets. With deadline option, ping waits for count ECHO_REPLY packets, until the timeout expires.</p>
+<ul>
+<li>-i interval</li>
+</ul>
+<p>Wait interval seconds between sending each packet. The default is to wait for one  second  between each packet normally, or not to wait in flood mode. Only super-user may set interval to values less 0.2 seconds.</p>
+<pre><code>$ ping 10.10.1.17 -c 1000 -i 0.010
+PING 10.10.1.17 (10.10.1.17) 56(84) bytes of data.
+64 bytes from 10.10.1.17: icmp_seq=1 ttl=64 time=0.176 ms
+64 bytes from 10.10.1.17: icmp_seq=2 ttl=64 time=0.173 ms
+&lt;omitted...&gt;
+64 bytes from 10.10.1.17: icmp_seq=999 ttl=64 time=0.197 ms
+64 bytes from 10.10.1.17: icmp_seq=1000 ttl=64 time=0.195 ms
+
+--- 10.10.1.17 ping statistics ---
+1000 packets transmitted, 1000 received, 0% packet loss, time 10992ms
+rtt min/avg/max/mdev = 0.096/0.173/0.210/0.025 ms
+</code></pre>
+<p>Round-trip time (RTT) is the duration, measured in milliseconds, from when the source server sends a request to when it receives a response from a target server. It’s a key performance metric to measure network latency.</p>
+<p>Actual round trip time can be influenced by:</p>
+<ul>
+<li>Distance – The length a signal has to travel correlates with the time taken for a request to reach a server.</li>
+<li>Transmission medium – The medium used to route a signal (e.g., copper wire, fiber optic cables) can impact how quickly a request is received by a server and routed back to a user.</li>
+<li>Number of network hops – Intermediate routers or servers take time to process a signal, increasing RTT. The more hops a signal has to travel through, the higher the RTT.</li>
+<li>Traffic levels – RTT typically increases when a network is congested with high levels of traffic. Conversely, low traffic times can result in decreased RTT.</li>
+<li>Server response time – The time taken for a target server to respond to a request depends on its processing capacity, the number of requests being handled and the nature of the request (i.e., how much server-side work is required). A longer server response time increases RTT.</li>
+</ul>
+<h2 id="traceroute"><a href="#traceroute" class="headerlink" title="traceroute"></a>traceroute</h2><p>A traceroute displays the path that the signal took as it traveled around the Internet to the website. It also displays times which are the response times that occurred at each stop along the route. If there is a connection problem or latency connecting to a site, it will show up in these times. You will be able to identify which of the stops (also called ‘hops’) along the route is the culprit.</p>
+<pre><code>$ for i in `seq 1 5`; do traceroute 10.10.1.17;sleep 3; done
+traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
+ 1  10.10.1.17 (10.10.1.17)  0.181 ms  0.086 ms  0.084 ms
+traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
+ 1  10.10.1.17 (10.10.1.17)  0.179 ms  0.087 ms  0.081 ms
+traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
+ 1  10.10.1.17 (10.10.1.17)  0.175 ms  0.087 ms  0.081 ms
+traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
+ 1  10.10.1.17 (10.10.1.17)  0.183 ms  0.073 ms  0.081 ms
+traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
+ 1  10.10.1.17 (10.10.1.17)  0.177 ms  0.080 ms  0.081 ms
+</code></pre>
+<p>-<br>Hop Number – the first column is simply the number of the hop along the route.</p>
+<p>-<br>RTT Columns – The last three columns display the round trip time (RTT) for the packet to reach that point and return. It is listed in milliseconds. There are three columns because the traceroute sends three separate signal packets. This is to display consistency in the route.</p>
+<h2 id="netperf"><a href="#netperf" class="headerlink" title="netperf"></a>netperf</h2><p>Netperf is a benchmark that can be used to measure the performance of many different types of networking. It provides tests for both unidirectional throughput, and end-to-end latency. The environments currently measureable by netperf include:</p>
+<ul>
+<li><p>TCP and UDP via BSD Sockets for both IPv4 and IPv6</p>
+</li>
+<li><p>DLPI</p>
+</li>
+<li><p>Unix Domain Sockets</p>
+</li>
+<li><p>SCTP for both IPv4 and IPv6</p>
+<p>  netperf -h</p>
+<p>  Usage: netperf [global options] – [test options]</p>
+<p>  Global options:<br>  -a send,recv      Set the local send,recv buffer alignment<br>  -A send,recv      Set the remote send,recv buffer alignment<br>  -B brandstr       Specify a string to be emitted with brief output<br>  -c [cpu_rate]     Report local CPU usage<br>  -C [cpu_rate]     Report remote CPU usage<br>  -d                Increase debugging output<br>  -D [secs,units] * Display interim results at least every secs seconds<br>                    using units as the initial guess for units per second<br>  -f G|M|K|g|m|k    Set the output units<br>  -F fill_file      Pre-fill buffers with data from fill_file<br>  -h                Display this text<br>  -H name|ip,fam *  Specify the target machine and&#x2F;or local ip and family<br>  -i max,min        Specify the max and min number of iterations (15,1)<br>  -I lvl[,intvl]    Specify confidence level (95 or 99) (99)<br>                    and confidence interval in percentage (10)<br>  -j                Keep additional timing statistics<br>  -l testlen        Specify test duration (&gt;0 secs) (&lt;0 bytes|trans)<br>  -L name|ip,fam *  Specify the local ip|name and address family<br>  -o send,recv      Set the local send,recv buffer offsets<br>  -O send,recv      Set the remote send,recv buffer offset<br>  -n numcpu         Set the number of processors for CPU util<br>  -N                Establish no control connection, do ‘send’ side only<br>  -p port,lport*    Specify netserver port number and&#x2F;or local port<br>  -P 0|1            Donot&#x2F;Do display test headers<br>  -r                Allow confidence to be hit on result only<br>  -s seconds        Wait seconds between test setup and test start<br>  -S                Set SO_KEEPALIVE on the data connection<br>  -t testname       Specify test to perform<br>  -T lcpu,rcpu      Request netperf&#x2F;netserver be bound to local&#x2F;remote cpu<br>  -v verbosity      Specify the verbosity level<br>  -W send,recv      Set the number of send,recv buffers<br>  -v level          Set the verbosity level (default 1, min 0)<br>  -V                Display the netperf version and exit<br>  For those options taking two parms, at least one must be specified;<br>  specifying one value without a comma will set both parms to that<br>  value, specifying a value with a leading comma will set just the second<br>  parm, a value with a trailing comma will set just the first. To set<br>  each parm to unique values, specify both and separate them with a<br>  comma.</p>
+<ul>
+<li>For these options taking two parms, specifying one value with no comma<br>  will only set the first parms and will leave the second at the default<br>  value. To set the second value it must be preceded with a comma or be a<br>  comma-separated pair. This is to retain previous netperf behaviour.</li>
+</ul>
+<p>  $ wget -O netperf-2.5.0.tar.gz -c <a target="_blank" rel="noopener" href="https://codeload.github.com/HewlettPackard/netperf/tar.gz/netperf-2.5.0">https://codeload.github.com/HewlettPackard/netperf/tar.gz/netperf-2.5.0</a><br>  $ tar xf netperf-2.5.0.tar.gz &amp;&amp; cd netperf-netperf-2.5.0<br>  $ .&#x2F;configure &amp;&amp; make &amp;&amp; make install</p>
+<p>  [<a href="mailto:&#x72;&#111;&#x6f;&#116;&#x40;&#49;&#x30;&#x2e;&#x30;&#46;&#48;&#46;&#49;&#x37;">&#x72;&#111;&#x6f;&#116;&#x40;&#49;&#x30;&#x2e;&#x30;&#46;&#48;&#46;&#49;&#x37;</a>]$ netserver -D<br>  [<a href="mailto:&#x72;&#x6f;&#x6f;&#x74;&#64;&#x31;&#x30;&#46;&#x30;&#46;&#x30;&#46;&#x31;&#54;">&#x72;&#x6f;&#x6f;&#x74;&#64;&#x31;&#x30;&#46;&#x30;&#46;&#x30;&#46;&#x31;&#54;</a>]$ netperf -H 10.10.1.17 -l -1000000 -t TCP_RR -w 10ms -b 1 -v 2 – -O min_latency,mean_latency,max_latency,stddev_latency,transaction_rate<br>  Packet rate control is not compiled in.<br>  Packet burst size is not compiled in.<br>  MIGRATED TCP REQUEST&#x2F;RESPONSE TEST from 0.0.0.0 (0.0.0.0) port 0 AF_INET to 10.10.1.17 (10.10.1.17) port 0 AF_INET : first burst 0<br>  Minimum      Mean         Maximum      Stddev       Transaction<br>  Latency      Latency      Latency      Latency      Rate<br>  Microseconds Microseconds Microseconds Microseconds Tran&#x2F;s</p>
+<p>  63           84.92        2980         7.86         11740.092</p>
+</li>
+</ul>
+<h2 id="iperf"><a href="#iperf" class="headerlink" title="iperf"></a>iperf</h2><p>iPerf3 is a tool for active measurements of the maximum achievable bandwidth on IP networks. It supports tuning of various parameters related to timing, buffers and protocols (TCP, UDP, SCTP with IPv4 and IPv6). For each test it reports the bandwidth, loss, and other parameters.</p>
+<h2 id="lldp"><a href="#lldp" class="headerlink" title="lldp"></a>lldp</h2><p>LLDP (Link Layer Discovery Protocol) can be essential in the situations of complex network-server infrastructure configurations and it’s extremely helpful in case there is no direct access to our setup but we need to determine what network ports on the switches are our servers NIC cards connected to.</p>
+<p>Below example shows how to install and enable LLDP Daemon on CentOS and check what are the corresponding neighbor ports connected to the server network cards.</p>
+<pre><code>$ yum install lldpd
+$ systemctl --now enable lldpd
+  
+$ lldpcli show neighbors
+-------------------------------------------------------------------------------
+LLDP neighbors:
+-------------------------------------------------------------------------------
+Interface:    enp6s0f1, via: LLDP, RID: 1, Time: 0 day, 00:01:29
+  Chassis:
+    ChassisID:    mac 00:1c:73:82:07:ee
+    SysName:      xx-ay-01.06.09
+    SysDescr:     Arista Networks EOS version 4.16.6M running on an Arista Networks Lab-71x-28
+    MgmtIP:       10.0.254.9
+    Capability:   Bridge, on
+    Capability:   Router, on
+  Port:
+    PortID:       ifname Ethernet17
+    TTL:          120
+-------------------------------------------------------------------------------
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://hewlettpackard.github.io/netperf/">https://hewlettpackard.github.io/netperf/</a></li>
+<li><a target="_blank" rel="noopener" href="https://iperf.fr/">https://iperf.fr/</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Network/" rel="tag"><i class="fa fa-tag"></i> Network</a>
+              <a href="/tags/Observability/" rel="tag"><i class="fa fa-tag"></i> Observability</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/iouring-a-modern-asynchronous-i-o-interface-for-linux/" rel="prev" title="Iouring - A modern asynchronous I/O interface for Linux">
+                  <i class="fa fa-angle-left"></i> Iouring - A modern asynchronous I/O interface for Linux
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/capture-and-analyze-network-packets-with-tcpdump/" rel="next" title="Capture and analyze network packets with tcpdump">
+                  Capture and analyze network packets with tcpdump <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

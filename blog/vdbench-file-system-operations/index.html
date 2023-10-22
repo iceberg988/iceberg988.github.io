@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Specify file system operations in FWD and RDIn the File system Workload Definition(FWD), we can specify a single file sysetm operation that must be executed for the workload, with the parameter ‘opera">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vdbench file system operations">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/vdbench-file-system-operations/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="Specify file system operations in FWD and RDIn the File system Workload Definition(FWD), we can specify a single file sysetm operation that must be executed for the workload, with the parameter ‘opera">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="Vdbench">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/vdbench-file-system-operations/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/vdbench-file-system-operations/","path":"blog/vdbench-file-system-operations/","title":"Vdbench file system operations"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Vdbench file system operations | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Specify-file-system-operations-in-FWD-and-RD"><span class="nav-number">1.</span> <span class="nav-text">Specify file system operations in FWD and RD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Make-directories"><span class="nav-number">2.</span> <span class="nav-text">Make directories</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-files-in-the-existing-directories"><span class="nav-number">3.</span> <span class="nav-text">Create files in the existing directories</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getattr"><span class="nav-number">4.</span> <span class="nav-text">Getattr</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Delete-files"><span class="nav-number">5.</span> <span class="nav-text">Delete files</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Remove-directories"><span class="nav-number">6.</span> <span class="nav-text">Remove directories</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">7.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/vdbench-performance-test-on-raw-device/" rel="bookmark">
+        <time class="popular-posts-time">2021-08-23</time>
+        <br>
+      Vdbench performance test on raw device
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/vdbench-performance-test-on-filesystem/" rel="bookmark">
+        <time class="popular-posts-time">2021-08-24</time>
+        <br>
+      Vdbench performance test on filesystem
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/how-to-uninstall-ceph-storage-cluster/" rel="bookmark">
+        <time class="popular-posts-time">2021-10-14</time>
+        <br>
+      How to uninstall ceph storage cluster
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/uninstall-ceph-storage-cluster/" rel="bookmark">
+        <time class="popular-posts-time">2023-03-15</time>
+        <br>
+      Uninstall ceph storage cluster
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/setup-cockroachdb-cluster-with-haproxy-load-balancing/" rel="bookmark">
+        <time class="popular-posts-time">2022-12-01</time>
+        <br>
+      Setup CockroachDB cluster with HAProxy load balancing
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/vdbench-file-system-operations/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Vdbench file system operations | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vdbench file system operations
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-10 08:00:00" itemprop="dateCreated datePublished" datetime="2022-03-10T08:00:00-08:00">2022-03-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Specify-file-system-operations-in-FWD-and-RD"><a href="#Specify-file-system-operations-in-FWD-and-RD" class="headerlink" title="Specify file system operations in FWD and RD"></a>Specify file system operations in FWD and RD</h2><p>In the File system Workload Definition(FWD), we can specify a single file sysetm operation that must be executed for the workload, with the parameter ‘operation&#x3D;’. The valid operation can be mkdir,rmdir,create,delete,open,close,read,write,getattr and setattr. We can specify ‘fwd&#x3D;xxx,rdpct&#x3D;nn’ to allow for mixed read and write operations against the same file.</p>
+<p>If one or more operations need to be specified, the parameter ‘fwd&#x3D;xxx,operations&#x3D;’ in Run Definition(RD) can be leveraged to override the single operation in FWD. For example, the parameter ‘operations&#x3D;mkdir’ or ‘operations&#x3D;(read,getattr)’ can be specified in RD. Vdbench will fail the operation if the file structure is not created before it is accessed.</p>
+<p>In the following example, we will run vdbench to make directories, create files, getattr, delete files and remove directories.</p>
+<h2 id="Make-directories"><a href="#Make-directories" class="headerlink" title="Make directories"></a>Make directories</h2><p>Prepare the job file to make the directories:</p>
+<pre><code>$ cat jobfile/vdb_mkdir.job
+hd=default,vdbench=/home/tester/vdbench_test,shell=ssh,user=root
+hd=host1,jvms=1,system=192.168.1.2
+
+fsd=fsd1,anchor=/mnt/bench1,depth=5,width=5,files=2,size=4k
+fwd=fwd1,fsd=fsd1,host=host1,operation=mkdir
+rd=rd1,fwd=fwd1,format=no,fwdrate=max
+</code></pre>
+<p>Run vdbench job to make the directories:</p>
+<pre><code>$ ./vdbench -f jobfile/vdb_mkdir.job
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+Vdbench distribution: vdbench50407 Tue June 05  9:49:29 MDT 2018
+For documentation, see &#39;vdbench.pdf&#39;.
+
+02:06:05.755 input argument scanned: &#39;-fjobfile/vdb_mkdir.job&#39;
+02:06:05.833 Anchor size: anchor=/mnt/bench1: dirs:        3,905; files:        6,250; bytes:    24.414m (25,600,000)
+02:06:06.097 Starting slave: ssh 192.168.1.2 -l root /home/tester/vdbench_test/vdbench SlaveJvm -m 192.168.1.3 -n 192.168.1.2-10-220316-02.06.05.716 -l host1-0 -p 5570
+02:06:06.527 All slaves are now connected
+02:06:08.002 Starting RD=rd1; elapsed=30; fwdrate=max. For loops: None
+
+Mar 16, 2022 ..Interval.. .ReqstdOps... ...cpu%...  read ....read..... ....write.... ..mb/sec... mb/sec .xfer.. ...mkdir.... ....open.... ...close....
+                            rate   resp total  sys   pct   rate   resp   rate   resp  read write  total    size  rate   resp  rate   resp  rate   resp
+02:06:09.065            1 3905.0  0.018   3.7 0.41   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0  3905  0.018   0.0  0.000   0.0  0.000
+02:06:09.102      avg_2-1    NaN  0.000   NaN  NaN   0.0    NaN  0.000    NaN  0.000   NaN   NaN    NaN       0   NaN  0.000   NaN  0.000   NaN  0.000
+02:06:09.102      std_2-1
+02:06:09.103      max_2-1
+02:06:09.216
+02:06:09.216 Miscellaneous statistics:
+02:06:09.216 (These statistics do not include activity between the last reported interval and shutdown.)
+02:06:09.216 DIRECTORY_CREATES   Directories created:                          3,905      3,905/sec
+02:06:09.216
+02:06:09.932 Vdbench execution completed successfully. Output directory: /home/tester/vdbench_test/output
+
+$ ls -la /mnt/bench1/vdb.1_1.dir/vdb.2_1.dir/vdb.3_1.dir/vdb.4_1.dir/vdb.5_1.dir/
+total 8
+drwxr-xr-x 2 root root 4096 Mar 16 02:06 .
+drwxr-xr-x 7 root root 4096 Mar 16 02:06 ..
+</code></pre>
+<h2 id="Create-files-in-the-existing-directories"><a href="#Create-files-in-the-existing-directories" class="headerlink" title="Create files in the existing directories"></a>Create files in the existing directories</h2><p>Prepare the job file to create files in the existing directories:</p>
+<pre><code>$ cat jobfile/vdb_create.job
+hd=default,vdbench=/home/tester/vdbench_test,shell=ssh,user=root
+hd=host1,jvms=1,system=192.168.1.2
+
+fsd=fsd1,anchor=/mnt/bench1,depth=5,width=5,files=2,size=4k
+fwd=fwd1,fsd=fsd1,host=host1,operation=create
+rd=rd1,fwd=fwd1,format=restart,fwdrate=max
+</code></pre>
+<p>Note that we specify the parameter <strong>‘format&#x3D;restart’</strong>. It will create files that have not been created and will also expand files that have not reached the proper file size.</p>
+<p>Run vdbench job to create files:</p>
+<pre><code>$ ./vdbench -f jobfile/vdb_create.job
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+Vdbench distribution: vdbench50407 Tue June 05  9:49:29 MDT 2018
+For documentation, see &#39;vdbench.pdf&#39;.
+
+02:06:11.387 input argument scanned: &#39;-fjobfile/vdb_create.job&#39;
+02:06:11.468 Anchor size: anchor=/mnt/bench1: dirs:        3,905; files:        6,250; bytes:    24.414m (25,600,000)
+02:06:11.719 Starting slave: ssh 192.168.1.2 -l root /home/tester/vdbench_test/vdbench SlaveJvm -m 192.168.1.3 -n 192.168.1.2-10-220316-02.06.11.352 -l host1-0 -p 5570
+02:06:12.148 All slaves are now connected
+02:06:13.002 Starting RD=format_for_rd1
+02:06:13.238 host1-0: anchor=/mnt/bench1 mkdir complete.
+02:06:13.418 host1-0: anchor=/mnt/bench1 create complete.
+
+Mar 16, 2022 ..Interval.. .ReqstdOps... ...cpu%...  read ....read..... ....write.... ..mb/sec... mb/sec .xfer.. ...mkdir.... ...rmdir.... ...create... ....open.... ...close.... ...delete...
+                            rate   resp total  sys   pct   rate   resp   rate   resp  read write  total    size  rate   resp  rate   resp  rate   resp  rate   resp  rate   resp  rate   resp
+02:06:14.063            1 6250.0  0.019  12.7 0.99   0.0    0.0  0.000 6250.0  0.019  0.00 24.41  24.41    4096   0.0  0.000   0.0  0.000  6250  0.219  6250  0.071  6250  0.006   0.0  0.000
+02:06:14.103      avg_2-1    NaN  0.000   NaN  NaN   0.0    NaN  0.000    NaN  0.000   NaN   NaN    NaN       0   NaN  0.000   NaN  0.000   NaN  0.000   NaN  0.000   NaN  0.000   NaN  0.000
+02:06:14.103      std_2-1
+02:06:14.103      max_2-1
+02:06:14.217
+02:06:14.217 Miscellaneous statistics:
+02:06:14.217 (These statistics do not include activity between the last reported interval and shutdown.)
+02:06:14.218 FILE_CREATES        Files created:                                6,250      6,250/sec
+02:06:14.218 WRITE_OPENS         Files opened for write activity:              6,250      6,250/sec
+02:06:14.218 DIR_EXISTS          Directory may not exist (yet):                    7          7/sec
+02:06:14.218 FILE_CLOSES         Close requests:                               6,250      6,250/sec
+02:06:14.218
+02:06:15.001 Starting RD=rd1; elapsed=30; fwdrate=max. For loops: None
+02:06:15.344
+02:06:15.344 Message from slave host1-0:
+02:06:15.345 Anchor: /mnt/bench1
+02:06:15.345 Vdbench is trying to create a new file, but all files already exist,
+02:06:15.345 and no threads are currently active deleting files
+02:06:15.345 FwgThread.canWeGetMoreFiles(): Shutting down threads for operation=create
+02:06:15.345
+
+Mar 16, 2022 ..Interval.. .ReqstdOps... ...cpu%...  read ....read..... ....write.... ..mb/sec... mb/sec .xfer.. ...mkdir.... ...rmdir.... ...create... ....open.... ...close.... ...delete...
+                            rate   resp total  sys   pct   rate   resp   rate   resp  read write  total    size  rate   resp  rate   resp  rate   resp  rate   resp  rate   resp  rate   resp
+02:06:16.021            1    0.0  0.000   1.8 0.09   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000   0.0  0.000   0.0  0.000   0.0  0.000   0.0  0.000
+02:06:16.030      avg_2-1    NaN  0.000   NaN  NaN   0.0    NaN  0.000    NaN  0.000   NaN   NaN    NaN       0   NaN  0.000   NaN  0.000   NaN  0.000   NaN  0.000   NaN  0.000   NaN  0.000
+02:06:16.030      std_2-1
+02:06:16.030      max_2-1
+02:06:16.135 Miscellaneous statistics: All counters are zero
+02:06:16.602 Vdbench execution completed successfully. Output directory: /home/tester/vdbench_test/output
+
+$ ls -la /mnt/bench1/vdb.1_1.dir/vdb.2_1.dir/vdb.3_1.dir/vdb.4_1.dir/vdb.5_1.dir/
+total 16
+drwxr-xr-x 2 root root 4096 Mar 16 02:06 .
+drwxr-xr-x 7 root root 4096 Mar 16 02:06 ..
+-rw-r--r-- 1 root root 4096 Mar 16 02:06 vdb_f0000.file
+-rw-r--r-- 1 root root 4096 Mar 16 02:06 vdb_f0001.file
+</code></pre>
+<h2 id="Getattr"><a href="#Getattr" class="headerlink" title="Getattr"></a>Getattr</h2><p>Prepare the job file to getattr:</p>
+<pre><code>$ cat jobfile/vdb_getattr.job
+hd=default,vdbench=/home/tester/vdbench_test,shell=ssh,user=root
+hd=host1,jvms=1,system=192.168.1.2
+
+fsd=fsd1,anchor=/mnt/bench1,depth=5,width=5,files=2,size=4k
+fwd=fwd1,fsd=fsd1,host=host1,operation=getattr
+rd=rd1,fwd=fwd1,format=no,fwdrate=max
+</code></pre>
+<p>Run vdbench job to getattr:</p>
+<pre><code>$ ./vdbench -f jobfile/vdb_getattr.job
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+Vdbench distribution: vdbench50407 Tue June 05  9:49:29 MDT 2018
+For documentation, see &#39;vdbench.pdf&#39;.
+
+02:06:18.059 input argument scanned: &#39;-fjobfile/vdb_getattr.job&#39;
+02:06:18.145 Anchor size: anchor=/mnt/bench1: dirs:        3,905; files:        6,250; bytes:    24.414m (25,600,000)
+02:06:18.408 Starting slave: ssh 192.168.1.2 -l root /home/tester/vdbench_test/vdbench SlaveJvm -m 192.168.1.3 -n 192.168.1.2-10-220316-02.06.18.020 -l host1-0 -p 5570
+02:06:18.778 All slaves are now connected
+02:06:20.002 Starting RD=rd1; elapsed=30; fwdrate=max. For loops: None
+
+Mar 16, 2022 ..Interval.. .ReqstdOps... ...cpu%...  read ....read..... ....write.... ..mb/sec... mb/sec .xfer.. ....open.... ...close.... ..getattr...
+                            rate   resp total  sys   pct   rate   resp   rate   resp  read write  total    size  rate   resp  rate   resp  rate   resp
+02:06:21.062            1  39541  0.015   8.1 0.84   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 39541  0.015
+02:06:22.032            2  77608  0.010   5.3 1.47   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 77608  0.010
+02:06:23.016            3  83661  0.009   4.5 1.26   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 83661  0.009
+02:06:24.014            4  83054  0.009   4.4 1.35   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 83054  0.009
+02:06:25.014            5  83753  0.009   4.3 1.26   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 83753  0.009
+02:06:26.012            6  83907  0.009   4.3 1.23   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 83907  0.009
+02:06:27.012            7  83520  0.009   4.3 1.26   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 83520  0.009
+02:06:28.011            8  82677  0.009   4.4 1.19   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82677  0.009
+02:06:29.016            9  83093  0.009   4.6 1.19   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 83093  0.009
+02:06:30.012           10  84090  0.009   4.5 1.23   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 84090  0.009
+02:06:31.011           11  83013  0.009   4.2 1.16   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 83013  0.009
+02:06:32.013           12  83158  0.010   4.3 1.38   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 83158  0.010
+02:06:33.010           13  74121  0.011   4.3 1.19   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 74121  0.011
+02:06:34.009           14  77405  0.010   4.4 1.35   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 77405  0.010
+02:06:35.011           15  82874  0.010   4.6 1.28   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82874  0.010
+02:06:36.011           16  82855  0.010   4.6 1.34   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82855  0.010
+02:06:37.010           17  82508  0.010   4.6 1.38   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82508  0.010
+02:06:38.007           18  82766  0.010   4.6 1.38   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82766  0.010
+02:06:39.009           19  82048  0.010   4.3 1.22   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82048  0.010
+02:06:40.010           20  81357  0.010   4.4 1.25   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 81357  0.010
+02:06:41.008           21  82723  0.010   4.4 1.28   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82723  0.010
+02:06:42.007           22  82702  0.010   4.5 1.50   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82702  0.010
+02:06:43.008           23  82793  0.010   4.3 1.41   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82793  0.010
+02:06:44.009           24  82465  0.010   4.4 1.28   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82465  0.010
+02:06:45.009           25  82695  0.010   4.4 1.32   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82695  0.010
+02:06:46.008           26  82119  0.010   4.6 1.47   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82119  0.010
+02:06:47.008           27  82297  0.010   4.8 1.72   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82297  0.010
+02:06:48.007           28  82508  0.010   4.4 1.35   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82508  0.010
+02:06:49.008           29  82545  0.010   4.4 1.41   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82545  0.010
+02:06:50.007           30  82641  0.010   4.7 1.44   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82641  0.010
+02:06:50.015     avg_2-30  82170  0.010   4.5 1.33   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82170  0.010
+02:06:50.015     std_2-30 2147.1  0.018                                                                                                    2147  0.018
+02:06:50.016     max_2-30  84090  5.854                                                                                                   84090  5.854
+02:06:50.234
+02:06:50.234 Miscellaneous statistics:
+02:06:50.234 (These statistics do not include activity between the last reported interval and shutdown.)
+02:06:50.234 GET_ATTR            Getattr requests:                         2,422,766     80,758/sec
+02:06:50.234
+02:06:51.201 Vdbench execution completed successfully. Output directory: /home/tester/vdbench_test/output
+
+$ ls -la /mnt/bench1/vdb.1_1.dir/vdb.2_1.dir/vdb.3_1.dir/vdb.4_1.dir/vdb.5_1.dir/
+total 16
+drwxr-xr-x 2 root root 4096 Mar 16 02:06 .
+drwxr-xr-x 7 root root 4096 Mar 16 02:06 ..
+-rw-r--r-- 1 root root 4096 Mar 16 02:06 vdb_f0000.file
+-rw-r--r-- 1 root root 4096 Mar 16 02:06 vdb_f0001.file
+</code></pre>
+<h2 id="Delete-files"><a href="#Delete-files" class="headerlink" title="Delete files"></a>Delete files</h2><p>Prepare the job file to delete files:</p>
+<pre><code>$ cat jobfile/vdb_delete.job
+hd=default,vdbench=/home/tester/vdbench_test,shell=ssh,user=root
+hd=host1,jvms=1,system=192.168.1.2
+
+fsd=fsd1,anchor=/mnt/bench1,depth=5,width=5,files=2,size=4k
+fwd=fwd1,fsd=fsd1,host=host1,operation=delete
+rd=rd1,fwd=fwd1,format=no,fwdrate=max
+</code></pre>
+<p>Run vdbench job to delete files:</p>
+<pre><code>$ ./vdbench -f jobfile/vdb_delete.job
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+Vdbench distribution: vdbench50407 Tue June 05  9:49:29 MDT 2018
+For documentation, see &#39;vdbench.pdf&#39;.
+
+02:06:52.656 input argument scanned: &#39;-fjobfile/vdb_delete.job&#39;
+02:06:52.757 Anchor size: anchor=/mnt/bench1: dirs:        3,905; files:        6,250; bytes:    24.414m (25,600,000)
+02:06:53.060 Starting slave: ssh 192.168.1.2 -l root /home/tester/vdbench_test/vdbench SlaveJvm -m 192.168.1.3 -n 192.168.1.2-10-220316-02.06.52.608 -l host1-0 -p 5570
+02:06:53.542 All slaves are now connected
+02:06:55.002 Starting RD=rd1; elapsed=30; fwdrate=max. For loops: None
+02:06:55.403
+02:06:55.403 Message from slave host1-0:
+02:06:55.403 Anchor: /mnt/bench1
+02:06:55.403 Vdbench is trying to delete a file, but no files are available, and no
+02:06:55.404 threads are currently active creating new files.
+02:06:55.404 FwgThread.canWeGetMoreFiles(): Shutting down threads for operation=delete
+02:06:55.404
+
+Mar 16, 2022 ..Interval.. .ReqstdOps... ...cpu%...  read ....read..... ....write.... ..mb/sec... mb/sec .xfer.. ....open.... ...close.... ...delete...
+                            rate   resp total  sys   pct   rate   resp   rate   resp  read write  total    size  rate   resp  rate   resp  rate   resp
+02:06:56.061            1 6250.0  0.044   7.3 0.61   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000  6250  0.044
+02:06:56.096      avg_2-1    NaN  0.000   NaN  NaN   0.0    NaN  0.000    NaN  0.000   NaN   NaN    NaN       0   NaN  0.000   NaN  0.000   NaN  0.000
+02:06:56.096      std_2-1
+02:06:56.097      max_2-1
+02:06:56.210
+02:06:56.210 Miscellaneous statistics:
+02:06:56.210 (These statistics do not include activity between the last reported interval and shutdown.)
+02:06:56.210 FILE_DELETES        Files deleted:                                6,250      6,250/sec
+02:06:56.211 FILE_MUST_EXIST     File does not exist (yet):                        1          1/sec
+02:06:56.211
+02:06:56.949 Vdbench execution completed successfully. Output directory: /home/tester/vdbench_test/output
+
+$ ls -la /mnt/bench1/vdb.1_1.dir/vdb.2_1.dir/vdb.3_1.dir/vdb.4_1.dir/vdb.5_1.dir/
+total 8
+drwxr-xr-x 2 root root 4096 Mar 16 02:06 .
+drwxr-xr-x 7 root root 4096 Mar 16 02:06 ..
+</code></pre>
+<h2 id="Remove-directories"><a href="#Remove-directories" class="headerlink" title="Remove directories"></a>Remove directories</h2><p>Prepare the job file to remove directories:</p>
+<pre><code>$ cat jobfile/vdb_rmdir.job
+hd=default,vdbench=/home/tester/vdbench_test,shell=ssh,user=root
+hd=host1,jvms=1,system=192.168.1.2
+
+fsd=fsd1,anchor=/mnt/bench1,depth=5,width=5,files=2,size=4k
+fwd=fwd1,fsd=fsd1,host=host1,operation=rmdir
+rd=rd1,fwd=fwd1,format=no,fwdrate=max
+</code></pre>
+<p>Run vdbench job to remove directories:</p>
+<pre><code>$ ./vdbench -f jobfile/vdb_rmdir.job
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+Vdbench distribution: vdbench50407 Tue June 05  9:49:29 MDT 2018
+For documentation, see &#39;vdbench.pdf&#39;.
+
+02:06:58.406 input argument scanned: &#39;-fjobfile/vdb_rmdir.job&#39;
+02:06:58.484 Anchor size: anchor=/mnt/bench1: dirs:        3,905; files:        6,250; bytes:    24.414m (25,600,000)
+02:06:58.736 Starting slave: ssh 192.168.1.2 -l root /home/tester/vdbench_test/vdbench SlaveJvm -m 192.168.1.3 -n 192.168.1.2-10-220316-02.06.58.369 -l host1-0 -p 5570
+02:06:59.158 All slaves are now connected
+02:07:00.002 Starting RD=rd1; elapsed=30; fwdrate=max. For loops: None
+
+Mar 16, 2022 ..Interval.. .ReqstdOps... ...cpu%...  read ....read..... ....write.... ..mb/sec... mb/sec .xfer.. ...rmdir.... ....open.... ...close....
+                            rate   resp total  sys   pct   rate   resp   rate   resp  read write  total    size  rate   resp  rate   resp  rate   resp
+02:07:01.051            1 3905.0  0.039   5.4 0.65   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0  3905  0.039   0.0  0.000   0.0  0.000
+02:07:01.089      avg_2-1    NaN  0.000   NaN  NaN   0.0    NaN  0.000    NaN  0.000   NaN   NaN    NaN       0   NaN  0.000   NaN  0.000   NaN  0.000
+02:07:01.089      std_2-1
+02:07:01.090      max_2-1
+02:07:01.204
+02:07:01.205 Miscellaneous statistics:
+02:07:01.205 (These statistics do not include activity between the last reported interval and shutdown.)
+02:07:01.205 DIRECTORY_DELETES   Directories deleted:                          3,905      3,905/sec
+02:07:01.205
+02:07:01.550 Vdbench execution completed successfully. Output directory: /home/tester/vdbench_test/output
+
+$ ls -la /mnt/bench1/vdb.1_1.dir/vdb.2_1.dir/vdb.3_1.dir/vdb.4_1.dir/vdb.5_1.dir/
+ls: cannot access /mnt/bench1/vdb.1_1.dir/vdb.2_1.dir/vdb.3_1.dir/vdb.4_1.dir/vdb.5_1.dir/: No such file or directory
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.oracle.com/technetwork/server-storage/vdbench-1901683.pdf">https://www.oracle.com/technetwork/server-storage/vdbench-1901683.pdf</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vdbench/" rel="tag"><i class="fa fa-tag"></i> Vdbench</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/proc-filesystem-diskstats/" rel="prev" title="Proc filesystem - diskstats">
+                  <i class="fa fa-angle-left"></i> Proc filesystem - diskstats
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/must-read-books-and-articles-for-software-and-performance-engineering/" rel="next" title="Must-read books and articles for Software and Performance Engineering">
+                  Must-read books and articles for Software and Performance Engineering <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

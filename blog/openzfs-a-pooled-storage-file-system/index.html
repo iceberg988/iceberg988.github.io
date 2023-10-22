@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="OpenZFSThe OpenZFS project is an open source derivative of the Oracle ZFS project. OpenZFS is an outstanding storage platform that encompasses the functionality of traditional filesystems, volume mana">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenZFS - A pooled storage file system">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/openzfs-a-pooled-storage-file-system/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="OpenZFSThe OpenZFS project is an open source derivative of the Oracle ZFS project. OpenZFS is an outstanding storage platform that encompasses the functionality of traditional filesystems, volume mana">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-16T14:00:00.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="OpenZFS">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/openzfs-a-pooled-storage-file-system/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/openzfs-a-pooled-storage-file-system/","path":"blog/openzfs-a-pooled-storage-file-system/","title":"OpenZFS - A pooled storage file system"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OpenZFS - A pooled storage file system | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenZFS"><span class="nav-number">1.</span> <span class="nav-text">OpenZFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ZFS-and-ZFS-Pooled-Storage"><span class="nav-number">2.</span> <span class="nav-text">ZFS and ZFS Pooled Storage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-ZFS-on-CentOS"><span class="nav-number">3.</span> <span class="nav-text">Install ZFS on CentOS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Manage-ZFS-storage-pool-and-file-system"><span class="nav-number">4.</span> <span class="nav-text">Manage ZFS storage pool and file system</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kernel-compatibility"><span class="nav-number">5.</span> <span class="nav-text">Kernel compatibility</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Uninstall-ZFS"><span class="nav-number">6.</span> <span class="nav-text">Uninstall ZFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">7.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/install-go-from-source/" rel="bookmark">
+        <time class="popular-posts-time">2022-10-08</time>
+        <br>
+      Install golang from source
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/install-git-from-source/" rel="bookmark">
+        <time class="popular-posts-time">2022-01-08</time>
+        <br>
+      Install git from source
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/install-and-uninstall-debuginfo-package-on-centos/" rel="bookmark">
+        <time class="popular-posts-time">2022-07-11</time>
+        <br>
+      Install and uninstall debuginfo package on CentOS
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-iperf-to-measure-the-network-bandwidth/" rel="bookmark">
+        <time class="popular-posts-time">2022-04-19</time>
+        <br>
+      Using iperf to measure the network bandwidth
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/enable-ssh-passwordless-login/" rel="bookmark">
+        <time class="popular-posts-time">2021-04-18</time>
+        <br>
+      Enable ssh passwordless login for large amount of servers
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/openzfs-a-pooled-storage-file-system/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OpenZFS - A pooled storage file system | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenZFS - A pooled storage file system
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-16 07:00:00" itemprop="dateCreated datePublished" datetime="2022-03-16T07:00:00-07:00">2022-03-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="OpenZFS"><a href="#OpenZFS" class="headerlink" title="OpenZFS"></a>OpenZFS</h2><p>The OpenZFS project is an open source derivative of the Oracle ZFS project. OpenZFS is an outstanding storage platform that encompasses the functionality of traditional filesystems, volume managers, and more, with consistent reliability, functionality and performance across all distributions.</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/OpenZFS">Source1</a><br><a target="_blank" rel="noopener" href="https://openzfs.github.io/openzfs-docs/Project%20and%20Community/FAQ.html#what-is-openzfs">Source2</a></p>
+<h2 id="ZFS-and-ZFS-Pooled-Storage"><a href="#ZFS-and-ZFS-Pooled-Storage" class="headerlink" title="ZFS and ZFS Pooled Storage"></a>ZFS and ZFS Pooled Storage</h2><p>The ZFS file system is a revolutionary new file system that fundamentally changes the way file systems are administered, with features and benefits not found in any other file system available today. ZFS is robust, scalable, and easy to administer.</p>
+<p>ZFS uses the concept of storage pools to manage physical storage. Historically, file systems were constructed on top of a single physical device. To address multiple devices and provide for data redundancy, the concept of a volume manager was introduced to provide a representation of a single device so that file systems would not need to be modified to take advantage of multiple devices. This design added another layer of complexity and ultimately prevented certain file system advances because the file system had no control over the physical placement of data on the virtualized volumes.</p>
+<p>ZFS eliminates volume management altogether. Instead of forcing you to create virtualized volumes, ZFS aggregates devices into a storage pool. The storage pool describes the physical characteristics of the storage (device layout, data redundancy, and so on) and acts as an arbitrary data store from which file systems can be created. File systems are no longer constrained to individual devices, allowing them to share disk space with all file systems in the pool. You no longer need to predetermine the size of a file system, as file systems grow automatically within the disk space allocated to the storage pool. When new storage is added, all file systems within the pool can immediately use the additional disk space without additional work. In many ways, the storage pool works similarly to a virtual memory system: When a memory DIMM is added to a system, the operating system doesn’t force you to run commands to configure the memory and assign it to individual processes. All processes on the system automatically use the additional memory.</p>
+<p><a target="_blank" rel="noopener" href="https://docs.oracle.com/cd/E19253-01/819-5461/zfsover-2/index.html">Source</a></p>
+<h2 id="Install-ZFS-on-CentOS"><a href="#Install-ZFS-on-CentOS" class="headerlink" title="Install ZFS on CentOS"></a>Install ZFS on CentOS</h2><p>ZFS is not included by default in CentOS. We will learn how to install it on CentOS 7.9 in this post.</p>
+<ol>
+<li><p>Add ZFS repository</p>
+<p> $ cat &#x2F;etc&#x2F;centos-release<br> CentOS Linux release 7.9.2009 (Core)</p>
+<p> $ yum install <a target="_blank" rel="noopener" href="https://zfsonlinux.org/epel/zfs-release.el7_9.noarch.rpm">https://zfsonlinux.org/epel/zfs-release.el7_9.noarch.rpm</a> -y</p>
+</li>
+<li><p>DKMS vs. kABI</p>
+</li>
+</ol>
+<p>DKMS and kABI are the two methods ZFS module can be loaded into the kernel. We are going to use kABI since it doesn’t require kernel re-compilation in case of kernel update. We can enable it by editing the ZFS repository as below.</p>
+<pre><code>$ cat /etc/yum.repos.d/zfs.repo
+[zfs]
+name=OpenZFS for EL7 - dkms
+baseurl=http://download.zfsonlinux.org/epel/7.9/$basearch/
+enabled=1
+metadata_expire=7d
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+
+[zfs-kmod]
+name=OpenZFS for EL7 - kmod
+baseurl=http://download.zfsonlinux.org/epel/7.9/kmod/$basearch/
+enabled=0
+metadata_expire=7d
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+
+[zfs-source]
+name=OpenZFS for EL7 - Source
+baseurl=http://download.zfsonlinux.org/epel/7.9/SRPMS/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+
+[zfs-next]
+name=OpenZFS for EL7 - dkms - Next upcoming version
+baseurl=http://download.zfsonlinux.org/epel-next/7.9/$basearch/
+enabled=0
+metadata_expire=7d
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+
+[zfs-testing]
+name=OpenZFS for EL7 - dkms - Testing
+baseurl=http://download.zfsonlinux.org/epel-testing/7.9/$basearch/
+enabled=0
+metadata_expire=7d
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+
+[zfs-testing-kmod]
+name=OpenZFS for EL7 - kmod - Testing
+baseurl=http://download.zfsonlinux.org/epel-testing/7.9/kmod/$basearch/
+enabled=0
+metadata_expire=7d
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+
+[zfs-testing-source]
+name=OpenZFS for EL7 - Testing Source
+baseurl=http://download.zfsonlinux.org/epel-testing/7.9/SRPMS/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+</code></pre>
+<p>We can disable DKMS and enable KABI by editing the <em>enable&#x3D;</em> in the following two sections.</p>
+<pre><code>$ vim /etc/yum.repos.d/zfs.repo
+[zfs]
+name=OpenZFS for EL7 - dkms
+baseurl=http://download.zfsonlinux.org/epel/7.9/$basearch/
+enabled=0
+metadata_expire=7d
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+
+[zfs-kmod]
+name=OpenZFS for EL7 - kmod
+baseurl=http://download.zfsonlinux.org/epel/7.9/kmod/$basearch/
+enabled=1
+metadata_expire=7d
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+</code></pre>
+<ol start="3">
+<li>Install ZFS</li>
+</ol>
+<p>Install ZFS using the following command:</p>
+<pre><code>$ yum install zfs -y
+[..]
+Installed:
+zfs.x86_64 0:2.0.7-1.el7
+
+Dependency Installed:
+kmod-zfs.x86_64 0:2.0.7-1.el7      libnvpair3.x86_64 0:2.0.7-1.el7     libuutil3.x86_64 0:2.0.7-1.el7     libzfs4.x86_64 0:2.0.7-1.el7     libzpool4.x86_64 0:2.0.7-1.el7     lm_sensors-libs.x86_64 0:3.4.0-8.20160601gitf9185e5.el7
+sysstat.x86_64 0:10.1.5-19.el7
+</code></pre>
+<p>Reboot the system to load zfs module:</p>
+<pre><code>$ reboot
+$ lsmod | grep zfs
+</code></pre>
+<p>Use the following command to load the ZFS kernel module if it’s not loaded after reboot:</p>
+<pre><code>$ modprobe zfs
+
+$ lsmod | grep zfs
+zfs                  4224878  0
+zunicode              331170  1 zfs
+zzstd                 460780  1 zfs
+zlua                  151526  1 zfs
+zcommon                94285  1 zfs
+znvpair                94388  2 zfs,zcommon
+zavl                   15698  1 zfs
+icp                   301775  1 zfs
+spl                    96750  6 icp,zfs,zavl,zzstd,zcommon,znvpair
+
+$ modinfo zfs
+filename:       /lib/modules/3.10.0-1160.11.1.el7.x86_64/weak-updates/zfs/zfs/zfs.ko
+version:        2.0.7-1
+license:        CDDL
+author:         OpenZFS
+description:    ZFS
+alias:          devname:zfs
+alias:          char-major-10-249
+retpoline:      Y
+rhelversion:    7.9
+srcversion:     CDFB8A7F2D3EE43324CF460
+depends:        spl,znvpair,icp,zlua,zzstd,zunicode,zcommon,zavl
+vermagic:       3.10.0-1160.49.1.el7.x86_64 SMP mod_unload modversions
+[..]
+
+$ zfs version
+zfs-2.0.7-1
+zfs-kmod-2.0.7-1
+</code></pre>
+<h2 id="Manage-ZFS-storage-pool-and-file-system"><a href="#Manage-ZFS-storage-pool-and-file-system" class="headerlink" title="Manage ZFS storage pool and file system"></a>Manage ZFS storage pool and file system</h2><ul>
+<li><p>Create ZFS storage pool</p>
+<p>  $ zpool create zpooldemo &#x2F;dev&#x2F;sdb</p>
+</li>
+<li><p>Add disk to ZFS storage pool</p>
+<p>  $ zpool add zpooldemo &#x2F;dev&#x2F;sdc</p>
+</li>
+<li><p>Check ZFS pool status</p>
+<p>  $ zpool list<br>  NAME        SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT<br>  zpooldemo   119G   174K   119G        -         -     0%     0%  1.00x    ONLINE  -</p>
+<p>  $ zpool status<br>  pool: zpooldemo<br>  state: ONLINE<br>  config:</p>
+<pre><code>  NAME        STATE     READ WRITE CKSUM
+  zpooldemo   ONLINE       0     0     0
+  sdb       ONLINE       0     0     0
+  sdc       ONLINE       0     0     0
+</code></pre>
+<p>  errors: No known data errors</p>
+</li>
+<li><p>Create ZFS file system</p>
+</li>
+</ul>
+<p>When you create a pool, a ZFS file system is created and mounted automatically. The whole file system space can be used as needed.</p>
+<pre><code>$ mount | egrep &quot;zfs&quot;
+zpooldemo on /zpooldemo type zfs (rw,xattr,noacl)
+
+$ df -h | egrep &quot;Filesystem|zpool&quot;
+Filesystem      Size  Used Avail Use% Mounted on
+zpooldemo       116G  128K  116G   1% /zpooldemo
+
+$ touch /zpooldemo/testfile
+$ ls -la /zpooldemo/
+total 6
+drwxr-xr-x   3 root root    4 Mar 17 22:49 .
+dr-xr-xr-x. 19 root root 4096 Mar 17 22:37 ..
+-rw-r--r--   1 root root    0 Mar 17 22:49 testfile
+</code></pre>
+<p>Within a pool, additional file systems can be created. The new create file systems allow users to manage different sets of data within the same pool.</p>
+<pre><code>$ zfs create zpooldemo/zfsdemo
+
+$ mount | egrep &quot;zfs&quot;
+zpooldemo on /zpooldemo type zfs (rw,xattr,noacl)
+zpooldemo/zfsdemo on /zpooldemo/zfsdemo type zfs (rw,xattr,noacl)
+
+$ df -h | egrep &quot;Filesystem|zpool&quot;
+Filesystem         Size  Used Avail Use% Mounted on
+zpooldemo          116G  128K  116G   1% /zpooldemo
+zpooldemo/zfsdemo  116G  128K  116G   1% /zpooldemo/zfsdemo
+</code></pre>
+<ul>
+<li>Set ZFS file system properties</li>
+</ul>
+<p>The file system property can be set when the ZFS is created.</p>
+<pre><code>$ zfs create -o atime=off zpooldemo/zfsdemo
+$ mount | grep zfs
+zpooldemo on /zpooldemo type zfs (rw,xattr,noacl)
+zpooldemo/zfsdemo on /zpooldemo/zfsdemo type zfs (rw,noatime,xattr,noacl)
+</code></pre>
+<p>The storage pool and file system properties can be retrieved as below.</p>
+<pre><code>$ zpool get all zpooldemo
+NAME       PROPERTY                       VALUE                          SOURCE
+zpooldemo  size                           59.5G                          -
+zpooldemo  capacity                       0%                             -
+zpooldemo  altroot                        -                              default
+zpooldemo  health                         ONLINE                         -
+zpooldemo  guid                           11167503015555961412           -
+zpooldemo  version                        -                              default
+zpooldemo  bootfs                         -                              default
+zpooldemo  delegation                     on                             default
+zpooldemo  autoreplace                    off                            default
+zpooldemo  cachefile                      -                              default
+zpooldemo  failmode                       wait                           default
+zpooldemo  listsnapshots                  off                            default
+zpooldemo  autoexpand                     off                            default
+zpooldemo  dedupratio                     1.00x                          -
+zpooldemo  free                           59.5G                          -
+zpooldemo  allocated                      106K                           -
+zpooldemo  readonly                       off                            -
+zpooldemo  ashift                         0                              default
+zpooldemo  comment                        -                              default
+zpooldemo  expandsize                     -                              -
+zpooldemo  freeing                        0                              -
+zpooldemo  fragmentation                  0%                             -
+zpooldemo  leaked                         0                              -
+zpooldemo  multihost                      off                            default
+zpooldemo  checkpoint                     -                              -
+zpooldemo  load_guid                      10842965729770643306           -
+zpooldemo  autotrim                       off                            default
+zpooldemo  feature@async_destroy          enabled                        local
+zpooldemo  feature@empty_bpobj            enabled                        local
+zpooldemo  feature@lz4_compress           active                         local
+zpooldemo  feature@multi_vdev_crash_dump  enabled                        local
+zpooldemo  feature@spacemap_histogram     active                         local
+zpooldemo  feature@enabled_txg            active                         local
+zpooldemo  feature@hole_birth             active                         local
+zpooldemo  feature@extensible_dataset     active                         local
+zpooldemo  feature@embedded_data          active                         local
+zpooldemo  feature@bookmarks              enabled                        local
+zpooldemo  feature@filesystem_limits      enabled                        local
+zpooldemo  feature@large_blocks           enabled                        local
+zpooldemo  feature@large_dnode            enabled                        local
+zpooldemo  feature@sha512                 enabled                        local
+zpooldemo  feature@skein                  enabled                        local
+zpooldemo  feature@edonr                  enabled                        local
+zpooldemo  feature@userobj_accounting     active                         local
+zpooldemo  feature@encryption             enabled                        local
+zpooldemo  feature@project_quota          active                         local
+zpooldemo  feature@device_removal         enabled                        local
+zpooldemo  feature@obsolete_counts        enabled                        local
+zpooldemo  feature@zpool_checkpoint       enabled                        local
+zpooldemo  feature@spacemap_v2            active                         local
+zpooldemo  feature@allocation_classes     enabled                        local
+zpooldemo  feature@resilver_defer         enabled                        local
+zpooldemo  feature@bookmark_v2            enabled                        local
+zpooldemo  feature@redaction_bookmarks    enabled                        local
+zpooldemo  feature@redacted_datasets      enabled                        local
+zpooldemo  feature@bookmark_written       enabled                        local
+zpooldemo  feature@log_spacemap           active                         local
+zpooldemo  feature@livelist               enabled                        local
+zpooldemo  feature@device_rebuild         enabled                        local
+zpooldemo  feature@zstd_compress          enabled                        local
+
+$ zfs get all zpooldemo/zfsdemo
+NAME               PROPERTY              VALUE                  SOURCE
+zpooldemo/zfsdemo  type                  filesystem             -
+zpooldemo/zfsdemo  creation              Thu Mar 17 23:00 2022  -
+zpooldemo/zfsdemo  used                  24K                    -
+zpooldemo/zfsdemo  available             57.6G                  -
+zpooldemo/zfsdemo  referenced            24K                    -
+zpooldemo/zfsdemo  compressratio         1.00x                  -
+zpooldemo/zfsdemo  mounted               yes                    -
+zpooldemo/zfsdemo  quota                 none                   default
+zpooldemo/zfsdemo  reservation           none                   default
+zpooldemo/zfsdemo  recordsize            128K                   default
+zpooldemo/zfsdemo  mountpoint            /zpooldemo/zfsdemo     default
+zpooldemo/zfsdemo  sharenfs              off                    default
+zpooldemo/zfsdemo  checksum              on                     default
+zpooldemo/zfsdemo  compression           off                    default
+zpooldemo/zfsdemo  atime                 off                    local
+zpooldemo/zfsdemo  devices               on                     default
+zpooldemo/zfsdemo  exec                  on                     default
+zpooldemo/zfsdemo  setuid                on                     default
+zpooldemo/zfsdemo  readonly              off                    default
+zpooldemo/zfsdemo  zoned                 off                    default
+zpooldemo/zfsdemo  snapdir               hidden                 default
+zpooldemo/zfsdemo  aclmode               discard                default
+zpooldemo/zfsdemo  aclinherit            restricted             default
+zpooldemo/zfsdemo  createtxg             20                     -
+zpooldemo/zfsdemo  canmount              on                     default
+zpooldemo/zfsdemo  xattr                 on                     default
+zpooldemo/zfsdemo  copies                1                      default
+zpooldemo/zfsdemo  version               5                      -
+zpooldemo/zfsdemo  utf8only              off                    -
+zpooldemo/zfsdemo  normalization         none                   -
+zpooldemo/zfsdemo  casesensitivity       sensitive              -
+zpooldemo/zfsdemo  vscan                 off                    default
+zpooldemo/zfsdemo  nbmand                off                    default
+zpooldemo/zfsdemo  sharesmb              off                    default
+zpooldemo/zfsdemo  refquota              none                   default
+zpooldemo/zfsdemo  refreservation        none                   default
+zpooldemo/zfsdemo  guid                  10461278007032944398   -
+zpooldemo/zfsdemo  primarycache          all                    default
+zpooldemo/zfsdemo  secondarycache        all                    default
+zpooldemo/zfsdemo  usedbysnapshots       0B                     -
+zpooldemo/zfsdemo  usedbydataset         24K                    -
+zpooldemo/zfsdemo  usedbychildren        0B                     -
+zpooldemo/zfsdemo  usedbyrefreservation  0B                     -
+zpooldemo/zfsdemo  logbias               latency                default
+zpooldemo/zfsdemo  objsetid              136                    -
+zpooldemo/zfsdemo  dedup                 off                    default
+zpooldemo/zfsdemo  mlslabel              none                   default
+zpooldemo/zfsdemo  sync                  standard               default
+zpooldemo/zfsdemo  dnodesize             legacy                 default
+zpooldemo/zfsdemo  refcompressratio      1.00x                  -
+zpooldemo/zfsdemo  written               24K                    -
+zpooldemo/zfsdemo  logicalused           12K                    -
+zpooldemo/zfsdemo  logicalreferenced     12K                    -
+zpooldemo/zfsdemo  volmode               default                default
+zpooldemo/zfsdemo  filesystem_limit      none                   default
+zpooldemo/zfsdemo  snapshot_limit        none                   default
+zpooldemo/zfsdemo  filesystem_count      none                   default
+zpooldemo/zfsdemo  snapshot_count        none                   default
+zpooldemo/zfsdemo  snapdev               hidden                 default
+zpooldemo/zfsdemo  acltype               off                    default
+zpooldemo/zfsdemo  context               none                   default
+zpooldemo/zfsdemo  fscontext             none                   default
+zpooldemo/zfsdemo  defcontext            none                   default
+zpooldemo/zfsdemo  rootcontext           none                   default
+zpooldemo/zfsdemo  relatime              off                    default
+zpooldemo/zfsdemo  redundant_metadata    all                    default
+zpooldemo/zfsdemo  overlay               on                     default
+zpooldemo/zfsdemo  encryption            off                    default
+zpooldemo/zfsdemo  keylocation           none                   default
+zpooldemo/zfsdemo  keyformat             none                   default
+zpooldemo/zfsdemo  pbkdf2iters           0                      default
+zpooldemo/zfsdemo  special_small_blocks  0                      default
+</code></pre>
+<p><em>zfs set</em> command can be used to set any dataset property.</p>
+<pre><code>$ zfs set checksum=off zpooldemo/zfsdemo
+</code></pre>
+<p><em>zfs get</em> command can be used to retrieve any dataset property.</p>
+<pre><code>$ zfs get checksum zpooldemo
+NAME       PROPERTY  VALUE      SOURCE
+zpooldemo  checksum  on         default
+
+$ zfs get checksum zpooldemo/zfsdemo
+NAME               PROPERTY  VALUE      SOURCE
+zpooldemo/zfsdemo  checksum  off        local
+</code></pre>
+<ul>
+<li><p>Destroy ZFS storage pool and file system</p>
+<p>  $ zfs list<br>  NAME                USED  AVAIL     REFER  MOUNTPOINT<br>  zpooldemo           194K   115G       25K  &#x2F;zpooldemo<br>  zpooldemo&#x2F;zfsdemo    24K   115G       24K  &#x2F;zpooldemo&#x2F;zfsdemo</p>
+<p>  $ zfs destroy zpooldemo&#x2F;zfsdemo</p>
+<p>  $ zfs list<br>  NAME        USED  AVAIL     REFER  MOUNTPOINT<br>  zpooldemo   169K   115G       25K  &#x2F;zpooldemo</p>
+<p>  $ zpool destroy zpooldemo<br>  $ zpool list<br>  no pools available</p>
+</li>
+</ul>
+<h2 id="Kernel-compatibility"><a href="#Kernel-compatibility" class="headerlink" title="Kernel compatibility"></a>Kernel compatibility</h2><p>When to install zfs on CentOS, it will check if the already installed kernel version matches the specified the release version. In the following example, the required kernel 3.10.0-1160 will be installed automatically during zfs-release.el7_9 installation.</p>
+<pre><code>$ yum install https://zfsonlinux.org/epel/zfs-release.el7_9.noarch.rpm -y
+$ yum install zfs -y
+Installed:
+kernel.x86_64 0:3.10.0-1160.59.1.el7                                                                                       
+zfs.x86_64 0:2.0.7-1.el7
+
+Dependency Installed:
+kmod-zfs.x86_64 0:2.0.7-1.el7                 
+libnvpair3.x86_64 0:2.0.7-1.el7                 
+libuutil3.x86_64 0:2.0.7-1.el7                 
+libzfs4.x86_64 0:2.0.7-1.el7                 
+libzpool4.x86_64 0:2.0.7-1.el7
+
+$ reboot
+$ uname -r
+3.10.0-1160.59.1.el7.x86_64
+
+$ lsmod  |  grep zfs
+$ modprobe zfs
+$ lsmod  |  grep zfs
+zfs                  4224878  0
+zunicode              331170  1 zfs
+zzstd                 460780  1 zfs
+zlua                  151526  1 zfs
+zcommon                94285  1 zfs
+znvpair                94388  2 zfs,zcommon
+zavl                   15698  1 zfs
+icp                   301775  1 zfs
+spl                    96750  6 icp,zfs,zavl,zzstd,zcommon,znvpair
+$ zfs version
+zfs-2.0.7-1
+zfs-kmod-2.0.7-1
+</code></pre>
+<h2 id="Uninstall-ZFS"><a href="#Uninstall-ZFS" class="headerlink" title="Uninstall ZFS"></a>Uninstall ZFS</h2><p>Remove the installed rpms and remove the repository as below.</p>
+<pre><code>$ rpm -ev &lt;pkg-rpm-name&gt;
+$ yum remove zfs-release
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/OpenZFS">https://en.wikipedia.org/wiki/OpenZFS</a></li>
+<li><a target="_blank" rel="noopener" href="https://openzfs.org/wiki/Main_Page">https://openzfs.org/wiki/Main_Page</a></li>
+<li><a target="_blank" rel="noopener" href="https://openzfs.github.io/openzfs-docs/index.html">https://openzfs.github.io/openzfs-docs/index.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.oracle.com/cd/E19253-01/819-5461/index.html">https://docs.oracle.com/cd/E19253-01/819-5461/index.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.symmcom.com/docs/how-tos/storages/how-to-install-zfs-on-centos-7">https://www.symmcom.com/docs/how-tos/storages/how-to-install-zfs-on-centos-7</a></li>
+<li><a target="_blank" rel="noopener" href="https://zfsonlinux.org/">https://zfsonlinux.org/</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OpenZFS/" rel="tag"><i class="fa fa-tag"></i> OpenZFS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/fio-initial-write-overwrite-and-append-write/" rel="prev" title="Fio initial write, overwrite and append write">
+                  <i class="fa fa-angle-left"></i> Fio initial write, overwrite and append write
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/we-shall-fight-on-the-beaches/" rel="next" title="We Shall Fight on the Beaches">
+                  We Shall Fight on the Beaches <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

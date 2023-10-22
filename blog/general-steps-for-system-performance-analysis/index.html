@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="This post tries to provide general steps for system performance analysis. We are going to cover the following objectives.  The performance goals Workload characterization Drill-down analysis Tradition">
+<meta property="og:type" content="article">
+<meta property="og:title" content="General steps for system performance analysis">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/general-steps-for-system-performance-analysis/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="This post tries to provide general steps for system performance analysis. We are going to cover the following objectives.  The performance goals Workload characterization Drill-down analysis Tradition">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-03-05T17:52:00.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="RCA">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/general-steps-for-system-performance-analysis/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/general-steps-for-system-performance-analysis/","path":"blog/general-steps-for-system-performance-analysis/","title":"General steps for system performance analysis"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>General steps for system performance analysis | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Goals-of-performance-analysis"><span class="nav-number">1.</span> <span class="nav-text">The Goals of performance analysis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Workload-characterization"><span class="nav-number">2.</span> <span class="nav-text">Workload characterization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Drill-down-analysis"><span class="nav-number">3.</span> <span class="nav-text">Drill-down analysis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Traditional-performance-tools"><span class="nav-number">4.</span> <span class="nav-text">Traditional performance tools</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BCC-BPF-performance-tools"><span class="nav-number">5.</span> <span class="nav-text">BCC&#x2F;BPF performance tools</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/tuned-dynamic-adaptive-system-tuning-daemon/" rel="bookmark">
+        <time class="popular-posts-time">2022-07-12</time>
+        <br>
+      tuned - dynamic adaptive system tuning daemon
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/analyze-cockroach-performance-from-db-console/" rel="bookmark">
+        <time class="popular-posts-time">2023-02-27</time>
+        <br>
+      Analyze Cockroach performance from the built-in DB console
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/surprised-how-can-the-write-throughput-be-10x-faster-than-the-cloud-native-disk-performance/" rel="bookmark">
+        <time class="popular-posts-time">2023-01-25</time>
+        <br>
+      Surprised! How can the write IOPS be 10x faster than the cloud native disk performance
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/iozone-a-filesystem-benchmark-tool/" rel="bookmark">
+        <time class="popular-posts-time">2021-03-01</time>
+        <br>
+      Iozone - A filesystem benchmark tool
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/kubernetes-and-gluster-performance/" rel="bookmark">
+        <time class="popular-posts-time">2021-02-28</time>
+        <br>
+      Kubernetes and Gluster performance
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/general-steps-for-system-performance-analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="General steps for system performance analysis | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          General steps for system performance analysis
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-03-05 09:52:00" itemprop="dateCreated datePublished" datetime="2023-03-05T09:52:00-08:00">2023-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>This post tries to provide general steps for system performance analysis. We are going to cover the following objectives.</p>
+<ul>
+<li>The performance goals</li>
+<li>Workload characterization</li>
+<li>Drill-down analysis</li>
+<li>Traditional performance tools</li>
+<li>BCC&#x2F;BPF performance tools</li>
+</ul>
+<h2 id="The-Goals-of-performance-analysis"><a href="#The-Goals-of-performance-analysis" class="headerlink" title="The Goals of performance analysis"></a>The Goals of performance analysis</h2><p>In general, the goals of performance analysis are to improve end-user performance and reduce the operating cost. To achieve this, it’s important to make the performance measurable. We often use the following metrics to measure performance.</p>
+<ul>
+<li>Rates - operation or request rates per second</li>
+<li>Throughput - data transferred per second</li>
+<li>Latency - the time to accomplish a operation or request in milliseconds</li>
+<li>Resource utilization - the resource usage in percentage</li>
+<li>Cost - Price&#x2F;performance ratio</li>
+</ul>
+<p>The rates, throughput and latency are usually the most important metrics to check if the certain performance goal is met. For example, the throughput measured in MiB&#x2F;s for a daily database backup is too slow to complete in a given backup window. We need to investigate the issue from the backup application to system layer in order to find a solution to improve the performance. For a second example, the latency at cloud native storage volume layer is as high as 20ms while the underneath SSD disk latency shows less than 1ms. This requires further analysis at volume layer in order to find out the cause for the 19ms latency.</p>
+<p>Performance optimization is endless effort. It depends on the goal you are targeting. So, setting the goals is the first step before you involve further performance analysis activities.</p>
+<h2 id="Workload-characterization"><a href="#Workload-characterization" class="headerlink" title="Workload characterization"></a>Workload characterization</h2><p>Performance analysis is a process to analyze systematically. Understanding the system&#x2F;application configuration and applied workload are often needed before you do further performance analysis. This is the workload characterization.</p>
+<p>The workload characterization tries to answer the following questions:</p>
+<ul>
+<li>What’s the running application? What’s the major components&#x2F;features used in the application?</li>
+<li>What is the schedule to run the workload? What is the job concurrency?</li>
+<li>What are the read&#x2F;write patterns? Mixed read and write, or read&#x2F;write only workload?</li>
+<li>What are the rates, throughput and latency at application level?</li>
+<li>What is the performance concern?</li>
+</ul>
+<p>Sometimes, you may get a description of the workload from end-users. However, the workload and its configuraiton are usualaly not described clearly enough by the users. It’s worth to characterize the workload with custom profiler. An application level workload profiler can be developed for this purpose. But this often requires application expertise.  At system level, you may leverage the BCC&#x2F;BPF performance tools to profile the workload.</p>
+<h2 id="Drill-down-analysis"><a href="#Drill-down-analysis" class="headerlink" title="Drill-down analysis"></a>Drill-down analysis</h2><p>The drill-down analysis is to find a clue and drill deeper until you find the root cause for the performance issue.</p>
+<p>The general process for drill-down analysis would be like these steps.</p>
+<ol>
+<li>Examine the high level performance metrics and identify the degraded performance point</li>
+<li>For the target workload point with degradation, lazer focus on the four major system resources(CPU, memory, disk I&#x2F;O and network) to see what is the potential bottleneck</li>
+<li>If it’s hardware bottleneck, it might be resolved by scaling up and scaling out the system resources. Otherwise, it could be a software bottleneck either from kernel space or user space.</li>
+<li>Find a clue based on the collected metrics to drill down to the next level. Software bottleneck analysis often requires profiling and tracing effort to pinpoint the culprit.</li>
+</ol>
+<p>To identify a hardware bottleneck, you would check if any of the four major resources are saturated. For example, the system must be CPU bound if the CPU utilization is above 90%. The system must be disk I&#x2F;O bound if the disk is 100% busy and wait queue is unexpected large.</p>
+<p>It’s likely that you could not find the root cause with one round of analysis if you go with the wrong direction. You have to repeat the above steps to identify the right direction for RCA. Keep in mind, finding a needle in haystack is not an easy work. You must be patient.</p>
+<h2 id="Traditional-performance-tools"><a href="#Traditional-performance-tools" class="headerlink" title="Traditional performance tools"></a>Traditional performance tools</h2><p>During the drill-down performance analysis, you can use the following Linux built-in tools. They are simple but very powerful to help determine the next direction on the way of performance analysis.</p>
+<ul>
+<li>uptime - system loads in past 1 minute, 5 minutes and 15 minutes</li>
+<li>dmesg - system error messages</li>
+<li>vmstat - overview of system resource usage(CPU, Memory and disk&#x2F;network I&#x2F;O)</li>
+<li>mpstat - per-CPU usage in different states</li>
+<li>pidstat - CPU usage per process</li>
+<li>iostat - disk I&#x2F;O statistics(throughput, IOPS, latency, etc)</li>
+<li>netstat&#x2F;sar - network throughput, TCP&#x2F;IP connection stats</li>
+<li>top - CPU&#x2F;Memory usage per process and more</li>
+</ul>
+<p>Please refer to this <a href="https://www.flamingbytes.com/blog/performance-analysis-in-60-seconds">post</a> for more detail on how to use Linux traditional tools to analyze performance.</p>
+<h2 id="BCC-BPF-performance-tools"><a href="#BCC-BPF-performance-tools" class="headerlink" title="BCC&#x2F;BPF performance tools"></a>BCC&#x2F;BPF performance tools</h2><p>While the traditional tools always gives us a first look at the system performance especially on the resource usage, we can use(or create) BCC&#x2F;BPF tools for further performance analysis. Please refer to this <a href="https://www.flamingbytes.com/blog/bcc-performance-tools-checklist">post</a> for more detail.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/RCA/" rel="tag"><i class="fa fa-tag"></i> RCA</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/using-aws-cli-to-manage-ebs-volumes/" rel="prev" title="Using AWS CLI to manage EBS volumes">
+                  <i class="fa fa-angle-left"></i> Using AWS CLI to manage EBS volumes
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/uninstall-ceph-storage-cluster/" rel="next" title="Uninstall ceph storage cluster">
+                  Uninstall ceph storage cluster <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="GoalBased on the overall death data and COVID realated death data since 2019, we want to study the impact trend of COVID to the overall pupulation death of US in these years. Download the dataWe will">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using R to analyze the quarterly US COVID data">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/analysis-us-quartely-covid-data-from-cdc/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="GoalBased on the overall death data and COVID realated death data since 2019, we want to study the impact trend of COVID to the overall pupulation death of US in these years. Download the dataWe will">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.flamingbytes.com/images/2023/01/image-1.png">
+<meta property="article:published_time" content="2023-01-10T21:02:33.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="R">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.flamingbytes.com/images/2023/01/image-1.png">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/analysis-us-quartely-covid-data-from-cdc/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/analysis-us-quartely-covid-data-from-cdc/","path":"blog/analysis-us-quartely-covid-data-from-cdc/","title":"Using R to analyze the quarterly US COVID data"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Using R to analyze the quarterly US COVID data | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Goal"><span class="nav-number">1.</span> <span class="nav-text">Goal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Download-the-data"><span class="nav-number">2.</span> <span class="nav-text">Download the data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Take-a-quick-look-at-the-data"><span class="nav-number">3.</span> <span class="nav-text">Take a quick look at the data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Clear-the-columns-name"><span class="nav-number">4.</span> <span class="nav-text">Clear the columns name</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Filter-and-select"><span class="nav-number">5.</span> <span class="nav-text">Filter and select</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deal-with-NA-value"><span class="nav-number">6.</span> <span class="nav-text">Deal with NA value</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Draw-diagram-for-the-whole-US-data"><span class="nav-number">7.</span> <span class="nav-text">Draw diagram for the whole US data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Draw-diagram-for-California-data"><span class="nav-number">8.</span> <span class="nav-text">Draw diagram for California data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-Calculate-a-new-column-for-covid-ratio"><span class="nav-number">9.</span> <span class="nav-text">Create&#x2F;Calculate a new column for covid ratio</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Draw-diagram-for-covid-ratio"><span class="nav-number">10.</span> <span class="nav-text">Draw diagram for covid ratio</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-r-to-analyze-us-covid-waves-and-peaks/" rel="bookmark">
+        <time class="popular-posts-time">2023-01-12</time>
+        <br>
+      Using R to analyze US COVID pandemic waves and peaks
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-anova-in-r-to-analyze-us-covid-data/" rel="bookmark">
+        <time class="popular-posts-time">2023-01-12</time>
+        <br>
+      Using ANOVA in R to analyze US COVID data to understand age impact to death rate
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/reachthestars/" rel="bookmark">
+        <time class="popular-posts-time">2022-12-25</time>
+        <br>
+      Reach the Stars!
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/angularjs-table-creation-for-dynamic-number-of-columns/" rel="bookmark">
+        <time class="popular-posts-time">2022-04-22</time>
+        <br>
+      AngularJS table creation for dynamic number of columns
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/tracking-stock-financial-metrics-in-tradingview/" rel="bookmark">
+        <time class="popular-posts-time">2023-01-17</time>
+        <br>
+      Tracking stock financial metrics in tradingview
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/analysis-us-quartely-covid-data-from-cdc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Using R to analyze the quarterly US COVID data | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Using R to analyze the quarterly US COVID data
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-10 13:02:33" itemprop="dateCreated datePublished" datetime="2023-01-10T13:02:33-08:00">2023-01-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h2><p>Based on the overall death data and COVID realated death data since 2019, we want to study the impact trend of COVID to the overall pupulation death of US in these years.</p>
+<h2 id="Download-the-data"><a href="#Download-the-data" class="headerlink" title="Download the data"></a>Download the data</h2><p>We will use NCHS(National Center for Health Statistics) as our data source.</p>
+<p>Visit <a target="_blank" rel="noopener" href="https://data.cdc.gov/browse?category=NCHS&amp;sortBy=last_modified">https://data.cdc.gov/browse?category=NCHS&sortBy=last_modified</a>, and search <code>VSRR Quarterly</code>, we will find the data we are intrested in.</p>
+<p><a target="_blank" rel="noopener" href="https://data.cdc.gov/NCHS/NCHS-VSRR-Quarterly-provisional-estimates-for-sele/489q-934x">https://data.cdc.gov/NCHS/NCHS-VSRR-Quarterly-provisional-estimates-for-sele/489q-934x</a></p>
+<p>In this page, we can export data into csv file as <code>NCHS_-_VSRR_Quarterly_provisional_estimates_for_selected_indicators_of_mortality.csv</code></p>
+<h2 id="Take-a-quick-look-at-the-data"><a href="#Take-a-quick-look-at-the-data" class="headerlink" title="Take a quick look at the data"></a>Take a quick look at the data</h2><p>To load the data:</p>
+<pre><code># If &quot;readr&quot; not installed, run install.packages(&quot;readr&quot;) to install it
+library(&quot;readr&quot;)
+df &lt;- readr::read_csv(file.path(getwd(), &quot;NCHS_-_VSRR_Quarterly_provisional_estimates_for_selected_indicators_of_mortality.csv&quot;), col_names = TRUE)   
+</code></pre>
+<p>To check the first few lines:</p>
+<pre><code>&gt; head(df)
+# A tibble: 6 × 69
+  Year a…¹ Time …² Cause…³ Rate …⁴ Unit  Overa…⁵ Rate …⁶ Rate …⁷ Rate …⁸ Rate …⁹
+  &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 2019 Q1  12 mon… All ca… Age-ad… Deat…   712.    600.    844.       NA      NA
+2 2019 Q1  12 mon… Alzhei… Age-ad… Deat…    29.6    33.1    23.8      NA      NA
+3 2019 Q1  12 mon… COVID-… Age-ad… Deat…    NA      NA      NA        NA      NA
+4 2019 Q1  12 mon… Cancer  Age-ad… Deat…   148.    128.    175.       NA      NA
+5 2019 Q1  12 mon… Chroni… Age-ad… Deat…    11       7.7    14.7      NA      NA
+6 2019 Q1  12 mon… Chroni… Age-ad… Deat…    38.5    35.7    42.4      NA      NA
+# … with 59 more variables: `Rate Age 15-24` &lt;dbl&gt;, `Rate Age 25-34` &lt;dbl&gt;,
+#   `Rate Age 35-44` &lt;dbl&gt;, `Rate Age 45-54` &lt;dbl&gt;, `Rate Age 55-64` &lt;dbl&gt;,
+#   `Rate 65-74` &lt;dbl&gt;, `Rate Age 75-84` &lt;dbl&gt;, `Rate Age 85 plus` &lt;dbl&gt;,
+#   `Rate Alaska` &lt;dbl&gt;, `Rate Alabama` &lt;dbl&gt;, `Rate Arkansas` &lt;dbl&gt;,
+#   `Rate Arizona` &lt;dbl&gt;, `Rate California` &lt;dbl&gt;, `Rate Colorado` &lt;dbl&gt;,
+#   `Rate Connecticut` &lt;dbl&gt;, `Rate District of Columbia` &lt;dbl&gt;,
+#   `Rate Delaware` &lt;dbl&gt;, `Rate Florida` &lt;dbl&gt;, `Rate Georgia` &lt;dbl&gt;, …
+# ℹ Use `colnames()` to see all variable names   
+</code></pre>
+<p>To get a summary:</p>
+<pre><code>summary(df)
+ Year and Quarter   Time Period        Cause of Death      Rate Type        
+ Length:1232        Length:1232        Length:1232        Length:1232       
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+
+     Unit            Overall Rate     Rate Sex Female   Rate Sex Male    
+ Length:1232        Min.   :   1.20   Min.   :   0.60   Min.   :   1.90  
+ Class :character   1st Qu.:  11.40   1st Qu.:   6.95   1st Qu.:  13.20  
+ Mode  :character   Median :  17.00   Median :  14.80   Median :  23.50  
+                    Mean   :  80.51   Mean   :  70.56   Mean   :  91.63  
+                    3rd Qu.:  50.60   3rd Qu.:  49.92   3rd Qu.:  65.42  
+                    Max.   :1142.30   Max.   :1067.00   Max.   :1219.90  
+                    NA&#39;s   :44        NA&#39;s   :44        NA&#39;s   :44       
+  ...
+</code></pre>
+<p>To get glimpse from columns point of view:</p>
+<pre><code>&gt; library(&quot;dplyr&quot;)
+&gt; glimpse(df)
+Rows: 1,232
+Columns: 69
+$ `Year and Quarter`          &lt;chr&gt; &quot;2019 Q1&quot;, &quot;2019 Q1&quot;, &quot;2019 Q1&quot;, &quot;2019 Q1&quot;…
+$ `Time Period`               &lt;chr&gt; &quot;12 months ending with quarter&quot;, &quot;12 month…
+$ `Cause of Death`            &lt;chr&gt; &quot;All causes&quot;, &quot;Alzheimer disease&quot;, &quot;COVID-…
+$ `Rate Type`                 &lt;chr&gt; &quot;Age-adjusted&quot;, &quot;Age-adjusted&quot;, &quot;Age-adjus…
+$ Unit                        &lt;chr&gt; &quot;Deaths per 100,000&quot;, &quot;Deaths per 100,000&quot;…
+$ `Overall Rate`              &lt;dbl&gt; 712.2, 29.6, NA, 148.1, 11.0, 38.5, 21.3, …
+$ `Rate Sex Female`           &lt;dbl&gt; 600.3, 33.1, NA, 127.9, 7.7, 35.7, 16.8, 1…
+$ `Rate Sex Male`             &lt;dbl&gt; 843.7, 23.8, NA, 175.4, 14.7, 42.4, 26.9, …
+$ `Rate Age 1-4`              &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ `Rate Age 5-14`             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ `Rate Age 15-24`            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ `Rate Age 25-34`            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ `Rate Age 35-44`            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ `Rate Age 45-54`            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ `Rate Age 55-64`            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ `Rate 65-74`                &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ `Rate Age 75-84`            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+...
+</code></pre>
+<h2 id="Clear-the-columns-name"><a href="#Clear-the-columns-name" class="headerlink" title="Clear the columns name"></a>Clear the columns name</h2><p>As we can see, the column names has space, it may cause some trouble while refering it in R, it’s a common sugestion to convert space to “_” before doing any R o&#x2F;p.</p>
+<p>A good thing is , there is a R package can help us on it.</p>
+<pre><code>&gt; library(&quot;janitor&quot;)
+&gt; df &lt;- clean_names(df)
+!&gt; glimpse(df)
+ Rows: 1,232
+ Columns: 69
+ $ year_and_quarter          &lt;chr&gt; &quot;2019 Q1&quot;, &quot;2019 Q1&quot;, &quot;2019 Q1&quot;, &quot;2019 Q1&quot;, …
+ $ time_period               &lt;chr&gt; &quot;12 months ending with quarter&quot;, &quot;12 months …
+ $ cause_of_death            &lt;chr&gt; &quot;All causes&quot;, &quot;Alzheimer disease&quot;, &quot;COVID-19…
+ $ rate_type                 &lt;chr&gt; &quot;Age-adjusted&quot;, &quot;Age-adjusted&quot;, &quot;Age-adjuste…
+ $ unit                      &lt;chr&gt; &quot;Deaths per 100,000&quot;, &quot;Deaths per 100,000&quot;, …
+ $ overall_rate              &lt;dbl&gt; 712.2, 29.6, NA, 148.1, 11.0, 38.5, 21.3, 20…
+ $ rate_sex_female           &lt;dbl&gt; 600.3, 33.1, NA, 127.9, 7.7, 35.7, 16.8, 13.…
+ $ rate_sex_male             &lt;dbl&gt; 843.7, 23.8, NA, 175.4, 14.7, 42.4, 26.9, 27…
+ $ rate_age_1_4              &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+</code></pre>
+<p>As you can see, while we run <code>glimpse(df)</code>, the colum name has been changed from “Year and Quarter” to “year_and_quarter”.</p>
+<h2 id="Filter-and-select"><a href="#Filter-and-select" class="headerlink" title="Filter and select"></a>Filter and select</h2><p>The raw data has so many columns and rows, but we just want to focus on those cols&#x2F;rows we really have intrest.</p>
+<p>We can use <code>filter</code>(applying on rows) and <code>select</code>(applying on columns) in such condition.</p>
+<pre><code>&gt; df1 &lt;- df %&gt;%
+      filter(time_period == &quot;3-month period&quot; &amp; rate_type == &quot;Crude&quot; &amp; cause_of_death %in% c(&quot;All causes&quot;, &quot;COVID-19&quot;)) %&gt;%
+      select(year_and_quarter, cause_of_death, overall_rate)
+&gt; print(df1,n=50)
+ # A tibble: 28 × 3
+    year_and_quarter cause_of_death overall_rate
+    &lt;chr&gt;            &lt;chr&gt;                 &lt;dbl&gt;
+  1 2019 Q1          All causes            910
+  2 2019 Q1          COVID-19               NA
+  3 2019 Q2          All causes            851.
+  4 2019 Q2          COVID-19               NA
+  5 2019 Q3          All causes            827.
+  6 2019 Q3          COVID-19               NA
+  7 2019 Q4          All causes            891.
+  8 2019 Q4          COVID-19               NA
+  9 2020 Q1          All causes            945.
+ 10 2020 Q1          COVID-19                8.2
+ 11 2020 Q2          All causes           1035.
+ 12 2020 Q2          COVID-19              137.
+ 13 2020 Q3          All causes            985.
+ 14 2020 Q3          COVID-19               87.3
+ 15 2020 Q4          All causes           1142.
+ 16 2020 Q4          COVID-19              193.
+ 17 2021 Q1          All causes           1116
+ 18 2021 Q1          COVID-19              191.
+ 19 2021 Q2          All causes            915.
+ 20 2021 Q2          COVID-19               42.4
+ 21 2021 Q3          All causes           1051.
+ 22 2021 Q3          COVID-19              138.
+ 23 2021 Q4          All causes           1092.
+ 24 2021 Q4          COVID-19              131.
+ 25 2022 Q1          All causes           1116
+ 26 2022 Q1          COVID-19              150.
+ 27 2022 Q2          All causes            899.
+ 28 2022 Q2          COVID-19               17.6
+</code></pre>
+<p><code>%&gt;%</code> looks strange, it’s just like <code>| (pipe)</code> in linux shell command.</p>
+<pre><code>df1 &lt;- df %&gt;%
+    filter(time_period == &quot;3-month period&quot; &amp; rate_type == &quot;Crude&quot; &amp; cause_of_death %in% c(&quot;All causes&quot;, &quot;COVID-19&quot;)) %&gt;%
+    select(year_and_quarter, cause_of_death, overall_rate)
+</code></pre>
+<p>It means only keep those rows which meet those condition of <code>filter</code>, and those columns which meet condition of <code>select</code>.</p>
+<h2 id="Deal-with-NA-value"><a href="#Deal-with-NA-value" class="headerlink" title="Deal with NA value"></a>Deal with NA value</h2><p>As you can see, in “overall_rate” column, there are few “NA” values, in this context it means 0, so we may want to convert it as 0 for future’s process.</p>
+<p>We can do it like as below.</p>
+<pre><code> &gt; df1 &lt;- df1 %&gt;%
+     mutate_at(c(&quot;overall_rate&quot;), ~coalesce(.,0))
+</code></pre>
+<p>It means , we want to convert all NA to 0 in “overall_rate” column.</p>
+<p>Now, let’s check the df1 again, we can see all NA has been changed to 0.</p>
+<pre><code>!+ &gt; df1
+ # A tibble: 28 × 3
+    year_and_quarter cause_of_death overall_rate
+    &lt;chr&gt;            &lt;chr&gt;                 &lt;dbl&gt;
+  1 2019 Q1          All causes            910
+  2 2019 Q1          COVID-19                0
+  3 2019 Q2          All causes            851.
+  4 2019 Q2          COVID-19                0
+  5 2019 Q3          All causes            827.
+  6 2019 Q3          COVID-19                0
+  7 2019 Q4          All causes            891.
+  8 2019 Q4          COVID-19                0
+  9 2020 Q1          All causes            945.
+ 10 2020 Q1          COVID-19                8.2
+ # … with 18 more rows
+</code></pre>
+<h2 id="Draw-diagram-for-the-whole-US-data"><a href="#Draw-diagram-for-the-whole-US-data" class="headerlink" title="Draw diagram for the whole US data"></a>Draw diagram for the whole US data</h2><p>To draw a diagram directly:</p>
+<pre><code>&gt; ggplot(df1, aes(fill=cause_of_death, x=year_and_quarter, y=overall_rate)) +
+    geom_bar(position=&quot;stack&quot;, stat=&quot;identity&quot;) +
+    geom_col() +
+    geom_smooth(aes(group=cause_of_death)) +
+    scale_y_continuous(breaks=seq(0,1500,100))
+    theme_bw()
+</code></pre>
+<p>To save the diagram in a file:</p>
+<pre><code>library(sjPlot)
+p = ggplot(df1, aes(fill=cause_of_death, x=year_and_quarter, y=overall_rate)) +
+    geom_bar(position=&quot;stack&quot;, stat=&quot;identity&quot;) +
+    geom_col() +
+    geom_smooth(aes(group=cause_of_death)) +
+    scale_y_continuous(breaks=seq(0,1500,100)) +
+    theme_bw()
+
+save_plot(&quot;covid_plot.svg&quot;, fig = p, width=30, height=20)
+</code></pre>
+<p>The diagram looks like below.<br><img src="/images/2023/01/image-1.png"></p>
+<h2 id="Draw-diagram-for-California-data"><a href="#Draw-diagram-for-California-data" class="headerlink" title="Draw diagram for California data"></a>Draw diagram for California data</h2><p>Do you want to try it by yourself?</p>
+<h2 id="Create-Calculate-a-new-column-for-covid-ratio"><a href="#Create-Calculate-a-new-column-for-covid-ratio" class="headerlink" title="Create&#x2F;Calculate a new column for covid ratio"></a>Create&#x2F;Calculate a new column for covid ratio</h2><p>Somehow, we want to get to know the trend for covid ratio.</p>
+<ul>
+<li><p>covid_ratio &#x3D; overall_rate_of_covid &#x2F; overall_rate_of_all_causes</p>
+<p>  covid_death_rate &lt;- df1 %&gt;%<br>  filter(cause_of_death &#x3D;&#x3D; “COVID-19”) %&gt;%<br>  select(“overall_rate”)<br>  all_causes_rate &lt;- df1 %&gt;%<br>  filter(cause_of_death &#x3D;&#x3D; “All causes”) %&gt;%<br>  select(overall_rate)<br>  covid_ratio &lt;- covid_death_rate &#x2F; all_causes_rate</p>
+<p>  df_ratio &lt;- df1 %&gt;%<br>  filter(cause_of_death &#x3D;&#x3D; “All causes”) %&gt;%<br>  select(year_and_quarter)<br>  df_ratio[“covid_ratio”] &#x3D; covid_ratio</p>
+<blockquote>
+<p>print(df_ratio)<br>  A tibble: 14 × 2<br>     year_and_quarter covid_ratio<br>     <chr>                  <dbl><br>   1 2019 Q1              0<br>   2 2019 Q2              0<br>   3 2019 Q3              0<br>   4 2019 Q4              0<br>   5 2020 Q1              0.00868<br>   6 2020 Q2              0.132<br>   7 2020 Q3              0.0886<br>   8 2020 Q4              0.169<br>   9 2021 Q1              0.171<br>  10 2021 Q2              0.0463<br>  11 2021 Q3              0.131<br>  12 2021 Q4              0.120<br>  13 2022 Q1              0.134<br>  14 2022 Q2              0.0196</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Draw-diagram-for-covid-ratio"><a href="#Draw-diagram-for-covid-ratio" class="headerlink" title="Draw diagram for covid ratio"></a>Draw diagram for covid ratio</h2><p>Do you want to try it by yourself?</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/R/" rel="tag"><i class="fa fa-tag"></i> R</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/getting-started-with-r/" rel="prev" title="Getting started with R">
+                  <i class="fa fa-angle-left"></i> Getting started with R
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/using-r-to-analyze-us-covid-waves-and-peaks/" rel="next" title="Using R to analyze US COVID pandemic waves and peaks">
+                  Using R to analyze US COVID pandemic waves and peaks <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

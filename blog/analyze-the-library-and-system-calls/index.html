@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="When the application source code is not available, we can trace the function calls during its runtime in order to understand how the application code works. Library calls take place in user space. Sys">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Analyze the library and system calls">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/analyze-the-library-and-system-calls/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="When the application source code is not available, we can trace the function calls during its runtime in order to understand how the application code works. Library calls take place in user space. Sys">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-02-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="Perf">
+<meta property="article:tag" content="Ltrace">
+<meta property="article:tag" content="Strace">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/analyze-the-library-and-system-calls/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/analyze-the-library-and-system-calls/","path":"blog/analyze-the-library-and-system-calls/","title":"Analyze the library and system calls"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Analyze the library and system calls | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#perf-profiler"><span class="nav-number">1.</span> <span class="nav-text">perf profiler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Library-function-calls"><span class="nav-number">2.</span> <span class="nav-text">Library function calls</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#System-calls"><span class="nav-number">3.</span> <span class="nav-text">System calls</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-ftrace-to-analyze-latency-of-the-kernel-module-function/" rel="bookmark">
+        <time class="popular-posts-time">2022-07-14</time>
+        <br>
+      Using ftrace to analyze latency of the kernel module function
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/useful-tools-in-linux-operating-system/" rel="bookmark">
+        <time class="popular-posts-time">2022-03-25</time>
+        <br>
+      Useful tools in Linux operating system
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-signals-with-kill-in-linux/" rel="bookmark">
+        <time class="popular-posts-time">2023-01-04</time>
+        <br>
+      Using signals with kill command in Linux
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-gstack-for-docker-container-process/" rel="bookmark">
+        <time class="popular-posts-time">2021-04-27</time>
+        <br>
+      Using gstack for docker container process
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/lambda-function-in-python/" rel="bookmark">
+        <time class="popular-posts-time">2023-04-28</time>
+        <br>
+      Lambda function in Python
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/analyze-the-library-and-system-calls/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Analyze the library and system calls | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Analyze the library and system calls
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-02-18 08:00:00" itemprop="dateCreated datePublished" datetime="2021-02-18T08:00:00-08:00">2021-02-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>When the application source code is not available, we can trace the function calls during its runtime in order to understand how the application code works.</p>
+<p>Library calls take place in user space. <a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man2/syscalls.2.html">System calls</a> is the fundamental interface between application and the kernel. System calls are not invoked directly but rather via wrapper functions in glibc(or other library).</p>
+<p>In this article, we will study how to use ltrace&#x2F;strace&#x2F;perf tracing tools to help understand the target application.</p>
+<p>Both strace and ltrace are tracing tools which use ptrace(process trace) to inspect the internal of the target process. strace only works for tracing system calls while ltrace has no such restriction.</p>
+<p>We use a Redhat6.2 Linux system for this study.</p>
+<pre><code>$ cat /etc/redhat-release
+Red Hat Enterprise Linux Server release 6.2 (Santiago)
+
+$ uname -r
+2.6.32-220.el6.x86_64
+</code></pre>
+<p>We have ltrace, strace and perf installed in the system.</p>
+<pre><code>$ rpm -qa ltrace
+ltrace-0.5-16.45svn.1.el6.x86_64
+
+$ rpm -qa strace
+strace-4.5.19-1.10.el6.x86_64
+
+$ rpm -qa perf
+perf-2.6.32-220.el6.x86_64
+</code></pre>
+<h2 id="perf-profiler"><a href="#perf-profiler" class="headerlink" title="perf profiler"></a>perf profiler</h2><p>perf is the official Linux profiler which is suited for CPU analysis. It can help analyze software functions as well.</p>
+<pre><code>$ pid=`pidof &lt;process-name&gt;`
+$ perf record -p $pid -a -g -- sleep 10
+$ perf report -n --stdio &gt; perf.&lt;process-name&gt;.out
+
+$ cat perf.&lt;process-name&gt;.out
+
+# Events: 1K cycles
+#
+# Overhead  Samples    Command         Shared Object                       Symbol
+# ........ ..........  .......         .................  ...........................
+#
+
+    10.17%   131       &lt;process-name&gt;  libc-2.12.so       [.] __memcpy
+</code></pre>
+<p>From the output, the memcpy function is called to the library libc-2.12.so.</p>
+<h2 id="Library-function-calls"><a href="#Library-function-calls" class="headerlink" title="Library function calls"></a>Library function calls</h2><p>ltrace is a library call tracer.</p>
+<pre><code>$ man ltrace
+
+ltrace(1)
+
+NAME
+       ltrace - A library call tracer
+
+SYNOPSIS
+       ltrace  [-CdfhiLrStttV]  [-a  column] [-e expr] [-l filename] [-n nr] [-o filename] [-p pid] ... [-s strsize] [-u username] [-X extern] [-x extern]
+       ... [--align=column] [--debug] [--demangle] [--help] [--indent=nr] [--library=filename] [--output=filename] [--version] [command [arg ...]]
+
+DESCRIPTION
+       ltrace is a program that simply runs the specified command until it exits.  It intercepts and records the dynamic library calls which are called by
+       the executed process and the signals which are received by that process.  It can also intercept and print the system calls executed by the program.
+
+       Its use is very similar to strace(1).
+
+
+$ ltrace -h
+
+Usage: ltrace [option ...] [command [arg ...]]
+Trace library calls of a given program.
+
+  -a, --align=COLUMN  align return values in a secific column.
+  -c                  count time and calls, and report a summary on exit.
+  -C, --demangle      decode low-level symbol names into user-level names.
+  -d, --debug         print debugging info.
+  -e expr             modify which events to trace.
+  -f                  follow forks.
+  -h, --help          display this help and exit.
+  -i                  print instruction pointer at time of library call.
+  -l, --library=FILE  print library calls from this library only.
+  -L                  do NOT display library calls.
+  -n, --indent=NR     indent output by NR spaces for each call level nesting.
+  -o, --output=FILE   write the trace output to that file.
+  -p PID              attach to the process with the process ID pid.
+  -r                  print relative timestamps.
+  -s STRLEN           specify the maximum string size to print.
+  -S                  display system calls.
+  -t, -tt, -ttt       print absolute timestamps.
+  -T                  show the time spent inside each call.
+  -u USERNAME         run command with the userid, groupid of username.
+  -V, --version       output version information and exit.
+  -x NAME             treat the global NAME like a library subroutine.
+
+Report bugs to ltrace-devel@lists.alioth.debian.org
+</code></pre>
+<p>We use the following commands to trace the target process on the specified library calls. The “-c” option is used to get the summary report.</p>
+<pre><code>$ ltrace -p $pid --library=/lib/libc-2.12.so -c -o ltrace.&lt;process-name&gt;.c.out
+
+$ cat ltrace.&lt;process-name&gt;.c.out
+
+% time     seconds  usecs/call     calls      function
+=========================================================
+ 63.69    8.028116        2386      3364 write
+ 18.63    2.348951         190     12323 memcpy
+ 16.37    2.063338         613      3365 time
+  0.62    0.078129          34      2243 access
+  0.36    0.044836          19      2242 strncpy
+  0.33    0.041813          18      2243 __errno_location
+=========================================================
+100.00   12.605183                 25780 total
+</code></pre>
+<p>From above tracing output, the process spent 63.69% time in write function call and 18.63% time in memcpy function call.</p>
+<p>To know more detail for the function calls, we remove the “-c” option and trace again.</p>
+<pre><code>$ ltrace -p $pid --library=/lib/libc-2.12.so -o ltrace.&lt;process-name&gt;.out
+
+$ cat ltrace.&lt;process-name&gt;.out
+
+25236 access(&quot;&quot;, 0)                                = -1
+25236 time(0x7fff8b770d58)                         = 1613691764
+25236 memcpy(0x7fc462d54000, &quot;\323j\377\305\207\037\332\234\304CH\317\270\005\036\250\271\304w&quot;`\262\214\322\213\357\\\356\213,\300\357&quot;..., 80384) = 0x7fc462d54000
+25236 memcpy(0x7fc462d67a00, &quot;\204\257\265P\261\241\340\232\0278\2132\272\350)\327\025Iwc\342\014#\353&#123;\265d2|\240V\266&quot;..., 131072) = 0x7fc462d67a00
+25236 memcpy(0x7fc462d87a00, &quot;\204\257\265Q\261\241\340\233\0278\2133\272\350)\330\025Iwd\342\014#\354&#123;\265d3|\240V\267&quot;..., 131072) = 0x7fc462d87a00
+25236 memcpy(0x7fc462da7a00, &quot;\204\257\265R\261\241\340\234\0278\2134\272\350)\331\025Iwe\342\014#\355&#123;\265d4|\240V\270&quot;..., 131072) = 0x7fc462da7a00
+25236 memcpy(0x7fc462dc7a00, &quot;\204\257\265S\261\241\340\235\0278\2135\272\350)\332\025Iwf\342\014#\356&#123;\265d5|\240V\271&quot;..., 50688) = 0x7fc462dc7a00
+25236 __errno_location()                           = 0x7fc4631416a8
+25236 write(1, &quot;\323j\377\305\207\037\332\234\304CH\317\270\005\036\250\271\304w&quot;`\262\214\322\213\357\\\356\213,\300\357&quot;..., 524288) = 524288
+</code></pre>
+<p>From above tracing output, there are five memcpy function calls to totally copy 524288 bytes in memory, and followed by a write function call to write the same amount of data to a file of file descriptor 1.</p>
+<p>We can read the memcpy function call definition from the library manual page.</p>
+<pre><code>$ man 3 memcpy
+
+MEMCPY(3)                  Linux Programmer’s Manual                 MEMCPY(3)
+
+NAME
+       memcpy - copy memory area
+
+SYNOPSIS
+       #include &lt;string.h&gt;
+
+       void *memcpy(void *dest, const void *src, size_t n);
+
+DESCRIPTION
+       The  memcpy() function copies n bytes from memory area src to memory area dest.  The memory areas should not overlap.  Use memmove(3) if the memory
+       areas do overlap.
+
+RETURN VALUE
+       The memcpy() function returns a pointer to dest.
+</code></pre>
+<h2 id="System-calls"><a href="#System-calls" class="headerlink" title="System calls"></a>System calls</h2><p>ltrace provides a “-S” option to display the system calls.</p>
+<pre><code>$ ltrace -p $pid --library=/lib/libc-2.12.so -S -c -o ltrace.&lt;process-name&gt;.l.S.c.out
+
+$ cat ltrace.&lt;process-name&gt;.l.S.c.out
+% time     seconds  usecs/call     calls      function
+=========================================================
+ 41.04   10.231204        3444      2970 write
+ 40.78   10.166975        3420      2972 SYS_write
+  9.25    2.306825         212     10877 memcpy
+  8.33    2.076351        1048      1980 access
+  0.22    0.055967          18      2971 time
+  0.16    0.039493          19      1980 strncpy
+  0.15    0.037153          18      1980 __errno_location
+  0.07    0.016229           8      1980 SYS_access
+  0.00    0.000037          37         1 _IO_putc
+=========================================================
+100.00   24.930234                 27711 total
+</code></pre>
+<p>We can also use strace to do the similar trace to system calls.</p>
+<pre><code>$ strace -p $pid -o &gt; strace.&lt;process-name&gt;.c.out
+
+$ cat strace.&lt;process-name&gt;.c.out
+
+% time     seconds  usecs/call     calls   errors syscall
+=========================================================
+ 99.85    0.039798          11      3533           write
+  0.15    0.000060           0      2356      2356 access
+=========================================================
+100.00    0.039858                  5889      2356 total
+</code></pre>
+<p>The function call details can be traced by removing the “-c” option.</p>
+<pre><code>$ strace -p $pid -o &gt; strace.&lt;process-name&gt;.out
+
+$ cat strace.&lt;process-name&gt;.out
+
+write(1, &quot;\4\363\263\370EJ\n\336W,\270a\275\221;\7`\261\364\24\354_t7\6#\354\212&#125;\v\325\230&quot;..., 524288) = 524288
+</code></pre>
+<p>Similar to the output from ltrace, it writes 524288 bytes data from the buffer to a file of file descriptor 1.</p>
+<p>We can read the manual page to understand the parameters and return value for the write system call.</p>
+<pre><code>$ man 2 write
+
+NAME
+       write - write to a file descriptor
+
+SYNOPSIS
+       #include &lt;unistd.h&gt;
+
+       ssize_t write(int fd, const void *buf, size_t count);
+
+DESCRIPTION
+       write() writes up to count bytes from the buffer pointed buf to the file referred to by the file descriptor fd.
+
+RETURN VALUE
+       On success, the number of bytes written is returned (zero indicates nothing was written).  On error, -1 is returned, and  errno  is  set  appropriately.
+</code></pre>
+<p>If we want to know which file is actually written, we can get the file descriptors from &#x2F;proc&#x2F;$pid&#x2F;fd</p>
+<pre><code>$ ls -la /proc/$pid/fd &gt; proc.fd.out
+total 0
+dr-x------ 2 root root  0 Feb 18 15:49 .
+dr-xr-xr-x 7 root root  0 Feb 18 15:39 ..
+lrwx------ 1 root root 64 Feb 18 15:49 0 -&gt; socket:[39812145]
+lrwx------ 1 root root 64 Feb 18 15:49 1 -&gt; socket:[39812145]
+lrwx------ 1 root root 64 Feb 18 15:49 2 -&gt; socket:[39812186]
+</code></pre>
+<p>Now, we understand it actually writes to a socket but rather a real file. This makes sense because the application is a data generator which produce data in memory and send to remote server through network.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Ptrace">https://en.wikipedia.org/wiki/Ptrace</a></li>
+<li><a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man2/syscalls.2.html">https://man7.org/linux/man-pages/man2/syscalls.2.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://developers.redhat.com/blog/2014/07/10/ltrace-for-rhel-6-and-7">https://developers.redhat.com/blog/2014/07/10/ltrace-for-rhel-6-and-7</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/User-Mode-vs-Kernel-Mode">https://www.tutorialspoint.com/User-Mode-vs-Kernel-Mode</a></li>
+<li><a target="_blank" rel="noopener" href="https://code.woboq.org/gcc/libgcc/memcpy.c.html">https://code.woboq.org/gcc/libgcc/memcpy.c.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://code.woboq.org/userspace/glibc/sysdeps/unix/sysv/linux/write.c.html#__libc_write">https://code.woboq.org/userspace/glibc/sysdeps/unix/sysv/linux/write.c.html#__libc_write</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Perf/" rel="tag"><i class="fa fa-tag"></i> Perf</a>
+              <a href="/tags/Ltrace/" rel="tag"><i class="fa fa-tag"></i> Ltrace</a>
+              <a href="/tags/Strace/" rel="tag"><i class="fa fa-tag"></i> Strace</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/book-report-on-island-of-the-blue-dolphins/" rel="prev" title="Book Report on Island of the Blue Dolphins">
+                  <i class="fa fa-angle-left"></i> Book Report on Island of the Blue Dolphins
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/using-fio-to-generate-millions-of-files/" rel="next" title="Using fio to generate millions of files">
+                  Using fio to generate millions of files <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

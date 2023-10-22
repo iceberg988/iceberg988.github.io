@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="The memory controller isolates the memory behaviour of a group of tasks from the rest of the system. $ mount | egrep &quot;&#x2F;cgroup |&#x2F;memory&quot; tmpfs on &#x2F;sys&#x2F;fs&#x2F;cgroup type tmpfs (ro,nosuid,nodev,no">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using cgroups to limit Memory usage">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/cgroups-limit-memory/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="The memory controller isolates the memory behaviour of a group of tasks from the rest of the system. $ mount | egrep &quot;&#x2F;cgroup |&#x2F;memory&quot; tmpfs on &#x2F;sys&#x2F;fs&#x2F;cgroup type tmpfs (ro,nosuid,nodev,no">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-12-04T21:08:00.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="Cgroups">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/cgroups-limit-memory/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/cgroups-limit-memory/","path":"blog/cgroups-limit-memory/","title":"Using cgroups to limit Memory usage"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Using cgroups to limit Memory usage | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-memory-control-group"><span class="nav-number">1.</span> <span class="nav-text">Create memory control group</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Limit-the-memory-usage"><span class="nav-number">2.</span> <span class="nav-text">Limit the memory usage</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-control-files-directly"><span class="nav-number">2.1.</span> <span class="nav-text">Using control files directly</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-libcgroup-tools"><span class="nav-number">2.2.</span> <span class="nav-text">Using libcgroup tools</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Verify-the-memory-usage"><span class="nav-number">3.</span> <span class="nav-text">Verify the memory usage</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Unlimit-the-memory-usage"><span class="nav-number">3.1.</span> <span class="nav-text">Unlimit the memory usage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Limit-the-memory-usage-to-32GB"><span class="nav-number">3.2.</span> <span class="nav-text">Limit the memory usage to 32GB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Limit-the-memory-usage-for-the-tasks-in-the-current-bash"><span class="nav-number">3.3.</span> <span class="nav-text">Limit the memory usage for the tasks in the current bash</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/cgroup-limit-cpu/" rel="bookmark">
+        <time class="popular-posts-time">2022-12-03</time>
+        <br>
+      Using cgroups to limit CPU utilization
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/max-open-files-limit/" rel="bookmark">
+        <time class="popular-posts-time">2021-03-02</time>
+        <br>
+      Max open files limit
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/cgroups-limit-io/" rel="bookmark">
+        <time class="popular-posts-time">2022-12-05</time>
+        <br>
+      Using cgroups to limit block device bandwidth
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-cgroup-to-limit-resource-for-ssh-session/" rel="bookmark">
+        <time class="popular-posts-time">2023-06-04</time>
+        <br>
+      Using cgroup to limit resource for ssh session
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/kmalloc-and-vmalloc/" rel="bookmark">
+        <time class="popular-posts-time">2021-02-01</time>
+        <br>
+      kmalloc and vmalloc
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/cgroups-limit-memory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Using cgroups to limit Memory usage | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Using cgroups to limit Memory usage
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-04 13:08:00" itemprop="dateCreated datePublished" datetime="2022-12-04T13:08:00-08:00">2022-12-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>The memory controller isolates the memory behaviour of a group of tasks from the rest of the system.</p>
+<pre><code>$ mount | egrep &quot;/cgroup |/memory&quot;
+tmpfs on /sys/fs/cgroup type tmpfs (ro,nosuid,nodev,noexec,mode=755)
+cgroup on /sys/fs/cgroup/memory type cgroup (rw,nosuid,nodev,noexec,relatime,memory)
+
+$ lssubsys -am | grep memory
+memory /sys/fs/cgroup/memory
+</code></pre>
+<p>In this post, we will learn how to use the following control files to limit and monitor memory usage for the user tasks.</p>
+<ul>
+<li>memory.usage_in_bytes - show current usage for memory</li>
+<li>memory.limit_in_bytes - set&#x2F;show limit of memory usage</li>
+</ul>
+<h2 id="Create-memory-control-group"><a href="#Create-memory-control-group" class="headerlink" title="Create memory control group"></a>Create memory control group</h2><p>Install libcgroup package to manage cgroups:</p>
+<pre><code>$ yum install libcgroup libcgroup-tools
+</code></pre>
+<p>Create memory control group:</p>
+<pre><code>$ cgcreate -g memory:/memlimited
+$ lscgroup | grep memory
+memory:/
+memory:/memlimited
+
+$ ls /sys/fs/cgroup/memory/memlimited/
+cgroup.clone_children           memory.kmem.slabinfo                memory.memsw.failcnt             memory.soft_limit_in_bytes
+cgroup.event_control            memory.kmem.tcp.failcnt             memory.memsw.limit_in_bytes      memory.stat
+cgroup.procs                    memory.kmem.tcp.limit_in_bytes      memory.memsw.max_usage_in_bytes  memory.swappiness
+memory.failcnt                  memory.kmem.tcp.max_usage_in_bytes  memory.memsw.usage_in_bytes      memory.usage_in_bytes
+memory.force_empty              memory.kmem.tcp.usage_in_bytes      memory.move_charge_at_immigrate  memory.use_hierarchy
+memory.kmem.failcnt             memory.kmem.usage_in_bytes          memory.numa_stat                 notify_on_release
+memory.kmem.limit_in_bytes      memory.limit_in_bytes               memory.oom_control               tasks
+memory.kmem.max_usage_in_bytes  memory.max_usage_in_bytes           memory.pressure_level
+</code></pre>
+<h2 id="Limit-the-memory-usage"><a href="#Limit-the-memory-usage" class="headerlink" title="Limit the memory usage"></a>Limit the memory usage</h2><h3 id="Using-control-files-directly"><a href="#Using-control-files-directly" class="headerlink" title="Using control files directly"></a>Using control files directly</h3><pre><code>$ echo 32G &gt; /sys/fs/cgroup/memory/memlimited/memory.limit_in_bytes
+$ cat /sys/fs/cgroup/memory/memlimited/memory.limit_in_bytes
+34359738368
+</code></pre>
+<h3 id="Using-libcgroup-tools"><a href="#Using-libcgroup-tools" class="headerlink" title="Using libcgroup tools"></a>Using libcgroup tools</h3><p>Limit the memory usage:</p>
+<pre><code>$ cgset -r memory.limit_in_bytes=32G memlimited
+$ cgget -r memory.limit_in_bytes memlimited
+memlimited:
+memory.limit_in_bytes: 34359738368
+</code></pre>
+<h2 id="Verify-the-memory-usage"><a href="#Verify-the-memory-usage" class="headerlink" title="Verify the memory usage"></a>Verify the memory usage</h2><h3 id="Unlimit-the-memory-usage"><a href="#Unlimit-the-memory-usage" class="headerlink" title="Unlimit the memory usage"></a>Unlimit the memory usage</h3><pre><code>$ cgset -r memory.limit_in_bytes=-1 memlimited
+$ cgget -r memory.limit_in_bytes memlimited
+memlimited:
+memory.limit_in_bytes: 9223372036854771712
+</code></pre>
+<p>Use fio to write 50G data:</p>
+<pre><code>$ echo 3 &gt; /proc/sys/vm/drop_caches
+$ cgexec -g memory:memlimited fio --blocksize=64k --ioengine=libaio --readwrite=write --filesize=50G --group_reporting --direct=0 --iodepth=128 --end_fsync=1 --name=job1 --filename=/mnt/fio.dat
+</code></pre>
+<p>Verify the memory usage is unlimited:</p>
+<pre><code>$ while true; do cat /sys/fs/cgroup/memory/memlimited/memory.usage_in_bytes; sleep 5; done
+14143488
+14143488
+819499008
+13288558592
+25772953600
+38258790400
+50776608768
+55638511616
+55638429696
+55638478848
+55638528000
+55638577152
+55210229760
+55210229760
+^C
+</code></pre>
+<h3 id="Limit-the-memory-usage-to-32GB"><a href="#Limit-the-memory-usage-to-32GB" class="headerlink" title="Limit the memory usage to 32GB"></a>Limit the memory usage to 32GB</h3><pre><code>$ cgset -r memory.limit_in_bytes=32G memlimited
+$ cgget -r memory.limit_in_bytes memlimited
+memlimited:
+memory.limit_in_bytes: 34359738368
+</code></pre>
+<p>Use fio to write 50G data:</p>
+<pre><code>$ echo 3 &gt; /proc/sys/vm/drop_caches
+$ cgexec -g memory:memlimited fio --blocksize=64k --ioengine=libaio --readwrite=write --filesize=50G --group_reporting --direct=0 --iodepth=128 --end_fsync=1 --name=job1 --filename=/mnt/fio.dat
+</code></pre>
+<p>Verify the memory usage is limited to 32GB:</p>
+<pre><code>$ while true; do cat /sys/fs/cgroup/memory/memlimited/memory.usage_in_bytes; sleep 5; done
+9134080
+6819614720
+18048208896
+29089763328
+34359726080
+34359672832
+34359607296
+34359717888
+34359635968
+34359619584
+34280120320
+34280120320
+^C
+</code></pre>
+<p>From vmstat output, the cache usage is limited to 32GB. There is also swapping out activity due the memory pressure.</p>
+<pre><code>$ vmstat 5 -t
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu----- -----timestamp-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st                 UTC
+ 0  0      0 1053891776    968 142992    0    0     0    30    0    0  0  0 100  0  0 2022-12-23 22:04:30
+ 2  0      0 1045755200    968 8266836    0    0  1697     0 3789  727  2  1 98  0  0 2022-12-23 22:04:35
+ 1  0      0 1034800320    976 19222628    0    0     0     2 1770  575  0  1 99  0  0 2022-12-23 22:04:40
+ 1  0      0 1024034304    984 29988256    0    0     0 163843 2999  780  0  1 99  0  0 2022-12-23 22:04:45
+ 1  1      0 1020353664    992 33665560    0    0     0 985500 8317 2414  0  1 98  0  0 2022-12-23 22:04:50
+ 1  1 317440 1020354112   1000 33666764    0 63474     3 1518376 18524 2604  0  1 98  1  0 2022-12-23 22:04:55
+ 1  1 340480 1020353472   1008 33666660    0 4571     0 1602014 15377 2381  0  1 98  1  0 2022-12-23 22:05:00
+ 2  0 340480 1020355904   1016 33667212   39    0    39 1632866 22166 70618  0  1 98  0  0 2022-12-23 22:05:05
+ 1  0 340480 1020356032   1020 33667228    0    0     0 1861355 27437 108029  0  1 99  0  0 2022-12-23 22:05:10
+ 2  0 340480 1020356224   1024 33667236    0    0     0 1874438 28732 111364  0  1 98  0  0 2022-12-23 22:05:15
+ 0  0    512 1020432704   1024 33599516  212    0   550 915429 13644 56805  0  1 99  0  0 2022-12-23 22:05:20
+ 0  0    512 1020432960   1028 33599516    0    0     3     4  165  149  0  0 100  0  0 2022-12-23 22:05:25
+^C
+</code></pre>
+<h3 id="Limit-the-memory-usage-for-the-tasks-in-the-current-bash"><a href="#Limit-the-memory-usage-for-the-tasks-in-the-current-bash" class="headerlink" title="Limit the memory usage for the tasks in the current bash"></a>Limit the memory usage for the tasks in the current bash</h3><pre><code>$ cat /sys/fs/cgroup/memory/memlimited/tasks
+$ echo $$ &gt; /sys/fs/cgroup/memory/memlimited/tasks
+$ cat /sys/fs/cgroup/memory/memlimited/tasks
+27875
+28889
+
+$ ps -ef | egrep &quot;27875|29023&quot; | grep -v grep
+root     27875 27873  0 21:11 pts/0    00:00:17 -bash
+root     29026 27875  0 22:11 pts/0    00:00:00 ps -ef
+</code></pre>
+<p>Use fio to write 50G data:</p>
+<pre><code>$ fio --blocksize=64k --ioengine=libaio --readwrite=write --filesize=50G --group_reporting --direct=0 --iodepth=128 --end_fsync=1 --name=job1 --filename=/mnt/fio.dat
+</code></pre>
+<p>Verify the memory usage is limited to 32GB:</p>
+<pre><code>$ while true; do cat /sys/fs/cgroup/memory/memlimited/memory.usage_in_bytes; sleep 5; done
+22835200
+22835200
+22835200
+10150678528
+21453983744
+32693850112
+34359607296
+34359607296
+34359738368
+34359730176
+34359730176
+34359660544
+34280062976
+^C
+
+
+$ vmstat 5 -t
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu----- -----timestamp-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st                 UTC
+ 0  0    512 1053886784   1004 144860    0    0     0    31    0    0  0  0 100  0  0 2022-12-23 22:09:17
+ 0  0    512 1053886528   1004 144824    0    0     0     0  143  148  0  0 100  0  0 2022-12-23 22:09:22
+ 1  0    512 1050907776   1004 3109688    0    0  1660     3 2690  566  1  0 98  0  0 2022-12-23 22:09:27
+ 1  0    512 1039836288   1012 14180528    0    0     0     2 1699  508  0  1 99  0  0 2022-12-23 22:09:32
+ 1  0    512 1028822720   1020 25194536    0    0     0     2 1625  494  0  1 99  0  0 2022-12-23 22:09:37
+ 1  1    512 1020348800   1028 33665604    0    0     0 385026 4478 1313  0  1 99  0  0 2022-12-23 22:09:42
+ 1  1  46080 1020340224   1036 33676796    0 9090     0 1563114 13781 2301  0  1 98  1  0 2022-12-23 22:09:47
+ 1  1 340480 1020338688   1044 33676544    0 58904     0 1557223 19212 2580  0  1 98  1  0 2022-12-23 22:09:52
+ 1  1 340480 1020337792   1052 33676376   33    0    33 1481028 14133 5776  0  1 98  1  0 2022-12-23 22:09:57
+ 1  0 340480 1020342208   1056 33676396    0    0   184 1877767 27447 114955  0  1 98  0  0 2022-12-23 22:10:02
+ 1  1 340480 1020341056   1056 33677100    0    0     0 1817494 27635 101675  0  1 98  0  0 2022-12-23 22:10:07
+ 1  0 195144 1020350208   1060 33676988   83    0    83 1872111 27068 113280  0  1 98  0  0 2022-12-23 22:10:12
+^C
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.kernel.org/admin-guide/cgroup-v1/memory.html">https://docs.kernel.org/admin-guide/cgroup-v1/memory.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://engineering.linkedin.com/blog/2016/08/don_t-let-linux-control-groups-uncontrolled">https://engineering.linkedin.com/blog/2016/08/don_t-let-linux-control-groups-uncontrolled</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Cgroups/" rel="tag"><i class="fa fa-tag"></i> Cgroups</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/cockroachdb-performance-benchmarking/" rel="prev" title="CockroachDB performance benchmarking">
+                  <i class="fa fa-angle-left"></i> CockroachDB performance benchmarking
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/cgroups-limit-io/" rel="next" title="Using cgroups to limit block device bandwidth">
+                  Using cgroups to limit block device bandwidth <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

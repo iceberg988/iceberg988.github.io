@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Intro to go-ycsbgo-ycsb is a Go port of YCSB. It fully supports all YCSB generators and the Core workload so we can do the basic CRUD benchmarks with Go. Install golang package$ wget https:&#x2F;&#x2F;dl.google">
+<meta property="og:type" content="article">
+<meta property="og:title" content="YCSB performance benchmark on CockroachDB">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/ycsb-performance-benchmark-on-cockroachdb/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="Intro to go-ycsbgo-ycsb is a Go port of YCSB. It fully supports all YCSB generators and the Core workload so we can do the basic CRUD benchmarks with Go. Install golang package$ wget https:&#x2F;&#x2F;dl.google">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-02T14:00:00.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="CockroachDB">
+<meta property="article:tag" content="YCSB">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/ycsb-performance-benchmark-on-cockroachdb/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/ycsb-performance-benchmark-on-cockroachdb/","path":"blog/ycsb-performance-benchmark-on-cockroachdb/","title":"YCSB performance benchmark on CockroachDB"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>YCSB performance benchmark on CockroachDB | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro-to-go-ycsb"><span class="nav-number">1.</span> <span class="nav-text">Intro to go-ycsb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-golang-package"><span class="nav-number">2.</span> <span class="nav-text">Install golang package</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-go-ycsb"><span class="nav-number">3.</span> <span class="nav-text">Install go-ycsb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#YCSB-workloads"><span class="nav-number">4.</span> <span class="nav-text">YCSB workloads</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Workload-A-Update-heavy-workload"><span class="nav-number">4.1.</span> <span class="nav-text">Workload A: Update heavy workload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Workload-B-Read-mostly-workload"><span class="nav-number">4.2.</span> <span class="nav-text">Workload B: Read mostly workload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Workload-C-Read-only"><span class="nav-number">4.3.</span> <span class="nav-text">Workload C: Read only</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Workload-D-Read-latest-workload"><span class="nav-number">4.4.</span> <span class="nav-text">Workload D: Read latest workload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Workload-E-Short-ranges"><span class="nav-number">4.5.</span> <span class="nav-text">Workload E: Short ranges</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Workload-F-Read-modify-write"><span class="nav-number">4.6.</span> <span class="nav-text">Workload F: Read-modify-write</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Load-the-data-to-database"><span class="nav-number">5.</span> <span class="nav-text">Load the data to database</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Verify-the-loaded-data"><span class="nav-number">6.</span> <span class="nav-text">Verify the loaded data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Run-the-YCSB-benchmark"><span class="nav-number">7.</span> <span class="nav-text">Run the YCSB benchmark</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">8.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/ycsb-benchmark-on-postgresql/" rel="bookmark">
+        <time class="popular-posts-time">2023-02-14</time>
+        <br>
+      YCSB benchmark on PostgreSQL
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/setup-cockroachdb-in-docker-container/" rel="bookmark">
+        <time class="popular-posts-time">2022-12-02</time>
+        <br>
+      Setup CockroachDB in docker container
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/go-ycsb-hangup/" rel="bookmark">
+        <time class="popular-posts-time">2022-10-06</time>
+        <br>
+      go-ycsb load db terminated with message 'Got signal [hangup] to exit'
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/cockroachdb-performance-benchmarking/" rel="bookmark">
+        <time class="popular-posts-time">2022-12-04</time>
+        <br>
+      CockroachDB performance benchmarking
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/deploy-cockroachdb-in-kubernetes-cluster/" rel="bookmark">
+        <time class="popular-posts-time">2022-12-03</time>
+        <br>
+      Deploy CockroachDB in kubernetes cluster
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/ycsb-performance-benchmark-on-cockroachdb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="YCSB performance benchmark on CockroachDB | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          YCSB performance benchmark on CockroachDB
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-02 07:00:00" itemprop="dateCreated datePublished" datetime="2022-10-02T07:00:00-07:00">2022-10-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Intro-to-go-ycsb"><a href="#Intro-to-go-ycsb" class="headerlink" title="Intro to go-ycsb"></a>Intro to go-ycsb</h2><p>go-ycsb is a Go port of YCSB. It fully supports all YCSB generators and the Core workload so we can do the basic CRUD benchmarks with Go.</p>
+<h2 id="Install-golang-package"><a href="#Install-golang-package" class="headerlink" title="Install golang package"></a>Install golang package</h2><pre><code>$ wget https://dl.google.com/go/go1.19.2.linux-amd64.tar.gz
+$ tar -C /usr/local -xvzf go1.19.2.linux-amd64.tar.gz
+$ cat /usr/local/go/VERSION
+go1.19.2
+
+$ vim /root/.bash_profile
+PATH=$PATH:$HOME/bin:/usr/local/go/bin
+export PATH
+
+$ source /root/.bash_profile
+$ go version
+go version go1.19.2 linux/amd64
+</code></pre>
+<h2 id="Install-go-ycsb"><a href="#Install-go-ycsb" class="headerlink" title="Install go-ycsb"></a>Install go-ycsb</h2><pre><code>$ git clone https://github.com/pingcap/go-ycsb.git
+$ cd go-ycsb
+
+$ make
+go build -tags &quot; libsqlite3&quot; -o bin/go-ycsb cmd/go-ycsb/*
+# github.com/mattn/go-sqlite3
+/root/go/pkg/mod/github.com/mattn/go-sqlite3@v2.0.1+incompatible/backup.go:12:21: fatal error: sqlite3.h: No such file or directory
+ #include &lt;sqlite3.h&gt;
+                     ^
+compilation terminated.
+make: *** [build] Error 2
+
+$ cat /etc/centos-release
+CentOS Linux release 7.9.2009 (Core)
+
+$ yum install sqlite-devel.x86_64
+$ rpm -qa | grep sqlite
+sqlite-3.7.17-8.el7_7.1.x86_64
+sqlite-devel-3.7.17-8.el7_7.1.x86_64
+
+$ make
+go build -tags &quot; libsqlite3&quot; -o bin/go-ycsb cmd/go-ycsb/*
+
+$ ./bin/go-ycsb --help
+Go YCSB
+
+Usage:
+  go-ycsb [command]
+
+Available Commands:
+  help        Help about any command
+  load        YCSB load benchmark
+  run         YCSB run benchmark
+  shell       YCSB Command Line Client
+
+Flags:
+  -h, --help   help for go-ycsb
+
+Use &quot;go-ycsb [command] --help&quot; for more information about a command.
+</code></pre>
+<h2 id="YCSB-workloads"><a href="#YCSB-workloads" class="headerlink" title="YCSB workloads"></a>YCSB workloads</h2><p>YCSB includes a set of core workloads that define a basic benchmark for cloud systems. Of course, you can define your own workloads, as described in Implementing New Workloads. However, the core workloads are a useful first step, and obtaining these benchmark numbers for a variety of different systems would allow you to understand the performance tradeoffs of different systems.</p>
+<p>The core workloads consist of six different workloads:</p>
+<pre><code>[root@cockroach-db-host go-ycsb]# ls db
+aerospike  basic   cassandra      etcd          minio    mysql    pg     rocksdb  sqlite
+badger     boltdb  elasticsearch  foundationdb  mongodb  pegasus  redis  spanner  tikv
+
+[root@cockroach-db-host go-ycsb]# ls workloads/
+minio  workloada  workloadb  workloadc  workloadd  workloadd.orig  workloade  workloadf  workload_template
+</code></pre>
+<h3 id="Workload-A-Update-heavy-workload"><a href="#Workload-A-Update-heavy-workload" class="headerlink" title="Workload A: Update heavy workload"></a>Workload A: Update heavy workload</h3><pre><code>$ cat go-ycsb/workloads/workloada
+# Workload A: Update heavy workload
+#   Application example: Session store recording recent actions
+#
+#   Read/update ratio: 50/50
+#   Default data size: 1 KB records (10 fields, 100 bytes each, plus key)
+#   Request distribution: zipfian
+
+recordcount=1000
+operationcount=1000
+workload=core
+
+readallfields=true
+
+readproportion=0.5
+updateproportion=0.5
+scanproportion=0
+insertproportion=0
+
+requestdistribution=uniform
+</code></pre>
+<h3 id="Workload-B-Read-mostly-workload"><a href="#Workload-B-Read-mostly-workload" class="headerlink" title="Workload B: Read mostly workload"></a>Workload B: Read mostly workload</h3><pre><code>$ cat go-ycsb/workloads/workloadb
+# Yahoo! Cloud System Benchmark
+# Workload B: Read mostly workload
+#   Application example: photo tagging; add a tag is an update, but most operations are to read tags
+#
+#   Read/update ratio: 95/5
+#   Default data size: 1 KB records (10 fields, 100 bytes each, plus key)
+#   Request distribution: zipfian
+
+recordcount=1000
+operationcount=1000
+workload=core
+
+readallfields=true
+
+readproportion=0.95
+updateproportion=0.05
+scanproportion=0
+insertproportion=0
+
+requestdistribution=uniform
+</code></pre>
+<h3 id="Workload-C-Read-only"><a href="#Workload-C-Read-only" class="headerlink" title="Workload C: Read only"></a>Workload C: Read only</h3><pre><code>$ cat go-ycsb/workloads/workloadc
+# Yahoo! Cloud System Benchmark
+# Workload C: Read only
+#   Application example: user profile cache, where profiles are constructed elsewhere (e.g., Hadoop)
+#
+#   Read/update ratio: 100/0
+#   Default data size: 1 KB records (10 fields, 100 bytes each, plus key)
+#   Request distribution: zipfian
+
+recordcount=1000
+operationcount=1000
+workload=core
+
+readallfields=true
+
+readproportion=1
+updateproportion=0
+scanproportion=0
+insertproportion=0
+
+requestdistribution=uniform
+</code></pre>
+<h3 id="Workload-D-Read-latest-workload"><a href="#Workload-D-Read-latest-workload" class="headerlink" title="Workload D: Read latest workload"></a>Workload D: Read latest workload</h3><pre><code>$ cat go-ycsb/workloads/workloadd
+# Yahoo! Cloud System Benchmark
+# Workload D: Read latest workload
+#   Application example: user status updates; people want to read the latest
+#
+#   Read/update/insert ratio: 95/0/5
+#   Default data size: 1 KB records (10 fields, 100 bytes each, plus key)
+#   Request distribution: latest
+
+# The insert order for this is hashed, not ordered. The &quot;latest&quot; items may be
+# scattered around the keyspace if they are keyed by userid.timestamp. A workload
+# which orders items purely by time, and demands the latest, is very different than
+# workload here (which we believe is more typical of how people build systems.)
+
+recordcount=1000
+operationcount=1000
+workload=core
+
+readallfields=true
+
+readproportion=0.95
+updateproportion=0
+scanproportion=0
+insertproportion=0.05
+
+requestdistribution=latest
+</code></pre>
+<h3 id="Workload-E-Short-ranges"><a href="#Workload-E-Short-ranges" class="headerlink" title="Workload E: Short ranges"></a>Workload E: Short ranges</h3><pre><code>$ cat go-ycsb/workloads/workloade
+# Yahoo! Cloud System Benchmark
+# Workload E: Short ranges
+#   Application example: threaded conversations, where each scan is for the posts in a given thread (assumed to be clustered by thread id)
+#
+#   Scan/insert ratio: 95/5
+#   Default data size: 1 KB records (10 fields, 100 bytes each, plus key)
+#   Request distribution: zipfian
+
+# The insert order is hashed, not ordered. Although the scans are ordered, it does not necessarily
+# follow that the data is inserted in order. For example, posts for thread 342 may not be inserted contiguously, but
+# instead interspersed with posts from lots of other threads. The way the YCSB client works is that it will pick a start
+# key, and then request a number of records; this works fine even for hashed insertion.
+
+recordcount=1000
+operationcount=1000
+workload=core
+
+readallfields=true
+
+readproportion=0
+updateproportion=0
+scanproportion=0.95
+insertproportion=0.05
+
+requestdistribution=uniform
+
+maxscanlength=1
+
+scanlengthdistribution=uniform
+</code></pre>
+<h3 id="Workload-F-Read-modify-write"><a href="#Workload-F-Read-modify-write" class="headerlink" title="Workload F: Read-modify-write"></a>Workload F: Read-modify-write</h3><pre><code>$ cat go-ycsb/workloads/workloadf
+# Yahoo! Cloud System Benchmark
+# Workload F: Read-modify-write workload
+#   Application example: user database, where user records are read and modified by the user or to record user activity.
+#
+#   Read/read-modify-write ratio: 50/50
+#   Default data size: 1 KB records (10 fields, 100 bytes each, plus key)
+#   Request distribution: zipfian
+
+recordcount=1000
+operationcount=1000
+workload=core
+
+readallfields=true
+
+readproportion=0.5
+updateproportion=0
+scanproportion=0
+insertproportion=0
+readmodifywriteproportion=0.5
+
+requestdistribution=uniform
+</code></pre>
+<h2 id="Load-the-data-to-database"><a href="#Load-the-data-to-database" class="headerlink" title="Load the data to database"></a>Load the data to database</h2><p>The database needs to be created before data load.</p>
+<pre><code>root@cockroach-db-host-ip:26257/defaultdb&gt; create database test;
+CREATE DATABASE
+
+Time: 16ms total (execution 16ms / network 0ms)
+
+root@cockroach-db-host-ip:26257/defaultdb&gt; show databases;
+  database_name | owner | primary_region | regions | survival_goal
+----------------+-------+----------------+---------+----------------
+  defaultdb     | root  | NULL           | &#123;&#125;      | NULL
+  postgres      | root  | NULL           | &#123;&#125;      | NULL
+  system        | node  | NULL           | &#123;&#125;      | NULL
+  test          | root  | NULL           | &#123;&#125;      | NULL
+(4 rows)
+
+Time: 6ms total (execution 5ms / network 1ms)
+</code></pre>
+<p>Load the database as below:</p>
+<pre><code>[root@cockroach-db-host go-ycsb]# ./bin/go-ycsb load --help
+YCSB load benchmark
+
+Usage:
+  go-ycsb load db [flags]
+
+Flags:
+  -h, --help                    help for load
+      --interval int            Interval of outputting measurements in seconds (default 10)
+  -p, --prop stringArray        Specify a property value with name=value
+  -P, --property_file strings   Spefify a property file
+      --table string            Use the table name instead of the default &quot;usertable&quot;
+      --target int              Attempt to do n operations per second (default: unlimited) - can also be specified as the &quot;target&quot; property
+      --threads int             Execute using n threads - can also be specified as the &quot;threadcount&quot; property (default 1)
+
+$ ./bin/go-ycsb load cockroach -P workloads/workloadd -p pg.host=cockroach-db-host-ip -p pg.port=26257 -p pg.user=root -p pg.db=test -p pg.sslmode=disable -p dropdata=true
+***************** properties *****************
+&quot;insertproportion&quot;=&quot;0.05&quot;
+&quot;dropdata&quot;=&quot;true&quot;
+&quot;scanproportion&quot;=&quot;0&quot;
+&quot;workload&quot;=&quot;core&quot;
+&quot;recordcount&quot;=&quot;1000&quot;
+&quot;pg.port&quot;=&quot;26257&quot;
+&quot;dotransactions&quot;=&quot;false&quot;
+&quot;updateproportion&quot;=&quot;0&quot;
+&quot;pg.user&quot;=&quot;root&quot;
+&quot;requestdistribution&quot;=&quot;latest&quot;
+&quot;readallfields&quot;=&quot;true&quot;
+&quot;pg.sslmode&quot;=&quot;disable&quot;
+&quot;command&quot;=&quot;load&quot;
+&quot;pg.host&quot;=&quot;cockroach-db-host-ip&quot;
+&quot;operationcount&quot;=&quot;1000&quot;
+&quot;pg.db&quot;=&quot;test&quot;
+&quot;readproportion&quot;=&quot;0.95&quot;
+**********************************************
+Run finished, takes 2.794042708s
+INSERT - Takes(s): 2.8, Count: 1000, OPS: 361.7, Avg(us): 2734, Min(us): 1794, Max(us): 29903, 99th(us): 3557, 99.9th(us): 10999, 99.99th(us): 29903
+</code></pre>
+<p>The “–threads” option can be specified to increase the number of threads for data load.</p>
+<pre><code>$ ./bin/go-ycsb load cockroach -P workloads/workloadd --threads 96 -p pg.host=cockroach-db-host-ip -p pg.port=26257 -p pg.user=root -p pg.db=test -p pg.sslmode=disable -p dropdata=true
+</code></pre>
+<h2 id="Verify-the-loaded-data"><a href="#Verify-the-loaded-data" class="headerlink" title="Verify the loaded data"></a>Verify the loaded data</h2><pre><code>root@cockroach-db-host-ip:26257/defaultdb&gt; use test;
+SET
+
+Time: 1ms total (execution 1ms / network 0ms)
+
+root@cockroach-db-host-ip:26257/test&gt; show tables;
+  schema_name | table_name | type  | owner | estimated_row_count | locality
+--------------+------------+-------+-------+---------------------+-----------
+  public      | usertable  | table | root  |                1000 | NULL
+(1 row)
+
+Time: 39ms total (execution 38ms / network 0ms)
+
+root@cockroach-db-host-ip:26257/test&gt; show columns from usertable;
+  column_name |  data_type   | is_nullable | column_default | generation_expression |     indices      | is_hidden
+--------------+--------------+-------------+----------------+-----------------------+------------------+------------
+  ycsb_key    | VARCHAR(64)  |    false    | NULL           |                       | &#123;usertable_pkey&#125; |   false
+  field0      | VARCHAR(100) |    true     | NULL           |                       | &#123;usertable_pkey&#125; |   false
+  field1      | VARCHAR(100) |    true     | NULL           |                       | &#123;usertable_pkey&#125; |   false
+  field2      | VARCHAR(100) |    true     | NULL           |                       | &#123;usertable_pkey&#125; |   false
+  field3      | VARCHAR(100) |    true     | NULL           |                       | &#123;usertable_pkey&#125; |   false
+  field4      | VARCHAR(100) |    true     | NULL           |                       | &#123;usertable_pkey&#125; |   false
+  field5      | VARCHAR(100) |    true     | NULL           |                       | &#123;usertable_pkey&#125; |   false
+  field6      | VARCHAR(100) |    true     | NULL           |                       | &#123;usertable_pkey&#125; |   false
+  field7      | VARCHAR(100) |    true     | NULL           |                       | &#123;usertable_pkey&#125; |   false
+  field8      | VARCHAR(100) |    true     | NULL           |                       | &#123;usertable_pkey&#125; |   false
+  field9      | VARCHAR(100) |    true     | NULL           |                       | &#123;usertable_pkey&#125; |   false
+(11 rows)
+
+Time: 56ms total (execution 55ms / network 1ms)
+
+root@cockroach-db-host-ip:26257/test&gt; show ranges from table usertable;
+  start_key | end_key | range_id |     range_size_mb     | lease_holder | lease_holder_locality | replicas | replica_localities
+------------+---------+----------+-----------------------+--------------+-----------------------+----------+---------------------
+  NULL      | NULL    |       45 | 1.0670000000000000000 |            1 |                       | &#123;1,2,3&#125;  | &#123;,,&#125;
+(1 row)
+
+Time: 26ms total (execution 25ms / network 1ms)
+
+root@cockroach-db-host-ip:26257/test&gt; select count(*) from usertable;
+  count
+---------
+   1000
+(1 row)
+
+Time: 3ms total (execution 2ms / network 0ms)
+
+root@cockroach-db-host-ip:26257/test&gt; select * from usertable limit 2;
+         ycsb_key         |                                                field0                                                |                                                field1                                                |                                                field2                                                |                                                field3                                                |                                                field4                                                |                                                field5                                                |                                                field6                                                |                                                field7                                                |                                                field8                                                |                                                
+         field9
+
+  user6282602628620641459 | CRvLzkeCGxHtROFZjmDBFtRGwQigtZAPNCOSMdNXgDNsmpONJsVKRyJpleAmmigBbLoCUvtqDwPNYNoipLCXFqrEvBLnIoDrHSVq | dmhlgvUykChQAJzTfgSwBwEuWwBhLgcYUkBFAObtredxAUHWkCVaWfgMQCKIYUUrnHbguWZGrZXmYVRKAoZHVOnKdBsMYYaUqCWC | UtVaaGeRrAoupCumOJNesfunCVXnJhFoWBlKqebBYFZyooDIaYHPeQVgvCqEfCdmGpVtcLZJYhjvMSyFBZixzyMiykEoTZXMbFic | VmmyYkAgPawZuSqZmSiIEoEnssZHuLfbBhcpFixthpYsZUHgbxfpiffrgOFSlIYgejLLQuXMaGDxBbKHegWaHXpDBdxUUHZgJSLx | cCRKTqdUukzOdPwxqTBKyBEQPkIyIgAkxdaqXAiYbNwhuJVCoEqpBPSUApjLyvSXdyAqovEwSnsiIVvuviUCTiqcelbJuwvnCGyx | JuggBRLaLLqWhcCNoxEpbJZsXhcxSGyaPNRUrLoqrnKvpJfLvABueeZQOsmCERRMXasJIIJazBQoqLKVHfELiOwzolwgcXfOtLco | DJrJlWIgICwWgOuEQjnzUiZoCnGnKYXcJtrrgEYznFnKsOEmapuWzuwFVekgElVlYuwOoruMKqHoIOjHqLYZCUzoiSsIbPHZscaq | MOZiEsuFeHnouWlGmBcvNNZvXuOWqHlHKBDEFfYXcsaHNUGJPLUWpEGeHOKOilztleethxYoHLdAFBZdClYRRApEDoezGpuEvpwa | YvdqeMSnQPLoXYfExfduQrNSFRiTVKFPZdGATDpQMvtCHAdqTqMYjMpElQgcRjUuJUBMqwXJDzcVWlGiQSAirgVVDBGoAHqyzgdA | mkKBHtYOEsdXlpndKPOYHTQiqkFbTAsDbESpWeYXVSiBximrDHhjBARBZHkjWQjzZGITkqjecazQeCHvmkePqefSNieJtFTdbvRI
+
+  user6282603728132269670 | DSNUAvAFJxstogmWRPJmbNikPspeilFAZQJKzLRdxJpyOQJeQbltpxqnYJQtWwihrPbvZoOzbaMrMlLKBiAWjttcMskyfguSFidf | pSYiwZdqValtHyYGoYwkVYGawNErokKdMTiNCJUrcKTQWSQWKGixRVDxJTcaCfUXHMLxSSvDdFTVjTuxqWGWkWlxKocypFUGupqH | YBoLQdTXAQpjUgZReUGUfAOzsrBMKZyoZCdwxWJrOBkRlbbpXUmZLQxHHnDgnLNCNEnxozGPFCGEOVilyqLCixqDIsPNhccTdhbq | UQNzeZJXzbvwwupufEHeacjxxrTGCYfppLsbOCxLyfvuhZYPmoSyhKupkGRkHsYSnQVCFHCokWmHFWnLbYctVGdAunsPnkDjQAPk | HkqgViwhjGaBGUXJikhpwPMFCxqtOxoIunZQjmeKcytoItvGrfvcztncPzUukauoovIoQRmBCcQhJpoZxDLmXcpQJgFAbDYsbBGc | VDazXEFSiKZSKoSPMpAnFNAzqbrGcZwwrSMjFIJoEJPfvDzdwWwiVmHRkRGuFzwrXTOAKOiazelzsQFMAARAZdreFMWzKIwXieCP | lwbhKgtyTCZYJZmeRbVmWzkmPsWvdURifyZgGuSwVRrcCDCmrwvEdnFTWgCsYmcqzFgziAjgakhSuJjyixzoNThbtIgTkPuzAMVX | cKRURxsRlJvcKgrRQwMFeRLKCWfiavzTKqTJbYbWKZgOkZuutCIltPbwufcIMPDRWdgAZVaPqGCussiIxcFjMHMioVNLLQklptbG | OzGsnjbnnUtzsxjSVLpukwOcdegoTYrBLhOISwiNdNMGzKXBbDIRpBQqvNFEUEVfMPPJIWGSVzvSGTyAazIOvSMnWeEdKnEuggge | aHOwSIrvztvWYhrsdYaYGjtdjLTiVgfZluTgohVwNABYlZyiYPdrZgmMCFTQLOXqcbBbtahLNzPxdtoeqxrCBAussTPjmJrIzxns
+(2 rows)
+
+Time: 2ms total (execution 1ms / network 1ms)
+</code></pre>
+<h2 id="Run-the-YCSB-benchmark"><a href="#Run-the-YCSB-benchmark" class="headerlink" title="Run the YCSB benchmark"></a>Run the YCSB benchmark</h2><pre><code>[root@cockroach-db-host go-ycsb]# ./bin/go-ycsb run --help
+YCSB run benchmark
+
+Usage:
+  go-ycsb run db [flags]
+
+Flags:
+  -h, --help                    help for run
+      --interval int            Interval of outputting measurements in seconds (default 10)
+  -p, --prop stringArray        Specify a property value with name=value
+  -P, --property_file strings   Spefify a property file
+      --table string            Use the table name instead of the default &quot;usertable&quot;
+      --target int              Attempt to do n operations per second (default: unlimited) - can also be specified as the &quot;target&quot; property
+      --threads int             Execute using n threads - can also be specified as the &quot;threadcount&quot; property (default 1)
+
+[root@cockroach-db-host go-ycsb]# ./bin/go-ycsb run cockroach -P workloads/workloadd --threads 96 -p pg.host=cockroach-db-host-ip -p pg.port=26257 -p pg.user=root -p pg.db=test -p pg.sslmode=disable
+Run finished, takes 41m57.357806424s
+INSERT - Takes(s): 2517.3, Count: 4992285, OPS: 1983.2, Avg(us): 5053, Min(us): 1214, Max(us): 32863, 99th(us): 26719, 99.9th(us): 31471, 99.99th(us): 32671
+READ   - Takes(s): 2517.3, Count: 94554325, OPS: 37561.2, Avg(us): 2131, Min(us): 389, Max(us): 20687, 99th(us): 11543, 99.9th(us): 19695, 99.99th(us): 20591
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/pingcap/go-ycsb">https://github.com/pingcap/go-ycsb</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/brianfrankcooper/YCSB/wiki/Core-Workloads">https://github.com/brianfrankcooper/YCSB/wiki/Core-Workloads</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload">https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.scylladb.com/product/benchmarks/scylla-vs-cockroachdb/">https://www.scylladb.com/product/benchmarks/scylla-vs-cockroachdb/</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/@siddontang/use-go-ycsb-to-benchmark-different-databases-8850f6edb3a7">https:&#x2F;&#x2F;medium.com&#x2F;@siddontang&#x2F;use-go-ycsb-to-benchmark-different-databases-8850f6edb3a7</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cockroachdb/docs/blob/master/v2.1/cockroach-workload.md">https://github.com/cockroachdb/docs/blob/master/v2.1/cockroach-workload.md</a></li>
+<li><a target="_blank" rel="noopener" href="https://research.yahoo.com/news/yahoo-cloud-serving-benchmark/">Yahoo announcement</a></li>
+<li><a target="_blank" rel="noopener" href="https://courses.cs.duke.edu/fall13/compsci590.4/838-CloudPapers/ycsb.pdf">Paper - Benchmarking Cloud Serving Systems with YCSB</a></li>
+<li><a target="_blank" rel="noopener" href="https://s.yimg.com/ge/labs/v1/files/ycsb-v4.pdf">Yahoo lab experiments</a></li>
+<li><a target="_blank" rel="noopener" href="https://helenchw.github.io/files/ycsb-overview.pdf">A Quick Introduction to YCSB</a></li>
+<li><a target="_blank" rel="noopener" href="https://benchant.com/blog/ycsb">The Ultimate YCSB Benchmark Guide 2021</a></li>
+<li><a target="_blank" rel="noopener" href="http://highscalability.com/blog/2021/2/17/benchmark-ycsb-numbers-for-redis-mongodb-couchbase2-yugabyte.html">http://highscalability.com/blog/2021/2/17/benchmark-ycsb-numbers-for-redis-mongodb-couchbase2-yugabyte.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/YCSB">https://en.wikipedia.org/wiki/YCSB</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CockroachDB/" rel="tag"><i class="fa fa-tag"></i> CockroachDB</a>
+              <a href="/tags/YCSB/" rel="tag"><i class="fa fa-tag"></i> YCSB</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/the-highway-to-fantasy-land/" rel="prev" title="The Highway to Fantasy Land">
+                  <i class="fa fa-angle-left"></i> The Highway to Fantasy Land
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/limit-usable-memory-size-in-linux-grub/" rel="next" title="Limit usable memory size in Linux grub">
+                  Limit usable memory size in Linux grub <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Performance tools checklistThe following tools can be used for the first look at any performance issues. By executing these commands in the poorly performing Linux system, it would help solve the perf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux performance analysis in 60 seconds">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/linux-performance-analysis-in-60-seconds/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="Performance tools checklistThe following tools can be used for the first look at any performance issues. By executing these commands in the poorly performing Linux system, it would help solve the perf">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-03-01T17:46:00.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="RCA">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/linux-performance-analysis-in-60-seconds/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/linux-performance-analysis-in-60-seconds/","path":"blog/linux-performance-analysis-in-60-seconds/","title":"Linux performance analysis in 60 seconds"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux performance analysis in 60 seconds | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Performance-tools-checklist"><span class="nav-number">1.</span> <span class="nav-text">Performance tools checklist</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#uptime"><span class="nav-number">2.</span> <span class="nav-text">uptime</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lscpu"><span class="nav-number">3.</span> <span class="nav-text">lscpu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#free-m"><span class="nav-number">4.</span> <span class="nav-text">free -m</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dmesg-tail"><span class="nav-number">5.</span> <span class="nav-text">dmesg | tail</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vmstat-1"><span class="nav-number">6.</span> <span class="nav-text">vmstat 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iostat-xz-1"><span class="nav-number">7.</span> <span class="nav-text">iostat -xz 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sar-n-DEV-1"><span class="nav-number">8.</span> <span class="nav-text">sar -n DEV 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sar-n-TCP-ETCP-1"><span class="nav-number">9.</span> <span class="nav-text">sar -n TCP,ETCP 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mpstat-P-ALL-1"><span class="nav-number">10.</span> <span class="nav-text">mpstat -P ALL 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pidstat-1"><span class="nav-number">11.</span> <span class="nav-text">pidstat 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#top"><span class="nav-number">12.</span> <span class="nav-text">top</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-sar-to-understand-system-activity/" rel="bookmark">
+        <time class="popular-posts-time">2022-07-06</time>
+        <br>
+      Using sar to understand system activity
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/fio-benchmark-on-multiple-devices/" rel="bookmark">
+        <time class="popular-posts-time">2021-10-12</time>
+        <br>
+      fio benchmark on multiple devices
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/understanding-await-in-iostat/" rel="bookmark">
+        <time class="popular-posts-time">2021-03-10</time>
+        <br>
+      Understanding await in iostat
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/setup-cockroachdb-in-docker-container/" rel="bookmark">
+        <time class="popular-posts-time">2022-12-02</time>
+        <br>
+      Setup CockroachDB in docker container
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-dm-delay-to-emulate-slower-ssd-on-nvme-device/" rel="bookmark">
+        <time class="popular-posts-time">2023-06-03</time>
+        <br>
+      Using dm-delay to emulate slower SSD on NVME device
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/linux-performance-analysis-in-60-seconds/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux performance analysis in 60 seconds | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux performance analysis in 60 seconds
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-03-01 09:46:00" itemprop="dateCreated datePublished" datetime="2023-03-01T09:46:00-08:00">2023-03-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Performance-tools-checklist"><a href="#Performance-tools-checklist" class="headerlink" title="Performance tools checklist"></a>Performance tools checklist</h2><p>The following tools can be used for the first look at any performance issues. By executing these commands in the poorly performing Linux system, it would help solve the performance issue or reveal the clues for the next step of performance issue analysis.</p>
+<ul>
+<li>uptime</li>
+<li>dmesg | tail</li>
+<li>lscpu</li>
+<li>free -m</li>
+<li>lsblk</li>
+<li>vmstat 1</li>
+<li>mpstat -P ALL 1</li>
+<li>pidstat -u 1</li>
+<li>pidstat -dt 1</li>
+<li>iostat -ktdx 1</li>
+<li>sar -n DEV 1</li>
+<li>sar -n TCP,ETCP 1</li>
+<li>top</li>
+</ul>
+<h2 id="uptime"><a href="#uptime" class="headerlink" title="uptime"></a>uptime</h2><p>This is a quick way to view the load averages on the system. It includes the number of processes waiting to run on the CPUs and blocked in uninterruptible I&#x2F;O(usually disk I&#x2F;O). The three numbers are the moving load averages for the last 1-minute, 5-minute, and 15-minutes. In this example, it shows a significant load increase.</p>
+<pre><code>$ cat uptime.out
+ 20:22:25 up 97 days, 46 min,  1 user,  load average: 23.50, 11.97, 5.07
+</code></pre>
+<h2 id="lscpu"><a href="#lscpu" class="headerlink" title="lscpu"></a>lscpu</h2><p>This command is useful to know about the system CPU information.</p>
+<pre><code>$ lscpu
+Architecture:          x86_64
+CPU op-mode(s):        32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                96
+On-line CPU(s) list:   0-95
+Thread(s) per core:    2
+Core(s) per socket:    24
+Socket(s):             2
+NUMA node(s):          2
+Vendor ID:             GenuineIntel
+CPU family:            6
+Model:                 85
+Model name:            Intel(R) Xeon(R) Gold 6240R CPU @ 2.40GHz
+Stepping:              7
+CPU MHz:               2315.744
+CPU max MHz:           4000.0000
+CPU min MHz:           1000.0000
+BogoMIPS:              4800.00
+Virtualization:        VT-x
+L1d cache:             32K
+L1i cache:             32K
+L2 cache:              1024K
+L3 cache:              36608K
+NUMA node0 CPU(s):     0-23,48-71
+NUMA node1 CPU(s):     24-47,72-95
+Flags:                 fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 cdp_l3 invpcid_single intel_ppin ssbd mba ibrs ibpb stibp ibrs_enhanced tpr_shadow vnmi flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm mpx rdt_a avx512f avx512dq rdseed adx smap clflushopt clwb intel_pt avx512cd avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local dtherm ida arat pln pts pku ospke avx512_vnni md_clear flush_l1d arch_capabilities
+</code></pre>
+<h2 id="free-m"><a href="#free-m" class="headerlink" title="free -m"></a>free -m</h2><p>This shows the total and available memory in MB. Generally, the available memory is the sum of free and buff&#x2F;cache. This is because the buff&#x2F;cache can be flushed to disk as needed.</p>
+<pre><code>$ free -m
+              total        used        free      shared  buff/cache   available
+Mem:          61939        5954        1561         270       54424       52116
+Swap:          4095         198        3897
+</code></pre>
+<h2 id="dmesg-tail"><a href="#dmesg-tail" class="headerlink" title="dmesg | tail"></a>dmesg | tail</h2><p>This shows the last 10 system messages. Sometimes, the error messages shown here could indiate the cause for the performance issue.</p>
+<pre><code>$ dmesg | tail
+[6832692.919986] bash (27857): drop_caches: 3
+[7550537.761563] Device 1009069759715322128 added ffff888248373000 with mode 0x48002 fastpath 0 npath 0
+[7550538.267764] removing device 1009069759715322128
+[7550544.483191] Device 1009069759715322128 added ffff888801cd6000 with mode 0x48002 fastpath 0 npath 0
+[7551342.509806] trace_kprobe: Could not probe notrace function vfs_stat_set_lookup_flags
+[7551342.512439] trace_kprobe: Could not probe notrace function vfs_stat_set_lookup_flags
+[7551359.071096] trace_kprobe: Could not probe notrace function vfs_stat_set_lookup_flags
+[7551359.073699] trace_kprobe: Could not probe notrace function vfs_stat_set_lookup_flags
+[8276360.681817] RPC: fragment too large: 612067950
+[8281013.520451] nfsd: peername failed (err 107)!
+</code></pre>
+<h2 id="vmstat-1"><a href="#vmstat-1" class="headerlink" title="vmstat 1"></a>vmstat 1</h2><p>This is a simple but very useful command including a system performance summary for the CPU, memory, swap and I&#x2F;O. In many cases, you could get the cause or clue for the performance issue. In this example, it indicates the number of running processes(or threads) is ~25 and the ~22% CPU spent in user space. Notice that the first report gives the averages since the last reboot. Usually, we look at the report starting from the second sampling period.</p>
+<pre><code>$ vmstat 1 3
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+31  0 202752 1599384  45844 55684312    0    0    62   785    0    0  2  1 97  0  0
+
+24  0 202752 1774464  45468 55505764    0   88 328816   116 145768 111575 22  2 75  1  0
+27  0 202752 1577296  45476 55693220    0    0 185692    44 148113 108146 23  2 75  0  0
+</code></pre>
+<h2 id="iostat-xz-1"><a href="#iostat-xz-1" class="headerlink" title="iostat -xz 1"></a>iostat -xz 1</h2><p>This is another useful tool to analyze the disk I&#x2F;O performance. The first report provides statistics since the last system boot.</p>
+<p>The metrics include</p>
+<ul>
+<li><p>merges&#x2F;s - rrqm&#x2F;s, wrqm&#x2F;s</p>
+</li>
+<li><p>iops - reads&#x2F;s, writes&#x2F;s</p>
+</li>
+<li><p>throughput - rKB&#x2F;s, wKB&#x2F;s</p>
+</li>
+<li><p>io size - avgrq-sz</p>
+</li>
+<li><p>queue size - avgqu-sz</p>
+</li>
+<li><p>wait time in ms - await, r_await, w_await</p>
+</li>
+<li><p>service time in ms - svctm</p>
+</li>
+<li><p>disk bandwidth utilization - %util</p>
+<p>  $ iostat -xz 1 3<br>  Linux 5.7.12-1.el7.elrepo.x86_64 (localhost) 03&#x2F;20&#x2F;2023 <em>x86_64</em> (96 CPU)</p>
+<p>  avg-cpu:  %user   %nice %system %iowait  %steal   %idle<br>         2.31    0.00    0.52    0.05    0.00   97.11<br>  Device:         rrqm&#x2F;s   wrqm&#x2F;s     r&#x2F;s     w&#x2F;s    rkB&#x2F;s    wkB&#x2F;s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util<br>  nvme4n1           0.09     0.77   13.66   13.87   555.49   681.99    89.89     0.00    0.14    0.22    0.06   0.29   0.81<br>  nvme3n1           1.41    25.85   12.89  269.43   567.87 14516.73   106.86     0.02    0.09    0.23    0.08   0.24   6.75<br>  nvme5n1           1.40    25.13   15.25  261.88   576.08 14394.15   108.04     0.02    0.09    0.20    0.08   0.24   6.72<br>  nvme0n1           0.17     0.47    0.71    0.75    15.99    22.02    52.06     0.00    0.42    0.14    0.69   0.39   0.06<br>  nvme2n1           0.18     0.84   14.35   14.01   559.02   687.26    87.88     0.00    0.14    0.22    0.07   0.30   0.84<br>  nvme1n1           0.00     0.00    0.00    0.00     0.01     0.00    52.12     0.00    0.10    0.10    0.00   0.13   0.00<br>  nvme6n1           1.44    25.28   11.29  259.40   562.39 14368.24   110.32     0.02    0.09    0.25    0.08   0.24   6.60<br>  nvme8n1           0.22     0.80   13.58   13.64   554.13   676.59    90.43     0.00    0.15    0.23    0.07   0.29   0.80<br>  nvme7n1           1.44    25.69   11.51  258.52   556.81 14250.59   109.67     0.02    0.08    0.25    0.08   0.24   6.56<br>  nvme9n1           0.10     0.91   13.86   13.54   550.89   668.71    89.04     0.00    0.14    0.22    0.07   0.29   0.81<br>  md0               0.00     0.00   12.31   15.97   655.15   414.27    75.63     0.00    0.00    0.00    0.00   0.00   0.00</p>
+<p>  avg-cpu:  %user   %nice %system %iowait  %steal   %idle<br>        21.63    0.00    2.10    1.23    0.00   75.04<br>  Device:         rrqm&#x2F;s   wrqm&#x2F;s     r&#x2F;s     w&#x2F;s    rkB&#x2F;s    wkB&#x2F;s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util<br>  nvme4n1           8.00     0.00 2264.00    0.00 83248.00     0.00    73.54     0.49    0.22    0.22    0.00   0.29  65.30<br>  nvme0n1           0.00    16.00    0.00    7.00     0.00    92.00    26.29     0.14   19.29    0.00   19.29  15.71  11.00<br>  nvme2n1           3.00     0.00 2264.00    0.00 82724.00     0.00    73.08     0.50    0.22    0.22    0.00   0.30  67.50<br>  nvme8n1           8.00     0.00 2180.00    4.00 80624.00    20.00    73.85     0.47    0.22    0.22    0.00   0.30  64.60<br>  nvme9n1           6.00     0.00 2254.00    0.00 82180.00     0.00    72.92     0.49    0.22    0.22    0.00   0.28  64.10<br>  md0               0.00     0.00 8986.00    8.00 328704.00    20.00    73.10     0.00    0.00    0.00    0.00   0.00   0.00</p>
+<p>  avg-cpu:  %user   %nice %system %iowait  %steal   %idle<br>        22.84    0.00    1.78    0.44    0.00   74.94<br>  Device:         rrqm&#x2F;s   wrqm&#x2F;s     r&#x2F;s     w&#x2F;s    rkB&#x2F;s    wkB&#x2F;s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util<br>  nvme4n1           3.00     0.00 1153.00    0.00 47180.00     0.00    81.84     0.25    0.22    0.22    0.00   0.44  50.80<br>  nvme0n1           0.00     0.00    5.00    0.00    40.00     0.00    16.00     0.00    0.20    0.20    0.00   0.40   0.20<br>  nvme2n1           2.00     0.00 1140.00    0.00 47260.00     0.00    82.91     0.26    0.23    0.23    0.00   0.42  48.20<br>  nvme8n1           2.00     0.00 1101.00    8.00 46696.00    32.00    84.27     0.25    0.22    0.22    0.00   0.45  50.10<br>  nvme9n1           5.00     1.00 1112.00    2.00 44516.00    12.00    79.94     0.25    0.22    0.22    0.00   0.43  48.00<br>  md0               0.00     0.00 4516.00   19.00 185620.00    44.00    81.88     0.00    0.00    0.00    0.00   0.00   0.00</p>
+</li>
+</ul>
+<h2 id="sar-n-DEV-1"><a href="#sar-n-DEV-1" class="headerlink" title="sar -n DEV 1"></a>sar -n DEV 1</h2><p>The sar tool has many options for different metrics. Here we use an option to look at the network device metrics. This is very useful to check the current network throughput on each interface.</p>
+<pre><code>$ sar -n DEV 1 3
+Linux 5.7.12-1.el7.elrepo.x86_64 (localhost) 03/20/2023 _x86_64_ (96 CPU)
+
+08:22:25 PM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s
+08:22:26 PM        lo      9.00      9.00      0.73      0.73      0.00      0.00      0.00
+08:22:26 PM      eno1     57.00      8.00      3.47      0.47      0.00      0.00      0.00
+08:22:26 PM      eno2      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+08:22:26 PM enp175s0f0  22353.00  22359.00  13986.21  13454.67     0.00      0.00      0.00
+08:22:26 PM enp175s0f1     0.00      0.00      0.00      0.00     0.00      0.00      0.00
+08:22:26 PM   docker0      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+08:22:26 PM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s
+08:22:27 PM        lo      8.00      8.00      0.47      0.47      0.00      0.00      0.00
+08:22:27 PM      eno1     60.00      6.00      3.66      0.43      0.00      0.00      0.00
+08:22:27 PM      eno2      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+08:22:27 PM enp175s0f0  23500.00  23497.00  14913.20  13944.36     0.00      0.00      0.00
+08:22:27 PM enp175s0f1     0.00      0.00      0.00      0.00      0.00      0.00      0.00
+08:22:27 PM   docker0      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+08:22:27 PM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s
+08:22:28 PM        lo     12.00     12.00      1.19      1.19      0.00      0.00      0.00
+08:22:28 PM      eno1     66.00      8.00      4.11      0.63      0.00      0.00      0.00
+08:22:28 PM      eno2      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+08:22:28 PM enp175s0f0  23584.00  23590.00  14889.09  14073.68     0.00      0.00      0.00
+08:22:28 PM enp175s0f1     0.00      0.00      0.00      0.00      0.00      0.00      0.00
+08:22:28 PM   docker0      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+Average:        IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s
+Average:           lo      9.67      9.67      0.80      0.80      0.00      0.00      0.00
+Average:         eno1     61.00      7.33      3.75      0.51      0.00      0.00      0.00
+Average:         eno2      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+Average:    enp175s0f0  23145.67  23148.67  14596.16  13824.24     0.00      0.00      0.00
+Average:    enp175s0f1     0.00      0.00      0.00      0.00      0.00      0.00      0.00
+Average:      docker0      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+</code></pre>
+<h2 id="sar-n-TCP-ETCP-1"><a href="#sar-n-TCP-ETCP-1" class="headerlink" title="sar -n TCP,ETCP 1"></a>sar -n TCP,ETCP 1</h2><p>This command shows the following three useful metrics</p>
+<ul>
+<li><p>active&#x2F;s - The number of locally initiated TCP connections per second</p>
+</li>
+<li><p>passive&#x2F;s - The number of remotely initiated TCP connections per second</p>
+</li>
+<li><p>retrans&#x2F;s - The number of TCP retransmits per second</p>
+<p>  $ sar -n TCP,ETCP 1<br>  Linux 5.7.12-1.el7.elrepo.x86_64 (init500-c4) 03&#x2F;20&#x2F;2023 <em>x86_64</em> (96 CPU)</p>
+<p>  08:48:02 PM  active&#x2F;s passive&#x2F;s    iseg&#x2F;s    oseg&#x2F;s<br>  08:48:03 PM      1.00      0.00  23194.00  23200.00</p>
+<p>  08:48:02 PM  atmptf&#x2F;s  estres&#x2F;s retrans&#x2F;s isegerr&#x2F;s   orsts&#x2F;s<br>  08:48:03 PM      0.00      0.00      0.00      0.00      4.00</p>
+<p>  08:48:03 PM  active&#x2F;s passive&#x2F;s    iseg&#x2F;s    oseg&#x2F;s<br>  08:48:04 PM      0.00      0.00  23410.00  23406.00</p>
+<p>  08:48:03 PM  atmptf&#x2F;s  estres&#x2F;s retrans&#x2F;s isegerr&#x2F;s   orsts&#x2F;s<br>  08:48:04 PM      0.00      0.00      0.00      0.00      8.00</p>
+<p>  08:48:04 PM  active&#x2F;s passive&#x2F;s    iseg&#x2F;s    oseg&#x2F;s<br>  08:48:05 PM      1.00      0.00  23698.00  23706.00</p>
+<p>  08:48:04 PM  atmptf&#x2F;s  estres&#x2F;s retrans&#x2F;s isegerr&#x2F;s   orsts&#x2F;s<br>  08:48:05 PM      0.00      0.00      0.00      0.00      4.00</p>
+<p>  Average:     active&#x2F;s passive&#x2F;s    iseg&#x2F;s    oseg&#x2F;s<br>  Average:         0.67      0.00  23434.00  23437.33</p>
+<p>  Average:     atmptf&#x2F;s  estres&#x2F;s retrans&#x2F;s isegerr&#x2F;s   orsts&#x2F;s<br>  Average:         0.00      0.00      0.00      0.00      5.33</p>
+</li>
+</ul>
+<h2 id="mpstat-P-ALL-1"><a href="#mpstat-P-ALL-1" class="headerlink" title="mpstat -P ALL 1"></a>mpstat -P ALL 1</h2><p>This command helps identify the per-CPU core usage. You may look for if any of the CPU cores has utilization(%usr+%sys) close to 100%.</p>
+<pre><code>$ mpstat -P ALL 1 3
+Linux 5.7.12-1.el7.elrepo.x86_64 (init500-c4)   03/20/2023  _x86_64_    (96 CPU)
+
+08:22:25 PM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
+08:22:26 PM  all   21.11    0.00    1.79    1.23    0.00    0.20    0.00    0.00    0.00   75.67
+08:22:26 PM    0   27.17    0.00    2.17    2.17    0.00    0.00    0.00    0.00    0.00   68.48
+08:22:26 PM    1    4.12    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   95.88
+08:22:26 PM    2    7.00    0.00    1.00    0.00    0.00    0.00    0.00    0.00    0.00   92.00
+08:22:26 PM    3   12.00    0.00    1.00    1.00    0.00    0.00    0.00    0.00    0.00   86.00
+08:22:26 PM    4   15.00    0.00    1.00    1.00    0.00    0.00    0.00    0.00    0.00   83.00
+08:22:26 PM    5   16.83    0.00    1.98    0.00    0.00    0.00    0.00    0.00    0.00   81.19
+08:22:26 PM    6   24.00    0.00    1.00    2.00    0.00    0.00    0.00    0.00    0.00   73.00
+[...]
+
+08:22:26 PM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
+08:22:27 PM  all   22.84    0.00    1.53    0.44    0.00    0.28    0.00    0.00    0.00   74.91
+08:22:27 PM    0   10.64    0.00    1.06    0.00    0.00    3.19    0.00    0.00    0.00   85.11
+08:22:27 PM    1   35.35    0.00    3.03    1.01    0.00    0.00    0.00    0.00    0.00   60.61
+08:22:27 PM    2   17.17    0.00    0.00    1.01    0.00    0.00    0.00    0.00    0.00   81.82
+08:22:27 PM    3   40.00    0.00    3.00    1.00    0.00    0.00    0.00    0.00    0.00   56.00
+08:22:27 PM    4    8.08    0.00    1.01    0.00    0.00    0.00    0.00    0.00    0.00   90.91
+08:22:27 PM    5   27.00    0.00    1.00    1.00    0.00    0.00    0.00    0.00    0.00   71.00
+08:22:27 PM    6   14.00    0.00    1.00    0.00    0.00    0.00    0.00    0.00    0.00   85.00
+[...]
+
+08:22:27 PM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
+08:22:28 PM  all   22.42    0.00    1.57    0.42    0.00    0.20    0.00    0.00    0.00   75.39
+08:22:28 PM    0   29.35    0.00    2.17    0.00    0.00    0.00    0.00    0.00    0.00   68.48
+08:22:28 PM    1   20.41    0.00    1.02    0.00    0.00    0.00    0.00    0.00    0.00   78.57
+08:22:28 PM    2   18.18    0.00    1.01    0.00    0.00    0.00    0.00    0.00    0.00   80.81
+08:22:28 PM    3   10.89    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   89.11
+08:22:28 PM    4   18.00    0.00    1.00    0.00    0.00    0.00    0.00    0.00    0.00   81.00
+08:22:28 PM    5    5.05    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   94.95
+08:22:28 PM    6   21.21    0.00    1.01    0.00    0.00    0.00    0.00    0.00    0.00   77.78
+[...]
+
+Average:     CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
+Average:     all   22.12    0.00    1.63    0.69    0.00    0.23    0.00    0.00    0.00   75.32
+Average:       0   22.30    0.00    1.80    0.72    0.00    1.08    0.00    0.00    0.00   74.10
+Average:       1   20.07    0.00    1.36    0.34    0.00    0.00    0.00    0.00    0.00   78.23
+Average:       2   14.09    0.00    0.67    0.34    0.00    0.00    0.00    0.00    0.00   84.90
+Average:       3   20.93    0.00    1.33    0.66    0.00    0.00    0.00    0.00    0.00   77.08
+Average:       4   13.71    0.00    1.00    0.33    0.00    0.00    0.00    0.00    0.00   84.95
+Average:       5   16.33    0.00    1.00    0.33    0.00    0.00    0.00    0.00    0.00   82.33
+Average:       6   19.73    0.00    1.00    0.67    0.00    0.00    0.00    0.00    0.00   78.60
+[...]
+</code></pre>
+<h2 id="pidstat-1"><a href="#pidstat-1" class="headerlink" title="pidstat 1"></a>pidstat 1</h2><p>This command shows the CPU usage per process. In this example, the process <em>cockroach</em> consumes 100% CPU. Notice that the system has toally 9600%(96 cores) CPU bandwidth available. There is an option <em>-t</em> which shows the per-thread CPU usage. Also, the option <em>-d</em> shows the disk I&#x2F;O per process(or per thread when to use with option <em>-t</em>).</p>
+<pre><code>$ pidstat 1 3
+Linux 5.7.12-1.el7.elrepo.x86_64 (localhost) 03/20/2023 _x86_64_ (96 CPU)
+
+08:22:25 PM   UID       PID    %usr %system  %guest    %CPU   CPU  Command
+08:22:26 PM     0       568    0.00   12.62    0.00   12.62     9  kswapd0
+08:22:26 PM     0     27131  100.00  100.00    0.00  100.00    85  cockroach
+08:22:26 PM     0     42056    0.97    1.94    0.00    2.91    40  pidstat
+08:22:26 PM     0     42060    0.97    1.94    0.00    2.91    89  top
+08:22:26 PM     0     53123    0.00    0.97    0.00    0.97    74  kworker/74:0-events
+08:22:26 PM     0     94796    0.00    1.94    0.00    1.94    41  kworker/u192:1-mlx5_cmd_0000:af:00.0
+
+08:22:26 PM   UID       PID    %usr %system  %guest    %CPU   CPU  Command
+08:22:27 PM     0       568    0.00    3.00    0.00    3.00    58  kswapd0
+08:22:27 PM     0      3175    0.00    1.00    0.00    1.00    19  containerd
+08:22:27 PM     0     17494    0.00    1.00    0.00    1.00    33  kworker/33:2-events
+08:22:27 PM     0     27131  100.00  100.00    0.00  100.00    79  cockroach
+08:22:27 PM     0     38660    0.00    1.00    0.00    1.00    32  kworker/32:1-mm_percpu_wq
+08:22:27 PM     0     39110    0.00    1.00    0.00    1.00    46  kworker/46:0-events
+08:22:27 PM     0     41667    0.00    1.00    0.00    1.00    80  kworker/80:2-events
+08:22:27 PM     0     42056    1.00    4.00    0.00    5.00    40  pidstat
+08:22:27 PM     0     42060    2.00    2.00    0.00    4.00    89  top
+08:22:27 PM     0     94796    0.00    1.00    0.00    1.00    81  kworker/u192:1-mlx5_cmd_0000:af:00.0
+
+08:22:27 PM   UID       PID    %usr %system  %guest    %CPU   CPU  Command
+08:22:28 PM     0        11    0.00    1.00    0.00    1.00    57  rcu_sched
+08:22:28 PM     0       568    0.00    7.00    0.00    7.00    58  kswapd0
+08:22:28 PM     0     27131  100.00  100.00    0.00  100.00    40  cockroach
+08:22:28 PM     0     41616    0.00    1.00    0.00    1.00    23  iostat
+08:22:28 PM     0     42056    1.00    2.00    0.00    3.00    41  pidstat
+08:22:28 PM     0     53853    0.00    1.00    0.00    1.00    29  kworker/29:1-events
+08:22:28 PM     0     87419    0.00    1.00    0.00    1.00     0  kworker/0:0-events
+
+Average:      UID       PID    %usr %system  %guest    %CPU   CPU  Command
+Average:        0        11    0.00    0.33    0.00    0.33     -  rcu_sched
+Average:        0       568    0.00    7.59    0.00    7.59     -  kswapd0
+Average:        0      3175    0.00    0.33    0.00    0.33     -  containerd
+Average:        0     17494    0.00    0.33    0.00    0.33     -  kworker/33:2-mm_percpu_wq
+Average:        0     27131  100.00  100.00    0.00  100.00     -  cockroach
+Average:        0     38660    0.00    0.33    0.00    0.33     -  kworker/32:1-mm_percpu_wq
+Average:        0     39110    0.00    0.33    0.00    0.33     -  kworker/46:0-events
+Average:        0     41616    0.00    0.33    0.00    0.33     -  iostat
+Average:        0     41667    0.00    0.33    0.00    0.33     -  kworker/80:2-events
+Average:        0     42056    0.99    2.64    0.00    3.63     -  pidstat
+Average:        0     53123    0.00    0.33    0.00    0.33     -  kworker/74:0-events
+Average:        0     53853    0.00    0.33    0.00    0.33     -  kworker/29:1-events
+Average:        0     87419    0.00    0.33    0.00    0.33     -  kworker/0:0-events
+Average:        0     94796    0.00    0.99    0.00    0.99     -  kworker/u192:1-dm-thin
+</code></pre>
+<h2 id="top"><a href="#top" class="headerlink" title="top"></a>top</h2><p>This command shows the CPU and memory usage per process. It’s very useful when you need to create a CPU or memory profile per process. You may notice that it also shows the load averages. If you want to collect the metrics by saving to file, you can use the command like <em>top -b -d1 -n3</em>.</p>
+<pre><code>$ top
+top - 20:22:25 up 97 days, 46 min,  1 user,  load average: 23.50, 11.97, 5.07
+Tasks: 979 total,   1 running, 405 sleeping,   0 stopped,   0 zombie
+%Cpu(s): 23.2 us,  3.0 sy,  0.0 ni, 71.2 id,  2.3 wa,  0.0 hi,  0.3 si,  0.0 st
+KiB Mem : 63426556 total,  1962168 free,  6098708 used, 55365680 buff/cache
+KiB Swap:  4194300 total,  3991548 free,   202752 used. 53364460 avail Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+27131 root      20   0   19.0g   1.3g  46196 S  2244  2.2   7412:53 cockroach
+[...]
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+27131 root      20   0   19.0g   1.3g  46196 R  2177  2.2   7413:15 cockroach
+[...]
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+27131 root      20   0   19.0g   1.3g  46208 S  2323  2.2   7413:39 cockroach
+[...]
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/RCA/" rel="tag"><i class="fa fa-tag"></i> RCA</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/analyze-cockroach-performance-from-db-console/" rel="prev" title="Analyze Cockroach performance from the built-in DB console">
+                  <i class="fa fa-angle-left"></i> Analyze Cockroach performance from the built-in DB console
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/using-aws-cli-to-manage-ebs-volumes/" rel="next" title="Using AWS CLI to manage EBS volumes">
+                  Using AWS CLI to manage EBS volumes <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

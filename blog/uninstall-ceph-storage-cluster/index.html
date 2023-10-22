@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Check the pools, images and OSDs[ceph: root@host1 &#x2F;]$ ceph osd tree ID  CLASS  WEIGHT    TYPE NAME             STATUS  REWEIGHT  PRI-AFF -1         83.83411  root default -3         27.94470      host">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Uninstall ceph storage cluster">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/uninstall-ceph-storage-cluster/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="Check the pools, images and OSDs[ceph: root@host1 &#x2F;]$ ceph osd tree ID  CLASS  WEIGHT    TYPE NAME             STATUS  REWEIGHT  PRI-AFF -1         83.83411  root default -3         27.94470      host">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-03-15T19:36:00.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="Ceph">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/uninstall-ceph-storage-cluster/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/uninstall-ceph-storage-cluster/","path":"blog/uninstall-ceph-storage-cluster/","title":"Uninstall ceph storage cluster"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Uninstall ceph storage cluster | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Check-the-pools-images-and-OSDs"><span class="nav-number">1.</span> <span class="nav-text">Check the pools, images and OSDs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Remove-the-images-and-pools"><span class="nav-number">2.</span> <span class="nav-text">Remove the images and pools</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Remove-the-OSDs"><span class="nav-number">3.</span> <span class="nav-text">Remove the OSDs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Remove-the-cluster-hosts"><span class="nav-number">4.</span> <span class="nav-text">Remove the cluster hosts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Check-if-there-is-ceph-daemon-running"><span class="nav-number">5.</span> <span class="nav-text">Check if there is ceph daemon running</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Remove-the-ceph-storage-cluster"><span class="nav-number">6.</span> <span class="nav-text">Remove the ceph storage cluster</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cleanup-the-ceph-configuration-files"><span class="nav-number">7.</span> <span class="nav-text">Cleanup the ceph configuration files</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cleanup-the-ceph-block-devices"><span class="nav-number">8.</span> <span class="nav-text">Cleanup the ceph block devices</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/how-to-uninstall-ceph-storage-cluster/" rel="bookmark">
+        <time class="popular-posts-time">2021-10-14</time>
+        <br>
+      How to uninstall ceph storage cluster
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/setup-cockroachdb-cluster-with-haproxy-load-balancing/" rel="bookmark">
+        <time class="popular-posts-time">2022-12-01</time>
+        <br>
+      Setup CockroachDB cluster with HAProxy load balancing
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/install-and-uninstall-debuginfo-package-on-centos/" rel="bookmark">
+        <time class="popular-posts-time">2022-07-11</time>
+        <br>
+      Install and uninstall debuginfo package on CentOS
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-sar-to-understand-system-activity/" rel="bookmark">
+        <time class="popular-posts-time">2022-07-06</time>
+        <br>
+      Using sar to understand system activity
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/sysrq-linux-magic-system-request-key-hacks/" rel="bookmark">
+        <time class="popular-posts-time">2022-05-21</time>
+        <br>
+      SysRq - Linux Magic System Request Key Hacks
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/uninstall-ceph-storage-cluster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Uninstall ceph storage cluster | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Uninstall ceph storage cluster
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-03-15 12:36:00" itemprop="dateCreated datePublished" datetime="2023-03-15T12:36:00-07:00">2023-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Check-the-pools-images-and-OSDs"><a href="#Check-the-pools-images-and-OSDs" class="headerlink" title="Check the pools, images and OSDs"></a>Check the pools, images and OSDs</h2><pre><code>[ceph: root@host1 /]$ ceph osd tree
+ID  CLASS  WEIGHT    TYPE NAME             STATUS  REWEIGHT  PRI-AFF
+-1         83.83411  root default
+-3         27.94470      host host1
+ 0    ssd   3.49309          osd.0             up   1.00000  1.00000
+ 1    ssd   3.49309          osd.1             up   1.00000  1.00000
+ 2    ssd   3.49309          osd.2             up   1.00000  1.00000
+ 3    ssd   3.49309          osd.3             up   1.00000  1.00000
+ 4    ssd   3.49309          osd.4             up   1.00000  1.00000
+ 5    ssd   3.49309          osd.5             up   1.00000  1.00000
+ 6    ssd   3.49309          osd.6             up   1.00000  1.00000
+ 7    ssd   3.49309          osd.7             up   1.00000  1.00000
+-5         27.94470      host host2
+ 8    ssd   3.49309          osd.8             up   1.00000  1.00000
+ 9    ssd   3.49309          osd.9             up   1.00000  1.00000
+10    ssd   3.49309          osd.10            up   1.00000  1.00000
+11    ssd   3.49309          osd.11            up   1.00000  1.00000
+12    ssd   3.49309          osd.12            up   1.00000  1.00000
+13    ssd   3.49309          osd.13            up   1.00000  1.00000
+14    ssd   3.49309          osd.14            up   1.00000  1.00000
+15    ssd   3.49309          osd.15            up   1.00000  1.00000
+-7         27.94470      host host3
+16    ssd   3.49309          osd.16            up   1.00000  1.00000
+17    ssd   3.49309          osd.17            up   1.00000  1.00000
+18    ssd   3.49309          osd.18            up   1.00000  1.00000
+19    ssd   3.49309          osd.19            up   1.00000  1.00000
+20    ssd   3.49309          osd.20            up   1.00000  1.00000
+21    ssd   3.49309          osd.21            up   1.00000  1.00000
+22    ssd   3.49309          osd.22            up   1.00000  1.00000
+23    ssd   3.49309          osd.23            up   1.00000  1.00000
+
+[ceph: root@host1 /]$ ceph osd lspools
+1 device_health_metrics
+2 datapool
+
+[ceph: root@host1 /]$ rbd showmapped
+id  pool      namespace  image    snap  device
+0   datapool             rbdvol1  -     /dev/rbd0
+1   datapool             rbdvol2  -     /dev/rbd1
+2   datapool             rbdvol3  -     /dev/rbd2
+3   datapool             rbdvol4  -     /dev/rbd3
+</code></pre>
+<h2 id="Remove-the-images-and-pools"><a href="#Remove-the-images-and-pools" class="headerlink" title="Remove the images and pools"></a>Remove the images and pools</h2><pre><code>[ceph: root@host1 /]$ rbd unmap /dev/rbd0
+[ceph: root@host1 /]$ rbd unmap /dev/rbd1
+[ceph: root@host1 /]$ rbd unmap /dev/rbd2
+[ceph: root@host1 /]$ rbd unmap /dev/rbd3
+
+[ceph: root@host1 /]$ rbd showmapped
+
+[ceph: root@host1 /]$ rbd rm datapool/rbdvol1
+Removing image: 100% complete...done.
+[ceph: root@host1 /]$ rbd rm datapool/rbdvol2
+Removing image: 100% complete...done.
+[ceph: root@host1 /]$ rbd rm datapool/rbdvol3
+Removing image: 100% complete...done.
+[ceph: root@host1 /]$ rbd rm datapool/rbdvol4
+Removing image: 100% complete...done.
+
+[ceph: root@host1 /]$ ceph osd pool rm datapool datapool --yes-i-really-really-mean-it
+Error EPERM: pool deletion is disabled; you must first set the mon_allow_pool_delete config option to true before you can destroy a pool
+
+[ceph: root@host1 /]$ ceph tell mon.\* injectargs &#39;--mon-allow-pool-delete=true&#39;
+mon.host1: mon_allow_pool_delete = &#39;true&#39;
+mon.host1: &#123;&#125;
+mon.host3: mon_allow_pool_delete = &#39;true&#39;
+mon.host3: &#123;&#125;
+mon.host2: mon_allow_pool_delete = &#39;true&#39;
+mon.host2: &#123;&#125;
+[ceph: root@host1 /]$ ceph osd pool rm datapool datapool --yes-i-really-really-mean-it
+pool &#39;datapool&#39; removed
+</code></pre>
+<h2 id="Remove-the-OSDs"><a href="#Remove-the-OSDs" class="headerlink" title="Remove the OSDs"></a>Remove the OSDs</h2><pre><code>[ceph: root@host1 /]$ for i in `seq 0 23`
+&gt; do
+&gt; ceph osd down $i &amp;&amp; ceph osd destroy $i --force
+&gt; done
+marked down osd.0.
+destroyed osd.0
+[omitted...]
+
+[ceph: root@host1 /]$  ceph osd tree
+ID  CLASS  WEIGHT    TYPE NAME             STATUS     REWEIGHT  PRI-AFF
+-1         83.83411  root default
+-3         27.94470      host host1
+ 0    ssd   3.49309          osd.0         destroyed   1.00000  1.00000
+ 1    ssd   3.49309          osd.1         destroyed   1.00000  1.00000
+ 2    ssd   3.49309          osd.2         destroyed   1.00000  1.00000
+ 3    ssd   3.49309          osd.3         destroyed   1.00000  1.00000
+ 4    ssd   3.49309          osd.4         destroyed   1.00000  1.00000
+ 5    ssd   3.49309          osd.5         destroyed   1.00000  1.00000
+ 6    ssd   3.49309          osd.6         destroyed   1.00000  1.00000
+ 7    ssd   3.49309          osd.7         destroyed   1.00000  1.00000
+-5         27.94470      host host2
+ 8    ssd   3.49309          osd.8         destroyed   1.00000  1.00000
+ 9    ssd   3.49309          osd.9         destroyed   1.00000  1.00000
+10    ssd   3.49309          osd.10        destroyed   1.00000  1.00000
+11    ssd   3.49309          osd.11        destroyed   1.00000  1.00000
+12    ssd   3.49309          osd.12        destroyed   1.00000  1.00000
+13    ssd   3.49309          osd.13        destroyed   1.00000  1.00000
+14    ssd   3.49309          osd.14        destroyed   1.00000  1.00000
+15    ssd   3.49309          osd.15        destroyed   1.00000  1.00000
+-7         27.94470      host host3
+16    ssd   3.49309          osd.16        destroyed   1.00000  1.00000
+17    ssd   3.49309          osd.17        destroyed   1.00000  1.00000
+18    ssd   3.49309          osd.18        destroyed   1.00000  1.00000
+19    ssd   3.49309          osd.19        destroyed   1.00000  1.00000
+20    ssd   3.49309          osd.20        destroyed   1.00000  1.00000
+21    ssd   3.49309          osd.21        destroyed   1.00000  1.00000
+22    ssd   3.49309          osd.22        destroyed   1.00000  1.00000
+23    ssd   3.49309          osd.23               up   1.00000  1.00000
+</code></pre>
+<h2 id="Remove-the-cluster-hosts"><a href="#Remove-the-cluster-hosts" class="headerlink" title="Remove the cluster hosts"></a>Remove the cluster hosts</h2><pre><code>[ceph: root@host1 /]$ ceph orch host rm host3
+Removed host &#39;host3&#39;
+[ceph: root@host1 /]$ ceph orch host rm host2
+Removed host &#39;host2&#39;
+[ceph: root@host1 /]$ ceph orch host rm host1
+Removed host &#39;host1&#39;
+</code></pre>
+<h2 id="Check-if-there-is-ceph-daemon-running"><a href="#Check-if-there-is-ceph-daemon-running" class="headerlink" title="Check if there is ceph daemon running"></a>Check if there is ceph daemon running</h2><pre><code>[ceph: root@host1 /]$ ceph orch ps host3
+No daemons reported
+[ceph: root@host1 /]$ ceph orch ps host2
+No daemons reported
+[ceph: root@host1 /]$ ceph orch ps host1
+No daemons reported
+</code></pre>
+<h2 id="Remove-the-ceph-storage-cluster"><a href="#Remove-the-ceph-storage-cluster" class="headerlink" title="Remove the ceph storage cluster"></a>Remove the ceph storage cluster</h2><pre><code>[root@host1 ~]$ cephadm rm-cluster --fsid fec2332e-1b0b-11ec-abbe-ac1f6bc8d268 --force
+[root@host1 ~]$ cephadm ls
+[]
+</code></pre>
+<h2 id="Cleanup-the-ceph-configuration-files"><a href="#Cleanup-the-ceph-configuration-files" class="headerlink" title="Cleanup the ceph configuration files"></a>Cleanup the ceph configuration files</h2><pre><code>[root@host1 ~]$ rm -rf /etc/ceph
+[root@host1 ~]$ rm -rf /var/lib/ce
+ceph/       cephadm/    certmonger/
+[root@host1 ~]$ rm -rf /var/lib/ceph*
+</code></pre>
+<h2 id="Cleanup-the-ceph-block-devices"><a href="#Cleanup-the-ceph-block-devices" class="headerlink" title="Cleanup the ceph block devices"></a>Cleanup the ceph block devices</h2><p>Do the following on each cluster node.</p>
+<pre><code>[root@host1 ~]$ lsblk
+NAME                                                                                                  MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+nvme0n1                                                                                               259:0    0  3.5T  0 disk
+├─nvme0n1p3                                                                                           259:4    0  3.5T  0 part
+│ ├─vgroot-lvswap01                                                                                   253:1    0    4G  0 lvm
+│ └─vgroot-lvroot                                                                                     253:0    0  3.5T  0 lvm  /
+├─nvme0n1p1                                                                                           259:2    0    1G  0 part /boot/efi
+└─nvme0n1p2                                                                                           259:3    0  500M  0 part /boot
+nvme3n1                                                                                               259:6    0  3.5T  0 disk
+└─ceph--ab144c40--73d6--49bc--921b--65025c383bb1-osd--block--2b965e29--b194--4363--8c96--20ab5b97db33 253:3    0  3.5T  0 lvm
+nvme2n1                                                                                               259:5    0  3.5T  0 disk
+└─ceph--b1ffe76d--1043--43a2--848b--6ba117e71a75-osd--block--0d6ff85d--9c49--43a0--98a3--c519fbb20b9c 253:4    0  3.5T  0 lvm
+nvme1n1                                                                                               259:1    0  3.5T  0 disk
+
+[root@host1 ~]$ for i in `seq 2 9`; do dd if=/dev/zero of=/dev/nvme$&#123;i&#125;n1 bs=1M count=1000; done
+[root@host1 ~]$ reboot
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Ceph/" rel="tag"><i class="fa fa-tag"></i> Ceph</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/general-steps-for-system-performance-analysis/" rel="prev" title="General steps for system performance analysis">
+                  <i class="fa fa-angle-left"></i> General steps for system performance analysis
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/upgrade-linux-kernel-on-centos-7/" rel="next" title="Upgrade Linux kernel on CentOS 7">
+                  Upgrade Linux kernel on CentOS 7 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

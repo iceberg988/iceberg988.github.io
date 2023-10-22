@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="What is Gluster?Gluster is a scalable, distributed file system that aggregates disk storage resources from multiple servers into a single global namespace. Advantages  Scales to several petabytes Hand">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GlusterFS - A distributed file syste">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/glusterfs-a-distributed-file-syste/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="What is Gluster?Gluster is a scalable, distributed file system that aggregates disk storage resources from multiple servers into a single global namespace. Advantages  Scales to several petabytes Hand">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-02-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="GlusterFS">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/glusterfs-a-distributed-file-syste/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/glusterfs-a-distributed-file-syste/","path":"blog/glusterfs-a-distributed-file-syste/","title":"GlusterFS - A distributed file syste"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>GlusterFS - A distributed file syste | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-Gluster"><span class="nav-number">1.</span> <span class="nav-text">What is Gluster?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Installation-and-configuration"><span class="nav-number">2.</span> <span class="nav-text">Installation and configuration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/kubernetes-and-gluster-performance/" rel="bookmark">
+        <time class="popular-posts-time">2021-02-28</time>
+        <br>
+      Kubernetes and Gluster performance
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/access-a-sharedv4-volume-outside-of-a-portwrox-cluster/" rel="bookmark">
+        <time class="popular-posts-time">2022-04-20</time>
+        <br>
+      Access a sharedv4 volume outside of a Portwrox cluster
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-aws-cli-to-manage-ebs-volumes/" rel="bookmark">
+        <time class="popular-posts-time">2023-03-04</time>
+        <br>
+      Using AWS CLI to manage EBS volumes
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/how-to-setup-nfs-network-file-system-on-rhel-centos/" rel="bookmark">
+        <time class="popular-posts-time">2022-06-29</time>
+        <br>
+      How to setup NFS (Network File System) on RHEL/CentOS
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/data-volume-unit/" rel="bookmark">
+        <time class="popular-posts-time">2022-02-01</time>
+        <br>
+      Data volume unit
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/glusterfs-a-distributed-file-syste/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="GlusterFS - A distributed file syste | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GlusterFS - A distributed file syste
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-02-27 08:00:00" itemprop="dateCreated datePublished" datetime="2021-02-27T08:00:00-08:00">2021-02-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="What-is-Gluster"><a href="#What-is-Gluster" class="headerlink" title="What is Gluster?"></a>What is Gluster?</h2><p><a target="_blank" rel="noopener" href="https://docs.gluster.org/en/latest/Administrator-Guide/GlusterFS-Introduction/">Gluster</a> is a scalable, distributed file system that aggregates disk storage resources from multiple servers into a single global namespace.</p>
+<p>Advantages</p>
+<ul>
+<li>Scales to several petabytes</li>
+<li>Handles thousands of clients</li>
+<li>POSIX compatible</li>
+<li>Uses commodity hardware</li>
+<li>Can use any ondisk filesystem that supports extended attributes</li>
+<li>Accessible using industry standard protocols like NFS and SMB</li>
+<li>Provides replication, quotas, geo-replication, snapshots and bitrot detection</li>
+<li>Allows optimization for different workloads</li>
+<li>Open Source</li>
+</ul>
+<h2 id="Installation-and-configuration"><a href="#Installation-and-configuration" class="headerlink" title="Installation and configuration"></a>Installation and configuration</h2><ol>
+<li><p>To install gluster and start gluster service:</p>
+<p> [root@centos83-1 ~]# cat &#x2F;etc&#x2F;centos-release<br> CentOS Linux release 8.3.2011</p>
+<p> [root@centos83-1 ~]# systemctl stop firewalld<br> [root@centos83-1 ~]# systemctl disable firewalld</p>
+<p> [root@centos83-1 ~]# yum install -y centos-release-gluster<br> [root@centos83-1 ~]# yum install -y glusterfs-server<br> [root@centos83-1 ~]# rpm -qa |grep gluster<br> glusterfs-cli-8.3-1.el8.x86_64<br> libvirt-daemon-driver-storage-gluster-6.0.0-28.module_el8.3.0+555+a55c8938.x86_64<br> glusterfs-client-xlators-8.3-1.el8.x86_64<br> qemu-kvm-block-gluster-4.2.0-34.module_el8.3.0+555+a55c8938.x86_64<br> libglusterd0-8.3-1.el8.x86_64<br> glusterfs-8.3-1.el8.x86_64<br> pcp-pmda-gluster-5.1.1-3.el8.x86_64<br> glusterfs-fuse-8.3-1.el8.x86_64<br> centos-release-gluster8-1.0-1.el8.noarch<br> libglusterfs0-8.3-1.el8.x86_64<br> glusterfs-server-8.3-1.el8.x86_64</p>
+<p> [root@centos83-1 ~]# systemctl enable glusterd<br> [root@centos83-1 ~]# systemctl restart glusterd</p>
+<p> [root@centos83-1 ~]# systemctl status glusterd<br>  glusterd.service - GlusterFS, a clustered file-system server<br>  Loaded: loaded (&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;glusterd.service; enabled; vendor preset: enabled)<br>  Active: active (running) since Tue 2021-01-05 17:28:42 PST; 1 months 22 days ago<br>   Docs: man:glusterd(8)<br>  Main PID: 1420 (glusterd)<br>  Tasks: 26 (limit: 409792)<br>  Memory: 152.3M<br>  CGroup: &#x2F;system.slice&#x2F;glusterd.service</p>
+</li>
+<li><p>To form a trusted storage pool with the second server:</p>
+<p> [root@centos83-1 ~]# gluster peer probe centos83-2<br> [root@centos83-1 ~]# gluster peer status<br> Number of Peers: 1</p>
+<p> Hostname: centos83-2<br> Uuid: b07d3d6e-4d6e-42a9-ad21-018223843fd5<br> State: Peer in Cluster (Connected)</p>
+</li>
+<li><p>To create brick on the first server:</p>
+<p> [root@centos83-1 ~]# lsblk | egrep “NAME|sdb”<br> NAME               MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT<br> sdb                  8:16   0    1T  0 disk</p>
+<p> [root@centos83-1 ~]# pvcreate &#x2F;dev&#x2F;sdb<br> [root@centos83-1 ~]# vgcreate vg_bricks &#x2F;dev&#x2F;sdb<br> [root@centos83-1 ~]# lvcreate -L 800g -n gfslv1 vg_bricks<br> [root@centos83-1 ~]# mkfs.xfs &#x2F;dev&#x2F;vg_bricks&#x2F;gfslv1<br> [root@centos83-1 ~]# mkdir -p &#x2F;bricks&#x2F;vm1_brick1<br> [root@centos83-1 ~]# vim &#x2F;etc&#x2F;fstab<br> &#x2F;dev&#x2F;vg_bricks&#x2F;gfslv1 &#x2F;bricks&#x2F;vm1_brick1        xfs     defaults        0 0<br> [root@centos83-1 ~]# mount -a<br> [root@centos83-1 ~]# df -h |grep gfs<br> &#x2F;dev&#x2F;mapper&#x2F;vg_bricks-gfslv1  800G  5.7G  794G   1% &#x2F;bricks&#x2F;vm1_brick1</p>
+</li>
+<li><p>To create brick on the second server:</p>
+<p> [root@centos83-2 ~]# lsblk | egrep “NAME|sdb”<br> NAME               MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT<br> sdb                  8:16   0    1T  0 disk</p>
+<p> [root@centos83-2 ~]# pvcreate &#x2F;dev&#x2F;sdb<br> [root@centos83-2 ~]# vgcreate vg_bricks &#x2F;dev&#x2F;sdb<br> [root@centos83-2 ~]# lvcreate -L 800g -n gfslv1 vg_bricks<br> [root@centos83-2 ~]# mkfs.xfs &#x2F;dev&#x2F;vg_bricks&#x2F;gfslv1<br> [root@centos83-2 ~]# mkdir -p &#x2F;bricks&#x2F;vm2_brick1<br> [root@centos83-2 ~]# vim &#x2F;etc&#x2F;fstab<br> &#x2F;dev&#x2F;vg_bricks&#x2F;gfslv1 &#x2F;bricks&#x2F;vm2_brick1        xfs     defaults        0 0<br> [root@centos83-2 ~]# mount -a<br> [root@centos83-2 ~]# df -h |grep gfs<br> &#x2F;dev&#x2F;mapper&#x2F;vg_bricks-gfslv1  800G  5.7G  794G   1% &#x2F;bricks&#x2F;vm2_brick1</p>
+</li>
+<li><p>To create distributed volume with the two bricks which are created on the two nodes:</p>
+<p> [root@centos83-1 ~]# gluster volume create gv0 centos83-1:&#x2F;bricks&#x2F;vm1_brick1&#x2F;gv0 centos83-2:&#x2F;bricks&#x2F;vm2_brick1&#x2F;gv0<br> [root@centos83-1 ~]# gluster volume start gv0</p>
+</li>
+<li><p>To verify the volume status:</p>
+<p> [root@centos83-1 ~]#  gluster volume info gv0</p>
+<p> Volume Name: gv0<br> Type: Distribute<br> Volume ID: ee08d16a-f940-4ec2-aba8-5f1fcfe41bd4<br> Status: Started<br> Snapshot Count: 0<br> Number of Bricks: 2<br> Transport-type: tcp<br> Bricks:<br> Brick1: centos83-1:&#x2F;bricks&#x2F;vm1_brick1&#x2F;gv0<br> Brick2: centos83-2:&#x2F;bricks&#x2F;vm2_brick1&#x2F;gv0<br> Options Reconfigured:<br> storage.fips-mode-rchecksum: on<br> transport.address-family: inet<br> nfs.disable: on</p>
+</li>
+<li><p>To mount the distributed volume on one of the servers(treat it as client for simple demonstration):</p>
+<p> [root@centos83-1 ~]# mkdir &#x2F;testmnt<br> [root@centos83-1 ~]# mount -t glusterfs centos83-2:&#x2F;gv0 &#x2F;testmnt<br> [root@centos83-1 ~]# df -h | grep testmnt<br> centos83-2:&#x2F;gv0               1.6T   28G  1.6T   2% &#x2F;testmnt</p>
+</li>
+</ol>
+<p>As shown above, the usable storage size is the sum of the brick size from two nodes.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.gluster.org/en/latest/Administrator-Guide/GlusterFS-Introduction/">https://docs.gluster.org/en/latest/Administrator-Guide/GlusterFS-Introduction/</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/GlusterFS/" rel="tag"><i class="fa fa-tag"></i> GlusterFS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/cbt-changed-block-tracking/" rel="prev" title="CBT - Changed Block Tracking">
+                  <i class="fa fa-angle-left"></i> CBT - Changed Block Tracking
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/kubernetes-and-gluster-performance/" rel="next" title="Kubernetes and Gluster performance">
+                  Kubernetes and Gluster performance <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

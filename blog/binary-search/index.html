@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="IntroBinary Search splits the search space into two halves and only keep the half that has the search target and throw away the other half that would not have the target. In each step, the search spac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Binary search">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/binary-search/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="IntroBinary Search splits the search space into two halves and only keep the half that has the search target and throw away the other half that would not have the target. In each step, the search spac">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.flamingbytes.com/images/binarysearch.gif">
+<meta property="article:published_time" content="2023-10-06T05:11:18.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Leetcode">
+<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="Binary Search">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.flamingbytes.com/images/binarysearch.gif">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/binary-search/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/binary-search/","path":"blog/binary-search/","title":"Binary search"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Binary search | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generalized-binary-search-template"><span class="nav-number">2.</span> <span class="nav-text">Generalized binary search template</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic-application"><span class="nav-number">3.</span> <span class="nav-text">Basic application</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Leetcode-35-Search-Insert-Position"><span class="nav-number">3.1.</span> <span class="nav-text">[Leetcode 35] Search Insert Position</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Leetcode-69-Sqrt-x"><span class="nav-number">3.2.</span> <span class="nav-text">[Leetcode 69] Sqrt(x)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Leetcode-278-First-Bad-Version"><span class="nav-number">3.3.</span> <span class="nav-text">[Leetcode 278] First Bad Version</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Advanced-application"><span class="nav-number">4.</span> <span class="nav-text">Advanced application</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Leetcode-668-Kth-Smallest-Number-in-Multiplication-Table"><span class="nav-number">4.1.</span> <span class="nav-text">[Leetcode 668] Kth Smallest Number in Multiplication Table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Leetcode-719-Find-K-th-Smallest-Pair-Distance"><span class="nav-number">4.2.</span> <span class="nav-text">[Leetcode 719] Find K-th Smallest Pair Distance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Leetcode-875-Koko-Eating-Bananas"><span class="nav-number">4.3.</span> <span class="nav-text">[Leetcode 875] Koko Eating Bananas</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Leetcode-1011-Capacity-To-Ship-Packages-Within-D-Days"><span class="nav-number">4.4.</span> <span class="nav-text">[Leetcode 1011] Capacity To Ship Packages Within D Days</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Leetcode-1201-Ugly-Number-III"><span class="nav-number">4.5.</span> <span class="nav-text">[Leetcode 1201] Ugly Number III</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Leetcode-1283-Find-the-Smallest-Divisor-Given-a-Threshold"><span class="nav-number">4.6.</span> <span class="nav-text">[Leetcode 1283] Find the Smallest Divisor Given a Threshold</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/binary-search-tree-in-python/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-06</time>
+        <br>
+      Binary search tree in Python
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/sliding-window/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-02</time>
+        <br>
+      Sliding window
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/backtracking/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-09</time>
+        <br>
+      Backtracking
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/array-and-string/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-01</time>
+        <br>
+      Array and string
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/greedy-algorithm/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-10</time>
+        <br>
+      Greedy algorithm
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/binary-search/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Binary search | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Binary search
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-10-05 22:11:18" itemprop="dateCreated datePublished" datetime="2023-10-05T22:11:18-07:00">2023-10-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>Binary Search splits the search space into two halves and only keep the half that has the search target and throw away the other half that would not have the target. In each step, the search space is reduced to half, until the target is found. Binary Search reduces the search time from linear O(n) to logarithmic O(log n).<span id="more"></span></p>
+<p><img src="/images/binarysearch.gif"></p>
+<h2 id="Generalized-binary-search-template"><a href="#Generalized-binary-search-template" class="headerlink" title="Generalized binary search template"></a>Generalized binary search template</h2><p>For an array(not only for numbers) sorted in ascending order, the following is the generalized binary search template to solve many problems.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">binary_search</span>(<span class="params">array</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    array.sort()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">condition</span>(<span class="params">value</span>) -&gt; <span class="built_in">bool</span>: <span class="comment"># the condition should be satisfied to get the result</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    left, right = <span class="number">0</span>, <span class="built_in">len</span>(array)  <span class="comment"># search space</span></span><br><span class="line">    <span class="keyword">while</span> left &lt; right:</span><br><span class="line">        mid = left + (right - left) // <span class="number">2</span> <span class="comment"># try to avoid overflow</span></span><br><span class="line">        <span class="keyword">if</span> condition(mid): </span><br><span class="line">            right = mid</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            left = mid + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> left <span class="comment"># return value could be left or left-1</span></span><br></pre></td></tr></table></figure>
+
+<p>Note:</p>
+<ul>
+<li>The left and right are the boundary to include all possible elements(aka search space)</li>
+<li>Is return value left or left - 1? Remember this: after exiting the while loop, left is the minimal k​ satisfying the condition function</li>
+<li>Design the condition function. Let’s get more sense with the following practices.</li>
+</ul>
+<p>Thanks to <strong>zhijun_liao</strong> who wrote this useful binary search <a target="_blank" rel="noopener" href="https://leetcode.com/problems/find-k-th-smallest-pair-distance/solutions/769705/python-clear-explanation-powerful-ultimate-binary-search-template-solved-many-problems/">article</a>.</p>
+<h2 id="Basic-application"><a href="#Basic-application" class="headerlink" title="Basic application"></a>Basic application</h2><h3 id="Leetcode-35-Search-Insert-Position"><a href="#Leetcode-35-Search-Insert-Position" class="headerlink" title="[Leetcode 35] Search Insert Position"></a>[Leetcode 35] Search Insert Position</h3><p>Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.</p>
+<p>You must write an algorithm with O(log n) runtime complexity.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [1,3,5,6], target = 5</span><br><span class="line">Output: 2</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [1,3,5,6], target = 2</span><br><span class="line">Output: 1</span><br></pre></td></tr></table></figure>
+
+<p>Example 3:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [1,3,5,6], target = 7</span><br><span class="line">Output: 4</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>1 &lt;&#x3D; nums.length &lt;&#x3D; 104</li>
+<li>-104 &lt;&#x3D; nums[i] &lt;&#x3D; 104</li>
+<li>nums contains distinct values sorted in ascending order.</li>
+<li>-104 &lt;&#x3D; target &lt;&#x3D; 104</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">searchInsert</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], target: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="comment"># Note that the target element can be larger than all the elementes in nums and it would be inserted to the end</span></span><br><span class="line">        left, right = <span class="number">0</span>, <span class="built_in">len</span>(nums)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> left &lt; right:</span><br><span class="line">            mid = left + (right - left) // <span class="number">2</span></span><br><span class="line">            <span class="comment"># looking for the minimal k value satisfying nums[k] &gt;= target</span></span><br><span class="line">            <span class="keyword">if</span> nums[mid] &gt;= target:</span><br><span class="line">                right = mid</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                left = mid + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> left</span><br></pre></td></tr></table></figure>
+
+<h3 id="Leetcode-69-Sqrt-x"><a href="#Leetcode-69-Sqrt-x" class="headerlink" title="[Leetcode 69] Sqrt(x)"></a>[Leetcode 69] Sqrt(x)</h3><p>Given a non-negative integer x, return the square root of x rounded down to the nearest integer. The returned integer should be non-negative as well.</p>
+<p>You must not use any built-in exponent function or operator.</p>
+<p>For example, do not use pow(x, 0.5) in c++ or x ** 0.5 in python.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: x = 4</span><br><span class="line">Output: 2</span><br><span class="line">Explanation: The square root of 4 is 2, so we return 2.</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: x = 8</span><br><span class="line">Output: 2</span><br><span class="line">Explanation: The square root of 8 is 2.82842..., and since we round it down to the nearest integer, 2 is returned.</span><br></pre></td></tr></table></figure>
+<p>Constraints:</p>
+<ul>
+<li>0 &lt;&#x3D; x &lt;&#x3D; 231 - 1</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">mySqrt</span>(<span class="params">self, x: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">if</span> x &lt;= <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> x</span><br><span class="line">        </span><br><span class="line">        left, right = <span class="number">0</span>, x</span><br><span class="line">        <span class="keyword">while</span> left &lt; right:</span><br><span class="line">            mid = left + (right - left )// <span class="number">2</span></span><br><span class="line">            <span class="keyword">if</span> mid * mid &lt;= x:</span><br><span class="line">                left = mid + <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                right = mid</span><br><span class="line">                </span><br><span class="line">        <span class="keyword">return</span> left - <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Leetcode-278-First-Bad-Version"><a href="#Leetcode-278-First-Bad-Version" class="headerlink" title="[Leetcode 278] First Bad Version"></a>[Leetcode 278] First Bad Version</h3><p>You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check. Since each version is developed based on the previous version, all the versions after a bad version are also bad.</p>
+<p>Suppose you have n versions [1, 2, …, n] and you want to find out the first bad one, which causes all the following ones to be bad.</p>
+<p>You are given an API bool isBadVersion(version) which returns whether version is bad. Implement a function to find the first bad version. You should minimize the number of calls to the API.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: n = 5, bad = 4</span><br><span class="line">Output: 4</span><br><span class="line">Explanation:</span><br><span class="line">call isBadVersion(3) -&gt; false</span><br><span class="line">call isBadVersion(5) -&gt; true</span><br><span class="line">call isBadVersion(4) -&gt; true</span><br><span class="line">Then 4 is the first bad version.</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: n = 1, bad = 1</span><br><span class="line">Output: 1</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>1 &lt;&#x3D; bad &lt;&#x3D; n &lt;&#x3D; 231 - 1</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">firstBadVersion</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="comment"># search boundary: [1,n]</span></span><br><span class="line">        left, right = <span class="number">1</span>, n</span><br><span class="line"></span><br><span class="line">        <span class="comment"># exit condition: left == right</span></span><br><span class="line">        <span class="keyword">while</span> left &lt; right:</span><br><span class="line">            <span class="comment"># reduce possibility of overflow</span></span><br><span class="line">            mid = left + (right - left) // <span class="number">2</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># condition function: isBadVersion()</span></span><br><span class="line">            <span class="keyword">if</span> isBadVersion(mid):</span><br><span class="line">                <span class="comment"># include mid in the next round of search since it could be the first bad version</span></span><br><span class="line">                right = mid</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># exclude mid from the next round of search since it&#x27;s NOT bad version</span></span><br><span class="line">                left = mid + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># left is the minimum value to satisfy condition function</span></span><br><span class="line">        <span class="keyword">return</span> left</span><br></pre></td></tr></table></figure>
+
+<h2 id="Advanced-application"><a href="#Advanced-application" class="headerlink" title="Advanced application"></a>Advanced application</h2><h3 id="Leetcode-668-Kth-Smallest-Number-in-Multiplication-Table"><a href="#Leetcode-668-Kth-Smallest-Number-in-Multiplication-Table" class="headerlink" title="[Leetcode 668] Kth Smallest Number in Multiplication Table"></a>[Leetcode 668] Kth Smallest Number in Multiplication Table</h3><p>Nearly everyone has used the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Multiplication_table">Multiplication Table</a>. The multiplication table of size m x n is an integer matrix mat where mat[i][j] &#x3D;&#x3D; i * j (1-indexed).</p>
+<p>Given three integers m, n, and k, return the kth smallest element in the m x n multiplication table.</p>
+<p>Example :</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Input: m = 3, n = 3, k = 5</span><br><span class="line">Output: 3</span><br><span class="line">Explanation: </span><br><span class="line">The Multiplication Table:</span><br><span class="line">1	2	3</span><br><span class="line">2	4	6</span><br><span class="line">3	6	9</span><br><span class="line"></span><br><span class="line">The 5-th smallest number is 3 (1, 2, 2, 3, 3).</span><br></pre></td></tr></table></figure>
+
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findKthNumber</span>(<span class="params">self, m: <span class="built_in">int</span>, n: <span class="built_in">int</span>, k: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="comment"># Given an input num, determine if there&#x27;re at least k values &lt;= num.</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">hasKValuesAtLeast</span>(<span class="params">num</span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">            <span class="comment"># total numbers &lt;= k</span></span><br><span class="line">            count = <span class="number">0</span></span><br><span class="line">            <span class="comment"># count row by row</span></span><br><span class="line">            <span class="keyword">for</span> row <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, m + <span class="number">1</span>):</span><br><span class="line">                <span class="comment"># each row has i numbers which are &lt;= num</span></span><br><span class="line">                i = <span class="built_in">min</span>(num // row, n)</span><br><span class="line">                <span class="comment"># exit early if no number &lt;= num</span></span><br><span class="line">                <span class="keyword">if</span> i == <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="comment"># accumulate the numbers count</span></span><br><span class="line">                count += i</span><br><span class="line"></span><br><span class="line">            <span class="comment"># check if there are at least k numbers &lt;= given num</span></span><br><span class="line">            <span class="keyword">return</span> count &gt;= k</span><br><span class="line"></span><br><span class="line">        <span class="comment"># search range is [1,m*n]</span></span><br><span class="line">        left, right = <span class="number">1</span>, m * n</span><br><span class="line">        <span class="keyword">while</span> left &lt; right:</span><br><span class="line">            mid = left + (right - left) // <span class="number">2</span></span><br><span class="line">            <span class="comment"># look for the minimum number satisfying hasKValuesAtLeast function</span></span><br><span class="line">            <span class="keyword">if</span> hasKValuesAtLeast(mid):</span><br><span class="line">                right = mid</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                left = mid + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># the smallest number which has at least k number smaller than or equal to it</span></span><br><span class="line">        <span class="keyword">return</span> left</span><br></pre></td></tr></table></figure>
+
+<h3 id="Leetcode-719-Find-K-th-Smallest-Pair-Distance"><a href="#Leetcode-719-Find-K-th-Smallest-Pair-Distance" class="headerlink" title="[Leetcode 719] Find K-th Smallest Pair Distance"></a>[Leetcode 719] Find K-th Smallest Pair Distance</h3><p>The distance of a pair of integers a and b is defined as the absolute difference between a and b.</p>
+<p>Given an integer array nums and an integer k, return the kth smallest distance among all the pairs nums[i] and nums[j] where 0 &lt;&#x3D; i &lt; j &lt; nums.length.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [1,3,1], k = 1</span><br><span class="line">Output: 0</span><br><span class="line">Explanation: Here are all the pairs:</span><br><span class="line">(1,3) -&gt; 2</span><br><span class="line">(1,1) -&gt; 0</span><br><span class="line">(3,1) -&gt; 2</span><br><span class="line">Then the 1st smallest distance pair is (1,1), and its distance is 0.</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [1,1,1], k = 2</span><br><span class="line">Output: 0</span><br></pre></td></tr></table></figure>
+
+<p>Example 3:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [1,6,1], k = 3</span><br><span class="line">Output: 5</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>n &#x3D;&#x3D; nums.length</li>
+<li>2 &lt;&#x3D; n &lt;&#x3D; 104</li>
+<li>0 &lt;&#x3D; nums[i] &lt;&#x3D; 106</li>
+<li>1 &lt;&#x3D; k &lt;&#x3D; n * (n - 1) &#x2F; 2</li>
+</ul>
+<p>Solution:</p>
+<p>Brute force with priority queue:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">smallestDistancePair_time_limit_exceeded</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], k: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    minHeap = []</span><br><span class="line">    heapq.heapify(minHeap)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums)):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i+<span class="number">1</span>, <span class="built_in">len</span>(nums)):</span><br><span class="line">            d = <span class="built_in">abs</span>(nums[i] - nums[j])</span><br><span class="line">            heapq.heappush(minHeap, d)</span><br><span class="line"></span><br><span class="line">    kth = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(k):</span><br><span class="line">        kth = heapq.heappop(minHeap)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> kth</span><br></pre></td></tr></table></figure>
+
+<p>Binary search:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">smallestDistancePair</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], k: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        nums.sort()</span><br><span class="line">        n = <span class="built_in">len</span>(nums)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">hasKPairsAtleast</span>(<span class="params">distance</span>):</span><br><span class="line">            i, j, count = <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">            <span class="keyword">while</span> i &lt; n <span class="keyword">or</span> j &lt; n:</span><br><span class="line">                <span class="comment"># if the distance for nums[i] and nums[j] is less than the given distance, the distance between nums[i] and nums[k](i&lt;k&lt;j) is also less than distance</span></span><br><span class="line">                <span class="keyword">while</span> j &lt; n <span class="keyword">and</span> nums[j] - nums[i] &lt;= distance:</span><br><span class="line">                    <span class="comment"># extend the range</span></span><br><span class="line">                    j += <span class="number">1</span></span><br><span class="line">                <span class="comment"># count valid pairs:</span></span><br><span class="line">                <span class="comment"># [nums[i],nums[i+1]], [nums[i],nums[i+2]],..., [nums[i],nums[j-1]]</span></span><br><span class="line">                count += j - i - <span class="number">1</span></span><br><span class="line"></span><br><span class="line">                <span class="comment"># modify the start index for the range</span></span><br><span class="line">                i += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> count &gt;= k</span><br><span class="line"></span><br><span class="line">        <span class="comment"># search range is [0, nums[-1]-nums[0]]</span></span><br><span class="line">        left, right = <span class="number">0</span>, nums[-<span class="number">1</span>] - nums[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> left &lt; right:</span><br><span class="line">            mid = left + (right - left) // <span class="number">2</span></span><br><span class="line">            <span class="keyword">if</span> hasKPairsAtleast(mid):</span><br><span class="line">                right = mid</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                left = mid + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> left</span><br></pre></td></tr></table></figure>
+
+<h3 id="Leetcode-875-Koko-Eating-Bananas"><a href="#Leetcode-875-Koko-Eating-Bananas" class="headerlink" title="[Leetcode 875] Koko Eating Bananas"></a>[Leetcode 875] Koko Eating Bananas</h3><p>Koko loves to eat bananas. There are n piles of bananas, the ith pile has piles[i] bananas. The guards have gone and will come back in h hours.</p>
+<p>Koko can decide her bananas-per-hour eating speed of k. Each hour, she chooses some pile of bananas and eats k bananas from that pile. If the pile has less than k bananas, she eats all of them instead and will not eat any more bananas during this hour.</p>
+<p>Koko likes to eat slowly but still wants to finish eating all the bananas before the guards return.</p>
+<p>Return the minimum integer k such that she can eat all the bananas within h hours.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: piles = [3,6,7,11], h = 8</span><br><span class="line">Output: 4</span><br></pre></td></tr></table></figure>
+
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">minEatingSpeed</span>(<span class="params">self, piles: <span class="type">List</span>[<span class="built_in">int</span>], h: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="comment"># check if it can finish eating with the given speed</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">canEatBananasInSpeed</span>(<span class="params">speed</span>):</span><br><span class="line">            hours = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> pile <span class="keyword">in</span> piles:</span><br><span class="line">                <span class="keyword">if</span> pile % speed:</span><br><span class="line">                    hours += pile // speed + <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    hours += pile // speed</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> hours &lt;= h</span><br><span class="line"></span><br><span class="line">        <span class="comment"># search space is [1,max(piles)]</span></span><br><span class="line">        left, right = <span class="number">1</span>, <span class="built_in">max</span>(piles)</span><br><span class="line">        <span class="keyword">while</span> left &lt; right:</span><br><span class="line">            mid = left + (right - left) // <span class="number">2</span></span><br><span class="line">            <span class="comment"># continue to search slower speed if it can finish eating in the speed of &quot;mid&quot;</span></span><br><span class="line">            <span class="keyword">if</span> canEatBananasInSpeed(mid):</span><br><span class="line">                right = mid</span><br><span class="line">            <span class="comment"># it has to speed up since it can&#x27;t finish eating in the speed of &quot;mid&quot;</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                left = mid + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># this will be slowest speed it can finish eating all bananas</span></span><br><span class="line">        <span class="keyword">return</span> left</span><br></pre></td></tr></table></figure>
+
+<h3 id="Leetcode-1011-Capacity-To-Ship-Packages-Within-D-Days"><a href="#Leetcode-1011-Capacity-To-Ship-Packages-Within-D-Days" class="headerlink" title="[Leetcode 1011] Capacity To Ship Packages Within D Days"></a>[Leetcode 1011] Capacity To Ship Packages Within D Days</h3><p>A conveyor belt has packages that must be shipped from one port to another within days days.</p>
+<p>The ith package on the conveyor belt has a weight of weights[i]. Each day, we load the ship with packages on the conveyor belt (in the order given by weights). We may not load more weight than the maximum weight capacity of the ship.</p>
+<p>Return the least weight capacity of the ship that will result in all the packages on the conveyor belt being shipped within days days.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Input: weights = [1,2,3,4,5,6,7,8,9,10], days = 5</span><br><span class="line">Output: 15</span><br><span class="line">Explanation: A ship capacity of 15 is the minimum to ship all the packages in 5 days like this:</span><br><span class="line">1st day: 1, 2, 3, 4, 5</span><br><span class="line">2nd day: 6, 7</span><br><span class="line">3rd day: 8</span><br><span class="line">4th day: 9</span><br><span class="line">5th day: 10</span><br><span class="line"></span><br><span class="line">Note that the cargo must be shipped in the order given, so using a ship of capacity 14 and splitting the packages into parts like (2, 3, 4, 5), (1, 6, 7), (8), (9), (10) is not allowed.</span><br></pre></td></tr></table></figure>
+
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">shipWithinDays</span>(<span class="params">self, weights: <span class="type">List</span>[<span class="built_in">int</span>], days: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="comment"># check if the pacages can be shipped with given capacity in days</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">canShipPackages</span>(<span class="params">capacity</span>):</span><br><span class="line">            currentDayWeight = <span class="number">0</span>  <span class="comment"># the weight has been shipped in current day</span></span><br><span class="line">            countDays = <span class="number">1</span>  <span class="comment"># the number of days has been spent</span></span><br><span class="line">            <span class="keyword">for</span> weight <span class="keyword">in</span> weights:</span><br><span class="line">                currentDayWeight += weight</span><br><span class="line">                <span class="comment"># we need to wait for the next day due to out of capacity</span></span><br><span class="line">                <span class="keyword">if</span> currentDayWeight &gt; capacity:</span><br><span class="line">                    currentDayWeight = weight  <span class="comment"># reset</span></span><br><span class="line">                    countDays += <span class="number">1</span>  <span class="comment"># add days by 1</span></span><br><span class="line">                    <span class="keyword">if</span> countDays &gt; days:</span><br><span class="line">                        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># the minimum capacity must be in the range of [max(weights), sum(weights)]</span></span><br><span class="line">        left, right = <span class="built_in">max</span>(weights), <span class="built_in">sum</span>(weights)</span><br><span class="line">        <span class="keyword">while</span> left &lt; right:</span><br><span class="line">            mid = left + (right - left) // <span class="number">2</span></span><br><span class="line">            <span class="comment"># packages can be shipped with capacity &quot;mid&quot; and we continue to search smaller capacity</span></span><br><span class="line">            <span class="keyword">if</span> canShipPackages(mid):</span><br><span class="line">                right = mid</span><br><span class="line">            <span class="comment"># packages can not be shipped with capacity &quot;mid&quot; and we have to try bigger capacity which is mid+1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                left = mid + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> left</span><br></pre></td></tr></table></figure>
+
+<h3 id="Leetcode-1201-Ugly-Number-III"><a href="#Leetcode-1201-Ugly-Number-III" class="headerlink" title="[Leetcode 1201] Ugly Number III"></a>[Leetcode 1201] Ugly Number III</h3><p>An ugly number is a positive integer that is divisible by a, b, or c.</p>
+<p>Given four integers n, a, b, and c, return the nth ugly number.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: n = 3, a = 2, b = 3, c = 5</span><br><span class="line">Output: 4</span><br><span class="line">Explanation: The ugly numbers are 2, 3, 4, 5, 6, 8, 9, 10... The 3rd is 4.</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: n = 4, a = 2, b = 3, c = 4</span><br><span class="line">Output: 6</span><br><span class="line">Explanation: The ugly numbers are 2, 3, 4, 6, 8, 9, 10, 12... The 4th is 6.</span><br></pre></td></tr></table></figure>
+
+<p>Example 3:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: n = 5, a = 2, b = 11, c = 13</span><br><span class="line">Output: 10</span><br><span class="line">Explanation: The ugly numbers are 2, 4, 6, 8, 10, 11, 12, 13... The 5th is 10.</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>1 &lt;&#x3D; n, a, b, c &lt;&#x3D; 10^9</li>
+<li>1 &lt;&#x3D; a * b * c &lt;&#x3D; 10^18</li>
+<li>It is guaranteed that the result will be in range [1, 2 * 10^9].</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">nthUglyNumber</span>(<span class="params">self, n: <span class="built_in">int</span>, a: <span class="built_in">int</span>, b: <span class="built_in">int</span>, c: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        ab = a * b // math.gcd(a, b)</span><br><span class="line">        bc = b * c // math.gcd(b, c)</span><br><span class="line">        ac = a * c // math.gcd(a, c)</span><br><span class="line">        abc = a * bc // math.gcd(a, bc)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># check if there are at least n ugly numbers &lt;= num </span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">hasNUglyNumbersAtLeast</span>(<span class="params">num</span>):</span><br><span class="line">            uglyNums = num // a + num // b + num // c - \</span><br><span class="line">                num // ab - num // ac - num // bc + num // abc</span><br><span class="line">            <span class="keyword">return</span> uglyNums &gt;= n</span><br><span class="line"></span><br><span class="line">        left, right = <span class="number">1</span>, <span class="number">10</span>**<span class="number">10</span></span><br><span class="line">        <span class="keyword">while</span> left &lt; right:</span><br><span class="line">            mid = left + (right - left) // <span class="number">2</span></span><br><span class="line">            <span class="keyword">if</span> hasNUglyNumbersAtLeast(mid):</span><br><span class="line">                right = mid</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                left = mid + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> left</span><br></pre></td></tr></table></figure>
+
+<h3 id="Leetcode-1283-Find-the-Smallest-Divisor-Given-a-Threshold"><a href="#Leetcode-1283-Find-the-Smallest-Divisor-Given-a-Threshold" class="headerlink" title="[Leetcode 1283] Find the Smallest Divisor Given a Threshold"></a>[Leetcode 1283] Find the Smallest Divisor Given a Threshold</h3><p>Given an array of integers nums and an integer threshold, we will choose a positive integer divisor, divide all the array by it, and sum the division’s result. Find the smallest divisor such that the result mentioned above is less than or equal to threshold.</p>
+<p>Each result of the division is rounded to the nearest integer greater than or equal to that element. (For example: 7&#x2F;3 &#x3D; 3 and 10&#x2F;2 &#x3D; 5).</p>
+<p>The test cases are generated so that there will be an answer.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [1,2,5,9], threshold = 6</span><br><span class="line">Output: 5</span><br><span class="line">Explanation: We can get a sum to 17 (1+2+5+9) if the divisor is 1. </span><br><span class="line">If the divisor is 4 we can get a sum of 7 (1+1+2+3) and if the divisor is 5 the sum will be 5 (1+1+1+2). </span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [44,22,33,11,1], threshold = 5</span><br><span class="line">Output: 44</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>1 &lt;&#x3D; nums.length &lt;&#x3D; 5 * 10^4</li>
+<li>1 &lt;&#x3D; nums[i] &lt;&#x3D; 10^6</li>
+<li>nums.length &lt;&#x3D; threshold &lt;&#x3D; 10^6</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">smallestDivisor</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], threshold: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">condition</span>(<span class="params">divisor</span>):</span><br><span class="line">            s = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">                <span class="keyword">if</span> num % divisor:</span><br><span class="line">                    s += num // divisor + <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    s += num // divisor</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> s &lt;= threshold</span><br><span class="line"></span><br><span class="line">        left, right = <span class="number">1</span>, <span class="built_in">max</span>(nums)</span><br><span class="line">        <span class="keyword">while</span> left &lt; right:</span><br><span class="line">            mid = left + (right - left) // <span class="number">2</span></span><br><span class="line">            <span class="keyword">if</span> condition(mid):</span><br><span class="line">                right = mid</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                left = mid + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> left</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://leetcode.com/problems/binary-search/solutions/423162/Binary-Search-101-The-Ultimate-Binary-Search-Handbook/">The ultimate binary search handbook</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+              <a href="/tags/Leetcode/" rel="tag"><i class="fa fa-tag"></i> Leetcode</a>
+              <a href="/tags/Algorithm/" rel="tag"><i class="fa fa-tag"></i> Algorithm</a>
+              <a href="/tags/Binary-Search/" rel="tag"><i class="fa fa-tag"></i> Binary Search</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/stack-and-queue-in-python/" rel="prev" title="Stack and queue in python">
+                  <i class="fa fa-angle-left"></i> Stack and queue in python
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/binary-search-tree-in-python/" rel="next" title="Binary search tree in Python">
+                  Binary search tree in Python <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

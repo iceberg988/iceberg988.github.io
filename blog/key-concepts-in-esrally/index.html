@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="PipelinesA pipeline is a series of steps that are performed to get benchmark results. This is not intended to customize the actual benchmark but rather what happens before and after a benchmark. An ex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Key concepts in Elastic Rally">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/key-concepts-in-esrally/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="PipelinesA pipeline is a series of steps that are performed to get benchmark results. This is not intended to customize the actual benchmark but rather what happens before and after a benchmark. An ex">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-23T19:24:00.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="Esrally">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/key-concepts-in-esrally/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/key-concepts-in-esrally/","path":"blog/key-concepts-in-esrally/","title":"Key concepts in Elastic Rally"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Key concepts in Elastic Rally | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pipelines"><span class="nav-number">1.</span> <span class="nav-text">Pipelines</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#benchmark-only"><span class="nav-number">1.1.</span> <span class="nav-text">benchmark-only</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#from-distribution"><span class="nav-number">1.2.</span> <span class="nav-text">from-distribution</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/getting-started-with-esrally/" rel="bookmark">
+        <time class="popular-posts-time">2022-10-25</time>
+        <br>
+      Getting started with Elastic Rally benchmark
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/benchmark-es-cluster-with-rally/" rel="bookmark">
+        <time class="popular-posts-time">2022-10-26</time>
+        <br>
+      Benchmarking Elasticsearch cluster with Rally
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/useful-es-apis/" rel="bookmark">
+        <time class="popular-posts-time">2022-10-28</time>
+        <br>
+      Useful Elastic cluster APIs
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/overwrite-esrally-track-params/" rel="bookmark">
+        <time class="popular-posts-time">2022-10-24</time>
+        <br>
+      Overwrite the Elastic Rally track parameters
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/getting-started-with-elasticsearch/" rel="bookmark">
+        <time class="popular-posts-time">2022-10-17</time>
+        <br>
+      Getting started with Elasticsearch and Kibana
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/key-concepts-in-esrally/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Key concepts in Elastic Rally | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Key concepts in Elastic Rally
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-23 12:24:00" itemprop="dateCreated datePublished" datetime="2022-10-23T12:24:00-07:00">2022-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Pipelines"><a href="#Pipelines" class="headerlink" title="Pipelines"></a>Pipelines</h2><p>A pipeline is a series of steps that are performed to get benchmark results. This is not intended to customize the actual benchmark but rather what happens before and after a benchmark.</p>
+<p>An example will clarify the concept: If you want to benchmark a binary distribution of Elasticsearch, Rally has to download a distribution archive, decompress it, start Elasticsearch and then run the benchmark. However, if you want to benchmark a source build of Elasticsearch, it first has to build a distribution using the Gradle Wrapper. So, in both cases, different steps are involved and that’s what pipelines are for.</p>
+<p>You can get a list of all pipelines with <em>esrally list pipelines</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">$ esrally --version</span><br><span class="line">esrally 2.6.0</span><br><span class="line"></span><br><span class="line">$ esrally list pipelines</span><br><span class="line"></span><br><span class="line">    ____        ____</span><br><span class="line">   / __ \____ _/ / /_  __</span><br><span class="line">  / /_/ / __ `/ / / / / /</span><br><span class="line"> / _, _/ /_/ / / / /_/ /</span><br><span class="line">/_/ |_|\__,_/_/_/\__, /</span><br><span class="line">                /____/</span><br><span class="line"></span><br><span class="line">Available pipelines:</span><br><span class="line"></span><br><span class="line">Name               Description</span><br><span class="line">-----------------  ---------------------------------------------------------------------------------------------</span><br><span class="line">from-sources       Builds and provisions Elasticsearch, runs a benchmark and reports results.</span><br><span class="line">from-distribution  Downloads an Elasticsearch distribution, provisions it, runs a benchmark and reports results.</span><br><span class="line">benchmark-only     Assumes an already running Elasticsearch instance, runs a benchmark and reports results</span><br><span class="line"></span><br><span class="line">-------------------------------</span><br><span class="line">[INFO] SUCCESS (took 0 seconds)</span><br><span class="line">-------------------------------</span><br></pre></td></tr></table></figure>
+
+<h3 id="benchmark-only"><a href="#benchmark-only" class="headerlink" title="benchmark-only"></a>benchmark-only</h3><p>This is intended if you want to provision a cluster by yourself. Do not use this pipeline unless you are absolutely sure you need to. As Rally has not provisioned the cluster, results are not easily reproducable and it also cannot gather a lot of metrics (like CPU usage).</p>
+<p>To benchmark a cluster, you also have to specify the hosts to connect to.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ esrally race --pipeline=benchmark-only --target-host=10.10.10.1:39200,10.10.10.2:39200,10.10.10.3:39200 --track=geonames</span><br></pre></td></tr></table></figure>
+
+<h3 id="from-distribution"><a href="#from-distribution" class="headerlink" title="from-distribution"></a>from-distribution</h3><p>This pipeline allows to benchmark an official Elasticsearch distribution which will be automatically downloaded by Rally. An example invocation:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">    $ esrally race --track=geonames --pipeline=from-distribution --distribution-version=7.17.0</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line">### from-sources</span><br><span class="line"></span><br><span class="line">You should use this pipeline when you want to build and benchmark Elasticsearch from sources.</span><br><span class="line"></span><br><span class="line">Remember that you also need git installed. You have to specify a revision.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code>$ esrally race --track=geonames --pipeline=from-sources --revision=latest
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## track</span><br><span class="line"></span><br><span class="line">A track is the description of one or more benchmarking scenarios with a specific document corpus. It defines for example the involved indices, data files and which operations are invoked. List the available tracks with *esrally list tracks*. Although Rally ships with some tracks out of the box, you should usually create your own track based on your own data.</span><br><span class="line"></span><br><span class="line">- Geonames: for evaluating the performance of structured data.</span><br><span class="line">- Geopoint: for evaluating the performance of geopoint queries.</span><br><span class="line">- Geopointshape: for evaluating the performance of geopointshape queries.</span><br><span class="line">- Geoshape: for evaluating the performance of geoshape data.</span><br><span class="line">- Percolator: for evaluating the performance of percolation queries.</span><br><span class="line">- PMC: for evaluating the performance of full text search.</span><br><span class="line">- NYC taxis: for evaluating the performance for highly structured data.</span><br><span class="line">- NYC taxis (ARM): for evaluating the performance for highly structured data and detect ARM-specific regressions.</span><br><span class="line">- Nested: for evaluating the performance for nested documents.</span><br><span class="line">- HTTP Logs: for evaluating the performance of (Web) server logs.</span><br><span class="line">- NOAA: for evaluating the performance of range fields.</span><br><span class="line">- EQL: for evaluating the performance of EQL.</span><br><span class="line">- SQL: for evaluating the performance of SQL.</span><br><span class="line">- SO (Transform): for evaluating the performance of the transform feature.</span><br><span class="line">- SO (Frequent Items): for evaluating the performance of the frequent items aggregation.</span><br><span class="line">- Logging: for evaluating the performance of the Log Monitoring part of Elastic&#x27;s Observability solution.</span><br><span class="line">- Logging (Many Shards): for evaluating the performance of the Log Monitoring part of Elastic&#x27;s Observability solution with a large amount of shards.</span><br><span class="line">- Logging (Snapshots): for evaluating snapshot performance when taking snapshot with a large of amount of shards.</span><br><span class="line">- Dense Vector: for evaluating the performance of vectors search.</span><br><span class="line">- Security: for evaluating the performance of Elastic&#x27;s Security solution.</span><br><span class="line">- TSDB: for evaluating the performance of TSDB (time series database).</span><br><span class="line">- Logging (CCS): for evaluating the performance of CCS (cross cluster search).</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code>$ esrally list tracks
+
+    ____        ____
+   / __ \____ _/ / /_  __
+  / /_/ / __ `/ / / / / /
+ / _, _/ /_/ / / / /_/ /
+/_/ |_|\__,_/_/_/\__, /
+                /____/
+
+Available tracks:
+
+Name              Description                                                              Documents    Compressed Size    Uncompressed Size    Default Challenge        All Challenges
+----------------  -----------------------------------------------------------------------  -----------  -----------------  -------------------  -----------------------  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+elastic/logs      Track for simulating logging workloads                                   14,009,078   N/A                N/A                  logging-indexing         logging-indexing-querying,logging-indexing,logging-querying,logging-snapshot-mount,logging-snapshot-restore,logging-snapshot,cross-clusters-search,logging-disk-usage,many-shards-quantitative,many-shards-snapshots
+elastic/security  Track for simulating Elastic Security workloads                          77,513,777   N/A                N/A                  security-querying        security-indexing-querying,security-indexing,security-querying,index-alert-source-events
+elastic/endpoint  Endpoint track                                                           0            0 bytes            0 bytes              default                  default
+eql               EQL benchmarks based on endgame index of SIEM demo cluster               60,782,211   4.5 GB             109.2 GB             default                  default,index-sorting
+geonames          POIs from Geonames                                                       11,396,503   252.9 MB           3.3 GB               append-no-conflicts      append-no-conflicts,append-no-conflicts-index-only,append-fast-with-conflicts,significant-text
+geopoint          Point coordinates from PlanetOSM                                         60,844,404   482.1 MB           2.3 GB               append-no-conflicts      append-no-conflicts,append-no-conflicts-index-only,append-fast-with-conflicts
+geopointshape     Point coordinates from PlanetOSM indexed as geoshapes                    60,844,404   470.8 MB           2.6 GB               append-no-conflicts      append-no-conflicts,append-no-conflicts-index-only,append-fast-with-conflicts
+geoshape          Shapes from PlanetOSM                                                    84,220,567   17.0 GB            58.7 GB              append-no-conflicts      append-no-conflicts,append-no-conflicts-big
+http_logs         HTTP server log data                                                     247,249,096  1.2 GB             31.1 GB              append-no-conflicts      append-no-conflicts,runtime-fields,append-no-conflicts-index-only,append-sorted-no-conflicts,append-index-only-with-ingest-pipeline,update,append-no-conflicts-index-reindex-only
+metricbeat        Metricbeat data                                                          1,079,600    87.7 MB            1.2 GB               append-no-conflicts      append-no-conflicts
+nested            StackOverflow Q&amp;A stored as nested docs                                  11,203,029   663.3 MB           3.4 GB               nested-search-challenge  nested-search-challenge,index-only
+noaa              Global daily weather measurements from NOAA                              33,659,481   949.4 MB           9.0 GB               append-no-conflicts      append-no-conflicts,append-no-conflicts-index-only,aggs,filter-aggs
+nyc_taxis         Taxi rides in New York in 2015                                           165,346,692  4.5 GB             74.3 GB              append-no-conflicts      append-no-conflicts,append-no-conflicts-index-only,append-sorted-no-conflicts-index-only,update,append-ml,aggs
+percolator        Percolator benchmark based on AOL queries                                2,000,000    121.1 kB           104.9 MB             append-no-conflicts      append-no-conflicts
+pmc               Full text benchmark with academic papers from PMC                        574,199      5.5 GB             21.7 GB              append-no-conflicts      append-no-conflicts,append-no-conflicts-index-only,append-sorted-no-conflicts,append-fast-with-conflicts,indexing-querying
+so                Indexing benchmark using up to questions and answers from StackOverflow  36,062,278   8.9 GB             33.1 GB              append-no-conflicts      append-no-conflicts,transform,frequent-items
+sql               SQL query performance based on NOAA Weather data                         33,659,481   949.4 MB           9.0 GB               sql                      sql
+dense_vector      Benchmark for dense vector indexing and search                           10,000,000   7.2 GB             19.5 GB              index-and-search         index-and-search
+so_vector         Benchmark for vector search with StackOverflow data                      2,000,000    12.3 GB            32.2 GB              index-and-search         index-and-search
+tsdb              metricbeat information for elastic-app k8s cluster                       116,633,698  N/A                123.0 GB             append-no-conflicts      append-no-conflicts,downsample
+
+-------------------------------
+[INFO] SUCCESS (took 2 seconds)
+-------------------------------
+
+
+$ esrally info --track=geonames
+
+    ____        ____
+   / __ \____ _/ / /_  __
+  / /_/ / __ `/ / / / / /
+ / _, _/ /_/ / / / /_/ /
+/_/ |_|\__,_/_/_/\__, /
+                /____/
+
+Showing details for track [geonames]:
+
+* Description: POIs from Geonames
+* Documents: 11,396,503
+* Compressed Size: 252.9 MB
+* Uncompressed Size: 3.3 GB
+
+================================================
+Challenge [append-no-conflicts] (run by default)
+================================================
+
+Indexes the whole document corpus using Elasticsearch default settings. We only adjust the number of replicas as we benchmark a single node cluster and Rally will only start the benchmark if the cluster turns green. Document ids are unique so all index operations are append only. After that a couple of queries are run.
+
+Schedule:
+----------
+
+1. delete-index
+2. create-index
+3. check-cluster-health
+4. index-append (8 clients)
+5. refresh-after-index
+6. force-merge
+7. refresh-after-force-merge
+8. wait-until-merges-finish
+9. index-stats
+10. node-stats
+11. default
+12. term
+13. phrase
+14. country_agg_uncached
+15. country_agg_cached
+16. scroll
+17. expression
+18. painless_static
+19. painless_dynamic
+20. decay_geo_gauss_function_score
+21. decay_geo_gauss_script_score
+22. field_value_function_score
+23. field_value_script_score
+24. large_terms
+25. large_filtered_terms
+26. large_prohibited_terms
+27. desc_sort_population
+28. asc_sort_population
+29. asc_sort_with_after_population
+30. desc_sort_geonameid
+31. desc_sort_with_after_geonameid
+32. asc_sort_geonameid
+33. asc_sort_with_after_geonameid
+
+==========================================
+Challenge [append-no-conflicts-index-only]
+==========================================
+
+Indexes the whole document corpus using Elasticsearch default settings. We only adjust the number of replicas as we benchmark a single node cluster and Rally will only start the benchmark if the cluster turns green. Document ids are unique so all index operations are append only.
+
+Schedule:
+----------
+
+1. delete-index
+2. create-index
+3. check-cluster-health
+4. index-append (8 clients)
+5. force-merge
+6. wait-until-merges-finish
+
+======================================
+Challenge [append-fast-with-conflicts]
+======================================
+
+Indexes the whole document corpus using a setup that will lead to a larger indexing throughput than the default settings. Rally will produce duplicate ids in 25% of all documents (not configurable) so we can simulate a scenario with appends most of the time and some updates in between.
+
+Schedule:
+----------
+
+1. delete-index
+2. create-index
+3. check-cluster-health
+4. index-update (8 clients)
+5. force-merge
+6. wait-until-merges-finish
+
+============================
+Challenge [significant-text]
+============================
+
+Indexes the whole document corpus using Elasticsearch default settings. We only adjust the number of replicas as we benchmark a single node cluster and Rally will only start the benchmark if the cluster turns green. Document ids are unique so all index operations are append only.
+
+Schedule:
+----------
+
+1. delete-index
+2. create-index
+3. check-cluster-health
+4. index-append (8 clients)
+5. force-merge
+6. wait-until-merges-finish
+7. significant_text_selective
+8. significant_text_sampled_selective
+9. significant_text_unselective
+10. significant_text_sampled_unselective
+
+
+-------------------------------
+[INFO] SUCCESS (took 1 seconds)
+-------------------------------
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">A track is specified in a JSON file. A track JSON file can include the following sections:</span><br><span class="line"></span><br><span class="line">- indices/templates: define the relevant indices and index templates</span><br><span class="line">- data-streams: define the relevant data streams</span><br><span class="line">- composable-templates/component-templates: define the relevant composable and component templates</span><br><span class="line">- corpora: define all document corpora (i.e. data files) that Rally should use for this track</span><br><span class="line">- challenge(s): describe more than one set of operations, in the event your track needs to test more than one set of scenarios</span><br><span class="line">- schedule: describe the workload for the benchmark, for example index with two clients at maximum throughput while searching with another two clients with ten operations per second</span><br><span class="line">- operations: describe which operations are available for this track and how they are parametrized</span><br><span class="line">- dependencies</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code>$ ls .rally/benchmarks/tracks/default/geonames
+challenges  files.txt  index.json  operations  __pycache__  README.md  terms.txt  track.json  track.py
+
+$ cat .rally/benchmarks/tracks/default/geonames/track.json
+&#123;
+  &quot;version&quot;: 2,
+  &quot;description&quot;: &quot;POIs from Geonames&quot;,
+  &quot;data-url&quot;: &quot;http://benchmarks.elasticsearch.org.s3.amazonaws.com/corpora/geonames&quot;,
+  &quot;indices&quot;: [
+    &#123;
+      &quot;name&quot;: &quot;geonames&quot;,
+      &quot;body&quot;: &quot;index.json&quot;
+    &#125;
+  ],
+  &quot;corpora&quot;: [
+    &#123;
+      &quot;name&quot;: &quot;geonames&quot;,
+      &quot;base-url&quot;: &quot;https://rally-tracks.elastic.co/geonames&quot;,
+      &quot;documents&quot;: [
+        &#123;
+          &quot;source-file&quot;: &quot;documents-2.json.bz2&quot;,
+          &quot;document-count&quot;: 11396503,
+          &quot;compressed-bytes&quot;: 265208777,
+          &quot;uncompressed-bytes&quot;: 3547613828
+        &#125;
+      ]
+    &#125;
+  ],
+  &quot;operations&quot;: [
+    &#123;&#123; rally.collect(parts="operations/*.json") &#125;&#125;
+  ],
+  &quot;challenges&quot;: [
+    &#123;&#123; rally.collect(parts="challenges/*.json") &#125;&#125;
+  ]
+&#125;
+
+$ cat .rally/benchmarks/tracks/default/geonames/index.json
+&#123;
+  &quot;settings&quot;: &#123;
+    &quot;index.number_of_shards&quot;: &#123;&#123;number_of_shards | default(5)&#125;&#125;,
+    &quot;index.number_of_replicas&quot;: &#123;&#123;number_of_replicas | default(0)&#125;&#125;,
+    &quot;index.store.type&quot;: &quot;&#123;&#123;store_type | default('fs')&#125;&#125;&quot;,
+    &quot;index.requests.cache.enable&quot;: false
+  &#125;,
+  &quot;mappings&quot;: &#123;
+    &quot;dynamic&quot;: &quot;strict&quot;,
+    &quot;_source&quot;: &#123;
+      &quot;enabled&quot;: &#123;&#123; source_enabled | default(true) | tojson &#125;&#125;
+    &#125;,
+    &quot;properties&quot;: &#123;
+    [..]
+  &#125;
+&#125;
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## challenge</span><br><span class="line"></span><br><span class="line">A challenge describes one benchmarking scenario, for example indexing documents at maximum throughput with 4 clients while issuing term and phrase queries from another two clients rate-limited at 10 queries per second each. It is always specified in the context of a track. See the available challenges by listing the corresponding tracks with *esrally list tracks*.</span><br><span class="line"></span><br><span class="line">## car</span><br><span class="line"></span><br><span class="line">A car is a specific configuration of an Elasticsearch cluster that is benchmarked, for example the out-of-the-box configuration, a configuration with a specific heap size or a custom logging configuration. List the available cars with *esrally list cars*.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code>$ esrally list cars
+
+    ____        ____
+   / __ \____ _/ / /_  __
+  / /_/ / __ `/ / / / / /
+ / _, _/ /_/ / / / /_/ /
+/_/ |_|\__,_/_/_/\__, /
+                /____/
+
+Available cars:
+
+Name                     Type    Description
+-----------------------  ------  --------------------------------------
+16gheap                  car     Sets the Java heap to 16GB
+1gheap                   car     Sets the Java heap to 1GB
+24gheap                  car     Sets the Java heap to 24GB
+2gheap                   car     Sets the Java heap to 2GB
+4gheap                   car     Sets the Java heap to 4GB
+8gheap                   car     Sets the Java heap to 8GB
+defaults                 car     Sets the Java heap to 1GB
+basic-license            mixin   Basic License
+debug-non-safepoints     mixin   More accurate CPU profiles
+ea                       mixin   Enables Java assertions
+fp                       mixin   Preserves frame pointers
+g1gc                     mixin   Enables the G1 garbage collector
+parallelgc               mixin   Enables the Parallel garbage collector
+trial-license            mixin   Trial License
+unpooled                 mixin   Enables Netty&#39;s unpooled allocator
+x-pack-ml                mixin   X-Pack Machine Learning
+x-pack-monitoring-http   mixin   X-Pack Monitoring (HTTP exporter)
+x-pack-monitoring-local  mixin   X-Pack Monitoring (local exporter)
+x-pack-security          mixin   X-Pack Security
+zgc                      mixin   Enables the ZGC garbage collector
+
+-------------------------------
+[INFO] SUCCESS (took 1 seconds)
+-------------------------------
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## telemetry</span><br><span class="line"></span><br><span class="line">Telemetry is used in Rally to gather metrics about the car, for example CPU usage or index size.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code>$ esrally list telemetry
+
+    ____        ____
+   / __ \____ _/ / /_  __
+  / /_/ / __ `/ / / / / /
+ / _, _/ /_/ / / / /_/ /
+/_/ |_|\__,_/_/_/\__, /
+                /____/
+
+Available telemetry devices:
+
+Command                     Name                        Description
+--------------------------  --------------------------  --------------------------------------------------------------------
+jit                         JIT Compiler Profiler       Enables JIT compiler logs.
+gc                          GC log                      Enables GC logs.
+jfr                         Flight Recorder             Enables Java Flight Recorder (requires an Oracle JDK or OpenJDK 11+)
+heapdump                    Heap Dump                   Captures a heap dump.
+node-stats                  Node Stats                  Regularly samples node stats
+recovery-stats              Recovery Stats              Regularly samples shard recovery stats
+ccr-stats                   CCR Stats                   Regularly samples Cross Cluster Replication (CCR) related stats
+segment-stats               Segment Stats               Determines segment stats at the end of the benchmark.
+transform-stats             Transform Stats             Regularly samples transform stats
+searchable-snapshots-stats  Searchable Snapshots Stats  Regularly samples searchable snapshots stats
+shard-stats                 Shard Stats                 Regularly samples nodes stats at shard level
+data-stream-stats           Data Stream Stats           Regularly samples data stream stats
+ingest-pipeline-stats       Ingest Pipeline Stats       Reports Ingest Pipeline stats at the end of the benchmark.
+disk-usage-stats            Disk usage of each field    Runs the indices disk usage API after benchmarking
+
+Keep in mind that each telemetry device may incur a runtime overhead which can skew results.
+
+-------------------------------
+[INFO] SUCCESS (took 0 seconds)
+-------------------------------
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## race</span><br><span class="line"></span><br><span class="line">A race is one invocation of the Rally binary. Another name for that is one “benchmarking trial”. During a race, Rally runs one challenge on a track with the given car.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code>$ esrally race --pipeline=benchmark-only --target-host=10.10.10.1:39200,10.10.10.2:39200,10.10.10.3:39200 --track=geonames --track-params=&quot;number_of_shards:3,number_of_replicas:1&quot; --challenge=append-no-conflicts --on-error=abort --race-id=$&#123;RACE_ID&#125;
+
+$ esrally list races
+
+    ____        ____
+   / __ \____ _/ / /_  __
+  / /_/ / __ `/ / / / / /
+ / _, _/ /_/ / / / /_/ /
+/_/ |_|\__,_/_/_/\__, /
+                /____/
+
+
+Recent races:
+
+Race ID                               Race Timestamp    Track     Track Parameters                          Challenge            Car       User Tags                  Track Revision    Team Revision
+------------------------------------  ----------------  --------  ----------------------------------------  -------------------  --------  -------------------------  ----------------  ---------------
+066e02fa-a71a-4239-b515-984f705d5f02  20221031T230044Z  geonames  number_of_replicas=1, number_of_shards=3  append-no-conflicts  external  intention=3shards1replica  a64a92a
+734bb4b3-8b7a-4c0b-9fa6-aaeb4659569f  20221031T214254Z  geonames  number_of_replicas=0, number_of_shards=3  append-no-conflicts  external  intention=3shards0replica  a64a92a
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## tournament</span><br><span class="line"></span><br><span class="line">A tournament is a comparison of two races. Looks like [Rally](https://github.com/elastic/rally/issues/57) doesn&#x27;t have the tournament mode support yet. Instead, the comparison can be made as the following command between two races. Note that, we should NOT run the same benchmark multiple times without data cleanup between the benchmarks. It will give us unreproducible results.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code>$ esrally compare --baseline=066e02fa-a71a-4239-b515-984f705d5f02 --contender=734bb4b3-8b7a-4c0b-9fa6-aaeb4659569f
+
+    ____        ____
+   / __ \____ _/ / /_  __
+  / /_/ / __ `/ / / / / /
+ / _, _/ /_/ / / / /_/ /
+/_/ |_|\__,_/_/_/\__, /
+                /____/
+
+
+Comparing baseline
+  Race ID: 066e02fa-a71a-4239-b515-984f705d5f02
+  Race timestamp: 2022-10-31 23:00:44
+  Challenge: append-no-conflicts
+  Car: external
+  User tags: intention=3shards1replica
+
+with contender
+  Race ID: 734bb4b3-8b7a-4c0b-9fa6-aaeb4659569f
+  Race timestamp: 2022-10-31 21:42:54
+  Challenge: append-no-conflicts
+  Car: external
+  User tags: intention=3shards0replica
+
+------------------------------------------------------
+    _______             __   _____
+   / ____(_)___  ____ _/ /  / ___/_________  ________
+  / /_  / / __ \/ __ `/ /   \__ \/ ___/ __ \/ ___/ _ \
+ / __/ / / / / / /_/ / /   ___/ / /__/ /_/ / /  /  __/
+/_/   /_/_/ /_/\__,_/_/   /____/\___/\____/_/   \___/
+------------------------------------------------------
+
+|                                                        Metric |                           Task |        Baseline |       Contender |         Diff |    Unit |   Diff % |
+|--------------------------------------------------------------:|-------------------------------:|----------------:|----------------:|-------------:|--------:|---------:|
+|                    Cumulative indexing time of primary shards |                                |    14.3493      |    14.0125      |     -0.33683 |     min |   -2.35% |
+|             Min cumulative indexing time across primary shard |                                |     0           |     0           |      0       |     min |    0.00% |
+|          Median cumulative indexing time across primary shard |                                |     0.00696667  |     0.00696667  |      0       |     min |    0.00% |
+|             Max cumulative indexing time across primary shard |                                |     4.954       |     4.73868     |     -0.21532 |     min |   -4.35% |
+|           Cumulative indexing throttle time of primary shards |                                |     0           |     0           |      0       |     min |    0.00% |
+|    Min cumulative indexing throttle time across primary shard |                                |     0           |     0           |      0       |     min |    0.00% |
+| Median cumulative indexing throttle time across primary shard |                                |     0           |     0           |      0       |     min |    0.00% |
+|    Max cumulative indexing throttle time across primary shard |                                |     0           |     0           |      0       |     min |    0.00% |
+|                       Cumulative merge time of primary shards |                                |     9.5478      |     4.86773     |     -4.68007 |     min |  -49.02% |
+|                      Cumulative merge count of primary shards |                                |    93           |    70           |    -23       |         |  -24.73% |
+|                Min cumulative merge time across primary shard |                                |     0           |     0           |      0       |     min |    0.00% |
+|             Median cumulative merge time across primary shard |                                |     0.00276667  |     0.00276667  |      0       |     min |    0.00% |
+|                Max cumulative merge time across primary shard |                                |     3.61232     |     1.71572     |     -1.8966  |     min |  -52.50% |
+|              Cumulative merge throttle time of primary shards |                                |     2.62635     |     0.569683    |     -2.05667 |     min |  -78.31% |
+|       Min cumulative merge throttle time across primary shard |                                |     0           |     0           |      0       |     min |    0.00% |
+|    Median cumulative merge throttle time across primary shard |                                |     0           |     0           |      0       |     min |    0.00% |
+|       Max cumulative merge throttle time across primary shard |                                |     1.06415     |     0.21315     |     -0.851   |     min |  -79.97% |
+|                     Cumulative refresh time of primary shards |                                |     1.37218     |     0.45075     |     -0.92143 |     min |  -67.15% |
+|                    Cumulative refresh count of primary shards |                                |   421           |   327           |    -94       |         |  -22.33% |
+|              Min cumulative refresh time across primary shard |                                |     0           |     0           |      0       |     min |    0.00% |
+|           Median cumulative refresh time across primary shard |                                |     0.0191417   |     0.0191417   |      0       |     min |    0.00% |
+|              Max cumulative refresh time across primary shard |                                |     0.4631      |     0.152433    |     -0.31067 |     min |  -67.08% |
+|                       Cumulative flush time of primary shards |                                |     0.144633    |     0.185383    |      0.04075 |     min |  +28.17% |
+|                      Cumulative flush count of primary shards |                                |    14           |    14           |      0       |         |    0.00% |
+|                Min cumulative flush time across primary shard |                                |     0           |     0           |      0       |     min |    0.00% |
+|             Median cumulative flush time across primary shard |                                |     0.000191667 |     0.000191667 |      0       |     min |    0.00% |
+|                Max cumulative flush time across primary shard |                                |     0.0575833   |     0.0674167   |      0.00983 |     min |  +17.08% |
+|                                       Total Young Gen GC time |                                |    30.494       |    14.511       |    -15.983   |       s |  -52.41% |
+|                                      Total Young Gen GC count |                                |  3888           |  2381           |  -1507       |         |  -38.76% |
+|                                         Total Old Gen GC time |                                |     7.329       |     3.247       |     -4.082   |       s |  -55.70% |
+|                                        Total Old Gen GC count |                                |   109           |    48           |    -61       |         |  -55.96% |
+|                                                    Store size |                                |     5.78897     |     3.01044     |     -2.77854 |      GB |  -48.00% |
+|                                                 Translog size |                                |     8.19564e-07 |     6.65896e-07 |     -0       |      GB |  -18.75% |
+|                                        Heap used for segments |                                |     0.513947    |     0.385025    |     -0.12892 |      MB |  -25.08% |
+|                                      Heap used for doc values |                                |     0.037796    |     0.0160522   |     -0.02174 |      MB |  -57.53% |
+|                                           Heap used for terms |                                |     0.383759    |     0.296478    |     -0.08728 |      MB |  -22.74% |
+|                                           Heap used for norms |                                |     0.0499268   |     0.0380859   |     -0.01184 |      MB |  -23.72% |
+|                                          Heap used for points |                                |     0           |     0           |      0       |      MB |    0.00% |
+|                                   Heap used for stored fields |                                |     0.0424652   |     0.0344086   |     -0.00806 |      MB |  -18.97% |
+|                                                 Segment count |                                |    82           |    66           |    -16       |         |  -19.51% |
+|                                   Total Ingest Pipeline count |                                |     0           |     0           |      0       |         |    0.00% |
+|                                    Total Ingest Pipeline time |                                |     0           |     0           |      0       |      ms |    0.00% |
+|                                  Total Ingest Pipeline failed |                                |     0           |     0           |      0       |         |    0.00% |
+|                                                    error rate |                   index-append |     0           |     0           |      0       |       % |    0.00% |
+|                                                Min Throughput |                    index-stats |    90.001       |    90.0126      |      0.01165 |   ops/s |   +0.01% |
+|                                               Mean Throughput |                    index-stats |    90.0055      |    90.0241      |      0.01854 |   ops/s |   +0.02% |
+|                                             Median Throughput |                    index-stats |    90.0048      |    90.0219      |      0.01715 |   ops/s |   +0.02% |
+|                                                Max Throughput |                    index-stats |    90.0142      |    90.0422      |      0.02796 |   ops/s |   +0.03% |
+|                                       50th percentile latency |                    index-stats |     5.80729     |     5.40389     |     -0.40339 |      ms |   -6.95% |
+|                                       90th percentile latency |                    index-stats |     6.71673     |     6.22462     |     -0.49211 |      ms |   -7.33% |
+|                                       99th percentile latency |                    index-stats |     7.26607     |     6.8574      |     -0.40867 |      ms |   -5.62% |
+|                                     99.9th percentile latency |                    index-stats |    11.3788      |    11.1477      |     -0.23112 |      ms |   -2.03% |
+|                                      100th percentile latency |                    index-stats |    13.6309      |    14.0192      |      0.38829 |      ms |   +2.85% |
+|                                  50th percentile service time |                    index-stats |     4.61601     |     4.24021     |     -0.37579 |      ms |   -8.14% |
+|                                  90th percentile service time |                    index-stats |     5.40477     |     4.93823     |     -0.46654 |      ms |   -8.63% |
+|                                  99th percentile service time |                    index-stats |     5.85565     |     5.34821     |     -0.50744 |      ms |   -8.67% |
+|                                99.9th percentile service time |                    index-stats |     9.8608      |     7.74023     |     -2.12057 |      ms |  -21.51% |
+|                                 100th percentile service time |                    index-stats |    12.6355      |     9.44686     |     -3.18866 |      ms |  -25.24% |
+|                                                    error rate |                    index-stats |     0           |     0           |      0       |
+[..]
+
+-------------------------------
+[INFO] SUCCESS (took 0 seconds)
+-------------------------------
+</code></pre>
+<pre><code>
+## Reference
+
+- [https://esrally.readthedocs.io/en/stable/track.html](https://esrally.readthedocs.io/en/stable/track.html)
+- [https://esrally.readthedocs.io/en/stable/tournament.html](https://esrally.readthedocs.io/en/stable/tournament.html)
+- [https://github.com/elastic/rally/issues/57](https://github.com/elastic/rally/issues/57)
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Esrally/" rel="tag"><i class="fa fa-tag"></i> Esrally</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/getting-started-with-elasticsearch/" rel="prev" title="Getting started with Elasticsearch and Kibana">
+                  <i class="fa fa-angle-left"></i> Getting started with Elasticsearch and Kibana
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/overwrite-esrally-track-params/" rel="next" title="Overwrite the Elastic Rally track parameters">
+                  Overwrite the Elastic Rally track parameters <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="GoalAccording to weekly data between 2020 to 2022, we want to get to know the waves and peaks of COVID pandemic in these years. Download the dataWe will continue to use NCHS(National Center for Health">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using R to analyze US COVID pandemic waves and peaks">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/using-r-to-analyze-us-covid-waves-and-peaks/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="GoalAccording to weekly data between 2020 to 2022, we want to get to know the waves and peaks of COVID pandemic in these years. Download the dataWe will continue to use NCHS(National Center for Health">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.flamingbytes.com/images/covid_plot_weekly_wave.svg">
+<meta property="og:image" content="https://www.flamingbytes.com/images/covid_plot_weekly_peak.svg">
+<meta property="article:published_time" content="2023-01-12T10:33:00.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="R">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.flamingbytes.com/images/covid_plot_weekly_wave.svg">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/using-r-to-analyze-us-covid-waves-and-peaks/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/using-r-to-analyze-us-covid-waves-and-peaks/","path":"blog/using-r-to-analyze-us-covid-waves-and-peaks/","title":"Using R to analyze US COVID pandemic waves and peaks"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Using R to analyze US COVID pandemic waves and peaks | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Goal"><span class="nav-number">1.</span> <span class="nav-text">Goal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Download-the-data"><span class="nav-number">2.</span> <span class="nav-text">Download the data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Load-the-data"><span class="nav-number">3.</span> <span class="nav-text">Load the data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Identify-the-data-we-want-to-focus"><span class="nav-number">4.</span> <span class="nav-text">Identify the data we want to focus</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#A-tibble-158-%C3%97-2"><span class="nav-number"></span> <span class="nav-text">A tibble: 158 × 2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Draw-the-graph-to-see-the-wave"><span class="nav-number">1.</span> <span class="nav-text">Draw the graph to see the wave</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Find-the-peak-by-R-mark-it-in-the-graph"><span class="nav-number">2.</span> <span class="nav-text">Find the peak by R mark it in the graph</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hightlight-the-peak-points"><span class="nav-number">3.</span> <span class="nav-text">Hightlight the peak points</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Other-finding"><span class="nav-number">4.</span> <span class="nav-text">Other finding</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/analysis-us-quartely-covid-data-from-cdc/" rel="bookmark">
+        <time class="popular-posts-time">2023-01-10</time>
+        <br>
+      Using R to analyze the quarterly US COVID data
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-anova-in-r-to-analyze-us-covid-data/" rel="bookmark">
+        <time class="popular-posts-time">2023-01-12</time>
+        <br>
+      Using ANOVA in R to analyze US COVID data to understand age impact to death rate
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/reachthestars/" rel="bookmark">
+        <time class="popular-posts-time">2022-12-25</time>
+        <br>
+      Reach the Stars!
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/graph-implementation-in-python/" rel="bookmark">
+        <time class="popular-posts-time">2023-04-16</time>
+        <br>
+      Graph implementation in Python
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/bfs-and-dfs-in-graph/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-07</time>
+        <br>
+      BFS and DFS in Graph
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-r-to-analyze-us-covid-waves-and-peaks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Using R to analyze US COVID pandemic waves and peaks | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Using R to analyze US COVID pandemic waves and peaks
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-12 02:33:00" itemprop="dateCreated datePublished" datetime="2023-01-12T02:33:00-08:00">2023-01-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h2><p>According to weekly data between 2020 to 2022, we want to get to know the waves and peaks of COVID pandemic in these years.</p>
+<h2 id="Download-the-data"><a href="#Download-the-data" class="headerlink" title="Download the data"></a>Download the data</h2><p>We will continue to use NCHS(National Center for Health Statistics) as our data source.</p>
+<p>Visit <a target="_blank" rel="noopener" href="https://data.cdc.gov/browse?category=NCHS&amp;sortBy=last_modified">https://data.cdc.gov/browse?category=NCHS&sortBy=last_modified</a>, and search <code>Provisional COVID-19 Death Counts by Week</code>, we will find the data we are intrest.</p>
+<p><a target="_blank" rel="noopener" href="https://data.cdc.gov/NCHS/Provisional-COVID-19-Death-Counts-by-Week-Ending-D/r8kw-7aab">https://data.cdc.gov/NCHS/Provisional-COVID-19-Death-Counts-by-Week-Ending-D/r8kw-7aab</a>, in this page, we can export data into csv file.</p>
+<p>With that, we may get the data source csv, <code>Provisional_COVID-19_Death_Counts_by_Week_Ending_Date_and_State.csv</code>.</p>
+<h2 id="Load-the-data"><a href="#Load-the-data" class="headerlink" title="Load the data"></a>Load the data</h2><pre><code>library(&quot;dplyr&quot;)
+library(&quot;janitor&quot;)
+library(&quot;tidyr&quot;)
+library(&quot;readr&quot;)
+df &lt;- readr::read_csv(file.path(getwd(), &quot;Provisional_COVID-19_Death_Counts_by_Week_Ending_Date_and_State.csv&quot;), col_names = TRUE)
+df &lt;- clean_names(df)
+tmp_start_date &lt;- strptime(df$start_date, &quot;%m/%d/%Y&quot;)
+df$start_date &lt;- format(tmp_start_date, &quot;%Y-%m-%d&quot;)
+
+ &gt; glimpse(df)
+ Rows: 10,800
+ Columns: 17
+ $ data_as_of                             &lt;chr&gt; &quot;01/09/2023&quot;, &quot;01/09/2023&quot;, &quot;01…
+ $ start_date                             &lt;chr&gt; &quot;2019-12-29&quot;, &quot;2020-01-05&quot;, &quot;20…
+ $ end_date                               &lt;chr&gt; &quot;01/04/2020&quot;, &quot;01/11/2020&quot;, &quot;01…
+ $ group                                  &lt;chr&gt; &quot;By Week&quot;, &quot;By Week&quot;, &quot;By Week&quot;…
+ $ year                                   &lt;chr&gt; &quot;2019/2020&quot;, &quot;2020&quot;, &quot;2020&quot;, &quot;2…
+ $ month                                  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA,…
+ $ mmwr_week                              &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, …
+ $ week_ending_date                       &lt;chr&gt; &quot;01/04/2020&quot;, &quot;01/11/2020&quot;, &quot;01…
+ $ state                                  &lt;chr&gt; &quot;United States&quot;, &quot;United States…
+ $ covid_19_deaths                        &lt;dbl&gt; 0, 1, 2, 3, 0, 4, 6, 6, 9, 38, …
+ $ total_deaths                           &lt;dbl&gt; 60176, 60734, 59362, 59162, 588…
+ $ percent_of_expected_deaths             &lt;dbl&gt; 98, 97, 98, 99, 99, 100, 100, 1…
+ $ pneumonia_deaths                       &lt;dbl&gt; 4111, 4153, 4066, 3915, 3818, 3…
+ $ pneumonia_and_covid_19_deaths          &lt;dbl&gt; 0, 1, 2, 0, 0, 1, 1, 3, 5, 19, …
+ $ influenza_deaths                       &lt;dbl&gt; 434, 475, 468, 500, 481, 520, 5…
+ $ pneumonia_influenza_or_covid_19_deaths &lt;dbl&gt; 4545, 4628, 4534, 4418, 4299, 4…
+ $ footnote                               &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA,…
+
+ !&gt; df
+ # A tibble: 10,800 × 17
+    data_as_of start_date end_d…¹ group year  month mmwr_…² week_…³ state covid…⁴
+    &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;
+  1 01/09/2023 2019-12-29 01/04/… By W… 2019…    NA       1 01/04/… Unit…       0
+  2 01/09/2023 2020-01-05 01/11/… By W… 2020     NA       2 01/11/… Unit…       1
+  3 01/09/2023 2020-01-12 01/18/… By W… 2020     NA       3 01/18/… Unit…       2
+  4 01/09/2023 2020-01-19 01/25/… By W… 2020     NA       4 01/25/… Unit…       3
+  5 01/09/2023 2020-01-26 02/01/… By W… 2020     NA       5 02/01/… Unit…       0
+  6 01/09/2023 2020-02-02 02/08/… By W… 2020     NA       6 02/08/… Unit…       4
+  7 01/09/2023 2020-02-09 02/15/… By W… 2020     NA       7 02/15/… Unit…       6
+  8 01/09/2023 2020-02-16 02/22/… By W… 2020     NA       8 02/22/… Unit…       6
+  9 01/09/2023 2020-02-23 02/29/… By W… 2020     NA       9 02/29/… Unit…       9
+ 10 01/09/2023 2020-03-01 03/07/… By W… 2020     NA      10 03/07/… Unit…      38
+ # … with 10,790 more rows, 7 more variables: total_deaths &lt;dbl&gt;,
+ #   percent_of_expected_deaths &lt;dbl&gt;, pneumonia_deaths &lt;dbl&gt;,
+ #   pneumonia_and_covid_19_deaths &lt;dbl&gt;, influenza_deaths &lt;dbl&gt;,
+ #   pneumonia_influenza_or_covid_19_deaths &lt;dbl&gt;, footnote &lt;chr&gt;, and
+ #   abbreviated variable names ¹ end_date, ² mmwr_week, ³ week_ending_date,
+ #   ⁴ covid_19_deaths
+ # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
+</code></pre>
+<h2 id="Identify-the-data-we-want-to-focus"><a href="#Identify-the-data-we-want-to-focus" class="headerlink" title="Identify the data we want to focus"></a>Identify the data we want to focus</h2><p>As we can see, there are 4 diffrent groups, and it has the <code>whole United states</code> and each state’s data</p>
+<pre><code>&gt; unique(df$group)
+[1] &quot;By Week&quot;  &quot;By Month&quot; &quot;By Year&quot;  &quot;By Total&quot;
+&gt;
+</code></pre>
+<p>We only want to get the weekly data, so we may want to <code>filter</code> with “group&#x3D;By Week”, and “state&#x3D;United states”</p>
+<p>in the mean time, we may only want to <code>select</code> only 2 columns.</p>
+<ul>
+<li><p>start_date</p>
+</li>
+<li><p>covid_19_deaths</p>
+<blockquote>
+<p>df1 &lt;- df %&gt;%<br>      filter(state &#x3D;&#x3D; “United States” &amp; group &#x3D;&#x3D; “By Week”) %&gt;%<br>      select(start_date, covid_19_deaths)<br>print(df1,n&#x3D;20)</p>
+</blockquote>
+<ul>
+<li><blockquote>
+<h1 id="A-tibble-158-×-2"><a href="#A-tibble-158-×-2" class="headerlink" title="A tibble: 158 × 2"></a>A tibble: 158 × 2</h1><p> start_date covid_19_deaths<br> <chr>                <dbl><br>   1 2019-12-29               0<br>   2 2020-01-05               1<br>   3 2020-01-12               2<br>   4 2020-01-19               3<br>   5 2020-01-26               0<br>   6 2020-02-02               4<br>   7 2020-02-09               6<br>   8 2020-02-16               6<br>   9 2020-02-23               9<br>  10 2020-03-01              38<br>  11 2020-03-08              60<br>  12 2020-03-15             588<br>  13 2020-03-22            3226<br>  14 2020-03-29           10141<br>  15 2020-04-05           16347<br>  16 2020-04-12           17221<br>  17 2020-04-19           15557<br>  18 2020-04-26           13223<br>  19 2020-05-03           11243<br>  20 2020-05-10            9239<br>  …</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Draw-the-graph-to-see-the-wave"><a href="#Draw-the-graph-to-see-the-wave" class="headerlink" title="Draw the graph to see the wave"></a>Draw the graph to see the wave</h2><pre><code>library(&quot;ggplot2&quot;)
+library(&quot;sjPlot&quot;)
+p = ggplot(df1, aes( x=start_date, y=covid_19_deaths, group=1)) +
+    geom_line(color=&quot;blue&quot;) +
+    theme(axis.text.x=element_text(angle=45,hjust=1,size=5))
+save_plot(&quot;covid_plot_weekly_wave.svg&quot;, fig = p, width=60, height=20)
+</code></pre>
+<p><img src="/images/covid_plot_weekly_wave.svg" alt="Image"></p>
+<h2 id="Find-the-peak-by-R-mark-it-in-the-graph"><a href="#Find-the-peak-by-R-mark-it-in-the-graph" class="headerlink" title="Find the peak by R mark it in the graph"></a>Find the peak by R mark it in the graph</h2><p>From above graph, we can easily to figure out the waves and peaks, but we also can let R help us to do it, it’s pretty useful if we have to deal with many data and many graphs.</p>
+<p>To achive it, firstly we can call <code>findpeaks</code> from <code>pracma</code> library to find the peaks</p>
+<pre><code>library(&quot;pracma&quot;)
++ peaks = findpeaks(df1$covid_19_deaths, npeaks=5,  sortstr=TRUE)
+&gt; &gt; peaks
+      [,1] [,2] [,3] [,4]
+[1,] 26027   54   40   66
+[2,] 21364  108   98  121
+[3,] 17221   16    8   26
+[4,] 15536   88   79   98
+[5,]  8308   31   26   38
+&gt;
+</code></pre>
+<p>The 2nd column means the the row index of the peak. in this case, we can tell, the 54th row has the top peak covid death number <code>26027</code>.</p>
+<p>It’s not very obvious which week(start_date) is hitting the peak, so we can do something like this.</p>
+<pre><code>is_peak &lt;- vector( &quot;logical&quot; , length(df1$covid_19_deaths ))
+df1$is_peak = is_peak
+
+for (x in peaks[,2]) &#123;
+  df1$is_peak[x] = TRUE
+&#125;
+</code></pre>
+<p>As you can see, we added a new column <code>is_peak</code>, so we can use it to filter out those none peak data, sort the peak data points.</p>
+<pre><code>!&gt; df2 = df1 %&gt;% filter(is_peak == TRUE)
+ + df2[order(-df2$covid_19_deaths),]
+ &gt; # A tibble: 5 × 3
+   start_date covid_19_deaths is_peak
+   &lt;chr&gt;                &lt;dbl&gt; &lt;lgl&gt;
+ 1 2021-01-03           26027 TRUE
+ 2 2022-01-16           21364 TRUE
+ 3 2020-04-12           17221 TRUE
+ 4 2021-08-29           15536 TRUE
+ 5 2020-07-26            8308 TRUE
+ &gt; &gt;
+</code></pre>
+<h2 id="Hightlight-the-peak-points"><a href="#Hightlight-the-peak-points" class="headerlink" title="Hightlight the peak points"></a>Hightlight the peak points</h2><pre><code>p = ggplot(df1, aes(x=start_date, y=covid_19_deaths, group=1)) +
+    geom_line(color=&quot;blue&quot;) +
+    geom_point(data = . %&gt;% filter(is_peak == TRUE), stat=&quot;identity&quot;, size = 4, color = &quot;red&quot;) +
+    scale_y_continuous(breaks=seq(0,30000,4000)) +
+    theme(axis.text.x=element_text(angle=45,hjust=1,size=5))
+
+save_plot(&quot;covid_plot_weekly_peak.svg&quot;, fig = p, width=60, height=20)
+</code></pre>
+<p><img src="/images/covid_plot_weekly_peak.svg" alt="Image"></p>
+<h2 id="Other-finding"><a href="#Other-finding" class="headerlink" title="Other finding"></a>Other finding</h2><pre><code>!&gt; &gt; sum(df1$covid_19_deaths)
+ [1] 1089714   ===&gt; the total covid_19_deaths death number from 2020 to 2022
+
+!&gt; summary(df1$covid_19_deaths)
+    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
+       0    2223    4428    6897    9862   26027
+ &gt;
+!&gt; df3 &lt;- df %&gt;%
+ +     filter(state == &quot;United States&quot; &amp; group == &quot;By Week&quot;) %&gt;%
+ +     select(start_date, total_deaths)
+ + sum(df3$total_deaths)
+ + &gt; [1] 10077273  ===&gt; the total death number from 2020 to 2022 
+ + summary(df3$total_deaths)
+ &gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
+    7100   58522   60451   63780   68610   87415
+ &gt;
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/R/" rel="tag"><i class="fa fa-tag"></i> R</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/analysis-us-quartely-covid-data-from-cdc/" rel="prev" title="Using R to analyze the quarterly US COVID data">
+                  <i class="fa fa-angle-left"></i> Using R to analyze the quarterly US COVID data
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/using-anova-in-r-to-analyze-us-covid-data/" rel="next" title="Using ANOVA in R to analyze US COVID data to understand age impact to death rate">
+                  Using ANOVA in R to analyze US COVID data to understand age impact to death rate <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

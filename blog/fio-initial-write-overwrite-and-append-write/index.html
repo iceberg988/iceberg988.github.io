@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="In this post, we try to study how the overwrite and file_append options work in fio benchmark. overwrite and file_append options overwrite&#x3D;bool  If true, writes to a file will always overwrite ex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fio initial write, overwrite and append write">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/fio-initial-write-overwrite-and-append-write/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="In this post, we try to study how the overwrite and file_append options work in fio benchmark. overwrite and file_append options overwrite&#x3D;bool  If true, writes to a file will always overwrite ex">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-15T14:00:00.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="Fio">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/fio-initial-write-overwrite-and-append-write/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/fio-initial-write-overwrite-and-append-write/","path":"blog/fio-initial-write-overwrite-and-append-write/","title":"Fio initial write, overwrite and append write"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Fio initial write, overwrite and append write | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#overwrite-and-file-append-options"><span class="nav-number">1.</span> <span class="nav-text">overwrite and file_append options</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fio-commands"><span class="nav-number">2.</span> <span class="nav-text">Fio commands</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fio-results"><span class="nav-number">3.</span> <span class="nav-text">Fio results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fio-syscalls-for-create-write-and-read"><span class="nav-number">4.</span> <span class="nav-text">Fio syscalls for create, write and read</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/fio-fsync-end_fsync-fdatasync-and-sync/" rel="bookmark">
+        <time class="popular-posts-time">2022-03-14</time>
+        <br>
+      Fio fsync, end_fsync, fdatasync and sync
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/fio-benchmark-on-multiple-files/" rel="bookmark">
+        <time class="popular-posts-time">2021-10-13</time>
+        <br>
+      fio benchmark on multiple files
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/fio-direct-i-o-error-with-1k-blocksize/" rel="bookmark">
+        <time class="popular-posts-time">2023-01-23</time>
+        <br>
+      fio direct I/O error with 1k blocksize
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/libaio-init-failed-due-to-resource-temporarily-unavailable/" rel="bookmark">
+        <time class="popular-posts-time">2021-12-04</time>
+        <br>
+      libaio init failed due to resource temporarily unavailable
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/vdbench-file-system-operations/" rel="bookmark">
+        <time class="popular-posts-time">2022-03-10</time>
+        <br>
+      Vdbench file system operations
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/fio-initial-write-overwrite-and-append-write/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Fio initial write, overwrite and append write | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Fio initial write, overwrite and append write
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-15 07:00:00" itemprop="dateCreated datePublished" datetime="2022-03-15T07:00:00-07:00">2022-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>In this post, we try to study how the overwrite and file_append options work in fio benchmark.</p>
+<h2 id="overwrite-and-file-append-options"><a href="#overwrite-and-file-append-options" class="headerlink" title="overwrite and file_append options"></a>overwrite and file_append options</h2><ul>
+<li>overwrite&#x3D;bool</li>
+</ul>
+<p>If true, writes to a file will always overwrite existing data. If the file doesn’t already exist, it will be created before the write phase begins. If the file exists and is large enough for the specified write phase, nothing will be done. Default: false.</p>
+<ul>
+<li>file_append&#x3D;bool</li>
+</ul>
+<p>Perform I&#x2F;O after the end of the file. Normally fio will operate within the size of a file. If this option is set, then fio will append to the file instead. This has identical behavior to setting offset to the size of a file. This option is ignored on non-regular files.</p>
+<ul>
+<li>offset&#x3D;int</li>
+</ul>
+<p>Start I&#x2F;O at the provided offset in the file, given as either a fixed size in bytes, zones or a percentage. If a percentage is given, the generated offset will be aligned to the minimum blocksize or to the value of offset_align if provided. Data before the given offset will not be touched. This effectively caps the file size at real_size - offset. Can be combined with size to constrain the start and end range of the I&#x2F;O workload. A percentage can be specified by a number between 1 and 100 followed by ‘%’, for example, offset&#x3D;20% to specify 20%. In ZBD mode, value can be set as number of zones using ‘z’.</p>
+<h2 id="Fio-commands"><a href="#Fio-commands" class="headerlink" title="Fio commands"></a>Fio commands</h2><p>The following fio commands are used to study initial write, overwrite and append write. We also have one more randread run at the last. Before each command run, we drop kernel cache with command “echo 3&gt;&#x2F;proc&#x2F;sys&#x2F;vm&#x2F;drop_caches”.</p>
+<pre><code>$ fio --name=test --ioengine=libaio --blocksize=4k --readwrite=randwrite --directory=/mnt/bench1 --nrfiles=1 --size=1g --end_fsync=1 --numjobs=1 --direct=1
+$ fio --name=test --ioengine=libaio --blocksize=4k --readwrite=randwrite --directory=/mnt/bench1 --nrfiles=1 --size=1g --end_fsync=1 --numjobs=1 --direct=1
+$ fio --name=test --ioengine=libaio --blocksize=4k --readwrite=randwrite --directory=/mnt/bench1 --nrfiles=1 --size=1g --end_fsync=1 --numjobs=1 --direct=1 --overwrite=1
+$ fio --name=test --ioengine=libaio --blocksize=4k --readwrite=randwrite --directory=/mnt/bench1 --nrfiles=1 --size=1g --end_fsync=1 --numjobs=1 --direct=1 --file_append=1
+$ fio --name=test --ioengine=libaio --blocksize=4k --readwrite=randread --directory=/mnt/bench1 --nrfiles=1 --size=1g --end_fsync=1 --numjobs=1 --direct=1
+</code></pre>
+<h2 id="Fio-results"><a href="#Fio-results" class="headerlink" title="Fio results"></a>Fio results</h2><p>With the option “–file_append&#x3D;1”, fio will append to the end of the file and expand it to the proper size. The write performance is similar to the initial write.</p>
+<p>With the option “–overwrite&#x3D;1”, fio will overwrite the existing data. If the file doesn’t already exist, it will be created before the write phase begins. If the file exists and is large enough for the specified write phase, nothing will be done.</p>
+<p>The following table shows the fio results.<br>Test NameFio OptionsResultFile SizeInitial Writewrite: IOPS&#x3D;7009, BW&#x3D;27.4MiB&#x2F;s0GB -&gt; 1GBOverwrite–overwrite&#x3D;0(default)write: IOPS&#x3D;10.4k, BW&#x3D;40.4MiB&#x2F;s1GBOverwrite–overwrite&#x3D;1write: IOPS&#x3D;10.0k, BW&#x3D;39.2MiB&#x2F;s1GBAppend Write–file_append&#x3D;1write: IOPS&#x3D;6667, BW&#x3D;26.0MiB&#x2F;s1GB -&gt; 2GBRandom Readread: IOPS&#x3D;7769, BW&#x3D;30.3MiB&#x2F;s2GB</p>
+<h2 id="Fio-syscalls-for-create-write-and-read"><a href="#Fio-syscalls-for-create-write-and-read" class="headerlink" title="Fio syscalls for create, write and read"></a>Fio syscalls for create, write and read</h2><p>The file space will be allocated when to lay out the file.</p>
+<pre><code>29247 write(1, &quot;Starting 1 process\n&quot;, 19) = 19
+29247 stat(&quot;/mnt/bench1/test.0.0&quot;, 0x7ffd59df9db0) = -1 ENOENT (No such file or directory)
+29247 write(1, &quot;test: Laying out IO file (1 file&quot;..., 44) = 44
+29247 unlink(&quot;/mnt/bench1/test.0.0&quot;)    = -1 ENOENT (No such file or directory)
+29247 open(&quot;/mnt/bench1/test.0.0&quot;, O_WRONLY|O_CREAT, 0644) = 3
+29247 fallocate(3, 0, 0, 1073741824)    = 0
+29247 fadvise64(3, 0, 1073741824, POSIX_FADV_DONTNEED) = 0
+29247 close(3)
+</code></pre>
+<p>The following are the syscalls when fio writes data with ioengine <em>libaio</em>.</p>
+<pre><code>29429 open(&quot;/mnt/bench1/test.0.0&quot;, O_RDWR|O_CREAT|O_DIRECT, 0600) = 3
+29429 fadvise64(3, 1073741824, 1073741824, POSIX_FADV_DONTNEED) = 0
+29429 fadvise64(3, 1073741824, 1073741824, POSIX_FADV_RANDOM) = 0
+29429 io_submit(0x7fbe9301c000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;5\340(\3148\240\231\26\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=4096, aio_offset=1138499584&#125;]) = 1
+29429 io_getevents(0x7fbe9301c000, 1, 1, [&#123;data=0, obj=0xa77de0, res=4096, res2=0&#125;], NULL) = 1
+29429 io_submit(0x7fbe9301c000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;\0\340`o\0\0\0\0\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=4096, aio_offset=1868619776&#125;]) = 1
+29429 io_getevents(0x7fbe9301c000, 1, 1, [&#123;data=0, obj=0xa77de0, res=4096, res2=0&#125;], NULL) = 1
+[..]
+29429 io_submit(0x7fbe9301c000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;\0\300\357y\0\0\0\0\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=4096, aio_offset=2046550016&#125;]) = 1
+29429 io_getevents(0x7fbe9301c000, 1, 1, [&#123;data=0, obj=0xa77de0, res=4096, res2=0&#125;], NULL) = 1
+29429 fsync(3)                          = 0
+29429 close(3)
+</code></pre>
+<p>The following are the syscalls when fio reads data with ioengine <em>libaio</em>.</p>
+<pre><code>29484 open(&quot;/mnt/bench1/test.0.0&quot;, O_RDONLY|O_DIRECT) = 3
+29484 fadvise64(3, 0, 1073741824, POSIX_FADV_DONTNEED) = 0
+29484 fadvise64(3, 0, 1073741824, POSIX_FADV_RANDOM) = 0
+29484 io_submit(0x7f069d23a000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PREAD, aio_fildes=3, aio_buf=0x9d1000, aio_nbytes=4096, aio_offset=64757760&#125;]) = 1
+29484 io_getevents(0x7f069d23a000, 1, 1, [&#123;data=0, obj=0x9d3da0, res=4096, res2=0&#125;], NULL) = 1
+29484 io_submit(0x7f069d23a000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PREAD, aio_fildes=3, aio_buf=0x9d1000, aio_nbytes=4096, aio_offset=794877952&#125;]) = 1
+29484 io_getevents(0x7f069d23a000, 1, 1, [&#123;data=0, obj=0x9d3da0, res=4096, res2=0&#125;], NULL) = 1
+[..]
+29484 io_submit(0x7f069d23a000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PREAD, aio_fildes=3, aio_buf=0x9d1000, aio_nbytes=4096, aio_offset=972808192&#125;]) = 1
+29484 io_getevents(0x7f069d23a000, 1, 1, [&#123;data=0, obj=0x9d3da0, res=4096, res2=0&#125;], NULL) = 1
+29484 getrusage(RUSAGE_THREAD, &#123;ru_utime=&#123;tv_sec=1, tv_usec=706077&#125;, ru_stime=&#123;tv_sec=7, tv_usec=828474&#125;, ...&#125;) = 0
+29484 close(3)
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Fio/" rel="tag"><i class="fa fa-tag"></i> Fio</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/book-report-on-the-hatchet/" rel="prev" title="Book Report on The Hatchet">
+                  <i class="fa fa-angle-left"></i> Book Report on The Hatchet
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/openzfs-a-pooled-storage-file-system/" rel="next" title="OpenZFS - A pooled storage file system">
+                  OpenZFS - A pooled storage file system <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

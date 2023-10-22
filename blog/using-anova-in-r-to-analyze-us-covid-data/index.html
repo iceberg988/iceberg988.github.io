@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="A great example to use ANOVA in R to analyze complicated data.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using ANOVA in R to analyze US COVID data to understand age impact to death rate">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/using-anova-in-r-to-analyze-us-covid-data/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="A great example to use ANOVA in R to analyze complicated data.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.flamingbytes.com/images/covid_plot_age_impact1.svg">
+<meta property="og:image" content="https://www.flamingbytes.com/images/covid_plot_age_impact2.svg">
+<meta property="article:published_time" content="2023-01-12T20:57:00.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="R">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.flamingbytes.com/images/covid_plot_age_impact1.svg">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/using-anova-in-r-to-analyze-us-covid-data/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/using-anova-in-r-to-analyze-us-covid-data/","path":"blog/using-anova-in-r-to-analyze-us-covid-data/","title":"Using ANOVA in R to analyze US COVID data to understand age impact to death rate"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Using ANOVA in R to analyze US COVID data to understand age impact to death rate | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Goal"><span class="nav-number">1.</span> <span class="nav-text">Goal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Download-the-data"><span class="nav-number">2.</span> <span class="nav-text">Download the data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Load-the-data"><span class="nav-number">3.</span> <span class="nav-text">Load the data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Filter-and-Select"><span class="nav-number">4.</span> <span class="nav-text">Filter and Select</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pivot-longer-to-reorg-the-data-for-grouping"><span class="nav-number">5.</span> <span class="nav-text">pivot_longer to reorg the data for grouping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Draw-diagram-for-each-group"><span class="nav-number">6.</span> <span class="nav-text">Draw diagram for each group</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ANOVA-analysis"><span class="nav-number">7.</span> <span class="nav-text">ANOVA analysis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Compare-diffrent-age-ranges"><span class="nav-number">8.</span> <span class="nav-text">Compare diffrent age ranges</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Draw-diagram-for-pairs-comparisons"><span class="nav-number">9.</span> <span class="nav-text">Draw diagram for pairs comparisons</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">10.</span> <span class="nav-text">Conclusion</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-r-to-analyze-us-covid-waves-and-peaks/" rel="bookmark">
+        <time class="popular-posts-time">2023-01-12</time>
+        <br>
+      Using R to analyze US COVID pandemic waves and peaks
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/analysis-us-quartely-covid-data-from-cdc/" rel="bookmark">
+        <time class="popular-posts-time">2023-01-10</time>
+        <br>
+      Using R to analyze the quarterly US COVID data
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/latency-numbers/" rel="bookmark">
+        <time class="popular-posts-time">2022-02-02</time>
+        <br>
+      Latency numbers
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/reachthestars/" rel="bookmark">
+        <time class="popular-posts-time">2022-12-25</time>
+        <br>
+      Reach the Stars!
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/what-is-performance-engineering/" rel="bookmark">
+        <time class="popular-posts-time">2022-04-08</time>
+        <br>
+      What is Performance Engineering
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-anova-in-r-to-analyze-us-covid-data/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Using ANOVA in R to analyze US COVID data to understand age impact to death rate | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Using ANOVA in R to analyze US COVID data to understand age impact to death rate
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-12 12:57:00" itemprop="dateCreated datePublished" datetime="2023-01-12T12:57:00-08:00">2023-01-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h2><p>We want to analysis the relationship between age and covid death rate in US.</p>
+<h2 id="Download-the-data"><a href="#Download-the-data" class="headerlink" title="Download the data"></a>Download the data</h2><p>We will use NCHS(National Center for Health Statistics) as our data source.</p>
+<p>Visit <a target="_blank" rel="noopener" href="https://data.cdc.gov/browse?category=NCHS&amp;sortBy=last_modified">https://data.cdc.gov/browse?category=NCHS&sortBy=last_modified</a>, and search <code>VSRR Quarterly</code>, we will find the data we are intrest.</p>
+<p><a target="_blank" rel="noopener" href="https://data.cdc.gov/NCHS/NCHS-VSRR-Quarterly-provisional-estimates-for-sele/489q-934x">https://data.cdc.gov/NCHS/NCHS-VSRR-Quarterly-provisional-estimates-for-sele/489q-934x</a>, in this page, we can export data into csv file.</p>
+<p>With that, we may can download data source csv, <code>NCHS_-_VSRR_Quarterly_provisional_estimates_for_selected_indicators_of_mortality.csv</code></p>
+<h2 id="Load-the-data"><a href="#Load-the-data" class="headerlink" title="Load the data"></a>Load the data</h2><pre><code>library(&quot;dplyr&quot;)
+library(&quot;ggplot2&quot;)
+library(&quot;janitor&quot;)
+library(&quot;tidyr&quot;)
+library(&quot;readr&quot;)
+library(&quot;sjPlot&quot;)
+df &lt;- readr::read_csv(file.path(getwd(), &quot;NCHS_-_VSRR_Quarterly_provisional_estimates_for_selected_indicators_of_mortality.csv&quot;), col_names = TRUE)
+df &lt;- clean_names(df)
+# To fix the colname format from origin csv file
+df &lt;- df %&gt;% rename(&quot;rate_age_65_74&quot; = &quot;rate_65_74&quot;)
+</code></pre>
+<h2 id="Filter-and-Select"><a href="#Filter-and-Select" class="headerlink" title="Filter and Select"></a>Filter and Select</h2><pre><code>df1 &lt;- df %&gt;%
+    filter(time_period == &quot;3-month period&quot; &amp; rate_type == &quot;Crude&quot; &amp; cause_of_death %in% c(&quot;COVID-19&quot;)) %&gt;%
+    select(year_and_quarter, rate_age_1_4, rate_age_5_14,rate_age_15_24, rate_age_25_34,rate_age_35_44, rate_age_45_54,rate_age_55_64,rate_age_65_74,rate_age_75_84,rate_age_85_plus)
+  # take a quick look from column&#39;s point of view
+!&gt; glimpse(df1)
+ Rows: 14
+ Columns: 11
+ $ year_and_quarter &lt;chr&gt; &quot;2019 Q1&quot;, &quot;2019 Q2&quot;, &quot;2019 Q3&quot;, &quot;2019 Q4&quot;, &quot;2020 Q1&quot;…
+ $ rate_age_1_4     &lt;dbl&gt; NA, NA, NA, NA, NA, 0.2, NA, 0.2, 0.2, 0.2, 0.6, 0.4,…
+ $ rate_age_5_14    &lt;dbl&gt; NA, NA, NA, NA, NA, 0.1, 0.2, 0.2, 0.2, 0.1, 0.6, 0.5…
+ $ rate_age_15_24   &lt;dbl&gt; NA, NA, NA, NA, 0.1, 1.4, 1.5, 1.6, 1.9, 1.0, 5.9, 4.…
+ $ rate_age_25_34   &lt;dbl&gt; NA, NA, NA, NA, 0.8, 6.6, 5.4, 6.7, 8.9, 4.6, 23.8, 1…
+ $ rate_age_35_44   &lt;dbl&gt; NA, NA, NA, NA, 2.1, 18.8, 16.1, 20.6, 25.1, 11.9, 65…
+ $ rate_age_45_54   &lt;dbl&gt; NA, NA, NA, NA, 4.9, 56.1, 42.8, 64.4, 79.9, 33.9, 14…
+ $ rate_age_55_64   &lt;dbl&gt; NA, NA, NA, NA, 9.3, 129.8, 96.0, 162.0, 201.9, 67.4,…
+ $ rate_age_65_74   &lt;dbl&gt; NA, NA, NA, NA, 19.0, 293.6, 206.7, 413.6, 464.8, 109…
+ $ rate_age_75_84   &lt;dbl&gt; NA, NA, NA, NA, 43.9, 725.6, 465.8, 1112.4, 1110.7, 1…
+ $ rate_age_85_plus &lt;dbl&gt; NA, NA, NA, NA, 97.7, 2210.8, 1127.2, 3101.9, 2783.8,…
+</code></pre>
+<h2 id="pivot-longer-to-reorg-the-data-for-grouping"><a href="#pivot-longer-to-reorg-the-data-for-grouping" class="headerlink" title="pivot_longer to reorg the data for grouping"></a><code>pivot_longer</code> to reorg the data for grouping</h2><pre><code>df2 = df1 %&gt;% pivot_longer(names_to = &quot;rate_type&quot;, values_to = &quot;rate_of_10k&quot;,cols = -c(year_and_quarter))
+# convert NA to 0
+df2 &lt;- df2 %&gt;%
+    mutate_at(c(&quot;rate_of_10k&quot;), ~coalesce(.,0))
+!&gt; df2
+ # A tibble: 140 × 3
+    year_and_quarter rate_type        rate_of_10k
+    &lt;chr&gt;            &lt;chr&gt;                  &lt;dbl&gt;
+  1 2019 Q1          rate_age_1_4               0
+  2 2019 Q1          rate_age_5_14              0
+  3 2019 Q1          rate_age_15_24             0
+  4 2019 Q1          rate_age_25_34             0
+  5 2019 Q1          rate_age_35_44             0
+  6 2019 Q1          rate_age_45_54             0
+  7 2019 Q1          rate_age_55_64             0
+  8 2019 Q1          rate_age_65_74             0
+  9 2019 Q1          rate_age_75_84             0
+ 10 2019 Q1          rate_age_85_plus           0	
+</code></pre>
+<h2 id="Draw-diagram-for-each-group"><a href="#Draw-diagram-for-each-group" class="headerlink" title="Draw diagram for each group"></a>Draw diagram for each group</h2><pre><code>plotdata &lt;- df2 %&gt;%
+    group_by(rate_type) %&gt;%
+    summarize(n = n(),
+            mean = mean(rate_of_10k),
+            sd = sd(rate_of_10k),
+            ci = qt(0.975, df = n - 1) * sd / sqrt(n))
+p = ggplot(plotdata,
+       aes(x = factor(rate_type, level = c(&#39;rate_age_1_4&#39;,&#39;rate_age_5_14&#39;,&#39;rate_age_15_24&#39;,&#39;rate_age_25_34&#39;,&#39;rate_age_35_44&#39;,&#39;rate_age_45_54&#39;,&#39;rate_age_55_64&#39;,&#39;rate_age_65_74&#39;,&#39;rate_age_75_84&#39;,&#39;rate_age_85_plus&#39;))
+         , y = mean, group = 1)) +
+    geom_line(linetype=&quot;dashed&quot;, color=&quot;darkgrey&quot;) +
+    geom_errorbar(aes(ymin = mean - ci,
+                      ymax = mean + ci),
+                  width = .2) +
+    geom_point(size = 3, color=&quot;red&quot;) +
+    scale_y_continuous(breaks=seq(0,1800,100)) +
+    theme_bw() +
+    labs(x=&quot;rate_type&quot;,
+         y=&quot;rate_of_10k&quot;,
+         title=&quot;Mean Plot with 95% Confidence Interval&quot;)
+save_plot(&quot;covid_plot_age_impact1.svg&quot;, fig = p, width=30, height=20)
+</code></pre>
+<p><img src="/images/covid_plot_age_impact1.svg" alt="Image"></p>
+<h2 id="ANOVA-analysis"><a href="#ANOVA-analysis" class="headerlink" title="ANOVA analysis"></a>ANOVA analysis</h2><p>Analysis of variance (ANOVA) is a collection of statistical models and their associated estimation procedures (such as the “variation” among and between groups) used to analyze the differences among means.</p>
+<p>It’s very useful in our case, <code>aov</code> from R make it very easy to use, see <a target="_blank" rel="noopener" href="https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/aov">https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/aov</a> for more detail.</p>
+<pre><code>fit &lt;- aov(rate_of_10k ~ rate_type, data=df2)
+summary(fit)
+!&gt; summary(fit)
+              Df   Sum Sq Mean Sq F value   Pr(&gt;F)
+ rate_type     9 12988087 1443121   10.21 8.49e-12 ***
+ Residuals   130 18370513  141312
+ ---
+ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+</code></pre>
+<p>we saw <code>8.49e-12 ***</code>, which means age has big impact on covid death rate.</p>
+<h2 id="Compare-diffrent-age-ranges"><a href="#Compare-diffrent-age-ranges" class="headerlink" title="Compare diffrent age ranges"></a>Compare diffrent age ranges</h2><pre><code>pairwise &lt;- TukeyHSD(fit)
+pairwise
+
+ + pairwise
+ &gt;   Tukey multiple comparisons of means
+     95% family-wise confidence level
+
+ Fit: aov(formula = rate_of_10k ~ rate_type, data = df2)
+
+ $rate_type
+                                          diff        lwr       upr     p adj
+ rate_age_15_24-rate_age_1_4        1.25000000 -456.16974  458.6697 1.0000000
+ rate_age_25_34-rate_age_1_4        5.87857143 -451.54117  463.2983 1.0000000
+ rate_age_35_44-rate_age_1_4       16.50714286 -440.91259  473.9269 1.0000000
+ rate_age_45_54-rate_age_1_4       43.45714286 -413.96259  500.8769 0.9999996
+ rate_age_5_14-rate_age_1_4        -0.02857143 -457.44831  457.3912 1.0000000
+ ....
+</code></pre>
+<p>if <code>p adj</code> is close to 1, it means <code>no big difference</code> for this pair</p>
+<p>if <code>p adj</code> is close to 0, it means <code>big difference</code> for this pair</p>
+<h2 id="Draw-diagram-for-pairs-comparisons"><a href="#Draw-diagram-for-pairs-comparisons" class="headerlink" title="Draw diagram for pairs comparisons"></a>Draw diagram for pairs comparisons</h2><pre><code>plotdata &lt;- as.data.frame(pairwise[[1]])
+plotdata$conditions &lt;- row.names(plotdata)
+p = ggplot(data=plotdata, aes(x=conditions, y=diff)) +
+  geom_errorbar(aes(ymin=lwr, ymax=upr, width=.2)) +
+  geom_hline(yintercept=0, color=&quot;red&quot;, linetype=&quot;dashed&quot;) +
+  geom_point(size=3, color=&quot;red&quot;) +
+  theme_bw() +
+  labs(y=&quot;Difference in mean levels&quot;, x=&quot;&quot;,
+       title=&quot;95% family-wise confidence level&quot;) +
+   coord_flip()
+save_plot(&quot;covid_plot_age_impact2.svg&quot;, fig = p, width=30, height=20)
+</code></pre>
+<p><img src="/images/covid_plot_age_impact2.svg" alt="Image"></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><ul>
+<li>Age does have big impact for covid death rate.</li>
+<li>85+ was impacted the most.</li>
+<li>For 35-,  the death rate is very low, and no big difference from age 0-35.</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/R/" rel="tag"><i class="fa fa-tag"></i> R</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/using-r-to-analyze-us-covid-waves-and-peaks/" rel="prev" title="Using R to analyze US COVID pandemic waves and peaks">
+                  <i class="fa fa-angle-left"></i> Using R to analyze US COVID pandemic waves and peaks
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/tracking-stock-financial-metrics-in-tradingview/" rel="next" title="Tracking stock financial metrics in tradingview">
+                  Tracking stock financial metrics in tradingview <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

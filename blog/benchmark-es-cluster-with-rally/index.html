@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Install Rally on each nodePrerequisites $ yum update $ yum install openssl-devel bzip2-devel libffi-devel $ yum groupinstall &quot;Development Tools&quot;  Install Python 3.8+ $ wget https:&#x2F;&#x2F;www.pytho">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Benchmarking Elasticsearch cluster with Rally">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/benchmark-es-cluster-with-rally/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="Install Rally on each nodePrerequisites $ yum update $ yum install openssl-devel bzip2-devel libffi-devel $ yum groupinstall &quot;Development Tools&quot;  Install Python 3.8+ $ wget https:&#x2F;&#x2F;www.pytho">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-26T19:34:00.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="Esrally">
+<meta property="article:tag" content="Elastic Search">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/benchmark-es-cluster-with-rally/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/benchmark-es-cluster-with-rally/","path":"blog/benchmark-es-cluster-with-rally/","title":"Benchmarking Elasticsearch cluster with Rally"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Benchmarking Elasticsearch cluster with Rally | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-Rally-on-each-node"><span class="nav-number">1.</span> <span class="nav-text">Install Rally on each node</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Benchmarking-a-Single-Node"><span class="nav-number">2.</span> <span class="nav-text">Benchmarking a Single Node</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Benchmarking-a-Cluster"><span class="nav-number">3.</span> <span class="nav-text">Benchmarking a Cluster</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Troubleshooting"><span class="nav-number">4.</span> <span class="nav-text">Troubleshooting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/overwrite-esrally-track-params/" rel="bookmark">
+        <time class="popular-posts-time">2022-10-24</time>
+        <br>
+      Overwrite the Elastic Rally track parameters
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/getting-started-with-esrally/" rel="bookmark">
+        <time class="popular-posts-time">2022-10-25</time>
+        <br>
+      Getting started with Elastic Rally benchmark
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/useful-es-apis/" rel="bookmark">
+        <time class="popular-posts-time">2022-10-28</time>
+        <br>
+      Useful Elastic cluster APIs
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/getting-started-with-elasticsearch/" rel="bookmark">
+        <time class="popular-posts-time">2022-10-17</time>
+        <br>
+      Getting started with Elasticsearch and Kibana
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/key-concepts-in-esrally/" rel="bookmark">
+        <time class="popular-posts-time">2022-10-23</time>
+        <br>
+      Key concepts in Elastic Rally
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/benchmark-es-cluster-with-rally/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Benchmarking Elasticsearch cluster with Rally | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Benchmarking Elasticsearch cluster with Rally
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-26 12:34:00" itemprop="dateCreated datePublished" datetime="2022-10-26T12:34:00-07:00">2022-10-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Install-Rally-on-each-node"><a href="#Install-Rally-on-each-node" class="headerlink" title="Install Rally on each node"></a>Install Rally on each node</h2><p>Prerequisites</p>
+<pre><code>$ yum update
+$ yum install openssl-devel bzip2-devel libffi-devel
+$ yum groupinstall &quot;Development Tools&quot;
+</code></pre>
+<p>Install Python 3.8+</p>
+<pre><code>$ wget https://www.python.org/ftp/python/3.8.15/Python-3.8.15.tar.xz
+$ tar xf Python-3.8.15.tar.xz
+$ vim Python-3.8.15/Modules/Setup
+SSL=/usr/local/ssl
+_ssl _ssl.c \
+        -DUSE_SSL -I$(SSL)/include -I$(SSL)/include/openssl \
+        -L$(SSL)/lib -lssl -lcrypto
+$ mv Python-3.8.15 /usr/src
+$ cd /usr/src/Python-3.8.15/
+$ ./configure --enable-optimizations
+$ make altinstall
+$ python3.8 -m ssl
+$ pip3.8 install --upgrade pip
+</code></pre>
+<p>Install Git (Not required for load generator node)</p>
+<pre><code>$ yum install libcurl-devel
+$ wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.38.1.tar.xz
+$ tar xvf git-2.38.1.tar.xz
+$ cd git-2.38.1/
+$ make configure
+$ ./configure --prefix=/usr/local
+$ make install
+$ git --version
+git version 2.38.1
+</code></pre>
+<p>Install JDK (Not required for load generator node)</p>
+<pre><code>$ yum install java
+$ java -version
+openjdk version &quot;1.8.0_352&quot;
+</code></pre>
+<p>Install esrally</p>
+<pre><code>$ pip3.8 install esrally
+$ esrally --version
+esrally 2.6.0
+</code></pre>
+<p>Elasticsearch can not be launched as root. Create a non-root user on each node.</p>
+<pre><code>$ groupadd es
+$ useradd es -g es
+$ passwd es
+$ cd /home/es
+$ su - es
+</code></pre>
+<p>Set JAVA_HOME path</p>
+<pre><code>$ vim .bash_profile
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.352.b08-2.el7_9.x86_64/jre
+export JAVA_HOME
+$ source .bash_profile
+$ echo $JAVA_HOME
+/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.352.b08-2.el7_9.x86_64/jre
+</code></pre>
+<h2 id="Benchmarking-a-Single-Node"><a href="#Benchmarking-a-Single-Node" class="headerlink" title="Benchmarking a Single Node"></a>Benchmarking a Single Node</h2><p>Install Elasticsearch</p>
+<pre><code>$ esrally install --distribution-version=7.17.0 --node-name=&quot;rally-node-0&quot; --network-host=&quot;127.0.0.1&quot; --http-port=39200 --master-nodes=&quot;rally-node-0&quot; --seed-hosts=&quot;127.0.0.1:39300&quot;
+
+    ____        ____
+   / __ \____ _/ / /_  __
+  / /_/ / __ `/ / / / / /
+ / _, _/ /_/ / / / /_/ /
+/_/ |_|\__,_/_/_/\__, /
+                /____/
+
+[INFO] Downloading Elasticsearch 7.17.0 (297.0 MB total size)                       [100%]
+&#123;
+  &quot;installation-id&quot;: &quot;10735bfa-f1b8-44c4-8e7f-8932c8daa201&quot;
+&#125;
+
+--------------------------------
+[INFO] SUCCESS (took 10 seconds)
+--------------------------------
+</code></pre>
+<p>Start the Elasticsearch node</p>
+<pre><code>$ export INSTALLATION_ID=10735bfa-f1b8-44c4-8e7f-8932c8daa201
+$ export RACE_ID=$(uuidgen)
+$ esrally start --installation-id=&quot;$&#123;INSTALLATION_ID&#125;&quot; --race-id=&quot;$&#123;RACE_ID&#125;&quot;
+
+    ____        ____
+   / __ \____ _/ / /_  __
+  / /_/ / __ `/ / / / / /
+ / _, _/ /_/ / / / /_/ /
+/_/ |_|\__,_/_/_/\__, /
+                /____/
+
+
+-------------------------------
+[INFO] SUCCESS (took 3 seconds)
+-------------------------------
+</code></pre>
+<p>Run a benchmark</p>
+<pre><code>$ esrally race --pipeline=benchmark-only --target-host=127.0.0.1:39200 --track=geonames --challenge=append-no-conflicts-index-only --on-error=abort --race-id=$&#123;RACE_ID&#125;
+
+    ____        ____
+   / __ \____ _/ / /_  __
+  / /_/ / __ `/ / / / / /
+ / _, _/ /_/ / / / /_/ /
+/_/ |_|\__,_/_/_/\__, /
+                /____/
+
+[INFO] Race id is [4e93324a-9326-49e8-be72-9f77cc837657]
+[INFO] Downloading track data (252.9 MB total size)                               [100.0%]
+[INFO] Decompressing track data from [/home/es/.rally/benchmarks/data/geonames/documents-2.json.bz2] to [/home/es/.rally/benchmarks/data/geonames/documents-2.json] (resulting size: [3.30] GB) ... [OK]
+[INFO] Preparing file offset table for [/home/es/.rally/benchmarks/data/geonames/documents-2.json] ... [OK]
+[INFO] Racing on track [geonames], challenge [append-no-conflicts-index-only] and car [&#39;external&#39;] with version [7.17.0].
+
+Running delete-index                                                           [100% done]
+Running create-index                                                           [100% done]
+Running check-cluster-health                                                   [100% done]
+Running index-append                                                           [100% done]
+Running force-merge                                                            [100% done]
+Running wait-until-merges-finish                                               [100% done]
+
+------------------------------------------------------
+    _______             __   _____
+   / ____(_)___  ____ _/ /  / ___/_________  ________
+  / /_  / / __ \/ __ `/ /   \__ \/ ___/ __ \/ ___/ _ \
+ / __/ / / / / / /_/ / /   ___/ / /__/ /_/ / /  /  __/
+/_/   /_/_/ /_/\__,_/_/   /____/\___/\____/_/   \___/
+------------------------------------------------------
+
+|                                                         Metric |         Task |           Value |   Unit |
+|---------------------------------------------------------------:|-------------:|----------------:|-------:|
+|                     Cumulative indexing time of primary shards |              |    12.5856      |    min |
+|             Min cumulative indexing time across primary shards |              |     0.0190333   |    min |
+|          Median cumulative indexing time across primary shards |              |     2.49065     |    min |
+|             Max cumulative indexing time across primary shards |              |     2.61288     |    min |
+|            Cumulative indexing throttle time of primary shards |              |     0.0081      |    min |
+|    Min cumulative indexing throttle time across primary shards |              |     0           |    min |
+| Median cumulative indexing throttle time across primary shards |              |     0           |    min |
+|    Max cumulative indexing throttle time across primary shards |              |     0.0061      |    min |
+|                        Cumulative merge time of primary shards |              |     6.75938     |    min |
+|                       Cumulative merge count of primary shards |              |    55           |        |
+|                Min cumulative merge time across primary shards |              |     0           |    min |
+|             Median cumulative merge time across primary shards |              |     1.32735     |    min |
+|                Max cumulative merge time across primary shards |              |     1.47518     |    min |
+|               Cumulative merge throttle time of primary shards |              |     1.72393     |    min |
+|       Min cumulative merge throttle time across primary shards |              |     0           |    min |
+|    Median cumulative merge throttle time across primary shards |              |     0.323533    |    min |
+|       Max cumulative merge throttle time across primary shards |              |     0.42085     |    min |
+|                      Cumulative refresh time of primary shards |              |     2.97073     |    min |
+|                     Cumulative refresh count of primary shards |              |   246           |        |
+|              Min cumulative refresh time across primary shards |              |     0.00185     |    min |
+|           Median cumulative refresh time across primary shards |              |     0.5943      |    min |
+|              Max cumulative refresh time across primary shards |              |     0.599217    |    min |
+|                        Cumulative flush time of primary shards |              |     0.237767    |    min |
+|                       Cumulative flush count of primary shards |              |     8           |        |
+|                Min cumulative flush time across primary shards |              |     0.00241667  |    min |
+|             Median cumulative flush time across primary shards |              |     0.0473      |    min |
+|                Max cumulative flush time across primary shards |              |     0.0492167   |    min |
+|                                        Total Young Gen GC time |              |    14.009       |      s |
+|                                       Total Young Gen GC count |              |  1159           |        |
+|                                          Total Old Gen GC time |              |     3.491       |      s |
+|                                         Total Old Gen GC count |              |    66           |        |
+|                                                     Store size |              |     3.20482     |     GB |
+|                                                  Translog size |              |     3.07336e-07 |     GB |
+|                                         Heap used for segments |              |     1.00685     |     MB |
+|                                       Heap used for doc values |              |     0.0602913   |     MB |
+|                                            Heap used for terms |              |     0.77124     |     MB |
+|                                            Heap used for norms |              |     0.104492    |     MB |
+|                                           Heap used for points |              |     0           |     MB |
+|                                    Heap used for stored fields |              |     0.0708237   |     MB |
+|                                                  Segment count |              |   141           |        |
+|                                    Total Ingest Pipeline count |              |     0           |        |
+|                                     Total Ingest Pipeline time |              |     0           |      s |
+|                                   Total Ingest Pipeline failed |              |     0           |        |
+|                                                 Min Throughput | index-append | 86654           | docs/s |
+|                                                Mean Throughput | index-append | 87091.9         | docs/s |
+|                                              Median Throughput | index-append | 87152.4         | docs/s |
+|                                                 Max Throughput | index-append | 87276.3         | docs/s |
+|                                        50th percentile latency | index-append |   315.247       |     ms |
+|                                        90th percentile latency | index-append |   573.935       |     ms |
+|                                        99th percentile latency | index-append |  1139.89        |     ms |
+|                                       100th percentile latency | index-append |  1153.22        |     ms |
+|                                   50th percentile service time | index-append |   315.247       |     ms |
+|                                   90th percentile service time | index-append |   573.935       |     ms |
+|                                   99th percentile service time | index-append |  1139.89        |     ms |
+|                                  100th percentile service time | index-append |  1153.22        |     ms |
+|                                                     error rate | index-append |     0           |      % |
+
+
+---------------------------------
+[INFO] SUCCESS (took 255 seconds)
+---------------------------------
+</code></pre>
+<p>Stop the Elasticsearch node</p>
+<pre><code>$ esrally stop --installation-id=&quot;$&#123;INSTALLATION_ID&#125;&quot;
+</code></pre>
+<p>If you only want to shutdown the node but don’t want to delete the node and the data, pass –preserve-install additionally.</p>
+<h2 id="Benchmarking-a-Cluster"><a href="#Benchmarking-a-Cluster" class="headerlink" title="Benchmarking a Cluster"></a>Benchmarking a Cluster</h2><p>Install and start Elasticsearch on each cluster node</p>
+<pre><code>$ esrally install --distribution-version=7.17.0 --node-name=&quot;rally-node-0&quot; --network-host=&quot;10.10.10.2&quot; --http-port=39200 --master-nodes=&quot;rally-node-0,rally-node-1,rally-node-2&quot; --seed-hosts=&quot;10.10.10.2:39300,10.10.10.3:39300,10.10.10.4:39300&quot;
+[INFO] Downloading Elasticsearch 7.17.0 (297.0 MB total size)  [100%]
+&#123;
+  &quot;installation-id&quot;: &quot;aa826112-d371-4f09-9b68-f9084e7c9e0b&quot;
+&#125;
+</code></pre>
+<p>Generate a race id on one of the nodes</p>
+<pre><code>$ uuidgen
+734bb4b3-8b7a-4c0b-9fa6-aaeb4659569f
+</code></pre>
+<p><strong>Note</strong>: The same race id is set on all the nodes including the one where will generate load.</p>
+<p>Start the cluster by running the following command on each node</p>
+<pre><code>$ export INSTALLATION_ID=aa826112-d371-4f09-9b68-f9084e7c9e0b
+$ export RACE_ID=734bb4b3-8b7a-4c0b-9fa6-aaeb4659569f
+$ esrally start --installation-id=&quot;$&#123;INSTALLATION_ID&#125;&quot; --race-id=&quot;$&#123;RACE_ID&#125;&quot;
+</code></pre>
+<p><strong>Note</strong>: The INSTALLATION_ID is specific to each node and the RACI_ID is identical for all the nodes.</p>
+<p>Once the cluster is started, check the cluster status with the _cat&#x2F;health API</p>
+<pre><code>[es@node1 ~]$ curl http://10.10.10.2:39200/_cat/health\?v
+epoch      timestamp cluster         status node.total node.data shards pri relo init unassign pending_tasks max_task_wait_time active_shards_percent
+1667015754 03:55:54  rally-benchmark green           3         3      6   3    0    0        0             0                  -                100.0%
+</code></pre>
+<p>On each cluster node, check the elastic process and port</p>
+<pre><code>$ ps -ef | egrep -i &quot;rally|elastic&quot; | grep -v grep
+es        2258     1 91 20:52 ?        00:58:39 /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.352.b08-2.el7_9.x86_64/jre/bin/java -Xshare:auto -Des.networkaddress.cache.ttl=60 -Des.networkaddress.cache.negative.ttl=10 -XX:+AlwaysPreTouch -Xss1m -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Djna.nosys=true -XX:-OmitStackTraceInFastThrow -Dio.netty.noUnsafe=true -Dio.netty.noKeySetOptimization=true -Dio.netty.recycler.maxCapacityPerThread=0 -Dio.netty.allocator.numDirectArenas=0 -Dlog4j.shutdownHookEnabled=false -Dlog4j2.disable.jmx=true -Dlog4j2.formatMsgNoLookups=true -Djava.locale.providers=SPI,JRE -Xms1g -Xmx1g -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -Des.networkaddress.cache.ttl=60 -Des.networkaddress.cache.negative.ttl=10 -XX:+AlwaysPreTouch -Xss1m -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Djna.nosys=true -XX:-OmitStackTraceInFastThrow -Dio.netty.noUnsafe=true -Dio.netty.noKeySetOptimization=true -Dio.netty.recycler.maxCapacityPerThread=0 -Dlog4j.shutdownHookEnabled=false -Dlog4j2.disable.jmx=true -Djava.io.tmpdir=/tmp/elasticsearch-1322059221495755520 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/heapdump -XX:ErrorFile=/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/logs/server/hs_err_pid%p.log -XX:+ExitOnOutOfMemoryError -XX:MaxDirectMemorySize=536870912 -Des.path.home=/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/install/elasticsearch-7.17.0 -Des.path.conf=/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/install/elasticsearch-7.17.0/config -Des.distribution.flavor=default -Des.distribution.type=tar -Des.bundled_jdk=true -cp /home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/install/elasticsearch-7.17.0/lib/* org.elasticsearch.bootstrap.Elasticsearch -d -p ./pid
+es        2285  2258  0 20:52 ?        00:00:00 /home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/install/elasticsearch-7.17.0/modules/x-pack-ml/platform/linux-x86_64/bin/controller
+
+$ netstat -anop | grep 39200
+tcp6       0      0 10.10.10.2:39200       :::*                    LISTEN      2258/java            off (0.00/0/0)
+</code></pre>
+<p>Start the benchmark on the load generator node (remember to set the race id there)</p>
+<pre><code>[es@node1 ~]$ export RACE_ID=734bb4b3-8b7a-4c0b-9fa6-aaeb4659569f
+[es@node1 ~]$ esrally race --pipeline=benchmark-only --target-host=10.10.10.2:39200,10.10.10.3:39200,10.10.10.4:39200 --track=geonames --challenge=append-no-conflicts --on-error=abort --race-id=$&#123;RACE_ID&#125;
+    ____        ____
+   / __ \____ _/ / /_  __
+  / /_/ / __ `/ / / / / /
+ / _, _/ /_/ / / / /_/ /
+/_/ |_|\__,_/_/_/\__, /
+                /____/
+
+[INFO] Race id is [734bb4b3-8b7a-4c0b-9fa6-aaeb4659569f]
+[INFO] Racing on track [geonames], challenge [append-no-conflicts] and car [&#39;external&#39;] with version [7.17.0].
+
+[WARNING] merges_total_time is 420149 ms indicating that the cluster is not in a defined clean state. Recorded index time metrics may be misleading.
+[WARNING] merges_total_throttled_time is 81765 ms indicating that the cluster is not in a defined clean state. Recorded index time metrics may be misleading.
+[WARNING] indexing_total_time is 825388 ms indicating that the cluster is not in a defined clean state. Recorded index time metrics may be misleading.
+[WARNING] refresh_total_time is 76340 ms indicating that the cluster is not in a defined clean state. Recorded index time metrics may be misleading.
+[WARNING] flush_total_time is 10787 ms indicating that the cluster is not in a defined clean state. Recorded index time metrics may be misleading.
+Running delete-index                                                           [100% done]
+Running create-index                                                           [100% done]
+Running check-cluster-health                                                   [100% done]
+Running index-append                                                           [100% done]
+Running refresh-after-index                                                    [100% done]
+Running force-merge                                                            [100% done]
+Running refresh-after-force-merge                                              [100% done]
+Running wait-until-merges-finish                                               [100% done]
+Running index-stats                                                            [100% done]
+Running node-stats                                                             [100% done]
+Running default                                                                [100% done]
+Running term                                                                   [100% done]
+Running phrase                                                                 [100% done]
+Running country_agg_uncached                                                   [100% done]
+Running country_agg_cached                                                     [100% done]
+Running scroll                                                                 [100% done]
+Running expression                                                             [100% done]
+Running painless_static                                                        [100% done]
+Running painless_dynamic                                                       [100% done]
+Running decay_geo_gauss_function_score                                         [100% done]
+Running decay_geo_gauss_script_score                                           [100% done]
+Running field_value_function_score                                             [100% done]
+Running field_value_script_score                                               [100% done]
+Running large_terms                                                            [100% done]
+Running large_filtered_terms                                                   [100% done]
+Running large_prohibited_terms                                                 [100% done]
+Running desc_sort_population                                                   [100% done]
+Running asc_sort_population                                                    [100% done]
+Running asc_sort_with_after_population                                         [100% done]
+Running desc_sort_geonameid                                                    [100% done]
+Running desc_sort_with_after_geonameid                                         [100% done]
+Running asc_sort_geonameid                                                     [100% done]
+Running asc_sort_with_after_geonameid                                          [100% done]
+
+------------------------------------------------------
+    _______             __   _____
+   / ____(_)___  ____ _/ /  / ___/_________  ________
+  / /_  / / __ \/ __ `/ /   \__ \/ ___/ __ \/ ___/ _ \
+ / __/ / / / / / /_/ / /   ___/ / /__/ /_/ / /  /  __/
+/_/   /_/_/ /_/\__,_/_/   /____/\___/\____/_/   \___/
+------------------------------------------------------
+
+|                                                         Metric |                           Task |          Value |    Unit |
+|---------------------------------------------------------------:|-------------------------------:|---------------:|--------:|
+|                     Cumulative indexing time of primary shards |                                |   13.3055      |     min |
+|             Min cumulative indexing time across primary shards |                                |    0           |     min |
+|          Median cumulative indexing time across primary shards |                                |    2.68572     |     min |
+|             Max cumulative indexing time across primary shards |                                |    2.74885     |     min |
+|            Cumulative indexing throttle time of primary shards |                                |    0           |     min |
+|    Min cumulative indexing throttle time across primary shards |                                |    0           |     min |
+| Median cumulative indexing throttle time across primary shards |                                |    0           |     min |
+|    Max cumulative indexing throttle time across primary shards |                                |    0           |     min |
+|                        Cumulative merge time of primary shards |                                |    4.82182     |     min |
+|                       Cumulative merge count of primary shards |                                |   57           |         |
+|                Min cumulative merge time across primary shards |                                |    0           |     min |
+|             Median cumulative merge time across primary shards |                                |    0.984917    |     min |
+|                Max cumulative merge time across primary shards |                                |    1.06472     |     min |
+|               Cumulative merge throttle time of primary shards |                                |    0.978367    |     min |
+|       Min cumulative merge throttle time across primary shards |                                |    0           |     min |
+|    Median cumulative merge throttle time across primary shards |                                |    0.195508    |     min |
+|       Max cumulative merge throttle time across primary shards |                                |    0.265933    |     min |
+|                      Cumulative refresh time of primary shards |                                |    1.20573     |     min |
+|                     Cumulative refresh count of primary shards |                                |  148           |         |
+|              Min cumulative refresh time across primary shards |                                |    3.33333e-05 |     min |
+|           Median cumulative refresh time across primary shards |                                |    0.258775    |     min |
+|              Max cumulative refresh time across primary shards |                                |    0.283433    |     min |
+|                        Cumulative flush time of primary shards |                                |    0.172783    |     min |
+|                       Cumulative flush count of primary shards |                                |   11           |         |
+|                Min cumulative flush time across primary shards |                                |    1.66667e-05 |     min |
+|             Median cumulative flush time across primary shards |                                |    0.0345      |     min |
+|                Max cumulative flush time across primary shards |                                |    0.0385167   |     min |
+|                                        Total Young Gen GC time |                                |   16.263       |       s |
+|                                       Total Young Gen GC count |                                | 2821           |         |
+|                                          Total Old Gen GC time |                                |    2.312       |       s |
+|                                         Total Old Gen GC count |                                |   41           |         |
+|                                                     Store size |                                |    3.03867     |      GB |
+|                                                  Translog size |                                |    3.58559e-07 |      GB |
+|                                         Heap used for segments |                                |    0.701981    |      MB |
+|                                       Heap used for doc values |                                |    0.0314178   |      MB |
+|                                            Heap used for terms |                                |    0.54541     |      MB |
+|                                            Heap used for norms |                                |    0.0736694   |      MB |
+|                                           Heap used for points |                                |    0           |      MB |
+|                                    Heap used for stored fields |                                |    0.0514832   |      MB |
+|                                                  Segment count |                                |  102           |         |
+|                                    Total Ingest Pipeline count |                                |    0           |         |
+|                                     Total Ingest Pipeline time |                                |    0           |       s |
+|                                   Total Ingest Pipeline failed |                                |    0           |         |
+|                                                     error rate |                   index-append |    0           |       % |
+|                                                 Min Throughput |                    index-stats |   90.01        |   ops/s |
+|                                                Mean Throughput |                    index-stats |   90.02        |   ops/s |
+|                                              Median Throughput |                    index-stats |   90.02        |   ops/s |
+|                                                 Max Throughput |                    index-stats |   90.04        |   ops/s |
+|                                        50th percentile latency |                    index-stats |    5.16153     |      ms |
+|                                        90th percentile latency |                    index-stats |    6.00114     |      ms |
+|                                        99th percentile latency |                    index-stats |    6.61081     |      ms |
+|                                      99.9th percentile latency |                    index-stats |   10.4064      |      ms |
+|                                       100th percentile latency |                    index-stats |   10.8105      |      ms |
+|                                   50th percentile service time |                    index-stats |    4.00402     |      ms |
+|                                   90th percentile service time |                    index-stats |    4.6339      |      ms |
+|                                   99th percentile service time |                    index-stats |    5.10083     |      ms |
+|                                 99.9th percentile service time |                    index-stats |    9.17415     |      ms |
+|                                  100th percentile service time |                    index-stats |    9.22474     |      ms |
+[..]
+
+[WARNING] No throughput metrics available for [index-append]. Likely cause: The benchmark ended already during warmup.
+
+----------------------------------
+[INFO] SUCCESS (took 4008 seconds)
+----------------------------------
+</code></pre>
+<p>Shutdown the cluster on each node</p>
+<pre><code>$ esrally stop --installation-id=&quot;$&#123;INSTALLATION_ID&#125;&quot;
+</code></pre>
+<p><strong>Note</strong>: If you only want to shutdown the node but don’t want to delete the node and the data, add the option “–preserve-install” additionally.</p>
+<h2 id="Troubleshooting"><a href="#Troubleshooting" class="headerlink" title="Troubleshooting"></a>Troubleshooting</h2><p>Elasticsearch start failure due to max virtual memory is too low</p>
+<pre><code>$ cat /home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/logs/server/rally-benchmark.log
+[..]
+[2022-10-28T16:58:41,041][ERROR][o.e.b.Bootstrap          ] [rally-node-0] node validation exception
+[1] bootstrap checks failed. You must address the points described in the following [1] lines before starting Elasticsearch.
+bootstrap check failure [1] of [1]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+[..]
+
+$ sysctl -a | grep max_map_count
+vm.max_map_count = 65530
+</code></pre>
+<p>To fix this issue, change the kernel parameter</p>
+<pre><code>$ vim /etc/sysctl.conf
+vm.max_map_count=1048576
+$ sysctl -p
+vm.max_map_count = 1048576
+</code></pre>
+<p>Restart Elasticsearch and verify the process and port</p>
+<pre><code>$ esrally stop --installation-id=&quot;$&#123;INSTALLATION_ID&#125;&quot; --preserve-install
+$ esrally start --installation-id=&quot;$&#123;INSTALLATION_ID&#125;&quot; --race-id=&quot;$&#123;RACE_ID&#125;&quot;
+
+$ netstat -anop | grep 39200
+tcp6       0      0 10.10.10.2:39200       :::*                    LISTEN      23726/java           off (0.00/0/0)
+
+$ ps -ef | egrep -i &quot;rally|elastic&quot; | grep -v grep
+es       23726     1 18 18:01 ?        00:00:42 /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.352.b08-2.el7_9.x86_64/jre/bin/java -Xshare:auto -Des.networkaddress.cache.ttl=60 -Des.networkaddress.cache.negative.ttl=10 -XX:+AlwaysPreTouch -Xss1m -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Djna.nosys=true -XX:-OmitStackTraceInFastThrow -Dio.netty.noUnsafe=true -Dio.netty.noKeySetOptimization=true -Dio.netty.recycler.maxCapacityPerThread=0 -Dio.netty.allocator.numDirectArenas=0 -Dlog4j.shutdownHookEnabled=false -Dlog4j2.disable.jmx=true -Dlog4j2.formatMsgNoLookups=true -Djava.locale.providers=SPI,JRE -Xms1g -Xmx1g -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -Des.networkaddress.cache.ttl=60 -Des.networkaddress.cache.negative.ttl=10 -XX:+AlwaysPreTouch -Xss1m -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Djna.nosys=true -XX:-OmitStackTraceInFastThrow -Dio.netty.noUnsafe=true -Dio.netty.noKeySetOptimization=true -Dio.netty.recycler.maxCapacityPerThread=0 -Dlog4j.shutdownHookEnabled=false -Dlog4j2.disable.jmx=true -Djava.io.tmpdir=/tmp/elasticsearch-7969870787666953814 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/heapdump -XX:ErrorFile=/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/logs/server/hs_err_pid%p.log -XX:+ExitOnOutOfMemoryError -XX:MaxDirectMemorySize=536870912 -Des.path.home=/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/install/elasticsearch-7.17.0 -Des.path.conf=/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/install/elasticsearch-7.17.0/config -Des.distribution.flavor=default -Des.distribution.type=tar -Des.bundled_jdk=true -cp /home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/install/elasticsearch-7.17.0/lib/* org.elasticsearch.bootstrap.Elasticsearch -d -p ./pid
+es       23752 23726  0 18:01 ?        00:00:00 /home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/install/elasticsearch-7.17.0/modules/x-pack-ml/platform/linux-x86_64/bin/controller
+</code></pre>
+<p>Elasticsearch start failure due to max file descriptors is too low</p>
+<pre><code>$ cat /home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/logs/server/rally-benchmark.log
+[..]
+[2022-10-28T18:02:09,107][ERROR][o.e.b.Bootstrap          ] [rally-node-1] node validation exception
+[1] bootstrap checks failed. You must address the points described in the following [1] lines before starting Elasticsearch.
+bootstrap check failure [1] of [1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65535]
+[..]
+</code></pre>
+<p>To fix this issue, change the max open files value in &#x2F;etc&#x2F;security&#x2F;limits.conf</p>
+<pre><code>$ vim /etc/security/limits.conf
+*              soft     nofile          1048576
+*              hard     nofile          1048576
+</code></pre>
+<p>Exit and login back to the shell to see the changed value</p>
+<pre><code>ulimit -a  | grep &quot;open files&quot;
+open files                      (-n) 1048576
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://esrally.readthedocs.io/en/stable/">Rally User Guide</a></li>
+<li><a target="_blank" rel="noopener" href="https://elasticsearch-benchmarks.elastic.co/#">https://elasticsearch-benchmarks.elastic.co/#</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/elastic/rally-eventdata-track">https://github.com/elastic/rally-eventdata-track</a></li>
+<li><a target="_blank" rel="noopener" href="https://esrally.readthedocs.io/en/stable/configuration.html#reporting">https://esrally.readthedocs.io/en/stable/configuration.html#reporting</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Esrally/" rel="tag"><i class="fa fa-tag"></i> Esrally</a>
+              <a href="/tags/Elastic-Search/" rel="tag"><i class="fa fa-tag"></i> Elastic Search</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/getting-started-with-esrally/" rel="prev" title="Getting started with Elastic Rally benchmark">
+                  <i class="fa fa-angle-left"></i> Getting started with Elastic Rally benchmark
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/useful-es-apis/" rel="next" title="Useful Elastic cluster APIs">
+                  Useful Elastic cluster APIs <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

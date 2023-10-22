@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Client-server modeNormally fio is invoked as a stand-alone application on the machine where the I&#x2F;O workload should be generated. However, the backend and frontend of fio can be run separately i.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to run fio across multiple servers">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/How-to-run-fio-across-multiple-servers/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="Client-server modeNormally fio is invoked as a stand-alone application on the machine where the I&#x2F;O workload should be generated. However, the backend and frontend of fio can be run separately i.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-09-23T04:36:44.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="Fio">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/How-to-run-fio-across-multiple-servers/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/How-to-run-fio-across-multiple-servers/","path":"blog/How-to-run-fio-across-multiple-servers/","title":"How to run fio across multiple servers"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>How to run fio across multiple servers | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Client-server-mode"><span class="nav-number">1.</span> <span class="nav-text">Client-server mode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example"><span class="nav-number">2.</span> <span class="nav-text">Example</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/enable-ssh-passwordless-login/" rel="bookmark">
+        <time class="popular-posts-time">2021-04-18</time>
+        <br>
+      Enable ssh passwordless login for large amount of servers
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/how-to-setup-nfs-network-file-system-on-rhel-centos/" rel="bookmark">
+        <time class="popular-posts-time">2022-06-29</time>
+        <br>
+      How to setup NFS (Network File System) on RHEL/CentOS
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/tcp-3-way-handshake-syn-syn-ack-ack/" rel="bookmark">
+        <time class="popular-posts-time">2023-05-27</time>
+        <br>
+      TCP 3-way handshake (SYN, SYN-ACK,ACK)
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-nconnect-to-improve-nfs-performance/" rel="bookmark">
+        <time class="popular-posts-time">2022-06-30</time>
+        <br>
+      Using nconnect to improve NFS performance
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-virtctl-to-access-virtual-machine-in-kubernetes/" rel="bookmark">
+        <time class="popular-posts-time">2023-01-02</time>
+        <br>
+      Using virtctl to access virtual machine in Kubernetes
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/How-to-run-fio-across-multiple-servers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="How to run fio across multiple servers | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          How to run fio across multiple servers
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-09-22 21:36:44" itemprop="dateCreated datePublished" datetime="2023-09-22T21:36:44-07:00">2023-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Client-server-mode"><a href="#Client-server-mode" class="headerlink" title="Client-server mode"></a>Client-server mode</h2><p>Normally <a target="_blank" rel="noopener" href="https://fio.readthedocs.io/en/latest/fio_doc.html#client-server">fio</a> is invoked as a stand-alone application on the machine where the I&#x2F;O workload should be generated. However, the backend and frontend of fio can be run separately i.e., the fio server can generate an I&#x2F;O workload on the “Device Under Test” while being controlled by a client on another machine.</p>
+<span id="more"></span>
+
+<p>Start the server on the machine which has access to the storage DUT.</p>
+<ul>
+<li><p>Start a fio server, listening on all interfaces on the default port (8765).</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ fio --server</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Start a fio server, listening on IP belonging to hostname and on specified port.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ fio --server=&lt;ip&gt;:&lt;hostname&gt;,&lt;port&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><p>Start server on vm1 and vm2 and listen on default port 8765:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># fio -server</span></span><br><span class="line">fio: server listening on 0.0.0.0,8765</span><br><span class="line"></span><br><span class="line">[root@vm2 ~]<span class="comment"># fio -server</span></span><br><span class="line">fio: server listening on 0.0.0.0,8765</span><br></pre></td></tr></table></figure>
+
+<p>If you have multiple servers, you can input a file containing host IPs&#x2F;names for the –client option.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@vm3 ~]<span class="comment"># cat host.list.2vms</span></span><br><span class="line">10.10.10.2</span><br><span class="line">10.10.10.3</span><br></pre></td></tr></table></figure>
+
+<p>Create a fio job file to be run on each server:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@vm3 ~]<span class="comment">#  cat fio.job</span></span><br><span class="line">[global]</span><br><span class="line">ioengine=libaio</span><br><span class="line">size=5GiB</span><br><span class="line">name=<span class="built_in">test</span></span><br><span class="line">direct=1</span><br><span class="line">iodepth=128</span><br><span class="line">group_reporting=1</span><br><span class="line">numjobs=2</span><br><span class="line"></span><br><span class="line">[job1]</span><br><span class="line">blocksize=64k</span><br><span class="line">filename=/dev/sdd</span><br><span class="line">readwrite=write</span><br><span class="line">end_fsync=1</span><br></pre></td></tr></table></figure>
+
+<p>Trigger fio jobs from client and run the jobs across multiple servers:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@vm3 ~]<span class="comment"># fio --client=./host.list.2vms --output=fio.2vms.out fio.job</span></span><br></pre></td></tr></table></figure>
+
+<p>Check the fio result:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">[root@vm3 ~]<span class="comment"># cat fio.2vms.out</span></span><br><span class="line">hostname=vm1, be=0, 64-bit, os=Linux, <span class="built_in">arch</span>=x86-64, fio=fio-3.7, flags=1</span><br><span class="line">hostname=vm2, be=0, 64-bit, os=Linux, <span class="built_in">arch</span>=x86-64, fio=fio-3.7, flags=1</span><br><span class="line">&lt;vm1&gt; job1: (g=0): rw=write, bs=(R) 64.0KiB-64.0KiB, (W) 64.0KiB-64.0KiB, (T) 64.0KiB-64.0KiB, ioengine=libaio, iodepth=128</span><br><span class="line">&lt;vm1&gt; ...</span><br><span class="line">&lt;vm2&gt; job1: (g=0): rw=write, bs=(R) 64.0KiB-64.0KiB, (W) 64.0KiB-64.0KiB, (T) 64.0KiB-64.0KiB, ioengine=libaio, iodepth=128</span><br><span class="line">&lt;vm2&gt; ...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;vm1&gt; Starting 2 processes</span><br><span class="line">&lt;vm2&gt; Starting 2 processes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">job1: (groupid=0, <span class="built_in">jobs</span>=2): err= 0: pid=25680: Sat Sep 23 04:41:08 2023</span><br><span class="line">  write: IOPS=2864, BW=179MiB/s (188MB/s)(9537MiB/53276msec)</span><br><span class="line">    slat (usec): min=2, max=302, avg=11.76, stdev= 7.74</span><br><span class="line">    clat (msec): min=3, max=191, avg=89.36, stdev=15.47</span><br><span class="line">     lat (msec): min=3, max=191, avg=89.37, stdev=15.47</span><br><span class="line">    clat percentiles (msec):</span><br><span class="line">     |  1.00th=[   59],  5.00th=[   62], 10.00th=[   64], 20.00th=[   70],</span><br><span class="line">     | 30.00th=[   87], 40.00th=[   92], 50.00th=[   94], 60.00th=[   96],</span><br><span class="line">     | 70.00th=[   99], 80.00th=[  103], 90.00th=[  106], 95.00th=[  109],</span><br><span class="line">     | 99.00th=[  114], 99.50th=[  116], 99.90th=[  129], 99.95th=[  163],</span><br><span class="line">     | 99.99th=[  192]</span><br><span class="line">   bw (  KiB/s): min=79744, max=129664, per=50.01%, avg=91671.96, stdev=15600.42, samples=212</span><br><span class="line">   iops        : min= 1246, max= 2026, avg=1432.36, stdev=243.76, samples=212</span><br><span class="line">  lat (msec)   : 4=0.02%, 10=0.03%, 20=0.03%, 50=0.08%, 100=74.58%</span><br><span class="line">  lat (msec)   : 250=25.26%</span><br><span class="line">  cpu          : usr=0.67%, sys=1.32%, ctx=9877, majf=0, minf=19</span><br><span class="line">  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.1%, 32=0.1%, &gt;=64=99.9%</span><br><span class="line">     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.0%</span><br><span class="line">     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.1%</span><br><span class="line">     issued rwts: total=0,152588,0,0 short=0,0,0,0 dropped=0,0,0,0</span><br><span class="line">     latency   : target=0, window=0, percentile=100.00%, depth=128</span><br><span class="line"></span><br><span class="line">Run status group 0 (all <span class="built_in">jobs</span>):</span><br><span class="line">  WRITE: bw=179MiB/s (188MB/s), 179MiB/s-179MiB/s (188MB/s-188MB/s), io=9537MiB (10.0GB), run=53276-53276msec</span><br><span class="line"></span><br><span class="line">Disk stats (<span class="built_in">read</span>/write):</span><br><span class="line">  sdd: ios=48/151321, merge=0/1119, ticks=34/13488966, in_queue=13489000, util=99.84%</span><br><span class="line">&lt;vm1&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">job1: (groupid=0, <span class="built_in">jobs</span>=2): err= 0: pid=4425: Sat Sep 23 04:41:08 2023</span><br><span class="line">  write: IOPS=2855, BW=178MiB/s (187MB/s)(9537MiB/53430msec)</span><br><span class="line">    slat (usec): min=2, max=269, avg=12.22, stdev= 9.09</span><br><span class="line">    clat (msec): min=4, max=137, avg=89.61, stdev=15.68</span><br><span class="line">     lat (msec): min=4, max=137, avg=89.63, stdev=15.68</span><br><span class="line">    clat percentiles (msec):</span><br><span class="line">     |  1.00th=[   56],  5.00th=[   62], 10.00th=[   63], 20.00th=[   70],</span><br><span class="line">     | 30.00th=[   87], 40.00th=[   92], 50.00th=[   94], 60.00th=[   97],</span><br><span class="line">     | 70.00th=[  100], 80.00th=[  103], 90.00th=[  106], 95.00th=[  110],</span><br><span class="line">     | 99.00th=[  115], 99.50th=[  117], 99.90th=[  123], 99.95th=[  125],</span><br><span class="line">     | 99.99th=[  136]</span><br><span class="line">   bw (  KiB/s): min=77952, max=128896, per=49.89%, avg=91190.65, stdev=15736.83, samples=212</span><br><span class="line">   iops        : min= 1218, max= 2014, avg=1424.84, stdev=245.89, samples=212</span><br><span class="line">  lat (msec)   : 10=0.02%, 20=0.03%, 50=0.22%, 100=71.90%, 250=27.82%</span><br><span class="line">  cpu          : usr=0.66%, sys=1.37%, ctx=9653, majf=0, minf=19</span><br><span class="line">  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.1%, 32=0.1%, &gt;=64=99.9%</span><br><span class="line">     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.0%</span><br><span class="line">     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.1%</span><br><span class="line">     issued rwts: total=0,152588,0,0 short=0,0,0,0 dropped=0,0,0,0</span><br><span class="line">     latency   : target=0, window=0, percentile=100.00%, depth=128</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">All clients: (groupid=0, <span class="built_in">jobs</span>=2): err= 0: pid=0: Sat Sep 23 04:41:08 2023</span><br><span class="line">  write: IOPS=5711, BW=357Mi (374M)(18.6GiB/53430msec)</span><br><span class="line">    slat (usec): min=2, max=302, avg=12.22, stdev= 6.43</span><br><span class="line">    clat (msec): min=3, max=191, avg=89.61, stdev=11.09</span><br><span class="line">     lat (msec): min=3, max=191, avg=89.63, stdev=11.09</span><br><span class="line">   bw (  KiB/s): min=77952, max=129664, per=24.91%, avg=91190.65, stdev=11114.46, samples=424</span><br><span class="line">   iops        : min= 1218, max= 2026, avg=1424.84, stdev=173.67, samples=424</span><br><span class="line">  lat (msec)   : 4=0.01%, 10=0.02%, 20=0.03%, 50=0.15%, 100=73.24%</span><br><span class="line">  lat (msec)   : 250=26.54%</span><br><span class="line">  cpu          : usr=0.66%, sys=1.35%, ctx=19530, majf=0, minf=38</span><br><span class="line">  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.1%, 32=0.1%, &gt;=64=99.9%</span><br><span class="line">     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.0%</span><br><span class="line">     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.1%</span><br><span class="line">     issued rwts: total=0,305176,0,0 short=0,0,0,0 dropped=0,0,0,0</span><br><span class="line"></span><br><span class="line">Run status group 0 (all <span class="built_in">jobs</span>):</span><br><span class="line">  WRITE: bw=178MiB/s (187MB/s), 178MiB/s-178MiB/s (187MB/s-187MB/s), io=9537MiB (10.0GB), run=53430-53430msec</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk stats (<span class="built_in">read</span>/write):</span><br><span class="line">  sdd: ios=84/151410, merge=0/1068, ticks=30/13539292, in_queue=13539322, util=99.77%</span><br><span class="line">&lt;vm2&gt;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Fio/" rel="tag"><i class="fa fa-tag"></i> Fio</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/Just-a-normal-summer-camp/" rel="prev" title="Just a normal summer camp">
+                  <i class="fa fa-angle-left"></i> Just a normal summer camp
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/The-void-path-to-freedom/" rel="next" title="The void path to freedom">
+                  The void path to freedom <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

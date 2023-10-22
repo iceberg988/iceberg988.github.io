@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="IntroductionReceive ring buffers are shared between the device driver and NIC. The card assigns a transmit (TX) and receive (RX) ring buffer. As the name implies, the ring buffer is a circular buffer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Network ring buffer">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/network-ring-buffer/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="IntroductionReceive ring buffers are shared between the device driver and NIC. The card assigns a transmit (TX) and receive (RX) ring buffer. As the name implies, the ring buffer is a circular buffer">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="Network">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/network-ring-buffer/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/network-ring-buffer/","path":"blog/network-ring-buffer/","title":"Network ring buffer"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Network ring buffer | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Interrupts-and-Interrupt-Handlers"><span class="nav-number">2.</span> <span class="nav-text">Interrupts and Interrupt Handlers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SoftIRQs"><span class="nav-number">3.</span> <span class="nav-text">SoftIRQs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Displaying-the-number-of-dropped-packets"><span class="nav-number">4.</span> <span class="nav-text">Displaying the number of dropped packets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Increasing-the-RX-ring-buffer-to-reduce-a-high-packet-drop-rate"><span class="nav-number">5.</span> <span class="nav-text">Increasing the RX ring buffer to reduce a high packet drop rate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Understanding-the-maximum-RX-TX-ring-buffer"><span class="nav-number">6.</span> <span class="nav-text">Understanding the maximum RX&#x2F;TX ring buffer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">7.</span> <span class="nav-text">References</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-fio-to-generate-millions-of-files/" rel="bookmark">
+        <time class="popular-posts-time">2021-02-19</time>
+        <br>
+      Using fio to generate millions of files
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/set-in-golang/" rel="bookmark">
+        <time class="popular-posts-time">2022-03-12</time>
+        <br>
+      Set in golang
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/iouring-a-modern-asynchronous-i-o-interface-for-linux/" rel="bookmark">
+        <time class="popular-posts-time">2021-08-04</time>
+        <br>
+      Iouring - A modern asynchronous I/O interface for Linux
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/capture-and-analyze-network-packets-with-tcpdump/" rel="bookmark">
+        <time class="popular-posts-time">2021-08-20</time>
+        <br>
+      Capture and analyze network packets with tcpdump
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/buffered-and-direct-io/" rel="bookmark">
+        <time class="popular-posts-time">2021-03-09</time>
+        <br>
+      Buffered and Direct IO
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/network-ring-buffer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Network ring buffer | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Network ring buffer
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-03-04 08:00:00" itemprop="dateCreated datePublished" datetime="2021-03-04T08:00:00-08:00">2021-03-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Receive ring buffers are shared between the device driver and NIC. The card assigns a transmit (TX) and receive (RX) ring buffer. As the name implies, the ring buffer is a circular buffer where an overflow simply overwrites existing data. It should be noted that there are two ways to move data from the NIC to the kernel, hardware interrupts and software interrupts, also called SoftIRQs.</p>
+<p>The RX ring buffer is used to store incoming packets until they can be processed by the device driver. The device driver drains the RX ring, typically via SoftIRQs, which puts the incoming packets into a kernel data structure called an sk_buff or “skb” to begin its journey through the kernel and up to the application which owns the relevant socket. The TX ring buffer is used to hold outgoing packets which are destined for the wire.</p>
+<p>These ring buffers reside at the bottom of the stack and are a crucial point at which packet drop can occur, which in turn will adversely affect network performance.</p>
+<p>You can increase the size of the Ethernet device RX ring buffer if the packet drop rate causes applications to report:</p>
+<ul>
+<li>a loss of data</li>
+<li>cluster fence</li>
+<li>slow performance</li>
+<li>timeouts</li>
+<li>failed backups</li>
+</ul>
+<h2 id="Interrupts-and-Interrupt-Handlers"><a href="#Interrupts-and-Interrupt-Handlers" class="headerlink" title="Interrupts and Interrupt Handlers"></a>Interrupts and Interrupt Handlers</h2><p>Interrupts from the hardware are known as “top-half” interrupts. When a NIC receives incoming data, it copies the data into kernel buffers using DMA. The NIC notifies the kernel of this data by raising a hard interrupt. These interrupts are processed by interrupt handlers which do minimal work, as they have already interrupted another task and cannot be interrupted themselves. Hard interrupts can be expensive in terms of CPU usage, especially when holding kernel locks. The hard interrupt handler then leaves the majority of packet reception to a software interrupt, or SoftIRQ, process which can be scheduled more fairly.</p>
+<p>Hard interrupts can be seen in &#x2F;proc&#x2F;interrupts where each queue has an interrupt vector in the 1st column assigned to it. These are initialized when the system boots or when the NIC device driver module is loaded. Each RX and TX queue is assigned a unique vector, which informs the interrupt handler as to which NIC&#x2F;queue the interrupt is coming from. The columns represent the number of incoming interrupts as a counter value:</p>
+<pre><code>$ egrep “CPU0|eth2” /proc/interrupts
+ CPU0 CPU1 CPU2 CPU3 CPU4 CPU5
+ 105: 141606 0 0 0 0 0 IR-PCI-MSI-edge eth2-rx-0
+ 106: 0 141091 0 0 0 0 IR-PCI-MSI-edge eth2-rx-1
+ 107: 2 0 163785 0 0 0 IR-PCI-MSI-edge eth2-rx-2
+ 108: 3 0 0 194370 0 0 IR-PCI-MSI-edge eth2-rx-3
+ 109: 0 0 0 0 0 0 IR-PCI-MSI-edge eth2-tx
+</code></pre>
+<h2 id="SoftIRQs"><a href="#SoftIRQs" class="headerlink" title="SoftIRQs"></a>SoftIRQs</h2><p>Also known as “bottom-half” interrupts, software interrupt requests (SoftIRQs) are kernel routines which are scheduled to run at a time when other tasks will not be interrupted. The SoftIRQ’s purpose is to drain the network adapter receive ring buffers. These routines run in the form of ksoftirqd&#x2F;cpu-number processes and call driver-specific code functions. They can be seen in process monitoring tools such as ps and top.</p>
+<p>The following call stack, read from the bottom up, is an example of a SoftIRQ polling a Mellanox card. The functions marked [mlx4_en] are the Mellanox polling routines in the mlx4_en.ko driver kernel module, called by the kernel’s generic polling routines such as net_rx_action. After moving from the driver to the kernel, the traffic being received will then move up to the socket, ready for the application to consume:</p>
+<pre><code> mlx4_en_complete_rx_desc [mlx4_en]
+ mlx4_en_process_rx_cq [mlx4_en]
+ mlx4_en_poll_rx_cq [mlx4_en]
+ net_rx_action
+ __do_softirq
+ run_ksoftirqd
+ smpboot_thread_fn
+ kthread
+ kernel_thread_starter
+ kernel_thread_starter
+ 1 lock held by ksoftirqd
+</code></pre>
+<p>SoftIRQs can be monitored as follows. Each column represents a CPU:</p>
+<pre><code>$ watch -n1 grep RX /proc/softirqs
+$ watch -n1 grep TX /proc/softirqs
+</code></pre>
+<h2 id="Displaying-the-number-of-dropped-packets"><a href="#Displaying-the-number-of-dropped-packets" class="headerlink" title="Displaying the number of dropped packets"></a>Displaying the number of dropped packets</h2><p>The ethtool utility enables administrators to query, configure, or control network driver settings.</p>
+<p>The exhaustion of the RX ring buffer causes an increment in the counters, such as “discard” or “drop” in the output of ethtool -S interface_name. The discarded packets indicate that the available buffer is filling up faster than the kernel can process the packets.</p>
+<p>To display drop counters for the enp1s0 interface, enter:</p>
+<pre><code>$ ethtool -S enp1s0
+</code></pre>
+<h2 id="Increasing-the-RX-ring-buffer-to-reduce-a-high-packet-drop-rate"><a href="#Increasing-the-RX-ring-buffer-to-reduce-a-high-packet-drop-rate" class="headerlink" title="Increasing the RX ring buffer to reduce a high packet drop rate"></a>Increasing the RX ring buffer to reduce a high packet drop rate</h2><p>The ethtool utility helps to increase the RX buffer to reduce a high packet drop rate.</p>
+<ol>
+<li><p>To view the maximum RX ring buffer size:</p>
+<p> $ ethtool -g nic0<br> Ring parameters for nic0:<br> Pre-set maximums:<br> RX:             4078<br> RX Mini:        0<br> RX Jumbo:       0<br> TX:             4078<br> Current hardware settings:<br> RX:             2048<br> RX Mini:        0<br> RX Jumbo:       0<br> TX:             2048</p>
+</li>
+<li><p>If the values in the Pre-set maximums section are higher than in the Current hardware settings section, increase RX ring buffer:</p>
+</li>
+</ol>
+<ul>
+<li><p>To temporary change the RX ring buffer of the nic0 device to 4078, enter:</p>
+<p>  $ ethtool -G nic0 rx 4078</p>
+</li>
+<li><p>To permanently change the RX ring buffer create a NetworkManager dispatcher script.</p>
+</li>
+</ul>
+<h2 id="Understanding-the-maximum-RX-TX-ring-buffer"><a href="#Understanding-the-maximum-RX-TX-ring-buffer" class="headerlink" title="Understanding the maximum RX&#x2F;TX ring buffer"></a>Understanding the maximum RX&#x2F;TX ring buffer</h2><p>From <a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/source/include/linux/ethtool.h">ethtool</a> source code, we can find the following function which is used by command “ethtool -g [nic]”</p>
+<pre><code>* @get_ringparam: Report ring sizes
+</code></pre>
+<p>For different NIC vender, the <a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/C/ident/get_ringparam">driver</a> may be implemented differently.</p>
+<p>In this example, the NIC driver is bnx2x.</p>
+<pre><code>$ ethtool -i nic0
+driver: bnx2x
+</code></pre>
+<p>So, we can check the <a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/source/drivers/net/ethernet/broadcom/bnx2x/bnx2x_ethtool.c#L3677">source code</a> as below.</p>
+<pre><code>static void bnx2x_get_ringparam(struct net_device *dev,
+                struct ethtool_ringparam *ering)
+&#123;
+    struct bnx2x *bp = netdev_priv(dev);
+
+    ering-&gt;rx_max_pending = MAX_RX_AVAIL;
+
+    /* If size isn&#39;t already set, we give an estimation of the number
+     * of buffers we&#39;ll have. We&#39;re neglecting some possible conditions
+     * [we couldn&#39;t know for certain at this point if number of queues
+     * might shrink] but the number would be correct for the likely
+     * scenario.
+     */
+    if (bp-&gt;rx_ring_size)
+        ering-&gt;rx_pending = bp-&gt;rx_ring_size;
+    else if (BNX2X_NUM_RX_QUEUES(bp))
+        ering-&gt;rx_pending = MAX_RX_AVAIL / BNX2X_NUM_RX_QUEUES(bp);
+    else
+        ering-&gt;rx_pending = MAX_RX_AVAIL;
+
+    ering-&gt;tx_max_pending = IS_MF_FCOE_AFEX(bp) ? 0 : MAX_TX_AVAIL;
+    ering-&gt;tx_pending = bp-&gt;tx_ring_size;
+&#125;
+</code></pre>
+<p>MAX_RX_AVAIL is the place to define the maximum RX ring buffer. We can further check the formula as below.</p>
+<pre><code>#define MAX_RX_AVAIL		(MAX_RX_DESC_CNT * NUM_RX_RINGS - 2)
+
+#define NUM_RX_RINGS		8
+
+#define MAX_RX_DESC_CNT		(RX_DESC_CNT - NEXT_PAGE_RX_DESC_CNT)
+#define RX_DESC_CNT		(BCM_PAGE_SIZE / sizeof(struct eth_rx_bd))
+#define NEXT_PAGE_RX_DESC_CNT	2
+
+#define BCM_PAGE_SIZE		(1 &lt;&lt; BCM_PAGE_SHIFT)
+#define BCM_PAGE_SHIFT		12
+
+/*
+ * The eth Rx Buffer Descriptor
+ */
+struct eth_rx_bd &#123;
+    __le32 addr_lo;
+    __le32 addr_hi;
+&#125;;
+</code></pre>
+<p>So, based on the formula above, we can calculate the maximum RX ring buffer as below.</p>
+<pre><code>rx_max = MAX_RX_AVAIL 
+       = MAX_RX_DESC_CNT * NUM_RX_RINGS - 2
+       = (RX_DESC_CNT - NEXT_PAGE_RX_DESC_CNT) * NUM_RX_RINGS - 2
+       = ((BCM_PAGE_SIZE / sizeof(struct eth_rx_bd)) - 2) * 8 - 2
+       = (((1 &lt;&lt; BCM_PAGE_SHIFT) / sizeof(struct eth_rx_bd)) - 2) * 8 - 2
+       = ((4096 / 8 ) - 2) * 8 - 2
+       = 4078
+</code></pre>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://access.redhat.com/sites/default/files/attachments/20150325_network_performance_tuning.pdf">Red Hat Enterprise Linux Network Performance Tuning Guide</a></li>
+<li><a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/monitoring-and-tuning-the-rx-ring-buffer_configuring-and-managing-networking">MONITORING AND TUNING THE RX RING BUFFER</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Network/" rel="tag"><i class="fa fa-tag"></i> Network</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/semaphore/" rel="prev" title="Semaphore">
+                  <i class="fa fa-angle-left"></i> Semaphore
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/buffered-and-direct-io/" rel="next" title="Buffered and Direct IO">
+                  Buffered and Direct IO <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
