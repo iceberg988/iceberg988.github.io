@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">252</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-count">252</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,193 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-systemtap-to-analyze-latency-of-the-kernel-module-function/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/using-systemtap-to-analyze-latency-of-the-kernel-module-function/" class="post-title-link" itemprop="url">Using systemtap to analyze latency of the kernel module function</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-07-16 07:00:00" itemprop="dateCreated datePublished" datetime="2022-07-16T07:00:00-07:00">2022-07-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>In this post, we continue to explore how to use SystemTap to analyze the latency of the kernel module function. In the following example, we want to analyze the latency of the function “nfsd_vfs_write” from the kernel module “nfsd”.</p>
+<h2 id="Deploy-the-SystemTap-packages"><a href="#Deploy-the-SystemTap-packages" class="headerlink" title="Deploy the SystemTap packages"></a>Deploy the SystemTap packages</h2><p>Refer to <a href="/blog/getting-started-with-systemtap-for-linux-system-profiling/">this</a> post to deploy SystemTap and its required packages.</p>
+<h2 id="Check-the-nfsd-kernel-module-info"><a href="#Check-the-nfsd-kernel-module-info" class="headerlink" title="Check the nfsd kernel module info"></a>Check the nfsd kernel module info</h2><pre><code>[root@host1 ~]# uname -r
+3.10.0-1160.el7.x86_64
+
+[root@host1 ~]# ls /lib/modules/`uname -r`/kernel/
+arch  crypto  drivers  fs  kernel  lib  mm  net  sound  virt
+[root@host1 ~]# ls /lib/modules/`uname -r`/kernel/fs
+binfmt_misc.ko.xz  btrfs  cachefiles  ceph  cifs  cramfs  dlm  exofs  ext4  fat  fscache  fuse  gfs2  isofs  jbd2  lockd  mbcache.ko.xz  nfs  nfs_common  nfsd  nls  overlayfs  pstore  squashfs  udf  xfs
+
+[root@host1 ~]# ls /lib/modules/`uname -r`/kernel/fs/ext4
+ext4.ko.xz
+[root@host1 ~]# ls /lib/modules/`uname -r`/kernel/fs/xfs
+xfs.ko.xz
+[root@host1 ~]# ls /lib/modules/`uname -r`/kernel/fs/btrfs
+btrfs.ko.xz
+[root@host1 ~]# ls /lib/modules/`uname -r`/kernel/fs/nfs
+blocklayout  filelayout  flexfilelayout  nfs.ko.xz  nfsv3.ko.xz  nfsv4.ko.xz  objlayout
+
+
+[root@host1 ~]# lsmod | grep &quot;nfsd &quot;
+nfsd                  351321  13
+[root@host1 ~]# modinfo nfsd
+filename:       /lib/modules/3.10.0-1160.el7.x86_64/kernel/fs/nfsd/nfsd.ko.xz
+license:        GPL
+author:         Olaf Kirch &lt;okir@monad.swb.de&gt;
+alias:          fs-nfsd
+retpoline:      Y
+rhelversion:    7.9
+srcversion:     61A6390CD82AA4A7492CB06
+depends:        auth_rpcgss,sunrpc,grace,lockd,nfs_acl
+intree:         Y
+vermagic:       3.10.0-1160.el7.x86_64 SMP mod_unload modversions
+signer:         CentOS Linux kernel signing key
+sig_key:        E1:FD:B0:E2:A7:E8:61:A1:D1:CA:80:A2:3D:CF:0D:BA:3A:A4:AD:F5
+sig_hashalgo:   sha256
+parm:           cltrack_prog:Path to the nfsdcltrack upcall program (string)
+parm:           cltrack_legacy_disable:Disable legacy recoverydir conversion. Default: false (bool)
+parm:           nfs4_disable_idmapping:Turn off server&#39;s NFSv4 idmapping when using &#39;sec=sys&#39; (bool)
+
+[root@host1 ~]# cat /proc/kallsyms |  egrep -i -w &quot;nfsd_vfs_write&quot;
+ffffffffc094fdd0 t nfsd_vfs_write	[nfsd] 
+</code></pre>
+<h2 id="SystemTap-script"><a href="#SystemTap-script" class="headerlink" title="SystemTap script"></a>SystemTap script</h2><p>In the following SystemTap script, we have implemented</p>
+<ul>
+<li><p>a probe to detect the kernel module “nfsd” and its function “nfsd_vfs_write”</p>
+</li>
+<li><p>a probe to detect the return of the function “nfsd_vfs_write”</p>
+</li>
+<li><p>handlers to get the execname, pid, tid and timestamp in each probe function</p>
+</li>
+<li><p>a probe as timer(5 seconds tracing)</p>
+</li>
+<li><p>a probe “end” to analyze the collected runtime of the function “nfsd_vfs_write” in the end of tracing</p>
+<p>  [root@host1 ~]# cat nfs_trace.stp<br>  global count<br>  global start_t,diff_t[1000000]</p>
+<p>  probe module(“nfsd”).function(“nfsd_vfs_write”){<br>  count++<br>  e &#x3D; execname()<br>  p &#x3D; pid()<br>  t &#x3D; tid()<br>  start_t[e,p,t] &#x3D; gettimeofday_us()<br>  }</p>
+<p>  probe module(“nfsd”).function(“nfsd_vfs_write”).return {<br>  e &#x3D; execname()<br>  p &#x3D; pid()<br>  t &#x3D; tid()<br>  start_ts &#x3D; start_t[e,p,t]<br>  end_ts &#x3D; gettimeofday_us()<br>  if(start_ts&gt;0)<br>      diff_t[e,p,t,start_ts] &#x3D; end_ts - start_ts<br>  }</p>
+<p>  probe timer.s(5){exit()}</p>
+<p>  probe end{<br>  count&#x3D;1<br>  total_time&#x3D;0<br>  foreach([e,p,t,ts] in diff_t){<br>      printf(“nfsd_vfs_write(%d %s %d %d %d) call time: %d\n”,count,e,p,t,ts,diff_t[e,p,t,ts])<br>      count++<br>      total_time+&#x3D;diff_t[e,p,t,ts]<br>  }<br>  count–<br>  printf(“nfsd_vfs_write total call time(us): %d\n”,total_time)<br>  printf(“nfsd_vfs_write calls: %d\n”,count)<br>  printf(“nfsd_vfs_write average call time(us): %d\n”,total_time&#x2F;count)<br>  }</p>
+</li>
+</ul>
+<h2 id="Run-the-SystemTap-script"><a href="#Run-the-SystemTap-script" class="headerlink" title="Run the SystemTap script"></a>Run the SystemTap script</h2><pre><code>[root@host1 ~]# cat stp.sh
+runid=$1
+sleep 10
+stap -D MAXACTION=1000000 nfs_trace.stp &gt; nfs_trace.$&#123;runid&#125;.out
+
+[root@host1 ~]# ./stp.sh kernel-3.10-run1
+</code></pre>
+<p>Note that, the script will wait for 10 seconds before tracing. This is to make sure the network workload to be monitored will be running stable.</p>
+<h2 id="Get-the-tracing-result"><a href="#Get-the-tracing-result" class="headerlink" title="Get the tracing result"></a>Get the tracing result</h2><pre><code>[root@host1 ~]# cat stp_3.10/nfs_trace.1.out | head -3
+nfsd_vfs_write(1 nfsd 3597 3597 1658189341055849) call time: 139
+nfsd_vfs_write(2 nfsd 3598 3598 1658189341055864) call time: 136
+nfsd_vfs_write(3 nfsd 3596 3596 1658189341055977) call time: 149
+[root@host1 ~]# cat stp_3.10/nfs_trace.1.out | tail -5
+nfsd_vfs_write(116340 nfsd 3595 3595 1658189346055536) call time: 182
+nfsd_vfs_write(116341 nfsd 3598 3598 1658189346055621) call time: 237
+nfsd_vfs_write total call time(us): 23050967
+nfsd_vfs_write calls: 116341
+nfsd_vfs_write average call time(us): 198
+</code></pre>
+<p>As we can see, there are totally 116341 calls for the function “nfsd_vfs_write” and the average call time is 198 us. This gives us a clear sense of the function call latency so that we can compare the same for different system configurations(e.g. different kernel versions).</p>
+<h2 id="SystemTap-runtime-errors"><a href="#SystemTap-runtime-errors" class="headerlink" title="SystemTap runtime errors"></a>SystemTap runtime errors</h2><p>When we run the SystemTap script, we added a option “-D MAXACTION&#x3D;1000000” to fix the following runtime error.</p>
+<pre><code>[root@host1 ~]# stap nfs_trace.stp &gt; nfs_trace.out
+ERROR: MAXACTION exceeded near identifier &#39;printf&#39; at nfs_trace.stp:27:3
+WARNING: Number of errors: 1, skipped probes: 0
+WARNING: /usr/bin/staprun exited with status: 1
+Pass 5: run failed.  [man error::pass5]
+</code></pre>
+<p>What does “⁠MAXACTION exceeded” mean?</p>
+<blockquote>
+<p>The probe handler attempted to execute too many statements in the probe handler. The default number of actions allowed in a probe handler is 1000.</p>
+</blockquote>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://sourceware.org/systemtap/SystemTap_Beginners_Guide/">https://sourceware.org/systemtap/SystemTap_Beginners_Guide&#x2F;</a></li>
+<li><a target="_blank" rel="noopener" href="https://sourceware.org/systemtap/examples/">https://sourceware.org/systemtap/examples/</a></li>
+<li><a target="_blank" rel="noopener" href="https://sourceware.org/systemtap/SystemTap_Beginners_Guide/errors.html">https://sourceware.org/systemtap/SystemTap_Beginners_Guide&#x2F;errors.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://sourceware.org/systemtap/SystemTap_Beginners_Guide/runtimeerror.html">https://sourceware.org/systemtap/SystemTap_Beginners_Guide&#x2F;runtimeerror.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://mediatemple.net/blog/legacy/wrangling-nsf-load-with-systemtap/">https://mediatemple.net/blog/legacy/wrangling-nsf-load-with-systemtap/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1541,113 +1728,6 @@ $ journalctl --since &quot;5 minutes ago&quot;
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/html/latest/admin-guide/sysrq.html">https://www.kernel.org/doc/html/latest/admin-guide/sysrq.html</a></li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/journalctl-query-the-systemd-journal/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/journalctl-query-the-systemd-journal/" class="post-title-link" itemprop="url">journalctl - Query the systemd journal</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-05-20 07:00:00" itemprop="dateCreated datePublished" datetime="2022-05-20T07:00:00-07:00">2022-05-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>journalctl may be used to query the contents of the systemd journal as written by systemd-journald.service.</p>
-<p>If called without parameters, it will show the full contents of the journal, starting with the oldest entry collected.</p>
-<p>The following are some of the common used options:</p>
-<ul>
-<li>–no-full, –full, -l Ellipsize fields when they do not fit in available columns. The default is to show full fields, allowing them to wrap or be truncated by the pager, if one is used.</li>
-<li>-f, –follow Show only the most recent journal entries, and continuously print new entries as they are appended to the journal.</li>
-<li>-u, –unit&#x3D;UNIT or PATTERN Show messages for the specified systemd unit UNIT (such as a service unit), or for any of the units matched by PATTERN. This parameter can be specified multiple times.</li>
-<li>-S, –since&#x3D;, -U, –until&#x3D; Start showing entries on or newer than the specified date, or on or older than the specified date, respectively.</li>
-</ul>
-<p>The following commands are to save the journal to a file or query it on the fly with the <em>-f</em> option.</p>
-<pre><code>$ systemctl -a | grep ntpd.service
-  ntpd.service  loaded    active   running   Network Time Service
-$ journalctl -u ntpd &gt; ntpd.journal.out
-$ tail ntpd.journal.out
-
-$ journalctl -u ntpd* --since &quot;10 minutes ago&quot;
-
-$ journalctl -lfu ntpd*
-</code></pre>
 
       
     </div>

@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">252</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-count">252</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,157 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/docker-based-fio-benchmarking-part-one/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/docker-based-fio-benchmarking-part-one/" class="post-title-link" itemprop="url">Docker-based fio benchmarking - Part One</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-02-22 08:00:00" itemprop="dateCreated datePublished" datetime="2022-02-22T08:00:00-08:00">2022-02-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Why-Docker-based-fio-benchmarking"><a href="#Why-Docker-based-fio-benchmarking" class="headerlink" title="Why Docker-based fio benchmarking"></a>Why Docker-based fio benchmarking</h2><p><a target="_blank" rel="noopener" href="https://fio.readthedocs.io/en/latest/fio_doc.html">fio</a> is a flexible I&#x2F;O tester which generates I&#x2F;O and measure I&#x2F;O performance on the target storage system. In the case we want to run the fio workload on the cloud deployments, we can containerize fio. Also we can encapsulate necessary packages in the docker image so that it can be easily deployed to avoid package dependency.</p>
+<p>There are ready-to-use fio docker image online if you search with google. In this article, we discuss how to create a docker image which consumes a python script to run fio workload.</p>
+<h2 id="Build-docker-image-with-Dockerfile"><a href="#Build-docker-image-with-Dockerfile" class="headerlink" title="Build docker image with Dockerfile"></a>Build docker image with Dockerfile</h2><p>Docker can build images automatically by reading the instructions from a Dockerfile. A Dockerfile is a text document that contains all the commands a user could call on the command line to assemble an image. Using docker build users can create an automated build that executes several command-line instructions in succession.</p>
+<p>The following is Dockerfile we are going to use to build the docker image.</p>
+<pre><code>$ cat Dockerfile
+FROM python:3-alpine
+
+RUN apk add --no-cache \
+    fio==3.28-r1 \
+    sudo \
+    lsblk \
+    util-linux \
+    procps
+
+COPY perfbench/perfbench.py /
+COPY perfbench/run.sh /
+
+ENTRYPOINT [ &quot;/run.sh&quot; ]
+</code></pre>
+<p>We use Alpine Linux which is a security-oriented, lightweight Linux distribution based on musl libc and busybox. Since we need python support, we leverge the official <strong>python:3-alpine</strong> image which is based on <a target="_blank" rel="noopener" href="https://alpinelinux.org/">Alpine Linux</a>.</p>
+<p>We install the latest supported fio-3.28 to the docker image. And we install packages like sudo, lsblk, util-linux and procps which are needed by the python script. We copy the python script and wrapper shell script to the root directory. The run.sh script will be run once the container is started in order to run fio benchmark.</p>
+<p>The following is the run.sh script.</p>
+<pre><code>$ cat perfbench/run.sh
+#!/bin/sh
+
+[ -z &quot;$FIO_DATA_DIR&quot; ] &amp;&amp; echo &quot;FIO_DATA_DIR variable is required.&quot; &amp;&amp; exit 1;
+[ -z &quot;$FIO_LOG_DIR&quot; ] &amp;&amp; echo &quot;FIO_LOG_DIR variable is required.&quot; &amp;&amp; exit 1;
+[ ! -d &quot;$FIO_DATA_DIR&quot; ] &amp;&amp; echo &quot;The data directory $FIO_DATA_DIR does not exist.&quot; &amp;&amp; exit 1;
+[ ! -d &quot;$FIO_LOG_DIR&quot; ] &amp;&amp; echo &quot;The result directory $FIO_LOG_DIR does not exit.&quot; &amp;&amp; exit 1;
+echo &quot;Running fio benchmark on directory $FIO_DATA_DIR&quot;
+python perfbench.py --dir $FIO_DATA_DIR --logdir $FIO_LOG_DIR
+</code></pre>
+<p>Now, we can build the docker image with the Dockerfile.</p>
+<pre><code>$ docker build -t perfbench .
+Sending build context to Docker daemon  19.46kB
+Step 1/5 : FROM python:3-alpine
+Step 2/5 : RUN apk add --no-cache     fio==3.28-r1     sudo     lsblk     util-linux     procps
+Step 3/5 : COPY perfbench/perfbench.py /
+Step 4/5 : COPY perfbench/run.sh /
+Step 5/5 : ENTRYPOINT /run.sh
+Successfully built 9c0957911607
+Successfully tagged perfbench:latest
+
+$ docker image list
+REPOSITORY                           TAG                 IMAGE ID            CREATED             SIZE
+perfbench                            latest              f63e13d57991        32 minutes ago      60MB
+python                               3-alpine            c7100ae3ac4d        2 weeks ago         48.7MB
+</code></pre>
+<h2 id="Run-fio-benchmark-with-docker"><a href="#Run-fio-benchmark-with-docker" class="headerlink" title="Run fio benchmark with docker"></a>Run fio benchmark with docker</h2><p>Use the following command to run fio benchmark. Note that we have defined the fio benchmark logic in the customized python script consumed by the container.</p>
+<pre><code>$ docker run --rm --privileged -v /data:/data -e FIO_DATA_DIR=/data -e FIO_LOG_DIR=/data/result perfbench
+</code></pre>
+<p>Note that the option “–privileged” is to allow the python script in the container to drop cache in this case. The same purpose can also be approached with the following method. Then we can do “echo 3 &gt; drop_caches” in the container to drop cache.</p>
+<pre><code>$ docker run --rm -v /proc/sys/vm/drop_caches:/drop_caches -v /data:/data -e FIO_DATA_DIR=/data -e FIO_RESULT_DIR=/data/result perfbench
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/builder/">https://docs.docker.com/engine/reference/builder/</a></li>
+<li><a target="_blank" rel="noopener" href="https://alpinelinux.org/">https://alpinelinux.org/</a></li>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/_/alpine">https://hub.docker.com/_&#x2F;alpine</a></li>
+<li><a target="_blank" rel="noopener" href="https://pkgs.alpinelinux.org/packages">https://pkgs.alpinelinux.org/packages</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/run/">https://docs.docker.com/engine/reference/commandline/run/</a></li>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/_/python">https://hub.docker.com/_&#x2F;python</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/51875802/docker-containers-drop-cache-without-root-other-options">https://stackoverflow.com/questions/51875802/docker-containers-drop-cache-without-root-other-options</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1280,108 +1431,6 @@ Model name:            Intel(R) Xeon(R) CPU E5-2630 v3 @ 2.40GHz
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/High_availability">https://en.wikipedia.org/wiki/High_availability</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.atlassian.com/blog/statuspage/high-availability#:~:text=What%20is%20high%20availability%3F,a%20system%20that%20never%20fails.">https://www.atlassian.com/blog/statuspage/high-availability#:~:text&#x3D;What is high availability%3F,a system that never fails.</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/latency-numbers/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/latency-numbers/" class="post-title-link" itemprop="url">Latency numbers</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-02-02 08:00:00" itemprop="dateCreated datePublished" datetime="2022-02-02T08:00:00-08:00">2022-02-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Latency-Comparison-Numbers-2012"><a href="#Latency-Comparison-Numbers-2012" class="headerlink" title="Latency Comparison Numbers (~2012)"></a>Latency Comparison Numbers (~2012)</h2><p><img src="/images/latency-numbers.png" alt="Image"></p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><ul>
-<li>Disk is much slower than the memory</li>
-<li>Avoid the disk seek if possible</li>
-<li>Compressing data is worth to consider before sending over network</li>
-<li>It takes time to send data between data centers if they are in different regions</li>
-</ul>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://computers-are-fast.github.io/">https://computers-are-fast.github.io/</a></li>
-<li><a target="_blank" rel="noopener" href="http://research.google.com/people/jeff/">http://research.google.com/people/jeff/</a> by Jeff Dean</li>
-<li><a target="_blank" rel="noopener" href="http://norvig.com/21-days.html#answers">http://norvig.com/21-days.html#answers</a> by Peter Norvig</li>
-<li>Humanized comparison: <a target="_blank" rel="noopener" href="https://gist.github.com/hellerbarde/2843375">https://gist.github.com/hellerbarde/2843375</a></li>
-<li>Visual comparison chart: <a target="_blank" rel="noopener" href="http://i.imgur.com/k0t1e.png">http://i.imgur.com/k0t1e.png</a></li>
 </ul>
 
       

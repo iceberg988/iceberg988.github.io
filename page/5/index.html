@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">252</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-count">252</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,113 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/tree-traversal-algorithm-in-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/tree-traversal-algorithm-in-python/" class="post-title-link" itemprop="url">Tree traversal algorithm in Python</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-26 12:49:00" itemprop="dateCreated datePublished" datetime="2023-04-26T12:49:00-07:00">2023-04-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Tree traversal (also known as tree search and walking the tree) is a form of graph traversal and refers to the process of visiting (e.g. retrieving, updating, or deleting) each node in a tree data structure, exactly once. Such traversals are classified by the order in which the nodes are visited. - <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Tree_traversal">Wikipedia</a></p>
+<p>Tree traversal algorithms can be classified in the following two categories:</p>
+<ul>
+<li>Depth-First Search (DFS): It starts at the root node (selecting some arbitrary node as the root node in the case of a graph) and explores as far as possible along each branch before backtracking.</li>
+<li>Breadth-First Search (BFS): It starts at the tree’s root (selecting some arbitrary node as the root node in the case of a graph) and searches all nodes at the current depth level before moving on to the nodes at the next depth level.</li>
+</ul>
+<p>Depth-First Search (DFS) algorithms have three variants:</p>
+<ul>
+<li>Preorder Traversal (current-left-right): Visit the current node before visiting any nodes inside left or right subtrees.</li>
+<li>Inorder Traversal (left-current-right): Visit the current node after visiting all nodes inside left subtree but before visiting any node within the right subtree.</li>
+<li>Postorder Traversal (left-right-current): Visit the current node after visiting all the nodes of left and right subtrees.</li>
+</ul>
+<p>Breadth-First Search (BFS) Algorithm has one variant:</p>
+<ul>
+<li><p>Level Order Traversal: Visit nodes level-by-level and left-to-right fashion at the same level.</p>
+<p>  class Node:<br>  def <strong>init</strong>(self, val):<br>      self.val &#x3D; val<br>      self.left &#x3D; None<br>      self.right &#x3D; None<br>  def pre_order_traverse(node):<br>  if node &#x3D;&#x3D; None:<br>      return<br><br>  print(f”{node.val} “, end&#x3D;””)<br>  pre_order_traverse(node.left)<br>  pre_order_traverse(node.right)<br>  def in_order_traverse(node):<br>  if node &#x3D;&#x3D; None:<br>      return<br><br>  in_order_traverse(node.left)<br>  print(f”{node.val} “, end&#x3D;””)<br>  in_order_traverse(node.right)<br>  def post_order_traverse(node):<br>  if node &#x3D;&#x3D; None:<br>      return<br><br>  post_order_traverse(node.left)<br>  post_order_traverse(node.right)<br>  print(f”{node.val} “, end&#x3D;””)<br>  def level_order_traverse(node):<br>  if node &#x3D;&#x3D; None:<br>      return<br><br>  queue &#x3D; []<br>  queue.append(node)<br><br>  while len(queue) &gt; 0:<br>      first &#x3D; queue.pop(0)<br><br>      print(f”{first.val} “, end&#x3D;””)<br><br>      if first.left !&#x3D; None:<br>          queue.append(first.left)<br><br>      if first.right !&#x3D; None:<br>          queue.append(first.right)<br>  root &#x3D; Node(0)<br>  n1 &#x3D; Node(1)<br>  n2 &#x3D; Node(2)<br>  root.left &#x3D; n1<br>  root.right &#x3D; n2<br>  n3 &#x3D; Node(3)<br>  n4 &#x3D; Node(4)<br>  n1.left &#x3D; n3<br>  n1.right &#x3D; n4<br>  n5 &#x3D; Node(5)<br>  n6 &#x3D; Node(6)<br>  n2.left &#x3D; n5<br>  n2.right &#x3D; n6<br>  n7 &#x3D; Node(7)<br>  n8 &#x3D; Node(8)<br>  n3.left &#x3D; n7<br>  n3.right &#x3D; n8</p>
+<p>  pre_order_traverse(root)<br>  print()<br>  in_order_traverse(root)<br>  print()<br>  post_order_traverse(root)<br>  print()<br>  level_order_traverse(root)<br>  print()</p>
+<h1 id="Output"><a href="#Output" class="headerlink" title="Output:"></a>Output:</h1><h1 id="0-1-3-7-8-4-2-5-6"><a href="#0-1-3-7-8-4-2-5-6" class="headerlink" title="0 1 3 7 8 4 2 5 6"></a>0 1 3 7 8 4 2 5 6</h1><h1 id="7-3-8-1-4-0-5-2-6"><a href="#7-3-8-1-4-0-5-2-6" class="headerlink" title="7 3 8 1 4 0 5 2 6"></a>7 3 8 1 4 0 5 2 6</h1><h1 id="7-8-3-4-1-5-6-2-0"><a href="#7-8-3-4-1-5-6-2-0" class="headerlink" title="7 8 3 4 1 5 6 2 0"></a>7 8 3 4 1 5 6 2 0</h1><h1 id="0-1-2-3-4-5-6-7-8"><a href="#0-1-2-3-4-5-6-7-8" class="headerlink" title="0 1 2 3 4 5 6 7 8"></a>0 1 2 3 4 5 6 7 8</h1></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2242,248 +2349,6 @@ Output:
 15
 20
 True
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/priority-queue-implementation-in-python/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/priority-queue-implementation-in-python/" class="post-title-link" itemprop="url">Priority Queue implementation in Python</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-04-08 01:30:00" itemprop="dateCreated datePublished" datetime="2023-04-08T01:30:00-07:00">2023-04-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Priority Queue is an extension of Queue with following properties</p>
-<ul>
-<li>each item has a priority associated with it</li>
-<li>the item with high priority is dequeued before other item with low priority</li>
-</ul>
-<p>Binary heap is generally preferred implementation for Priority Queue. It takes time O(log n) to re-heapify the remaining items if the min&#x2F;max item is removed.The same amount of time O(log n) is taken to insert an new item in the heap.</p>
-<p>The key functions to implement in Priority Queue include:</p>
-<ul>
-<li>insert(val)</li>
-<li>extractMin()&#x2F;extractMax()</li>
-<li>remove(i)</li>
-<li>getMin()&#x2F;getMax()</li>
-<li>changePriority(i, val)</li>
-</ul>
-<p>Implementation in Python:</p>
-<pre><code>def left_child(k):
-    return 2 * k + 1
-
-
-def right_child(k):
-    return 2 * k + 2
-
-
-def is_leaf(k):
-    return 2 * k &gt;= len(mylist)
-
-
-def parent(k):
-    return (k - 1) // 2
-
-
-def getMin():
-    return mylist[0]
-
-
-def heapify(k):
-    if is_leaf(k):
-        return
-
-    n = len(mylist)
-
-    # get left and right child index
-    left = left_child(k)
-    right = right_child(k)
-
-    # find the smallest elements among current node, its left child and right child if exists
-    smallest = k
-    if left &lt; n and mylist[k] &gt; mylist[left]:
-        smallest = left
-    if right &lt; n and mylist[smallest] &gt; mylist[right]:
-        smallest = right
-
-    # swap current node and the smallest child
-    if smallest != k:
-        mylist[k], mylist[smallest] = mylist[smallest], mylist[k]
-        heapify(smallest)
-
-
-def shift_up(i):
-    while i &gt; 0 and mylist[i] &lt; mylist[parent(i)]:
-        mylist[i], mylist[parent(i)] = mylist[parent(i)], mylist[i]
-        i = parent(i)
-
-
-def insert(val):
-    mylist.append(val)
-    shift_up(len(mylist) - 1)
-
-
-def extractMin():
-    min = mylist[0]
-    mylist[0] = mylist[len(mylist) - 1]
-    mylist.pop(len(mylist) - 1)
-    heapify(0)
-    return min
-
-
-def remove(i):
-    mylist[i] = getMin() - 1
-    shift_up(i)
-    extractMin()
-
-
-def print_heap():
-    for i in range(len(mylist) // 2):
-        left = 2 * i + 1
-        right = 2 * i + 2
-        if left &lt; len(mylist) and right &lt; len(mylist):
-            print(
-                f&quot;parent: &#123;mylist[i]&#125; left-child: &#123;mylist[left]&#125; right-child: &#123;mylist[right]&#125;&quot;
-            )
-        elif left &lt; len(mylist):
-            print(f&quot;parent: &#123;mylist[i]&#125; left-child: &#123;mylist[left]&#125; right-child: None&quot;)
-            
-mylist = []            
-</code></pre>
-<p>Build the binary heap:</p>
-<pre><code>insert(6)
-insert(4)
-insert(8)
-insert(2)
-insert(9)
-insert(7)
-print(mylist)
-
-Output:
-[2,4,7,6,9,8]
-
-
-         4        4         2         2          2
-4  --&gt;  /   --&gt;  / \  --&gt;  / \  --&gt;  / \  --&gt;  /    \ 
-       6        6   8     4   8     4   8     4     7
-                         /         / \       / \   /
-                        6         6   9     6   9 8
-</code></pre>
-<p>Insert a new item:</p>
-<pre><code>insert(1)
-print(mylist)
-
-Output:
-[1,4,2,6,9,8,7]
-
-      2             2             1
-    /   \         /   \         /   \
-   4     7  --&gt;  4     1  --&gt;  4     2
-  / \   / \     / \   / \     / \   / \
- 6   9 8   1   6   9 8   7   6   9 8   7
-</code></pre>
-<p>Extract the min item:</p>
-<pre><code>extractMin()
-print(mylist)
-
-Output:
-[2,4,7,6,9,8]
-
-      1             7             2
-    /   \         /   \         /   \
-   4     2  --&gt;  4     2  --&gt;  4     7
-  / \   / \     / \   /       / \   / 
- 6   9 8   7   6   9  8      6   9 8
-</code></pre>
-<p>Remove the item at specified position:</p>
-<pre><code>remove(1)
-print(mylist)
-
-Output:
-[2,6,7,8,9]
-
-       2                1(2-1)         8              2              2
-     /   \            /   \          /   \          /   \          /   \
-    4     7  --&gt;     2     7  --&gt;   2     7  --&gt;   8     7  --&gt;   6     7
-   / \   /          / \   /        / \            / \            / \
-  6   9 8          6   9 8        6   9          6   9          8   9
 </code></pre>
 
       

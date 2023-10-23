@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">251</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">252</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">251</span>
+          <span class="site-state-item-count">252</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,540 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/deploy-ceph-cluster-on-ubuntu-18-04-and-centos-7-8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/deploy-ceph-cluster-on-ubuntu-18-04-and-centos-7-8/" class="post-title-link" itemprop="url">Deploy ceph cluster on Ubuntu 18.04 and CentOS 7.8</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-22 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-22T07:00:00-07:00">2021-08-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>In this article, we learn to deploy ceph cluster on ubuntu 18.04. Three nodes are used for this study.</p>
+<p>We target to deploy the most recent ceph release which is called <strong>Pacific</strong>. With this release, we can use <strong>cephadm</strong> to create a ceph cluster by <strong>bootstrapping</strong> on a single host and expanding the cluster to additional hosts.</p>
+<h2 id="Intro-to-ceph"><a href="#Intro-to-ceph" class="headerlink" title="Intro to ceph"></a>Intro to ceph</h2><p>Whether you want to provide Ceph Object Storage and&#x2F;or Ceph Block Device services to Cloud Platforms, deploy a Ceph Filesystem or use Ceph for another purpose, all Ceph Storage Cluster deployments begin with setting up each Ceph Node, your network, and the Ceph Storage Cluster. A Ceph Storage Cluster requires at least one Ceph Monitor, Ceph Manager, and Ceph OSD (Object Storage Daemon). The Ceph Metadata Server is also required when running Ceph Filesystem clients.</p>
+<ul>
+<li><p><strong>Monitors</strong>: A Ceph Monitor (ceph-mon) maintains maps of the cluster state, including the monitor map, manager map, the OSD map, and the CRUSH map. These maps are critical cluster state required for Ceph daemons to coordinate with each other. Monitors are also responsible for managing authentication between daemons and clients. At least three monitors are normally required for redundancy and high availability.</p>
+</li>
+<li><p><strong>Managers</strong>: A Ceph Manager daemon (ceph-mgr) is responsible for keeping track of runtime metrics and the current state of the Ceph cluster, including storage utilization, current performance metrics, and system load. The Ceph Manager daemons also host python-based plugins to manage and expose Ceph cluster information, including a web-based dashboard and REST API. At least two managers are normally required for high availability.</p>
+</li>
+<li><p><strong>Ceph OSDs</strong>: A Ceph OSD (object storage daemon, ceph-osd) stores data, handles data replication, recovery, rebalancing, and provides some monitoring information to Ceph Monitors and Managers by checking other Ceph OSD Daemons for a heartbeat. At least 3 Ceph OSDs are normally required for redundancy and high availability.</p>
+</li>
+<li><p><strong>MDSs</strong>: A Ceph Metadata Server (MDS, ceph-mds) stores metadata on behalf of the Ceph Filesystem (i.e., Ceph Block Devices and Ceph Object Storage do not use MDS). Ceph Metadata Servers allow POSIX file system users to execute basic commands (like ls, find, etc.) without placing an enormous burden on the Ceph Storage Cluster.</p>
+</li>
+</ul>
+<p>Ceph stores data as objects within logical storage pools. Using the CRUSH algorithm, Ceph calculates which placement group should contain the object, and further calculates which Ceph OSD Daemon should store the placement group. The CRUSH algorithm enables the Ceph Storage Cluster to scale, rebalance, and recover dynamically.</p>
+<h2 id="Deploy-a-ceph-storage-cluster"><a href="#Deploy-a-ceph-storage-cluster" class="headerlink" title="Deploy a ceph storage cluster"></a>Deploy a ceph storage cluster</h2><h3 id="Prepare-Ubuntu-Linux-and-packages"><a href="#Prepare-Ubuntu-Linux-and-packages" class="headerlink" title="Prepare Ubuntu Linux and packages"></a>Prepare Ubuntu Linux and packages</h3><p>From ceph installation guide, the following system requirements must be met before deployment.</p>
+<ul>
+<li><p>Python 3</p>
+</li>
+<li><p>Systemd</p>
+</li>
+<li><p>Podman or Docker for running containers</p>
+</li>
+<li><p>Time synchronization (such as chrony or NTP)</p>
+</li>
+<li><p>LVM2 for provisioning storage devices</p>
+<p>  root@host1:~# cat &#x2F;etc&#x2F;*release<br>  DISTRIB_ID&#x3D;Ubuntu<br>  DISTRIB_RELEASE&#x3D;16.04</p>
+</li>
+</ul>
+<p><strong>Upgrade to Ubuntu 18.0.4</strong></p>
+<pre><code>root@host1:~# apt install update-manager-core
+
+root@host1:~# do-release-upgrade -c
+Checking for a new Ubuntu release
+New release &#39;18.04.5 LTS&#39; available.
+Run &#39;do-release-upgrade&#39; to upgrade to it.
+
+root@host1:~# do-release-upgrade
+
+root@host1:~# cat /etc/*release
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=18.04
+</code></pre>
+<p><strong>Install python3</strong></p>
+<pre><code>root@host1:~# apt-get install python3
+</code></pre>
+<p><strong>Install docker</strong></p>
+<p>Refer to <a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/ubuntu/">here</a></p>
+<p><strong>Install ntp</strong></p>
+<pre><code>root@host1:~# apt-get install ntp
+root@host1:~# service ntp start
+root@host1:~# timedatectl set-timezone UTC
+</code></pre>
+<p><strong>Install lvm2</strong></p>
+<pre><code>root@host1:~# apt-get install lvm2
+</code></pre>
+<p><strong>Check and disable firewall status</strong></p>
+<pre><code>root@host1:~# ufw status
+</code></pre>
+<p><strong>Add cluster nodes to &#x2F;etc&#x2F;hosts</strong></p>
+<p><strong>Configure passwordless ssh from primary host to the others</strong></p>
+<h2 id="Install-cephadm"><a href="#Install-cephadm" class="headerlink" title="Install cephadm"></a>Install cephadm</h2><p>The cephadm command can</p>
+<ul>
+<li><p>bootstrap a new cluster</p>
+</li>
+<li><p>launch a containerized shell with a working Ceph CLI</p>
+</li>
+<li><p>aid in debugging containerized Ceph daemons</p>
+<p>  root@host1:<del># curl –silent –remote-name –location <a target="_blank" rel="noopener" href="https://github.com/ceph/ceph/raw/pacific/src/cephadm/cephadm">https://github.com/ceph/ceph/raw/pacific/src/cephadm/cephadm</a><br>  root@host1:</del># ls<br>  cephadm<br>  root@host1:~# chmod +x cephadm</p>
+<p>  root@host1:<del># .&#x2F;cephadm add-repo –release pacific<br>  root@host1:</del># .&#x2F;cephadm install<br>  root@host1:~# which cephadm<br>  &#x2F;usr&#x2F;sbin&#x2F;cephadm</p>
+</li>
+</ul>
+<h2 id="Bootstrap-a-new-cluster"><a href="#Bootstrap-a-new-cluster" class="headerlink" title="Bootstrap a new cluster"></a>Bootstrap a new cluster</h2><p>The first step in creating a new Ceph cluster is running the <strong>cephadm bootstrap</strong> command on the Ceph cluster’s first host. The act of running the <strong>cephadm bootstrap</strong> command on the Ceph cluster’s first host creates the Ceph cluster’s first “monitor daemon”, and that monitor daemon needs an IP address. You must pass the IP address of the Ceph cluster’s first host to the <strong>ceph bootstrap</strong> command, so you’ll need to know the IP address of that host.</p>
+<pre><code>root@host1:~# cephadm bootstrap --mon-ip &lt;host1-ip&gt; --allow-fqdn-hostname
+Ceph Dashboard is now available at:
+
+         URL: https://host1:8443/
+        User: admin
+    Password: btauef87vj
+
+Enabling client.admin keyring and conf on hosts with &quot;admin&quot; label
+You can access the Ceph CLI with:
+
+    sudo /usr/sbin/cephadm shell --fsid ad30a6fc-068f-11ec-8323-000c29bf98ea -c /etc/ceph/ceph.conf -k /etc/ceph/ceph.client.admin.keyring
+
+Please consider enabling telemetry to help improve Ceph:
+
+    ceph telemetry on
+
+For more information see:
+
+    https://docs.ceph.com/docs/pacific/mgr/telemetry/
+
+Bootstrap complete.
+
+root@host1:~# docker ps
+CONTAINER ID   IMAGE                        COMMAND                  CREATED         STATUS         PORTS     NAMES
+a946ae868dbc   prom/alertmanager:v0.20.0    &quot;/bin/alertmanager -…&quot;   6 minutes ago   Up 6 minutes             ceph-ad30a6fc-068f-11ec-8323-000c29bf98ea-alertmanager.host1
+504d9271b24c   ceph/ceph-grafana:6.7.4      &quot;/bin/sh -c &#39;grafana…&quot;   6 minutes ago   Up 6 minutes             ceph-ad30a6fc-068f-11ec-8323-000c29bf98ea-grafana.host1
+622a5e234406   prom/prometheus:v2.18.1      &quot;/bin/prometheus --c…&quot;   6 minutes ago   Up 6 minutes             ceph-ad30a6fc-068f-11ec-8323-000c29bf98ea-prometheus.host1
+6c2b0440d4c1   prom/node-exporter:v0.18.1   &quot;/bin/node_exporter …&quot;   6 minutes ago   Up 6 minutes             ceph-ad30a6fc-068f-11ec-8323-000c29bf98ea-node-exporter.host1
+8bc618e9ffa3   ceph/ceph                    &quot;/usr/bin/ceph-crash…&quot;   6 minutes ago   Up 6 minutes             ceph-ad30a6fc-068f-11ec-8323-000c29bf98ea-crash.host1
+b57a021238ba   ceph/ceph:v16                &quot;/usr/bin/ceph-mgr -…&quot;   7 minutes ago   Up 7 minutes             ceph-ad30a6fc-068f-11ec-8323-000c29bf98ea-mgr.host1.ltfphc
+e812853ef17d   ceph/ceph:v16                &quot;/usr/bin/ceph-mon -…&quot;   7 minutes ago   Up 7 minutes             ceph-ad30a6fc-068f-11ec-8323-000c29bf98ea-mon.host1
+</code></pre>
+<h2 id="Enable-ceph-CLI"><a href="#Enable-ceph-CLI" class="headerlink" title="Enable ceph CLI"></a>Enable ceph CLI</h2><p>To execute ceph commands, you can also run commands like this:</p>
+<pre><code>root@host1:~# cephadm shell -- ceph -s
+Inferring fsid ad30a6fc-068f-11ec-8323-000c29bf98ea
+Inferring config /var/lib/ceph/ad30a6fc-068f-11ec-8323-000c29bf98ea/mon.host1/config
+Using recent ceph image ceph/ceph@sha256:829ebf54704f2d827de00913b171e5da741aad9b53c1f35ad59251524790eceb
+  cluster:
+    id:     ad30a6fc-068f-11ec-8323-000c29bf98ea
+    health: HEALTH_WARN
+            OSD count 0 &lt; osd_pool_default_size 3
+
+  services:
+    mon: 1 daemons, quorum host1 (age 9m)
+    mgr: host1.ltfphc(active, since 10m)
+    osd: 0 osds: 0 up, 0 in
+
+  data:
+    pools:   0 pools, 0 pgs
+    objects: 0 objects, 0 B
+    usage:   0 B used, 0 B / 0 B avail
+    pgs:
+</code></pre>
+<p>Cephadm does not require any Ceph packages to be installed on the host. However, it recommends enabling easy access to the ceph command.</p>
+<p>You can install the ceph-common package, which contains all of the ceph commands, including ceph, rbd, mount.ceph (for mounting CephFS file systems), etc.:</p>
+<pre><code>root@host1:~# cephadm add-repo --release pacific
+Installing repo GPG key from https://download.ceph.com/keys/release.gpg...
+Installing repo file at /etc/apt/sources.list.d/ceph.list...
+Updating package list...
+Completed adding repo.
+root@host1:~# cephadm install ceph-common
+Installing packages [&#39;ceph-common&#39;]...
+
+root@host1:~# ceph -v
+ceph version 16.2.5 (0883bdea7337b95e4b611c768c0279868462204a) pacific (stable)
+
+root@host1:~# ceph status
+  cluster:
+    id:     ad30a6fc-068f-11ec-8323-000c29bf98ea
+    health: HEALTH_WARN
+            OSD count 0 &lt; osd_pool_default_size 3
+
+  services:
+    mon: 1 daemons, quorum host1 (age 11m)
+    mgr: host1.ltfphc(active, since 12m)
+    osd: 0 osds: 0 up, 0 in
+
+  data:
+    pools:   0 pools, 0 pgs
+    objects: 0 objects, 0 B
+    usage:   0 B used, 0 B / 0 B avail
+    pgs:
+</code></pre>
+<h2 id="Adding-additional-hosts-to-the-cluster"><a href="#Adding-additional-hosts-to-the-cluster" class="headerlink" title="Adding additional hosts to the cluster"></a>Adding additional hosts to the cluster</h2><p>To add each new host to the cluster, perform two steps:</p>
+<ol>
+<li><p>Install the cluster’s public SSH key in the new host’s root user’s authorized_keys file:</p>
+<p> root@host1:<del># ssh-copy-id -f -i &#x2F;etc&#x2F;ceph&#x2F;ceph.pub root@host2<br> root@host1:</del># ssh-copy-id -f -i &#x2F;etc&#x2F;ceph&#x2F;ceph.pub root@host3</p>
+</li>
+<li><p>Tell Ceph that the new node is part of the cluster:</p>
+<p> root@host1:<del># ceph orch host add host2 <host2-ip> –labels _admin<br> root@host1:</del># ceph orch host add host3 <host3-ip> –labels _admin</p>
+</li>
+</ol>
+<p>Wait for a while until the monitor detects the new hosts. Verify the new added hosts as below.</p>
+<pre><code>root@host1:~# cat /etc/ceph/ceph.conf
+# minimal ceph.conf for ad30a6fc-068f-11ec-8323-000c29bf98ea
+[global]
+    fsid = ad30a6fc-068f-11ec-8323-000c29bf98ea
+    mon_host = [v2:&lt;host2-ip&gt;:3300/0,v1:&lt;host2-ip&gt;:6789/0] [v2:&lt;host3-ip&gt;:3300/0,v1:&lt;host3-ip&gt;:6789/0] [v2:&lt;host1-ip&gt;:3300/0,v1:&lt;host1-ip&gt;:6789/0]
+
+root@host1:~# ceph status
+  cluster:
+    id:     ad30a6fc-068f-11ec-8323-000c29bf98ea
+    health: HEALTH_WARN
+            clock skew detected on mon.host2, mon.host3
+            OSD count 0 &lt; osd_pool_default_size 3
+
+  services:
+    mon: 3 daemons, quorum host1,host2,host3 (age 115s)
+    mgr: host1.ltfphc(active, since 30m), standbys: host2.dqlsnk
+    osd: 0 osds: 0 up, 0 in
+
+  data:
+    pools:   0 pools, 0 pgs
+    objects: 0 objects, 0 B
+    usage:   0 B used, 0 B / 0 B avail
+    pgs:
+</code></pre>
+<h2 id="Adding-storage"><a href="#Adding-storage" class="headerlink" title="Adding storage"></a>Adding storage</h2><p>To add storage to the cluster, either tell Ceph to consume any available and unused device:</p>
+<pre><code>ceph orch apply osd --all-available-devices
+</code></pre>
+<p>Or Deploy OSDs with specified storage devices.</p>
+<h3 id="Listing-storage-devices"><a href="#Listing-storage-devices" class="headerlink" title="Listing storage devices"></a>Listing storage devices</h3><p>In order to deploy an OSD, there must be a storage device that is available on which the OSD will be deployed.</p>
+<p>Run this command to display an inventory of storage devices on all cluster hosts:</p>
+<pre><code>root@host1:~# ceph orch device ls
+Hostname                            Path      Type  Serial  Size   Health   Ident  Fault  Available
+host2  /dev/sdb  hdd           85.8G  Unknown  N/A    N/A    Yes
+host3  /dev/sdb  hdd           85.8G  Unknown  N/A    N/A    Yes
+host1  /dev/sdb  hdd           85.8G  Unknown  N/A    N/A    Yes
+</code></pre>
+<p>A storage device is considered available if all of the following conditions are met:</p>
+<ul>
+<li>The device must have no partitions.</li>
+<li>The device must not have any LVM state.</li>
+<li>The device must not be mounted.</li>
+<li>The device must not contain a file system.</li>
+<li>The device must not contain a Ceph BlueStore OSD.</li>
+<li>The device must be larger than 5 GB.</li>
+</ul>
+<p>Ceph will not provision an OSD on a device that is not available.</p>
+<h3 id="Creating-new-OSDs"><a href="#Creating-new-OSDs" class="headerlink" title="Creating new OSDs"></a>Creating new OSDs</h3><p>There are a few ways to create new OSDs:</p>
+<ul>
+<li><p>Tell Ceph to consume any available and unused storage device:</p>
+<p>  ceph orch apply osd –all-available-devices</p>
+</li>
+</ul>
+<p>After running the above command:</p>
+<ul>
+<li>If you add new disks to the cluster, they will automatically be used to create new OSDs.</li>
+<li>If you remove an OSD and clean the LVM physical volume, a new OSD will be created automatically.</li>
+</ul>
+<p>If you want to avoid this behavior (disable automatic creation of OSD on available devices), use the <em>unmanaged</em> parameter:</p>
+<pre><code>ceph orch apply osd --all-available-devices --unmanaged=true
+</code></pre>
+<ul>
+<li><p>Create an OSD from a specific device on a specific host:</p>
+<p>  ceph orch daemon add osd <em><host></em>:<em><device-path></em></p>
+</li>
+</ul>
+<p>For example:</p>
+<pre><code>ceph orch daemon add osd host1:/dev/sdb 
+</code></pre>
+<p>In our case, we use the following commands to create OSDs for the three nodes. We only need run the commands from host1.</p>
+<pre><code>root@host1:~#   ceph orch daemon add osd host1:/dev/sdb
+Created osd(s) 0 on host &#39;host1&#39;
+root@host1:~# ceph orch daemon add osd host2:/dev/sdb
+Created osd(s) 1 on host &#39;host2&#39;
+root@host1:~# ceph orch daemon add osd host3:/dev/sdb
+Created osd(s) 2 on host &#39;host3&#39;
+
+root@host1:~# ceph status
+  cluster:
+    id:     ad30a6fc-068f-11ec-8323-000c29bf98ea
+    health: HEALTH_WARN
+            clock skew detected on mon.host2, mon.host3
+            59 slow ops, oldest one blocked for 130 sec, mon.host2 has slow ops
+
+  services:
+    mon: 3 daemons, quorum host1,host2,host3 (age 2m)
+    mgr: host1.ltfphc(active, since 102s), standbys: host2.dqlsnk
+    osd: 3 osds: 3 up (since 7m), 3 in (since 7m)
+
+  data:
+    pools:   1 pools, 1 pgs
+    objects: 0 objects, 0 B
+    usage:   15 MiB used, 240 GiB / 240 GiB avail
+    pgs:     1 active+clean
+</code></pre>
+<h3 id="Rry-Run"><a href="#Rry-Run" class="headerlink" title="Rry Run"></a>Rry Run</h3><p>The –dry-run flag causes the orchestrator to present a preview of what will happen without actually creating the OSDs.</p>
+<p>For example:</p>
+<pre><code>ceph orch apply osd --all-available-devices --dry-run
+</code></pre>
+<h2 id="Create-a-pool"><a href="#Create-a-pool" class="headerlink" title="Create a pool"></a>Create a pool</h2><p>Pools are logical partitions for storing objects. When you first deploy a cluster without creating a pool, Ceph uses the default pools for storing data.</p>
+<p>By default, Ceph makes 3 replicas of RADOS objects. Ensure you have a realistic number of placement groups. Ceph recommends approximately 100 per OSD and always use the nearest power of 2.</p>
+<pre><code>root@host1:~# ceph osd lspools
+1 device_health_metrics
+root@host1:~# ceph osd pool create datapool 128 128
+pool &#39;datapool&#39; created
+root@host1:~# ceph osd lspools
+1 device_health_metrics
+2 datapool
+
+
+root@host1:~# ceph osd pool ls detail
+pool 1 &#39;device_health_metrics&#39; replicated size 3 min_size 2 crush_rule 0 object_hash rjenkins pg_num 1 pgp_num 1 autoscale_mode on last_change 22 flags hashpspool stripe_width 0 pg_num_min 1 application mgr_devicehealth
+pool 2 &#39;datapool&#39; replicated size 3 min_size 2 crush_rule 0 object_hash rjenkins pg_num 128 pgp_num 128 autoscale_mode on last_change 39 flags hashpspool stripe_width 0
+
+root@host1:~# ceph osd pool get datapool all
+size: 3
+min_size: 2
+pg_num: 128
+pgp_num: 128
+crush_rule: replicated_rule
+hashpspool: true
+nodelete: false
+nopgchange: false
+nosizechange: false
+write_fadvise_dontneed: false
+noscrub: false
+nodeep-scrub: false
+use_gmt_hitset: 1
+fast_read: 0
+pg_autoscale_mode: on
+</code></pre>
+<p>On the admin node, use the rbd tool to initialize the pool for use by RBD:</p>
+<pre><code>[ceph: root@host1 /]# rbd pool init datapool
+</code></pre>
+<h2 id="Create-rbd-volume-and-map-to-a-block-device-on-the-host"><a href="#Create-rbd-volume-and-map-to-a-block-device-on-the-host" class="headerlink" title="Create rbd volume and map to a block device on the host"></a>Create rbd volume and map to a block device on the host</h2><p>The rbd command enables you to create, list, introspect and remove block device images. You can also use it to clone images, create snapshots, rollback an image to a snapshot, view a snapshot, etc.</p>
+<pre><code>root@host1:~# rbd create --size 512000 datapool/rbdvol1
+root@host1:~# rbd map datapool/rbdvol1
+rbd: sysfs write failed
+RBD image feature set mismatch. You can disable features unsupported by the kernel with &quot;rbd feature disable datapool/rbdvol1 object-map fast-diff deep-flatten&quot;.
+In some cases useful info is found in syslog - try &quot;dmesg | tail&quot;.
+rbd: map failed: (6) No such device or address
+
+root@host1:~# dmesg | tail
+[50268.015821] cgroup: cgroup: disabling cgroup2 socket matching due to net_prio or net_cls activation
+[59168.019848] Key type ceph registered
+[59168.020080] libceph: loaded (mon/osd proto 15/24)
+[59168.023667] rbd: loaded (major 252)
+[59168.028478] libceph: mon2 &lt;host1-ip&gt;:6789 session established
+[59168.028571] libceph: mon2 &lt;host1-ip&gt;:6789 socket closed (con state OPEN)
+[59168.028594] libceph: mon2 &lt;host1-ip&gt;:6789 session lost, hunting for new mon
+[59175.101037] libceph: mon0 &lt;host1-ip&gt;:6789 session established
+[59175.101413] libceph: client14535 fsid ad30a6fc-068f-11ec-8323-000c29bf98ea
+[59175.105601] rbd: image rbdvol1: image uses unsupported features: 0x38
+
+root@host1:~# rbd feature disable datapool/rbdvol1 object-map fast-diff deep-flatten
+
+root@host1:~# rbd map datapool/rbdvol1
+/dev/rbd0
+
+root@host1:~# rbd showmapped
+id  pool      namespace  image    snap  device
+0   datapool             rbdvol1  -     /dev/rbd0
+
+root@host1:~# lsblk
+NAME                                                                                                  MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                                                                                                     8:0    0  128G  0 disk
+├─sda1                                                                                                  8:1    0  127G  0 part /
+├─sda2                                                                                                  8:2    0    1K  0 part
+└─sda5                                                                                                  8:5    0  975M  0 part
+sdb                                                                                                     8:16   0   80G  0 disk
+└─ceph--bc7eff08--2ac6--44a5--b941--5444c4a8600a-osd--block--b4dfb938--05af--413d--a327--18d26fc75b8d 253:0    0   80G  0 lvm
+rbd0                                                                                                  252:0    0  100G  0 disk
+
+root@host1:~# ls -la /dev/rbd/datapool/rbdvol1
+lrwxrwxrwx 1 root root 10 Aug 26 19:35 /dev/rbd/datapool/rbdvol1 -&gt; ../../rbd0
+
+root@host1:~# ls -la /dev/rbd0
+brw-rw---- 1 root disk 252, 0 Aug 26 19:35 /dev/rbd0
+
+root@host1:~# rbd status datapool/rbdvol1
+Watchers:
+    watcher=&lt;host1-ip&gt;:0/2778790200 client.14556 cookie=18446462598732840967
+
+root@host1:~# rbd info datapool/rbdvol1
+rbd image &#39;rbdvol1&#39;:
+    size 100 GiB in 25600 objects
+    order 22 (4 MiB objects)
+    snapshot_count: 0
+    id: 38bebe718b2f
+    block_name_prefix: rbd_data.38bebe718b2f
+    format: 2
+    features: layering, exclusive-lock
+    op_features:
+    flags:
+    create_timestamp: Thu Aug 26 19:31:29 2021
+    access_timestamp: Thu Aug 26 19:31:29 2021
+    modify_timestamp: Thu Aug 26 19:31:29 2021
+</code></pre>
+<h2 id="Create-filesystem-and-mount-rbd-volume"><a href="#Create-filesystem-and-mount-rbd-volume" class="headerlink" title="Create filesystem and mount rbd volume"></a>Create filesystem and mount rbd volume</h2><p>You can use Linux standard commands to create filesystem on the volume and mount it for different purpose.</p>
+<h2 id="Troubleshooting"><a href="#Troubleshooting" class="headerlink" title="Troubleshooting"></a>Troubleshooting</h2><ol>
+<li>Ceph does not support pacific or later on centos7.8</li>
+</ol>
+<p>If you are installing Ceph with version of pacific on CentOS 7.8, you may see the following issue.</p>
+<pre><code>$ cat /etc/*release
+CentOS Linux release 7.8.2003 (Core)
+NAME=&quot;CentOS Linux&quot;
+
+$ uname -r
+5.7.12-1.el7.elrepo.x86_64
+
+# ./cephadm add-repo --release pacific
+ERROR: Ceph does not support pacific or later for this version of this linux distro and therefore cannot add a repo for it
+</code></pre>
+<p>You can install Ceph with version “octopus” instead.</p>
+<pre><code>$ ./cephadm add-repo --release octopus
+Writing repo to /etc/yum.repos.d/ceph.repo...
+Enabling EPEL...
+Completed adding repo
+</code></pre>
+<p>Note: <strong>cephadm</strong> is new in Ceph release v15.2.0 (Octopus) and does not support older versions of Ceph.</p>
+<ol start="2">
+<li><p>Invalid GPG Key</p>
+<p> $ .&#x2F;cephadm install<br> Installing packages [‘cephadm’]…<br> Non-zero exit code 1 from yum install -y cephadm<br> yum: stdout Loaded plugins: fastestmirror, langpacks, priorities<br> yum: stdout Loading mirror speeds from cached hostfile<br> yum: stdout  * base: pxe.dev.purestorage.com<br> yum: stdout  * centosplus: pxe.dev.purestorage.com<br> yum: stdout  * epel: mirror.lax.genesisadaptive.com<br> yum: stdout  * extras: pxe.dev.purestorage.com<br> yum: stdout  * updates: pxe.dev.purestorage.com<br> yum: stdout 279 packages excluded due to repository priority protections<br> yum: stdout Resolving Dependencies<br> yum: stdout –&gt; Running transaction check<br> yum: stdout —&gt; Package cephadm.noarch 2:15.2.14-0.el7 will be installed<br> yum: stdout –&gt; Finished Dependency Resolution<br> yum: stdout<br> yum: stdout Dependencies Resolved<br> yum: stdout<br> yum: stdout &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br> yum: stdout  Package        Arch          Version                  Repository          Size<br> yum: stdout &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br> yum: stdout Installing:<br> yum: stdout  cephadm        noarch        2:15.2.14-0.el7          Ceph-noarch         55 k<br> yum: stdout<br> yum: stdout Transaction Summary<br> yum: stdout &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br> yum: stdout Install  1 Package<br> yum: stdout<br> yum: stdout Total download size: 55 k<br> yum: stdout Installed size: 223 k<br> yum: stdout Downloading packages:<br> yum: stdout Public key for cephadm-15.2.14-0.el7.noarch.rpm is not installed<br> yum: stdout Retrieving key from <a target="_blank" rel="noopener" href="https://download.ceph.com/keys/release.gpg">https://download.ceph.com/keys/release.gpg</a><br> yum: stderr warning: &#x2F;var&#x2F;cache&#x2F;yum&#x2F;x86_64&#x2F;7&#x2F;Ceph-noarch&#x2F;packages&#x2F;cephadm-15.2.14-0.el7.noarch.rpm: Header V4 RSA&#x2F;SHA256 Signature, key ID    460f3994: NOKEY<br> yum: stderr<br> yum: stderr<br> yum: stderr Invalid GPG Key from <a target="_blank" rel="noopener" href="https://download.ceph.com/keys/release.gpg">https://download.ceph.com/keys/release.gpg</a>: No key found in given key data<br> Traceback (most recent call last):<br>   File “.&#x2F;cephadm”, line 8432, in <module><br> main()<br>   File “.&#x2F;cephadm”, line 8420, in main<br> r &#x3D; ctx.func(ctx)<br>   File “.&#x2F;cephadm”, line 6384, in command_install<br> pkg.install(ctx.packages)<br>   File “.&#x2F;cephadm”, line 6231, in install<br> call_throws(self.ctx, [self.tool, ‘install’, ‘-y’] + ls)<br>   File “.&#x2F;cephadm”, line 1461, in call_throws<br> raise RuntimeError(‘Failed command: %s’ % ‘ ‘.join(command))<br> RuntimeError: Failed command: yum install -y cephadm</p>
+</li>
+</ol>
+<p>Based on <a target="_blank" rel="noopener" href="https://docs.ceph.com/en/mimic/install/get-packages/">Ceph Documentation</a> , execute the following to install the release.asc key.</p>
+<pre><code>$ rpm --import &#39;https://download.ceph.com/keys/release.asc&#39;
+</code></pre>
+<p>Install cephadm package again and it succeeds.</p>
+<pre><code>$ ./cephadm install
+Installing packages [&#39;cephadm&#39;]...
+
+$ which cephadm
+/usr/sbin/cephadm
+</code></pre>
+<ol start="3">
+<li><p>Failed to add host during bootstrap</p>
+<p> $ cephadm bootstrap –mon-ip 192.168.1.183<br> Adding host host1…<br> Non-zero exit code 22 from &#x2F;usr&#x2F;bin&#x2F;docker run –rm –ipc&#x3D;host –net&#x3D;host –entrypoint &#x2F;usr&#x2F;bin&#x2F;ceph -e CONTAINER_IMAGE&#x3D;docker.io&#x2F;ceph&#x2F;ceph:v15    -e NODE_NAME&#x3D;host1 -v &#x2F;var&#x2F;log&#x2F;ceph&#x2F;ccc938de-0c30-11ec-8c3f-ac1f6bc8d268:&#x2F;var&#x2F;log&#x2F;ceph:z -v &#x2F;tmp&#x2F;ceph-tmpdqxjp0ly:&#x2F;etc&#x2F;ceph&#x2F;ceph.client.admin.   keyring:z -v &#x2F;tmp&#x2F;ceph-tmpmt5hrjo9:&#x2F;etc&#x2F;ceph&#x2F;ceph.conf:z docker.io&#x2F;ceph&#x2F;ceph:v15 orch host add host1<br> &#x2F;usr&#x2F;bin&#x2F;ceph: stderr Error EINVAL: Failed to connect to host1 (host1).<br> &#x2F;usr&#x2F;bin&#x2F;ceph: stderr Please make sure that the host is reachable and accepts connections using the cephadm SSH key<br> &#x2F;usr&#x2F;bin&#x2F;ceph: stderr<br> &#x2F;usr&#x2F;bin&#x2F;ceph: stderr To add the cephadm SSH key to the host:<br> &#x2F;usr&#x2F;bin&#x2F;ceph: stderr &gt; ceph cephadm get-pub-key &gt; ~&#x2F;ceph.pub<br> &#x2F;usr&#x2F;bin&#x2F;ceph: stderr &gt; ssh-copy-id -f -i ~&#x2F;ceph.pub root@host1<br> &#x2F;usr&#x2F;bin&#x2F;ceph: stderr<br> &#x2F;usr&#x2F;bin&#x2F;ceph: stderr To check that the host is reachable:<br> &#x2F;usr&#x2F;bin&#x2F;ceph: stderr &gt; ceph cephadm get-ssh-config &gt; ssh_config<br> &#x2F;usr&#x2F;bin&#x2F;ceph: stderr &gt; ceph config-key get mgr&#x2F;cephadm&#x2F;ssh_identity_key &gt; ~&#x2F;cephadm_private_key<br> &#x2F;usr&#x2F;bin&#x2F;ceph: stderr &gt; chmod 0600 ~&#x2F;cephadm_private_key<br> &#x2F;usr&#x2F;bin&#x2F;ceph: stderr &gt; ssh -F ssh_config -i ~&#x2F;cephadm_private_key root@host1<br> ERROR: Failed to add host <host1>: Failed command: &#x2F;usr&#x2F;bin&#x2F;docker run –rm –ipc&#x3D;host –net&#x3D;host –entrypoint &#x2F;usr&#x2F;bin&#x2F;ceph -e    CONTAINER_IMAGE&#x3D;docker.io&#x2F;ceph&#x2F;ceph:v15 -e NODE_NAME&#x3D;host1 -v &#x2F;var&#x2F;log&#x2F;ceph&#x2F;ccc938de-0c30-11ec-8c3f-ac1f6bc8d268:&#x2F;var&#x2F;log&#x2F;ceph:z -v &#x2F;tmp&#x2F;   ceph-tmpdqxjp0ly:&#x2F;etc&#x2F;ceph&#x2F;ceph.client.admin.keyring:z -v &#x2F;tmp&#x2F;ceph-tmpmt5hrjo9:&#x2F;etc&#x2F;ceph&#x2F;ceph.conf:z docker.io&#x2F;ceph&#x2F;ceph:v15 orch host add    host1</p>
+</li>
+</ol>
+<p>Note: If there are multiple networks and interfaces, be sure to choose one that will be accessible by any host accessing the Ceph cluster.</p>
+<p>Make sure passwordless ssh is configured on each host.</p>
+<ol start="4">
+<li><p>Remove ceph cluster</p>
+<p> $ cephadm  rm-cluster –fsid ccc938de-0c30-11ec-8c3f-ac1f6bc8d268 –force</p>
+</li>
+<li><p>ceph-common installation failure</p>
+<p> $ cephadm install ceph-common<br> Installing packages [‘ceph-common’]…<br> Non-zero exit code 1 from yum install -y ceph-common<br> yum: stdout Loaded plugins: fastestmirror, langpacks, priorities<br> yum: stdout Loading mirror speeds from cached hostfile<br> yum: stdout  * base: pxe.dev.purestorage.com<br> yum: stdout  * centosplus: pxe.dev.purestorage.com<br> yum: stdout  * epel: mirror.lax.genesisadaptive.com<br> yum: stdout  * extras: pxe.dev.purestorage.com<br> yum: stdout  * updates: pxe.dev.purestorage.com<br> yum: stdout 279 packages excluded due to repository priority protections<br> yum: stdout Resolving Dependencies<br> yum: stdout –&gt; Running transaction check<br> yum: stdout —&gt; Package ceph-common.x86_64 1:10.2.5-4.el7 will be installed<br> yum: stdout –&gt; Processing Dependency: python-rbd &#x3D; 1:10.2.5-4.el7 for package: 1:ceph-common-10.2.5-4.el7.x86_64<br> yum: stdout Package python-rbd is obsoleted by python3-rbd, but obsoleting package does not provide for requirements<br> yum: stdout –&gt; Processing Dependency: python-rados &#x3D; 1:10.2.5-4.el7 for package: 1:ceph-common-10.2.5-4.el7.x86_64<br> yum: stdout Package python-rados is obsoleted by python3-rados, but obsoleting package does not provide for requirements<br> yum: stdout –&gt; Processing Dependency: hdparm for package: 1:ceph-common-10.2.5-4.el7.x86_64<br> yum: stdout –&gt; Processing Dependency: gdisk for package: 1:ceph-common-10.2.5-4.el7.x86_64<br> yum: stdout –&gt; Processing Dependency: libboost_regex-mt.so.1.53.0()(64bit) for package: 1:ceph-common-10.2.5-4.el7.x86_64<br> yum: stdout –&gt; Processing Dependency: libboost_program_options-mt.so.1.53.0()(64bit) for package: 1:ceph-common-10.2.5-4.el7.x86_64<br> yum: stdout –&gt; Running transaction check<br> yum: stdout —&gt; Package boost-program-options.x86_64 0:1.53.0-28.el7 will be installed<br> yum: stdout —&gt; Package boost-regex.x86_64 0:1.53.0-28.el7 will be installed<br> yum: stdout –&gt; Processing Dependency: libicuuc.so.50()(64bit) for package: boost-regex-1.53.0-28.el7.x86_64<br> yum: stdout –&gt; Processing Dependency: libicui18n.so.50()(64bit) for package: boost-regex-1.53.0-28.el7.x86_64<br> yum: stdout –&gt; Processing Dependency: libicudata.so.50()(64bit) for package: boost-regex-1.53.0-28.el7.x86_64<br> yum: stdout —&gt; Package ceph-common.x86_64 1:10.2.5-4.el7 will be installed<br> yum: stdout –&gt; Processing Dependency: python-rbd &#x3D; 1:10.2.5-4.el7 for package: 1:ceph-common-10.2.5-4.el7.x86_64<br> yum: stdout Package python-rbd is obsoleted by python3-rbd, but obsoleting package does not provide for requirements<br> yum: stdout –&gt; Processing Dependency: python-rados &#x3D; 1:10.2.5-4.el7 for package: 1:ceph-common-10.2.5-4.el7.x86_64<br> yum: stdout Package python-rados is obsoleted by python3-rados, but obsoleting package does not provide for requirements<br> yum: stdout —&gt; Package gdisk.x86_64 0:0.8.10-3.el7 will be installed<br> yum: stdout —&gt; Package hdparm.x86_64 0:9.43-5.el7 will be installed<br> yum: stdout –&gt; Running transaction check<br> yum: stdout —&gt; Package ceph-common.x86_64 1:10.2.5-4.el7 will be installed<br> yum: stdout –&gt; Processing Dependency: python-rbd &#x3D; 1:10.2.5-4.el7 for package: 1:ceph-common-10.2.5-4.el7.x86_64<br> yum: stdout Package python-rbd is obsoleted by python3-rbd, but obsoleting package does not provide for requirements<br> yum: stdout –&gt; Processing Dependency: python-rados &#x3D; 1:10.2.5-4.el7 for package: 1:ceph-common-10.2.5-4.el7.x86_64<br> yum: stdout Package python-rados is obsoleted by python3-rados, but obsoleting package does not provide for requirements<br> yum: stdout —&gt; Package libicu.x86_64 0:50.2-4.el7_7 will be installed<br> yum: stdout –&gt; Finished Dependency Resolution<br> yum: stdout  You could try using –skip-broken to work around the problem<br> yum: stdout  You could try running: rpm -Va –nofiles –nodigest<br> yum: stderr Error: Package: 1:ceph-common-10.2.5-4.el7.x86_64 (base)<br> yum: stderr            Requires: python-rbd &#x3D; 1:10.2.5-4.el7<br> yum: stderr            Available: 1:python-rbd-10.2.5-4.el7.x86_64 (base)<br> yum: stderr                python-rbd &#x3D; 1:10.2.5-4.el7<br> yum: stderr            Available: 2:python3-rbd-15.2.14-0.el7.x86_64 (Ceph)<br> yum: stderr                python-rbd &#x3D; 2:15.2.14-0.el7<br> yum: stderr Error: Package: 1:ceph-common-10.2.5-4.el7.x86_64 (base)<br> yum: stderr            Requires: python-rados &#x3D; 1:10.2.5-4.el7<br> yum: stderr            Available: 1:python-rados-10.2.5-4.el7.x86_64 (base)<br> yum: stderr                python-rados &#x3D; 1:10.2.5-4.el7<br> yum: stderr            Available: 2:python3-rados-15.2.14-0.el7.x86_64 (Ceph)<br> yum: stderr                python-rados &#x3D; 2:15.2.14-0.el7<br> Traceback (most recent call last):<br>   File “&#x2F;usr&#x2F;sbin&#x2F;cephadm”, line 6242, in <module><br> r &#x3D; args.func()<br>   File “&#x2F;usr&#x2F;sbin&#x2F;cephadm”, line 5073, in command_install<br> pkg.install(args.packages)<br>   File “&#x2F;usr&#x2F;sbin&#x2F;cephadm”, line 4931, in install<br> call_throws([self.tool, ‘install’, ‘-y’] + ls)<br>   File “&#x2F;usr&#x2F;sbin&#x2F;cephadm”, line 1112, in call_throws<br> raise RuntimeError(‘Failed command: %s’ % ‘ ‘.join(command))<br> RuntimeError: Failed command: yum install -y ceph-common</p>
+</li>
+<li><p>cephadm log</p>
+</li>
+</ol>
+<p>&#x2F;var&#x2F;log&#x2F;ceph&#x2F;cephadm.log</p>
+<ol start="7">
+<li><p>rbd image map failed</p>
+<p> [ceph: root@host1 &#x2F;]# rbd map datapool&#x2F;rbdvol1<br> modinfo: ERROR: Module alias rbd not found.<br> modprobe: FATAL: Module rbd not found in directory &#x2F;lib&#x2F;modules&#x2F;5.7.12-1.el7.elrepo.x86_64<br> rbd: failed to load rbd kernel module (1)<br> rbd: sysfs write failed<br> In some cases useful info is found in syslog - try “dmesg | tail”.<br> rbd: map failed: (2) No such file or directory</p>
+<p> [root@host1 ~]# modprobe rbd<br> [root@host1 ~]# lsmod | grep rbd<br> rbd                   106496  0<br> libceph               331776  1 rbd</p>
+</li>
+<li><p>rbd image map failed on other cluster nodes</p>
+<p> [ceph: root@host2 &#x2F;]# rbd map datapool&#x2F;rbdvol5 –id admin<br> 2021-09-21T19:49:49.384+0000 7f91ea781500 -1 auth: unable to find a keyring on &#x2F;etc&#x2F;ceph&#x2F;ceph.client.admin.keyring,&#x2F;etc&#x2F;ceph&#x2F;ceph.keyring,&#x2F;etc&#x2F;ceph&#x2F;keyring,&#x2F;etc&#x2F;ceph&#x2F;keyring.bin,: (2) No such file or directory<br> rbd: sysfs write failed<br> 2021-09-21T19:49:49.387+0000 7f91ea781500 -1 auth: unable to find a keyring on &#x2F;etc&#x2F;ceph&#x2F;ceph.client.admin.keyring,&#x2F;etc&#x2F;ceph&#x2F;ceph.keyring,&#x2F;etc&#x2F;ceph&#x2F;keyring,&#x2F;etc&#x2F;ceph&#x2F;keyring.bin,: (2) No such file or directory<br> 2021-09-21T19:49:49.387+0000 7f91ea781500 -1 AuthRegistry(0x5633b09431e0) no keyring found at &#x2F;etc&#x2F;ceph&#x2F;ceph.client.admin.keyring,&#x2F;etc&#x2F;ceph&#x2F;ceph.keyring,&#x2F;etc&#x2F;ceph&#x2F;keyring,&#x2F;etc&#x2F;ceph&#x2F;keyring.bin,, disabling cephx<br> 2021-09-21T19:49:49.388+0000 7f91ea781500 -1 auth: unable to find a keyring on &#x2F;etc&#x2F;ceph&#x2F;ceph.client.admin.keyring,&#x2F;etc&#x2F;ceph&#x2F;ceph.keyring,&#x2F;etc&#x2F;ceph&#x2F;keyring,&#x2F;etc&#x2F;ceph&#x2F;keyring.bin,: (2) No such file or directory<br> 2021-09-21T19:49:49.388+0000 7f91ea781500 -1 AuthRegistry(0x7fffd357c350) no keyring found at &#x2F;etc&#x2F;ceph&#x2F;ceph.client.admin.keyring,&#x2F;etc&#x2F;ceph&#x2F;ceph.keyring,&#x2F;etc&#x2F;ceph&#x2F;keyring,&#x2F;etc&#x2F;ceph&#x2F;keyring.bin,, disabling cephx<br> 2021-09-21T19:49:49.389+0000 7f91d9b68700 -1 monclient(hunting): handle_auth_bad_method server allowed_methods [2] but i only support [1]<br> 2021-09-21T19:49:49.389+0000 7f91da369700 -1 monclient(hunting): handle_auth_bad_method server allowed_methods [2] but i only support [1]<br> 2021-09-21T19:49:49.389+0000 7f91dab6a700 -1 monclient(hunting): handle_auth_bad_method server allowed_methods [2] but i only support [1]<br> 2021-09-21T19:49:49.389+0000 7f91ea781500 -1 monclient: authenticate NOTE: no keyring found; disabled cephx authentication<br> rbd: couldnot connect to the cluster!<br> In some cases useful info is found in syslog - try “dmesg | tail”.<br> rbd: map failed: (22) Invalid argument</p>
+<p> [ceph: root@host2 &#x2F;]# ls &#x2F;etc&#x2F;ceph<br> ceph.conf  rbdmap</p>
+</li>
+</ol>
+<p>Copy the &#x2F;etc&#x2F;ceph&#x2F;ceph.keyring from admin node host1 to host2</p>
+<pre><code>[ceph: root@host2 /]# ls /etc/ceph
+ceph.conf  ceph.keyring  rbdmap
+
+[ceph: root@host2 /]# rbd map datapool/rbdvol5
+[ceph: root@host2 /]# rbd device list
+id  pool      namespace  image    snap  device
+0   datapool             rbdvol5  -     /dev/rbd0
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.ceph.com/en/latest/releases/">https://docs.ceph.com/en/latest/releases/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.ceph.com/en/mimic/start/intro/">https://docs.ceph.com/en/mimic/start/intro/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.ceph.com/en/latest/cephadm/install/">https://docs.ceph.com/en/latest/cephadm/install/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.ceph.com/en/latest/cephadm/osd/#cephadm-deploy-osds">https://docs.ceph.com/en/latest/cephadm/osd/#cephadm-deploy-osds</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.ceph.com/en/latest/rados/operations/pools/">https://docs.ceph.com/en/latest/rados/operations/pools/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.ceph.com/en/latest/rados/configuration/pool-pg-config-ref/">https://docs.ceph.com/en/latest/rados/configuration/pool-pg-config-ref/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.ceph.com/en/latest/rbd/rados-rbd-cmds/">https://docs.ceph.com/en/latest/rbd/rados-rbd-cmds/</a></li>
+<li><a target="_blank" rel="noopener" href="https://sabaini.at/pages/ceph-cheatsheet.html">https://sabaini.at/pages/ceph-cheatsheet.html</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1583,99 +2117,6 @@ $ docker inspect 1cd20ecd897d | grep RootDir
 &quot;RootDir&quot;: &quot;/data/var_lib_docker/overlay/90021ce8266c3f717e2d30e258311e850b50e946b7f68d505f504b008378414c/root&quot;
 </code></pre>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/the-detective/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/the-detective/" class="post-title-link" itemprop="url">The Detective</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-15 07:05:00" itemprop="dateCreated datePublished" datetime="2021-05-15T07:05:00-07:00">2021-05-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Young Author Gold Award, 4th grade, 2021</p>
-<p>It was a fine summer morning and Zachory Taylor was enjoying the fresh air and sunshine. He was on summer vacation to Azogia, one of the richest countries which controlled most of the gold mines in the world. Azogia was located next to Zemonia, which controlled most of the silver mines. Azog, who was the ruler of Azogia, was a cousin of Zemo, the ruler of Zemonia. The two cousins had been competing against each other for a few decades on whose country was the most powerful. Azog was building golden walls to protect Azogopolis, the capital of Azogia, in case Zemo tried to launch a surprise attack on Azogia.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/the-detective/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 
