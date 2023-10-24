@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">252</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">96</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">254</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">252</span>
+          <span class="site-state-item-count">254</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">96</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,251 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-kubeconfig-to-configure-access-to-remote-kubernetes-cluster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/using-kubeconfig-to-configure-access-to-remote-kubernetes-cluster/" class="post-title-link" itemprop="url">Using kubeconfig to configure access to remote Kubernetes cluster</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-26 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-26T08:00:00-08:00">2022-12-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Install-kubectl-binary"><a href="#Install-kubectl-binary" class="headerlink" title="Install kubectl binary"></a>Install kubectl binary</h2><p>The Kubernetes command-line tool, <a target="_blank" rel="noopener" href="https://kubernetes.io/docs/tasks/tools/">kubectl</a>, allows you to run commands against Kubernetes clusters. You can use kubectl to deploy applications, inspect and manage cluster resources, and view logs.</p>
+<pre><code>[root@localhost ~]# curl -LO &quot;https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl&quot;
+[root@localhost ~]# sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+[root@localhost ~]# ls -la /usr/local/bin/kubectl
+[root@localhost ~]# kubectl version --output=yaml
+clientVersion:
+  buildDate: &quot;2022-09-21T14:33:49Z&quot;
+  compiler: gc
+  gitCommit: 5835544ca568b757a8ecae5c153f317e5736700e
+  gitTreeState: clean
+  gitVersion: v1.25.2
+  goVersion: go1.19.1
+  major: &quot;1&quot;
+  minor: &quot;25&quot;
+  platform: linux/amd64
+kustomizeVersion: v4.5.7
+
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+</code></pre>
+<h2 id="Use-kubeconfig-file-to-access-remote-Kubernetes-cluster"><a href="#Use-kubeconfig-file-to-access-remote-Kubernetes-cluster" class="headerlink" title="Use kubeconfig file to access remote Kubernetes cluster"></a>Use kubeconfig file to access remote Kubernetes cluster</h2><p>A <em>kubeconfig</em> is a YAML file with all the Kubernetes cluster details, certificate, and secret token to authenticate the cluster. You might get this config file directly from the cluster administrator or from a cloud platform if you are using managed Kubernetes cluster. A <em>kubeconfig</em> file is a file to configure access to Kubernetes when to use with <em>kubectl</em> cli tool.</p>
+<p>When to deploy Kubernetes cluster, a <em>kubeconfig</em> is automatically generated. It’s saved in ~&#x2F;.kube&#x2F;config drectory.</p>
+<pre><code>[root@host1 ~]#  ls -la ~/.kube/config
+-rw------- 1 root root 5577 May  9 02:25 /root/.kube/config
+</code></pre>
+<p>You can access the Kubernetes cluster by providing the kubeconfig file remotely.</p>
+<pre><code>[root@localhost ~]# scp host1:/root/.kube/config ./kubeconfig-remote
+[root@localhost ~]# kubectl --kubeconfig=./kubeconfig-remote get nodes
+NAME            STATUS   ROLES    AGE    VERSION
+host0   Ready    &lt;none&gt;   135d   v1.19.2
+host1   Ready    &lt;none&gt;   135d   v1.19.2
+host2   Ready    &lt;none&gt;   135d   v1.19.2
+host3   Ready    master   135d   v1.19.2
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/lambda-architecture-in-big-data-system/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/lambda-architecture-in-big-data-system/" class="post-title-link" itemprop="url">Lambda architecture in big data system</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-25 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-25T08:00:00-08:00">2022-12-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="What-is-Lambda-Architecture"><a href="#What-is-Lambda-Architecture" class="headerlink" title="What is Lambda Architecture"></a>What is Lambda Architecture</h2><p>When working with very large data sets, it can take a long time to run the sort of queries that clients need. These queries can’t be performed in real time, and often require algorithms such as MapReduce that operate in parallel across the entire data set. The results are then stored separately from the raw data and used for querying.</p>
+<p>One drawback to this approach is that it introduces latency — if processing takes a few hours, a query may return results that are several hours old. Ideally, you would like to get some results in real time (perhaps with some loss of accuracy), and combine these results with the results from the batch analytics.</p>
+<p>The lambda architecture, first proposed by Nathan Marz, addresses this problem by creating two paths for data flow. All data coming into the system goes through these two paths:</p>
+<ul>
+<li>A batch layer (cold path) stores all of the incoming data in its raw form and performs batch processing on the data. The result of this processing is stored as a batch view.</li>
+<li>A speed layer (hot path) analyzes data in real time. This layer is designed for low latency, at the expense of accuracy.</li>
+</ul>
+<p>The batch layer feeds into a serving layer that indexes the batch view for efficient querying. The speed layer updates the serving layer with incremental updates based on the most recent data.</p>
+<p><img src="/images/lambda.png" alt="Image"></p>
+<p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/azure/architecture/data-guide/big-data/">Source</a></p>
+<p>Data that flows into the hot path is constrained by latency requirements imposed by the speed layer, so that it can be processed as quickly as possible. Often, this requires a tradeoff of some level of accuracy in favor of data that is ready as quickly as possible. For example, consider an IoT scenario where a large number of temperature sensors are sending telemetry data. The speed layer may be used to process a sliding time window of the incoming data.</p>
+<p>Data flowing into the cold path, on the other hand, is not subject to the same low latency requirements. This allows for high accuracy computation across large data sets, which can be very time intensive.</p>
+<p>Eventually, the hot and cold paths converge at the analytics client application. If the client needs to display timely, yet potentially less accurate data in real time, it will acquire its result from the hot path. Otherwise, it will select results from the cold path to display less timely but more accurate data. In other words, the hot path has data for a relatively small window of time, after which the results can be updated with more accurate data from the cold path.</p>
+<p>The raw data stored at the batch layer is immutable. Incoming data is always appended to the existing data, and the previous data is never overwritten. Any changes to the value of a particular datum are stored as a new timestamped event record. This allows for recomputation at any point in time across the history of the data collected. The ability to recompute the batch view from the original raw data is important, because it allows for new views to be created as the system evolves.</p>
+<h2 id="Batch-Layer"><a href="#Batch-Layer" class="headerlink" title="Batch Layer"></a>Batch Layer</h2><p>New data comes continuously, as a feed to the data system. It gets fed to the batch layer and the speed layer simultaneously. It looks at all the data at once and eventually corrects the data in the stream layer.  Here we can find lots of ETL and a traditional data warehouse. This layer is built using a predefined schedule, usually once or twice a day. The batch layer has two very important functions:</p>
+<ul>
+<li>To manage the master dataset</li>
+<li>To pre-compute the batch views.</li>
+</ul>
+<h2 id="Serving-Layer"><a href="#Serving-Layer" class="headerlink" title="Serving Layer"></a>Serving Layer</h2><p>The outputs from the batch layer in the form of batch views and those coming from the speed layer in the form of near real-time views get forwarded to the serving.  This layer indexes the batch views so that they can be queried in low-latency on an ad-hoc basis.</p>
+<h2 id="Speed-Layer-Stream-Layer"><a href="#Speed-Layer-Stream-Layer" class="headerlink" title="Speed Layer (Stream Layer)"></a>Speed Layer (Stream Layer)</h2><p>This layer handles the data that are not already delivered in the batch view due to the latency of the batch layer. In addition, it only deals with recent data in order to provide a complete view of the data to the user by creating real-time views.</p>
+<h2 id="Benefits-of-lambda-architectures"><a href="#Benefits-of-lambda-architectures" class="headerlink" title="Benefits of lambda architectures"></a>Benefits of lambda architectures</h2><p>Here are the main benefits of lambda architectures:</p>
+<ul>
+<li>No Server Management – you do not have to install, maintain, or administer any software.</li>
+<li>Flexible Scaling – your application can be either automatically scaled or scaled by the adjustment of its capacity</li>
+<li>Automated High Availability – refers to the fact that serverless applications have already built-in availability and faults tolerance. It represents a guarantee that all requests will get a response about whether they were successful or not.</li>
+<li>Business Agility – React in real-time to changing business&#x2F;market scenarios</li>
+</ul>
+<h2 id="Challenges-with-lambda-architectures"><a href="#Challenges-with-lambda-architectures" class="headerlink" title="Challenges with lambda architectures"></a>Challenges with lambda architectures</h2><ul>
+<li>Complexity – lambda architectures can be highly complex. Administrators must typically maintain two separate code bases for batch and streaming layers, which can make debugging difficult.</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li>&lt;BigData - Priciples and best practices of scalable real-time data systems&gt;</li>
+<li><a target="_blank" rel="noopener" href="https://databricks.com/glossary/lambda-architecture">https://databricks.com/glossary/lambda-architecture</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/azure/architecture/data-guide/big-data/">https://docs.microsoft.com/en-us/azure/architecture/data-guide/big-data/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2457,414 +2702,6 @@ postgres://root@host1:26257?sslmode=disable postgres://root@host2:26257?sslmode=
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/docs/v22.1/start-a-local-cluster-in-docker-linux">https://www.cockroachlabs.com/docs/v22.1/start-a-local-cluster-in-docker-linux</a></li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/setup-cockroachdb-cluster-with-haproxy-load-balancing/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/setup-cockroachdb-cluster-with-haproxy-load-balancing/" class="post-title-link" itemprop="url">Setup CockroachDB cluster with HAProxy load balancing</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-12-01 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-01T08:00:00-08:00">2022-12-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Each CockroachDB node is an equally suitable SQL gateway to your cluster, but to ensure client performance and reliability, it’s important to use load balancing.</p>
-<ul>
-<li><p>Performance: Load balancers spread client traffic across nodes. This prevents any one node from being overwhelmed by requests and improves overall cluster performance (queries per second).</p>
-</li>
-<li><p>Reliability: Load balancers decouple client health from the health of a single CockroachDB node. In cases where a node fails, the load balancer redirects client traffic to available nodes.</p>
-</li>
-</ul>
-<p>HAProxy is one of the most popular open-source TCP load balancers, and CockroachDB includes a built-in command for generating a configuration file that is preset to work with your running cluster.</p>
-<p>With a single load balancer, client connections are resilient to node failure, but the load balancer itself is a point of failure. It’s therefore best to make load balancing resilient as well by using multiple load balancing instances, with a mechanism like floating IPs or DNS to select load balancers for clients.</p>
-<p>For performance and availability reasons, it is not recommended to run the HAproxy on the same node as the cockroachDB.</p>
-<p>This post shows a detailed steps how to deploy a HAProxy load balancer for CockroachDB cluster.</p>
-<h2 id="Deploy-the-CockroachDB-cluster"><a href="#Deploy-the-CockroachDB-cluster" class="headerlink" title="Deploy the CockroachDB cluster"></a>Deploy the CockroachDB cluster</h2><pre><code>[root@host1 ~]# ps -ef | grep cockroach | grep -v grep
-root      4783     1 99 18:59 ?        2-17:35:59 cockroach start --log-dir=/var/log/cockroachdb_logs/1 --store=/mnt/cockroachdb_mnt1 --insecure --listen-addr=host1:26257 --http-addr=host1:8080 --join=host1:26257,host1:26258,host1:26259,host1:26260,host1:26261,host1:26262,host1:26263,host1:26264,host2:26257,host2:26258,host2:26259,host2:26260,host2:26261,host2:26262,host2:26263,host2:26264,host3:26257,host3:26258,host3:26259,host3:26260,host3:26261,host3:26262,host3:26263,host3:26264 --cache=2GiB --max-sql-memory=2GiB
-root      4876     1 95 18:59 ?        03:33:42 cockroach start --log-dir=/var/log/cockroachdb_logs/2 --store=/mnt/cockroachdb_mnt2 --insecure --listen-addr=host1:26258 --http-addr=host1:8081 --join=host1:26257,host1:26258,host1:26259,host1:26260,host1:26261,host1:26262,host1:26263,host1:26264,host2:26257,host2:26258,host2:26259,host2:26260,host2:26261,host2:26262,host2:26263,host2:26264,host3:26257,host3:26258,host3:26259,host3:26260,host3:26261,host3:26262,host3:26263,host3:26264 --cache=2GiB --max-sql-memory=2GiB
-root      4932     1 77 18:59 ?        02:53:13 cockroach start --log-dir=/var/log/cockroachdb_logs/3 --store=/mnt/cockroachdb_mnt3 --insecure --listen-addr=host1:26259 --http-addr=host1:8082 --join=host1:26257,host1:26258,host1:26259,host1:26260,host1:26261,host1:26262,host1:26263,host1:26264,host2:26257,host2:26258,host2:26259,host2:26260,host2:26261,host2:26262,host2:26263,host2:26264,host3:26257,host3:26258,host3:26259,host3:26260,host3:26261,host3:26262,host3:26263,host3:26264 --cache=2GiB --max-sql-memory=2GiB
-root      5049     1 99 18:59 ?        06:02:17 cockroach start --log-dir=/var/log/cockroachdb_logs/4 --store=/mnt/cockroachdb_mnt4 --insecure --listen-addr=host1:26260 --http-addr=host1:8083 --join=host1:26257,host1:26258,host1:26259,host1:26260,host1:26261,host1:26262,host1:26263,host1:26264,host2:26257,host2:26258,host2:26259,host2:26260,host2:26261,host2:26262,host2:26263,host2:26264,host3:26257,host3:26258,host3:26259,host3:26260,host3:26261,host3:26262,host3:26263,host3:26264 --cache=2GiB --max-sql-memory=2GiB
-root      5131     1 94 18:59 ?        03:31:51 cockroach start --log-dir=/var/log/cockroachdb_logs/5 --store=/mnt/cockroachdb_mnt5 --insecure --listen-addr=host1:26261 --http-addr=host1:8084 --join=host1:26257,host1:26258,host1:26259,host1:26260,host1:26261,host1:26262,host1:26263,host1:26264,host2:26257,host2:26258,host2:26259,host2:26260,host2:26261,host2:26262,host2:26263,host2:26264,host3:26257,host3:26258,host3:26259,host3:26260,host3:26261,host3:26262,host3:26263,host3:26264 --cache=2GiB --max-sql-memory=2GiB
-root      5220     1 72 18:59 ?        02:42:39 cockroach start --log-dir=/var/log/cockroachdb_logs/6 --store=/mnt/cockroachdb_mnt6 --insecure --listen-addr=host1:26262 --http-addr=host1:8085 --join=host1:26257,host1:26258,host1:26259,host1:26260,host1:26261,host1:26262,host1:26263,host1:26264,host2:26257,host2:26258,host2:26259,host2:26260,host2:26261,host2:26262,host2:26263,host2:26264,host3:26257,host3:26258,host3:26259,host3:26260,host3:26261,host3:26262,host3:26263,host3:26264 --cache=2GiB --max-sql-memory=2GiB
-root      5309     1 94 18:59 ?        03:30:22 cockroach start --log-dir=/var/log/cockroachdb_logs/7 --store=/mnt/cockroachdb_mnt7 --insecure --listen-addr=host1:26263 --http-addr=host1:8086 --join=host1:26257,host1:26258,host1:26259,host1:26260,host1:26261,host1:26262,host1:26263,host1:26264,host2:26257,host2:26258,host2:26259,host2:26260,host2:26261,host2:26262,host2:26263,host2:26264,host3:26257,host3:26258,host3:26259,host3:26260,host3:26261,host3:26262,host3:26263,host3:26264 --cache=2GiB --max-sql-memory=2GiB
-root      5358     1 58 18:59 ?        02:11:20 cockroach start --log-dir=/var/log/cockroachdb_logs/8 --store=/mnt/cockroachdb_mnt8 --insecure --listen-addr=host1:26264 --http-addr=host1:8087 --join=host1:26257,host1:26258,host1:26259,host1:26260,host1:26261,host1:26262,host1:26263,host1:26264,host2:26257,host2:26258,host2:26259,host2:26260,host2:26261,host2:26262,host2:26263,host2:26264,host3:26257,host3:26258,host3:26259,host3:26260,host3:26261,host3:26262,host3:26263,host3:26264 --cache=2GiB --max-sql-memory=2GiB
-
-[root@host1 ~]# cockroach node status --insecure --host=host1:26257
-  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live
------+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+----------
-   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-17 18:59:37.989384 | 2022-09-17 22:43:39.507057 |          | true         | true
-   2 | host1:26258 | host1:26258 | v22.1.6 | 2022-09-17 18:59:39.128398 | 2022-09-17 22:43:40.640431 |          | true         | true
-   3 | host1:26259 | host1:26259 | v22.1.6 | 2022-09-17 18:59:39.374127 | 2022-09-17 22:43:40.885678 |          | true         | true
-   4 | host1:26260 | host1:26260 | v22.1.6 | 2022-09-17 18:59:39.726667 | 2022-09-17 22:43:36.73931  |          | true         | true
-   5 | host1:26261 | host1:26261 | v22.1.6 | 2022-09-17 18:59:39.971549 | 2022-09-17 22:43:36.983538 |          | true         | true
-   6 | host1:26262 | host1:26262 | v22.1.6 | 2022-09-17 18:59:40.225358 | 2022-09-17 22:43:37.235768 |          | true         | true
-   7 | host1:26263 | host1:26263 | v22.1.6 | 2022-09-17 18:59:40.447688 | 2022-09-17 22:43:37.459962 |          | true         | true
-   8 | host1:26264 | host1:26264 | v22.1.6 | 2022-09-17 18:59:40.677217 | 2022-09-17 22:43:37.690883 |          | true         | true
-   9 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-17 18:59:41.604348 | 2022-09-17 22:43:38.613662 |          | true         | true
-  10 | host2:26258 | host2:26258 | v22.1.6 | 2022-09-17 18:59:41.904071 | 2022-09-17 22:43:38.912773 |          | true         | true
-  11 | host2:26259 | host2:26259 | v22.1.6 | 2022-09-17 18:59:42.194446 | 2022-09-17 22:43:39.202688 |          | true         | true
-  12 | host2:26260 | host2:26260 | v22.1.6 | 2022-09-17 18:59:42.512201 | 2022-09-17 22:43:39.519727 |          | true         | true
-  13 | host2:26261 | host2:26261 | v22.1.6 | 2022-09-17 18:59:42.850974 | 2022-09-17 22:43:39.860063 |          | true         | true
-  14 | host2:26262 | host2:26262 | v22.1.6 | 2022-09-17 18:59:43.177162 | 2022-09-17 22:43:40.191082 |          | true         | true
-  15 | host2:26263 | host2:26263 | v22.1.6 | 2022-09-17 18:59:43.543973 | 2022-09-17 22:43:40.553146 |          | true         | true
-  16 | host2:26264 | host2:26264 | v22.1.6 | 2022-09-17 18:59:43.858993 | 2022-09-17 22:43:40.86705  |          | true         | true
-  17 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-17 18:59:44.807641 | 2022-09-17 22:43:37.315927 |          | true         | true
-  18 | host3:26258 | host3:26258 | v22.1.6 | 2022-09-17 18:59:45.119533 | 2022-09-17 22:43:37.628497 |          | true         | true
-  19 | host3:26259 | host3:26259 | v22.1.6 | 2022-09-17 18:59:45.508535 | 2022-09-17 22:43:38.015714 |          | true         | true
-  20 | host3:26260 | host3:26260 | v22.1.6 | 2022-09-17 18:59:45.901631 | 2022-09-17 22:43:38.409443 |          | true         | true
-  21 | host3:26261 | host3:26261 | v22.1.6 | 2022-09-17 18:59:46.191724 | 2022-09-17 22:43:38.700531 |          | true         | true
-  22 | host3:26262 | host3:26262 | v22.1.6 | 2022-09-17 18:59:46.540504 | 2022-09-17 22:43:39.048942 |          | true         | true
-  23 | host3:26263 | host3:26263 | v22.1.6 | 2022-09-17 18:59:46.944353 | 2022-09-17 22:43:39.453175 |          | true         | true
-  24 | host3:26264 | host3:26264 | v22.1.6 | 2022-09-17 18:59:47.274458 | 2022-09-17 22:43:39.782378 |          | true         | true
-(24 rows)
-</code></pre>
-<h2 id="Generate-HAProxy-configuration-file"><a href="#Generate-HAProxy-configuration-file" class="headerlink" title="Generate HAProxy configuration file"></a>Generate HAProxy configuration file</h2><p>Install HAProxy on one of the CockroachDB nodes:</p>
-<pre><code>[root@host1 ~]# yum install haproxy
-[root@host1 ~]# haproxy -v
-HA-Proxy version 1.5.18 2016/05/10
-Copyright 2000-2016 Willy Tarreau &lt;willy@haproxy.org&gt;
-</code></pre>
-<p>Generate the HAProxy configuration file:</p>
-<pre><code>[root@host1 ~]# cockroach gen haproxy --host=host1:26257 --insecure
-
-[root@host1 ~]# cat haproxy.cfg
-
-global
-  maxconn 4096
-
-defaults
-    mode                tcp
-
-    # Timeout values should be configured for your specific use.
-    # See: https://cbonte.github.io/haproxy-dconv/1.8/configuration.html#4-timeout%20connect
-
-    # With the timeout connect 5 secs,
-    # if the backend server is not responding, haproxy will make a total
-    # of 3 connection attempts waiting 5s each time before giving up on the server,
-    # for a total of 15 seconds.
-    retries             2
-    timeout connect     5s
-
-    # timeout client and server govern the maximum amount of time of TCP inactivity.
-    # The server node may idle on a TCP connection either because it takes time to
-    # execute a query before the first result set record is emitted, or in case of
-    # some trouble on the server. So these timeout settings should be larger than the
-    # time to execute the longest (most complex, under substantial concurrent workload)
-    # query, yet not too large so truly failed connections are lingering too long
-    # (resources associated with failed connections should be freed reasonably promptly).
-    timeout client      10m
-    timeout server      10m
-
-    # TCP keep-alive on client side. Server already enables them.
-    option              clitcpka
-
-listen psql
-    bind :26257
-    mode tcp
-    balance roundrobin
-    option httpchk GET /health?ready=1
-    server cockroach1 host1:26257 check port 8080
-    server cockroach2 host1:26258 check port 8081
-    server cockroach3 host1:26259 check port 8082
-    server cockroach4 host1:26260 check port 8083
-    server cockroach5 host1:26261 check port 8084
-    server cockroach6 host1:26262 check port 8085
-    server cockroach7 host1:26263 check port 8086
-    server cockroach8 host1:26264 check port 8087
-    server cockroach9 host2:26257 check port 8080
-    server cockroach10 host2:26258 check port 8081
-    server cockroach11 host2:26259 check port 8082
-    server cockroach12 host2:26260 check port 8083
-    server cockroach13 host2:26261 check port 8084
-    server cockroach14 host2:26262 check port 8085
-    server cockroach15 host2:26263 check port 8086
-    server cockroach16 host2:26264 check port 8087
-    server cockroach17 host3:26257 check port 8080
-    server cockroach18 host3:26258 check port 8081
-    server cockroach19 host3:26259 check port 8082
-    server cockroach20 host3:26260 check port 8083
-    server cockroach21 host3:26261 check port 8084
-    server cockroach22 host3:26262 check port 8085
-    server cockroach23 host3:26263 check port 8086
-    server cockroach24 host3:26264 check port 8087
-</code></pre>
-<h2 id="Start-HAProxy"><a href="#Start-HAProxy" class="headerlink" title="Start HAProxy"></a>Start HAProxy</h2><p>It’s not recommended to deploy HAProxy on the same node as CockroachDB for performance and availability reasons. Thus, we are going to start the HAProxy  on a dedicated node.</p>
-<p>Connect to the dedicated HAProxy node and install the proxy on it:</p>
-<pre><code>[root@host4 ~]# yum install haproxy
-</code></pre>
-<p>Start HAproxy with the generated configuration file:</p>
-<pre><code>[root@host4 ~]# scp host1:/root/haproxy.cfg ./
-[root@host4 ~]# haproxy -f haproxy.cfg
-</code></pre>
-<h2 id="Verify-the-HAProxy"><a href="#Verify-the-HAProxy" class="headerlink" title="Verify the HAProxy"></a>Verify the HAProxy</h2><p>The Load Balancer distributes the requests sent to the cluster equally between the different nodes.</p>
-<p>From primary node, we can check which node is being connected as below:</p>
-<pre><code>[root@host1 ~]# cockroach sql --host=host4 --insecure
-root@host4:26257/defaultdb&gt; SHOW node_id;
-  node_id
------------
-  1
-
-root@host4:26257/defaultdb&gt; exit
-[root@host1 ~]# cockroach sql --host=host4 --insecure
-root@host4:26257/defaultdb&gt; SHOW node_id;
-  node_id
------------
-  2
-
-[root@host1 ~]# cockroach sql --host=host4 --insecure
-root@host4:26257/defaultdb&gt; SHOW node_id;
-  node_id
------------
-  3
-</code></pre>
-<h2 id="Run-TPCC-through-the-HAProxy-load-balancer"><a href="#Run-TPCC-through-the-HAProxy-load-balancer" class="headerlink" title="Run TPCC through the HAProxy load balancer"></a>Run TPCC through the HAProxy load balancer</h2><pre><code>[root@host4 cockroachdb]# cockroach workload run tpcc --warehouses=5000 --split --scatter --ramp=30s --duration=5m &#39;postgresql://root@host4:26257/tpcc?sslmode=disable&#39;
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/docs/v22.1/deploy-cockroachdb-on-premises-insecure">https://www.cockroachlabs.com/docs/v22.1/deploy-cockroachdb-on-premises-insecure</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.scaleway.com/en/docs/tutorials/setup-cockroachdb-cluster/">Install a multi-node Cockroach database with HA Proxy</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.haproxy.org/">http://www.haproxy.org/</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/how-to-delete-partition-in-linux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/how-to-delete-partition-in-linux/" class="post-title-link" itemprop="url">How to delete partition in Linux</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-11-11 13:17:00" itemprop="dateCreated datePublished" datetime="2022-11-11T13:17:00-08:00">2022-11-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Identify-the-disk-which-contains-the-partitions"><a href="#Identify-the-disk-which-contains-the-partitions" class="headerlink" title="Identify the disk which contains the partitions"></a>Identify the disk which contains the partitions</h2><pre><code>$ lsblk
-NAME                         MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
-sr0                           11:0    1   9.5G  0 rom
-nvme0n1                      259:6    0   1.5T  0 disk
-├─nvme0n1p1                  259:7    0   200M  0 part /boot/efi
-├─nvme0n1p2                  259:8    0     1G  0 part /boot
-└─nvme0n1p3                  259:9    0   1.5T  0 part
-  ├─centos_init500--c11-root 253:0    0    50G  0 lvm  /
-  ├─centos_init500--c11-swap 253:1    0     4G  0 lvm  [SWAP]
-  └─centos_init500--c11-home 253:2    0   1.4T  0 lvm  /home
-nvme1n1                      259:10   0   1.5T  0 disk
-├─nvme1n1p1                  259:13   0   100M  0 part
-├─nvme1n1p5                  259:14   0     4G  0 part
-├─nvme1n1p6                  259:15   0     4G  0 part
-├─nvme1n1p7                  259:17   0 119.9G  0 part
-└─nvme1n1p8                  259:18   0   1.3T  0 part
-
-
-$ fdisk -l
-[..]
-Disk /dev/nvme1n1: 1600.3 GB, 1600321314816 bytes, 3125627568 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk label type: dos
-Disk identifier: 0x7f33a7d2
-
-        Device Boot      Start         End      Blocks   Id  System
-/dev/nvme1n1p1               1  3125627534  1562813767   ee  GPT
-[..]
-</code></pre>
-<h2 id="Delete-the-partitions"><a href="#Delete-the-partitions" class="headerlink" title="Delete the partitions"></a>Delete the partitions</h2><p>Select the disk that contains the partitions you intend to delete:</p>
-<pre><code>$ fdisk /dev/nvme1n1
-Welcome to fdisk (util-linux 2.23.2).
-
-Changes will remain in memory only, until you decide to write them.
-Be careful before using the write command.
-</code></pre>
-<p>Delete the partition:</p>
-<pre><code>Command (m for help): d
-Selected partition 1
-Partition 1 is deleted
-</code></pre>
-<p><strong>NOTE:</strong> The partition is automatically selected if there are no other partitions on disk. If the disk contains multiple partitions, select a partition that you want to delete.</p>
-<p>Verify the paritions:</p>
-<pre><code>Command (m for help): p
-
-Disk /dev/nvme1n1: 1600.3 GB, 1600321314816 bytes, 3125627568 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk label type: dos
-Disk identifier: 0x7f33a7d2
-
-        Device Boot      Start         End      Blocks   Id  System
-</code></pre>
-<p>Save the change and quit fdisk:</p>
-<pre><code>Command (m for help): w
-The partition table has been altered!
-
-Calling ioctl() to re-read partition table.
-Syncing disks.
-</code></pre>
-<p>Verify the partitions with lsblk:</p>
-<pre><code>$ lsblk
-NAME                         MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-sr0                           11:0    1  9.5G  0 rom
-nvme0n1                      259:6    0  1.5T  0 disk
-├─nvme0n1p1                  259:7    0  200M  0 part /boot/efi
-├─nvme0n1p2                  259:8    0    1G  0 part /boot
-└─nvme0n1p3                  259:9    0  1.5T  0 part
-  ├─centos_init500--c11-root 253:0    0   50G  0 lvm  /
-  ├─centos_init500--c11-swap 253:1    0    4G  0 lvm  [SWAP]
-  └─centos_init500--c11-home 253:2    0  1.4T  0 lvm  /home
-nvme1n1                      259:10   0  1.5T  0 disk
-</code></pre>
 
       
     </div>

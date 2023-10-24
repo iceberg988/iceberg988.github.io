@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">252</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">96</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">254</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">252</span>
+          <span class="site-state-item-count">254</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">96</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,207 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/libaio-init-failed-due-to-resource-temporarily-unavailable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/libaio-init-failed-due-to-resource-temporarily-unavailable/" class="post-title-link" itemprop="url">libaio init failed due to resource temporarily unavailable</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-12-04 08:00:00" itemprop="dateCreated datePublished" datetime="2021-12-04T08:00:00-08:00">2021-12-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Issue-Description"><a href="#Issue-Description" class="headerlink" title="Issue Description"></a>Issue Description</h2><pre><code>$ sudo fio --blocksize=64k --directory=/mnt/bench1 --filename=testfile --ioengine=libaio --readwrite=randread --size=10G --name=test --numjobs=512 --group_reporting --direct=1 --iodepth=128 --randrepeat=1 --disable_lat=0 --gtod_reduce=0
+
+test: (g=0): rw=randread, bs=(R) 64.0KiB-64.0KiB, (W) 64.0KiB-64.0KiB, (T) 64.0KiB-64.0KiB, ioengine=libaio, iodepth=128
+...
+fio-3.7
+Starting 512 processes
+fio: pid=38868, err=11/file:engines/libaio.c:354, func=io_queue_init, error=Resource temporarily unavailable
+...
+fio: check /proc/sys/fs/aio-max-nr
+fio: io engine libaio init failed. Perhaps try reducing io depth?
+</code></pre>
+<h2 id="Resolution"><a href="#Resolution" class="headerlink" title="Resolution"></a>Resolution</h2><p>The Linux kernel provides the Asynchronous non-blocking I&#x2F;O (AIO) feature that allows a process to initiate multiple I&#x2F;O operations simultaneously without having to wait for any of them to complete. This helps boost performance for applications that are able to overlap processing and I&#x2F;O.</p>
+<p>The performance can be tuned using the &#x2F;proc&#x2F;sys&#x2F;fs&#x2F;aio-max-nr virtual file in the proc file system. The aio-max-nr parameter determines the maximum number of allowable concurrent requests.</p>
+<p>To set the aio-max-nr value, add the following line to the &#x2F;etc&#x2F;sysctl.d&#x2F;99-sysctl.conf file:</p>
+<pre><code>$  cat  /proc/sys/fs/aio-max-nr
+65536
+$ echo &quot;fs.aio-max-nr = 1048576&quot; &gt;&gt; /etc/sysctl.d/99-sysctl.conf
+</code></pre>
+<p>To activate the new setting, run the following command:</p>
+<pre><code>$ sysctl -p /etc/sysctl.d/99-sysctl.conf
+fs.aio-max-nr = 1048576
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://sort.veritas.com/public/documents/HSO/2.0/linux/productguides/html/hfo_admin_ubuntu/ch04s03.htm">https://sort.veritas.com/public/documents/HSO/2.0/linux/productguides/html/hfo_admin_ubuntu&#x2F;ch04s03.htm</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/rationality-island/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/rationality-island/" class="post-title-link" itemprop="url">Rationality Island</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-11-13 08:00:00" itemprop="dateCreated datePublished" datetime="2021-11-13T08:00:00-08:00">2021-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Rationality Island is a city where the citizens choose to live a happy and successful life. The city earned its name based on the mission statement, “Using rationality to solve your problems is the best way to enhance your life.” The citizens demonstrate the values of rationality, self-reliance, and determination. The people solve their own problems by analyzing and finding the cause of it. Instead of feeling disheartened when they face challenges, the citizens rationally find ways to overcome the problems. They persevere through the hardships and help each other. The city of Rationality Island is progressing every day and people work hard to live happily.</p>
+<p>Because Rationality Island has a variety of landforms on it, there is a wide range of natural resources available.  The city is surrounded by water and there are exotic fish, which traders from all over the world come to buy. To the North of the main city lies the Crystal Mountains, where miners mine an abundant amount of gold, silver, and other precious metals. These metals are either crafted into jewelry or traded in the market. On the opposite side of the island, woodchoppers get a large amount of lumber, which is used for building ships for trading or used for houses and furniture. Trade is also an important factor in the economy. Goods are imported in the East Harbor and exported in the North Harbor. Hundreds of ships arrive every day and merchants trade spices and extraordinary furniture like Persian rugs for the supreme jewelry that craftsmen produce. The citizens  of Rationality Island are productive entrepreneurs who use their resources to enhance their life.</p>
+<p>To live in Rationality Island, the citizens must follow one guiding principle: Respect everyone’s natural rights. Everyone is equal regardless of race and skin color because they enjoy the same natural rights. Also the citizens must be honest and honor their contract. Those who don’t show integrity and steal other’s property will be sentenced to jail with a fair trial. Even if anyone is caught doing a dishonorable act, the judges must listen to the defendant’s argument before giving the judgement. The citizens of Rationality Island believe that rationality should be used to enhance your life. Therefore, everyone must go to school to gain valuable knowledge. The citizens are free to produce and trade in a  place where violence is unacceptable and contracts are reliable.</p>
+<p>The flag of Rationality Island is a symbol of the values that the citizens exhibit. The gold bar on the island represents the discoveries and opportunities that people make and receive. The purple mountains indicate the precious metals that are mined in the Crystal Mountains. The lush, green tree and bushes symbolize the large amount of lumber that is chopped. The sun symbolizes hope for citizens to improve and enhance their lives. The fish stands for the exotic salmon and tuna available. The blue ocean represents the peace and freedom that people enjoy. Finally, the light blue sky symbolizes the trade and success in the city.  Rationality Island is a prosperous city, for people demonstrate the values of rationality and independence.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2347,329 +2548,6 @@ tigera-operator    tigera-operator-698876cbb5-dghgv            1/1     Running  
 <li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/setup/production-environment/tools/">https://kubernetes.io/docs/setup/production-environment/tools/</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.projectcalico.org/about/about-calico">https://docs.projectcalico.org/about/about-calico</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.projectcalico.org/getting-started/kubernetes/quickstart">https://docs.projectcalico.org/getting-started/kubernetes/quickstart</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/vdbench-performance-test-on-filesystem/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/vdbench-performance-test-on-filesystem/" class="post-title-link" itemprop="url">Vdbench performance test on filesystem</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-08-24 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-24T07:00:00-07:00">2021-08-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="File-system-testing-Method-1"><a href="#File-system-testing-Method-1" class="headerlink" title="File system testing - Method 1"></a>File system testing - Method 1</h2><p><strong>Vdbench filesystem testing terminologies:</strong></p>
-<ul>
-<li>Anchor - A directory or a filesystme mount point. A file system structure will be created by specifying the structure information including directory depth, width, number of files and file size. Multiple anchor can be defined and used by filesystem workloads.</li>
-<li>Operation - File system operations. For example, directory create&#x2F;delete, file create&#x2F;delete, file read&#x2F;write, file open&#x2F;close, setattr and getattr.</li>
-</ul>
-<p><strong>Vdbench parameters for filesystem benchmark:</strong></p>
-<ul>
-<li>File system definition(FSD) - Describe the directory structure.</li>
-<li>File system workload definition(FWD) - Describe the workload parameters.</li>
-<li>Run definition(RD) - Describe how the workload will be run.</li>
-</ul>
-<p><strong>The following is an example of the vdbench job file.</strong></p>
-<pre><code>hd=default,vdbench=/home/tester/vdbench_test,shell=ssh,user=root
-hd=host1,jvms=1,system=192.168.1.50
-fsd=fsd1,anchor=/mnt/testdir1,depth=1,width=1,files=4,size=50g,openflag=o_direct
-fsd=fsd2,anchor=/mnt/testdir2,depth=1,width=1,files=4,size=50g,openflag=o_direct
-fwd=fwd1,fsd=fsd1,host=host1,fileio=random,operation=write,xfersize=4k,fileselect=random,threads=$th
-fwd=fwd2,fsd=fsd2,host=host1,fileio=random,operation=write,xfersize=4k,fileselect=random,threads=$th
-rd=rd1,fwd=fwd*,fwdrate=max,format=yes,elapsed=180,interval=30
-</code></pre>
-<p>Explanation:</p>
-<ol>
-<li><p>hd - it specifies which host to run the filesystem workload. The number of jvms is default to 1. It can be increased if the number of jvms can not handle very high iops with a fast system.</p>
-</li>
-<li><p>fsd - it specifies under which directory to create the filesystem structures. “depth” defines how many level of directories will be created. “width” defines how many sub-directories will be created under each parent directory. “files” defines how many files will be created under each directory. “size” defines the file size. “openflag” controls how the file will be opened.</p>
-</li>
-<li><p>fwd - it specifies what workload will be run on the target filesystems. In this example, it will run random write with 4k blocksize. The specified number of threads will be used to write corresponding number of files. The files will be randomly selected for the workload to run. Note that, the number of threads should less than or equal to the number of files. Note that, the writes to the file is single threaded unless “filiio&#x3D;(random,shared) is specified.</p>
-</li>
-<li><p>rd - it controls how the workload will be run. In this example, the workload will be run for 3 minutes. The “format” option is very useful. It will recreate the filesystem structure before the workload run. It will give us more repeatable results. “fwdrate” indicates the iorate will be unlimited in order to stress the system as much as possible.</p>
-</li>
-<li><p>In this example, we run the 4k random write workload concurrently on two filesystems. The number of threads to write each filesystem can be controlled by passing from shell variable during run time as below.</p>
-<p> .&#x2F;vdbench jobfile&#x2F;vdb.job th&#x3D;2</p>
-</li>
-</ol>
-<h2 id="File-system-testing-Method-2"><a href="#File-system-testing-Method-2" class="headerlink" title="File system testing - Method 2"></a>File system testing - Method 2</h2><p>The similar workload in the method one can also be run as below.</p>
-<pre><code>hd=default,vdbench=/home/tester/vdbench_test,shell=ssh,user=root
-hd=host1,system=192.168.1.50
-sd=sd1,host=host1,lun=/mnt/testdir1/testfile,hitarea=1m,openflag=o_direct,size=50g
-sd=sd2,host=host1,lun=/mnt/testdir2/testfile,hitarea=1m,openflag=o_direct,size=50g
-wd=wd1,sd=sd*,seekpct=100
-rd=rd1,wd=wd1,iorate=max,rdpct=0,xfersize=4K,elapsed=180,interval=30,th=$th
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.oracle.com/technetwork/server-storage/vdbench-1901683.pdf">https://www.oracle.com/technetwork/server-storage/vdbench-1901683.pdf</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/vdbench-performance-test-on-raw-device/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/vdbench-performance-test-on-raw-device/" class="post-title-link" itemprop="url">Vdbench performance test on raw device</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-08-23 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-23T07:00:00-07:00">2021-08-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Terminology"><a href="#Terminology" class="headerlink" title="Terminology"></a>Terminology</h2><ul>
-<li><p><strong>Master and Slave</strong>: Vdbench runs as two or more Java Virtual Machines (JVMs). The JVM that you start is the master. The master takes care of the parsing of all the parameters, it determines which workloads should run, and then will also do all the reporting. The actual workload is executed by one or more Slaves. A Slave can run on the host where the Master was started, or it can run on any remote host as defined in the parameter file.</p>
-</li>
-<li><p><strong>Raw I&#x2F;O workload</strong> parameters describe the storage configuration to be used and the workload to be generated. The parameters include <strong>General</strong>, <strong>Host Definition (HD)</strong>, <strong>Replay Group (RG)</strong>, <strong>Storage Definition (SD)</strong>, <strong>Workload Definition (WD)</strong> and <strong>Run Definition (RD)</strong> and must always be entered in the order in which they are listed here. A <strong>Run</strong> is the execution of one workload requested by a <strong>Run Definition</strong>. Multiple Runs can be requested within one Run Definition.</p>
-</li>
-<li><p><strong>File system Workload</strong> parameters describe the file system configuration to be used and the workload to be generated. The parameters include <strong>General</strong>, <strong>Host Definition (HD)</strong>, <strong>File System Definition (FSD)</strong>, <strong>File system Workload Definition (FWD)</strong> and <strong>Run Definition(RD)</strong> and must always be entered in the order in which they are listed here. A <strong>Run</strong> is the execution of one workload requested by a <strong>Run Definition</strong>. Multiple Runs can be requested within one Run Definition.</p>
-</li>
-</ul>
-<h2 id="Install-java"><a href="#Install-java" class="headerlink" title="Install java"></a>Install java</h2><p>java is required by vdbench on both master and slave hosts.</p>
-<pre><code>$ apt install default-jre
-
-$ java -version
-openjdk version &quot;11.0.11&quot; 2021-04-20
-OpenJDK Runtime Environment (build 11.0.11+9-Ubuntu-0ubuntu2.18.04)
-OpenJDK 64-Bit Server VM (build 11.0.11+9-Ubuntu-0ubuntu2.18.04, mixed mode, sharing)
-</code></pre>
-<h2 id="Install-vdbench"><a href="#Install-vdbench" class="headerlink" title="Install vdbench"></a>Install vdbench</h2><p>Vdbench is packaged as a zip file. Unzip the file and you’re ready to go.</p>
-<pre><code>$ ls -la vdbench50407.zip
--rw-r--r--. 1 root root 3073219 Aug 26 21:23 vdbench50407.zip
-
-$ unzip vdbench50407.zip
-
-$ file vdbench
-vdbench: Bourne-Again shell script, ASCII text executable
-</code></pre>
-<h2 id="Vdbench-job-file"><a href="#Vdbench-job-file" class="headerlink" title="Vdbench job file"></a>Vdbench job file</h2><p>The following is an example job file to run random read I&#x2F;O for a minute on the raw block device of the remote host.</p>
-<pre><code>$ cat jobfile/dryrun.job
-hd=default,vdbench=/home/tester/vdbench,shell=ssh,user=root
-hd=host1,system=&lt;slave-host-ip&gt;
-sd=sd1,host=host1,lun=/dev/sdd,hitarea=10m,openflag=o_direct,size=20000m
-wd=wd_random_rd1,sd=sd1,seekpct=100
-
-# 4KB random read
-rd=rd_4KB_randread,wd=wd_random_rd1,iorate=max,rdpct=100,xfersize=4K,elapsed=60,interval=10,th=1
-</code></pre>
-<h2 id="Benchmark-run-and-result"><a href="#Benchmark-run-and-result" class="headerlink" title="Benchmark run and result"></a>Benchmark run and result</h2><p>You can run the benchmark job with the following command.</p>
-<pre><code>$ ./vdbench -f jobfile/dryrun.job
-Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
-Vdbench distribution: vdbench50407 Tue June 05  9:49:29 MDT 2018
-For documentation, see &#39;vdbench.pdf&#39;.
-
-22:06:52.177 input argument scanned: &#39;-fjobfile/dryrun.job&#39;
-22:06:52.353 Starting slave: ssh &lt;slave-host-ip&gt; -l root /home/tester/vdbench/vdbench SlaveJvm -m &lt;master-host-ip&gt; -n &lt;slave-host-ip&gt;-10-210826-22.06.52.140 -l host1-0 -p 5570
-22:06:53.123 Clock synchronization warning: slave host1-0 is 41 seconds out of sync. This can lead to heartbeat issues.
-22:06:53.140 All slaves are now connected
-22:06:54.002 Starting RD=rd_4KB_randread; I/O rate: Uncontrolled MAX; elapsed=60; For loops: rdpct=100 xfersize=4k threads=1
-
-Aug 26, 2021    interval        i/o   MB/sec   bytes   read     resp     read    write     read    write     resp  queue  cpu%  cpu%
-                               rate  1024**2     i/o    pct     time     resp     resp      max      max   stddev  depth sys+u   sys
-22:07:04.055           1     5563.1    21.73    4096 100.00    0.157    0.157    0.000    10.89     0.00    0.342    0.9  16.5   7.6
-22:07:14.011           2     7022.2    27.43    4096 100.00    0.127    0.127    0.000     7.54     0.00    0.108    0.9  10.7   7.5
-22:07:24.009           3     7018.5    27.42    4096 100.00    0.128    0.128    0.000     9.67     0.00    0.087    0.9  10.9   8.2
-22:07:34.009           4     7026.8    27.45    4096 100.00    0.127    0.127    0.000     6.99     0.00    0.105    0.9  10.7   7.9
-22:07:44.008           5     7264.4    28.38    4096 100.00    0.123    0.123    0.000     7.75     0.00    0.082    0.9  10.7   7.7
-22:07:54.014           6     7311.4    28.56    4096 100.00    0.122    0.122    0.000     7.21     0.00    0.076    0.9  10.5   7.4
-22:07:54.024     avg_2-6     7128.7    27.85    4096 100.00    0.126    0.126    0.000     9.67     0.00    0.092    0.9  10.7   7.7
-22:07:54.445 Vdbench execution completed successfully. Output directory: /data/vdbench_test/output
-</code></pre>
-<p>The result is saved in output directory by default. You can also check the result summary by opening “summary.html” in a browser.</p>
-<pre><code>$ ls output/
-config.html    flatfile.html   host1-0.html         host1.html               logfile.html   parmscan.html       sd1.html   status.html   swat_mon_total.txt  totals.html errorlog.html  histogram.html  host1-0.stdout.html  host1.var_adm_msgs.html  parmfile.html  sd1.histogram.html  skew.html  summary.html  swat_mon.txt
-
-$ cat output/summary.html
-&lt;title&gt;Vdbench output/summary.html&lt;/title&gt;&lt;pre&gt;
-Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
-Vdbench summary report, created 22:06:52 Aug 26 2021 UTC (22:06:52 Aug 26 2021 UTC)
-
-Link to logfile:                 &lt;A HREF=&quot;logfile.html&quot;&gt;logfile&lt;/A&gt;
-Run totals:                      &lt;A HREF=&quot;totals.html&quot;&gt;totals&lt;/A&gt;
-Vdbench status:                  &lt;A HREF=&quot;status.html&quot;&gt;status&lt;/A&gt;
-Copy of input parameter files:   &lt;A HREF=&quot;parmfile.html&quot;&gt;parmfile&lt;/A&gt;
-Copy of parameter scan detail:   &lt;A HREF=&quot;parmscan.html&quot;&gt;parmscan&lt;/A&gt;
-Link to errorlog:                &lt;A HREF=&quot;errorlog.html&quot;&gt;errorlog&lt;/A&gt;
-Link to flatfile:                &lt;A HREF=&quot;flatfile.html&quot;&gt;flatfile&lt;/A&gt;
-
-Link to HOST reports:            &lt;A HREF=&quot;host1.html&quot;&gt;host1&lt;/A&gt;
-Link to response time histogram: &lt;A HREF=&quot;histogram.html&quot;&gt;histogram&lt;/A&gt;
-Link to workload skew report:    &lt;A HREF=&quot;skew.html&quot;&gt;skew&lt;/A&gt;
-Link to SD reports:              &lt;A HREF=&quot;sd1.html&quot;&gt;sd1&lt;/A&gt;
-
-Link to Run Definitions:         &lt;A HREF=&quot;#_463345942&quot;&gt;rd_4KB_randread For loops: rdpct=100 xfersize=4k threads=1&lt;/A&gt;
-
-Link to config output:           &lt;A HREF=&quot;config.html&quot;&gt;config&lt;/A&gt;
-
-&lt;a name=&quot;_463345942&quot;&gt;&lt;/a&gt;&lt;i&gt;&lt;b&gt;22:06:54.002 Starting RD=rd_4KB_randread; I/O rate: Uncontrolled MAX; elapsed=60; For loops: rdpct=100 xfersize=4k threads=1&lt;/b&gt;&lt;/i&gt;
-
-
-Aug 26, 2021    interval        i/o   MB/sec   bytes   read     resp     read    write     read    write     resp  queue  cpu%  cpu%
-                               rate  1024**2     i/o    pct     time     resp     resp      max      max   stddev  depth sys+u   sys
-22:07:04.052           1     5563.1    21.73    4096 100.00    0.157    0.157    0.000    10.89     0.00    0.342    0.9  16.5   7.6
-22:07:14.010           2     7022.2    27.43    4096 100.00    0.127    0.127    0.000     7.54     0.00    0.108    0.9  10.7   7.5
-22:07:24.008           3     7018.5    27.42    4096 100.00    0.128    0.128    0.000     9.67     0.00    0.087    0.9  10.9   8.2
-22:07:34.008           4     7026.8    27.45    4096 100.00    0.127    0.127    0.000     6.99     0.00    0.105    0.9  10.7   7.9
-22:07:44.008           5     7264.4    28.38    4096 100.00    0.123    0.123    0.000     7.75     0.00    0.082    0.9  10.7   7.7
-22:07:54.014           6     7311.4    28.56    4096 100.00    0.122    0.122    0.000     7.21     0.00    0.076    0.9  10.5   7.4
-22:07:54.023     avg_2-6     7128.7    27.85    4096 100.00    0.126    0.126    0.000     9.67     0.00    0.092    0.9  10.7   7.7
-22:07:54.445 Vdbench execution completed successfully
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://ubuntu.com/tutorials/install-jre#2-installing-openjdk-jre">https://ubuntu.com/tutorials/install-jre#2-installing-openjdk-jre</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.oracle.com/technetwork/server-storage/vdbench-1901683.pdf">https://www.oracle.com/technetwork/server-storage/vdbench-1901683.pdf</a></li>
 </ul>
 
       

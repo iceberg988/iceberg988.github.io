@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">252</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">96</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">254</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">252</span>
+          <span class="site-state-item-count">254</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">96</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,414 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/setup-cockroachdb-cluster-with-haproxy-load-balancing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/setup-cockroachdb-cluster-with-haproxy-load-balancing/" class="post-title-link" itemprop="url">Setup CockroachDB cluster with HAProxy load balancing</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-01 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-01T08:00:00-08:00">2022-12-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Each CockroachDB node is an equally suitable SQL gateway to your cluster, but to ensure client performance and reliability, it’s important to use load balancing.</p>
+<ul>
+<li><p>Performance: Load balancers spread client traffic across nodes. This prevents any one node from being overwhelmed by requests and improves overall cluster performance (queries per second).</p>
+</li>
+<li><p>Reliability: Load balancers decouple client health from the health of a single CockroachDB node. In cases where a node fails, the load balancer redirects client traffic to available nodes.</p>
+</li>
+</ul>
+<p>HAProxy is one of the most popular open-source TCP load balancers, and CockroachDB includes a built-in command for generating a configuration file that is preset to work with your running cluster.</p>
+<p>With a single load balancer, client connections are resilient to node failure, but the load balancer itself is a point of failure. It’s therefore best to make load balancing resilient as well by using multiple load balancing instances, with a mechanism like floating IPs or DNS to select load balancers for clients.</p>
+<p>For performance and availability reasons, it is not recommended to run the HAproxy on the same node as the cockroachDB.</p>
+<p>This post shows a detailed steps how to deploy a HAProxy load balancer for CockroachDB cluster.</p>
+<h2 id="Deploy-the-CockroachDB-cluster"><a href="#Deploy-the-CockroachDB-cluster" class="headerlink" title="Deploy the CockroachDB cluster"></a>Deploy the CockroachDB cluster</h2><pre><code>[root@host1 ~]# ps -ef | grep cockroach | grep -v grep
+root      4783     1 99 18:59 ?        2-17:35:59 cockroach start --log-dir=/var/log/cockroachdb_logs/1 --store=/mnt/cockroachdb_mnt1 --insecure --listen-addr=host1:26257 --http-addr=host1:8080 --join=host1:26257,host1:26258,host1:26259,host1:26260,host1:26261,host1:26262,host1:26263,host1:26264,host2:26257,host2:26258,host2:26259,host2:26260,host2:26261,host2:26262,host2:26263,host2:26264,host3:26257,host3:26258,host3:26259,host3:26260,host3:26261,host3:26262,host3:26263,host3:26264 --cache=2GiB --max-sql-memory=2GiB
+root      4876     1 95 18:59 ?        03:33:42 cockroach start --log-dir=/var/log/cockroachdb_logs/2 --store=/mnt/cockroachdb_mnt2 --insecure --listen-addr=host1:26258 --http-addr=host1:8081 --join=host1:26257,host1:26258,host1:26259,host1:26260,host1:26261,host1:26262,host1:26263,host1:26264,host2:26257,host2:26258,host2:26259,host2:26260,host2:26261,host2:26262,host2:26263,host2:26264,host3:26257,host3:26258,host3:26259,host3:26260,host3:26261,host3:26262,host3:26263,host3:26264 --cache=2GiB --max-sql-memory=2GiB
+root      4932     1 77 18:59 ?        02:53:13 cockroach start --log-dir=/var/log/cockroachdb_logs/3 --store=/mnt/cockroachdb_mnt3 --insecure --listen-addr=host1:26259 --http-addr=host1:8082 --join=host1:26257,host1:26258,host1:26259,host1:26260,host1:26261,host1:26262,host1:26263,host1:26264,host2:26257,host2:26258,host2:26259,host2:26260,host2:26261,host2:26262,host2:26263,host2:26264,host3:26257,host3:26258,host3:26259,host3:26260,host3:26261,host3:26262,host3:26263,host3:26264 --cache=2GiB --max-sql-memory=2GiB
+root      5049     1 99 18:59 ?        06:02:17 cockroach start --log-dir=/var/log/cockroachdb_logs/4 --store=/mnt/cockroachdb_mnt4 --insecure --listen-addr=host1:26260 --http-addr=host1:8083 --join=host1:26257,host1:26258,host1:26259,host1:26260,host1:26261,host1:26262,host1:26263,host1:26264,host2:26257,host2:26258,host2:26259,host2:26260,host2:26261,host2:26262,host2:26263,host2:26264,host3:26257,host3:26258,host3:26259,host3:26260,host3:26261,host3:26262,host3:26263,host3:26264 --cache=2GiB --max-sql-memory=2GiB
+root      5131     1 94 18:59 ?        03:31:51 cockroach start --log-dir=/var/log/cockroachdb_logs/5 --store=/mnt/cockroachdb_mnt5 --insecure --listen-addr=host1:26261 --http-addr=host1:8084 --join=host1:26257,host1:26258,host1:26259,host1:26260,host1:26261,host1:26262,host1:26263,host1:26264,host2:26257,host2:26258,host2:26259,host2:26260,host2:26261,host2:26262,host2:26263,host2:26264,host3:26257,host3:26258,host3:26259,host3:26260,host3:26261,host3:26262,host3:26263,host3:26264 --cache=2GiB --max-sql-memory=2GiB
+root      5220     1 72 18:59 ?        02:42:39 cockroach start --log-dir=/var/log/cockroachdb_logs/6 --store=/mnt/cockroachdb_mnt6 --insecure --listen-addr=host1:26262 --http-addr=host1:8085 --join=host1:26257,host1:26258,host1:26259,host1:26260,host1:26261,host1:26262,host1:26263,host1:26264,host2:26257,host2:26258,host2:26259,host2:26260,host2:26261,host2:26262,host2:26263,host2:26264,host3:26257,host3:26258,host3:26259,host3:26260,host3:26261,host3:26262,host3:26263,host3:26264 --cache=2GiB --max-sql-memory=2GiB
+root      5309     1 94 18:59 ?        03:30:22 cockroach start --log-dir=/var/log/cockroachdb_logs/7 --store=/mnt/cockroachdb_mnt7 --insecure --listen-addr=host1:26263 --http-addr=host1:8086 --join=host1:26257,host1:26258,host1:26259,host1:26260,host1:26261,host1:26262,host1:26263,host1:26264,host2:26257,host2:26258,host2:26259,host2:26260,host2:26261,host2:26262,host2:26263,host2:26264,host3:26257,host3:26258,host3:26259,host3:26260,host3:26261,host3:26262,host3:26263,host3:26264 --cache=2GiB --max-sql-memory=2GiB
+root      5358     1 58 18:59 ?        02:11:20 cockroach start --log-dir=/var/log/cockroachdb_logs/8 --store=/mnt/cockroachdb_mnt8 --insecure --listen-addr=host1:26264 --http-addr=host1:8087 --join=host1:26257,host1:26258,host1:26259,host1:26260,host1:26261,host1:26262,host1:26263,host1:26264,host2:26257,host2:26258,host2:26259,host2:26260,host2:26261,host2:26262,host2:26263,host2:26264,host3:26257,host3:26258,host3:26259,host3:26260,host3:26261,host3:26262,host3:26263,host3:26264 --cache=2GiB --max-sql-memory=2GiB
+
+[root@host1 ~]# cockroach node status --insecure --host=host1:26257
+  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live
+-----+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+----------
+   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-17 18:59:37.989384 | 2022-09-17 22:43:39.507057 |          | true         | true
+   2 | host1:26258 | host1:26258 | v22.1.6 | 2022-09-17 18:59:39.128398 | 2022-09-17 22:43:40.640431 |          | true         | true
+   3 | host1:26259 | host1:26259 | v22.1.6 | 2022-09-17 18:59:39.374127 | 2022-09-17 22:43:40.885678 |          | true         | true
+   4 | host1:26260 | host1:26260 | v22.1.6 | 2022-09-17 18:59:39.726667 | 2022-09-17 22:43:36.73931  |          | true         | true
+   5 | host1:26261 | host1:26261 | v22.1.6 | 2022-09-17 18:59:39.971549 | 2022-09-17 22:43:36.983538 |          | true         | true
+   6 | host1:26262 | host1:26262 | v22.1.6 | 2022-09-17 18:59:40.225358 | 2022-09-17 22:43:37.235768 |          | true         | true
+   7 | host1:26263 | host1:26263 | v22.1.6 | 2022-09-17 18:59:40.447688 | 2022-09-17 22:43:37.459962 |          | true         | true
+   8 | host1:26264 | host1:26264 | v22.1.6 | 2022-09-17 18:59:40.677217 | 2022-09-17 22:43:37.690883 |          | true         | true
+   9 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-17 18:59:41.604348 | 2022-09-17 22:43:38.613662 |          | true         | true
+  10 | host2:26258 | host2:26258 | v22.1.6 | 2022-09-17 18:59:41.904071 | 2022-09-17 22:43:38.912773 |          | true         | true
+  11 | host2:26259 | host2:26259 | v22.1.6 | 2022-09-17 18:59:42.194446 | 2022-09-17 22:43:39.202688 |          | true         | true
+  12 | host2:26260 | host2:26260 | v22.1.6 | 2022-09-17 18:59:42.512201 | 2022-09-17 22:43:39.519727 |          | true         | true
+  13 | host2:26261 | host2:26261 | v22.1.6 | 2022-09-17 18:59:42.850974 | 2022-09-17 22:43:39.860063 |          | true         | true
+  14 | host2:26262 | host2:26262 | v22.1.6 | 2022-09-17 18:59:43.177162 | 2022-09-17 22:43:40.191082 |          | true         | true
+  15 | host2:26263 | host2:26263 | v22.1.6 | 2022-09-17 18:59:43.543973 | 2022-09-17 22:43:40.553146 |          | true         | true
+  16 | host2:26264 | host2:26264 | v22.1.6 | 2022-09-17 18:59:43.858993 | 2022-09-17 22:43:40.86705  |          | true         | true
+  17 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-17 18:59:44.807641 | 2022-09-17 22:43:37.315927 |          | true         | true
+  18 | host3:26258 | host3:26258 | v22.1.6 | 2022-09-17 18:59:45.119533 | 2022-09-17 22:43:37.628497 |          | true         | true
+  19 | host3:26259 | host3:26259 | v22.1.6 | 2022-09-17 18:59:45.508535 | 2022-09-17 22:43:38.015714 |          | true         | true
+  20 | host3:26260 | host3:26260 | v22.1.6 | 2022-09-17 18:59:45.901631 | 2022-09-17 22:43:38.409443 |          | true         | true
+  21 | host3:26261 | host3:26261 | v22.1.6 | 2022-09-17 18:59:46.191724 | 2022-09-17 22:43:38.700531 |          | true         | true
+  22 | host3:26262 | host3:26262 | v22.1.6 | 2022-09-17 18:59:46.540504 | 2022-09-17 22:43:39.048942 |          | true         | true
+  23 | host3:26263 | host3:26263 | v22.1.6 | 2022-09-17 18:59:46.944353 | 2022-09-17 22:43:39.453175 |          | true         | true
+  24 | host3:26264 | host3:26264 | v22.1.6 | 2022-09-17 18:59:47.274458 | 2022-09-17 22:43:39.782378 |          | true         | true
+(24 rows)
+</code></pre>
+<h2 id="Generate-HAProxy-configuration-file"><a href="#Generate-HAProxy-configuration-file" class="headerlink" title="Generate HAProxy configuration file"></a>Generate HAProxy configuration file</h2><p>Install HAProxy on one of the CockroachDB nodes:</p>
+<pre><code>[root@host1 ~]# yum install haproxy
+[root@host1 ~]# haproxy -v
+HA-Proxy version 1.5.18 2016/05/10
+Copyright 2000-2016 Willy Tarreau &lt;willy@haproxy.org&gt;
+</code></pre>
+<p>Generate the HAProxy configuration file:</p>
+<pre><code>[root@host1 ~]# cockroach gen haproxy --host=host1:26257 --insecure
+
+[root@host1 ~]# cat haproxy.cfg
+
+global
+  maxconn 4096
+
+defaults
+    mode                tcp
+
+    # Timeout values should be configured for your specific use.
+    # See: https://cbonte.github.io/haproxy-dconv/1.8/configuration.html#4-timeout%20connect
+
+    # With the timeout connect 5 secs,
+    # if the backend server is not responding, haproxy will make a total
+    # of 3 connection attempts waiting 5s each time before giving up on the server,
+    # for a total of 15 seconds.
+    retries             2
+    timeout connect     5s
+
+    # timeout client and server govern the maximum amount of time of TCP inactivity.
+    # The server node may idle on a TCP connection either because it takes time to
+    # execute a query before the first result set record is emitted, or in case of
+    # some trouble on the server. So these timeout settings should be larger than the
+    # time to execute the longest (most complex, under substantial concurrent workload)
+    # query, yet not too large so truly failed connections are lingering too long
+    # (resources associated with failed connections should be freed reasonably promptly).
+    timeout client      10m
+    timeout server      10m
+
+    # TCP keep-alive on client side. Server already enables them.
+    option              clitcpka
+
+listen psql
+    bind :26257
+    mode tcp
+    balance roundrobin
+    option httpchk GET /health?ready=1
+    server cockroach1 host1:26257 check port 8080
+    server cockroach2 host1:26258 check port 8081
+    server cockroach3 host1:26259 check port 8082
+    server cockroach4 host1:26260 check port 8083
+    server cockroach5 host1:26261 check port 8084
+    server cockroach6 host1:26262 check port 8085
+    server cockroach7 host1:26263 check port 8086
+    server cockroach8 host1:26264 check port 8087
+    server cockroach9 host2:26257 check port 8080
+    server cockroach10 host2:26258 check port 8081
+    server cockroach11 host2:26259 check port 8082
+    server cockroach12 host2:26260 check port 8083
+    server cockroach13 host2:26261 check port 8084
+    server cockroach14 host2:26262 check port 8085
+    server cockroach15 host2:26263 check port 8086
+    server cockroach16 host2:26264 check port 8087
+    server cockroach17 host3:26257 check port 8080
+    server cockroach18 host3:26258 check port 8081
+    server cockroach19 host3:26259 check port 8082
+    server cockroach20 host3:26260 check port 8083
+    server cockroach21 host3:26261 check port 8084
+    server cockroach22 host3:26262 check port 8085
+    server cockroach23 host3:26263 check port 8086
+    server cockroach24 host3:26264 check port 8087
+</code></pre>
+<h2 id="Start-HAProxy"><a href="#Start-HAProxy" class="headerlink" title="Start HAProxy"></a>Start HAProxy</h2><p>It’s not recommended to deploy HAProxy on the same node as CockroachDB for performance and availability reasons. Thus, we are going to start the HAProxy  on a dedicated node.</p>
+<p>Connect to the dedicated HAProxy node and install the proxy on it:</p>
+<pre><code>[root@host4 ~]# yum install haproxy
+</code></pre>
+<p>Start HAproxy with the generated configuration file:</p>
+<pre><code>[root@host4 ~]# scp host1:/root/haproxy.cfg ./
+[root@host4 ~]# haproxy -f haproxy.cfg
+</code></pre>
+<h2 id="Verify-the-HAProxy"><a href="#Verify-the-HAProxy" class="headerlink" title="Verify the HAProxy"></a>Verify the HAProxy</h2><p>The Load Balancer distributes the requests sent to the cluster equally between the different nodes.</p>
+<p>From primary node, we can check which node is being connected as below:</p>
+<pre><code>[root@host1 ~]# cockroach sql --host=host4 --insecure
+root@host4:26257/defaultdb&gt; SHOW node_id;
+  node_id
+-----------
+  1
+
+root@host4:26257/defaultdb&gt; exit
+[root@host1 ~]# cockroach sql --host=host4 --insecure
+root@host4:26257/defaultdb&gt; SHOW node_id;
+  node_id
+-----------
+  2
+
+[root@host1 ~]# cockroach sql --host=host4 --insecure
+root@host4:26257/defaultdb&gt; SHOW node_id;
+  node_id
+-----------
+  3
+</code></pre>
+<h2 id="Run-TPCC-through-the-HAProxy-load-balancer"><a href="#Run-TPCC-through-the-HAProxy-load-balancer" class="headerlink" title="Run TPCC through the HAProxy load balancer"></a>Run TPCC through the HAProxy load balancer</h2><pre><code>[root@host4 cockroachdb]# cockroach workload run tpcc --warehouses=5000 --split --scatter --ramp=30s --duration=5m &#39;postgresql://root@host4:26257/tpcc?sslmode=disable&#39;
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/docs/v22.1/deploy-cockroachdb-on-premises-insecure">https://www.cockroachlabs.com/docs/v22.1/deploy-cockroachdb-on-premises-insecure</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.scaleway.com/en/docs/tutorials/setup-cockroachdb-cluster/">Install a multi-node Cockroach database with HA Proxy</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.haproxy.org/">http://www.haproxy.org/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/how-to-delete-partition-in-linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/how-to-delete-partition-in-linux/" class="post-title-link" itemprop="url">How to delete partition in Linux</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-11-11 13:17:00" itemprop="dateCreated datePublished" datetime="2022-11-11T13:17:00-08:00">2022-11-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Identify-the-disk-which-contains-the-partitions"><a href="#Identify-the-disk-which-contains-the-partitions" class="headerlink" title="Identify the disk which contains the partitions"></a>Identify the disk which contains the partitions</h2><pre><code>$ lsblk
+NAME                         MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sr0                           11:0    1   9.5G  0 rom
+nvme0n1                      259:6    0   1.5T  0 disk
+├─nvme0n1p1                  259:7    0   200M  0 part /boot/efi
+├─nvme0n1p2                  259:8    0     1G  0 part /boot
+└─nvme0n1p3                  259:9    0   1.5T  0 part
+  ├─centos_init500--c11-root 253:0    0    50G  0 lvm  /
+  ├─centos_init500--c11-swap 253:1    0     4G  0 lvm  [SWAP]
+  └─centos_init500--c11-home 253:2    0   1.4T  0 lvm  /home
+nvme1n1                      259:10   0   1.5T  0 disk
+├─nvme1n1p1                  259:13   0   100M  0 part
+├─nvme1n1p5                  259:14   0     4G  0 part
+├─nvme1n1p6                  259:15   0     4G  0 part
+├─nvme1n1p7                  259:17   0 119.9G  0 part
+└─nvme1n1p8                  259:18   0   1.3T  0 part
+
+
+$ fdisk -l
+[..]
+Disk /dev/nvme1n1: 1600.3 GB, 1600321314816 bytes, 3125627568 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk label type: dos
+Disk identifier: 0x7f33a7d2
+
+        Device Boot      Start         End      Blocks   Id  System
+/dev/nvme1n1p1               1  3125627534  1562813767   ee  GPT
+[..]
+</code></pre>
+<h2 id="Delete-the-partitions"><a href="#Delete-the-partitions" class="headerlink" title="Delete the partitions"></a>Delete the partitions</h2><p>Select the disk that contains the partitions you intend to delete:</p>
+<pre><code>$ fdisk /dev/nvme1n1
+Welcome to fdisk (util-linux 2.23.2).
+
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+</code></pre>
+<p>Delete the partition:</p>
+<pre><code>Command (m for help): d
+Selected partition 1
+Partition 1 is deleted
+</code></pre>
+<p><strong>NOTE:</strong> The partition is automatically selected if there are no other partitions on disk. If the disk contains multiple partitions, select a partition that you want to delete.</p>
+<p>Verify the paritions:</p>
+<pre><code>Command (m for help): p
+
+Disk /dev/nvme1n1: 1600.3 GB, 1600321314816 bytes, 3125627568 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk label type: dos
+Disk identifier: 0x7f33a7d2
+
+        Device Boot      Start         End      Blocks   Id  System
+</code></pre>
+<p>Save the change and quit fdisk:</p>
+<pre><code>Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+Syncing disks.
+</code></pre>
+<p>Verify the partitions with lsblk:</p>
+<pre><code>$ lsblk
+NAME                         MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sr0                           11:0    1  9.5G  0 rom
+nvme0n1                      259:6    0  1.5T  0 disk
+├─nvme0n1p1                  259:7    0  200M  0 part /boot/efi
+├─nvme0n1p2                  259:8    0    1G  0 part /boot
+└─nvme0n1p3                  259:9    0  1.5T  0 part
+  ├─centos_init500--c11-root 253:0    0   50G  0 lvm  /
+  ├─centos_init500--c11-swap 253:1    0    4G  0 lvm  [SWAP]
+  └─centos_init500--c11-home 253:2    0  1.4T  0 lvm  /home
+nvme1n1                      259:10   0  1.5T  0 disk
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2495,231 +2903,6 @@ GET _nodes/stats
 <p>Jimbo was the antagonist in the story. He made sure that all the  other monkeys didn’t get caught in the traps and  worked against Jay Berry during his several attempts. He acted rudely whenever he snatched a two dollar award from Jay and once, he got him drunk. He stole his britches, which was not his. His impudent remarks and cruel actions caused him to be the worst Challenger student. He did not respect others’ rights. Grandpa was a key supporting character and guided Jay Berry throughout the story. He helped design many traps which Jay used. For example, he made a trap with a net and it caught the old goose Gandy. It even caught two little monkeys, but Jimbo freed them during the chaos. Grandpa went as far as going to the library himself to get information. This showed that he really cared about Jay catching the monkeys. He always supported his grandson and helped him through hardships. Daisy is also a supporting character. She always warned Jay to not catch little animals because the Old Man of the Mountains was constantly watching. She was a protector of wildlife and disliked how boys captured poor animals just for the fun of it. Even though she was annoying sometimes, she cared greatly for her brother. She nursed him when he was bitten and when he was drunk. Also, she wished that her brother finally received the rifle and pony he so long wanted. This showed that she loved her brother and helped him achieve true happiness. One example was when she used the money she saved to purchase the rifle.From these characters I learned that I should persevere through challenges and be optimistic.</p>
 <p>The main theme of the story is that anyone can achieve his or her goals as long as he or she sets their mind to it and does not give up. Throughout the course of the novel, Jay Berry did this by demonstrating the value of perseverance, courage, and kindness. When he faced failure after failure, he still pursued his goals and was determined. For example, he asked for the help of his grandfather and they created new traps to catch the monkeys. The net actually worked, though Jimbo freed the monkeys in the end. They made several attempts and finally Jay persuaded the gang of monkeys to follow him into the corn crib, where they would be provided with a comfortable home and plentiful food.He showed rationality when he thought about what would happen to the monkeys during the storm. He knew that these monkeys did not know how to react to this fierce storm and this was an ideal opportunity for him. This was how he got the monkeys to willingly follow him. Jay Berry was also very kind. One example was when he dried off the pitiful monkeys, who were freezing. His act of kindness allowed Jimbo to realize that he could trust Jay, who was just trying to help them. This taught me that a kind act would also help you in the end.</p>
 <p>My favorite part of the story was when Jay Berry first discovered the tree full of monkeys. It was from here that he learned about the reward and was determined to capture them. He showed many values in his attempts and achieved true satisfaction in the end. My least favorite part was when he had to depart with his beloved pony. Even though he knew that he had done a good deed and his sister would no longer be a cripple, it broke his heart to acknowledge the fact that Dolly and he would be separated. Though, of course, he met Dolly again when his grandfather bought it using the money he saved. Yes, I would recommend this book to a friend because it taught how people could achieve their goals by putting their mind into it and persevering through challenges.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/how-to-setup-grafana-and-prometheus/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/how-to-setup-grafana-and-prometheus/" class="post-title-link" itemprop="url">How to setup the Grafana and Prometheus dashboard</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-10-15 12:42:00" itemprop="dateCreated datePublished" datetime="2022-10-15T12:42:00-07:00">2022-10-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Install-node-exporter-on-each-target-nodes"><a href="#Install-node-exporter-on-each-target-nodes" class="headerlink" title="Install node-exporter on each target nodes"></a>Install node-exporter on each target nodes</h2><pre><code>$ docker run --restart=always --name nd-export -d -p 9100:9100 -v /proc:/host/proc -v /sys:/host/sys -v /:/rootfs:ro,rslave --net=host quay.io/prometheus/node-exporter
-$ docker ps -a
-CONTAINER ID   IMAGE                              COMMAND                CREATED          STATUS          PORTS     NAMES
-d8c7fc8a4e40   quay.io/prometheus/node-exporter   &quot;/bin/node_exporter&quot;   32 minutes ago   Up 32 minutes             nd-export
-</code></pre>
-<h2 id="Deploy-Prometheus-on-a-VM"><a href="#Deploy-Prometheus-on-a-VM" class="headerlink" title="Deploy Prometheus on a VM"></a>Deploy Prometheus on a VM</h2><pre><code>$ vim /etc/prometheus/prometheus.yml
-global:
-scrape_configs:
-  - job_name: &#39;node&#39;
-    scrape_interval: 10s
-    static_configs:
-     - targets: [&#39;localhost:9100&#39;,&#39;host1-ip:9100&#39;,&#39;host2-ip:9100&#39;,&#39;host3-ip:9100&#39;,&#39;host4-ip:9100&#39;]
-
-$ docker run --restart=always --name prometheus -d -p 9090:9090 -v /etc/prometheus:/etc/prometheus prom/prometheus:v1.8.2
-
-$ docker ps -a
-CONTAINER ID   IMAGE                              COMMAND                  CREATED          STATUS          PORTS                                       NAMES
-3700700b61c9   prom/prometheus:v1.8.2         &quot;/bin/prometheus -co…&quot;   57 minutes ago   Up 22 minutes   0.0.0.0:9090-&gt;9090/tcp, :::9090-&gt;9090/tcp   prometheus
-</code></pre>
-<p>Verify the Prometheus by accessing <a target="_blank" rel="noopener" href="http://vm-ip:9090/targets">http://vm-ip:9090/targets</a>. You should be able to see the target nodes from the web UI.</p>
-<h2 id="Deploy-Grafana-on-a-VM"><a href="#Deploy-Grafana-on-a-VM" class="headerlink" title="Deploy Grafana on a VM"></a>Deploy Grafana on a VM</h2><pre><code>$ docker run --restart=always --name grafana -d -p 3000:3000 grafana/grafana
-
-$ docker ps -a
-CONTAINER ID   IMAGE                              COMMAND                  CREATED          STATUS          PORTS                                       NAMES
-da48a274ecc0   quay.io/prometheus/node-exporter   &quot;/bin/node_exporter&quot;     27 minutes ago   Up 27 minutes                                               nd-export
-814511410bff   grafana/grafana                    &quot;/run.sh&quot;                57 minutes ago   Up 57 minutes   0.0.0.0:3000-&gt;3000/tcp, :::3000-&gt;3000/tcp   grafana
-3700700b61c9   prom/prometheus:v1.8.2             &quot;/bin/prometheus -co…&quot;   57 minutes ago   Up 22 minutes   0.0.0.0:9090-&gt;9090/tcp, :::9090-&gt;9090/tcp   prometheus
-</code></pre>
-<h2 id="Configure-the-Promethous-data-source-in-Grafana"><a href="#Configure-the-Promethous-data-source-in-Grafana" class="headerlink" title="Configure the Promethous data source in Grafana"></a>Configure the Promethous data source in Grafana</h2><p>Login to the Grafana web UI by accessing <a target="_blank" rel="noopener" href="http://vm-ip:3000/">http://vm-ip:3000/</a>. The default username and password is admin&#x2F;admin.</p>
-<p>On the left corner, click “Add sources”.<br><img src="/images/grafana-datasource.png" alt="grafana-dashboard"></p>
-<p>Then add “Prometheus” as data source and fill in the prometheus data source name and the URL. Click Save &amp; test. The data source name will be used when you create the Grafana dashboard later.</p>
-<p><img src="/images/grafana-datasource-1.png" alt="Image"></p>
-<h2 id="Create-the-Grafana-dashboard"><a href="#Create-the-Grafana-dashboard" class="headerlink" title="Create the Grafana dashboard"></a>Create the Grafana dashboard</h2><p>The Grafana dashboard can be created by importing an json template and binding to the previous prometheus data source.</p>
-<p><img src="/images/grafana-dashboard.png" alt="Image"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/install-go-from-source/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/install-go-from-source/" class="post-title-link" itemprop="url">Install golang from source</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-10-08 07:00:00" itemprop="dateCreated datePublished" datetime="2022-10-08T07:00:00-07:00">2022-10-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <pre><code>$ wget https://dl.google.com/go/go1.15.5.linux-amd64.tar.gz
-$ tar -C /usr/local -xvzf go1.15.5.linux-amd64.tar.gz
-
-$ cat /usr/local/go/VERSION
-go1.15.5
-
-$ vim .bash_profile
-PATH=$PATH:$HOME/bin:/usr/local/go/bin
-export PATH
-
-$ source .bash_profile
-
-$ go version
-go version go1.15.5 linux/amd64
-</code></pre>
 
       
     </div>

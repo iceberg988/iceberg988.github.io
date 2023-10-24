@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">252</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">96</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">254</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">252</span>
+          <span class="site-state-item-count">254</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">96</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,231 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/how-to-setup-grafana-and-prometheus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/how-to-setup-grafana-and-prometheus/" class="post-title-link" itemprop="url">How to setup the Grafana and Prometheus dashboard</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-15 12:42:00" itemprop="dateCreated datePublished" datetime="2022-10-15T12:42:00-07:00">2022-10-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Install-node-exporter-on-each-target-nodes"><a href="#Install-node-exporter-on-each-target-nodes" class="headerlink" title="Install node-exporter on each target nodes"></a>Install node-exporter on each target nodes</h2><pre><code>$ docker run --restart=always --name nd-export -d -p 9100:9100 -v /proc:/host/proc -v /sys:/host/sys -v /:/rootfs:ro,rslave --net=host quay.io/prometheus/node-exporter
+$ docker ps -a
+CONTAINER ID   IMAGE                              COMMAND                CREATED          STATUS          PORTS     NAMES
+d8c7fc8a4e40   quay.io/prometheus/node-exporter   &quot;/bin/node_exporter&quot;   32 minutes ago   Up 32 minutes             nd-export
+</code></pre>
+<h2 id="Deploy-Prometheus-on-a-VM"><a href="#Deploy-Prometheus-on-a-VM" class="headerlink" title="Deploy Prometheus on a VM"></a>Deploy Prometheus on a VM</h2><pre><code>$ vim /etc/prometheus/prometheus.yml
+global:
+scrape_configs:
+  - job_name: &#39;node&#39;
+    scrape_interval: 10s
+    static_configs:
+     - targets: [&#39;localhost:9100&#39;,&#39;host1-ip:9100&#39;,&#39;host2-ip:9100&#39;,&#39;host3-ip:9100&#39;,&#39;host4-ip:9100&#39;]
+
+$ docker run --restart=always --name prometheus -d -p 9090:9090 -v /etc/prometheus:/etc/prometheus prom/prometheus:v1.8.2
+
+$ docker ps -a
+CONTAINER ID   IMAGE                              COMMAND                  CREATED          STATUS          PORTS                                       NAMES
+3700700b61c9   prom/prometheus:v1.8.2         &quot;/bin/prometheus -co…&quot;   57 minutes ago   Up 22 minutes   0.0.0.0:9090-&gt;9090/tcp, :::9090-&gt;9090/tcp   prometheus
+</code></pre>
+<p>Verify the Prometheus by accessing <a target="_blank" rel="noopener" href="http://vm-ip:9090/targets">http://vm-ip:9090/targets</a>. You should be able to see the target nodes from the web UI.</p>
+<h2 id="Deploy-Grafana-on-a-VM"><a href="#Deploy-Grafana-on-a-VM" class="headerlink" title="Deploy Grafana on a VM"></a>Deploy Grafana on a VM</h2><pre><code>$ docker run --restart=always --name grafana -d -p 3000:3000 grafana/grafana
+
+$ docker ps -a
+CONTAINER ID   IMAGE                              COMMAND                  CREATED          STATUS          PORTS                                       NAMES
+da48a274ecc0   quay.io/prometheus/node-exporter   &quot;/bin/node_exporter&quot;     27 minutes ago   Up 27 minutes                                               nd-export
+814511410bff   grafana/grafana                    &quot;/run.sh&quot;                57 minutes ago   Up 57 minutes   0.0.0.0:3000-&gt;3000/tcp, :::3000-&gt;3000/tcp   grafana
+3700700b61c9   prom/prometheus:v1.8.2             &quot;/bin/prometheus -co…&quot;   57 minutes ago   Up 22 minutes   0.0.0.0:9090-&gt;9090/tcp, :::9090-&gt;9090/tcp   prometheus
+</code></pre>
+<h2 id="Configure-the-Promethous-data-source-in-Grafana"><a href="#Configure-the-Promethous-data-source-in-Grafana" class="headerlink" title="Configure the Promethous data source in Grafana"></a>Configure the Promethous data source in Grafana</h2><p>Login to the Grafana web UI by accessing <a target="_blank" rel="noopener" href="http://vm-ip:3000/">http://vm-ip:3000/</a>. The default username and password is admin&#x2F;admin.</p>
+<p>On the left corner, click “Add sources”.<br><img src="/images/grafana-datasource.png" alt="grafana-dashboard"></p>
+<p>Then add “Prometheus” as data source and fill in the prometheus data source name and the URL. Click Save &amp; test. The data source name will be used when you create the Grafana dashboard later.</p>
+<p><img src="/images/grafana-datasource-1.png" alt="Image"></p>
+<h2 id="Create-the-Grafana-dashboard"><a href="#Create-the-Grafana-dashboard" class="headerlink" title="Create the Grafana dashboard"></a>Create the Grafana dashboard</h2><p>The Grafana dashboard can be created by importing an json template and binding to the previous prometheus data source.</p>
+<p><img src="/images/grafana-dashboard.png" alt="Image"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/install-go-from-source/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/install-go-from-source/" class="post-title-link" itemprop="url">Install golang from source</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-08 07:00:00" itemprop="dateCreated datePublished" datetime="2022-10-08T07:00:00-07:00">2022-10-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <pre><code>$ wget https://dl.google.com/go/go1.15.5.linux-amd64.tar.gz
+$ tar -C /usr/local -xvzf go1.15.5.linux-amd64.tar.gz
+
+$ cat /usr/local/go/VERSION
+go1.15.5
+
+$ vim .bash_profile
+PATH=$PATH:$HOME/bin:/usr/local/go/bin
+export PATH
+
+$ source .bash_profile
+
+$ go version
+go version go1.15.5 linux/amd64
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1333,412 +1558,6 @@ READ   - Takes(s): 2517.3, Count: 94554325, OPS: 37561.2, Avg(us): 2131, Min(us)
 <p><img src="/images/drawing/IMG_0337.jpeg"></p>
 <p><img src="/images/drawing/IMG_0338.jpeg"></p>
 <p><img src="/images/drawing/IMG_0339.jpeg"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/compile-linux-kernel-on-centos/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/compile-linux-kernel-on-centos/" class="post-title-link" itemprop="url">Compile Linux kernel on CentOS</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-07-19 07:00:00" itemprop="dateCreated datePublished" datetime="2022-07-19T07:00:00-07:00">2022-07-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Build-preparations"><a href="#Build-preparations" class="headerlink" title="Build preparations"></a>Build preparations</h2><p>To perform a successful kernel build, the following packages need to be installed:</p>
-<ul>
-<li>yum groupinstall “Development Tools”</li>
-<li>yum install ncurses-devel</li>
-<li>yum install qt3-devel (This is only necessary if you wish to use “make xconfig” instead of “make gconfig” or “make menuconfig”.) In the following example, we use “make menuconfig”.</li>
-<li>yum install hmaccalc zlib-devel binutils-devel elfutils-libelf-devel</li>
-</ul>
-<h2 id="Download-kernel-source"><a href="#Download-kernel-source" class="headerlink" title="Download kernel source"></a>Download kernel source</h2><p>Download kernel source from <a target="_blank" rel="noopener" href="https://www.kernel.org/">The Linux kernel archives</a>.</p>
-<pre><code>[root@host1 ~]# mkdir ~/rpmbuild/
-[root@host1 ~]# cd ~/rpmbuild/
-[root@host1 rpmbuild]# pwd
-/root/rpmbuild
-
-[root@host1 rpmbuild]# wget https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.18.12.tar.xz
-[root@host1 rpmbuild]# tar xvf linux-5.18.12.tar.xz
-[root@host1 rpmbuild]# cd linux-5.18.12
-</code></pre>
-<h2 id="Configure-the-new-kernel"><a href="#Configure-the-new-kernel" class="headerlink" title="Configure the new kernel"></a>Configure the new kernel</h2><p><strong>Note</strong>: If you do not intend to modify the distributed kernel configuration file, you may omit this section.</p>
-<p>Copy the config file from the current running kernel to the new kernel source directory:</p>
-<pre><code>[root@host1 linux-5.18.12]# cat /etc/centos-release
-CentOS Linux release 7.9.2009 (Core)
-
-[root@host1 linux-5.18.12]# uname -r
-5.18.10-1.el7.elrepo.x86_64
-
-[root@host1 linux-5.18.12]# cp /boot/config-5.18.10-1.el7.elrepo.x86_64 .config
-</code></pre>
-<p>Modify the kernel config with the “make menuconfig” command:</p>
-<pre><code>[root@host1 linux-5.18.12]# make menuconfig
-  HOSTCC  scripts/basic/fixdep
-  UPD     scripts/kconfig/mconf-cfg
-  HOSTCC  scripts/kconfig/mconf.o
-  HOSTCC  scripts/kconfig/lxdialog/checklist.o
-  HOSTCC  scripts/kconfig/lxdialog/inputbox.o
-  HOSTCC  scripts/kconfig/lxdialog/menubox.o
-  HOSTCC  scripts/kconfig/lxdialog/textbox.o
-  HOSTCC  scripts/kconfig/lxdialog/util.o
-  HOSTCC  scripts/kconfig/lxdialog/yesno.o
-  HOSTCC  scripts/kconfig/confdata.o
-  HOSTCC  scripts/kconfig/expr.o
-  LEX     scripts/kconfig/lexer.lex.c
-  YACC    scripts/kconfig/parser.tab.[ch]
-  HOSTCC  scripts/kconfig/lexer.lex.o
-  HOSTCC  scripts/kconfig/menu.o
-  HOSTCC  scripts/kconfig/parser.tab.o
-  HOSTCC  scripts/kconfig/preprocess.o
-  HOSTCC  scripts/kconfig/symbol.o
-  HOSTCC  scripts/kconfig/util.o
-  HOSTLD  scripts/kconfig/mconf
-
-
-*** End of the configuration.
-*** Execute &#39;make&#39; to start the build or try &#39;make help&#39;.
-</code></pre>
-<p>The following window should be seen. You can enable or disable certain kernel features as needed. Here we just leave everything the defaults.</p>
-<p><img src="/images/config-kernel-1.png" alt="Image"></p>
-<p>Once it’s configured, go to “&lt; Save &gt;” and press “&lt; Ok &gt;” to save it.</p>
-<p><img src="/images/config-kernel-2.png" alt="Image"></p>
-<p>Now we can open the file “.config” to verify the content based on the previous modification.</p>
-<pre><code>[root@host1 linux-5.18.12]# head .config
-#
-# Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.18.12 Kernel Configuration
-#
-CONFIG_CC_VERSION_TEXT=&quot;gcc (GCC) 7.3.1 20180303 (Red Hat 7.3.1-5)&quot;
-CONFIG_CC_IS_GCC=y
-CONFIG_GCC_VERSION=70301
-CONFIG_CLANG_VERSION=0
-CONFIG_AS_IS_GNU=y
-CONFIG_AS_VERSION=22800
-</code></pre>
-<h2 id="Install-multiple-gcc-versions"><a href="#Install-multiple-gcc-versions" class="headerlink" title="Install multiple gcc versions"></a>Install multiple gcc versions</h2><p>Depending on the gcc version included in the system, you may encounter errors when to run “make menuconfig” which requires a higher version of gcc.</p>
-<pre><code>[root@host1 linux-5.18.12]# make menuconfig
-&lt;...&gt;
-***
-*** Compiler is too old.
-***   Your GCC version:    4.8.5
-***   Minimum GCC version: 5.1.0
-***
-scripts/Kconfig.include:44: Sorry, this compiler is not supported.
-</code></pre>
-<p><a target="_blank" rel="noopener" href="https://www.softwarecollections.org/en/">Software Collections</a>, also known as SCL is a community project that allows you to build, install, and use multiple versions of software on the same system, without affecting system default packages. By enabling Software Collections, you gain access to the newer versions of programming languages and services which are not available in the core repositories. The SCL repositories provide a package named Developer Toolset, which includes newer versions of the GNU Compiler Collection, and other development and debugging tools.</p>
-<p>To check the already installed gcc version:</p>
-<pre><code>[root@host1 linux-5.18.12]# gcc --version
-gcc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-44)
-Copyright (C) 2015 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-</code></pre>
-<p>To install the newer version of gcc:</p>
-<pre><code>[root@host1 linux-5.18.12]# sudo yum install centos-release-scl
-[root@host1 linux-5.18.12]# sudo yum install devtoolset-7
-</code></pre>
-<p>To access gcc version 7, a new shell instance using the Software Collection scl tool needs to be launched.</p>
-<pre><code>[root@host1 linux-5.18.12]# scl enable devtoolset-7 bash
-149 packages can be updated.
-0 updates are security updates.
-
-[root@host1 linux-5.18.12]# gcc --version
-gcc (GCC) 7.3.1 20180303 (Red Hat 7.3.1-5)
-Copyright (C) 2017 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-[root@host1 linux-5.18.12]# make menuconfig
-</code></pre>
-<p>For more detail, please refer to <a target="_blank" rel="noopener" href="https://www.softwarecollections.org/en/scls/rhscl/devtoolset-7/">Developer Toolset 7</a> or a different version.</p>
-<h2 id="Compile-the-kernel"><a href="#Compile-the-kernel" class="headerlink" title="Compile the kernel"></a>Compile the kernel</h2><p>Before start compiling the new kernel, make sure more than 20GB of free space on the filesystem is available.</p>
-<pre><code>[root@host1 linux-5.18.12]# df -h | egrep &quot;Filesystem|root&quot;
-Filesystem                 Size  Used Avail Use% Mounted on
-/dev/mapper/vgroot-lvroot  1.5T   21G  1.4T   2% /
-</code></pre>
-<p>Now, we can compile the kernel. We run the compilation process in the background since it takes long time.</p>
-<pre><code>[root@host1 linux-5.18.12]# nohup make rpm-pkg &amp;
-[root@host1 linux-5.18.12]# tail -f nohup.out
-[root@host1 linux-5.18.12]# more nohup.out
-  SYNC    include/config/auto.conf.cmd
-  HOSTCC  scripts/kconfig/conf.o
-  HOSTLD  scripts/kconfig/conf
-  UPD     include/config/kernel.release
-make clean
-sh ./scripts/package/mkspec &gt;./kernel.spec
-  TAR     kernel-5.18.12.tar.gz
-rpmbuild  --target x86_64 -ta kernel-5.18.12.tar.gz \
---define=&#39;_smp_mflags %&#123;nil&#125;&#39;
-Building target platforms: x86_64
-Building for target x86_64
-Executing(%prep): /bin/sh -e /var/tmp/rpm-tmp.nOAadM
-</code></pre>
-<p>Note that the kernel.spec file is created automatically by “sh .&#x2F;scripts&#x2F;package&#x2F;mkspec &gt;.&#x2F;kernel.spec”.</p>
-<p>Upon completion, the following output shows the location of the generated rpms.</p>
-<pre><code>[root@host1 linux-5.18.12]# tail -15 nohup.out
-Obsoletes: kernel-headers
-Processing files: kernel-devel-5.18.12-1.x86_64
-Provides: kernel-devel = 5.18.12-1 kernel-devel(x86-64) = 5.18.12-1
-Requires(rpmlib): rpmlib(FileDigests) &lt;= 4.6.0-1 rpmlib(PayloadFilesHavePrefix) &lt;= 4.0-1 rpmlib(CompressedFileNames) &lt;= 3.0.4-1
-Checking for unpackaged file(s): /usr/lib/rpm/check-files /root/rpmbuild/BUILDROOT/kernel-5.18.12-1.x86_64
-Wrote: /root/rpmbuild/SRPMS/kernel-5.18.12-1.src.rpm
-Wrote: /root/rpmbuild/RPMS/x86_64/kernel-5.18.12-1.x86_64.rpm
-Wrote: /root/rpmbuild/RPMS/x86_64/kernel-headers-5.18.12-1.x86_64.rpm
-Wrote: /root/rpmbuild/RPMS/x86_64/kernel-devel-5.18.12-1.x86_64.rpm
-Executing(%clean): /bin/sh -e /var/tmp/rpm-tmp.DiAd0f
-+ umask 022
-+ cd /root/rpmbuild/BUILD
-+ cd kernel-5.18.12
-+ rm -rf /root/rpmbuild/BUILDROOT/kernel-5.18.12-1.x86_64
-+ exit 0
-</code></pre>
-<p>To check the generated kernel rpms:</p>
-<pre><code>[root@host1 rpmbuild]# pwd
-/root/rpmbuild
-
-[root@host1 rpmbuild]# ls RPMS/x86_64/
-kernel-5.18.12-1.x86_64.rpm  kernel-devel-5.18.12-1.x86_64.rpm  kernel-headers-5.18.12-1.x86_64.rpm
-[root@host1 rpmbuild]# ls SRPMS/
-kernel-5.18.12-1.src.rpm
-</code></pre>
-<h2 id="Install-the-new-kernel"><a href="#Install-the-new-kernel" class="headerlink" title="Install the new kernel"></a>Install the new kernel</h2><p>Now you can run the following command to install the rpm packages:</p>
-<pre><code>[root@host1 rpmbuild]# rpm -iUv ~/rpmbuild/RPMS/x86_64/*.rpm
-</code></pre>
-<p>Once the installation is complete, run the following command to reboot the system:</p>
-<pre><code>[root@host1 rpmbuild]# reboot
-</code></pre>
-<p>Once the system starts, run the following command to check the kernel version:</p>
-<pre><code>[root@host1 ~]# uname -r
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://wiki.centos.org/HowTos/Custom_Kernel">Build a custom kernel on CentOS</a></li>
-<li><a target="_blank" rel="noopener" href="https://linuxhint.com/compile-linux-kernel-centos7/">Compile Linux kernel on CentOS 7</a></li>
-<li><a target="_blank" rel="noopener" href="https://linuxize.com/post/how-to-install-gcc-compiler-on-centos-7/">How to install GCC compiler on CentOS 7</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.kernel.org/">Linux kernel arhives</a></li>
-<li><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/source">Linux kernel source code</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/deploy-systemtap-on-multiple-systems/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/deploy-systemtap-on-multiple-systems/" class="post-title-link" itemprop="url">Deploy systemtap on multiple systems</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-07-17 07:00:00" itemprop="dateCreated datePublished" datetime="2022-07-17T07:00:00-07:00">2022-07-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Normally, SystemTap scripts can only be run on systems where SystemTap is deployed together with the following required kernel packages.</p>
-<ul>
-<li>kernel-devel-$(uname -r)</li>
-<li>kernel-debuginfo-$(uname -r)</li>
-<li>kernel-debuginfo-common-$(uname -m)-$(uname -r)</li>
-</ul>
-<p>In the case that it’s neither feasible nor desired to install the denpendent packages on all the target systems. Using cross-instrumentation can work around. Cross-instrumentation is the process of generating SystemTap instrumentation modules from a SystemTap script on one system to be used on another system. This process offers the following benefits:</p>
-<ul>
-<li>The kernel information packages for various machines can be installed on a single host machine.</li>
-<li>Each target machine only needs one package to be installed to use the generated SystemTap instrumentation module: systemtap-runtime.</li>
-</ul>
-<p>To build the instrumentation module, do the following on the host which has the dependent kernel packages installed:</p>
-<pre><code>[root@host1 ~]# uname -r
-5.18.10-1.el7.elrepo.x86_64
-
-[root@host1 ~]# rpm -qa | egrep &quot;kernel-debug|kernel-devel|systemtap&quot;
-systemtap-client-4.0-13.el7.x86_64
-systemtap-runtime-4.0-13.el7.x86_64
-kernel-devel-3.10.0-1160.el7.x86_64
-systemtap-devel-4.0-13.el7.x86_64
-kernel-debuginfo-common-x86_64-3.10.0-1160.el7.x86_64
-kernel-debuginfo-3.10.0-1160.el7.x86_64
-systemtap-4.0-13.el7.x86_64
-
-[root@host1 ~]# stap -r 3.10.0-1160.el7.x86_64 -e &#39;probe vfs.read &#123;printf(&quot;read performed\n&quot;);&#125; probe timer.s(5)&#123;exit()&#125;&#39; -m ported_stap -p4
-ported_stap.ko
-
-[root@host1 ~]# file ported_stap.ko
-ported_stap.ko: ELF 64-bit LSB relocatable, x86-64, version 1 (SYSV), BuildID[sha1]=1ad58adccafc9bf629f1edcbc285e9090e84dc35, not stripped
-
-[root@host1 ~]# ls -la ported_stap.ko
--rw-r--r-- 1 root root 103608 Jul 20 22:33 ported_stap.ko
-</code></pre>
-<p>Once the instrumentation module is compiled, copy it to the target system and then run it using:</p>
-<pre><code>[root@host1 ~]# scp ported_stap.ko host2:/root
-
-[root@host2 ~]# uname -r
-3.10.0-1160.el7.x86_64
-
-[root@host2 ~]# rpm -qa | egrep &quot;kernel-debug|kernel-devel|systemtap&quot;
-systemtap-runtime-4.0-13.el7.x86_64
-
-[root@host2 ~]# staprun ported_stap.ko
-read performed
-read performed
-read performed
-&lt;...&gt;
-</code></pre>
-<p>When users run a SystemTap script, a kernel module is built out of that script. SystemTap then loads the module into the kernel, allowing it to extract the specified data directly from the kernel. From the following command output, it’s clear that the SystemTap kernel module is dynamically loaded during the script run.</p>
-<pre><code>[root@host2 ~]# lsmod | grep ported_stap
-ported_stap           139049  2
-[root@host2 ~]# lsmod | grep ported_stap
-[root@host2 ~]#
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html-single/systemtap_beginners_guide/index">SystemTap beginners guide</a></li>
-</ul>
 
       
     </div>

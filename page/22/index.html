@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">252</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">96</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">254</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">252</span>
+          <span class="site-state-item-count">254</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">96</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,364 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-bcc-tools-for-dynamic-kernel-tracing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/using-bcc-tools-for-dynamic-kernel-tracing/" class="post-title-link" itemprop="url">Using bcc-tools for dynamic kernel tracing</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-03-25 07:00:00" itemprop="dateCreated datePublished" datetime="2021-03-25T07:00:00-07:00">2021-03-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>In Red Hat Enterprise Linux 8.1, Red Hat ships a set of fully supported on x86_64 dynamic kernel tracing tools, called bcc-tools, that make use of a kernel technology called extended Berkeley Packet Filter (eBPF). With these tools, you can quickly gain insight into certain aspects of system performance that would have previously required more time and effort from the system and operator.</p>
+<p>The eBPF technology allows dynamic kernel tracing without requiring kernel modules (like systemtap) or rebooting of the kernel (as with debug kernels). eBPF accomplishes this while maintaining minimal overhead for each trace point, making these tools an ideal way to instrument running kernels in production.</p>
+<p>To ensure that an eBPF program will not harm the running kernel, tools built on eBPF go through the following process when instantiated by root on the command line:</p>
+<ul>
+<li>The program is compiled into eBPF bytecode.</li>
+<li>Loaded into the kernel.</li>
+<li>Run through a technology called the eBPF verifier to ensure that the program will not harm the running kernel.</li>
+<li>Upon passing the verifier, it begins execution. If it does not pass the verifier, the code is unloaded and does not execute.</li>
+</ul>
+<p>That said, bear in mind that you are still inserting tracing and some system calls are called significantly more than others, so depending on what you are tracing, there may be increased overhead.</p>
+<p>If you are interested in more information on eBPF in general, please see Stanislav Kozina’s blog: <a target="_blank" rel="noopener" href="https://www.redhat.com/en/blog/introduction-ebpf-red-hat-enterprise-linux-7">Introduction to eBPF in Red Hat Enterprise Linux 7</a>.</p>
+<h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><p>With RHEL 8.1, bcc-tools has gone fully supported on x86. To install bcc-tools on RHEL 7 (7.6+) and RHEL 8, run yum install as root:</p>
+<pre><code>$ uname -r
+3.10.0-1062.40.1.el7.x86_64
+$  cat /etc/redhat-release
+Red Hat Enterprise Linux Server release 7.7 (Maipo)
+$ yum install bcc-tools
+Installed:
+  bcc-tools.x86_64 0:0.10.0-1.el7
+Dependency Installed:
+  bcc.x86_64 0:0.10.0-1.el7                kernel-devel.x86_64 0:3.10.0-1160.21.1.el7
+  llvm-private.x86_64 0:7.0.1-1.el7        python-bcc.x86_64 0:0.10.0-1.el7
+
+$ pwd
+/usr/share/bcc/tools
+$  ls
+argdist       drsnoop         memleak         pythonstat   tclobjnew
+bashreadline  execsnoop       mountsnoop      reset-trace  tclstat
+biolatency    ext4dist        mysqld_qslower  rubycalls    tcpaccept
+biosnoop      ext4slower      nfsdist         rubyflow     tcpconnect
+biotop        filelife        nfsslower       rubygc       tcpconnlat
+bitesize      fileslower      nodegc          rubyobjnew   tcpdrop
+bpflist       filetop         nodestat        rubystat     tcplife
+btrfsdist     funccount       offcputime      runqlat      tcpretrans
+btrfsslower   funclatency     offwaketime     runqlen      tcpsubnet
+cachestat     funcslower      oomkill         runqslower   tcptop
+cachetop      gethostlatency  opensnoop       shmsnoop     tcptracer
+capable       hardirqs        perlcalls       slabratetop  tplist
+cobjnew       javacalls       perlflow        sofdsnoop    trace
+cpudist       javaflow        perlstat        softirqs     ttysnoop
+cpuunclaimed  javagc          phpcalls        solisten     vfscount
+dbslower      javaobjnew      phpflow         sslsniff     vfsstat
+dbstat        javastat        phpstat         stackcount   wakeuptime
+dcsnoop       javathreads     pidpersec       statsnoop    xfsdist
+dcstat        killsnoop       profile         syncsnoop    xfsslower
+deadlock      lib             pythoncalls     syscount
+deadlock.c    llcstat         pythonflow      tclcalls
+doc           mdflush         pythongc        tclflow  
+</code></pre>
+<h2 id="bcc-tools-Framework"><a href="#bcc-tools-Framework" class="headerlink" title="bcc-tools Framework"></a>bcc-tools Framework</h2><p>Before we dive into the different types of tools that are included in bcc-tools, it’s important to note a few things:</p>
+<ul>
+<li>All of these tools live in &#x2F;usr&#x2F;share&#x2F;bcc&#x2F;tools.</li>
+<li>These tools must run as the root user as any eBPF program can read kernel data. As such, injecting eBPF bytecode as a regular user is not allowed in RHEL 8.1.</li>
+<li>Each tool has a man page. To view the man page, run man . These man pages include descriptions of the tools, provide the options that can be called, and have information on the expected overhead of the specific tool.</li>
+</ul>
+<p>Since there are a lot of tools in bcc-tools, I’m going to divide the tools into the following classes and then we’ll dive into each class:</p>
+<ul>
+<li>The Snoops</li>
+<li>Latency Detectors</li>
+<li>Slower</li>
+<li>Top Up with bcc-tools</li>
+<li>Java&#x2F;Perl&#x2F;Python&#x2F;Ruby</li>
+</ul>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.redhat.com/en/blog/introduction-ebpf-red-hat-enterprise-linux-7">https://www.redhat.com/en/blog/introduction-ebpf-red-hat-enterprise-linux-7</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.redhat.com/en/blog/bcc-tools-brings-dynamic-kernel-tracing-red-hat-enterprise-linux-81">https://www.redhat.com/en/blog/bcc-tools-brings-dynamic-kernel-tracing-red-hat-enterprise-linux-81</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/blktrace-a-block-layer-io-tracing-utility/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/blktrace-a-block-layer-io-tracing-utility/" class="post-title-link" itemprop="url">blktrace - A block layer IO tracing utility</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-03-11 08:00:00" itemprop="dateCreated datePublished" datetime="2021-03-11T08:00:00-08:00">2021-03-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="What-can-blktrace-do"><a href="#What-can-blktrace-do" class="headerlink" title="What can blktrace do?"></a>What can blktrace do?</h2><p>Let’s dive into the block device layer and see how the I&#x2F;O are handled in disk queues.</p>
+<p>The following stack shows the I&#x2F;O paths including the block device layer. The application can issue I&#x2F;O requests directly to block device or through file systems. In the following sections, let’s dig into the block device layer with blktrace in order to understand the I&#x2F;O pattern and disk queue activities.</p>
+<pre><code>        Applications
+        |      |   |  
+        V      |   | 
+  File systems |   |
+        |      |   |
+        V      |   |
+ Page Cache &lt;--|   | 
+        |          | 
+        V          V
+Block I/O Layer: Request Queues
+        |
+        V 
+  SCSI Drivers
+        |
+        V
+ Physical Devices               
+</code></pre>
+<h2 id="Don’t-forget-iostat"><a href="#Don’t-forget-iostat" class="headerlink" title="Don’t forget iostat"></a>Don’t forget iostat</h2><p>iostat is always the first place to understand the I&#x2F;O characteristics before we turn to other advanced utilities like blktrace.</p>
+<p>It provides the following information for the disk IOs.</p>
+<ul>
+<li>Number of read&#x2F;write merges per second</li>
+<li>Number of reads&#x2F;writes per second</li>
+<li>Average I&#x2F;O request size(in sectors)</li>
+<li>Average request queue size</li>
+<li>Average I&#x2F;O wait time</li>
+</ul>
+<p>If any of the above metrics indicates disk I&#x2F;O performance concerns and it’s not sufficient to help us explain the performance issue, we can turn to blktrace or other tracing utilities for more insights.</p>
+<h2 id="blktrace-and-blkparse"><a href="#blktrace-and-blkparse" class="headerlink" title="blktrace and blkparse"></a>blktrace and blkparse</h2><p>To trace the target block device:</p>
+<pre><code>$ blktrace -d /dev/&lt;sd-device-name&gt; -D &lt;trace-raw-data-save-dir&gt; -w &lt;trace-time-in-seconds&gt;
+</code></pre>
+<p>To parse the blktrace data:</p>
+<pre><code>$ blkparse -i &lt;sd-device-name&gt; -D &lt;trace-raw-data-save-dir&gt; -o blkparse.&lt;sd-device-name&gt;.out -d blktrace.bin
+</code></pre>
+<p>blkparse output snippet:</p>
+<pre><code>  8,0    7        3     0.992335623  4180  A  WS 680911952 + 8 &lt;- (8,2) 679885904
+  8,0    7        4     0.992336407  4180  Q  WS 680911952 + 8 [jbd2/dm-7-8]
+  8,0    7        5     0.992338784  4180  G  WS 680911952 + 8 [jbd2/dm-7-8]
+  8,0    7        6     0.992339977  4180  I  WS 680911952 + 8 [jbd2/dm-7-8]
+  8,0    7        7     0.992341444  4180  D  WS 680911952 + 8 [jbd2/dm-7-8]
+  8,0   56        1     0.992499505     0  C  WS 680911952 + 8 [0]
+  8,0   47        7     0.991930131  4180  A  WS 680911920 + 8 &lt;- (8,2) 679885872
+  8,0   47        8     0.991930522  4180  Q  WS 680911920 + 8 [jbd2/dm-7-8]
+  8,0   47        9     0.991932697  4180  M  WS 680911920 + 8 [jbd2/dm-7-8]
+</code></pre>
+<p>The columns are Dev major,minor, CPU id, Sequence number, Timestamp, PID, Event, Operation, Start block + number of blocks(offset), Process name.</p>
+<p>In the above example, The first IO starts at block 680911952 with the offset of 8 blocks. It is handled in the following sequence.</p>
+<ul>
+<li>Remapped to a different device(8,2)</li>
+<li>Handled by the request queue code</li>
+<li>Get the request</li>
+<li>Inserted to the request queue</li>
+<li>Dispatch to device driver</li>
+<li>Completion</li>
+</ul>
+<p>The second IO starts at block 680911920 with the offset of 8 blocks. It’s handled in the following sequence.</p>
+<ul>
+<li>Remapped to a different device(8,2)</li>
+<li>Handled by the request queue code</li>
+<li>Back merged with request on queue</li>
+</ul>
+<p>blkparse output also includes a summary to explain the number of I&#x2F;Os in each queuing phase. In the following example, there are 86 writes handled by request queue. 19 out of 86 writes are merged with request on queue. Thus, only 67 writes are issued to device to complete the front end requests.</p>
+<pre><code>Total (sda):
+ Reads Queued:           0,        0KiB  Writes Queued:          86,      628KiB
+ Read Dispatches:        0,        0KiB  Write Dispatches:       67,      628KiB
+ Reads Requeued:         0               Writes Requeued:         0
+ Reads Completed:        0,        0KiB  Writes Completed:       67,      628KiB
+ Read Merges:            0,        0KiB  Write Merges:           19,       88KiB
+ IO unplugs:            21               Timer unplugs:           0
+</code></pre>
+<h2 id="btt"><a href="#btt" class="headerlink" title="btt"></a>btt</h2><p>btt is a post-processing tool for blktrace. blktrace is capable of producing tremendous amounts of output in the form of multiple individual traces per IO executed during the traced run. It is also capable of producing some general statistics concerning IO rates and the like. btt goes further and produces a variety of overall statistics about each of the individual handling of IOs, and provides data we believe is useful to plot to provide visual comparisons for evaluation.</p>
+<p>btt processes the binary file produced by blkparse.The major areas of output measured by btt include:</p>
+<ul>
+<li>Q2Q : Queue-to-Queue time</li>
+<li>Q2G : Queue-to-GetRequest time</li>
+<li>S2G : Sleep-to-GetRequest time</li>
+<li>G2I : GetRequest-to-Insert time</li>
+<li>Q2M : Queue-to-Merge time</li>
+<li>I2D : Insert-to-Issue time</li>
+<li>M2D : Merge-to-Issue time</li>
+<li>D2C : Issue-to-Complete time</li>
+<li>Q2C : Queue-to-Complete time</li>
+</ul>
+<p>For the D2C, it includes the driver and device time. It’s the average time from when the actual IO was issued to the driver until is completed (completion trace) back to the block IO layer. The D2C time should be greater than the actual physcial disk I&#x2F;O latency which is usually measured in disk(array) side.</p>
+<p>In the following exampl, 98.9265% of time is spent on D2C which is expected. The average IO time serviced by the disk is 1.65ms. The max IO time is 5.10ms. We may measure the I2D metric for different I&#x2F;O scheduler, like noop in SSD case.</p>
+<pre><code>$ btt -i blktrace.bin -B offset -o btt.out
+
+$ ls btt.*.out*
+btt.sda.30s.out.avg  btt.sda.30s.out.dat  btt.sda.30s.out_dhist.dat  btt.sda.30s.out.msg  btt.sda.30s.out_qhist.dat
+
+$ cat btt.out.avg
+==================== All Devices ====================
+
+ALL               MIN           AVG           MAX                  N
+--------------- ------------- ------------- ------------- -----------
+
+Q2Q               0.000001053   0.304967428   5.071043004          85
+Q2G               0.000000338   0.000001928   0.000008143          67
+G2I               0.000000161   0.000008231   0.000126276          67
+Q2M               0.000000178   0.000000664   0.000002175          19
+I2D               0.000000223   0.000003979   0.000024517          67
+M2D               0.000002771   0.000030058   0.000116136          19
+D2C               0.000089761   0.001640496   0.005096214          86
+Q2C               0.000093453   0.001658297   0.005098018          86
+
+==================== Device Overhead ====================
+
+       DEV |       Q2G       G2I       Q2M       I2D       D2C
+---------- | --------- --------- --------- --------- ---------
+ (  8,  0) |   0.0906%   0.3867%   0.0088%   0.1869%  98.9265%
+---------- | --------- --------- --------- --------- ---------
+   Overall |   0.0906%   0.3867%   0.0088%   0.1869%  98.9265%
+[..]   
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1390,670 +1748,6 @@ f2696790-b305-4099-8dba-b31d23b0beac    localhost Connected
 <p>As shown above, the usable storage size is the sum of the brick size from two nodes.</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://docs.gluster.org/en/latest/Administrator-Guide/GlusterFS-Introduction/">https://docs.gluster.org/en/latest/Administrator-Guide/GlusterFS-Introduction/</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/cbt-changed-block-tracking/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/cbt-changed-block-tracking/" class="post-title-link" itemprop="url">CBT - Changed Block Tracking</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-02-26 08:00:00" itemprop="dateCreated datePublished" datetime="2021-02-26T08:00:00-08:00">2021-02-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Changed Block Tracking is an incremental backup technology for virtual machines. It helps create faster and smaller backups. It has the following advantages.</p>
-<ul>
-<li>Reduce backup time</li>
-<li>Save disk space by only storing changed data to the previous backup</li>
-</ul>
-<p>Block changes are tracked in the virtualization layer, outside the virtual machines. During a backup, only the changed block since the last backup are transmitted. For VMware, the vSphere APIs can be used to request the VMkernel to return the changed blocks from the last snapshot backup. Microsoft provides Resilient Change Tracking(RCT) to provide the native CBT feature for Hyper-V.</p>
-<p>Veritas NetBackup Accelerator reduces the backup time for VMware backups. NetBackup uses VMware Changed Block Tracking (CBT) to identify the changes that were made within a virtual machine. Only the changed data blocks are sent to the NetBackup media server, to significantly reduce the I&#x2F;O and backup time. The media server combines the new data with previous backup data and produces a traditional full NetBackup image that includes the complete virtual machine files.</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://kb.vmware.com/s/article/1020128">https://kb.vmware.com/s/article/1020128</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.ibm.com/support/knowledgecenter/SSERB6_8.1.2/ve.hv/c_ve_hv_ovw_rct.html">https://www.ibm.com/support/knowledgecenter/SSERB6_8.1.2&#x2F;ve.hv&#x2F;c_ve_hv_ovw_rct.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.veritas.com/support/en_US/doc/21902280-127283730-0/v77418244-127283730">https://www.veritas.com/support/en_US&#x2F;doc&#x2F;21902280-127283730-0&#x2F;v77418244-127283730</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/perf-the-official-linux-profiler/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/perf-the-official-linux-profiler/" class="post-title-link" itemprop="url">Perf - The official Linux profiler</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-02-20 08:00:00" itemprop="dateCreated datePublished" datetime="2021-02-20T08:00:00-08:00">2021-02-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>perf, aka perf_events, is the official Linux profiler and included in the Linux kernel source under tools&#x2F;perf. It can instrument CPU performance counters, tracepoints, kprobes, and uprobes. It is capable of system profiling.</p>
-<h2 id="Performance-Monitoring-Counter-PMC"><a href="#Performance-Monitoring-Counter-PMC" class="headerlink" title="Performance Monitoring Counter(PMC)"></a>Performance Monitoring Counter(PMC)</h2><p><strong>Show system wide PMC statistics</strong></p>
-<p>The following example shows PMC statistics for the entire system, for 5 seconds.</p>
-<pre><code>$ perf stat -a sleep 5
-
- Performance counter stats for &#39;system wide&#39;:
-
-        399,489.78 msec cpu-clock                 #   79.290 CPUs utilized
-            21,795      context-switches          #    0.055 K/sec
-               208      cpu-migrations            #    0.001 K/sec
-            10,071      page-faults               #    0.025 K/sec
-    15,739,163,983      cycles                    #    0.039 GHz
-    11,493,495,432      instructions              #    0.73  insn per cycle
-     2,091,049,131      branches                  #    5.234 M/sec
-        23,987,055      branch-misses             #    1.15% of all branches
-
-       5.038337951 seconds time elapsed
-</code></pre>
-<p><strong>Show PMC statistics for the specified process</strong></p>
-<p>The following example shows PMC statistics for the fio process. The fio job file will be included later on.</p>
-<pre><code>$  perf stat fio fio_job_file.ini
-Performance counter stats for &#39;fio fio_job_file.ini&#39;:
-
-          9,500.26 msec task-clock                #    0.172 CPUs utilized
-           133,844      context-switches          #    0.014 M/sec
-            13,540      cpu-migrations            #    0.001 M/sec
-           107,703      page-faults               #    0.011 M/sec
-    21,039,694,713      cycles                    #    2.215 GHz
-     8,896,839,896      instructions              #    0.42  insn per cycle
-     1,755,629,641      branches                  #  184.798 M/sec
-        34,380,966      branch-misses             #    1.96% of all branches
-
-      55.143040711 seconds time elapsed
-
-       4.520016000 seconds user
-       5.921369000 seconds sys
-</code></pre>
-<h2 id="perf-events"><a href="#perf-events" class="headerlink" title="perf events"></a>perf events</h2><p>perf events can be listed using <em>perf list</em>. I only list a few of them for example. It includes hardware event, hardware cache event, software event, PMU event, tracepoint event and SDT event.</p>
-<pre><code>$ perf list
-List of pre-defined events (to be used in -e):
-
-  cache-misses                                       [Hardware event]
-  cache-references                                   [Hardware event]
-  context-switches OR cs                             [Software event]
-  page-faults OR faults                              [Software event]
-  L1-dcache-load-misses                              [Hardware cache event]
-  L1-dcache-loads                                    [Hardware cache event] 
-  cache-misses OR cpu/cache-misses/                  [Kernel PMU event]
-  cache-references OR cpu/cache-references/          [Kernel PMU event]
-  cpu-cycles OR cpu/cpu-cycles/                      [Kernel PMU event]  
-  block:block_plug                                   [Tracepoint event]
-  block:block_rq_abort                               [Tracepoint event]
-  block:block_rq_complete                            [Tracepoint event]
-  block:block_rq_insert                              [Tracepoint event]
-  block:block_rq_issue                               [Tracepoint event]
-  irq:softirq_entry                                  [Tracepoint event]
-  kmem:kfree                                         [Tracepoint event]
-  kmem:kmalloc                                       [Tracepoint event]
-  kmem:kmalloc_node                                  [Tracepoint event]
-  kmem:kmem_cache_alloc                              [Tracepoint event]
-  kmem:kmem_cache_alloc_node                         [Tracepoint event]
-  kmem:kmem_cache_free                               [Tracepoint event]
-  kmem:mm_page_alloc                                 [Tracepoint event]
-  kmem:mm_page_alloc_extfrag                         [Tracepoint event]
-  kmem:mm_page_alloc_zone_locked                     [Tracepoint event]
-  kmem:mm_page_free                                  [Tracepoint event]
-  kmem:mm_page_free_batched                          [Tracepoint event]
-  kmem:mm_page_pcpu_drain                            [Tracepoint event]
-  syscalls:sys_enter_write                           [Tracepoint event]
-  syscalls:sys_enter_read                            [Tracepoint event]
-  sdt_libc:memory_heap_free                          [SDT event]
-  sdt_libc:memory_heap_less                          [SDT event]
-  sdt_libc:memory_heap_more                          [SDT event]
-  sdt_libc:memory_heap_new                           [SDT event]  
-[...]  
-</code></pre>
-<h2 id="PMC-sample-frequency"><a href="#PMC-sample-frequency" class="headerlink" title="PMC sample frequency"></a>PMC sample frequency</h2><p>A default sample frequency is used when using perf record with PMCs. Thus, not all the event are recorded. This is desirable because some PMCs events can occur billions of time per second which causes significant overhead of recording.</p>
-<p>The following two examples record the hardware cycle events and software page-faults events. The output shows the frequency sampling is enabled(freq&#x3D;1) and the sample frequency is 4000.</p>
-<pre><code>$ perf record -vve cycles -a sleep 1
-Using CPUID GenuineIntel-6-55-4
-intel_pt default config: tsc,mtc,mtc_period=3,psb_period=3,pt,branch
-------------------------------------------------------------
-perf_event_attr:
-  size                             112
-  &#123; sample_period, sample_freq &#125;   4000
-  sample_type                      IP|TID|TIME|CPU|PERIOD
-  read_format                      ID
-  disabled                         1
-  inherit                          1
-  mmap                             1
-  comm                             1
-  freq                             1
-  task                             1
-  sample_id_all                    1
-  exclude_guest                    1
-  mmap2                            1
-  comm_exec                        1
-------------------------------------------------------------
-[...]
-[ perf record: Captured and wrote 2.057 MB perf.data (14549 samples) ]
-
-$ perf record -vve page-faults -a sleep 1
-Using CPUID GenuineIntel-6-55-4
-intel_pt default config: tsc,mtc,mtc_period=3,psb_period=3,pt,branch
-------------------------------------------------------------
-perf_event_attr:
-  type                             1
-  size                             112
-  config                           0x2
-  &#123; sample_period, sample_freq &#125;   4000
-  sample_type                      IP|TID|TIME|CPU|PERIOD
-  read_format                      ID
-  disabled                         1
-  inherit                          1
-  mmap                             1
-  comm                             1
-  freq                             1
-  task                             1
-  sample_id_all                    1
-  exclude_guest                    1
-  mmap2                            1
-  comm_exec                        1
-------------------------------------------------------------
-[...]
-[ perf record: Captured and wrote 1.434 MB perf.data (615 samples) ]
-</code></pre>
-<p>The sample frequency can be modified using the -F option.</p>
-<pre><code>$ perf record -F 99 -vve cycles -a sleep 1
-Using CPUID GenuineIntel-6-55-4
-intel_pt default config: tsc,mtc,mtc_period=3,psb_period=3,pt,branch
-------------------------------------------------------------
-perf_event_attr:
-  size                             112
-  &#123; sample_period, sample_freq &#125;   99
-  sample_type                      IP|TID|TIME|CPU|PERIOD
-  read_format                      ID
-  disabled                         1
-  inherit                          1
-  mmap                             1
-  comm                             1
-  freq                             1
-  task                             1
-  sample_id_all                    1
-  exclude_guest                    1
-  mmap2                            1
-  comm_exec                        1
-------------------------------------------------------------
-</code></pre>
-<p>In Linux, there is a limit for frequency rate and cpu utilization for perf. These limits can be changed with <em>sysctl</em> if needed.</p>
-<pre><code>$ sysctl -a | grep kernel.perf_event_max_sample_rate
-kernel.perf_event_max_sample_rate = 16000
-
-$ sysctl -a | grep kernel.perf_cpu_time_max_percent
-kernel.perf_cpu_time_max_percent = 25
-</code></pre>
-<h2 id="CPU-profiling"><a href="#CPU-profiling" class="headerlink" title="CPU profiling"></a>CPU profiling</h2><p>perf is often used for CPU profiling.</p>
-<p>In the following example, we have a fio workload running to create 10000 files and 100KB each. We can profile the workload while it’s running.</p>
-<p>We increase the open files parameter value from the default 1024 to 10240 so that we can create 10000 files.</p>
-<pre><code>$ ulimit -a | grep &quot;open files&quot;
-open files                      (-n) 1024
-
-$ ulimit -n 10240
-
-$ ulimit -a | grep &quot;open files&quot;
-open files                      (-n) 10240
-</code></pre>
-<p>We use the following fio job file to run the workload.</p>
-<pre><code>$ cat fio_job_file.ini
-[job1]
-ioengine=libaio
-iodepth=8
-rw=write
-direct=1
-nrfiles=10000
-filesize=102400
-blocksize=4096
-dedupe_percentage=30
-buffer_compress_percentage=50
-buffer_pattern=&quot;0123456789&quot;
-numjobs=1
-directory=/testdir
-
-$ fio fio_job_file.ini
-</code></pre>
-<p>We start the perf profiling in a different terminal while the above fio workload is running.</p>
-<pre><code>$ perf record -F 99 -p `pidof fio` -a -g -- sleep 5
-</code></pre>
-<p>Once the profiling is done, a <em>perf.data</em> result file is generated for later analysis. We use <em>perf report –stdio</em> command to summarize the <em>perf.data</em> and generate a text report.</p>
-<p>From the text report, we can have a better idea on how the fio works by understanding the system call function graph. This is extremly useful when we need to identify the high latency of functions.</p>
-<pre><code>$ ls -la | grep perf.data
--rw-------.  1 root root   143460 Feb 25 02:25 perf.data
-
-$ perf report --stdio &gt; perf.report.stdio.out
-# To display the perf.data header info, please use --header/--header-only options.
-#
-#
-# Total Lost Samples: 0
-#
-# Samples: 335  of event &#39;cycles:ppp&#39;
-# Event count (approx.): 3215628508
-#
-# Children      Self  Command  Shared Object       Symbol
-# ........  ........  .......  ..................  ............................................
-#
-    41.73%     0.00%  :198904  [kernel.kallsyms]   [k] system_call_fastpath
-            |
-            ---system_call_fastpath
-               |
-               |--30.99%--sys_io_submit
-               |          |
-               |          |--29.96%--do_io_submit
-               |          |          |
-               |          |          |--15.62%--vx_naio_write_v2
-               |          |          |          vx_naio_write
-               |          |          |          |
-               |          |          |          |--9.73%--vx_naio_handoff
-               |          |          |          |          |
-               |          |          |          |           --8.57%--__wake_up
-               |          |          |          |                     __wake_up_common_lock
-               |          |          |          |                     __wake_up_common
-               |          |          |          |                     vx_wq_wakeup_function
-               |          |          |          |                     default_wake_function
-               |          |          |          |                     try_to_wake_up
-               |          |          |          |                     |
-               |          |          |          |                      --0.87%--_raw_spin_lock_irqsave
-               |          |          |          |
-               |          |          |           --5.89%--vx_naio_checks.isra.5.constprop.6
-               |          |          |                     |
-               |          |          |                      --5.16%--vx_fel_io_allowed
-               |          |          |                                |
-               |          |          |                                |--2.86%--vx_irwunlock
-               |          |          |                                |          vx_recsmp_rangeunlock
-               |          |          |                                |          vx_rwsleep_rec_unlock
-               |          |          |                                |
-               |          |          |                                 --1.92%--vx_irwlock
-               |          |          |                                           vx_irwlock2
-               |          |          |                                           vx_recsmp_rangelock
-               |          |          |                                           vx_rwsleep_rec_lock
-               |          |          |                                           _raw_spin_lock_irqsave
-               |          |          |
-               |          |          |--7.94%--kmem_cache_alloc
-               |          |          |          __slab_alloc
-               |          |          |          ___slab_alloc
-               |          |          |
-               |          |          |--3.83%--rw_verify_area
-               |          |          |          security_file_permission
-               |          |          |          |
-               |          |          |           --3.48%--selinux_file_permission
-               |          |          |                     __inode_security_revalidate
-               |          |          |
-               |          |          |--1.04%--lookup_ioctx
-               |          |          |
-               |          |           --0.83%--fget
-               |          |
-               |           --0.86%--kmem_cache_alloc
-               |
-               |--5.52%--sys_io_getevents
-               |          read_events
-               |          |
-               |          |--3.06%--schedule
-               |          |          __schedule
-               |          |          |
-               |          |           --2.76%--deactivate_task
-               |          |                     update_rq_clock.part.76
-               |          |
-               |          |--1.77%--aio_read_events
-               |          |          |
-               |          |           --0.58%--_cond_resched
-               |          |
-               |           --0.64%--prepare_to_wait
-               |                     _raw_spin_lock_irqsave
-               |
-                --5.04%--sys_open
-                          do_sys_open
-                          |
-                          |--4.12%--do_filp_open
-                          |          path_openat
-                          |          |
-                          |          |--2.38%--link_path_walk
-                          |          |          |
-                          |          |           --0.66%--lookup_fast
-                          |          |                     vx_drevalidate
-                          |          |                     vx_nmspc_resolve
-                          |          |                     _raw_spin_lock_irqsave
-                          |          |
-                          |          |--0.90%--get_empty_filp
-                          |          |          |
-                          |          |           --0.72%--kmem_cache_alloc
-                          |          |
-                          |           --0.81%--do_last
-                          |                     |
-                          |                      --0.56%--__audit_inode
-                          |                                audit_copy_inode
-                          |                                get_vfs_caps_from_disk
-                          |                                vx_linux_getxattr
-                          |                                vx_get_eatype
-                          |
-                           --0.92%--getname
-                                     getname_flags
-                                     kmem_cache_alloc
-[...]
-</code></pre>
-<h2 id="Tracepoint-events"><a href="#Tracepoint-events" class="headerlink" title="Tracepoint events"></a>Tracepoint events</h2><p>In the previous profile, we saw a function kmem_cache_alloc. It’s a pre-defined tracepoint. So, we can trace it directly to understand the call graph related.</p>
-<pre><code>$ perf list | grep kmem_cache_alloc
-  kmem:kmem_cache_alloc                              [Tracepoint event]
-
-
-$ perf record -F 99 -e kmem:kmem_cache_alloc -p `pidof fio` -a -g -- sleep 5 
-</code></pre>
-<p>We can check the target tracepoint call graph as below.</p>
-<pre><code>$ perf report --stdio
-    14.61%    14.61%  (mmap_region+0x38c) call_site=ffffffff877fa39c ptr=0xffff9193252c5f38 bytes_req=216 bytes_alloc=216 gfp_flags=GFP_KERNEL|GFP_ZERO
-            |
-            ---__mmap64
-               system_call_fastpath
-               sys_mmap
-               sys_mmap_pgoff
-               vm_mmap_pgoff
-               do_mmap
-               mmap_region
-               kmem_cache_alloc
-[...]               
-</code></pre>
-<p>Another example is to check the which function issues the disk I&#x2F;Os(e.g. synchronous read&#x2F;write).</p>
-<pre><code>$ perf record -e block:block_rq_insert -a -g -- sleep 60
-</code></pre>
-<p><em>perf script</em> can also be used to get a summary. It’s useful to spot patterns overtime which might be lost in a huge report summary.</p>
-<pre><code>$ perf script
-
-fio 264249 [020] 3116264.020748: kmem:kmem_cache_alloc: (getname_flags+0x4f) call_site=ffffffff8785c74f ptr=0xffff9234810d5000 bytes_req=4096 bytes_alloc=4096 gfp_flags=GFP
-_KERNEL
-    ffffffff8782660d kmem_cache_alloc+0xfd ([kernel.kallsyms])
-    ffffffff8785c74f getname_flags+0x4f ([kernel.kallsyms])
-    ffffffff8785d8c5 user_path_at_empty+0x45 ([kernel.kallsyms])
-    ffffffff8785d951 user_path_at+0x11 ([kernel.kallsyms])
-    ffffffff87850633 vfs_fstatat+0x63 ([kernel.kallsyms])
-    ffffffff87850a51 SYSC_newlstat+0x31 ([kernel.kallsyms])
-    ffffffff87850ebe sys_newlstat+0xe ([kernel.kallsyms])
-    ffffffff87d8fede system_call_fastpath+0x25 ([kernel.kallsyms])
-        7fd8de3ea365 __lxstat64+0x15 (/usr/lib64/libc-2.17.so)
-                8000 [unknown] ([unknown])
-[...]
-</code></pre>
-<p>The following are the reports without using “-g” option during profiling. It summarizes the profile without the detail function graph.</p>
-<pre><code>$ perf script
-    fio 276212 [047] 3116580.119986: kmem:kmem_cache_alloc: (get_empty_filp+0x5c) call_site=ffffffff8784d10c ptr=0xffff922b52f2ee00 bytes_req=256 bytes_alloc=256 g
-    fio 276212 [047] 3116580.120138: kmem:kmem_cache_alloc: (sys_io_setup+0xaa) call_site=ffffffff878a182a ptr=0xffff918f24972f40 bytes_req=576 bytes_alloc=576 gfp
-    fio 276212 [008] 3116580.120419: kmem:kmem_cache_alloc: (do_io_submit+0x194) call_site=ffffffff878a1da4 ptr=0xffff91224f606f00 bytes_req=192 bytes_alloc=192 gf
-    fio 276212 [008] 3116580.120420: kmem:kmem_cache_alloc: (do_io_submit+0x194) call_site=ffffffff878a1da4 ptr=0xffff91224f606f00 bytes_req=192 bytes_alloc=192 gf
-    fio 276212 [008] 3116580.120420: kmem:kmem_cache_alloc: (do_io_submit+0x194) call_site=ffffffff878a1da4 ptr=0xffff91224f606f00 bytes_req=192 bytes_alloc=192 gf
-    fio 276212 [008] 3116580.120425: kmem:kmem_cache_alloc: (vx_alloc+0x152) call_site=ffffffffc13ec032 ptr=0xffff91b661b0bd10 bytes_req=88 bytes_alloc=88 gfp_flag
-    fio 276212 [008] 3116580.120440: kmem:kmem_cache_alloc: (getname_flags+0x4f) call_site=ffffffff8785c74f ptr=0xffff919470bd5000 bytes_req=4096 bytes_alloc=4096
-
-
-$ perf report --stdio
-    12.93%  (vx_alloc+0x152) call_site=ffffffffc13ec032 ptr=0xffff90e61cd6c840 bytes_req=88 bytes_alloc=88 gfp_flags=GFP_NOFS|GFP_NOWARN|GFP_NORETRY
-    12.50%  (do_io_submit+0x194) call_site=ffffffff878a1da4 ptr=0xffff91cbb8190300 bytes_req=192 bytes_alloc=192 gfp_flags=GFP_KERNEL|GFP_ZERO
-    12.42%  (do_io_submit+0x194) call_site=ffffffff878a1da4 ptr=0xffff91e20e737980 bytes_req=192 bytes_alloc=192 gfp_flags=GFP_KERNEL|GFP_ZERO
-    12.02%  (do_io_submit+0x194) call_site=ffffffff878a1da4 ptr=0xffff919379aea240 bytes_req=192 bytes_alloc=192 gfp_flags=GFP_KERNEL|GFP_ZERO
-    11.69%  (vx_alloc+0x152) call_site=ffffffffc13ec032 ptr=0xffff922ef33f91b8 bytes_req=88 bytes_alloc=88 gfp_flags=GFP_NOFS|GFP_NOWARN|GFP_NORETRY
-    10.60%  (do_io_submit+0x194) call_site=ffffffff878a1da4 ptr=0xffff9153dad8be00 bytes_req=192 bytes_alloc=192 gfp_flags=GFP_KERNEL|GFP_ZERO
-     5.79%  (getname_flags+0x4f) call_site=ffffffff8785c74f ptr=0xffff90edba1c3000 bytes_req=4096 bytes_alloc=4096 gfp_flags=GFP_KERNEL
-     5.74%  (vx_alloc+0x152) call_site=ffffffffc13ec032 ptr=0xffff922efbb0b580 bytes_req=88 bytes_alloc=88 gfp_flags=GFP_NOFS|GFP_NOWARN|GFP_NORETRY
-     4.88%  (do_io_submit+0x194) call_site=ffffffff878a1da4 ptr=0xffff91224f606a80 bytes_req=192 bytes_alloc=192 gfp_flags=GFP_KERNEL|GFP_ZERO
-</code></pre>
-<h2 id="perf-stat"><a href="#perf-stat" class="headerlink" title="perf stat"></a>perf stat</h2><p><em>perf stat</em> subcommand can be used to count the target event during the specified seconds.</p>
-<p>The following example shows the <em>kmem:kmem_cache_alloc</em> tracepoints fired 146,375 times during 5 seconds.</p>
-<pre><code>$ perf stat -e kmem:kmem_cache_alloc -p `pidof fio` -a -- sleep 5
-
- Performance counter stats for process id &#39;9639&#39;:
-
-           146,375      kmem:kmem_cache_alloc
-
-       5.003282238 seconds time elapsed
-</code></pre>
-<h2 id="Dynamic-tracing-with-probe-events"><a href="#Dynamic-tracing-with-probe-events" class="headerlink" title="Dynamic tracing with probe events"></a>Dynamic tracing with probe events</h2><p>Except for tracing the predefined perf events which are present in <em>perf list</em> command, <em>perf</em> is capable of creating more probe events dynamically.</p>
-<p><strong>kprobes</strong></p>
-<p>kprobes(kernel probes) can trace kernel function or instruction.</p>
-<p>Noticed that there are lots of function calls of <em>native_apic_mem_write</em></p>
-<pre><code>$ perf record -F 99 -p `pidof fio` -a -- sleep 5
-$ perf script
-  fio 225677 3122981.775077:      42831 cycles:ppp:  ffffffff87663ec0 native_apic_mem_write+0x0 ([kernel.kallsyms])
-  fio 225677 3122981.775309:      62731 cycles:ppp:  ffffffff87635b48 native_sched_clock+0x58 ([kernel.kallsyms])
-[...]  
-</code></pre>
-<p>It’s not a pre-defined tracepoint.</p>
-<pre><code>$ perf list | grep native_write_msr_safe
-</code></pre>
-<p>It’s a kernel function.</p>
-<pre><code>$ cat /proc/kallsyms | grep native_write_msr_safe
-ffffffff8766d5b0 t native_write_msr_safe
-</code></pre>
-<p>We add the probe event for the kernel function and it will be listed in <em>perf list</em>. Now it’s ready for tracing.</p>
-<pre><code>$ perf probe --add native_write_msr_safe
-Added new event:
-  probe:native_write_msr_safe (on native_write_msr_safe)
-
-You can now use it in all perf tools, such as:
-
-    perf record -e probe:native_write_msr_safe -aR sleep 1
-
-$ perf list | grep native_write_msr_safe
-  probe:native_write_msr_safe                        [Tracepoint event]
-
-$ perf record -e probe:native_write_msr_safe -p `pidof fio` -a -g sleep 5
-Warning:
-PID/TID switch overriding SYSTEM
-[ perf record: Woken up 1 times to write data ]
-[ perf record: Captured and wrote 0.417 MB perf.data (1564 samples) ]
-
-$ perf script
-fio 241552 [020] 3123367.978632: probe:native_write_msr_safe: (ffffffff8766d5b0)
-        ffffffff8766d5b1 native_write_msr_safe+0x1 ([kernel.kallsyms])
-        ffffffff8770de01 clockevents_program_event+0x71 ([kernel.kallsyms])
-        ffffffff8770fb03 tick_program_event+0x23 ([kernel.kallsyms])
-        ffffffff876cad42 hrtimer_interrupt+0xf2 ([kernel.kallsyms])
-        ffffffff8765c61b local_apic_timer_interrupt+0x3b ([kernel.kallsyms])
-        ffffffff87d949d3 smp_apic_timer_interrupt+0x43 ([kernel.kallsyms])
-        ffffffff87d90efa apic_timer_interrupt+0x16a ([kernel.kallsyms])
-        ffffffffc13a484d vx_log+0x2bd ([kernel.kallsyms])
-        ffffffffc14620cb vx_trancommit+0x70b ([kernel.kallsyms])
-        ffffffffc1327fb3 vx_growfile+0x683 ([kernel.kallsyms])
-        ffffffffc132ecbd vx_tran_extset+0x79d ([kernel.kallsyms])
-        ffffffffc132d982 vx_extset+0x4e2 ([kernel.kallsyms])
-        ffffffffc13ea139 vx_do_fallocate+0x479 ([kernel.kallsyms])
-        ffffffffc13ea330 vx_fallocate+0x60 ([kernel.kallsyms])
-        ffffffffc13ea3e6 vx_fallocate_v2+0x16 ([kernel.kallsyms])
-        ffffffff87847d82 vfs_fallocate+0x142 ([kernel.kallsyms])
-        ffffffff87848dab sys_fallocate+0x5b ([kernel.kallsyms])
-        ffffffff87d8fede system_call_fastpath+0x25 ([kernel.kallsyms])
-            7fcc1002a730 fallocate64+0x70 (/usr/lib64/libc-2.17.so)
-[...]         
-</code></pre>
-<p>We can remove the kprobe if it’s no longer needed.</p>
-<pre><code>$ perf probe --del native_write_msr_safe
-Removed event: probe:native_write_msr_safe
-</code></pre>
-<p>The function variables including arguments are available to perf if the <strong>kernel debuginfo</strong> is available.</p>
-<pre><code>$ perf probe --vars native_write_msr_safe
-</code></pre>
-<p><strong>uprobes</strong></p>
-<p>uprobes can trace user-space functions in applications and libraries.</p>
-<p>The following example adds user probe for fopen function on the libc library.</p>
-<pre><code>$ perf probe -x /usr/lib64/libc.so.6 --add fopen
-Added new event:
-  probe_libc:fopen     (on fopen in /usr/lib64/libc-2.17.so)
-
-You can now use it in all perf tools, such as:
-
-    perf record -e probe_libc:fopen -aR sleep 1
-
-$ perf probe --del probe_libc:fopen
-Removed event: probe_libc:fopen
-</code></pre>
-<p>The return of the function can be instrumented by adding %return after the function.</p>
-<pre><code>$ perf probe -x /usr/lib64/libc.so.6 --add fopen%return
-Added new event:
-  probe_libc:fopen__return (on fopen%return in /usr/lib64/libc-2.17.so)
-
-You can now use it in all perf tools, such as:
-
-    perf record -e probe_libc:fopen__return -aR sleep 1
-
-$ perf list |grep fopen
-  probe_libc:fopen__return                           [Tracepoint event]
-
-$ perf probe --del probe_libc:fopen__return
-Removed event: probe_libc:fopen__return
-</code></pre>
-<p>If the system has debuginfo for the target library, the variable information including arguments might be available.</p>
-<pre><code>$ perf probe -x /usr/lib64/libc.so.6 --vars fopen
-</code></pre>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/source/tools/perf">https://elixir.bootlin.com/linux/latest/source/tools/perf</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/html/latest/trace/">https://www.kernel.org/doc/html/latest/trace/</a></li>
 </ul>
 
       

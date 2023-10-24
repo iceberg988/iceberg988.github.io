@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">252</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">96</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">254</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">252</span>
+          <span class="site-state-item-count">254</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">96</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,271 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/upgrade-kernel-version-in-centos-7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/upgrade-kernel-version-in-centos-7/" class="post-title-link" itemprop="url">Upgrade kernel version in centos 7</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-18 07:00:00" itemprop="dateCreated datePublished" datetime="2021-07-18T07:00:00-07:00">2021-07-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Before-upgrade"><a href="#Before-upgrade" class="headerlink" title="Before upgrade"></a>Before upgrade</h2><pre><code>$ cat /etc/centos-release
+CentOS Linux release 7.4.1708 (Core)
+
+$ uname -r
+3.10.0-693.el7.x86_64
+
+$ cat /boot/grub2/grubenv
+saved_entry=CentOS Linux (3.10.0-693.el7.x86_64) 7 (Core)
+</code></pre>
+<h2 id="Install-the-newer-kernel-package"><a href="#Install-the-newer-kernel-package" class="headerlink" title="Install the newer kernel package"></a>Install the newer kernel package</h2><pre><code>$ rpm -ivh kernel-ml-5.7.12-1.el7.elrepo.x86_64.rpm
+warning: kernel-ml-5.7.12-1.el7.elrepo.x86_64.rpm: Header V4 DSA/SHA1 Signature, key ID baadae52: NOKEY
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:kernel-ml-5.7.12-1.el7.elrepo    ################################# [100%]
+
+$ rpm -ivh kernel-ml-devel-5.7.12-1.el7.elrepo.x86_64.rpm
+warning: kernel-ml-devel-5.7.12-1.el7.elrepo.x86_64.rpm: Header V4 DSA/SHA1 Signature, key ID baadae52: NOKEY
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:kernel-ml-devel-5.7.12-1.el7.elre################################# [100%]
+
+$  rpm -qa | grep kernel
+kernel-ml-devel-5.7.12-1.el7.elrepo.x86_64
+kernel-3.10.0-693.el7.x86_64
+kernel-tools-3.10.0-693.el7.x86_64
+kernel-ml-5.7.12-1.el7.elrepo.x86_64
+kernel-tools-libs-3.10.0-693.el7.x86_64
+</code></pre>
+<h2 id="Set-the-default-boot-kernel-entry"><a href="#Set-the-default-boot-kernel-entry" class="headerlink" title="Set the default boot kernel entry"></a>Set the default boot kernel entry</h2><p><strong>Notes:</strong> if &#x2F;etc&#x2F;grub2.cfg does not exist, do next step to rebuild the GRUB2 and come back later after that.</p>
+<pre><code>$ awk -F\&#39; &#39;$1==&quot;menuentry &quot; &#123;print $2&#125;&#39; /etc/grub2.cfg
+CentOS Linux (5.7.12-1.el7.elrepo.x86_64) 7 (Core)
+CentOS Linux (3.10.0-693.el7.x86_64) 7 (Core)
+CentOS Linux (0-rescue-8ef36acf9f544b90bf0621450fe05f75) 7 (Core)
+
+$ grub2-set-default 0 
+$ grep saved /boot/grub2/grubenv
+saved_entry=0
+</code></pre>
+<h2 id="Rebuild-the-GRUB2-configuration"><a href="#Rebuild-the-GRUB2-configuration" class="headerlink" title="Rebuild the GRUB2 configuration"></a>Rebuild the GRUB2 configuration</h2><pre><code>$ grub2-mkconfig -o /boot/grub2/grub.cfg
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-5.7.12-1.el7.elrepo.x86_64
+Found initrd image: /boot/initramfs-5.7.12-1.el7.elrepo.x86_64.img
+Found linux image: /boot/vmlinuz-3.10.0-693.el7.x86_64
+Found initrd image: /boot/initramfs-3.10.0-693.el7.x86_64.img
+Found linux image: /boot/vmlinuz-0-rescue-8ef36acf9f544b90bf0621450fe05f75
+Found initrd image: /boot/initramfs-0-rescue-8ef36acf9f544b90bf0621450fe05f75.img
+done
+</code></pre>
+<h2 id="Reboot-the-system"><a href="#Reboot-the-system" class="headerlink" title="Reboot the system"></a>Reboot the system</h2><pre><code>$ reboot
+</code></pre>
+<h2 id="Verify-the-new-kernel-version"><a href="#Verify-the-new-kernel-version" class="headerlink" title="Verify the new kernel version"></a>Verify the new kernel version</h2><pre><code>$ uname -r
+5.7.12-1.el7.elrepo.x86_64
+$ cat /etc/centos-release
+CentOS Linux release 7.4.1708 (Core)
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.golinuxcloud.com/set-default-boot-kernel-version-old-previous-rhel-linux/">https://www.golinuxcloud.com/set-default-boot-kernel-version-old-previous-rhel-linux/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.tecmint.com/install-upgrade-kernel-version-in-centos-7/">https://www.tecmint.com/install-upgrade-kernel-version-in-centos-7/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/migrate-docker-data-to-different-directory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/migrate-docker-data-to-different-directory/" class="post-title-link" itemprop="url">Migrate docker data to different directory</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-10 07:00:00" itemprop="dateCreated datePublished" datetime="2021-07-10T07:00:00-07:00">2021-07-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>This post guides us how to migrate the docker data from the existing directory to a target directory in the case that the old directory runs out of space.</p>
+<h2 id="Stop-the-docker-daemon"><a href="#Stop-the-docker-daemon" class="headerlink" title="Stop the docker daemon"></a>Stop the docker daemon</h2><pre><code>$ cat /etc/centos-release
+CentOS Linux release 7.9.2009 (Core)
+    
+$ systemctl stop docker.service
+$ ps aux | grep -i docker | grep -v grep
+</code></pre>
+<h2 id="Add-a-configuration-file-to-tell-docker-where-is-the-new-location-of-the-data"><a href="#Add-a-configuration-file-to-tell-docker-where-is-the-new-location-of-the-data" class="headerlink" title="Add a configuration file to tell docker where is the new location of the data"></a>Add a configuration file to tell docker where is the new location of the data</h2><pre><code>$ mkdir /data/var_lib_docker/
+$ vim /etc/docker/daemon.json
+&#123;
+    &quot;data-root&quot;: &quot;/data/var_lib_docker&quot;
+&#125;
+</code></pre>
+<h1 id="Copy-the-docker-data-to-new-directory-It-takes-time"><a href="#Copy-the-docker-data-to-new-directory-It-takes-time" class="headerlink" title="Copy the docker data to new directory(It takes time)"></a>Copy the docker data to new directory(It takes time)</h1><pre><code>sudo rsync -aP /var/lib/docker/ /data/var_lib_docker
+</code></pre>
+<h1 id="Verify-if-the-migration-works"><a href="#Verify-if-the-migration-works" class="headerlink" title="Verify if the migration works"></a>Verify if the migration works</h1><pre><code>$ mv /var/lib/docker/ /var/lib/docker.old
+
+$ sudo systemctl start docker
+
+$ ps aux | grep -i docker | grep -v grep
+root     29227  0.2  0.1 1244076 28448 ?       Ssl  10:43   0:01 /usr/bin/dockerd
+root     29243  0.0  0.0 984268  7696 ?        Ssl  10:43   0:00 docker-containerd -l unix:///var/run/docker/libcontainerd/docker-containerd.sock --metrics-interval=0 --start-timeout 2m --state-dir /var/run/docker/libcontainerd/containerd --shim docker-containerd-shim --runtime docker-runc
+
+$ docker info  | grep Root
+    Docker Root Dir: /data/var_lib_docker
+
+$ docker images
+$ docker inspect 1cd20ecd897d | grep RootDir
+&quot;RootDir&quot;: &quot;/data/var_lib_docker/overlay/90021ce8266c3f717e2d30e258311e850b50e946b7f68d505f504b008378414c/root&quot;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1048,364 +1313,6 @@ ulimit -aS
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li>Advanced Programming in the UNIX Environment</li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-bcc-tools-for-dynamic-kernel-tracing/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/using-bcc-tools-for-dynamic-kernel-tracing/" class="post-title-link" itemprop="url">Using bcc-tools for dynamic kernel tracing</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-03-25 07:00:00" itemprop="dateCreated datePublished" datetime="2021-03-25T07:00:00-07:00">2021-03-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>In Red Hat Enterprise Linux 8.1, Red Hat ships a set of fully supported on x86_64 dynamic kernel tracing tools, called bcc-tools, that make use of a kernel technology called extended Berkeley Packet Filter (eBPF). With these tools, you can quickly gain insight into certain aspects of system performance that would have previously required more time and effort from the system and operator.</p>
-<p>The eBPF technology allows dynamic kernel tracing without requiring kernel modules (like systemtap) or rebooting of the kernel (as with debug kernels). eBPF accomplishes this while maintaining minimal overhead for each trace point, making these tools an ideal way to instrument running kernels in production.</p>
-<p>To ensure that an eBPF program will not harm the running kernel, tools built on eBPF go through the following process when instantiated by root on the command line:</p>
-<ul>
-<li>The program is compiled into eBPF bytecode.</li>
-<li>Loaded into the kernel.</li>
-<li>Run through a technology called the eBPF verifier to ensure that the program will not harm the running kernel.</li>
-<li>Upon passing the verifier, it begins execution. If it does not pass the verifier, the code is unloaded and does not execute.</li>
-</ul>
-<p>That said, bear in mind that you are still inserting tracing and some system calls are called significantly more than others, so depending on what you are tracing, there may be increased overhead.</p>
-<p>If you are interested in more information on eBPF in general, please see Stanislav Kozina’s blog: <a target="_blank" rel="noopener" href="https://www.redhat.com/en/blog/introduction-ebpf-red-hat-enterprise-linux-7">Introduction to eBPF in Red Hat Enterprise Linux 7</a>.</p>
-<h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><p>With RHEL 8.1, bcc-tools has gone fully supported on x86. To install bcc-tools on RHEL 7 (7.6+) and RHEL 8, run yum install as root:</p>
-<pre><code>$ uname -r
-3.10.0-1062.40.1.el7.x86_64
-$  cat /etc/redhat-release
-Red Hat Enterprise Linux Server release 7.7 (Maipo)
-$ yum install bcc-tools
-Installed:
-  bcc-tools.x86_64 0:0.10.0-1.el7
-Dependency Installed:
-  bcc.x86_64 0:0.10.0-1.el7                kernel-devel.x86_64 0:3.10.0-1160.21.1.el7
-  llvm-private.x86_64 0:7.0.1-1.el7        python-bcc.x86_64 0:0.10.0-1.el7
-
-$ pwd
-/usr/share/bcc/tools
-$  ls
-argdist       drsnoop         memleak         pythonstat   tclobjnew
-bashreadline  execsnoop       mountsnoop      reset-trace  tclstat
-biolatency    ext4dist        mysqld_qslower  rubycalls    tcpaccept
-biosnoop      ext4slower      nfsdist         rubyflow     tcpconnect
-biotop        filelife        nfsslower       rubygc       tcpconnlat
-bitesize      fileslower      nodegc          rubyobjnew   tcpdrop
-bpflist       filetop         nodestat        rubystat     tcplife
-btrfsdist     funccount       offcputime      runqlat      tcpretrans
-btrfsslower   funclatency     offwaketime     runqlen      tcpsubnet
-cachestat     funcslower      oomkill         runqslower   tcptop
-cachetop      gethostlatency  opensnoop       shmsnoop     tcptracer
-capable       hardirqs        perlcalls       slabratetop  tplist
-cobjnew       javacalls       perlflow        sofdsnoop    trace
-cpudist       javaflow        perlstat        softirqs     ttysnoop
-cpuunclaimed  javagc          phpcalls        solisten     vfscount
-dbslower      javaobjnew      phpflow         sslsniff     vfsstat
-dbstat        javastat        phpstat         stackcount   wakeuptime
-dcsnoop       javathreads     pidpersec       statsnoop    xfsdist
-dcstat        killsnoop       profile         syncsnoop    xfsslower
-deadlock      lib             pythoncalls     syscount
-deadlock.c    llcstat         pythonflow      tclcalls
-doc           mdflush         pythongc        tclflow  
-</code></pre>
-<h2 id="bcc-tools-Framework"><a href="#bcc-tools-Framework" class="headerlink" title="bcc-tools Framework"></a>bcc-tools Framework</h2><p>Before we dive into the different types of tools that are included in bcc-tools, it’s important to note a few things:</p>
-<ul>
-<li>All of these tools live in &#x2F;usr&#x2F;share&#x2F;bcc&#x2F;tools.</li>
-<li>These tools must run as the root user as any eBPF program can read kernel data. As such, injecting eBPF bytecode as a regular user is not allowed in RHEL 8.1.</li>
-<li>Each tool has a man page. To view the man page, run man . These man pages include descriptions of the tools, provide the options that can be called, and have information on the expected overhead of the specific tool.</li>
-</ul>
-<p>Since there are a lot of tools in bcc-tools, I’m going to divide the tools into the following classes and then we’ll dive into each class:</p>
-<ul>
-<li>The Snoops</li>
-<li>Latency Detectors</li>
-<li>Slower</li>
-<li>Top Up with bcc-tools</li>
-<li>Java&#x2F;Perl&#x2F;Python&#x2F;Ruby</li>
-</ul>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.redhat.com/en/blog/introduction-ebpf-red-hat-enterprise-linux-7">https://www.redhat.com/en/blog/introduction-ebpf-red-hat-enterprise-linux-7</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.redhat.com/en/blog/bcc-tools-brings-dynamic-kernel-tracing-red-hat-enterprise-linux-81">https://www.redhat.com/en/blog/bcc-tools-brings-dynamic-kernel-tracing-red-hat-enterprise-linux-81</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/blktrace-a-block-layer-io-tracing-utility/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/blktrace-a-block-layer-io-tracing-utility/" class="post-title-link" itemprop="url">blktrace - A block layer IO tracing utility</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-03-11 08:00:00" itemprop="dateCreated datePublished" datetime="2021-03-11T08:00:00-08:00">2021-03-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="What-can-blktrace-do"><a href="#What-can-blktrace-do" class="headerlink" title="What can blktrace do?"></a>What can blktrace do?</h2><p>Let’s dive into the block device layer and see how the I&#x2F;O are handled in disk queues.</p>
-<p>The following stack shows the I&#x2F;O paths including the block device layer. The application can issue I&#x2F;O requests directly to block device or through file systems. In the following sections, let’s dig into the block device layer with blktrace in order to understand the I&#x2F;O pattern and disk queue activities.</p>
-<pre><code>        Applications
-        |      |   |  
-        V      |   | 
-  File systems |   |
-        |      |   |
-        V      |   |
- Page Cache &lt;--|   | 
-        |          | 
-        V          V
-Block I/O Layer: Request Queues
-        |
-        V 
-  SCSI Drivers
-        |
-        V
- Physical Devices               
-</code></pre>
-<h2 id="Don’t-forget-iostat"><a href="#Don’t-forget-iostat" class="headerlink" title="Don’t forget iostat"></a>Don’t forget iostat</h2><p>iostat is always the first place to understand the I&#x2F;O characteristics before we turn to other advanced utilities like blktrace.</p>
-<p>It provides the following information for the disk IOs.</p>
-<ul>
-<li>Number of read&#x2F;write merges per second</li>
-<li>Number of reads&#x2F;writes per second</li>
-<li>Average I&#x2F;O request size(in sectors)</li>
-<li>Average request queue size</li>
-<li>Average I&#x2F;O wait time</li>
-</ul>
-<p>If any of the above metrics indicates disk I&#x2F;O performance concerns and it’s not sufficient to help us explain the performance issue, we can turn to blktrace or other tracing utilities for more insights.</p>
-<h2 id="blktrace-and-blkparse"><a href="#blktrace-and-blkparse" class="headerlink" title="blktrace and blkparse"></a>blktrace and blkparse</h2><p>To trace the target block device:</p>
-<pre><code>$ blktrace -d /dev/&lt;sd-device-name&gt; -D &lt;trace-raw-data-save-dir&gt; -w &lt;trace-time-in-seconds&gt;
-</code></pre>
-<p>To parse the blktrace data:</p>
-<pre><code>$ blkparse -i &lt;sd-device-name&gt; -D &lt;trace-raw-data-save-dir&gt; -o blkparse.&lt;sd-device-name&gt;.out -d blktrace.bin
-</code></pre>
-<p>blkparse output snippet:</p>
-<pre><code>  8,0    7        3     0.992335623  4180  A  WS 680911952 + 8 &lt;- (8,2) 679885904
-  8,0    7        4     0.992336407  4180  Q  WS 680911952 + 8 [jbd2/dm-7-8]
-  8,0    7        5     0.992338784  4180  G  WS 680911952 + 8 [jbd2/dm-7-8]
-  8,0    7        6     0.992339977  4180  I  WS 680911952 + 8 [jbd2/dm-7-8]
-  8,0    7        7     0.992341444  4180  D  WS 680911952 + 8 [jbd2/dm-7-8]
-  8,0   56        1     0.992499505     0  C  WS 680911952 + 8 [0]
-  8,0   47        7     0.991930131  4180  A  WS 680911920 + 8 &lt;- (8,2) 679885872
-  8,0   47        8     0.991930522  4180  Q  WS 680911920 + 8 [jbd2/dm-7-8]
-  8,0   47        9     0.991932697  4180  M  WS 680911920 + 8 [jbd2/dm-7-8]
-</code></pre>
-<p>The columns are Dev major,minor, CPU id, Sequence number, Timestamp, PID, Event, Operation, Start block + number of blocks(offset), Process name.</p>
-<p>In the above example, The first IO starts at block 680911952 with the offset of 8 blocks. It is handled in the following sequence.</p>
-<ul>
-<li>Remapped to a different device(8,2)</li>
-<li>Handled by the request queue code</li>
-<li>Get the request</li>
-<li>Inserted to the request queue</li>
-<li>Dispatch to device driver</li>
-<li>Completion</li>
-</ul>
-<p>The second IO starts at block 680911920 with the offset of 8 blocks. It’s handled in the following sequence.</p>
-<ul>
-<li>Remapped to a different device(8,2)</li>
-<li>Handled by the request queue code</li>
-<li>Back merged with request on queue</li>
-</ul>
-<p>blkparse output also includes a summary to explain the number of I&#x2F;Os in each queuing phase. In the following example, there are 86 writes handled by request queue. 19 out of 86 writes are merged with request on queue. Thus, only 67 writes are issued to device to complete the front end requests.</p>
-<pre><code>Total (sda):
- Reads Queued:           0,        0KiB  Writes Queued:          86,      628KiB
- Read Dispatches:        0,        0KiB  Write Dispatches:       67,      628KiB
- Reads Requeued:         0               Writes Requeued:         0
- Reads Completed:        0,        0KiB  Writes Completed:       67,      628KiB
- Read Merges:            0,        0KiB  Write Merges:           19,       88KiB
- IO unplugs:            21               Timer unplugs:           0
-</code></pre>
-<h2 id="btt"><a href="#btt" class="headerlink" title="btt"></a>btt</h2><p>btt is a post-processing tool for blktrace. blktrace is capable of producing tremendous amounts of output in the form of multiple individual traces per IO executed during the traced run. It is also capable of producing some general statistics concerning IO rates and the like. btt goes further and produces a variety of overall statistics about each of the individual handling of IOs, and provides data we believe is useful to plot to provide visual comparisons for evaluation.</p>
-<p>btt processes the binary file produced by blkparse.The major areas of output measured by btt include:</p>
-<ul>
-<li>Q2Q : Queue-to-Queue time</li>
-<li>Q2G : Queue-to-GetRequest time</li>
-<li>S2G : Sleep-to-GetRequest time</li>
-<li>G2I : GetRequest-to-Insert time</li>
-<li>Q2M : Queue-to-Merge time</li>
-<li>I2D : Insert-to-Issue time</li>
-<li>M2D : Merge-to-Issue time</li>
-<li>D2C : Issue-to-Complete time</li>
-<li>Q2C : Queue-to-Complete time</li>
-</ul>
-<p>For the D2C, it includes the driver and device time. It’s the average time from when the actual IO was issued to the driver until is completed (completion trace) back to the block IO layer. The D2C time should be greater than the actual physcial disk I&#x2F;O latency which is usually measured in disk(array) side.</p>
-<p>In the following exampl, 98.9265% of time is spent on D2C which is expected. The average IO time serviced by the disk is 1.65ms. The max IO time is 5.10ms. We may measure the I2D metric for different I&#x2F;O scheduler, like noop in SSD case.</p>
-<pre><code>$ btt -i blktrace.bin -B offset -o btt.out
-
-$ ls btt.*.out*
-btt.sda.30s.out.avg  btt.sda.30s.out.dat  btt.sda.30s.out_dhist.dat  btt.sda.30s.out.msg  btt.sda.30s.out_qhist.dat
-
-$ cat btt.out.avg
-==================== All Devices ====================
-
-ALL               MIN           AVG           MAX                  N
---------------- ------------- ------------- ------------- -----------
-
-Q2Q               0.000001053   0.304967428   5.071043004          85
-Q2G               0.000000338   0.000001928   0.000008143          67
-G2I               0.000000161   0.000008231   0.000126276          67
-Q2M               0.000000178   0.000000664   0.000002175          19
-I2D               0.000000223   0.000003979   0.000024517          67
-M2D               0.000002771   0.000030058   0.000116136          19
-D2C               0.000089761   0.001640496   0.005096214          86
-Q2C               0.000093453   0.001658297   0.005098018          86
-
-==================== Device Overhead ====================
-
-       DEV |       Q2G       G2I       Q2M       I2D       D2C
----------- | --------- --------- --------- --------- ---------
- (  8,  0) |   0.0906%   0.3867%   0.0088%   0.1869%  98.9265%
----------- | --------- --------- --------- --------- ---------
-   Overall |   0.0906%   0.3867%   0.0088%   0.1869%  98.9265%
-[..]   
-</code></pre>
 
       
     </div>

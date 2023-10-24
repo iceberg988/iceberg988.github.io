@@ -23399,4 +23399,50 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
         <tag>Drawing</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Common used built-in functions in Python</title>
+    <url>/blog/common-used-built-in-functions-in-python/</url>
+    <content><![CDATA[<h2 id="zip"><a href="#zip" class="headerlink" title="zip()"></a>zip()</h2><p>zip() method takes iterable containers and returns a single iterator object, having mapped values from all the containers. </p>
+<p>It is used to map the similar index of multiple containers so that they can be used just using a single entity. <span id="more"></span></p>
+<p>Syntax :  zip(*iterators) </p>
+<p>Parameters : Python iterables or containers ( list, string etc )<br>Return Value : Returns a single iterator object.</p>
+<p>Example:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">fruit = [ <span class="string">&quot;apple&quot;</span>, <span class="string">&quot;orange&quot;</span>, <span class="string">&quot;banana&quot;</span>, <span class="string">&quot;pear&quot;</span> ]</span><br><span class="line">amount = [ <span class="number">4</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span> ]</span><br><span class="line"> </span><br><span class="line"><span class="comment"># using zip() to map values</span></span><br><span class="line">mapped = <span class="built_in">zip</span>(fruit, amount)</span><br><span class="line"> </span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">set</span>(mapped))</span><br><span class="line"><span class="comment"># output: &#123;(&#x27;banana&#x27;, 3), (&#x27;pear&#x27;, 2), (&#x27;apple&#x27;, 4), (&#x27;orange&#x27;, 1)&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(mapped)</span><br><span class="line"><span class="keyword">for</span> f, a <span class="keyword">in</span> mapped:</span><br><span class="line">    <span class="built_in">print</span>(f,a)</span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"><span class="comment"># &lt;zip object at 0x7fa50d60d480&gt;</span></span><br><span class="line"><span class="comment"># apple 4</span></span><br><span class="line"><span class="comment"># orange 1</span></span><br><span class="line"><span class="comment"># banana 3</span></span><br><span class="line"><span class="comment"># pear 2</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Tech</category>
+        <category>Programming</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Heap and priority queue in Python</title>
+    <url>/blog/heap-and-priority-queue-in-python/</url>
+    <content><![CDATA[<h2 id="heapq-module-in-Python"><a href="#heapq-module-in-Python" class="headerlink" title="heapq module in Python"></a>heapq module in Python</h2><p>In Python, “heapq” module is available to use. Whenever elements are pushed or popped, heap structure is maintained. The heap[0] element also returns the smallest element each time.<span id="more"></span></p>
+<h2 id="Leetcode-2542-Maximum-Subsequence-Score"><a href="#Leetcode-2542-Maximum-Subsequence-Score" class="headerlink" title="[Leetcode 2542] Maximum Subsequence Score"></a>[Leetcode 2542] Maximum Subsequence Score</h2><p>You are given two 0-indexed integer arrays nums1 and nums2 of equal length n and a positive integer k. You must choose a subsequence of indices from nums1 of length k.</p>
+<p>For chosen indices i0, i1, …, ik - 1, your score is defined as:</p>
+<ul>
+<li>The sum of the selected elements from nums1 multiplied with the minimum of the selected elements from nums2.</li>
+<li>It can defined simply as: (nums1[i0] + nums1[i1] +…+ nums1[ik - 1]) * min(nums2[i0] , nums2[i1], … ,nums2[ik - 1]).<br>Return the maximum possible score.</li>
+</ul>
+<p>A subsequence of indices of an array is a set that can be derived from the set {0, 1, …, n-1} by deleting some or no elements.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: nums1 = [1,3,3,2], nums2 = [2,1,3,4], k = 3</span><br><span class="line">Output: 12</span><br><span class="line">Explanation: </span><br><span class="line">The four possible subsequence scores are:</span><br><span class="line">- We choose the indices 0, 1, and 2 with score = (1+3+3) * min(2,1,3) = 7.</span><br><span class="line">- We choose the indices 0, 1, and 3 with score = (1+3+2) * min(2,1,4) = 6. </span><br><span class="line">- We choose the indices 0, 2, and 3 with score = (1+3+2) * min(2,3,4) = 12. </span><br><span class="line">- We choose the indices 1, 2, and 3 with score = (3+3+2) * min(1,3,4) = 8.</span><br><span class="line">Therefore, we return the max score, which is 12.</span><br></pre></td></tr></table></figure>
+
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">maxScore</span>(<span class="params">self, nums1: <span class="type">List</span>[<span class="built_in">int</span>], nums2: <span class="type">List</span>[<span class="built_in">int</span>], k: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        preSum = <span class="number">0</span></span><br><span class="line">        minHeap = []</span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 1. construct pair list by zipping nums1 and nums2, </span></span><br><span class="line">        <span class="comment"># 2. sort the list by 2nd element in descending order</span></span><br><span class="line">        <span class="comment"># 3. calculate presum with the first elements in zipped list</span></span><br><span class="line">        <span class="comment"># 4. if there is k elements in minheap, multiply presum with the second element in each pair.</span></span><br><span class="line">        <span class="comment"># 5. the second elelment in each pair is the minimum element as we iterate so far</span></span><br><span class="line">        <span class="comment"># 6. pop the first element from minheap </span></span><br><span class="line">        <span class="keyword">for</span> n1, n2 <span class="keyword">in</span> <span class="built_in">sorted</span>(<span class="built_in">list</span>(<span class="built_in">zip</span>(nums1, nums2)), key = <span class="keyword">lambda</span> n : n[<span class="number">1</span>], reverse = <span class="literal">True</span>):</span><br><span class="line">            preSum += n1</span><br><span class="line">            heapq.heappush(minHeap, n1)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(minHeap) == k:</span><br><span class="line">                res = <span class="built_in">max</span>(res, preSum * n2)</span><br><span class="line">                preSum -= heapq.heappop(minHeap)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Tech</category>
+        <category>Programming</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Leetcode</tag>
+        <tag>Data structure</tag>
+        <tag>Heap</tag>
+        <tag>Priority Queue</tag>
+      </tags>
+  </entry>
 </search>

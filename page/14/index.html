@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">252</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">96</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">254</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">252</span>
+          <span class="site-state-item-count">254</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">96</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,260 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/how-to-setup-nfs-network-file-system-on-rhel-centos/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/how-to-setup-nfs-network-file-system-on-rhel-centos/" class="post-title-link" itemprop="url">How to setup NFS (Network File System) on RHEL/CentOS</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-06-29 07:00:00" itemprop="dateCreated datePublished" datetime="2022-06-29T07:00:00-07:00">2022-06-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>We need to install NFS packages on the NFS Server as well as on NFS Client machine. We can install it via “yum” for RHEL&#x2F;CentOS.</p>
+<p>On the NFS server side, run the following commands to setup NFS server.</p>
+<pre><code>$ systemctl status nfs
+$ mkfs.ext4 /dev/nvme9n1
+$ mkdir /mnt/nfsshare
+
+$ vim /etc/exports
+/mnt/nfsshare 10.10.10.1(rw,no_root_squash)
+
+$ systemctl restart nfs
+$ exportfs -s
+/mnt/nfsshare  10.10.10.1(sync,wdelay,hide,no_subtree_check,sec=sys,rw,secure,no_root_squash,no_all_squash)
+</code></pre>
+<p>On the NFS client side, run the following command to mount the exported NFS share.</p>
+<pre><code>$ mkdir /mnt/nfs1
+$ mount -t nfs nfs-server-hostname:/mnt/nfsshare /mnt/
+$ mount  | grep nfs1
+fs-server-hostname:/mnt/nfsshare on /mnt/nfs1 type nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.10.10.2,local_lock=none,addr=10.10.10.1)
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/sysrq-linux-magic-system-request-key-hacks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/sysrq-linux-magic-system-request-key-hacks/" class="post-title-link" itemprop="url">SysRq - Linux Magic System Request Key Hacks</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-05-21 07:00:00" itemprop="dateCreated datePublished" datetime="2022-05-21T07:00:00-07:00">2022-05-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="What-is-the-magic-SysRq-key"><a href="#What-is-the-magic-SysRq-key" class="headerlink" title="What is the magic SysRq key?"></a>What is the magic SysRq key?</h2><p>It is a ‘magical’ key combo you can hit which the kernel will respond to regardless of whatever else it is doing, unless it is completely locked up.</p>
+<h2 id="How-do-I-enable-the-magic-SysRq-key"><a href="#How-do-I-enable-the-magic-SysRq-key" class="headerlink" title="How do I enable the magic SysRq key?"></a>How do I enable the magic SysRq key?</h2><p>You need to say “yes” to ‘Magic SysRq key (CONFIG_MAGIC_SYSRQ)’ when configuring the kernel. When running a kernel with SysRq compiled in, &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;sysrq controls the functions allowed to be invoked via the SysRq key. The default value in this file is set by the CONFIG_MAGIC_SYSRQ_DEFAULT_ENABLE config symbol, which itself defaults to 1. Here is the list of possible values in &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;sysrq:</p>
+<ul>
+<li><p>0 - disable sysrq completely</p>
+</li>
+<li><p>1 - enable all functions of sysrq</p>
+</li>
+<li><p>$&gt;$1 - bitmask of allowed sysrq functions (see below for detailed function description):</p>
+<pre><code>2 =   0x2 - enable control of console logging level
+4 =   0x4 - enable control of keyboard (SAK, unraw)
+8 =   0x8 - enable debugging dumps of processes etc.
+</code></pre>
+<p>   16 &#x3D;  0x10 - enable sync command<br>   32 &#x3D;  0x20 - enable remount read-only<br>   64 &#x3D;  0x40 - enable signalling of processes (term, kill, oom-kill)<br>  128 &#x3D;  0x80 - allow reboot&#x2F;poweroff<br>  256 &#x3D; 0x100 - allow nicing of all RT tasks</p>
+</li>
+</ul>
+<p>You can set the value in the file by the following command:</p>
+<pre><code>$ echo &quot;number&quot; &gt;/proc/sys/kernel/sysrq
+</code></pre>
+<p>The number may be written here either as decimal or as hexadecimal with the 0x prefix. CONFIG_MAGIC_SYSRQ_DEFAULT_ENABLE must always be written in hexadecimal.</p>
+<p>Note that the value of &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;sysrq influences only the invocation via a keyboard. Invocation of any operation via &#x2F;proc&#x2F;sysrq-trigger is always allowed (by a user with admin privileges).</p>
+<h2 id="How-do-I-use-the-magic-SysRq-key"><a href="#How-do-I-use-the-magic-SysRq-key" class="headerlink" title="How do I use the magic SysRq key?"></a>How do I use the magic SysRq key?</h2><p>Write a character to &#x2F;proc&#x2F;sysrq-trigger. e.g.:</p>
+<pre><code>$ echo &quot;command key&quot; &gt; /proc/sysrq-trigger
+</code></pre>
+<p>The “command key” is case sensitive.</p>
+<h2 id="What-are-the-command-keys"><a href="#What-are-the-command-keys" class="headerlink" title="What are the command keys?"></a>What are the command keys?</h2><p><img src="/images/sysrq-command-key.png" alt="Image"></p>
+<h2 id="What-can-I-use-them-for"><a href="#What-can-I-use-them-for" class="headerlink" title="What can I use them for?"></a>What can I use them for?</h2><p>If we want to check the backtrace of all active CPUs, we can do following.</p>
+<pre><code>$ echo l &gt; /proc/sysrq-trigger
+
+
+$ tail -f /var/log/messages
+May 21 17:49:41 host1 kernel: sysrq: Show backtrace of all active CPUs
+May 21 17:49:41 host1 kernel: NMI backtrace for cpu 34
+May 21 17:49:41 host1 kernel: CPU: 34 PID: 27101 Comm: bash Tainted: G           O      5.7.12-1.el7.elrepo.x86_64 #1
+May 21 17:49:41 host1 kernel: Hardware name: Supermicro SYS-1029U-TN12RV/X11DPU-V, BIOS 3.4 11/03/2020
+May 21 17:49:41 host1 kernel: Call Trace:
+May 21 17:49:41 host1 kernel: dump_stack+0x6d/0x9a
+May 21 17:49:41 host1 kernel: ? lapic_can_unplug_cpu.cold+0x40/0x40
+May 21 17:49:41 host1 kernel: nmi_cpu_backtrace.cold+0x14/0x53
+May 21 17:49:41 host1 kernel: nmi_trigger_cpumask_backtrace+0xd9/0xdb
+May 21 17:49:41 host1 kernel: arch_trigger_cpumask_backtrace+0x19/0x20
+May 21 17:49:41 host1 kernel: sysrq_handle_showallcpus+0x17/0x20
+May 21 17:49:41 host1 kernel: __handle_sysrq.cold+0x48/0x111
+May 21 17:49:41 host1 kernel: write_sysrq_trigger+0x28/0x37
+May 21 17:49:41 host1 kernel: proc_reg_write+0x66/0x90
+May 21 17:49:41 host1 kernel: __vfs_write+0x1b/0x40
+May 21 17:49:41 host1 kernel: vfs_write+0xb9/0x1b0
+May 21 17:49:41 host1 kernel: ksys_write+0x67/0xe0
+May 21 17:49:41 host1 kernel: __x64_sys_write+0x1a/0x20
+May 21 17:49:41 host1 kernel: do_syscall_64+0x60/0x1e0
+May 21 17:49:41 host1 kernel: entry_SYSCALL_64_after_hwframe+0x44/0xa9
+&lt;...&gt;
+</code></pre>
+<p>The same message can also be checked from the following command.</p>
+<pre><code>$ dmesg -T
+$ journalctl --since &quot;5 minutes ago&quot;
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/html/latest/admin-guide/sysrq.html">https://www.kernel.org/doc/html/latest/admin-guide/sysrq.html</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1578,257 +1832,6 @@ Change: 2022-04-30 20:42:56.468650708 +0000
 <li><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/source/include/linux/fs.h#L614">https://elixir.bootlin.com/linux/latest/source/include/linux/fs.h#L614</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.cs.montana.edu/courses/309/topics/4-disks/debugfs_example.html">https://www.cs.montana.edu/courses/309/topics/4-disks/debugfs_example.html</a></li>
 <li><a target="_blank" rel="noopener" href="https://linoxide.com/linux-inode/">https://linoxide.com/linux-inode/</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/understanding-mapreduce-with-an-example/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/understanding-mapreduce-with-an-example/" class="post-title-link" itemprop="url">Understanding MapReduce with an example</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-04-29 07:00:00" itemprop="dateCreated datePublished" datetime="2022-04-29T07:00:00-07:00">2022-04-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="What-is-MapReduce"><a href="#What-is-MapReduce" class="headerlink" title="What is MapReduce"></a>What is MapReduce</h2><p><img src="/images/mapreduce.png" alt="Image"></p>
-<p>MapReduce is a programming framework that allows us to perform distributed and parallel processing on large data sets in a distributed environment.</p>
-<ul>
-<li>MapReduce consists of two distinct tasks — Map and Reduce.</li>
-<li>As the name MapReduce suggests, reducer phase takes place after the mapper phase has been completed.</li>
-<li>So, the first is the map job, where a block of data is read and processed to produce key-value pairs as intermediate outputs.</li>
-<li>The output of a Mapper or map job (key-value pairs) is input to the Reducer.</li>
-<li>The reducer receives the key-value pair from multiple map jobs.</li>
-<li>Then, the reducer aggregates those intermediate data tuples (intermediate key-value pair) into a smaller set of tuples or key-value pairs which is the final output.</li>
-</ul>
-<h2 id="A-Word-Count-Example-of-MapReduce"><a href="#A-Word-Count-Example-of-MapReduce" class="headerlink" title="A Word Count Example of MapReduce"></a>A Word Count Example of MapReduce</h2><p>Let us understand, how a MapReduce works by taking an example where I have a text file called example.txt whose contents are as follows:</p>
-<p><em>Dear, Bear, River, Car, Car, River, Deer, Car and Bear</em></p>
-<p>Now, suppose, we have to perform a word count on the sample.txt using MapReduce. So, we will be finding unique words and the number of occurrences of those unique words.</p>
-<p><img src="/images/mapreduce-example.png" alt="Image"></p>
-<ul>
-<li>First, we divide the input into three splits as shown in the figure. This will distribute the work among all the map nodes.</li>
-<li>Then, we tokenize the words in each of the mappers and give a hardcoded value (1) to each of the tokens or words. The rationale behind giving a hardcoded value equal to 1 is that every word, in itself, will occur once.</li>
-<li>Now, a list of key-value pair will be created where the key is nothing but the individual words and value is one. So, for the first line (Dear Bear River) we have 3 key-value pairs — Dear, 1; Bear, 1; River, 1. The mapping process remains the same on all the nodes.</li>
-<li>After the mapper phase, a partition process takes place where sorting and shuffling happen so that all the tuples with the same key are sent to the corresponding reducer.</li>
-<li>So, after the sorting and shuffling phase, each reducer will have a unique key and a list of values corresponding to that very key. For example, Bear, [1,1]; Car, [1,1,1].., etc.</li>
-<li>Now, each Reducer counts the values which are present in that list of values. As shown in the figure, reducer gets a list of values which is [1,1] for the key Bear. Then, it counts the number of ones in the very list and gives the final output as — Bear, 2.</li>
-<li>Finally, all the output key&#x2F;value pairs are then collected and written in the output file.</li>
-</ul>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://medium.com/edureka/mapreduce-tutorial-3d9535ddbe7c">Fundamentals of MapReduce with MapReduce Example</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/angularjs-table-creation-for-dynamic-number-of-columns/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/angularjs-table-creation-for-dynamic-number-of-columns/" class="post-title-link" itemprop="url">AngularJS table creation for dynamic number of columns</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-04-22 07:00:00" itemprop="dateCreated datePublished" datetime="2022-04-22T07:00:00-07:00">2022-04-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <pre><code>&lt;head&gt;
-    &lt;link href=&quot;css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;
-    &lt;script src=&quot;js/bootstrap.bundle.min.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;js/angular.min.js&quot;&gt;&lt;/script&gt;
-&lt;/head&gt;
-
-&lt;body ng-app=&quot;myApp&quot;&gt;
-&lt;div ng-controller=&quot;MyCtrl&quot;&gt;
-    &lt;div class=&quot;table-responsive&quot; id=&quot;table1&quot;&gt;
-        &lt;table class=&quot;table table-sm table-hover&quot;&gt;
-            &lt;thead class=&quot;thead-light&quot;&gt;
-                &lt;tr&gt;
-                    &lt;th ng-repeat=&quot;column in cols&quot;&gt;&#123;&#123;column&#125;&#125;&lt;/th&gt;
-                &lt;/tr&gt;
-            &lt;/thead&gt;
-            &lt;tr ng-repeat=&quot;row in rows&quot;&gt;
-                &lt;td ng-repeat=&quot;column in cols&quot;&gt;&#123;&#123;row[column]&#125;&#125;&lt;/td&gt;
-            &lt;/tr&gt;
-        &lt;/table&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/body&gt;
-
-
-var myApp = angular.module(&#39;myApp&#39;,[]);
-
-function MyCtrl($scope) &#123;
-    $scope.rows = [
-    &#123;
-        &quot;#&quot;: &quot;1&quot;, 
-        &quot;name&quot;: &quot;aa&quot;, 
-        &quot;score&quot;: &quot;3.8&quot;
-    &#125;, 
-    &#123;
-        &quot;#&quot;: &quot;2&quot;, 
-        &quot;name&quot;: &quot;bb&quot;, 
-        &quot;score&quot;: &quot;4.0&quot;
-    &#125;, 
-    &#123;
-        &quot;#&quot;: &quot;3&quot;, 
-        &quot;name&quot;: &quot;cc&quot;, 
-        &quot;score&quot;: &quot;3.6&quot;
-    &#125;];
-    $scope.cols = Object.keys($scope.rows[0]);
-&#125;
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="http://jsfiddle.net/v6ruo7mj/1/">http://jsfiddle.net/v6ruo7mj/1/</a></li>
 </ul>
 
       

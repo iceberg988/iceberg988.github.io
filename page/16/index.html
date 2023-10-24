@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">94</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">252</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">96</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">254</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">252</span>
+          <span class="site-state-item-count">254</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">96</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,643 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/openzfs-a-pooled-storage-file-system/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/openzfs-a-pooled-storage-file-system/" class="post-title-link" itemprop="url">OpenZFS - A pooled storage file system</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-16 07:00:00" itemprop="dateCreated datePublished" datetime="2022-03-16T07:00:00-07:00">2022-03-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="OpenZFS"><a href="#OpenZFS" class="headerlink" title="OpenZFS"></a>OpenZFS</h2><p>The OpenZFS project is an open source derivative of the Oracle ZFS project. OpenZFS is an outstanding storage platform that encompasses the functionality of traditional filesystems, volume managers, and more, with consistent reliability, functionality and performance across all distributions.</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/OpenZFS">Source1</a><br><a target="_blank" rel="noopener" href="https://openzfs.github.io/openzfs-docs/Project%20and%20Community/FAQ.html#what-is-openzfs">Source2</a></p>
+<h2 id="ZFS-and-ZFS-Pooled-Storage"><a href="#ZFS-and-ZFS-Pooled-Storage" class="headerlink" title="ZFS and ZFS Pooled Storage"></a>ZFS and ZFS Pooled Storage</h2><p>The ZFS file system is a revolutionary new file system that fundamentally changes the way file systems are administered, with features and benefits not found in any other file system available today. ZFS is robust, scalable, and easy to administer.</p>
+<p>ZFS uses the concept of storage pools to manage physical storage. Historically, file systems were constructed on top of a single physical device. To address multiple devices and provide for data redundancy, the concept of a volume manager was introduced to provide a representation of a single device so that file systems would not need to be modified to take advantage of multiple devices. This design added another layer of complexity and ultimately prevented certain file system advances because the file system had no control over the physical placement of data on the virtualized volumes.</p>
+<p>ZFS eliminates volume management altogether. Instead of forcing you to create virtualized volumes, ZFS aggregates devices into a storage pool. The storage pool describes the physical characteristics of the storage (device layout, data redundancy, and so on) and acts as an arbitrary data store from which file systems can be created. File systems are no longer constrained to individual devices, allowing them to share disk space with all file systems in the pool. You no longer need to predetermine the size of a file system, as file systems grow automatically within the disk space allocated to the storage pool. When new storage is added, all file systems within the pool can immediately use the additional disk space without additional work. In many ways, the storage pool works similarly to a virtual memory system: When a memory DIMM is added to a system, the operating system doesn’t force you to run commands to configure the memory and assign it to individual processes. All processes on the system automatically use the additional memory.</p>
+<p><a target="_blank" rel="noopener" href="https://docs.oracle.com/cd/E19253-01/819-5461/zfsover-2/index.html">Source</a></p>
+<h2 id="Install-ZFS-on-CentOS"><a href="#Install-ZFS-on-CentOS" class="headerlink" title="Install ZFS on CentOS"></a>Install ZFS on CentOS</h2><p>ZFS is not included by default in CentOS. We will learn how to install it on CentOS 7.9 in this post.</p>
+<ol>
+<li><p>Add ZFS repository</p>
+<p> $ cat &#x2F;etc&#x2F;centos-release<br> CentOS Linux release 7.9.2009 (Core)</p>
+<p> $ yum install <a target="_blank" rel="noopener" href="https://zfsonlinux.org/epel/zfs-release.el7_9.noarch.rpm">https://zfsonlinux.org/epel/zfs-release.el7_9.noarch.rpm</a> -y</p>
+</li>
+<li><p>DKMS vs. kABI</p>
+</li>
+</ol>
+<p>DKMS and kABI are the two methods ZFS module can be loaded into the kernel. We are going to use kABI since it doesn’t require kernel re-compilation in case of kernel update. We can enable it by editing the ZFS repository as below.</p>
+<pre><code>$ cat /etc/yum.repos.d/zfs.repo
+[zfs]
+name=OpenZFS for EL7 - dkms
+baseurl=http://download.zfsonlinux.org/epel/7.9/$basearch/
+enabled=1
+metadata_expire=7d
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+
+[zfs-kmod]
+name=OpenZFS for EL7 - kmod
+baseurl=http://download.zfsonlinux.org/epel/7.9/kmod/$basearch/
+enabled=0
+metadata_expire=7d
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+
+[zfs-source]
+name=OpenZFS for EL7 - Source
+baseurl=http://download.zfsonlinux.org/epel/7.9/SRPMS/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+
+[zfs-next]
+name=OpenZFS for EL7 - dkms - Next upcoming version
+baseurl=http://download.zfsonlinux.org/epel-next/7.9/$basearch/
+enabled=0
+metadata_expire=7d
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+
+[zfs-testing]
+name=OpenZFS for EL7 - dkms - Testing
+baseurl=http://download.zfsonlinux.org/epel-testing/7.9/$basearch/
+enabled=0
+metadata_expire=7d
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+
+[zfs-testing-kmod]
+name=OpenZFS for EL7 - kmod - Testing
+baseurl=http://download.zfsonlinux.org/epel-testing/7.9/kmod/$basearch/
+enabled=0
+metadata_expire=7d
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+
+[zfs-testing-source]
+name=OpenZFS for EL7 - Testing Source
+baseurl=http://download.zfsonlinux.org/epel-testing/7.9/SRPMS/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+</code></pre>
+<p>We can disable DKMS and enable KABI by editing the <em>enable&#x3D;</em> in the following two sections.</p>
+<pre><code>$ vim /etc/yum.repos.d/zfs.repo
+[zfs]
+name=OpenZFS for EL7 - dkms
+baseurl=http://download.zfsonlinux.org/epel/7.9/$basearch/
+enabled=0
+metadata_expire=7d
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+
+[zfs-kmod]
+name=OpenZFS for EL7 - kmod
+baseurl=http://download.zfsonlinux.org/epel/7.9/kmod/$basearch/
+enabled=1
+metadata_expire=7d
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+</code></pre>
+<ol start="3">
+<li>Install ZFS</li>
+</ol>
+<p>Install ZFS using the following command:</p>
+<pre><code>$ yum install zfs -y
+[..]
+Installed:
+zfs.x86_64 0:2.0.7-1.el7
+
+Dependency Installed:
+kmod-zfs.x86_64 0:2.0.7-1.el7      libnvpair3.x86_64 0:2.0.7-1.el7     libuutil3.x86_64 0:2.0.7-1.el7     libzfs4.x86_64 0:2.0.7-1.el7     libzpool4.x86_64 0:2.0.7-1.el7     lm_sensors-libs.x86_64 0:3.4.0-8.20160601gitf9185e5.el7
+sysstat.x86_64 0:10.1.5-19.el7
+</code></pre>
+<p>Reboot the system to load zfs module:</p>
+<pre><code>$ reboot
+$ lsmod | grep zfs
+</code></pre>
+<p>Use the following command to load the ZFS kernel module if it’s not loaded after reboot:</p>
+<pre><code>$ modprobe zfs
+
+$ lsmod | grep zfs
+zfs                  4224878  0
+zunicode              331170  1 zfs
+zzstd                 460780  1 zfs
+zlua                  151526  1 zfs
+zcommon                94285  1 zfs
+znvpair                94388  2 zfs,zcommon
+zavl                   15698  1 zfs
+icp                   301775  1 zfs
+spl                    96750  6 icp,zfs,zavl,zzstd,zcommon,znvpair
+
+$ modinfo zfs
+filename:       /lib/modules/3.10.0-1160.11.1.el7.x86_64/weak-updates/zfs/zfs/zfs.ko
+version:        2.0.7-1
+license:        CDDL
+author:         OpenZFS
+description:    ZFS
+alias:          devname:zfs
+alias:          char-major-10-249
+retpoline:      Y
+rhelversion:    7.9
+srcversion:     CDFB8A7F2D3EE43324CF460
+depends:        spl,znvpair,icp,zlua,zzstd,zunicode,zcommon,zavl
+vermagic:       3.10.0-1160.49.1.el7.x86_64 SMP mod_unload modversions
+[..]
+
+$ zfs version
+zfs-2.0.7-1
+zfs-kmod-2.0.7-1
+</code></pre>
+<h2 id="Manage-ZFS-storage-pool-and-file-system"><a href="#Manage-ZFS-storage-pool-and-file-system" class="headerlink" title="Manage ZFS storage pool and file system"></a>Manage ZFS storage pool and file system</h2><ul>
+<li><p>Create ZFS storage pool</p>
+<p>  $ zpool create zpooldemo &#x2F;dev&#x2F;sdb</p>
+</li>
+<li><p>Add disk to ZFS storage pool</p>
+<p>  $ zpool add zpooldemo &#x2F;dev&#x2F;sdc</p>
+</li>
+<li><p>Check ZFS pool status</p>
+<p>  $ zpool list<br>  NAME        SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT<br>  zpooldemo   119G   174K   119G        -         -     0%     0%  1.00x    ONLINE  -</p>
+<p>  $ zpool status<br>  pool: zpooldemo<br>  state: ONLINE<br>  config:</p>
+<pre><code>  NAME        STATE     READ WRITE CKSUM
+  zpooldemo   ONLINE       0     0     0
+  sdb       ONLINE       0     0     0
+  sdc       ONLINE       0     0     0
+</code></pre>
+<p>  errors: No known data errors</p>
+</li>
+<li><p>Create ZFS file system</p>
+</li>
+</ul>
+<p>When you create a pool, a ZFS file system is created and mounted automatically. The whole file system space can be used as needed.</p>
+<pre><code>$ mount | egrep &quot;zfs&quot;
+zpooldemo on /zpooldemo type zfs (rw,xattr,noacl)
+
+$ df -h | egrep &quot;Filesystem|zpool&quot;
+Filesystem      Size  Used Avail Use% Mounted on
+zpooldemo       116G  128K  116G   1% /zpooldemo
+
+$ touch /zpooldemo/testfile
+$ ls -la /zpooldemo/
+total 6
+drwxr-xr-x   3 root root    4 Mar 17 22:49 .
+dr-xr-xr-x. 19 root root 4096 Mar 17 22:37 ..
+-rw-r--r--   1 root root    0 Mar 17 22:49 testfile
+</code></pre>
+<p>Within a pool, additional file systems can be created. The new create file systems allow users to manage different sets of data within the same pool.</p>
+<pre><code>$ zfs create zpooldemo/zfsdemo
+
+$ mount | egrep &quot;zfs&quot;
+zpooldemo on /zpooldemo type zfs (rw,xattr,noacl)
+zpooldemo/zfsdemo on /zpooldemo/zfsdemo type zfs (rw,xattr,noacl)
+
+$ df -h | egrep &quot;Filesystem|zpool&quot;
+Filesystem         Size  Used Avail Use% Mounted on
+zpooldemo          116G  128K  116G   1% /zpooldemo
+zpooldemo/zfsdemo  116G  128K  116G   1% /zpooldemo/zfsdemo
+</code></pre>
+<ul>
+<li>Set ZFS file system properties</li>
+</ul>
+<p>The file system property can be set when the ZFS is created.</p>
+<pre><code>$ zfs create -o atime=off zpooldemo/zfsdemo
+$ mount | grep zfs
+zpooldemo on /zpooldemo type zfs (rw,xattr,noacl)
+zpooldemo/zfsdemo on /zpooldemo/zfsdemo type zfs (rw,noatime,xattr,noacl)
+</code></pre>
+<p>The storage pool and file system properties can be retrieved as below.</p>
+<pre><code>$ zpool get all zpooldemo
+NAME       PROPERTY                       VALUE                          SOURCE
+zpooldemo  size                           59.5G                          -
+zpooldemo  capacity                       0%                             -
+zpooldemo  altroot                        -                              default
+zpooldemo  health                         ONLINE                         -
+zpooldemo  guid                           11167503015555961412           -
+zpooldemo  version                        -                              default
+zpooldemo  bootfs                         -                              default
+zpooldemo  delegation                     on                             default
+zpooldemo  autoreplace                    off                            default
+zpooldemo  cachefile                      -                              default
+zpooldemo  failmode                       wait                           default
+zpooldemo  listsnapshots                  off                            default
+zpooldemo  autoexpand                     off                            default
+zpooldemo  dedupratio                     1.00x                          -
+zpooldemo  free                           59.5G                          -
+zpooldemo  allocated                      106K                           -
+zpooldemo  readonly                       off                            -
+zpooldemo  ashift                         0                              default
+zpooldemo  comment                        -                              default
+zpooldemo  expandsize                     -                              -
+zpooldemo  freeing                        0                              -
+zpooldemo  fragmentation                  0%                             -
+zpooldemo  leaked                         0                              -
+zpooldemo  multihost                      off                            default
+zpooldemo  checkpoint                     -                              -
+zpooldemo  load_guid                      10842965729770643306           -
+zpooldemo  autotrim                       off                            default
+zpooldemo  feature@async_destroy          enabled                        local
+zpooldemo  feature@empty_bpobj            enabled                        local
+zpooldemo  feature@lz4_compress           active                         local
+zpooldemo  feature@multi_vdev_crash_dump  enabled                        local
+zpooldemo  feature@spacemap_histogram     active                         local
+zpooldemo  feature@enabled_txg            active                         local
+zpooldemo  feature@hole_birth             active                         local
+zpooldemo  feature@extensible_dataset     active                         local
+zpooldemo  feature@embedded_data          active                         local
+zpooldemo  feature@bookmarks              enabled                        local
+zpooldemo  feature@filesystem_limits      enabled                        local
+zpooldemo  feature@large_blocks           enabled                        local
+zpooldemo  feature@large_dnode            enabled                        local
+zpooldemo  feature@sha512                 enabled                        local
+zpooldemo  feature@skein                  enabled                        local
+zpooldemo  feature@edonr                  enabled                        local
+zpooldemo  feature@userobj_accounting     active                         local
+zpooldemo  feature@encryption             enabled                        local
+zpooldemo  feature@project_quota          active                         local
+zpooldemo  feature@device_removal         enabled                        local
+zpooldemo  feature@obsolete_counts        enabled                        local
+zpooldemo  feature@zpool_checkpoint       enabled                        local
+zpooldemo  feature@spacemap_v2            active                         local
+zpooldemo  feature@allocation_classes     enabled                        local
+zpooldemo  feature@resilver_defer         enabled                        local
+zpooldemo  feature@bookmark_v2            enabled                        local
+zpooldemo  feature@redaction_bookmarks    enabled                        local
+zpooldemo  feature@redacted_datasets      enabled                        local
+zpooldemo  feature@bookmark_written       enabled                        local
+zpooldemo  feature@log_spacemap           active                         local
+zpooldemo  feature@livelist               enabled                        local
+zpooldemo  feature@device_rebuild         enabled                        local
+zpooldemo  feature@zstd_compress          enabled                        local
+
+$ zfs get all zpooldemo/zfsdemo
+NAME               PROPERTY              VALUE                  SOURCE
+zpooldemo/zfsdemo  type                  filesystem             -
+zpooldemo/zfsdemo  creation              Thu Mar 17 23:00 2022  -
+zpooldemo/zfsdemo  used                  24K                    -
+zpooldemo/zfsdemo  available             57.6G                  -
+zpooldemo/zfsdemo  referenced            24K                    -
+zpooldemo/zfsdemo  compressratio         1.00x                  -
+zpooldemo/zfsdemo  mounted               yes                    -
+zpooldemo/zfsdemo  quota                 none                   default
+zpooldemo/zfsdemo  reservation           none                   default
+zpooldemo/zfsdemo  recordsize            128K                   default
+zpooldemo/zfsdemo  mountpoint            /zpooldemo/zfsdemo     default
+zpooldemo/zfsdemo  sharenfs              off                    default
+zpooldemo/zfsdemo  checksum              on                     default
+zpooldemo/zfsdemo  compression           off                    default
+zpooldemo/zfsdemo  atime                 off                    local
+zpooldemo/zfsdemo  devices               on                     default
+zpooldemo/zfsdemo  exec                  on                     default
+zpooldemo/zfsdemo  setuid                on                     default
+zpooldemo/zfsdemo  readonly              off                    default
+zpooldemo/zfsdemo  zoned                 off                    default
+zpooldemo/zfsdemo  snapdir               hidden                 default
+zpooldemo/zfsdemo  aclmode               discard                default
+zpooldemo/zfsdemo  aclinherit            restricted             default
+zpooldemo/zfsdemo  createtxg             20                     -
+zpooldemo/zfsdemo  canmount              on                     default
+zpooldemo/zfsdemo  xattr                 on                     default
+zpooldemo/zfsdemo  copies                1                      default
+zpooldemo/zfsdemo  version               5                      -
+zpooldemo/zfsdemo  utf8only              off                    -
+zpooldemo/zfsdemo  normalization         none                   -
+zpooldemo/zfsdemo  casesensitivity       sensitive              -
+zpooldemo/zfsdemo  vscan                 off                    default
+zpooldemo/zfsdemo  nbmand                off                    default
+zpooldemo/zfsdemo  sharesmb              off                    default
+zpooldemo/zfsdemo  refquota              none                   default
+zpooldemo/zfsdemo  refreservation        none                   default
+zpooldemo/zfsdemo  guid                  10461278007032944398   -
+zpooldemo/zfsdemo  primarycache          all                    default
+zpooldemo/zfsdemo  secondarycache        all                    default
+zpooldemo/zfsdemo  usedbysnapshots       0B                     -
+zpooldemo/zfsdemo  usedbydataset         24K                    -
+zpooldemo/zfsdemo  usedbychildren        0B                     -
+zpooldemo/zfsdemo  usedbyrefreservation  0B                     -
+zpooldemo/zfsdemo  logbias               latency                default
+zpooldemo/zfsdemo  objsetid              136                    -
+zpooldemo/zfsdemo  dedup                 off                    default
+zpooldemo/zfsdemo  mlslabel              none                   default
+zpooldemo/zfsdemo  sync                  standard               default
+zpooldemo/zfsdemo  dnodesize             legacy                 default
+zpooldemo/zfsdemo  refcompressratio      1.00x                  -
+zpooldemo/zfsdemo  written               24K                    -
+zpooldemo/zfsdemo  logicalused           12K                    -
+zpooldemo/zfsdemo  logicalreferenced     12K                    -
+zpooldemo/zfsdemo  volmode               default                default
+zpooldemo/zfsdemo  filesystem_limit      none                   default
+zpooldemo/zfsdemo  snapshot_limit        none                   default
+zpooldemo/zfsdemo  filesystem_count      none                   default
+zpooldemo/zfsdemo  snapshot_count        none                   default
+zpooldemo/zfsdemo  snapdev               hidden                 default
+zpooldemo/zfsdemo  acltype               off                    default
+zpooldemo/zfsdemo  context               none                   default
+zpooldemo/zfsdemo  fscontext             none                   default
+zpooldemo/zfsdemo  defcontext            none                   default
+zpooldemo/zfsdemo  rootcontext           none                   default
+zpooldemo/zfsdemo  relatime              off                    default
+zpooldemo/zfsdemo  redundant_metadata    all                    default
+zpooldemo/zfsdemo  overlay               on                     default
+zpooldemo/zfsdemo  encryption            off                    default
+zpooldemo/zfsdemo  keylocation           none                   default
+zpooldemo/zfsdemo  keyformat             none                   default
+zpooldemo/zfsdemo  pbkdf2iters           0                      default
+zpooldemo/zfsdemo  special_small_blocks  0                      default
+</code></pre>
+<p><em>zfs set</em> command can be used to set any dataset property.</p>
+<pre><code>$ zfs set checksum=off zpooldemo/zfsdemo
+</code></pre>
+<p><em>zfs get</em> command can be used to retrieve any dataset property.</p>
+<pre><code>$ zfs get checksum zpooldemo
+NAME       PROPERTY  VALUE      SOURCE
+zpooldemo  checksum  on         default
+
+$ zfs get checksum zpooldemo/zfsdemo
+NAME               PROPERTY  VALUE      SOURCE
+zpooldemo/zfsdemo  checksum  off        local
+</code></pre>
+<ul>
+<li><p>Destroy ZFS storage pool and file system</p>
+<p>  $ zfs list<br>  NAME                USED  AVAIL     REFER  MOUNTPOINT<br>  zpooldemo           194K   115G       25K  &#x2F;zpooldemo<br>  zpooldemo&#x2F;zfsdemo    24K   115G       24K  &#x2F;zpooldemo&#x2F;zfsdemo</p>
+<p>  $ zfs destroy zpooldemo&#x2F;zfsdemo</p>
+<p>  $ zfs list<br>  NAME        USED  AVAIL     REFER  MOUNTPOINT<br>  zpooldemo   169K   115G       25K  &#x2F;zpooldemo</p>
+<p>  $ zpool destroy zpooldemo<br>  $ zpool list<br>  no pools available</p>
+</li>
+</ul>
+<h2 id="Kernel-compatibility"><a href="#Kernel-compatibility" class="headerlink" title="Kernel compatibility"></a>Kernel compatibility</h2><p>When to install zfs on CentOS, it will check if the already installed kernel version matches the specified the release version. In the following example, the required kernel 3.10.0-1160 will be installed automatically during zfs-release.el7_9 installation.</p>
+<pre><code>$ yum install https://zfsonlinux.org/epel/zfs-release.el7_9.noarch.rpm -y
+$ yum install zfs -y
+Installed:
+kernel.x86_64 0:3.10.0-1160.59.1.el7                                                                                       
+zfs.x86_64 0:2.0.7-1.el7
+
+Dependency Installed:
+kmod-zfs.x86_64 0:2.0.7-1.el7                 
+libnvpair3.x86_64 0:2.0.7-1.el7                 
+libuutil3.x86_64 0:2.0.7-1.el7                 
+libzfs4.x86_64 0:2.0.7-1.el7                 
+libzpool4.x86_64 0:2.0.7-1.el7
+
+$ reboot
+$ uname -r
+3.10.0-1160.59.1.el7.x86_64
+
+$ lsmod  |  grep zfs
+$ modprobe zfs
+$ lsmod  |  grep zfs
+zfs                  4224878  0
+zunicode              331170  1 zfs
+zzstd                 460780  1 zfs
+zlua                  151526  1 zfs
+zcommon                94285  1 zfs
+znvpair                94388  2 zfs,zcommon
+zavl                   15698  1 zfs
+icp                   301775  1 zfs
+spl                    96750  6 icp,zfs,zavl,zzstd,zcommon,znvpair
+$ zfs version
+zfs-2.0.7-1
+zfs-kmod-2.0.7-1
+</code></pre>
+<h2 id="Uninstall-ZFS"><a href="#Uninstall-ZFS" class="headerlink" title="Uninstall ZFS"></a>Uninstall ZFS</h2><p>Remove the installed rpms and remove the repository as below.</p>
+<pre><code>$ rpm -ev &lt;pkg-rpm-name&gt;
+$ yum remove zfs-release
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/OpenZFS">https://en.wikipedia.org/wiki/OpenZFS</a></li>
+<li><a target="_blank" rel="noopener" href="https://openzfs.org/wiki/Main_Page">https://openzfs.org/wiki/Main_Page</a></li>
+<li><a target="_blank" rel="noopener" href="https://openzfs.github.io/openzfs-docs/index.html">https://openzfs.github.io/openzfs-docs/index.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.oracle.com/cd/E19253-01/819-5461/index.html">https://docs.oracle.com/cd/E19253-01/819-5461/index.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.symmcom.com/docs/how-tos/storages/how-to-install-zfs-on-centos-7">https://www.symmcom.com/docs/how-tos/storages/how-to-install-zfs-on-centos-7</a></li>
+<li><a target="_blank" rel="noopener" href="https://zfsonlinux.org/">https://zfsonlinux.org/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/fio-initial-write-overwrite-and-append-write/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/fio-initial-write-overwrite-and-append-write/" class="post-title-link" itemprop="url">Fio initial write, overwrite and append write</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-15 07:00:00" itemprop="dateCreated datePublished" datetime="2022-03-15T07:00:00-07:00">2022-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>In this post, we try to study how the overwrite and file_append options work in fio benchmark.</p>
+<h2 id="overwrite-and-file-append-options"><a href="#overwrite-and-file-append-options" class="headerlink" title="overwrite and file_append options"></a>overwrite and file_append options</h2><ul>
+<li>overwrite&#x3D;bool</li>
+</ul>
+<p>If true, writes to a file will always overwrite existing data. If the file doesn’t already exist, it will be created before the write phase begins. If the file exists and is large enough for the specified write phase, nothing will be done. Default: false.</p>
+<ul>
+<li>file_append&#x3D;bool</li>
+</ul>
+<p>Perform I&#x2F;O after the end of the file. Normally fio will operate within the size of a file. If this option is set, then fio will append to the file instead. This has identical behavior to setting offset to the size of a file. This option is ignored on non-regular files.</p>
+<ul>
+<li>offset&#x3D;int</li>
+</ul>
+<p>Start I&#x2F;O at the provided offset in the file, given as either a fixed size in bytes, zones or a percentage. If a percentage is given, the generated offset will be aligned to the minimum blocksize or to the value of offset_align if provided. Data before the given offset will not be touched. This effectively caps the file size at real_size - offset. Can be combined with size to constrain the start and end range of the I&#x2F;O workload. A percentage can be specified by a number between 1 and 100 followed by ‘%’, for example, offset&#x3D;20% to specify 20%. In ZBD mode, value can be set as number of zones using ‘z’.</p>
+<h2 id="Fio-commands"><a href="#Fio-commands" class="headerlink" title="Fio commands"></a>Fio commands</h2><p>The following fio commands are used to study initial write, overwrite and append write. We also have one more randread run at the last. Before each command run, we drop kernel cache with command “echo 3&gt;&#x2F;proc&#x2F;sys&#x2F;vm&#x2F;drop_caches”.</p>
+<pre><code>$ fio --name=test --ioengine=libaio --blocksize=4k --readwrite=randwrite --directory=/mnt/bench1 --nrfiles=1 --size=1g --end_fsync=1 --numjobs=1 --direct=1
+$ fio --name=test --ioengine=libaio --blocksize=4k --readwrite=randwrite --directory=/mnt/bench1 --nrfiles=1 --size=1g --end_fsync=1 --numjobs=1 --direct=1
+$ fio --name=test --ioengine=libaio --blocksize=4k --readwrite=randwrite --directory=/mnt/bench1 --nrfiles=1 --size=1g --end_fsync=1 --numjobs=1 --direct=1 --overwrite=1
+$ fio --name=test --ioengine=libaio --blocksize=4k --readwrite=randwrite --directory=/mnt/bench1 --nrfiles=1 --size=1g --end_fsync=1 --numjobs=1 --direct=1 --file_append=1
+$ fio --name=test --ioengine=libaio --blocksize=4k --readwrite=randread --directory=/mnt/bench1 --nrfiles=1 --size=1g --end_fsync=1 --numjobs=1 --direct=1
+</code></pre>
+<h2 id="Fio-results"><a href="#Fio-results" class="headerlink" title="Fio results"></a>Fio results</h2><p>With the option “–file_append&#x3D;1”, fio will append to the end of the file and expand it to the proper size. The write performance is similar to the initial write.</p>
+<p>With the option “–overwrite&#x3D;1”, fio will overwrite the existing data. If the file doesn’t already exist, it will be created before the write phase begins. If the file exists and is large enough for the specified write phase, nothing will be done.</p>
+<p>The following table shows the fio results.<br>Test NameFio OptionsResultFile SizeInitial Writewrite: IOPS&#x3D;7009, BW&#x3D;27.4MiB&#x2F;s0GB -&gt; 1GBOverwrite–overwrite&#x3D;0(default)write: IOPS&#x3D;10.4k, BW&#x3D;40.4MiB&#x2F;s1GBOverwrite–overwrite&#x3D;1write: IOPS&#x3D;10.0k, BW&#x3D;39.2MiB&#x2F;s1GBAppend Write–file_append&#x3D;1write: IOPS&#x3D;6667, BW&#x3D;26.0MiB&#x2F;s1GB -&gt; 2GBRandom Readread: IOPS&#x3D;7769, BW&#x3D;30.3MiB&#x2F;s2GB</p>
+<h2 id="Fio-syscalls-for-create-write-and-read"><a href="#Fio-syscalls-for-create-write-and-read" class="headerlink" title="Fio syscalls for create, write and read"></a>Fio syscalls for create, write and read</h2><p>The file space will be allocated when to lay out the file.</p>
+<pre><code>29247 write(1, &quot;Starting 1 process\n&quot;, 19) = 19
+29247 stat(&quot;/mnt/bench1/test.0.0&quot;, 0x7ffd59df9db0) = -1 ENOENT (No such file or directory)
+29247 write(1, &quot;test: Laying out IO file (1 file&quot;..., 44) = 44
+29247 unlink(&quot;/mnt/bench1/test.0.0&quot;)    = -1 ENOENT (No such file or directory)
+29247 open(&quot;/mnt/bench1/test.0.0&quot;, O_WRONLY|O_CREAT, 0644) = 3
+29247 fallocate(3, 0, 0, 1073741824)    = 0
+29247 fadvise64(3, 0, 1073741824, POSIX_FADV_DONTNEED) = 0
+29247 close(3)
+</code></pre>
+<p>The following are the syscalls when fio writes data with ioengine <em>libaio</em>.</p>
+<pre><code>29429 open(&quot;/mnt/bench1/test.0.0&quot;, O_RDWR|O_CREAT|O_DIRECT, 0600) = 3
+29429 fadvise64(3, 1073741824, 1073741824, POSIX_FADV_DONTNEED) = 0
+29429 fadvise64(3, 1073741824, 1073741824, POSIX_FADV_RANDOM) = 0
+29429 io_submit(0x7fbe9301c000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;5\340(\3148\240\231\26\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=4096, aio_offset=1138499584&#125;]) = 1
+29429 io_getevents(0x7fbe9301c000, 1, 1, [&#123;data=0, obj=0xa77de0, res=4096, res2=0&#125;], NULL) = 1
+29429 io_submit(0x7fbe9301c000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;\0\340`o\0\0\0\0\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=4096, aio_offset=1868619776&#125;]) = 1
+29429 io_getevents(0x7fbe9301c000, 1, 1, [&#123;data=0, obj=0xa77de0, res=4096, res2=0&#125;], NULL) = 1
+[..]
+29429 io_submit(0x7fbe9301c000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;\0\300\357y\0\0\0\0\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=4096, aio_offset=2046550016&#125;]) = 1
+29429 io_getevents(0x7fbe9301c000, 1, 1, [&#123;data=0, obj=0xa77de0, res=4096, res2=0&#125;], NULL) = 1
+29429 fsync(3)                          = 0
+29429 close(3)
+</code></pre>
+<p>The following are the syscalls when fio reads data with ioengine <em>libaio</em>.</p>
+<pre><code>29484 open(&quot;/mnt/bench1/test.0.0&quot;, O_RDONLY|O_DIRECT) = 3
+29484 fadvise64(3, 0, 1073741824, POSIX_FADV_DONTNEED) = 0
+29484 fadvise64(3, 0, 1073741824, POSIX_FADV_RANDOM) = 0
+29484 io_submit(0x7f069d23a000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PREAD, aio_fildes=3, aio_buf=0x9d1000, aio_nbytes=4096, aio_offset=64757760&#125;]) = 1
+29484 io_getevents(0x7f069d23a000, 1, 1, [&#123;data=0, obj=0x9d3da0, res=4096, res2=0&#125;], NULL) = 1
+29484 io_submit(0x7f069d23a000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PREAD, aio_fildes=3, aio_buf=0x9d1000, aio_nbytes=4096, aio_offset=794877952&#125;]) = 1
+29484 io_getevents(0x7f069d23a000, 1, 1, [&#123;data=0, obj=0x9d3da0, res=4096, res2=0&#125;], NULL) = 1
+[..]
+29484 io_submit(0x7f069d23a000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PREAD, aio_fildes=3, aio_buf=0x9d1000, aio_nbytes=4096, aio_offset=972808192&#125;]) = 1
+29484 io_getevents(0x7f069d23a000, 1, 1, [&#123;data=0, obj=0x9d3da0, res=4096, res2=0&#125;], NULL) = 1
+29484 getrusage(RUSAGE_THREAD, &#123;ru_utime=&#123;tv_sec=1, tv_usec=706077&#125;, ru_stime=&#123;tv_sec=7, tv_usec=828474&#125;, ...&#125;) = 0
+29484 close(3)
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1715,271 +2352,6 @@ usr sys idl wai hiq siq| read  writ| recv  send|  in   out | int   csw
 <li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/dstat-command-in-linux-with-examples/">https://www.geeksforgeeks.org/dstat-command-in-linux-with-examples/</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/dstat-real/dstat">https://github.com/dstat-real/dstat</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/scottchiefbaker/dool">https://github.com/scottchiefbaker/dool</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/art-sketch-2022/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/art-sketch-2022/" class="post-title-link" itemprop="url">Art - Sketch 2022</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-03-04 06:13:00" itemprop="dateCreated datePublished" datetime="2022-03-04T06:13:00-08:00">2022-03-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><img src="/images/drawing/IMG_0297.jpeg"></p>
-<p><img src="/images/drawing/IMG_0298.jpeg"></p>
-<p><img src="/images/drawing/IMG_0299.jpeg"></p>
-<p><img src="/images/drawing/IMG_0301.jpeg"></p>
-<p><img src="/images/drawing/IMG_0302.jpeg"></p>
-<p><img src="/images/drawing/IMG_0303.jpeg"></p>
-<p><img src="/images/drawing/IMG_0304.jpeg"></p>
-<p><img src="/images/drawing/IMG_0305.jpeg"></p>
-<p><img src="/images/drawing/IMG_0295.jpeg"></p>
-<p><img src="/images/drawing/IMG_0306.jpeg"></p>
-<p><img src="/images/drawing/IMG_0307.jpeg"></p>
-<p><img src="/images/drawing/IMG_0308.jpeg"></p>
-<p><img src="/images/drawing/IMG_0309.jpeg"></p>
-<p><img src="/images/drawing/IMG_0312.jpeg"></p>
-<p><img src="/images/drawing/IMG_0313.jpeg"></p>
-<p><img src="/images/drawing/IMG_0314.jpeg"></p>
-<p><img src="/images/drawing/IMG_0315.jpeg"></p>
-<p><img src="/images/drawing/IMG_0316.jpeg"></p>
-<p><img src="/images/drawing/IMG_0317.jpeg"></p>
-<p><img src="/images/drawing/IMG_0318.jpeg"></p>
-<p><img src="/images/drawing/IMG_0320.jpeg"></p>
-<p><img src="/images/drawing/IMG_0321.jpeg"></p>
-<p><img src="/images/drawing/IMG_0322.jpeg"></p>
-<p><img src="/images/drawing/IMG_0323.jpeg"></p>
-<p><img src="/images/drawing/IMG_0324.jpeg"></p>
-<p><img src="/images/drawing/IMG_0325.jpeg"></p>
-<p><img src="/images/drawing/IMG_0326.jpeg"></p>
-<p><img src="/images/drawing/IMG_20220213_124048__01.jpg"></p>
-<p><img src="/images/drawing/IMG_20220213_124129__01.jpg"></p>
-<p><img src="/images/drawing/IMG_20220313_201632__01.jpg"></p>
-<p><img src="/images/drawing/IMG_20220313_201650__01.jpg"></p>
-<p><img src="/images/drawing/IMG_0296.jpeg"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/docker-based-fio-benchmarking-part-two/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/docker-based-fio-benchmarking-part-two/" class="post-title-link" itemprop="url">Docker-based fio benchmarking - Part Two</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-02-23 08:00:00" itemprop="dateCreated datePublished" datetime="2022-02-23T08:00:00-08:00">2022-02-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>In this article, we will build a docker image which is based on python versioned alpine Linux. Alpine Linux is much smaller than most distribution base images (~5MB), and thus leads to much slimmer images in general.</p>
-<p>In the python versioned alpine Linux image, we can add additional packages to support our python script “perfbench.py”. The following is the Dockerfile we will use to build the docker image.</p>
-<pre><code>cat Dockerfile
-FROM python:3-alpine
-
-RUN apk add --no-cache \
-    bash \
-    sudo \
-    lsblk \
-    util-linux \
-    procps \
-    fio==3.28-r1
-
-COPY perfbench/perfbench.py /
-</code></pre>
-<p>Now that we have Dockerfile defined, we can build the docker image as below.</p>
-<pre><code>$ docker build -t perfbench .
-
-$ docker images
-REPOSITORY                           TAG                 IMAGE ID            CREATED             SIZE
-perfbench                            latest              fb9441429ea1        21 minutes ago      61.2MB
-python                               3-alpine            08d07b62c1c9        2 days ago          48.6MB
-</code></pre>
-<h2 id="Detached-mode"><a href="#Detached-mode" class="headerlink" title="Detached mode"></a>Detached mode</h2><p>To start a container in detached mode, we can use the -d option.</p>
-<pre><code>$ docker run -t -d --privileged --name myperfbench -v /data:/data perfbench
-
-$ docker ps -a
-CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                         NAMES
-3473aa8332cb        perfbench            &quot;python3&quot;                4 seconds ago       Up 3 seconds                                      myperfbench
-
-$ docker exec -it myperfbench bash
-bash-5.1# cat /etc/alpine-release
-3.15.0
-bash-5.1# python --version
-Python 3.10.2
-</code></pre>
-<p>Notes:</p>
-<p>1.<br>Adding the “-t” flag prevents the container from exiting when running in the background. It allocates a pseudo-tty. You would see the following issue if it’s not specified.</p>
-<pre><code>$ docker run -d --name myperfbench perfbench
-
-$ docker ps -a
-CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                     PORTS                         NAMES
-ed997c56e9e9        perfbench            &quot;python3&quot;                6 seconds ago       Exited (0) 4 seconds ago                                 myperfbench
-</code></pre>
-<p>2.<br>Using “–privileged” flag to give extended privileges to the container. For example, we can drop cache inside the container with this privilege.</p>
-<h2 id="Foreground-mode"><a href="#Foreground-mode" class="headerlink" title="Foreground mode"></a>Foreground mode</h2><p>For interactive processes (like a shell), you must use -i -t together in order to allocate a tty for the container process.</p>
-<pre><code>$ docker run -it --rm --privileged --name myperfbench -v /data:/data perfbench bash
-
-$ docker run --rm --privileged --name myperfbench -v /data:/data perfbench bash -c &quot;python perfbench.py --dir /data --logdir /data/result&quot;
-</code></pre>
-<p>Note:</p>
-<ul>
-<li>By default a container’s file system persists even after the container exits. This makes debugging a lot easier (since you can inspect the final state) and you retain all your data by default. But if you are running short-term foreground processes, these container file systems can really pile up. If instead you’d like Docker to automatically clean up the container and remove the file system when the container exits, you can add the –rm flag.</li>
-</ul>
-<h2 id="Push-docker-image-to-docker-repository"><a href="#Push-docker-image-to-docker-repository" class="headerlink" title="Push docker image to docker repository"></a>Push docker image to docker repository</h2><pre><code>$ docker tag perfbench:latest noname/perfbench:latest
-$ docker push noname/perfbench:latest
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://hub.docker.com/_/python">https://hub.docker.com/_&#x2F;python</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/run/">https://docs.docker.com/engine/reference/run/</a></li>
 </ul>
 
       
