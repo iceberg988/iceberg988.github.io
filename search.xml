@@ -23419,7 +23419,53 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
   <entry>
     <title>Heap and priority queue in Python</title>
     <url>/blog/heap-and-priority-queue-in-python/</url>
-    <content><![CDATA[<h2 id="heapq-module-in-Python"><a href="#heapq-module-in-Python" class="headerlink" title="heapq module in Python"></a>heapq module in Python</h2><p>In Python, “heapq” module is available to use. Whenever elements are pushed or popped, heap structure is maintained. The heap[0] element also returns the smallest element each time.<span id="more"></span></p>
+    <content><![CDATA[<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>In Python, “heapq” module is available to use. Whenever elements are pushed or popped, heap structure is maintained. The heap[0] element also returns the smallest element each time.<span id="more"></span></p>
+<h2 id="Leetcode-857-Minimum-Cost-to-Hire-K-Workers"><a href="#Leetcode-857-Minimum-Cost-to-Hire-K-Workers" class="headerlink" title="[Leetcode 857] Minimum Cost to Hire K Workers"></a>[Leetcode 857] Minimum Cost to Hire K Workers</h2><p>There are n workers. You are given two integer arrays quality and wage where quality[i] is the quality of the ith worker and wage[i] is the minimum wage expectation for the ith worker.</p>
+<p>We want to hire exactly k workers to form a paid group. To hire a group of k workers, we must pay them according to the following rules:</p>
+<ul>
+<li>Every worker in the paid group should be paid in the ratio of their quality compared to other workers in the paid group.</li>
+<li>Every worker in the paid group must be paid at least their minimum wage expectation.</li>
+</ul>
+<p>Given the integer k, return the least amount of money needed to form a paid group satisfying the above conditions. Answers within 10-5 of the actual answer will be accepted. </p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: quality = [10,20,5], wage = [70,50,30], k = 2</span><br><span class="line">Output: 105.00000</span><br><span class="line">Explanation: We pay 70 to 0th worker and 35 to 2nd worker.</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: quality = [3,1,10,10,1], wage = [4,8,2,2,7], k = 3</span><br><span class="line">Output: 30.66667</span><br><span class="line">Explanation: We pay 4 to 0th worker, 13.33333 to 2nd and 3rd workers separately.</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>n &#x3D;&#x3D; quality.length &#x3D;&#x3D; wage.length</li>
+<li>1 &lt;&#x3D; k &lt;&#x3D; n &lt;&#x3D; 104</li>
+<li>1 &lt;&#x3D; quality[i], wage[i] &lt;&#x3D; 104</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">mincostToHireWorkers</span>(<span class="params">self, quality: <span class="type">List</span>[<span class="built_in">int</span>], wage: <span class="type">List</span>[<span class="built_in">int</span>], k: <span class="built_in">int</span></span>) -&gt; <span class="built_in">float</span>:</span><br><span class="line">        res, qualitySum, maxHeap = <span class="built_in">float</span>(<span class="string">&#x27;inf&#x27;</span>), <span class="number">0</span>, []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> ration, q <span class="keyword">in</span> <span class="built_in">sorted</span>([(w / q, q) <span class="keyword">for</span> w, q <span class="keyword">in</span> <span class="built_in">zip</span>(wage, quality)]):</span><br><span class="line">            qualitySum += q</span><br><span class="line">            heappush(maxHeap, -q)</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(maxHeap) == k:</span><br><span class="line">                res = <span class="built_in">min</span>(res, qualitySum * ration)</span><br><span class="line">                qualitySum -= -heappop(maxHeap)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> res </span><br></pre></td></tr></table></figure>
+
+<h2 id="Leetcode-1383-Maximum-Performance-of-a-Team"><a href="#Leetcode-1383-Maximum-Performance-of-a-Team" class="headerlink" title="[Leetcode 1383] Maximum Performance of a Team"></a>[Leetcode 1383] Maximum Performance of a Team</h2><p>You are given two integers n and k and two integer arrays speed and efficiency both of length n. There are n engineers numbered from 1 to n. speed[i] and efficiency[i] represent the speed and efficiency of the ith engineer respectively.</p>
+<p>Choose at most k different engineers out of the n engineers to form a team with the maximum performance.</p>
+<p>The performance of a team is the sum of its engineers’ speeds multiplied by the minimum efficiency among its engineers.</p>
+<p>Return the maximum performance of this team. Since the answer can be a huge number, return it modulo 109 + 7.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 6, speed = [2,10,3,1,5,8], efficiency = [5,4,3,9,7,2], k = 2</span><br><span class="line">Output: 60</span><br><span class="line">Explanation: </span><br><span class="line">We have the maximum performance of the team by selecting engineer 2 (with speed=10 and efficiency=4) and engineer 5 (with speed=5 and efficiency=7). That is, performance = (10 + 5) * min(4, 7) = 60.</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 6, speed = [2,10,3,1,5,8], efficiency = [5,4,3,9,7,2], k = 3</span><br><span class="line">Output: 68</span><br><span class="line">Explanation:</span><br><span class="line">This is the same example as the first but k = 3. We can select engineer 1, engineer 2 and engineer 5 to get the maximum performance of the team. That is, performance = (2 + 10 + 5) * min(5, 4, 7) = 68.</span><br></pre></td></tr></table></figure>
+
+<p>Example 3:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 6, speed = [2,10,3,1,5,8], efficiency = [5,4,3,9,7,2], k = 4</span><br><span class="line">Output: 72</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>1 &lt;&#x3D; k &lt;&#x3D; n &lt;&#x3D; 105</li>
+<li>speed.length &#x3D;&#x3D; n</li>
+<li>efficiency.length &#x3D;&#x3D; n</li>
+<li>1 &lt;&#x3D; speed[i] &lt;&#x3D; 105</li>
+<li>1 &lt;&#x3D; efficiency[i] &lt;&#x3D; 108</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">maxPerformance</span>(<span class="params">self, n: <span class="built_in">int</span>, speed: <span class="type">List</span>[<span class="built_in">int</span>], efficiency: <span class="type">List</span>[<span class="built_in">int</span>], k: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        res, speedSum, minHeap = <span class="number">0</span>, <span class="number">0</span>, []</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> ef, sp <span class="keyword">in</span> <span class="built_in">sorted</span>(<span class="built_in">zip</span>(efficiency, speed), reverse=<span class="literal">True</span>):</span><br><span class="line">            speedSum += sp</span><br><span class="line">            heappush(minHeap, sp)</span><br><span class="line">            res = <span class="built_in">max</span>(res, speedSum * ef)</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(minHeap) == k:</span><br><span class="line">                speedSum -= heappop(minHeap)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> res % (<span class="number">10</span>**<span class="number">9</span> + <span class="number">7</span>)</span><br></pre></td></tr></table></figure>
+
 <h2 id="Leetcode-2542-Maximum-Subsequence-Score"><a href="#Leetcode-2542-Maximum-Subsequence-Score" class="headerlink" title="[Leetcode 2542] Maximum Subsequence Score"></a>[Leetcode 2542] Maximum Subsequence Score</h2><p>You are given two 0-indexed integer arrays nums1 and nums2 of equal length n and a positive integer k. You must choose a subsequence of indices from nums1 of length k.</p>
 <p>For chosen indices i0, i1, …, ik - 1, your score is defined as:</p>
 <ul>
@@ -23430,8 +23476,16 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
 <p>Example 1:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: nums1 = [1,3,3,2], nums2 = [2,1,3,4], k = 3</span><br><span class="line">Output: 12</span><br><span class="line">Explanation: </span><br><span class="line">The four possible subsequence scores are:</span><br><span class="line">- We choose the indices 0, 1, and 2 with score = (1+3+3) * min(2,1,3) = 7.</span><br><span class="line">- We choose the indices 0, 1, and 3 with score = (1+3+2) * min(2,1,4) = 6. </span><br><span class="line">- We choose the indices 0, 2, and 3 with score = (1+3+2) * min(2,3,4) = 12. </span><br><span class="line">- We choose the indices 1, 2, and 3 with score = (3+3+2) * min(1,3,4) = 8.</span><br><span class="line">Therefore, we return the max score, which is 12.</span><br></pre></td></tr></table></figure>
 
+<p>Constraints:</p>
+<ul>
+<li>n &#x3D;&#x3D; nums1.length &#x3D;&#x3D; nums2.length</li>
+<li>1 &lt;&#x3D; n &lt;&#x3D; 105</li>
+<li>0 &lt;&#x3D; nums1[i], nums2[j] &lt;&#x3D; 105</li>
+<li>1 &lt;&#x3D; k &lt;&#x3D; n</li>
+</ul>
 <p>Solution:</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">maxScore</span>(<span class="params">self, nums1: <span class="type">List</span>[<span class="built_in">int</span>], nums2: <span class="type">List</span>[<span class="built_in">int</span>], k: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        preSum = <span class="number">0</span></span><br><span class="line">        minHeap = []</span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 1. construct pair list by zipping nums1 and nums2, </span></span><br><span class="line">        <span class="comment"># 2. sort the list by 2nd element in descending order</span></span><br><span class="line">        <span class="comment"># 3. calculate presum with the first elements in zipped list</span></span><br><span class="line">        <span class="comment"># 4. if there is k elements in minheap, multiply presum with the second element in each pair.</span></span><br><span class="line">        <span class="comment"># 5. the second elelment in each pair is the minimum element as we iterate so far</span></span><br><span class="line">        <span class="comment"># 6. pop the first element from minheap </span></span><br><span class="line">        <span class="keyword">for</span> n1, n2 <span class="keyword">in</span> <span class="built_in">sorted</span>(<span class="built_in">list</span>(<span class="built_in">zip</span>(nums1, nums2)), key = <span class="keyword">lambda</span> n : n[<span class="number">1</span>], reverse = <span class="literal">True</span>):</span><br><span class="line">            preSum += n1</span><br><span class="line">            heapq.heappush(minHeap, n1)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(minHeap) == k:</span><br><span class="line">                res = <span class="built_in">max</span>(res, preSum * n2)</span><br><span class="line">                preSum -= heapq.heappop(minHeap)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>Tech</category>
