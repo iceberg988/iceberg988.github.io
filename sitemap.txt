@@ -1,3 +1,4 @@
+https://www.flamingbytes.com/blog/backtracking/
 https://www.flamingbytes.com/blog/binary-search/
 https://www.flamingbytes.com/blog/common-used-functions-in-python/
 https://www.flamingbytes.com/blog/heap-and-priority-queue-in-python/
@@ -36,7 +37,6 @@ https://www.flamingbytes.com/blog/art-sketch-2021/
 https://www.flamingbytes.com/blog/art-sketch-2022/
 https://www.flamingbytes.com/blog/art-spiderman/
 https://www.flamingbytes.com/blog/benchmark-es-cluster-with-rally/
-https://www.flamingbytes.com/blog/backtracking/
 https://www.flamingbytes.com/blog/binary-search-tree-in-python/
 https://www.flamingbytes.com/blog/big-red-book-report/
 https://www.flamingbytes.com/blog/binary-tree-traversal-inorder-preorder-and-postorder/
