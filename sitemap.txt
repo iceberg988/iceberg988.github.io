@@ -1,3 +1,4 @@
+https://www.flamingbytes.com/blog/greedy-algorithm/
 https://www.flamingbytes.com/blog/trie/
 https://www.flamingbytes.com/blog/backtracking/
 https://www.flamingbytes.com/blog/binary-search/
@@ -101,7 +102,6 @@ https://www.flamingbytes.com/blog/glusterfs-a-distributed-file-syste/
 https://www.flamingbytes.com/blog/go-ycsb-hangup/
 https://www.flamingbytes.com/blog/google-analytics-and-adsense-in-hexo-next/
 https://www.flamingbytes.com/blog/graph-implementation-in-python/
-https://www.flamingbytes.com/blog/greedy-algorithm/
 https://www.flamingbytes.com/blog/hash-table-implementation-in-python/
 https://www.flamingbytes.com/blog/hashmap-and-set/
 https://www.flamingbytes.com/blog/hello-hexo-world/

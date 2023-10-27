@@ -28,7 +28,7 @@
 <meta property="og:description" content="What is Greedy algorithm Greedy is an algorithmic paradigm that builds up a solution piece by piece, always choosing the next piece that offers the most obvious and immediate benefit. So the problems">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-10-11T04:19:31.000Z">
-<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:modified_time" content="2023-10-27T04:21:46.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="Algorithm">
@@ -154,7 +154,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-Greedy-algorithm"><span class="nav-number">1.</span> <span class="nav-text">What is Greedy algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-659-Split-Array-into-Consecutive-Subsequences"><span class="nav-number">2.</span> <span class="nav-text">[Leetcode 659] Split Array into Consecutive Subsequences</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-Greedy-algorithm"><span class="nav-number">1.</span> <span class="nav-text">What is Greedy algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-435-Non-overlapping-Intervals"><span class="nav-number">2.</span> <span class="nav-text">[Leetcode 435] Non-overlapping Intervals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-659-Split-Array-into-Consecutive-Subsequences"><span class="nav-number">3.</span> <span class="nav-text">[Leetcode 659] Split Array into Consecutive Subsequences</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -213,10 +213,10 @@
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/backtracking/" rel="bookmark">
-        <time class="popular-posts-time">2023-10-09</time>
+      <a class="popular-posts-link" href="/blog/heap-and-priority-queue-in-python/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-19</time>
         <br>
-      Backtracking
+      Heap and priority queue in Python
       </a>
     </li>
     <li class="popular-posts-item">
@@ -227,17 +227,17 @@
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/trie/" rel="bookmark">
-        <time class="popular-posts-time">2023-10-08</time>
+      <a class="popular-posts-link" href="/blog/backtracking/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-09</time>
         <br>
-      Trie (Prefix Tree)
+      Backtracking
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/how-to-use-sorted-and-sort-in-python/" rel="bookmark">
-        <time class="popular-posts-time">2023-04-27</time>
+      <a class="popular-posts-link" href="/blog/linked-list-in-python/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-11</time>
         <br>
-      How to use sorted() and sort() in Python
+      Linked list in python
       </a>
     </li>
   </ul>
@@ -296,7 +296,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+      <time title="Modified: 2023-10-26 21:21:46" itemprop="dateModified" datetime="2023-10-26T21:21:46-07:00">2023-10-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -332,6 +332,25 @@
 <p>Greedy is an algorithmic paradigm that builds up a solution piece by piece, always choosing the next piece that offers the most obvious and immediate benefit. So the problems where choosing locally optimal also leads to global solution are the best fit for Greedy.</p>
 </blockquote>
 <span id="more"></span>
+
+<h2 id="Leetcode-435-Non-overlapping-Intervals"><a href="#Leetcode-435-Non-overlapping-Intervals" class="headerlink" title="[Leetcode 435] Non-overlapping Intervals"></a>[Leetcode 435] Non-overlapping Intervals</h2><p>Given an array of intervals intervals where intervals[i] &#x3D; [starti, endi], return the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: intervals = [[1,2],[2,3],[3,4],[1,3]]</span><br><span class="line">Output: 1</span><br><span class="line">Explanation: [1,3] can be removed and the rest of the intervals are non-overlapping.</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: intervals = [[1,2],[1,2],[1,2]]</span><br><span class="line">Output: 2</span><br><span class="line">Explanation: You need to remove two [1,2] to make the rest of the intervals non-overlapping.</span><br></pre></td></tr></table></figure>
+
+<p>Example 3:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: intervals = [[1,2],[2,3]]</span><br><span class="line">Output: 0</span><br><span class="line">Explanation: You don&#x27;t need to remove any of the intervals since they&#x27;re already non-overlapping.</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>1 &lt;&#x3D; intervals.length &lt;&#x3D; 105</li>
+<li>intervals[i].length &#x3D;&#x3D; 2</li>
+<li>-5 * 104 &lt;&#x3D; starti &lt; endi &lt;&#x3D; 5 * 104</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">eraseOverlapIntervals</span>(<span class="params">self, intervals: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="comment"># sort by end time of a meeting</span></span><br><span class="line">        intervals.sort(key = <span class="keyword">lambda</span> x : x[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># count the first meeting in</span></span><br><span class="line">        prev = <span class="number">0</span></span><br><span class="line">        count = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># count meetings only if its start time is greater than end time of previous meeting</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(intervals)):</span><br><span class="line">            <span class="keyword">if</span> intervals[i][<span class="number">0</span>] &gt;= intervals[prev][<span class="number">1</span>]:</span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line">                prev = i</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(intervals) - count</span><br></pre></td></tr></table></figure>
 
 <h2 id="Leetcode-659-Split-Array-into-Consecutive-Subsequences"><a href="#Leetcode-659-Split-Array-into-Consecutive-Subsequences" class="headerlink" title="[Leetcode 659] Split Array into Consecutive Subsequences"></a>[Leetcode 659] Split Array into Consecutive Subsequences</h2><p>You are given an integer array nums that is sorted in non-decreasing order.</p>
 <p>Determine if it is possible to split nums into one or more subsequences such that both of the following conditions are true:</p>
