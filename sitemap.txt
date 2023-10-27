@@ -1,3 +1,4 @@
+https://www.flamingbytes.com/blog/trie/
 https://www.flamingbytes.com/blog/backtracking/
 https://www.flamingbytes.com/blog/binary-search/
 https://www.flamingbytes.com/blog/common-used-functions-in-python/
@@ -205,7 +206,6 @@ https://www.flamingbytes.com/blog/top-50-linux-commands-you-should-know/
 https://www.flamingbytes.com/blog/tracking-stock-financial-metrics-in-tradingview/
 https://www.flamingbytes.com/blog/transform-plain-text-into-static-websites-and-blogs/
 https://www.flamingbytes.com/blog/tree-traversal-algorithm-in-python/
-https://www.flamingbytes.com/blog/trie/
 https://www.flamingbytes.com/blog/tuned-dynamic-adaptive-system-tuning-daemon/
 https://www.flamingbytes.com/blog/tuning-kernel-parameters-in-docker/
 https://www.flamingbytes.com/blog/understanding-await-in-iostat/
