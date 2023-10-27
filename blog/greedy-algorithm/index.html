@@ -28,7 +28,7 @@
 <meta property="og:description" content="What is Greedy algorithm Greedy is an algorithmic paradigm that builds up a solution piece by piece, always choosing the next piece that offers the most obvious and immediate benefit. So the problems">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-10-11T04:19:31.000Z">
-<meta property="article:modified_time" content="2023-10-27T04:21:46.000Z">
+<meta property="article:modified_time" content="2023-10-27T04:54:18.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="Algorithm">
@@ -154,7 +154,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-Greedy-algorithm"><span class="nav-number">1.</span> <span class="nav-text">What is Greedy algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-435-Non-overlapping-Intervals"><span class="nav-number">2.</span> <span class="nav-text">[Leetcode 435] Non-overlapping Intervals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-659-Split-Array-into-Consecutive-Subsequences"><span class="nav-number">3.</span> <span class="nav-text">[Leetcode 659] Split Array into Consecutive Subsequences</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-Greedy-algorithm"><span class="nav-number">1.</span> <span class="nav-text">What is Greedy algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-435-Non-overlapping-Intervals"><span class="nav-number">2.</span> <span class="nav-text">[Leetcode 435] Non-overlapping Intervals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-452-Minimum-Number-of-Arrows-to-Burst-Balloons"><span class="nav-number">3.</span> <span class="nav-text">[Leetcode 452] Minimum Number of Arrows to Burst Balloons</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-659-Split-Array-into-Consecutive-Subsequences"><span class="nav-number">4.</span> <span class="nav-text">[Leetcode 659] Split Array into Consecutive Subsequences</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -213,6 +213,13 @@
       </a>
     </li>
     <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/understanding-azure-disk-bursting/" rel="bookmark">
+        <time class="popular-posts-time">2022-09-15</time>
+        <br>
+      Understanding Azure disk bursting
+      </a>
+    </li>
+    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/blog/heap-and-priority-queue-in-python/" rel="bookmark">
         <time class="popular-posts-time">2023-10-19</time>
         <br>
@@ -220,24 +227,17 @@
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/binary-search/" rel="bookmark">
-        <time class="popular-posts-time">2023-10-05</time>
-        <br>
-      Binary search
-      </a>
-    </li>
-    <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/backtracking/" rel="bookmark">
-        <time class="popular-posts-time">2023-10-09</time>
-        <br>
-      Backtracking
-      </a>
-    </li>
-    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/blog/linked-list-in-python/" rel="bookmark">
         <time class="popular-posts-time">2023-10-11</time>
         <br>
       Linked list in python
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/binary-search/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-05</time>
+        <br>
+      Binary search
       </a>
     </li>
   </ul>
@@ -296,7 +296,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-26 21:21:46" itemprop="dateModified" datetime="2023-10-26T21:21:46-07:00">2023-10-26</time>
+      <time title="Modified: 2023-10-26 21:54:18" itemprop="dateModified" datetime="2023-10-26T21:54:18-07:00">2023-10-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -352,6 +352,27 @@
 <p>Solution:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">eraseOverlapIntervals</span>(<span class="params">self, intervals: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="comment"># sort by end time of a meeting</span></span><br><span class="line">        intervals.sort(key = <span class="keyword">lambda</span> x : x[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># count the first meeting in</span></span><br><span class="line">        prev = <span class="number">0</span></span><br><span class="line">        count = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># count meetings only if its start time is greater than end time of previous meeting</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(intervals)):</span><br><span class="line">            <span class="keyword">if</span> intervals[i][<span class="number">0</span>] &gt;= intervals[prev][<span class="number">1</span>]:</span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line">                prev = i</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(intervals) - count</span><br></pre></td></tr></table></figure>
 
+<h2 id="Leetcode-452-Minimum-Number-of-Arrows-to-Burst-Balloons"><a href="#Leetcode-452-Minimum-Number-of-Arrows-to-Burst-Balloons" class="headerlink" title="[Leetcode 452] Minimum Number of Arrows to Burst Balloons"></a>[Leetcode 452] Minimum Number of Arrows to Burst Balloons</h2><p>There are some spherical balloons taped onto a flat wall that represents the XY-plane. The balloons are represented as a 2D integer array points where points[i] &#x3D; [xstart, xend] denotes a balloon whose horizontal diameter stretches between xstart and xend. You do not know the exact y-coordinates of the balloons.</p>
+<p>Arrows can be shot up directly vertically (in the positive y-direction) from different points along the x-axis. A balloon with xstart and xend is burst by an arrow shot at x if xstart &lt;&#x3D; x &lt;&#x3D; xend. There is no limit to the number of arrows that can be shot. A shot arrow keeps traveling up infinitely, bursting any balloons in its path.</p>
+<p>Given the array points, return the minimum number of arrows that must be shot to burst all balloons.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input: points = [[10,16],[2,8],[1,6],[7,12]]</span><br><span class="line">Output: 2</span><br><span class="line">Explanation: The balloons can be burst by 2 arrows:</span><br><span class="line">- Shoot an arrow at x = 6, bursting the balloons [2,8] and [1,6].</span><br><span class="line">- Shoot an arrow at x = 11, bursting the balloons [10,16] and [7,12].</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: points = [[1,2],[3,4],[5,6],[7,8]]</span><br><span class="line">Output: 4</span><br><span class="line">Explanation: One arrow needs to be shot for each balloon for a total of 4 arrows.</span><br></pre></td></tr></table></figure>
+
+<p>Example 3:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input: points = [[1,2],[2,3],[3,4],[4,5]]</span><br><span class="line">Output: 2</span><br><span class="line">Explanation: The balloons can be burst by 2 arrows:</span><br><span class="line">- Shoot an arrow at x = 2, bursting the balloons [1,2] and [2,3].</span><br><span class="line">- Shoot an arrow at x = 4, bursting the balloons [3,4] and [4,5].</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>1 &lt;&#x3D; points.length &lt;&#x3D; 105</li>
+<li>points[i].length &#x3D;&#x3D; 2</li>
+<li>-231 &lt;&#x3D; xstart &lt; xend &lt;&#x3D; 231 - 1</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="comment"># e.g. points = [[10,16],[2,8],[1,6],[7,12]]               </span></span><br><span class="line">    <span class="comment">#    1         6  </span></span><br><span class="line">    <span class="comment">#      2            8 </span></span><br><span class="line">    <span class="comment">#                7            12</span></span><br><span class="line">    <span class="comment">#                         10            16</span></span><br><span class="line">    <span class="comment">#  1st arrow can burst [1,6] [2,8]</span></span><br><span class="line">    <span class="comment">#  2nd arrow is needed to burst [7,12] since 7 is greater than 6</span></span><br><span class="line">    <span class="comment">#  2nd arrow can also burst [10,16] since 10 is smaller than 12</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findMinArrowShots</span>(<span class="params">self, points: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="comment"># sort by end value</span></span><br><span class="line">        points.sort(key = <span class="keyword">lambda</span> x : x[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">        currEnd = points[<span class="number">0</span>][<span class="number">1</span>]</span><br><span class="line">        res = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(points)):</span><br><span class="line">            start = points[i][<span class="number">0</span>]</span><br><span class="line">            end = points[i][<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> start &gt; currEnd:</span><br><span class="line">                res += <span class="number">1</span></span><br><span class="line">                currEnd = end</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
 <h2 id="Leetcode-659-Split-Array-into-Consecutive-Subsequences"><a href="#Leetcode-659-Split-Array-into-Consecutive-Subsequences" class="headerlink" title="[Leetcode 659] Split Array into Consecutive Subsequences"></a>[Leetcode 659] Split Array into Consecutive Subsequences</h2><p>You are given an integer array nums that is sorted in non-decreasing order.</p>
 <p>Determine if it is possible to split nums into one or more subsequences such that both of the following conditions are true:</p>
 <ul>
@@ -377,6 +398,7 @@
 </ul>
 <p>Solution:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">isPossible</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="comment"># count the numbers</span></span><br><span class="line">        freq = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">            freq[num] = freq.get(num, <span class="number">0</span>) + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># tracking what is needed to form subsequence</span></span><br><span class="line">        need = &#123;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">            <span class="comment"># current number is not available for any subsequence</span></span><br><span class="line">            <span class="keyword">if</span> freq[num] == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># current number is needed for an existing subsequence</span></span><br><span class="line">            <span class="keyword">if</span> num <span class="keyword">in</span> need <span class="keyword">and</span> need[num] &gt; <span class="number">0</span>:</span><br><span class="line">                need[num] -= <span class="number">1</span>  <span class="comment"># reduce the current number from dict</span></span><br><span class="line">                freq[num] -= <span class="number">1</span>  <span class="comment"># reduce the current number from freq</span></span><br><span class="line">                </span><br><span class="line">                need[num+<span class="number">1</span>] = need.get(num+<span class="number">1</span>, <span class="number">0</span>) + <span class="number">1</span> <span class="comment"># add the next needed number to dict</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># can&#x27;t be part of existing subsequence, so have to create a new subsequence if possible</span></span><br><span class="line">            <span class="keyword">elif</span> num+<span class="number">1</span> <span class="keyword">in</span> freq <span class="keyword">and</span> freq[num+<span class="number">1</span>] &gt; <span class="number">0</span> <span class="keyword">and</span> num+<span class="number">2</span> <span class="keyword">in</span> freq <span class="keyword">and</span> freq[num+<span class="number">2</span>] &gt; <span class="number">0</span>:</span><br><span class="line">                freq[num] -= <span class="number">1</span></span><br><span class="line">                freq[num+<span class="number">1</span>] -= <span class="number">1</span></span><br><span class="line">                freq[num+<span class="number">2</span>] -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">                need[num+<span class="number">3</span>] = need.get(num+<span class="number">3</span>, <span class="number">0</span>) + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># can&#x27;t use for any subsequence, return false</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
     </div>
 
     
