@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">96</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">254</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">96</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">255</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">254</span>
+          <span class="site-state-item-count">255</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,120 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/interprocess-communication-ipc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/interprocess-communication-ipc/" class="post-title-link" itemprop="url">Interprocess communication(IPC)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-10 07:00:00" itemprop="dateCreated datePublished" datetime="2021-04-10T07:00:00-07:00">2021-04-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Pipes"><a href="#Pipes" class="headerlink" title="Pipes"></a>Pipes</h2><p>Pipes are the oldest form of UNIX System IPC and are provided by all UNIX systems. Pipes have two limitations.</p>
+<ol>
+<li>Historically, they have been half duplex (i.e., data flows in only one direction). Some systems now provide full-duplex pipes, but for maximum portability, we should never assume that this is the case.</li>
+<li>Pipes can be used only between processes that have a common ancestor. Normally, a pipe is created by a process, that process calls fork, and the pipe is used between the parent and the child.</li>
+</ol>
+<p>FIFOs get around the second limitation, and UNIX domain sockets get around both limitations.</p>
+<h2 id="FIFOs"><a href="#FIFOs" class="headerlink" title="FIFOs"></a>FIFOs</h2><p>FIFOs are sometimes called named pipes. Unnamed pipes can be used only between related processes when a common ancestor has created the pipe. With FIFOs, however, unrelated processes can exchange data.</p>
+<p>Creating a FIFO is similar to creating a file. Indeed, the pathname for a FIFO exists in the file system.</p>
+<h2 id="Message-Queues"><a href="#Message-Queues" class="headerlink" title="Message Queues"></a>Message Queues</h2><p>A message queue is a linked list of messages stored within the kernel and identified by a message queue identifier. We’ll call the message queue just a queue and its identifier a queue ID.</p>
+<p>A new queue is created or an existing queue opened by msgget. New messages are added to the end of a queue by msgsnd. Every message has a positive long integer type field, a non-negative length, and the actual data bytes (corresponding to the length), all of which are specified to msgsnd when the message is added to a queue. Messages are fetched from a queue by msgrcv. We don’t have to fetch the messages in a first-in, first-out order. Instead, we can fetch messages based on their type field.</p>
+<h2 id="Semaphores"><a href="#Semaphores" class="headerlink" title="Semaphores"></a>Semaphores</h2><p>A semaphore isn’t a form of IPC similar to the others that we’ve described (pipes, FIFOs, and message queues). A semaphore is a counter used to provide access to a shared data object for multiple processes.</p>
+<p>To obtain a shared resource, a process needs to do the following:</p>
+<ol>
+<li>Test the semaphore that controls the resource.</li>
+<li>If the value of the semaphore is positive, the process can use the resource. In this case, the process decrements the semaphore value by 1, indicating that it has used one unit of the resource.</li>
+<li>Otherwise, if the value of the semaphore is 0, the process goes to sleep until the semaphore value is greater than 0. When the process wakes up, it returns to step 1.</li>
+</ol>
+<p>When a process is done with a shared resource that is controlled by a semaphore, the semaphore value is incremented by 1. If any other processes are asleep, waiting for the semaphore, they are awakened.</p>
+<p>To implement semaphores correctly, the test of a semaphore’s value and the decrementing of this value must be an atomic operation. For this reason, semaphores are normally implemented inside the kernel.</p>
+<h2 id="Shared-Memory"><a href="#Shared-Memory" class="headerlink" title="Shared Memory"></a>Shared Memory</h2><p>Shared memory allows two or more processes to share a given region of memory. This is the fastest form of IPC, because the data does not need to be copied between the client and the server. The only trick in using shared memory is synchronizing access to a given region among multiple processes. If the server is placing data into a shared memory region, the client shouldn’t try to access the data until the server is done. Often, semaphores are used to synchronize shared memory access. But record locking or mutexes can also be used.</p>
+<h2 id="Network-IPC-Sockets"><a href="#Network-IPC-Sockets" class="headerlink" title="Network IPC: Sockets"></a>Network IPC: Sockets</h2><p>The socket network IPC interface can be used by processes to communicate with other processes, regardless of where they are running, on the same machine or on different machines. Indeed, this was one of the design goals of the socket interface. The same interfaces can be used for both intermachine communication and intramachine communication.</p>
+<p>A socket is an abstraction of a communication endpoint. Just as they would use file descriptors to access files, applications use socket descriptors to access sockets. Socket descriptors are implemented as file descriptors in the UNIX System. Indeed, many of the functions that deal with file descriptors, such as read and write, will work with a socket descriptor.</p>
+<p>Normally, the recv functions will block when no data is immediately available. Similarly, the send functions will block when there is not enough room in the socket’s output queue to send the message. This behavior changes when the socket is in nonblocking mode.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li>Advanced Programming in the UNIX Environment</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1613,142 +1727,6 @@ f2696790-b305-4099-8dba-b31d23b0beac    localhost Connected
 3200	/dev/sde	10.10.1.4
 </code></pre>
 <h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>From this case study, we had basic understanding on how the Gluster file system works with storage across multiple nodes. The default Gluster filesystem layout is not fit for all use cases. A custom storage layout would be needed to meet the performance requirement.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/glusterfs-a-distributed-file-syste/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/glusterfs-a-distributed-file-syste/" class="post-title-link" itemprop="url">GlusterFS - A distributed file syste</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-02-27 08:00:00" itemprop="dateCreated datePublished" datetime="2021-02-27T08:00:00-08:00">2021-02-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="What-is-Gluster"><a href="#What-is-Gluster" class="headerlink" title="What is Gluster?"></a>What is Gluster?</h2><p><a target="_blank" rel="noopener" href="https://docs.gluster.org/en/latest/Administrator-Guide/GlusterFS-Introduction/">Gluster</a> is a scalable, distributed file system that aggregates disk storage resources from multiple servers into a single global namespace.</p>
-<p>Advantages</p>
-<ul>
-<li>Scales to several petabytes</li>
-<li>Handles thousands of clients</li>
-<li>POSIX compatible</li>
-<li>Uses commodity hardware</li>
-<li>Can use any ondisk filesystem that supports extended attributes</li>
-<li>Accessible using industry standard protocols like NFS and SMB</li>
-<li>Provides replication, quotas, geo-replication, snapshots and bitrot detection</li>
-<li>Allows optimization for different workloads</li>
-<li>Open Source</li>
-</ul>
-<h2 id="Installation-and-configuration"><a href="#Installation-and-configuration" class="headerlink" title="Installation and configuration"></a>Installation and configuration</h2><ol>
-<li><p>To install gluster and start gluster service:</p>
-<p> [root@centos83-1 ~]# cat &#x2F;etc&#x2F;centos-release<br> CentOS Linux release 8.3.2011</p>
-<p> [root@centos83-1 ~]# systemctl stop firewalld<br> [root@centos83-1 ~]# systemctl disable firewalld</p>
-<p> [root@centos83-1 ~]# yum install -y centos-release-gluster<br> [root@centos83-1 ~]# yum install -y glusterfs-server<br> [root@centos83-1 ~]# rpm -qa |grep gluster<br> glusterfs-cli-8.3-1.el8.x86_64<br> libvirt-daemon-driver-storage-gluster-6.0.0-28.module_el8.3.0+555+a55c8938.x86_64<br> glusterfs-client-xlators-8.3-1.el8.x86_64<br> qemu-kvm-block-gluster-4.2.0-34.module_el8.3.0+555+a55c8938.x86_64<br> libglusterd0-8.3-1.el8.x86_64<br> glusterfs-8.3-1.el8.x86_64<br> pcp-pmda-gluster-5.1.1-3.el8.x86_64<br> glusterfs-fuse-8.3-1.el8.x86_64<br> centos-release-gluster8-1.0-1.el8.noarch<br> libglusterfs0-8.3-1.el8.x86_64<br> glusterfs-server-8.3-1.el8.x86_64</p>
-<p> [root@centos83-1 ~]# systemctl enable glusterd<br> [root@centos83-1 ~]# systemctl restart glusterd</p>
-<p> [root@centos83-1 ~]# systemctl status glusterd<br>  glusterd.service - GlusterFS, a clustered file-system server<br>  Loaded: loaded (&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;glusterd.service; enabled; vendor preset: enabled)<br>  Active: active (running) since Tue 2021-01-05 17:28:42 PST; 1 months 22 days ago<br>   Docs: man:glusterd(8)<br>  Main PID: 1420 (glusterd)<br>  Tasks: 26 (limit: 409792)<br>  Memory: 152.3M<br>  CGroup: &#x2F;system.slice&#x2F;glusterd.service</p>
-</li>
-<li><p>To form a trusted storage pool with the second server:</p>
-<p> [root@centos83-1 ~]# gluster peer probe centos83-2<br> [root@centos83-1 ~]# gluster peer status<br> Number of Peers: 1</p>
-<p> Hostname: centos83-2<br> Uuid: b07d3d6e-4d6e-42a9-ad21-018223843fd5<br> State: Peer in Cluster (Connected)</p>
-</li>
-<li><p>To create brick on the first server:</p>
-<p> [root@centos83-1 ~]# lsblk | egrep “NAME|sdb”<br> NAME               MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT<br> sdb                  8:16   0    1T  0 disk</p>
-<p> [root@centos83-1 ~]# pvcreate &#x2F;dev&#x2F;sdb<br> [root@centos83-1 ~]# vgcreate vg_bricks &#x2F;dev&#x2F;sdb<br> [root@centos83-1 ~]# lvcreate -L 800g -n gfslv1 vg_bricks<br> [root@centos83-1 ~]# mkfs.xfs &#x2F;dev&#x2F;vg_bricks&#x2F;gfslv1<br> [root@centos83-1 ~]# mkdir -p &#x2F;bricks&#x2F;vm1_brick1<br> [root@centos83-1 ~]# vim &#x2F;etc&#x2F;fstab<br> &#x2F;dev&#x2F;vg_bricks&#x2F;gfslv1 &#x2F;bricks&#x2F;vm1_brick1        xfs     defaults        0 0<br> [root@centos83-1 ~]# mount -a<br> [root@centos83-1 ~]# df -h |grep gfs<br> &#x2F;dev&#x2F;mapper&#x2F;vg_bricks-gfslv1  800G  5.7G  794G   1% &#x2F;bricks&#x2F;vm1_brick1</p>
-</li>
-<li><p>To create brick on the second server:</p>
-<p> [root@centos83-2 ~]# lsblk | egrep “NAME|sdb”<br> NAME               MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT<br> sdb                  8:16   0    1T  0 disk</p>
-<p> [root@centos83-2 ~]# pvcreate &#x2F;dev&#x2F;sdb<br> [root@centos83-2 ~]# vgcreate vg_bricks &#x2F;dev&#x2F;sdb<br> [root@centos83-2 ~]# lvcreate -L 800g -n gfslv1 vg_bricks<br> [root@centos83-2 ~]# mkfs.xfs &#x2F;dev&#x2F;vg_bricks&#x2F;gfslv1<br> [root@centos83-2 ~]# mkdir -p &#x2F;bricks&#x2F;vm2_brick1<br> [root@centos83-2 ~]# vim &#x2F;etc&#x2F;fstab<br> &#x2F;dev&#x2F;vg_bricks&#x2F;gfslv1 &#x2F;bricks&#x2F;vm2_brick1        xfs     defaults        0 0<br> [root@centos83-2 ~]# mount -a<br> [root@centos83-2 ~]# df -h |grep gfs<br> &#x2F;dev&#x2F;mapper&#x2F;vg_bricks-gfslv1  800G  5.7G  794G   1% &#x2F;bricks&#x2F;vm2_brick1</p>
-</li>
-<li><p>To create distributed volume with the two bricks which are created on the two nodes:</p>
-<p> [root@centos83-1 ~]# gluster volume create gv0 centos83-1:&#x2F;bricks&#x2F;vm1_brick1&#x2F;gv0 centos83-2:&#x2F;bricks&#x2F;vm2_brick1&#x2F;gv0<br> [root@centos83-1 ~]# gluster volume start gv0</p>
-</li>
-<li><p>To verify the volume status:</p>
-<p> [root@centos83-1 ~]#  gluster volume info gv0</p>
-<p> Volume Name: gv0<br> Type: Distribute<br> Volume ID: ee08d16a-f940-4ec2-aba8-5f1fcfe41bd4<br> Status: Started<br> Snapshot Count: 0<br> Number of Bricks: 2<br> Transport-type: tcp<br> Bricks:<br> Brick1: centos83-1:&#x2F;bricks&#x2F;vm1_brick1&#x2F;gv0<br> Brick2: centos83-2:&#x2F;bricks&#x2F;vm2_brick1&#x2F;gv0<br> Options Reconfigured:<br> storage.fips-mode-rchecksum: on<br> transport.address-family: inet<br> nfs.disable: on</p>
-</li>
-<li><p>To mount the distributed volume on one of the servers(treat it as client for simple demonstration):</p>
-<p> [root@centos83-1 ~]# mkdir &#x2F;testmnt<br> [root@centos83-1 ~]# mount -t glusterfs centos83-2:&#x2F;gv0 &#x2F;testmnt<br> [root@centos83-1 ~]# df -h | grep testmnt<br> centos83-2:&#x2F;gv0               1.6T   28G  1.6T   2% &#x2F;testmnt</p>
-</li>
-</ol>
-<p>As shown above, the usable storage size is the sum of the brick size from two nodes.</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://docs.gluster.org/en/latest/Administrator-Guide/GlusterFS-Introduction/">https://docs.gluster.org/en/latest/Administrator-Guide/GlusterFS-Introduction/</a></li>
-</ul>
 
       
     </div>

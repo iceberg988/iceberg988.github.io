@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">96</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">254</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">96</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">255</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">254</span>
+          <span class="site-state-item-count">255</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,106 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/how-to-redirect-the-default-404-page-not-found-error-page-in-ghost-blog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/how-to-redirect-the-default-404-page-not-found-error-page-in-ghost-blog/" class="post-title-link" itemprop="url">How to redirect the default "404 page not found" error page in Ghost blog</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-06 07:23:00" itemprop="dateCreated datePublished" datetime="2023-01-06T07:23:00-08:00">2023-01-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>When users access a non-existent page, they may see a page which shows the message “404 page not found” in Ghost blog.</p>
+<p>We can redirect the page to another page by creating a <strong>error-404.hbs</strong> file under the theme folder.</p>
+<p>In the following example, we redirect the users to the website home page when they access a non-existent page.</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv=&quot;refresh&quot; content=&quot;0; url=&#39;http://localhost:2368/&#39;&quot; /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1409,152 +1509,6 @@ $ kubectl apply -f statefulset-node-select.yaml
 $ kubectl get statefulset
 $ kubectl get pod -o wide
 </code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/pull-an-image-from-a-private-docker-registry-in-kubernetes-pod/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/pull-an-image-from-a-private-docker-registry-in-kubernetes-pod/" class="post-title-link" itemprop="url">Pull an image from a private docker registry in Kubernetes Pod</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-12-27 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-27T08:00:00-08:00">2022-12-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Log-in-to-Docker-Hub"><a href="#Log-in-to-Docker-Hub" class="headerlink" title="Log in to Docker Hub"></a>Log in to Docker Hub</h2><p>In order to pull a image from Docker Hub, you must authenticate with a registry. Use <strong>docker</strong> tool to log in to the Docker Hub as below. A username and password is needed to log in.</p>
-<pre><code>$ docker login
-</code></pre>
-<p>The login process creates or updates the config.json file which holds an authorization token.</p>
-<pre><code>$ cat /root/.docker/config.json
-&#123;
-    &quot;auths&quot;: &#123;
-        &quot;https://index.docker.io/v1/&quot;: &#123;
-            &quot;auth&quot;: &quot;xxx=&quot;
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<h2 id="Create-a-Secret-based-on-existing-credentials"><a href="#Create-a-Secret-based-on-existing-credentials" class="headerlink" title="Create a Secret based on existing credentials"></a>Create a Secret based on existing credentials</h2><p>A Kubernetes cluster uses the Secret of kubernetes.io&#x2F;dockerconfigjson type to authenticate with a container registry to pull a private image.</p>
-<p>If you already ran docker login, you can copy that credential into Kubernetes:</p>
-<pre><code>$ kubectl create secret generic regcred --from-file=.dockerconfigjson=/root/.docker/config.json --type=kubernetes.io/dockerconfigjson
-</code></pre>
-<p>You can inspect the Secret as below.</p>
-<pre><code>$ kubectl get secret regcred --output=yaml
-
-apiVersion: v1
-data:
-  .dockerconfigjson: &lt;base64-formatted-docker-credentials&gt;
-kind: Secret
-metadata:
-  creationTimestamp: &quot;2022-02-28T22:25:43Z&quot;
-  name: regcred
-  namespace: default
-  resourceVersion: &quot;1503624&quot;
-  uid: yyy
-type: kubernetes.io/dockerconfigjson
-</code></pre>
-<p>The value of the .dockerconfigjson field is a base64 representation of your Docker credentials. To understand what is in the .dockerconfigjson field, convert the secret data to a readable format:</p>
-<pre><code>$ kubectl get secret regcred --output=&quot;jsonpath=&#123;.data.\.dockerconfigjson&#125;&quot; | base64 --decode
-&#123;
-    &quot;auths&quot;: &#123;
-        &quot;https://index.docker.io/v1/&quot;: &#123;
-            &quot;auth&quot;: &quot;xxx=&quot;
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<h2 id="Create-a-Pod-that-uses-the-Secret-to-pull-image"><a href="#Create-a-Pod-that-uses-the-Secret-to-pull-image" class="headerlink" title="Create a Pod that uses the Secret to pull image"></a>Create a Pod that uses the Secret to pull image</h2><pre><code>$ vi my-private-reg-pod.yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: private-reg
-spec:
-  containers:
-  - name: private-reg-container
-    image: &lt;your-private-image&gt;
-  imagePullSecrets:
-  - name: regcred
-
-$ kubectl apply -f my-private-reg-pod.yaml
-$ kubectl get pod private-reg  
-</code></pre>
-<p>Note that the <strong>imagePullSecrets</strong> field specifies that Kubernetes should get the credentials from a Secret named <em>regcred</em> in order to pull a container image from Docker Hub.</p>
 
       
     </div>

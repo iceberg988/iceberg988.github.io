@@ -23698,4 +23698,32 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
         <tag>Python</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Monotonic stack</title>
+    <url>/blog/monotonic-stack/</url>
+    <content><![CDATA[<h2 id="What-is-a-Monotonic-Stack"><a href="#What-is-a-Monotonic-Stack" class="headerlink" title="What is a Monotonic Stack"></a>What is a Monotonic Stack</h2><p>A monotonic stack is a stack whose elements are monotonically increasing or decreasing. It contains all properties that a typical stack has and its elements are  monotonic decreasing or increasing.</p>
+<p>Monotonic increasing stack: 2  3  5  6  9<br>Monotonic decreasing stack: 9  6  5  3  2</p>
+<span id="more"></span>
+
+<h2 id="Leetcode-739-Daily-Temperatures"><a href="#Leetcode-739-Daily-Temperatures" class="headerlink" title="[Leetcode 739] Daily Temperatures"></a>[Leetcode 739] Daily Temperatures</h2><p>Given an array of integers temperatures represents the daily temperatures, return an array answer such that answer[i] is the number of days you have to wait after the ith day to get a warmer temperature. If there is no future day for which this is possible, keep answer[i] &#x3D;&#x3D; 0 instead.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: temperatures = [73,74,75,71,69,72,76,73]</span><br><span class="line">Output: [1,1,4,2,1,1,0,0]</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>1 &lt;&#x3D; temperatures.length &lt;&#x3D; 105</li>
+<li>30 &lt;&#x3D; temperatures[i] &lt;&#x3D; 100</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="comment"># e.g. temperatures = [73,74,75,71,69,72,76,73]</span></span><br><span class="line">    <span class="comment"># i  stack     result</span></span><br><span class="line">    <span class="comment"># 0  [0]       [0, 0, 0, 0, 0, 0, 0, 0]</span></span><br><span class="line">    <span class="comment"># 1  [1]       [1, 0, 0, 0, 0, 0, 0, 0]</span></span><br><span class="line">    <span class="comment"># 2  [2]       [1, 1, 0, 0, 0, 0, 0, 0]</span></span><br><span class="line">    <span class="comment"># 3  [2, 3]    [1, 1, 0, 0, 0, 0, 0, 0]</span></span><br><span class="line">    <span class="comment"># 4  [2, 3, 4] [1, 1, 0, 0, 0, 0, 0, 0]</span></span><br><span class="line">    <span class="comment"># 5  [2, 5]    [1, 1, 0, 2, 1, 0, 0, 0]</span></span><br><span class="line">    <span class="comment"># 6  [6]       [1, 1, 4, 2, 1, 1, 0, 0]</span></span><br><span class="line">    <span class="comment"># 7  [6, 7]    [1, 1, 4, 2, 1, 1, 0, 0]</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">dailyTemperatures</span>(<span class="params">self, temperatures: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        st = []</span><br><span class="line">        res = [<span class="number">0</span>] * <span class="built_in">len</span>(temperatures)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(temperatures)):</span><br><span class="line">            <span class="keyword">while</span> st <span class="keyword">and</span> temperatures[i] &gt; temperatures[st[-<span class="number">1</span>]]:</span><br><span class="line">                idx = st.pop()</span><br><span class="line">                res[idx] = i - idx</span><br><span class="line"></span><br><span class="line">            st.append(i)</span><br><span class="line">            <span class="comment">#print(st, res)</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Tech</category>
+        <category>Programming</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Data structure</tag>
+        <tag>Stack</tag>
+      </tags>
+  </entry>
 </search>
