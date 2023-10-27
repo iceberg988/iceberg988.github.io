@@ -23702,7 +23702,7 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
     <title>Monotonic stack</title>
     <url>/blog/monotonic-stack/</url>
     <content><![CDATA[<h2 id="What-is-a-Monotonic-Stack"><a href="#What-is-a-Monotonic-Stack" class="headerlink" title="What is a Monotonic Stack"></a>What is a Monotonic Stack</h2><p>A monotonic stack is a stack whose elements are monotonically increasing or decreasing. It contains all properties that a typical stack has and its elements are  monotonic decreasing or increasing.</p>
-<p>Monotonic increasing stack: 2  3  5  6  9<br>Monotonic decreasing stack: 9  6  5  3  2</p>
+<p>Monotonic increasing stack: [2  3  5  6  9]<br>Monotonic decreasing stack: [9  6  5  3  2]</p>
 <span id="more"></span>
 
 <h2 id="Leetcode-739-Daily-Temperatures"><a href="#Leetcode-739-Daily-Temperatures" class="headerlink" title="[Leetcode 739] Daily Temperatures"></a>[Leetcode 739] Daily Temperatures</h2><p>Given an array of integers temperatures represents the daily temperatures, return an array answer such that answer[i] is the number of days you have to wait after the ith day to get a warmer temperature. If there is no future day for which this is possible, keep answer[i] &#x3D;&#x3D; 0 instead.</p>
