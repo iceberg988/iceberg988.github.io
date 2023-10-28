@@ -23748,4 +23748,72 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
         <tag>Stack</tag>
       </tags>
   </entry>
+  <entry>
+    <title>bit manipulation</title>
+    <url>/blog/bit-manipulation/</url>
+    <content><![CDATA[<h2 id="Leetcode-136-Single-Number"><a href="#Leetcode-136-Single-Number" class="headerlink" title="[Leetcode 136] Single Number"></a>[Leetcode 136] Single Number</h2><p>Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.</p>
+<p>You must implement a solution with a linear runtime complexity and use only constant extra space.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: nums = [2,2,1]</span><br><span class="line">Output: 1</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: nums = [4,1,2,1,2]</span><br><span class="line">Output: 4</span><br></pre></td></tr></table></figure>
+
+<p>Example 3:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: nums = [1]</span><br><span class="line">Output: 1</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>1 &lt;&#x3D; nums.length &lt;&#x3D; 3 * 104</li>
+<li>-3 * 104 &lt;&#x3D; nums[i] &lt;&#x3D; 3 * 104</li>
+<li>Each element in the array appears twice except for one element which appears only once.</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">singleNumber</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="comment"># hint: xor the same number results in 0</span></span><br><span class="line">        <span class="comment">#res = nums[0]</span></span><br><span class="line">        <span class="comment">#for i in range(1,len(nums)):</span></span><br><span class="line">        <span class="comment">#    res ^= nums[i]</span></span><br><span class="line">        <span class="comment">#return res</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> reduce(<span class="keyword">lambda</span> res, num: res ^ num, nums)</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">singleNumber1</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        set1 = <span class="built_in">set</span>()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">            <span class="keyword">if</span> num <span class="keyword">in</span> set1:</span><br><span class="line">                set1.remove(num)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                set1.add(num)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">list</span>(set1)[<span class="number">0</span>]</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">singleNumber2</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        nums.sort()</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(nums),<span class="number">2</span>):</span><br><span class="line">            <span class="keyword">if</span> nums[i] != nums[i-<span class="number">1</span>]:</span><br><span class="line">                <span class="keyword">return</span> nums[i-<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">return</span> nums[<span class="built_in">len</span>(nums) - <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="Leetcode-338-Counting-Bits"><a href="#Leetcode-338-Counting-Bits" class="headerlink" title="[Leetcode 338] Counting Bits"></a>[Leetcode 338] Counting Bits</h2><p>Given an integer n, return an array ans of length n + 1 such that for each i (0 &lt;&#x3D; i &lt;&#x3D; n), ans[i] is the number of 1’s in the binary representation of i.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 2</span><br><span class="line">Output: [0,1,1]</span><br><span class="line">Explanation:</span><br><span class="line">0 --&gt; 0</span><br><span class="line">1 --&gt; 1</span><br><span class="line">2 --&gt; 10</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 5</span><br><span class="line">Output: [0,1,1,2,1,2]</span><br><span class="line">Explanation:</span><br><span class="line">0 --&gt; 0</span><br><span class="line">1 --&gt; 1</span><br><span class="line">2 --&gt; 10</span><br><span class="line">3 --&gt; 11</span><br><span class="line">4 --&gt; 100</span><br><span class="line">5 --&gt; 101</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>0 &lt;&#x3D; n &lt;&#x3D; 105</li>
+</ul>
+<p>Follow up:</p>
+<ul>
+<li>It is very easy to come up with a solution with a runtime of O(n log n). Can you do it in linear time O(n) and possibly in a single pass?<br>Can you do it without using any built-in function (i.e., like __builtin_popcount in C++)?</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">countBits</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n+<span class="number">1</span>):</span><br><span class="line">            num = i</span><br><span class="line">            <span class="keyword">if</span> num == <span class="number">0</span>:</span><br><span class="line">                res.append(<span class="number">0</span>)</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            </span><br><span class="line">            count = <span class="number">0</span></span><br><span class="line">            <span class="keyword">while</span> num:</span><br><span class="line">              count += num &amp; <span class="number">1</span></span><br><span class="line">              num &gt;&gt;= <span class="number">1</span></span><br><span class="line">            </span><br><span class="line">            res.append(count)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+<h2 id="Leetcode-1318-Minimum-Flips-to-Make-a-OR-b-Equal-to-c"><a href="#Leetcode-1318-Minimum-Flips-to-Make-a-OR-b-Equal-to-c" class="headerlink" title="[Leetcode 1318] Minimum Flips to Make a OR b Equal to c"></a>[Leetcode 1318] Minimum Flips to Make a OR b Equal to c</h2><p>Given 3 positives numbers a, b and c. Return the minimum flips required in some bits of a and b to make ( a OR b &#x3D;&#x3D; c ). (bitwise OR operation).<br>Flip operation consists of change any single bit 1 to 0 or change the bit 0 to 1 in their binary representation.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: a = 2, b = 6, c = 5</span><br><span class="line">Output: 3</span><br><span class="line">Explanation: After flips a = 1 , b = 4 , c = 5 such that (a OR b == c)</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: a = 4, b = 2, c = 7</span><br><span class="line">Output: 1</span><br></pre></td></tr></table></figure>
+
+<p>Example 3:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: a = 1, b = 2, c = 3</span><br><span class="line">Output: 0</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>1 &lt;&#x3D; a &lt;&#x3D; 10^9</li>
+<li>1 &lt;&#x3D; b &lt;&#x3D; 10^9</li>
+<li>1 &lt;&#x3D; c &lt;&#x3D; 10^9</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="comment"># e.g.</span></span><br><span class="line">    <span class="comment"># a = 8 (1000), c = 3 (0011), c = 5 (0101)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">minFlips</span>(<span class="params">self, a: <span class="built_in">int</span>, b: <span class="built_in">int</span>, c: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> a <span class="keyword">or</span> b <span class="keyword">or</span> c:</span><br><span class="line">            lastBit = c &amp; <span class="number">1</span> </span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> lastBit:</span><br><span class="line">                <span class="comment"># flip a or b to have bit 1</span></span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> (a &amp; <span class="number">1</span> <span class="keyword">or</span> b &amp; <span class="number">1</span>):</span><br><span class="line">                    res += <span class="number">1</span></span><br><span class="line">                   </span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># flip a to have bit 0</span></span><br><span class="line">                <span class="keyword">if</span> a &amp; <span class="number">1</span>:</span><br><span class="line">                    res += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">                <span class="comment"># flip b to have bit 0</span></span><br><span class="line">                <span class="keyword">if</span> b &amp; <span class="number">1</span>:</span><br><span class="line">                    res += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            a &gt;&gt;= <span class="number">1</span></span><br><span class="line">            b &gt;&gt;= <span class="number">1</span></span><br><span class="line">            c &gt;&gt;= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Tech</category>
+        <category>Programming</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Bit manipulation</tag>
+      </tags>
+  </entry>
 </search>

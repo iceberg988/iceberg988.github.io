@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">96</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">255</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">97</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">256</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">255</span>
+          <span class="site-state-item-count">256</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">96</span>
+        <span class="site-state-item-count">97</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,245 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/uninstall-ceph-storage-cluster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/uninstall-ceph-storage-cluster/" class="post-title-link" itemprop="url">Uninstall ceph storage cluster</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-03-15 12:36:00" itemprop="dateCreated datePublished" datetime="2023-03-15T12:36:00-07:00">2023-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Check-the-pools-images-and-OSDs"><a href="#Check-the-pools-images-and-OSDs" class="headerlink" title="Check the pools, images and OSDs"></a>Check the pools, images and OSDs</h2><pre><code>[ceph: root@host1 /]$ ceph osd tree
+ID  CLASS  WEIGHT    TYPE NAME             STATUS  REWEIGHT  PRI-AFF
+-1         83.83411  root default
+-3         27.94470      host host1
+ 0    ssd   3.49309          osd.0             up   1.00000  1.00000
+ 1    ssd   3.49309          osd.1             up   1.00000  1.00000
+ 2    ssd   3.49309          osd.2             up   1.00000  1.00000
+ 3    ssd   3.49309          osd.3             up   1.00000  1.00000
+ 4    ssd   3.49309          osd.4             up   1.00000  1.00000
+ 5    ssd   3.49309          osd.5             up   1.00000  1.00000
+ 6    ssd   3.49309          osd.6             up   1.00000  1.00000
+ 7    ssd   3.49309          osd.7             up   1.00000  1.00000
+-5         27.94470      host host2
+ 8    ssd   3.49309          osd.8             up   1.00000  1.00000
+ 9    ssd   3.49309          osd.9             up   1.00000  1.00000
+10    ssd   3.49309          osd.10            up   1.00000  1.00000
+11    ssd   3.49309          osd.11            up   1.00000  1.00000
+12    ssd   3.49309          osd.12            up   1.00000  1.00000
+13    ssd   3.49309          osd.13            up   1.00000  1.00000
+14    ssd   3.49309          osd.14            up   1.00000  1.00000
+15    ssd   3.49309          osd.15            up   1.00000  1.00000
+-7         27.94470      host host3
+16    ssd   3.49309          osd.16            up   1.00000  1.00000
+17    ssd   3.49309          osd.17            up   1.00000  1.00000
+18    ssd   3.49309          osd.18            up   1.00000  1.00000
+19    ssd   3.49309          osd.19            up   1.00000  1.00000
+20    ssd   3.49309          osd.20            up   1.00000  1.00000
+21    ssd   3.49309          osd.21            up   1.00000  1.00000
+22    ssd   3.49309          osd.22            up   1.00000  1.00000
+23    ssd   3.49309          osd.23            up   1.00000  1.00000
+
+[ceph: root@host1 /]$ ceph osd lspools
+1 device_health_metrics
+2 datapool
+
+[ceph: root@host1 /]$ rbd showmapped
+id  pool      namespace  image    snap  device
+0   datapool             rbdvol1  -     /dev/rbd0
+1   datapool             rbdvol2  -     /dev/rbd1
+2   datapool             rbdvol3  -     /dev/rbd2
+3   datapool             rbdvol4  -     /dev/rbd3
+</code></pre>
+<h2 id="Remove-the-images-and-pools"><a href="#Remove-the-images-and-pools" class="headerlink" title="Remove the images and pools"></a>Remove the images and pools</h2><pre><code>[ceph: root@host1 /]$ rbd unmap /dev/rbd0
+[ceph: root@host1 /]$ rbd unmap /dev/rbd1
+[ceph: root@host1 /]$ rbd unmap /dev/rbd2
+[ceph: root@host1 /]$ rbd unmap /dev/rbd3
+
+[ceph: root@host1 /]$ rbd showmapped
+
+[ceph: root@host1 /]$ rbd rm datapool/rbdvol1
+Removing image: 100% complete...done.
+[ceph: root@host1 /]$ rbd rm datapool/rbdvol2
+Removing image: 100% complete...done.
+[ceph: root@host1 /]$ rbd rm datapool/rbdvol3
+Removing image: 100% complete...done.
+[ceph: root@host1 /]$ rbd rm datapool/rbdvol4
+Removing image: 100% complete...done.
+
+[ceph: root@host1 /]$ ceph osd pool rm datapool datapool --yes-i-really-really-mean-it
+Error EPERM: pool deletion is disabled; you must first set the mon_allow_pool_delete config option to true before you can destroy a pool
+
+[ceph: root@host1 /]$ ceph tell mon.\* injectargs &#39;--mon-allow-pool-delete=true&#39;
+mon.host1: mon_allow_pool_delete = &#39;true&#39;
+mon.host1: &#123;&#125;
+mon.host3: mon_allow_pool_delete = &#39;true&#39;
+mon.host3: &#123;&#125;
+mon.host2: mon_allow_pool_delete = &#39;true&#39;
+mon.host2: &#123;&#125;
+[ceph: root@host1 /]$ ceph osd pool rm datapool datapool --yes-i-really-really-mean-it
+pool &#39;datapool&#39; removed
+</code></pre>
+<h2 id="Remove-the-OSDs"><a href="#Remove-the-OSDs" class="headerlink" title="Remove the OSDs"></a>Remove the OSDs</h2><pre><code>[ceph: root@host1 /]$ for i in `seq 0 23`
+&gt; do
+&gt; ceph osd down $i &amp;&amp; ceph osd destroy $i --force
+&gt; done
+marked down osd.0.
+destroyed osd.0
+[omitted...]
+
+[ceph: root@host1 /]$  ceph osd tree
+ID  CLASS  WEIGHT    TYPE NAME             STATUS     REWEIGHT  PRI-AFF
+-1         83.83411  root default
+-3         27.94470      host host1
+ 0    ssd   3.49309          osd.0         destroyed   1.00000  1.00000
+ 1    ssd   3.49309          osd.1         destroyed   1.00000  1.00000
+ 2    ssd   3.49309          osd.2         destroyed   1.00000  1.00000
+ 3    ssd   3.49309          osd.3         destroyed   1.00000  1.00000
+ 4    ssd   3.49309          osd.4         destroyed   1.00000  1.00000
+ 5    ssd   3.49309          osd.5         destroyed   1.00000  1.00000
+ 6    ssd   3.49309          osd.6         destroyed   1.00000  1.00000
+ 7    ssd   3.49309          osd.7         destroyed   1.00000  1.00000
+-5         27.94470      host host2
+ 8    ssd   3.49309          osd.8         destroyed   1.00000  1.00000
+ 9    ssd   3.49309          osd.9         destroyed   1.00000  1.00000
+10    ssd   3.49309          osd.10        destroyed   1.00000  1.00000
+11    ssd   3.49309          osd.11        destroyed   1.00000  1.00000
+12    ssd   3.49309          osd.12        destroyed   1.00000  1.00000
+13    ssd   3.49309          osd.13        destroyed   1.00000  1.00000
+14    ssd   3.49309          osd.14        destroyed   1.00000  1.00000
+15    ssd   3.49309          osd.15        destroyed   1.00000  1.00000
+-7         27.94470      host host3
+16    ssd   3.49309          osd.16        destroyed   1.00000  1.00000
+17    ssd   3.49309          osd.17        destroyed   1.00000  1.00000
+18    ssd   3.49309          osd.18        destroyed   1.00000  1.00000
+19    ssd   3.49309          osd.19        destroyed   1.00000  1.00000
+20    ssd   3.49309          osd.20        destroyed   1.00000  1.00000
+21    ssd   3.49309          osd.21        destroyed   1.00000  1.00000
+22    ssd   3.49309          osd.22        destroyed   1.00000  1.00000
+23    ssd   3.49309          osd.23               up   1.00000  1.00000
+</code></pre>
+<h2 id="Remove-the-cluster-hosts"><a href="#Remove-the-cluster-hosts" class="headerlink" title="Remove the cluster hosts"></a>Remove the cluster hosts</h2><pre><code>[ceph: root@host1 /]$ ceph orch host rm host3
+Removed host &#39;host3&#39;
+[ceph: root@host1 /]$ ceph orch host rm host2
+Removed host &#39;host2&#39;
+[ceph: root@host1 /]$ ceph orch host rm host1
+Removed host &#39;host1&#39;
+</code></pre>
+<h2 id="Check-if-there-is-ceph-daemon-running"><a href="#Check-if-there-is-ceph-daemon-running" class="headerlink" title="Check if there is ceph daemon running"></a>Check if there is ceph daemon running</h2><pre><code>[ceph: root@host1 /]$ ceph orch ps host3
+No daemons reported
+[ceph: root@host1 /]$ ceph orch ps host2
+No daemons reported
+[ceph: root@host1 /]$ ceph orch ps host1
+No daemons reported
+</code></pre>
+<h2 id="Remove-the-ceph-storage-cluster"><a href="#Remove-the-ceph-storage-cluster" class="headerlink" title="Remove the ceph storage cluster"></a>Remove the ceph storage cluster</h2><pre><code>[root@host1 ~]$ cephadm rm-cluster --fsid fec2332e-1b0b-11ec-abbe-ac1f6bc8d268 --force
+[root@host1 ~]$ cephadm ls
+[]
+</code></pre>
+<h2 id="Cleanup-the-ceph-configuration-files"><a href="#Cleanup-the-ceph-configuration-files" class="headerlink" title="Cleanup the ceph configuration files"></a>Cleanup the ceph configuration files</h2><pre><code>[root@host1 ~]$ rm -rf /etc/ceph
+[root@host1 ~]$ rm -rf /var/lib/ce
+ceph/       cephadm/    certmonger/
+[root@host1 ~]$ rm -rf /var/lib/ceph*
+</code></pre>
+<h2 id="Cleanup-the-ceph-block-devices"><a href="#Cleanup-the-ceph-block-devices" class="headerlink" title="Cleanup the ceph block devices"></a>Cleanup the ceph block devices</h2><p>Do the following on each cluster node.</p>
+<pre><code>[root@host1 ~]$ lsblk
+NAME                                                                                                  MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+nvme0n1                                                                                               259:0    0  3.5T  0 disk
+├─nvme0n1p3                                                                                           259:4    0  3.5T  0 part
+│ ├─vgroot-lvswap01                                                                                   253:1    0    4G  0 lvm
+│ └─vgroot-lvroot                                                                                     253:0    0  3.5T  0 lvm  /
+├─nvme0n1p1                                                                                           259:2    0    1G  0 part /boot/efi
+└─nvme0n1p2                                                                                           259:3    0  500M  0 part /boot
+nvme3n1                                                                                               259:6    0  3.5T  0 disk
+└─ceph--ab144c40--73d6--49bc--921b--65025c383bb1-osd--block--2b965e29--b194--4363--8c96--20ab5b97db33 253:3    0  3.5T  0 lvm
+nvme2n1                                                                                               259:5    0  3.5T  0 disk
+└─ceph--b1ffe76d--1043--43a2--848b--6ba117e71a75-osd--block--0d6ff85d--9c49--43a0--98a3--c519fbb20b9c 253:4    0  3.5T  0 lvm
+nvme1n1                                                                                               259:1    0  3.5T  0 disk
+
+[root@host1 ~]$ for i in `seq 2 9`; do dd if=/dev/zero of=/dev/nvme$&#123;i&#125;n1 bs=1M count=1000; done
+[root@host1 ~]$ reboot
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1501,102 +1740,6 @@ Tracing block device I/O... Hit Ctrl-C to end.
 <li><a target="_blank" rel="noopener" href="https://github.com/iovisor/bcc/blob/master/INSTALL.md#ubuntu---source">https://github.com/iovisor/bcc/blob/master/INSTALL.md#ubuntu---source</a></li>
 </ul>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/ycsb-benchmark-on-postgresql/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/ycsb-benchmark-on-postgresql/" class="post-title-link" itemprop="url">YCSB benchmark on PostgreSQL</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-02-14 13:20:50" itemprop="dateCreated datePublished" datetime="2023-02-14T13:20:50-08:00">2023-02-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          go-ycsb is a Go port of YCSB. It fully supports all YCSB generators and the Core workload so we can do the basic CRUD benchmarks with Go.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/ycsb-benchmark-on-postgresql/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 

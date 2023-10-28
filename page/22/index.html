@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">96</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">255</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">97</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">256</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">255</span>
+          <span class="site-state-item-count">256</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">96</span>
+        <span class="site-state-item-count">97</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,107 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/thread-synchronization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/thread-synchronization/" class="post-title-link" itemprop="url">Thread synchronization</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-11 07:00:00" itemprop="dateCreated datePublished" datetime="2021-04-11T07:00:00-07:00">2021-04-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Mutexes"><a href="#Mutexes" class="headerlink" title="Mutexes"></a>Mutexes</h2><p>A mutex is basically a lock that we set (lock) before accessing a shared resource and release (unlock) when we’re done. While it is set, any other thread that tries to set it will block until we release it. If more than one thread is blocked when we unlock the mutex, then all threads blocked on the lock will be made runnable, and the first one to run will be able to set the lock. The others will see that the mutex is still locked and go back to waiting for it to become available again. In this way, only one thread will proceed at a time.</p>
+<p>This mutual-exclusion mechanism works only if we design our threads to follow the same data-access rules. The operating system doesn’t serialize access to data for us. If we allow one thread to access a shared resource without first acquiring a lock, then inconsistencies can occur even though the rest of our threads do acquire the lock before attempting to access the shared resource.</p>
+<h2 id="Reader-Wrtier-lock"><a href="#Reader-Wrtier-lock" class="headerlink" title="Reader&#x2F;Wrtier lock"></a>Reader&#x2F;Wrtier lock</h2><p>Reader–writer locks are similar to mutexes, except that they allow for higher degrees of parallelism. With a mutex, the state is either locked or unlocked, and only one thread can lock it at a time. Three states are possible with a reader–writer lock: locked in read mode, locked in write mode, and unlocked. Only one thread at a time can hold a reader–writer lock in write mode, but multiple threads can hold a reader–writer lock in read mode at the same time.</p>
+<p>When a reader–writer lock is write locked, all threads attempting to lock it block until it is unlocked. When a reader–writer lock is read locked, all threads attempting to lock it in read mode are given access, but any threads attempting to lock it in write mode block until all the threads have released their read locks. Although implementations vary, reader–writer locks usually block additional readers if a lock is already held in read mode and a thread is blocked trying to acquire the lock in write mode. This prevents a constant stream of readers from starving waiting writers.</p>
+<p>Reader–writer locks are well suited for situations in which data structures are read more often than they are modified. When a reader–writer lock is held in write mode, the data structure it protects can be modified safely, since only one thread at a time can hold the lock in write mode. When the reader–writer lock is held in read mode, the data structure it protects can be read by multiple threads, as long as the threads first acquire the lock in read mode.</p>
+<p>Reader–writer locks are also called shared–exclusive locks. When a reader–writer lock is read locked, it is said to be locked in shared mode. When it is write locked, it is said to be locked in exclusive mode</p>
+<h2 id="Spin-Locks"><a href="#Spin-Locks" class="headerlink" title="Spin Locks"></a>Spin Locks</h2><p>A spin lock is like a mutex, except that instead of blocking a process by sleeping, the process is blocked by busy-waiting (spinning) until the lock can be acquired. A spin lock could be used in situations where locks are held for short periods of times and threads don’t want to incur the cost of being descheduled.</p>
+<p>Spin locks are often used as low-level primitives to implement other types of locks. Depending on the system architecture, they can be implemented efficiently using test- and-set instructions. Although efficient, they can lead to wasting CPU resources: while a thread is spinning and waiting for a lock to become available, the CPU can’t do anything else. This is why spin locks should be held only for short periods of time.</p>
+<h2 id="Barriers"><a href="#Barriers" class="headerlink" title="Barriers"></a>Barriers</h2><p>Barriers are a synchronization mechanism that can be used to coordinate multiple threads working in parallel. A barrier allows each thread to wait until all cooperating threads have reached the same point, and then continue executing from there. We’ve already seen one form of barrier—the pthread_join function acts as a barrier to allow one thread to wait until another thread exits.</p>
+<p>Barrier objects are more general than this, however. They allow an arbitrary number of threads to wait until all of the threads have completed processing, but the threads don’t have to exit. They can continue working after all threads have reached the barrier.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li>Advanced Programming in the UNIX Environment</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1586,147 +1687,6 @@ sdd               0.00     0.00  106.60 1665.60   426.40  6661.70     8.00     0
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://www.iozone.org/">https://www.iozone.org/</a></li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/kubernetes-and-gluster-performance/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/kubernetes-and-gluster-performance/" class="post-title-link" itemprop="url">Kubernetes and Gluster performance</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-02-28 08:00:00" itemprop="dateCreated datePublished" datetime="2021-02-28T08:00:00-08:00">2021-02-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Kubernetes-and-Gluster-Intro"><a href="#Kubernetes-and-Gluster-Intro" class="headerlink" title="Kubernetes and Gluster Intro"></a>Kubernetes and Gluster Intro</h2><p><a target="_blank" rel="noopener" href="https://kubernetes.io/">Kubernetes</a>, also known as K8s, is an open-source system for automating deployment, scaling, and management of containerized applications.</p>
-<p><a target="_blank" rel="noopener" href="https://docs.gluster.org/en/latest/Administrator-Guide/GlusterFS-Introduction/">Gluster</a> is a scalable, distributed file system that aggregates disk storage resources from multiple servers into a single global namespace.</p>
-<h2 id="Gluster-performance-study"><a href="#Gluster-performance-study" class="headerlink" title="Gluster performance study"></a>Gluster performance study</h2><p>In this article, we will discuss the Gluster performance in a Docker container environment which is built on Kubernetes.</p>
-<h3 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h3><p>We use three Redhat Linux servers to form a Kubernetes cluster in this study. A Kubernetes cluster that handles production traffic should have a minimum of three nodes.</p>
-<p>We have three Docker containers(application instances) provisioned within the Kubernetes cluster. Each container instance has its own Gluster storage pool.</p>
-<pre><code>[node1:root]~&gt; kubectl get services
-NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
-kubernetes   ClusterIP   10.96.0.1    &lt;none&gt;        443/TCP   6d14h
- 
-[node1:root]~&gt; kubectl get nodes
-NAME    STATUS   ROLES    AGE     VERSION
-node1   Ready    master   6d14h   v1.19.3
-node2   Ready    master   6d14h   v1.19.3
-node3   Ready    master   6d14h   v1.19.3
- 
-[node1:root]~&gt; kubectl get pods --namespace ns-1
-NAME         READY   STATUS    RESTARTS   AGE
-container1   1/1     Running   0          6d14h
-container2   1/1     Running   0          6d14h
-container3   1/1     Running   0          6d14h
-[...]
- 
-[node1:root]~&gt; gluster pool list
-UUID                    Hostname    State
-45d8ec04-4e7a-4442-bbb4-557256b864d6    10.10.1.3 Connected
-875be270-ae69-45ea-b38e-2768b7c6ce05    10.10.1.4 Connected
-f2696790-b305-4099-8dba-b31d23b0beac    localhost Connected
-</code></pre>
-<h3 id="Workload-and-performance"><a href="#Workload-and-performance" class="headerlink" title="Workload and performance"></a>Workload and performance</h3><p>We keep increasing the number of workload processes across three container instances and measure the throughput in MB&#x2F;s. For each workload process, it ingests data from multiple clients through 10GbE bonding network and writes the data to the mounted Gluster filesystem.</p>
-<p>There are two kinds of workloads. One is very I&#x2F;O intensive and the other is CPU bound.</p>
-<p><img src="/images/gluster-perf.png"></p>
-<h3 id="Observation"><a href="#Observation" class="headerlink" title="Observation"></a>Observation</h3><ul>
-<li>For the CPU bound workload, the performance scales very well.</li>
-<li>For the I&#x2F;O bound workload, the performance does not scale when the number of workload processes increases.</li>
-</ul>
-<h3 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h3><p>As we increase the number of workload processes, the workload can be distributed evenly across three instances(on three nodes). Thus, the CPU bandwidth from three nodes are available for the application computing.</p>
-<p>Although the storage from three nodes are usable for three container instances, with the default disk allocation for Gluster filesystem, the I&#x2F;O performance may not be optimal. It depends on how the disks are allocated to each Gluster filesystem bricks and how the bricks are assigned to the Gluster filesystems. Also, writing to remote disk would have worse performance due to network latency.</p>
-<p>The following is the disk mapping to bricks which are used by one of the three Gluster filesystems. It shows four bricks are created on the same disk <em>&#x2F;dev&#x2F;sde</em> on the node 10.10.1.4. Obviously, the I&#x2F;O performance could be degraded if multiple processes write on it.</p>
-<pre><code>brickSize(GB)	device	node
-3200	/dev/sdd	10.10.1.2
-3200	/dev/sde	10.10.1.2
-3200	/dev/sdd	10.10.1.2
-3200	/dev/sdd	10.10.1.2
-3200	/dev/sdc	10.10.1.3
-3200	/dev/sdc	10.10.1.3
-3200	/dev/sdb	10.10.1.3
-3200	/dev/sdb	10.10.1.3
-3200	/dev/sde	10.10.1.4
-3200	/dev/sde	10.10.1.4
-3200	/dev/sde	10.10.1.4
-3200	/dev/sde	10.10.1.4
-</code></pre>
-<h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>From this case study, we had basic understanding on how the Gluster file system works with storage across multiple nodes. The default Gluster filesystem layout is not fit for all use cases. A custom storage layout would be needed to meet the performance requirement.</p>
 
       
     </div>

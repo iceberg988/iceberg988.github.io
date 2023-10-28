@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">96</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">255</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">97</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">256</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">255</span>
+          <span class="site-state-item-count">256</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">96</span>
+        <span class="site-state-item-count">97</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,212 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/deploy-cockroachdb-in-kubernetes-cluster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/deploy-cockroachdb-in-kubernetes-cluster/" class="post-title-link" itemprop="url">Deploy CockroachDB in kubernetes cluster</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-03 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-03T08:00:00-08:00">2022-12-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Deploy-Kubernetes-cluster"><a href="#Deploy-Kubernetes-cluster" class="headerlink" title="Deploy Kubernetes cluster"></a>Deploy Kubernetes cluster</h2><pre><code>$ kubectl get nodes
+NAME            STATUS   ROLES    AGE    VERSION
+node0   Ready    &lt;none&gt;   115d   v1.19.2
+node1   Ready    &lt;none&gt;   115d   v1.19.2
+node2   Ready    &lt;none&gt;   115d   v1.19.2
+node3   Ready    master   115d   v1.19.2
+</code></pre>
+<h2 id="Start-CockroachDB-cluster"><a href="#Start-CockroachDB-cluster" class="headerlink" title="Start CockroachDB cluster"></a>Start CockroachDB cluster</h2><p>Start the CockroachDB nodes with a configuration file that has been customized for performance:</p>
+<pre><code>$ curl -O https://raw.githubusercontent.com/cockroachdb/cockroach/master/cloud/kubernetes/performance/cockroachdb-statefulset-insecure.yaml
+
+$ kubectl create -f cockroachdb-statefulset-insecure.yaml
+service/cockroachdb-public created
+service/cockroachdb created
+poddisruptionbudget.policy/cockroachdb-budget created
+statefulset.apps/cockroachdb created
+</code></pre>
+<p>Confirm that three pods are Running successfully. Note that they will not be considered Ready until after the cluster has been initialized:</p>
+<pre><code>$ kubectl get pods
+NAME            READY     STATUS    RESTARTS   AGE
+cockroachdb-0   0/1       Running   0          2m
+cockroachdb-1   0/1       Running   0          2m
+cockroachdb-2   0/1       Running   0          2m
+</code></pre>
+<p>Confirm that the persistent volumes and corresponding claims were created successfully for all three pods:</p>
+<pre><code>$ kubectl get pvc
+NAME                    STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+datadir-cockroachdb-0   Bound    pvc-ac210538-2a20-4d99-9b5d-c5a03d733b4d   1Ti        RWO            px-repl1       35s
+datadir-cockroachdb-1   Bound    pvc-54f24a59-a063-46bb-9645-d4292eb483a3   1Ti        RWO            px-repl1       25s
+datadir-cockroachdb-2   Bound    pvc-0ebd7fa7-dc36-4c77-ab9d-003d10680f56   1Ti        RWO            px-repl1       15s
+
+$ kubectl get pv
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                           STORAGECLASS   REASON   AGE
+pvc-0ebd7fa7-dc36-4c77-ab9d-003d10680f56   1Ti        RWO            Delete           Bound    default/datadir-cockroachdb-2   px-repl1                17s
+pvc-54f24a59-a063-46bb-9645-d4292eb483a3   1Ti        RWO            Delete           Bound    default/datadir-cockroachdb-1   px-repl1                27s
+pvc-ac210538-2a20-4d99-9b5d-c5a03d733b4d   1Ti        RWO            Delete           Bound    default/datadir-cockroachdb-0   px-repl1                27s
+</code></pre>
+<p>Before initialize the CockroachDB cluster, check the network(use ping command) to make sure each host can communicate with each other. Otherwise, you may run into connection failure between cluster nodes.</p>
+<p>In my case, I want to run the cluster over the private network which doesn’t have DNS setup. So, I just add the private IP addresses and Kubernetes qualified hostnames and CockroachDB node names in &#x2F;etc&#x2F;hosts file on each host as below.</p>
+<pre><code>10.0.0.1 ip-10-10-0-1 cockroachdb-0.cockroachdb
+10.0.0.2 ip-10-10-0-2 cockroachdb-1.cockroachdb
+10.0.0.3 ip-10-10-0-3 cockroachdb-2.cockroachdb
+</code></pre>
+<p>Use the provided cluster-init.yaml file to perform a one-time initialization that joins the CockroachDB nodes into a single cluster:</p>
+<pre><code>$ kubectl create \
+-f https://raw.githubusercontent.com/cockroachdb/cockroach/master/cloud/kubernetes/cluster-init.yaml
+</code></pre>
+<p>Confirm that cluster initialization has completed successfully. The job should be considered successful and the Kubernetes pods should soon be considered Ready:</p>
+<pre><code>$ kubectl get job cluster-init
+NAME           COMPLETIONS   DURATION   AGE
+cluster-init   1/1           7s         27s
+kubectl get pods
+NAME                 READY   STATUS      RESTARTS   AGE
+cluster-init-cqf8l   0/1     Completed   0          56s
+cockroachdb-0        1/1     Running     0          7m51s
+cockroachdb-1        1/1     Running     0          7m51s
+cockroachdb-2        1/1     Running     0          7m51s
+</code></pre>
+<h2 id="Use-the-built-in-SQL-client"><a href="#Use-the-built-in-SQL-client" class="headerlink" title="Use the built-in SQL client"></a>Use the built-in SQL client</h2><pre><code>$ kubectl run cockroachdb -it --image=cockroachdb/cockroach:v22.1.7 --rm --restart=Never -- sql --insecure --host=cockroachdb-public
+
+root@cockroachdb-public:26257/defaultdb&gt; show databases;
+  database_name | owner | primary_region | regions | survival_goal
+----------------+-------+----------------+---------+----------------
+  defaultdb     | root  | NULL           | &#123;&#125;      | NULL
+  postgres      | root  | NULL           | &#123;&#125;      | NULL
+  system        | node  | NULL           | &#123;&#125;      | NULL
+(3 rows)
+
+
+Time: 5ms total (execution 4ms / network 1ms)
+</code></pre>
+<h2 id="Run-TPC-C-workload-on-the-CockroachDB-cluster"><a href="#Run-TPC-C-workload-on-the-CockroachDB-cluster" class="headerlink" title="Run TPC-C workload on the CockroachDB cluster"></a>Run TPC-C workload on the CockroachDB cluster</h2><pre><code>$ kubectl run cockroachdb -it --image=cockroachdb/cockroach:v22.1.7 --rm --restart=Never -- bash
+[root@cockroachdb cockroach]# cockroach node ls --insecure --host=cockroachdb-public
+  id
+------
+   1
+   2
+   3
+(3 rows)
+
+[root@cockroachdb cockroach]# cockroach workload init tpcc &quot;postgresql://root@cockroachdb-public:26257?sslmode=disable&quot; --warehouses 10 --drop
+I220922 19:48:15.543311 1 workload/workloadsql/dataload.go:146  [-] 1  imported warehouse (0s, 10 rows)
+I220922 19:48:15.580634 1 workload/workloadsql/dataload.go:146  [-] 2  imported district (0s, 100 rows)
+I220922 19:48:20.098986 1 workload/workloadsql/dataload.go:146  [-] 3  imported customer (5s, 300000 rows)
+I220922 19:48:21.601978 1 workload/workloadsql/dataload.go:146  [-] 4  imported history (2s, 300000 rows)
+I220922 19:48:24.317881 1 workload/workloadsql/dataload.go:146  [-] 5  imported order (3s, 300000 rows)
+I220922 19:48:24.540100 1 workload/workloadsql/dataload.go:146  [-] 6  imported new_order (0s, 90000 rows)
+I220922 19:48:24.998829 1 workload/workloadsql/dataload.go:146  [-] 7  imported item (0s, 100000 rows)
+I220922 19:48:34.737491 1 workload/workloadsql/dataload.go:146  [-] 8  imported stock (10s, 1000000 rows)
+I220922 19:48:49.030366 1 workload/workloadsql/dataload.go:146  [-] 9  imported order_line (14s, 3001222 rows)
+
+[root@cockroachdb cockroach]# cockroach sql --insecure --database tpcc --host=cockroachdb-public:26257 -e &#39;show tables&#39;
+  schema_name | table_name | type  | owner | estimated_row_count | locality
+--------------+------------+-------+-------+---------------------+-----------
+  public      | customer   | table | root  |              300000 | NULL
+  public      | district   | table | root  |                 100 | NULL
+  public      | history    | table | root  |              300000 | NULL
+  public      | item       | table | root  |              100000 | NULL
+  public      | new_order  | table | root  |               90000 | NULL
+  public      | order      | table | root  |              300000 | NULL
+  public      | order_line | table | root  |             3001222 | NULL
+  public      | stock      | table | root  |             1000000 | NULL
+  public      | warehouse  | table | root  |                  10 | NULL
+(9 rows)
+
+[root@cockroachdb cockroach]# cockroach workload run tpcc --warehouses=10 --ramp=10s --duration=20s postgres://root@cockroachdb-public:26257?sslmode=disable
+I220922 19:52:41.633625 1 workload/cli/run.go:414  [-] 1  creating load generator...
+Initializing 20 connections...
+Initializing 0 idle connections...
+Initializing 100 workers and preparing statements...
+I220922 19:52:51.646000 1 workload/cli/run.go:445  [-] 2  creating load generator... done (took 10.012371773s)
+
+_elapsed_______tpmC____efc__avg(ms)__p50(ms)__p90(ms)__p95(ms)__p99(ms)_pMax(ms)
+   20.0s      153.0 119.0%     38.2     44.0     48.2     48.2     50.3     52.4
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/docs/v22.1/deploy-cockroachdb-with-kubernetes-insecure">https://www.cockroachlabs.com/docs/v22.1/deploy-cockroachdb-with-kubernetes-insecure</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/docs/stable/kubernetes-performance.html">https://www.cockroachlabs.com/docs/stable/kubernetes-performance.html</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2925,98 +3131,6 @@ GET _nodes/stats
 <li><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/important-settings.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/important-settings.html</a></li>
 </ul>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/the-winning-shot/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/the-winning-shot/" class="post-title-link" itemprop="url">The Winning Shot</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-10-16 07:09:00" itemprop="dateCreated datePublished" datetime="2022-10-16T07:09:00-07:00">2022-10-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Anyone can try out for their dream sports team just by signing up. But the real question is, who will be qualified into the winning team?
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/the-winning-shot/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 

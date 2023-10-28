@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">96</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">255</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">97</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">256</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">255</span>
+          <span class="site-state-item-count">256</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">96</span>
+        <span class="site-state-item-count">97</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,161 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/linux-software-raid/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/linux-software-raid/" class="post-title-link" itemprop="url">Linux Software RAID</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-01 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-01T07:00:00-07:00">2021-08-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="What-is-RAID"><a href="#What-is-RAID" class="headerlink" title="What is RAID?"></a>What is RAID?</h2><p>RAID stands for either Redundant Array of Independent Disks, or Redundant Array of Inexpensive Disks. The intention of RAID is to spread your data across several disks, such that a single disk failure will not lose that data.</p>
+<p>The current RAID drivers in Linux support the following levels:</p>
+<ul>
+<li>Linear Mode : JBOD</li>
+<li>RAID0&#x2F;Stripe : Two or more disks. No redundancy.</li>
+<li>RAID1&#x2F;Mirror : Two or more disks. Redundancy.</li>
+<li>RAID-4 : Three or more disks. Redundancy. Not used very often.</li>
+<li>RAID-5 : Three or more disks. Redundancy. Allows one disk failure.</li>
+<li>RAID-6 : Four or more disks. Redundancy. Allows two disks failure.</li>
+<li>RAID-10 : Four or more disks. Combination of RAID-1 and RAID-0.</li>
+</ul>
+<p>Linux Software RAID (often called mdraid or MD&#x2F;RAID) makes the use of RAID possible without a hardware RAID controller.</p>
+<h2 id="mdadm-utility"><a href="#mdadm-utility" class="headerlink" title="mdadm utility"></a>mdadm utility</h2><p>The mdadm utility can be used to create and manage storage arrays using Linux’s software RAID capabilities.</p>
+<h3 id="Creating-a-RAID-Array"><a href="#Creating-a-RAID-Array" class="headerlink" title="Creating a RAID Array"></a>Creating a RAID Array</h3><p>The following example shows the creation of a RAID 0 array with 8 NVME disks.</p>
+<pre><code>$ mdadm --create /dev/md0 --name=mdvol --level=raid0 --raid-devices=8 /dev/nvme2n1 /dev/nvme3n1 /dev/nvme4n1 /dev/nvme5n1 /dev/nvme6n1 /dev/nvme7n1 /dev/nvme8n1 /dev/nvme9n1
+</code></pre>
+<h2 id="Check-RAID-array-status"><a href="#Check-RAID-array-status" class="headerlink" title="Check RAID array status"></a>Check RAID array status</h2><pre><code>$ cat /proc/mdstat
+    Personalities : [raid0]
+    md0 : active raid0 nvme9n1[7] nvme8n1[6] nvme7n1[5] nvme6n1[4] nvme5n1[3] nvme4n1[2] nvme3n1[1] nvme2n1[0]
+      30004846592 blocks super 1.2 512k chunks
+
+$  mdadm --detail /dev/md0
+    /dev/md0:
+               Version : 1.2
+         Creation Time : Mon Sep 20 17:39:47 2021
+            Raid Level : raid0
+            Array Size : 30004846592 (27.94 TiB 30.72 TB)
+          Raid Devices : 8
+         Total Devices : 8
+           Persistence : Superblock is persistent
+    
+           Update Time : Mon Sep 20 17:39:47 2021
+                 State : clean
+        Active Devices : 8
+       Working Devices : 8
+        Failed Devices : 0
+         Spare Devices : 0
+    
+            Chunk Size : 512K
+    
+    Consistency Policy : none
+    
+                  Name : host1:mdvol
+                  UUID : 5908fc3f:8c8b8851:c0875278:ea274fec
+                Events : 0
+    
+        Number   Major   Minor   RaidDevice State
+           0     259        2        0      active sync   /dev/nvme2n1
+           1     259        6        1      active sync   /dev/nvme3n1
+           2     259        7        2      active sync   /dev/nvme4n1
+           3     259        8        3      active sync   /dev/nvme5n1
+           4     259       11        4      active sync   /dev/nvme6n1
+           5     259       12        5      active sync   /dev/nvme7n1
+           6     259       10        6      active sync   /dev/nvme8n1
+           7     259        9        7      active sync   /dev/nvme9n1 
+</code></pre>
+<h3 id="Deleting-a-RAID-Array"><a href="#Deleting-a-RAID-Array" class="headerlink" title="Deleting a RAID Array"></a>Deleting a RAID Array</h3><p>If a RAID volume is no longer required, it can be deactivated using the following commands:</p>
+<pre><code>$ mdadm --stop /dev/md0
+mdadm: stopped /dev/md0
+</code></pre>
+<p>A Linux software RAID array stores all of the necessary information about a RAID array in a superblock. The superblock for the individual devices can be deleted by the following commands. By doing this, you can re-use these disks for new RAID arrays.</p>
+<pre><code>$ mdadm --zero-superblock /dev/nvme2n1 /dev/nvme3n1 /dev/nvme4n1 /dev/nvme5n1 /dev/nvme6n1 /dev/nvme7n1 /dev/nvme8n1 /dev/nvme9n1
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://raid.wiki.kernel.org/index.php/Linux_Raid">https://raid.wiki.kernel.org/index.php/Linux_Raid</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.thomas-krenn.com/en/wiki/Linux_Software_RAID_Information">https://www.thomas-krenn.com/en/wiki/Linux_Software_RAID_Information</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1230,107 +1385,6 @@ ulimit -aS
 <p>  import java.util.Arrays;</p>
 <p>  public class Sort {<br>  public static void selection_sort(int[] arr) {<br>      for (int i &#x3D; 0; i &lt; arr.length - 1; i++) {<br>          int min_idx &#x3D; i;<br><br>          &#x2F;&#x2F; find the minimum value from right of arr[i] and swap with arr[i]<br>          for (int j &#x3D; i + 1; j &lt; arr.length; j++) {<br>              if (arr[j] &lt; arr[min_idx]) {<br>                  min_idx &#x3D; j;<br>              }<br>          }<br><br>          &#x2F;&#x2F; move the min value to the beginning of array<br>          int temp &#x3D; arr[i];<br>          arr[i] &#x3D; arr[min_idx];<br>          arr[min_idx] &#x3D; temp;<br>      }<br>  }<br><br>  public static void insert_sort(int[] arr) {<br>      &#x2F;&#x2F; sort from the second element since the first one is already sorted for itself<br>      for (int i &#x3D; 1; i &lt; arr.length; i++) {<br>          int curr &#x3D; arr[i];<br>          int j &#x3D; i - 1;<br><br>          &#x2F;&#x2F; move all the greater values(than curr) to one position right<br>          while (j &gt;&#x3D; 0 &amp;&amp; arr[j] &gt; curr) {<br>              arr[j + 1] &#x3D; arr[j];<br>              j–;<br>          }<br><br>          arr[j + 1] &#x3D; curr;<br>      }<br>  }<br><br>  public static void bubble_sort(int[] arr) {<br>      &#x2F;&#x2F; bubble sort for n - 1 rounds<br>      for (int i &#x3D; 0; i &lt; arr.length - 1; i++) {<br>          boolean swapped &#x3D; false;<br>          &#x2F;&#x2F; For each round, bubble up the maximum element to the right<br>          for (int j &#x3D; 0; j &lt; arr.length - i - 1; j++) {<br>              if (arr[j] &gt; arr[j + 1]) {<br>                  int temp &#x3D; arr[j];<br>                  arr[j] &#x3D; arr[j + 1];<br>                  arr[j + 1] &#x3D; temp;<br>                  swapped &#x3D; true;<br>              }<br>          }<br><br>          if (!swapped)<br>              break;<br>      }<br>  }<br><br>  public static void quick_sort(int[] arr, int left, int right) {<br>      if (left &lt; right) {<br>          int pivot &#x3D; partition(arr, left, right);<br>          quick_sort(arr, left, pivot - 1);<br>          quick_sort(arr, pivot + 1, right);<br>      }<br>  }<br><br>  private static int partition(int[] arr, int left, int right) {<br>      int pivot &#x3D; arr[right];<br>      int curr &#x3D; left - 1;<br><br>      for (int i &#x3D; left; i &lt; right; i++) {<br>          if (arr[i] &lt;&#x3D; pivot) {<br>              curr++;<br>              int temp &#x3D; arr[curr];<br>              arr[curr] &#x3D; arr[i];<br>              arr[i] &#x3D; temp;<br>          }<br>      }<br><br>      curr++;<br>      int temp &#x3D; arr[curr];<br>      arr[curr] &#x3D; pivot;<br>      arr[right] &#x3D; temp;<br>      return curr;<br>  }<br><br>  public static void merge_sort(int[] arr, int left, int right) {<br>      if (left &lt; right) {<br>          &#x2F;&#x2F;int mid &#x3D; (left + right) &#x2F; 2;<br>          int mid &#x3D; left + (right - left) &#x2F; 2; &#x2F;&#x2F; avoid overflow<br>          merge_sort(arr, left, mid);<br>          merge_sort(arr, mid + 1, right);<br>          merge(arr, left, mid, right);<br>      }<br>  }<br><br>  private static void merge(int[] arr, int left, int mid, int right) {<br>      int l1 &#x3D; mid - left + 1;<br>      int l2 &#x3D; right - mid;<br><br>      &#x2F;&#x2F; copy left and right to the temporary array<br>      int[] a1 &#x3D; new int[l1];<br>      int[] a2 &#x3D; new int[l2];<br><br><br>      for (int i &#x3D; 0; i &lt; l1; i++) {<br>          a1[i] &#x3D; arr[left + i];<br>      }<br><br>      for (int i &#x3D; 0; i &lt; l2; i++) {<br>          a2[i] &#x3D; arr[mid + 1 + i];<br>      }<br><br>      &#x2F;&#x2F; merge back to the original array<br>      int i &#x3D; 0, j &#x3D; 0, k &#x3D; left;<br>      while (i &lt; l1 &amp;&amp; j &lt; l2) {<br>          if (a1[i] &lt;&#x3D; a2[j]) {<br>              arr[k++] &#x3D; a1[i++];<br>          } else {<br>              arr[k++] &#x3D; a2[j++];<br>          }<br>      }<br><br>      while (i &lt; l1) {<br>          arr[k++] &#x3D; a1[i++];<br>      }<br>      while (j &lt; l2) {<br>          arr[k++] &#x3D; a2[j++];<br>      }<br>  }<br><br>  public static void main(String[] args) {<br>      &#x2F;&#x2F; TODO Auto-generated method stub<br>      int[] arr &#x3D; { 11, 25, 12, 22, 64 };<br>      selection_sort(arr);<br>      System.out.println(Arrays.toString(arr));<br><br>      int[] arr1 &#x3D; { 11, 25, 12, 22, 64 };<br>      insert_sort(arr1);<br>      System.out.println(Arrays.toString(arr1));<br><br>      int[] arr2 &#x3D; { 11, 25, 12, 22, 64 };<br>      bubble_sort(arr2);<br>      System.out.println(Arrays.toString(arr2));<br><br>      int[] arr3 &#x3D; { 11, 25, 12, 22, 64 };<br>      quick_sort(arr3, 0, arr3.length - 1);<br>      System.out.println(Arrays.toString(arr3));<br><br>      int[] arr4 &#x3D; { 11, 25, 12, 22, 64 };<br>      merge_sort(arr4, 0, arr4.length - 1);<br>      System.out.println(Arrays.toString(arr4));<br>  }<br>  }</p>
 </li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/thread-synchronization/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/thread-synchronization/" class="post-title-link" itemprop="url">Thread synchronization</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-11 07:00:00" itemprop="dateCreated datePublished" datetime="2021-04-11T07:00:00-07:00">2021-04-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Mutexes"><a href="#Mutexes" class="headerlink" title="Mutexes"></a>Mutexes</h2><p>A mutex is basically a lock that we set (lock) before accessing a shared resource and release (unlock) when we’re done. While it is set, any other thread that tries to set it will block until we release it. If more than one thread is blocked when we unlock the mutex, then all threads blocked on the lock will be made runnable, and the first one to run will be able to set the lock. The others will see that the mutex is still locked and go back to waiting for it to become available again. In this way, only one thread will proceed at a time.</p>
-<p>This mutual-exclusion mechanism works only if we design our threads to follow the same data-access rules. The operating system doesn’t serialize access to data for us. If we allow one thread to access a shared resource without first acquiring a lock, then inconsistencies can occur even though the rest of our threads do acquire the lock before attempting to access the shared resource.</p>
-<h2 id="Reader-Wrtier-lock"><a href="#Reader-Wrtier-lock" class="headerlink" title="Reader&#x2F;Wrtier lock"></a>Reader&#x2F;Wrtier lock</h2><p>Reader–writer locks are similar to mutexes, except that they allow for higher degrees of parallelism. With a mutex, the state is either locked or unlocked, and only one thread can lock it at a time. Three states are possible with a reader–writer lock: locked in read mode, locked in write mode, and unlocked. Only one thread at a time can hold a reader–writer lock in write mode, but multiple threads can hold a reader–writer lock in read mode at the same time.</p>
-<p>When a reader–writer lock is write locked, all threads attempting to lock it block until it is unlocked. When a reader–writer lock is read locked, all threads attempting to lock it in read mode are given access, but any threads attempting to lock it in write mode block until all the threads have released their read locks. Although implementations vary, reader–writer locks usually block additional readers if a lock is already held in read mode and a thread is blocked trying to acquire the lock in write mode. This prevents a constant stream of readers from starving waiting writers.</p>
-<p>Reader–writer locks are well suited for situations in which data structures are read more often than they are modified. When a reader–writer lock is held in write mode, the data structure it protects can be modified safely, since only one thread at a time can hold the lock in write mode. When the reader–writer lock is held in read mode, the data structure it protects can be read by multiple threads, as long as the threads first acquire the lock in read mode.</p>
-<p>Reader–writer locks are also called shared–exclusive locks. When a reader–writer lock is read locked, it is said to be locked in shared mode. When it is write locked, it is said to be locked in exclusive mode</p>
-<h2 id="Spin-Locks"><a href="#Spin-Locks" class="headerlink" title="Spin Locks"></a>Spin Locks</h2><p>A spin lock is like a mutex, except that instead of blocking a process by sleeping, the process is blocked by busy-waiting (spinning) until the lock can be acquired. A spin lock could be used in situations where locks are held for short periods of times and threads don’t want to incur the cost of being descheduled.</p>
-<p>Spin locks are often used as low-level primitives to implement other types of locks. Depending on the system architecture, they can be implemented efficiently using test- and-set instructions. Although efficient, they can lead to wasting CPU resources: while a thread is spinning and waiting for a lock to become available, the CPU can’t do anything else. This is why spin locks should be held only for short periods of time.</p>
-<h2 id="Barriers"><a href="#Barriers" class="headerlink" title="Barriers"></a>Barriers</h2><p>Barriers are a synchronization mechanism that can be used to coordinate multiple threads working in parallel. A barrier allows each thread to wait until all cooperating threads have reached the same point, and then continue executing from there. We’ve already seen one form of barrier—the pthread_join function acts as a barrier to allow one thread to wait until another thread exits.</p>
-<p>Barrier objects are more general than this, however. They allow an arbitrary number of threads to wait until all of the threads have completed processing, but the threads don’t have to exit. They can continue working after all threads have reached the barrier.</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li>Advanced Programming in the UNIX Environment</li>
 </ul>
 
       

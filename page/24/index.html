@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">96</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">255</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">97</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">256</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">255</span>
+          <span class="site-state-item-count">256</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">96</span>
+        <span class="site-state-item-count">97</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,200 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/kmalloc-and-vmalloc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/kmalloc-and-vmalloc/" class="post-title-link" itemprop="url">kmalloc and vmalloc</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-02-01 08:00:00" itemprop="dateCreated datePublished" datetime="2021-02-01T08:00:00-08:00">2021-02-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="kmalloc"><a href="#kmalloc" class="headerlink" title="kmalloc"></a>kmalloc</h2><p>The function allocates contiguous region in physical memory. It’s fast and doesn’t clear the allocated memory content.</p>
+<p>kmalloc function is defined in <a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/source/include/linux/slab.h#L538">include&#x2F;linux&#x2F;slab.h</a></p>
+<pre><code>/**
+ * kmalloc - allocate memory
+ * @size: how many bytes of memory are required.
+ * @flags: the type of memory to allocate.
+ *
+ * kmalloc is the normal method of allocating memory
+ * for objects smaller than page size in the kernel.
+ *
+ * The allocated object address is aligned to at least ARCH_KMALLOC_MINALIGN
+ * bytes. For @size of power of two bytes, the alignment is also guaranteed
+ * to be at least to the size.
+ *
+ * The @flags argument may be one of the GFP flags defined at
+ * include/linux/gfp.h and described at
+ * :ref:`Documentation/core-api/mm-api.rst &lt;mm-api-gfp-flags&gt;`
+ *
+ * The recommended usage of the @flags is described at
+ * :ref:`Documentation/core-api/memory-allocation.rst &lt;memory_allocation&gt;`
+ *
+ * Below is a brief outline of the most useful GFP flags
+ *
+ * %GFP_KERNEL
+ *	Allocate normal kernel ram. May sleep.
+ *
+ * %GFP_NOWAIT
+ *	Allocation will not sleep.
+ *
+ * %GFP_ATOMIC
+ *	Allocation will not sleep.  May use emergency pools.
+ *
+ * %GFP_HIGHUSER
+ *	Allocate memory from high memory on behalf of user.
+ *
+ * Also it is possible to set different flags by OR&#39;ing
+ * in one or more of the following additional @flags:
+ *
+ * %__GFP_HIGH
+ *	This allocation has high priority and may use emergency pools.
+ *
+ * %__GFP_NOFAIL
+ *	Indicate that this allocation is in no way allowed to fail
+ *	(think twice before using).
+ *
+ * %__GFP_NORETRY
+ *	If memory is not immediately available,
+ *	then give up at once.
+ *
+ * %__GFP_NOWARN
+ *	If allocation fails, don&#39;t issue any warnings.
+ *
+ * %__GFP_RETRY_MAYFAIL
+ *	Try really hard to succeed the allocation but fail
+ *	eventually.
+ */
+static __always_inline void *kmalloc(size_t size, gfp_t flags)&#123;
+      if (__builtin_constant_p(size)) &#123;
+#ifndef CONFIG_SLOB
+        unsigned int index;
+#endif
+        if (size &gt; KMALLOC_MAX_CACHE_SIZE)
+            return kmalloc_large(size, flags);
+#ifndef CONFIG_SLOB
+        index = kmalloc_index(size);
+
+        if (!index)
+            return ZERO_SIZE_PTR;
+
+        return kmem_cache_alloc_trace(
+                kmalloc_caches[kmalloc_type(flags)][index],
+                flags, size);
+#endif
+    &#125;
+    return __kmalloc(size, flags);
+&#125;
+</code></pre>
+<p>The first argument is the size of the blocks to be allocated. The second argument is the memory allocation type flags. It controls the behavior of kmalloc.</p>
+<ul>
+<li>GFP_KERNEL is the most commonly used flag. It means the allocation is performed on behalf of a process running in kernel space. kmalloc can put the current process to sleep while waiting for the page allocation if the system is in memory starvation. The free memory can be optained either by flushing buffer to disk or swapping out user process memory.</li>
+<li>GFP_ATOMIC is used if the kmalloc call is from outside process context. The kernel can use the reserved free pages to serve the allocation. The allocation can fail if there is no last free page.</li>
+</ul>
+<h2 id="vmalloc"><a href="#vmalloc" class="headerlink" title="vmalloc"></a>vmalloc</h2><p>vmalloc allocates a contiguous memory region in the virtual address space. The allocated pages in physical memory are not consecutive and each page is retrieved with separate call to alloc_page. Thus, the vmalloc function is less efficient than kmalloc.</p>
+<p>vmalloc function is defined in <a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/source/mm/vmalloc.c#L2650">mm&#x2F;vmalloc.c</a></p>
+<pre><code>/**
+ * vmalloc - allocate virtually contiguous memory
+ * @size:    allocation size
+ *
+ * Allocate enough pages to cover @size from the page level
+ * allocator and map them into contiguous kernel virtual space.
+ *
+ * For tight control over page level allocator and protection flags
+ * use __vmalloc() instead.
+ *
+ * Return: pointer to the allocated memory or %NULL on error
+ */
+void *vmalloc(unsigned long size)
+&#123;
+    return __vmalloc_node(size, 1, GFP_KERNEL, NUMA_NO_NODE,
+                __builtin_return_address(0));
+&#125;
+</code></pre>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.oreilly.com/library/view/linux-device-drivers/0596005903/ch08.html">https://www.oreilly.com/library/view/linux-device-drivers/0596005903/ch08.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/source/include/linux/slab.h#L538">https://elixir.bootlin.com/linux/latest/source/include/linux/slab.h#L538</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1499,153 +1693,6 @@ TOTAL_GB
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/shell-sed-and-awk-scripting/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/shell-sed-and-awk-scripting/" class="post-title-link" itemprop="url">Shell, sed and awk scripting</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-11-01 06:00:00" itemprop="dateCreated datePublished" datetime="2020-11-01T06:00:00-08:00">2020-11-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Shell"><a href="#Shell" class="headerlink" title="Shell"></a>Shell</h1><h2 id="Special-variables-in-Shell"><a href="#Special-variables-in-Shell" class="headerlink" title="Special variables in Shell:"></a>Special variables in Shell:</h2><ul>
-<li>$0 - The filename of the current script.</li>
-<li>$# - The number of arguments supplied to a script.</li>
-<li>$* - All the arguments are double quoted. If a script receives two arguments, $* is equivalent to $1 $2.</li>
-<li>$@ - All the arguments are individually double quoted. If a script receives two arguments, $@ is equivalent to $1 $2.</li>
-<li>$? - The exit status of the last command executed.</li>
-<li>$$ - The process number of the current shell. For shell scripts, this is the process ID under which they are executing.</li>
-<li>$! - The process number of the last background command.</li>
-</ul>
-<h2 id="Enable-ssh-passwordless-login-for-multiple-servers"><a href="#Enable-ssh-passwordless-login-for-multiple-servers" class="headerlink" title="Enable ssh passwordless login for multiple servers:"></a>Enable ssh passwordless login for multiple servers:</h2><pre><code>$ rpm -ivh sshpass-1.06-1.el7.x86_64.rpm
-
-$ for i in `seq 0 239`
-do
-    sshpass -p &quot;password&quot; ssh-copy-id -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no server$i
-done
-</code></pre>
-<h1 id="Sed"><a href="#Sed" class="headerlink" title="Sed"></a>Sed</h1><h2 id="Print-specific-line-from-a-file"><a href="#Print-specific-line-from-a-file" class="headerlink" title="Print specific line from a file:"></a>Print specific line from a file:</h2><pre><code>$ sed -n 5p &lt;file&gt;
-</code></pre>
-<h2 id="Replace-specific-line-with-new-string"><a href="#Replace-specific-line-with-new-string" class="headerlink" title="Replace specific line with new string:"></a>Replace specific line with new string:</h2><pre><code>$ sed -i &#39;2s/.*/aa/&#39; /file/path
-</code></pre>
-<h2 id="Add-line-after-string-match"><a href="#Add-line-after-string-match" class="headerlink" title="Add line after string match:"></a>Add line after string match:</h2><pre><code>$ sed -i &#39;/SERVER = str1/a SERVER = &quot;str2&quot;&#39; /file/path
-</code></pre>
-<h2 id="Remove-strings-from-beginning-of-lines"><a href="#Remove-strings-from-beginning-of-lines" class="headerlink" title="Remove strings from beginning of lines:"></a>Remove strings from beginning of lines:</h2><pre><code># Remove 40 characters from beginning of lines
-$ cat file | sed -r &#39;s/.&#123;40&#125;//&#39; 
-</code></pre>
-<h2 id="Remove-leading-and-tailing-spaces"><a href="#Remove-leading-and-tailing-spaces" class="headerlink" title="Remove leading and tailing spaces:"></a>Remove leading and tailing spaces:</h2><pre><code>$ echo $diskstats
-252       2 dev/dev1029144966969016657 150 0 1200 8031 2297170 2606 165332568 46106742 0 684017 44948515 5 0 72 4
-$ echo $diskstats | awk &#39;&#123;$1=&quot;&quot;;$2=&quot;&quot;;$3=&quot;&quot;;print&#125;&#39; | sed &#39;s/^[ \t]*//;s/[ \t]*$//;&#39;
-150 0 1200 8031 2297170 2606 165332568 46106742 0 684017 44948515 5 0 72 4
-</code></pre>
-<h2 id="Replace-multiple-digits-in-a-string"><a href="#Replace-multiple-digits-in-a-string" class="headerlink" title="Replace multiple digits in a string"></a>Replace multiple digits in a string</h2><pre><code>$ echo fio.read_16k_8jobs_20210927_103626.out | sed &#39;s/fio\.//g;s/\.out//g;&#39; | awk &#39;&#123;gsub(&quot;_[0-9]&#123;5,&#125;&quot;,&quot;&quot;,$1); print&#125;&#39;
-read_16k_8jobs
-</code></pre>
-<h1 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h1><h2 id="Use-awk-regex-to-match-variable-passed-from-shell"><a href="#Use-awk-regex-to-match-variable-passed-from-shell" class="headerlink" title="Use awk regex to match variable passed from shell"></a>Use awk regex to match variable passed from shell</h2><pre><code>str=abc
-awk  &#39;/&#39;$str&#39;/ &#123;print $0 &#125;&#39; filename
-</code></pre>
-<p>Or</p>
-<pre><code>str=abc
-awk  -v pattern=$str &#39;$0 ~ pattern&#123;print $0 &#125;&#39; filename
-</code></pre>
-<h1 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h1><h2 id="download-a-file"><a href="#download-a-file" class="headerlink" title="download a file"></a>download a file</h2><pre><code>$ sudo curl -vL -o testfile.zip &#39;https://example.com/remote_testfile.zip&#39;
-</code></pre>
-<p>wget directory:</p>
-<pre><code>$ wget -r -np -R &quot;index.html*&quot; http://example.com/configs/.vim/
-</code></pre>
-<h2 id="Sync-Mac-Address-during-boot"><a href="#Sync-Mac-Address-during-boot" class="headerlink" title="Sync Mac Address during boot"></a>Sync Mac Address during boot</h2><pre><code>$ cat /etc/rc.d/rc.local
-new_mac=`cat /sys/class/net/eno16780032/address`
-sed -i &quot;s/HWADDR=.*/HWADDR=$new_mac/&quot; /etc/sysconfig/network-scripts/ifcfg-eno16780032
-service network restart
-</code></pre>
-<h2 id="Check-command-exit-status"><a href="#Check-command-exit-status" class="headerlink" title="Check command exit status"></a>Check command exit status</h2><pre><code>for pool in $pools 
-do 
-    for vol in $vols
-    do 
-        pxctl v i $vol | grep $pool &gt; /dev/null 2&gt;&amp;1
-        if [ $? -eq 0 ]; then echo $vol; break; fi
-    done
-done
-</code></pre>
-
       
     </div>
 

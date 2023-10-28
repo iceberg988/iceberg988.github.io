@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">96</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">255</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">97</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">256</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">255</span>
+          <span class="site-state-item-count">256</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">96</span>
+        <span class="site-state-item-count">97</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,147 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/kubernetes-and-gluster-performance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/kubernetes-and-gluster-performance/" class="post-title-link" itemprop="url">Kubernetes and Gluster performance</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-02-28 08:00:00" itemprop="dateCreated datePublished" datetime="2021-02-28T08:00:00-08:00">2021-02-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Kubernetes-and-Gluster-Intro"><a href="#Kubernetes-and-Gluster-Intro" class="headerlink" title="Kubernetes and Gluster Intro"></a>Kubernetes and Gluster Intro</h2><p><a target="_blank" rel="noopener" href="https://kubernetes.io/">Kubernetes</a>, also known as K8s, is an open-source system for automating deployment, scaling, and management of containerized applications.</p>
+<p><a target="_blank" rel="noopener" href="https://docs.gluster.org/en/latest/Administrator-Guide/GlusterFS-Introduction/">Gluster</a> is a scalable, distributed file system that aggregates disk storage resources from multiple servers into a single global namespace.</p>
+<h2 id="Gluster-performance-study"><a href="#Gluster-performance-study" class="headerlink" title="Gluster performance study"></a>Gluster performance study</h2><p>In this article, we will discuss the Gluster performance in a Docker container environment which is built on Kubernetes.</p>
+<h3 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h3><p>We use three Redhat Linux servers to form a Kubernetes cluster in this study. A Kubernetes cluster that handles production traffic should have a minimum of three nodes.</p>
+<p>We have three Docker containers(application instances) provisioned within the Kubernetes cluster. Each container instance has its own Gluster storage pool.</p>
+<pre><code>[node1:root]~&gt; kubectl get services
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.96.0.1    &lt;none&gt;        443/TCP   6d14h
+ 
+[node1:root]~&gt; kubectl get nodes
+NAME    STATUS   ROLES    AGE     VERSION
+node1   Ready    master   6d14h   v1.19.3
+node2   Ready    master   6d14h   v1.19.3
+node3   Ready    master   6d14h   v1.19.3
+ 
+[node1:root]~&gt; kubectl get pods --namespace ns-1
+NAME         READY   STATUS    RESTARTS   AGE
+container1   1/1     Running   0          6d14h
+container2   1/1     Running   0          6d14h
+container3   1/1     Running   0          6d14h
+[...]
+ 
+[node1:root]~&gt; gluster pool list
+UUID                    Hostname    State
+45d8ec04-4e7a-4442-bbb4-557256b864d6    10.10.1.3 Connected
+875be270-ae69-45ea-b38e-2768b7c6ce05    10.10.1.4 Connected
+f2696790-b305-4099-8dba-b31d23b0beac    localhost Connected
+</code></pre>
+<h3 id="Workload-and-performance"><a href="#Workload-and-performance" class="headerlink" title="Workload and performance"></a>Workload and performance</h3><p>We keep increasing the number of workload processes across three container instances and measure the throughput in MB&#x2F;s. For each workload process, it ingests data from multiple clients through 10GbE bonding network and writes the data to the mounted Gluster filesystem.</p>
+<p>There are two kinds of workloads. One is very I&#x2F;O intensive and the other is CPU bound.</p>
+<p><img src="/images/gluster-perf.png"></p>
+<h3 id="Observation"><a href="#Observation" class="headerlink" title="Observation"></a>Observation</h3><ul>
+<li>For the CPU bound workload, the performance scales very well.</li>
+<li>For the I&#x2F;O bound workload, the performance does not scale when the number of workload processes increases.</li>
+</ul>
+<h3 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h3><p>As we increase the number of workload processes, the workload can be distributed evenly across three instances(on three nodes). Thus, the CPU bandwidth from three nodes are available for the application computing.</p>
+<p>Although the storage from three nodes are usable for three container instances, with the default disk allocation for Gluster filesystem, the I&#x2F;O performance may not be optimal. It depends on how the disks are allocated to each Gluster filesystem bricks and how the bricks are assigned to the Gluster filesystems. Also, writing to remote disk would have worse performance due to network latency.</p>
+<p>The following is the disk mapping to bricks which are used by one of the three Gluster filesystems. It shows four bricks are created on the same disk <em>&#x2F;dev&#x2F;sde</em> on the node 10.10.1.4. Obviously, the I&#x2F;O performance could be degraded if multiple processes write on it.</p>
+<pre><code>brickSize(GB)	device	node
+3200	/dev/sdd	10.10.1.2
+3200	/dev/sde	10.10.1.2
+3200	/dev/sdd	10.10.1.2
+3200	/dev/sdd	10.10.1.2
+3200	/dev/sdc	10.10.1.3
+3200	/dev/sdc	10.10.1.3
+3200	/dev/sdb	10.10.1.3
+3200	/dev/sdb	10.10.1.3
+3200	/dev/sde	10.10.1.4
+3200	/dev/sde	10.10.1.4
+3200	/dev/sde	10.10.1.4
+3200	/dev/sde	10.10.1.4
+</code></pre>
+<h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>From this case study, we had basic understanding on how the Gluster file system works with storage across multiple nodes. The default Gluster filesystem layout is not fit for all use cases. A custom storage layout would be needed to meet the performance requirement.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1868,200 +2009,6 @@ Node 1, zone   Normal 864976 1041246 994760 895916 726438 565284 415625 266573 1
 <p>The overcommit amount can be set via <code>vm.overcommit_ratio&#39; (percentage) or </code>vm.overcommit_kbytes’ (absolute value).</p>
 <p>The current overcommit limit and amount committed are viewable in</p>
 <p>&#x2F;proc&#x2F;meminfo as CommitLimit and Committed_AS respectively.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/kmalloc-and-vmalloc/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/kmalloc-and-vmalloc/" class="post-title-link" itemprop="url">kmalloc and vmalloc</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-02-01 08:00:00" itemprop="dateCreated datePublished" datetime="2021-02-01T08:00:00-08:00">2021-02-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="kmalloc"><a href="#kmalloc" class="headerlink" title="kmalloc"></a>kmalloc</h2><p>The function allocates contiguous region in physical memory. It’s fast and doesn’t clear the allocated memory content.</p>
-<p>kmalloc function is defined in <a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/source/include/linux/slab.h#L538">include&#x2F;linux&#x2F;slab.h</a></p>
-<pre><code>/**
- * kmalloc - allocate memory
- * @size: how many bytes of memory are required.
- * @flags: the type of memory to allocate.
- *
- * kmalloc is the normal method of allocating memory
- * for objects smaller than page size in the kernel.
- *
- * The allocated object address is aligned to at least ARCH_KMALLOC_MINALIGN
- * bytes. For @size of power of two bytes, the alignment is also guaranteed
- * to be at least to the size.
- *
- * The @flags argument may be one of the GFP flags defined at
- * include/linux/gfp.h and described at
- * :ref:`Documentation/core-api/mm-api.rst &lt;mm-api-gfp-flags&gt;`
- *
- * The recommended usage of the @flags is described at
- * :ref:`Documentation/core-api/memory-allocation.rst &lt;memory_allocation&gt;`
- *
- * Below is a brief outline of the most useful GFP flags
- *
- * %GFP_KERNEL
- *	Allocate normal kernel ram. May sleep.
- *
- * %GFP_NOWAIT
- *	Allocation will not sleep.
- *
- * %GFP_ATOMIC
- *	Allocation will not sleep.  May use emergency pools.
- *
- * %GFP_HIGHUSER
- *	Allocate memory from high memory on behalf of user.
- *
- * Also it is possible to set different flags by OR&#39;ing
- * in one or more of the following additional @flags:
- *
- * %__GFP_HIGH
- *	This allocation has high priority and may use emergency pools.
- *
- * %__GFP_NOFAIL
- *	Indicate that this allocation is in no way allowed to fail
- *	(think twice before using).
- *
- * %__GFP_NORETRY
- *	If memory is not immediately available,
- *	then give up at once.
- *
- * %__GFP_NOWARN
- *	If allocation fails, don&#39;t issue any warnings.
- *
- * %__GFP_RETRY_MAYFAIL
- *	Try really hard to succeed the allocation but fail
- *	eventually.
- */
-static __always_inline void *kmalloc(size_t size, gfp_t flags)&#123;
-      if (__builtin_constant_p(size)) &#123;
-#ifndef CONFIG_SLOB
-        unsigned int index;
-#endif
-        if (size &gt; KMALLOC_MAX_CACHE_SIZE)
-            return kmalloc_large(size, flags);
-#ifndef CONFIG_SLOB
-        index = kmalloc_index(size);
-
-        if (!index)
-            return ZERO_SIZE_PTR;
-
-        return kmem_cache_alloc_trace(
-                kmalloc_caches[kmalloc_type(flags)][index],
-                flags, size);
-#endif
-    &#125;
-    return __kmalloc(size, flags);
-&#125;
-</code></pre>
-<p>The first argument is the size of the blocks to be allocated. The second argument is the memory allocation type flags. It controls the behavior of kmalloc.</p>
-<ul>
-<li>GFP_KERNEL is the most commonly used flag. It means the allocation is performed on behalf of a process running in kernel space. kmalloc can put the current process to sleep while waiting for the page allocation if the system is in memory starvation. The free memory can be optained either by flushing buffer to disk or swapping out user process memory.</li>
-<li>GFP_ATOMIC is used if the kmalloc call is from outside process context. The kernel can use the reserved free pages to serve the allocation. The allocation can fail if there is no last free page.</li>
-</ul>
-<h2 id="vmalloc"><a href="#vmalloc" class="headerlink" title="vmalloc"></a>vmalloc</h2><p>vmalloc allocates a contiguous memory region in the virtual address space. The allocated pages in physical memory are not consecutive and each page is retrieved with separate call to alloc_page. Thus, the vmalloc function is less efficient than kmalloc.</p>
-<p>vmalloc function is defined in <a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/source/mm/vmalloc.c#L2650">mm&#x2F;vmalloc.c</a></p>
-<pre><code>/**
- * vmalloc - allocate virtually contiguous memory
- * @size:    allocation size
- *
- * Allocate enough pages to cover @size from the page level
- * allocator and map them into contiguous kernel virtual space.
- *
- * For tight control over page level allocator and protection flags
- * use __vmalloc() instead.
- *
- * Return: pointer to the allocated memory or %NULL on error
- */
-void *vmalloc(unsigned long size)
-&#123;
-    return __vmalloc_node(size, 1, GFP_KERNEL, NUMA_NO_NODE,
-                __builtin_return_address(0));
-&#125;
-</code></pre>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.oreilly.com/library/view/linux-device-drivers/0596005903/ch08.html">https://www.oreilly.com/library/view/linux-device-drivers/0596005903/ch08.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/source/include/linux/slab.h#L538">https://elixir.bootlin.com/linux/latest/source/include/linux/slab.h#L538</a></li>
-</ul>
 
       
     </div>

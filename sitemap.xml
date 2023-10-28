@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.flamingbytes.com/blog/bit-manipulation/</loc>
+    
+    <lastmod>2023-10-28</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.flamingbytes.com/blog/monotonic-stack/</loc>
     
     <lastmod>2023-10-28</lastmod>
@@ -2999,6 +3008,13 @@
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Priority-Queue/</loc>
+    <lastmod>2023-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flamingbytes.com/tags/Bit-manipulation/</loc>
     <lastmod>2023-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
