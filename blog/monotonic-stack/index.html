@@ -28,7 +28,7 @@
 <meta property="og:description" content="What is a Monotonic StackA monotonic stack is a stack whose elements are monotonically increasing or decreasing. It contains all properties that a typical stack has and its elements are  monotonic dec">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-10-13T05:02:28.000Z">
-<meta property="article:modified_time" content="2023-10-27T06:00:08.000Z">
+<meta property="article:modified_time" content="2023-10-28T00:36:40.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="Data structure">
@@ -155,7 +155,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-a-Monotonic-Stack"><span class="nav-number">1.</span> <span class="nav-text">What is a Monotonic Stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-739-Daily-Temperatures"><span class="nav-number">2.</span> <span class="nav-text">[Leetcode 739] Daily Temperatures</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-a-Monotonic-Stack"><span class="nav-number">1.</span> <span class="nav-text">What is a Monotonic Stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-739-Daily-Temperatures"><span class="nav-number">2.</span> <span class="nav-text">[Leetcode 739] Daily Temperatures</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-901-Online-Stock-Span"><span class="nav-number">3.</span> <span class="nav-text">[Leetcode 901] Online Stock Span</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -207,6 +207,13 @@
   </div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/tracking-stock-financial-metrics-in-tradingview/" rel="bookmark">
+        <time class="popular-posts-time">2023-01-17</time>
+        <br>
+      Tracking stock financial metrics in tradingview
+      </a>
+    </li>
+    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/blog/stack-implementation-in-python/" rel="bookmark">
         <time class="popular-posts-time">2023-04-04</time>
         <br>
@@ -221,13 +228,6 @@
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/flame-graph-and-stack-trace-visualization/" rel="bookmark">
-        <time class="popular-posts-time">2023-02-24</time>
-        <br>
-      Flame Graph and stack trace visualization
-      </a>
-    </li>
-    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/blog/sliding-window/" rel="bookmark">
         <time class="popular-posts-time">2023-10-02</time>
         <br>
@@ -235,10 +235,10 @@
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/queue-implementation-in-python/" rel="bookmark">
-        <time class="popular-posts-time">2023-04-05</time>
+      <a class="popular-posts-link" href="/blog/flame-graph-and-stack-trace-visualization/" rel="bookmark">
+        <time class="popular-posts-time">2023-02-24</time>
         <br>
-      Queue implementation in Python
+      Flame Graph and stack trace visualization
       </a>
     </li>
   </ul>
@@ -297,7 +297,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-26 23:00:08" itemprop="dateModified" datetime="2023-10-26T23:00:08-07:00">2023-10-26</time>
+      <time title="Modified: 2023-10-27 17:36:40" itemprop="dateModified" datetime="2023-10-27T17:36:40-07:00">2023-10-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -344,6 +344,28 @@
 </ul>
 <p>Solution:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="comment"># e.g. temperatures = [73,74,75,71,69,72,76,73]</span></span><br><span class="line">    <span class="comment"># i  stack     result</span></span><br><span class="line">    <span class="comment"># 0  [0]       [0, 0, 0, 0, 0, 0, 0, 0]</span></span><br><span class="line">    <span class="comment"># 1  [1]       [1, 0, 0, 0, 0, 0, 0, 0]</span></span><br><span class="line">    <span class="comment"># 2  [2]       [1, 1, 0, 0, 0, 0, 0, 0]</span></span><br><span class="line">    <span class="comment"># 3  [2, 3]    [1, 1, 0, 0, 0, 0, 0, 0]</span></span><br><span class="line">    <span class="comment"># 4  [2, 3, 4] [1, 1, 0, 0, 0, 0, 0, 0]</span></span><br><span class="line">    <span class="comment"># 5  [2, 5]    [1, 1, 0, 2, 1, 0, 0, 0]</span></span><br><span class="line">    <span class="comment"># 6  [6]       [1, 1, 4, 2, 1, 1, 0, 0]</span></span><br><span class="line">    <span class="comment"># 7  [6, 7]    [1, 1, 4, 2, 1, 1, 0, 0]</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">dailyTemperatures</span>(<span class="params">self, temperatures: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        st = []</span><br><span class="line">        res = [<span class="number">0</span>] * <span class="built_in">len</span>(temperatures)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(temperatures)):</span><br><span class="line">            <span class="keyword">while</span> st <span class="keyword">and</span> temperatures[i] &gt; temperatures[st[-<span class="number">1</span>]]:</span><br><span class="line">                idx = st.pop()</span><br><span class="line">                res[idx] = i - idx</span><br><span class="line"></span><br><span class="line">            st.append(i)</span><br><span class="line">            <span class="comment">#print(st, res)</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+<h2 id="Leetcode-901-Online-Stock-Span"><a href="#Leetcode-901-Online-Stock-Span" class="headerlink" title="[Leetcode 901] Online Stock Span"></a>[Leetcode 901] Online Stock Span</h2><p>Design an algorithm that collects daily price quotes for some stock and returns the span of that stock’s price for the current day.</p>
+<p>The span of the stock’s price in one day is the maximum number of consecutive days (starting from that day and going backward) for which the stock price was less than or equal to the price of that day.</p>
+<ul>
+<li>For example, if the prices of the stock in the last four days is [7,2,1,2] and the price of the stock today is 2, then the span of today is 4 because starting from today, the price of the stock was less than or equal 2 for 4 consecutive days.</li>
+<li>Also, if the prices of the stock in the last four days is [7,34,1,2] and the price of the stock today is 8, then the span of today is 3 because starting from today, the price of the stock was less than or equal 8 for 3 consecutive days.</li>
+</ul>
+<p>Implement the StockSpanner class:</p>
+<ul>
+<li>StockSpanner() Initializes the object of the class.</li>
+<li>int next(int price) Returns the span of the stock’s price given that today’s price is price.</li>
+</ul>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Input</span><br><span class="line">[&quot;StockSpanner&quot;, &quot;next&quot;, &quot;next&quot;, &quot;next&quot;, &quot;next&quot;, &quot;next&quot;, &quot;next&quot;, &quot;next&quot;]</span><br><span class="line">[[], [100], [80], [60], [70], [60], [75], [85]]</span><br><span class="line">Output</span><br><span class="line">[null, 1, 1, 1, 2, 1, 4, 6]</span><br><span class="line"></span><br><span class="line">Explanation</span><br><span class="line">StockSpanner stockSpanner = new StockSpanner();</span><br><span class="line">stockSpanner.next(100); // return 1</span><br><span class="line">stockSpanner.next(80);  // return 1</span><br><span class="line">stockSpanner.next(60);  // return 1</span><br><span class="line">stockSpanner.next(70);  // return 2</span><br><span class="line">stockSpanner.next(60);  // return 1</span><br><span class="line">stockSpanner.next(75);  // return 4, because the last 4 prices (including today&#x27;s price of 75) were less than or equal to today&#x27;s price.</span><br><span class="line">stockSpanner.next(85);  // return 6</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>1 &lt;&#x3D; price &lt;&#x3D; 105</li>
+<li>At most 104 calls will be made to next.</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">StockSpanner</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.st = []</span><br><span class="line"></span><br><span class="line">    <span class="comment"># e.g.</span></span><br><span class="line">    <span class="comment">#                                          (60,1)</span></span><br><span class="line">    <span class="comment">#                         (60,1)  (70,2)   (70,2)   (75,4)</span></span><br><span class="line">    <span class="comment">#                 (80,1)  (80,1)  (80,1)   (80,1)   (80,1)  (85,6)</span></span><br><span class="line">    <span class="comment">#         (100,1) (100,1) (100,1) (100,1)  (100,1)  (100,1) (100,1)</span></span><br><span class="line">    <span class="comment"># input:   100     80      60      70       60       75      85  </span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">next</span>(<span class="params">self, price: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        span = <span class="number">1</span> <span class="comment"># span for itself is 1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># accumulate the span with lower(or equal) prices and only save higher price in stack</span></span><br><span class="line">        <span class="keyword">while</span> self.st <span class="keyword">and</span> self.st[-<span class="number">1</span>][<span class="number">0</span>] &lt;= price:</span><br><span class="line">            prevPrice, prevSpan = self.st.pop()</span><br><span class="line">            span += prevSpan</span><br><span class="line"></span><br><span class="line">        self.st.append((price, span))</span><br><span class="line">        <span class="keyword">return</span> span</span><br></pre></td></tr></table></figure>
     </div>
 
     
