@@ -169,26 +169,6 @@
       </tags>
   </entry>
   <entry>
-    <title>The importance of hope</title>
-    <url>/blog/The-importance-of-hope/</url>
-    <content><![CDATA[<p>People who only hope for a better future get nowhere in life. Nothing will  change unless someone acts. Those who act in the hour of darkness are the ones who  are true heroes. Those who hope are the ones who benefit from these actions.<span id="more"></span>  </p>
-<p>There are many ways in which to look at some situations. Hope is one of these  situations. Some could say that hope is an essential part of human nature. It is what  motivates us and keeps us going through the most difficult times. When your will is  broken, you will give up and think all is lost. While this is true, it doesn’t mean that  you can’t change your fate. Action is what describes a person. If they act to improve  their lives, then they are rational. If they are too scared to act, well, that’s their own  choice. Hope and action are very important to live a happy and successful lifestyle,  and with hope, you can achieve even your wildest dreams.  </p>
-<p>Hope and action combined make people unstoppable. This was shown again  and again during the COVID-19 pandemic. Millions of people have been infected,  and hundreds of thousands have lost their lives. But hope and action kept those alive  motivated. People came together to support each other. Doctors and nurses risked  their lives to treat those infected, and some died trying to save others’ lives. Others  volunteered to develop food and necessary supplies for those in need. Either way,  people have been constantly stepping up and helping those in need. </p>
-<p>It is inspiring to see how all this kindness, compassion, generosity, and  bravery all concludes in one statement: There is hope for a better future. But hope is  not the only thing required for a better future. We need action. Science, technology,  and policy are all required to defeat the virus. Once again, humans have shown  success in these areas as well. </p>
-<p>Medical researchers, who started from nothing, have come to understand this  virus in great depths. Multiple vaccines have been developed to save people from  this disease. Millions of people have already received them, which is why many  more people survived this disease now than back in 2020.  </p>
-<p>Technology has also helped us adapt to the impact of the pandemic. People  had to do social distancing, and therefore schools were shut down. Online learning,  remote work, and virtual communication have become the norm, allowing us to stay  productive and keep in touch with friends and family. </p>
-<p>At the same time, government and organizations have passed laws and made  policies to make sure that people are doing social distancing and staying safe. They  also helped people in poverty and bad financial or health situations by making  donations. They made business loans and strived to help those in unemployment,<br>trying to find a job for everyone. These acts of kindness greatly benefited the people  and gave them relief during times of stress.  </p>
-<p>Even though there are still challenges, and new challenges will arise in the  future, people will always find a solution to it as long as the spirit of hope channels  through them. They need to be vigilant and productive to maintain a comfortable  lifestyle and be safe. In the face of a global crisis, people shall unite and fight it.  Sometime in the future, they will find a cure to COVID-19, just as they will find a  solution to any problem. We can find hope in our great advances of science,  technology, and policy, which help us battle the impact of the pandemic. Lastly, we  can find hope in common knowledge that the fate of the world is in our hands, and  even the smallest changes can result in a big impact.  </p>
-<p>Hope is the key to inner peace. It is a powerful and motivating force that  channels through everyone. We just must bring out that hope, and through our hard  work and actions, we can end the pandemic. Hope is what united us. Hope is what  has ignited the blazing fire in every soul. Hope is what motivated us to make new  technology to help us progress. Hope gives us comfortable warmth. It gives us  confidence that there will be a better future where everyone is happy and successful.  As we fight our way through this global pandemic, everyone shall never lose hope  and work hard and rationally towards a brighter future.</p>
-]]></content>
-      <categories>
-        <category>Young Author</category>
-      </categories>
-      <tags>
-        <tag>Writing</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>The most important swim meet</title>
     <url>/blog/The-most-important-swim-meet/</url>
     <content><![CDATA[<p>I remembered the first time I had ever considered joining a swim team. I was going to attend my friend Jack’s birthday pool party. We played water polo and balloon fights, which were all very fun. However, the one I was most excited about was the race. Jack’s dad, Mr. Chen, blew on the whistle and I was off. I had taken swimming lessons starting from young age, so I easily passed all the others.<span id="more"></span></p>
@@ -10133,7 +10113,7 @@ print(hash_table)
       </tags>
   </entry>
   <entry>
-    <title>Hashmap and set in python</title>
+    <title>Hashmap and set in Python</title>
     <url>/blog/hashmap-and-set/</url>
     <content><![CDATA[<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p><strong>Hashmap</strong> is indexed data structures. A hash map makes use of a hash function to compute an index with a key into an array of buckets or slots. Its value is mapped to the bucket with the corresponding index. The key is unique and immutable. Hash function is the core of <a href="https://www.flamingbytes.com/blog/hash-table-implementation-in-python/">implementing a hash map</a>. It takes in the key and translates it to the index of a bucket in the bucket list. Ideal hashing should produce a different index for each key. However, collisions can occur. When hashing gives an existing index, we can simply use a bucket for multiple values by appending a list or by rehashing.<span id="more"></span></p>
 <p>A <strong>Set</strong> in Python is an unordered collection data type that is iterable, mutable and has no duplicate elements. Set are represented by {} (values enclosed in curly braces). The major advantage of using a set, as opposed to a list, is that it has a highly optimized method for checking whether a specific element is contained in the set. This is based on a data structure known as a hash table. Since sets are unordered, we cannot access items using indexes as we do in lists.</p>
@@ -13312,7 +13292,7 @@ count: 4
       </tags>
   </entry>
   <entry>
-    <title>Linked list in python</title>
+    <title>Linked list in Python</title>
     <url>/blog/linked-list-in-python/</url>
     <content><![CDATA[<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>A <a href="https://www.flamingbytes.com/blog/linked-list-implementation-in-python">linked list</a> is a data structure which represents a sequence of nodes. In a singly linked list, each node points to the next node. In a doubly linked list, each node points to both the next and previous node.<span id="more"></span></p>
 <h2 id="Leetcode-2130-Maximum-Twin-Sum-of-a-Linked-List"><a href="#Leetcode-2130-Maximum-Twin-Sum-of-a-Linked-List" class="headerlink" title="[Leetcode 2130] Maximum Twin Sum of a Linked List"></a>[Leetcode 2130] Maximum Twin Sum of a Linked List</h2><p>In a linked list of size n, where n is even, the ith node (0-indexed) of the linked list is known as the twin of the (n-1-i)th node, if 0 &lt;&#x3D; i &lt;&#x3D; (n &#x2F; 2) - 1.</p>
@@ -23744,15 +23724,17 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
       </categories>
       <tags>
         <tag>Python</tag>
+        <tag>Leetcode</tag>
         <tag>Data structure</tag>
         <tag>Stack</tag>
       </tags>
   </entry>
   <entry>
-    <title>bit manipulation</title>
+    <title>Bit manipulation</title>
     <url>/blog/bit-manipulation/</url>
     <content><![CDATA[<h2 id="Leetcode-136-Single-Number"><a href="#Leetcode-136-Single-Number" class="headerlink" title="[Leetcode 136] Single Number"></a>[Leetcode 136] Single Number</h2><p>Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.</p>
 <p>You must implement a solution with a linear runtime complexity and use only constant extra space.</p>
+<span id="more"></span>
 <p>Example 1:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: nums = [2,2,1]</span><br><span class="line">Output: 1</span><br></pre></td></tr></table></figure>
 
@@ -23813,7 +23795,119 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
       </categories>
       <tags>
         <tag>Python</tag>
+        <tag>Leetcode</tag>
         <tag>Bit manipulation</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Best time to buy and sell stock</title>
+    <url>/blog/best-time-to-buy-and-sell-stock/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Tech</category>
+        <category>Programming</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Dynamic programming</title>
+    <url>/blog/dynamic-programming/</url>
+    <content><![CDATA[<h2 id="Leetcode-198-House-Robber"><a href="#Leetcode-198-House-Robber" class="headerlink" title="[Leetcode 198] House Robber"></a>[Leetcode 198] House Robber</h2><p>You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.</p>
+<p>Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: nums = [1,2,3,1]</span><br><span class="line">Output: 4</span><br><span class="line">Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).</span><br><span class="line">Total amount you can rob = 1 + 3 = 4.</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: nums = [2,7,9,3,1]</span><br><span class="line">Output: 12</span><br><span class="line">Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).</span><br><span class="line">Total amount you can rob = 2 + 9 + 1 = 12.</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>1 &lt;&#x3D; nums.length &lt;&#x3D; 100</li>
+<li>0 &lt;&#x3D; nums[i] &lt;&#x3D; 400</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">rob</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(nums) &lt;=<span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">max</span>(nums)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># dp[i] is the maximum amount of money to rob till house[i]</span></span><br><span class="line">        dp = [<span class="literal">None</span>] * <span class="built_in">len</span>(nums)</span><br><span class="line">        dp[<span class="number">0</span>] = nums[<span class="number">0</span>]</span><br><span class="line">        dp[<span class="number">1</span>] = <span class="built_in">max</span>(nums[<span class="number">0</span>], nums[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">len</span>(nums)):</span><br><span class="line">            dp[i] = <span class="built_in">max</span>(dp[i-<span class="number">1</span>], dp[i-<span class="number">2</span>] + nums[i])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dp[-<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="Leetcode-746-Min-Cost-Climbing-Stairs"><a href="#Leetcode-746-Min-Cost-Climbing-Stairs" class="headerlink" title="[Leetcode 746] Min Cost Climbing Stairs"></a>[Leetcode 746] Min Cost Climbing Stairs</h2><p>You are given an integer array cost where cost[i] is the cost of ith step on a staircase. Once you pay the cost, you can either climb one or two steps.</p>
+<p>You can either start from the step with index 0, or the step with index 1.</p>
+<p>Return the minimum cost to reach the top of the floor.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: cost = [10,15,20]</span><br><span class="line">Output: 15</span><br><span class="line">Explanation: You will start at index 1.</span><br><span class="line">- Pay 15 and climb two steps to reach the top.</span><br><span class="line">The total cost is 15.</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: cost = [1,100,1,1,1,100,1,1,100,1]</span><br><span class="line">Output: 6</span><br><span class="line">Explanation: You will start at index 0.</span><br><span class="line">- Pay 1 and climb two steps to reach index 2.</span><br><span class="line">- Pay 1 and climb two steps to reach index 4.</span><br><span class="line">- Pay 1 and climb two steps to reach index 6.</span><br><span class="line">- Pay 1 and climb one step to reach index 7.</span><br><span class="line">- Pay 1 and climb two steps to reach index 9.</span><br><span class="line">- Pay 1 and climb one step to reach the top.</span><br><span class="line">The total cost is 6.</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>2 &lt;&#x3D; cost.length &lt;&#x3D; 1000</li>
+<li>0 &lt;&#x3D; cost[i] &lt;&#x3D; 999</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="comment"># dp[i] = min(dp[i-1] + cost[i-1], dp[i-2] + cost[i-2])</span></span><br><span class="line">    <span class="comment"># e.g. [10, 15, 20]</span></span><br><span class="line">    <span class="comment"># n = 0, dp[0] = 0 (start)</span></span><br><span class="line">    <span class="comment"># n = 1, dp[1] = 0 (start)</span></span><br><span class="line">    <span class="comment"># n = 2, dp[2] = min(0 + 15, 0 + 10) = 10</span></span><br><span class="line">    <span class="comment"># n = 3, dp[3] = min(10 + 20, 15 + 0) = 15</span></span><br><span class="line">    <span class="comment"># Note: the top is with index 3</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">minCostClimbingStairs</span>(<span class="params">self, cost: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        n = <span class="built_in">len</span>(cost)</span><br><span class="line">        <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        dp = [<span class="literal">None</span>] * (n + <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># no cost needed to reach the 0th or 1th staircaes</span></span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">        dp[<span class="number">1</span>] = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n + <span class="number">1</span>):</span><br><span class="line">            <span class="comment"># choose the smaller cost from previous two staircases</span></span><br><span class="line">            dp[i] = <span class="built_in">min</span>(dp[i - <span class="number">1</span>] + cost[i - <span class="number">1</span>], dp[i - <span class="number">2</span>] + cost[i - <span class="number">2</span>])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dp[n]</span><br></pre></td></tr></table></figure>
+
+<h2 id="Leetcode-790-Domino-and-Tromino-Tiling"><a href="#Leetcode-790-Domino-and-Tromino-Tiling" class="headerlink" title="[Leetcode 790] Domino and Tromino Tiling"></a>[Leetcode 790] Domino and Tromino Tiling</h2><p>You have two types of tiles: a 2 x 1 domino shape and a tromino shape. You may rotate these shapes.</p>
+<p>Given an integer n, return the number of ways to tile an 2 x n board. Since the answer may be very large, return it modulo 109 + 7.</p>
+<p>In a tiling, every square must be covered by a tile. Two tilings are different if and only if there are two 4-directionally adjacent cells on the board such that exactly one of the tilings has both squares occupied by a tile.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 3</span><br><span class="line">Output: 5</span><br><span class="line">Explanation: The five different ways are show above.</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 1</span><br><span class="line">Output: 1</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>1 &lt;&#x3D; n &lt;&#x3D; 1000</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">numTilings</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        m = <span class="number">1000000007</span></span><br><span class="line">        dp = [<span class="literal">None</span>] * (n + <span class="number">1</span>) <span class="comment"># dp[i] denotes the number of ways to tile an 2*i board</span></span><br><span class="line">        dp[<span class="number">0</span>], dp[<span class="number">1</span>], dp[<span class="number">2</span>] = <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>, n + <span class="number">1</span>):</span><br><span class="line">            dp[i] = (<span class="number">2</span> * dp[i-<span class="number">1</span>] + dp[i - <span class="number">3</span>]) % m</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dp[-<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="Leetcode-1137-N-th-Tribonacci-Number"><a href="#Leetcode-1137-N-th-Tribonacci-Number" class="headerlink" title="[Leetcode 1137] N-th Tribonacci Number"></a>[Leetcode 1137] N-th Tribonacci Number</h2><p>The Tribonacci sequence Tn is defined as follows: </p>
+<p>T0 &#x3D; 0, T1 &#x3D; 1, T2 &#x3D; 1, and Tn+3 &#x3D; Tn + Tn+1 + Tn+2 for n &gt;&#x3D; 0.</p>
+<p>Given n, return the value of Tn.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 4</span><br><span class="line">Output: 4</span><br><span class="line">Explanation:</span><br><span class="line">T_3 = 0 + 1 + 1 = 2</span><br><span class="line">T_4 = 1 + 1 + 2 = 4</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: n = 25</span><br><span class="line">Output: 1389537</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>0 &lt;&#x3D; n &lt;&#x3D; 37</li>
+<li>The answer is guaranteed to fit within a 32-bit integer, ie. answer &lt;&#x3D; 2^31 - 1.</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">tribonacci</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        a, b, c, = <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span></span><br><span class="line">        d = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> a</span><br><span class="line">        <span class="keyword">elif</span> n == <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> b</span><br><span class="line">        <span class="keyword">elif</span> n == <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> c</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n - <span class="number">2</span>):</span><br><span class="line">                d = a + b + c</span><br><span class="line">                a = b</span><br><span class="line">                b = c</span><br><span class="line">                c = d</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> d</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Tech</category>
+        <category>Programming</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Dynamic programming</tag>
+        <tag>Recursive</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>The importance of hope</title>
+    <url>/blog/the-importance-of-hope/</url>
+    <content><![CDATA[<p>People who only hope for a better future get nowhere in life. Nothing will  change unless someone acts. Those who act in the hour of darkness are the ones who  are true heroes. Those who hope are the ones who benefit from these actions.<span id="more"></span>  </p>
+<p>There are many ways in which to look at some situations. Hope is one of these  situations. Some could say that hope is an essential part of human nature. It is what  motivates us and keeps us going through the most difficult times. When your will is  broken, you will give up and think all is lost. While this is true, it doesn’t mean that  you can’t change your fate. Action is what describes a person. If they act to improve  their lives, then they are rational. If they are too scared to act, well, that’s their own  choice. Hope and action are very important to live a happy and successful lifestyle,  and with hope, you can achieve even your wildest dreams.  </p>
+<p>Hope and action combined make people unstoppable. This was shown again  and again during the COVID-19 pandemic. Millions of people have been infected,  and hundreds of thousands have lost their lives. But hope and action kept those alive  motivated. People came together to support each other. Doctors and nurses risked  their lives to treat those infected, and some died trying to save others’ lives. Others  volunteered to develop food and necessary supplies for those in need. Either way,  people have been constantly stepping up and helping those in need. </p>
+<p>It is inspiring to see how all this kindness, compassion, generosity, and  bravery all concludes in one statement: There is hope for a better future. But hope is  not the only thing required for a better future. We need action. Science, technology,  and policy are all required to defeat the virus. Once again, humans have shown  success in these areas as well. </p>
+<p>Medical researchers, who started from nothing, have come to understand this  virus in great depths. Multiple vaccines have been developed to save people from  this disease. Millions of people have already received them, which is why many  more people survived this disease now than back in 2020.  </p>
+<p>Technology has also helped us adapt to the impact of the pandemic. People  had to do social distancing, and therefore schools were shut down. Online learning,  remote work, and virtual communication have become the norm, allowing us to stay  productive and keep in touch with friends and family. </p>
+<p>At the same time, government and organizations have passed laws and made  policies to make sure that people are doing social distancing and staying safe. They  also helped people in poverty and bad financial or health situations by making  donations. They made business loans and strived to help those in unemployment,<br>trying to find a job for everyone. These acts of kindness greatly benefited the people  and gave them relief during times of stress.  </p>
+<p>Even though there are still challenges, and new challenges will arise in the  future, people will always find a solution to it as long as the spirit of hope channels  through them. They need to be vigilant and productive to maintain a comfortable  lifestyle and be safe. In the face of a global crisis, people shall unite and fight it.  Sometime in the future, they will find a cure to COVID-19, just as they will find a  solution to any problem. We can find hope in our great advances of science,  technology, and policy, which help us battle the impact of the pandemic. Lastly, we  can find hope in common knowledge that the fate of the world is in our hands, and  even the smallest changes can result in a big impact.  </p>
+<p>Hope is the key to inner peace. It is a powerful and motivating force that  channels through everyone. We just must bring out that hope, and through our hard  work and actions, we can end the pandemic. Hope is what united us. Hope is what  has ignited the blazing fire in every soul. Hope is what motivated us to make new  technology to help us progress. Hope gives us comfortable warmth. It gives us  confidence that there will be a better future where everyone is happy and successful.  As we fight our way through this global pandemic, everyone shall never lose hope  and work hard and rationally towards a brighter future.</p>
+]]></content>
+      <categories>
+        <category>Young Author</category>
+      </categories>
+      <tags>
+        <tag>Writing</tag>
       </tags>
   </entry>
 </search>

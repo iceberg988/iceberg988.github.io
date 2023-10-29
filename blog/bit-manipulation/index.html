@@ -22,15 +22,16 @@
 
     <meta name="description" content="[Leetcode 136] Single NumberGiven a non-empty array of integers nums, every element appears twice except for one. Find that single one. You must implement a solution with a linear runtime complexity a">
 <meta property="og:type" content="article">
-<meta property="og:title" content="bit manipulation">
+<meta property="og:title" content="Bit manipulation">
 <meta property="og:url" content="https://www.flamingbytes.com/blog/bit-manipulation/index.html">
 <meta property="og:site_name" content="FlamingBytes">
 <meta property="og:description" content="[Leetcode 136] Single NumberGiven a non-empty array of integers nums, every element appears twice except for one. Find that single one. You must implement a solution with a linear runtime complexity a">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-10-16T00:48:22.000Z">
-<meta property="article:modified_time" content="2023-10-28T22:31:56.000Z">
+<meta property="article:modified_time" content="2023-10-29T00:28:46.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="Python">
+<meta property="article:tag" content="Leetcode">
 <meta property="article:tag" content="Bit manipulation">
 <meta name="twitter:card" content="summary">
 
@@ -39,10 +40,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/bit-manipulation/","path":"blog/bit-manipulation/","title":"bit manipulation"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/bit-manipulation/","path":"blog/bit-manipulation/","title":"Bit manipulation"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>bit manipulation | FlamingBytes</title>
+<title>Bit manipulation | FlamingBytes</title>
   
 
 
@@ -103,7 +104,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">97</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">256</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">258</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -169,7 +170,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">256</span>
+          <span class="site-state-item-count">258</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -180,7 +181,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">97</span>
+        <span class="site-state-item-count">99</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -273,12 +274,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="bit manipulation | FlamingBytes">
+      <meta itemprop="name" content="Bit manipulation | FlamingBytes">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          bit manipulation
+          Bit manipulation
         </h1>
 
         <div class="post-meta-container">
@@ -296,7 +297,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-28 15:31:56" itemprop="dateModified" datetime="2023-10-28T15:31:56-07:00">2023-10-28</time>
+      <time title="Modified: 2023-10-28 17:28:46" itemprop="dateModified" datetime="2023-10-28T17:28:46-07:00">2023-10-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -330,6 +331,7 @@
     
     <div class="post-body" itemprop="articleBody"><h2 id="Leetcode-136-Single-Number"><a href="#Leetcode-136-Single-Number" class="headerlink" title="[Leetcode 136] Single Number"></a>[Leetcode 136] Single Number</h2><p>Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.</p>
 <p>You must implement a solution with a linear runtime complexity and use only constant extra space.</p>
+<span id="more"></span>
 <p>Example 1:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [2,2,1]</span><br><span class="line">Output: 1</span><br></pre></td></tr></table></figure>
 
@@ -393,6 +395,7 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+              <a href="/tags/Leetcode/" rel="tag"><i class="fa fa-tag"></i> Leetcode</a>
               <a href="/tags/Bit-manipulation/" rel="tag"><i class="fa fa-tag"></i> Bit manipulation</a>
           </div>
 
@@ -405,8 +408,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/blog/heap-and-priority-queue-in-python/" rel="next" title="Heap and priority queue in Python">
-                  Heap and priority queue in Python <i class="fa fa-angle-right"></i>
+                <a href="/blog/best-time-to-buy-and-sell-stock/" rel="next" title="Best time to buy and sell stock">
+                  Best time to buy and sell stock <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

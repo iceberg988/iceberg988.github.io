@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">97</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">256</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">258</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">256</span>
+          <span class="site-state-item-count">258</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">97</span>
+        <span class="site-state-item-count">99</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,257 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/install-jekyll-on-macos/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/install-jekyll-on-macos/" class="post-title-link" itemprop="url">Install Jekyll on MacOS</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-07-20 07:00:00" itemprop="dateCreated datePublished" datetime="2020-07-20T07:00:00-07:00">2020-07-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Install-Command-Line-Tools"><a href="#Install-Command-Line-Tools" class="headerlink" title="Install Command Line Tools"></a>Install Command Line Tools</h2><p>First, you need to install the command-line tools to be able to compile native extensions, open a terminal and run:</p>
+<pre><code>$ xcode-select --install
+</code></pre>
+<h2 id="Install-Ruby"><a href="#Install-Ruby" class="headerlink" title="Install Ruby"></a>Install Ruby</h2><p>Jekyll requires Ruby &gt; 2.5.0. macOS Catalina 10.15 comes with ruby 2.6.3, so you’re fine. If you’re running a previous macOS system, you’ll have to install a newer version of Ruby.</p>
+<h2 id="With-Homebrew"><a href="#With-Homebrew" class="headerlink" title="With Homebrew"></a>With Homebrew</h2><p>To run the latest Ruby version you need to install it through [Homebrew][Homebrew].</p>
+<pre><code>$ /bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)&quot;
+
+$ ruby -v
+ruby 2.3.7p456 (2018-03-28 revision 63024) [universal.x86_64-darwin18]
+
+$  brew install ruby
+By default, binaries installed by gem will be placed into:
+  /usr/local/lib/ruby/gems/2.7.0/bin
+
+You may want to add this to your PATH.
+
+If you need to have ruby first in your PATH run:
+  echo &#39;export PATH=&quot;/usr/local/opt/ruby/bin:$PATH&quot;&#39; &gt;&gt; /Users/skyhawk/.bash_profile
+
+For compilers to find ruby you may need to set:
+  export LDFLAGS=&quot;-L/usr/local/opt/ruby/lib&quot;
+  export CPPFLAGS=&quot;-I/usr/local/opt/ruby/include&quot;
+
+Then relaunch your terminal and check your updated Ruby setup:
+
+$ ruby -v
+ruby 2.7.1p83 (2020-03-31 revision a0c7c23c9c) [x86_64-darwin18]
+</code></pre>
+<h2 id="With-rbenv"><a href="#With-rbenv" class="headerlink" title="With rbenv"></a>With rbenv</h2><p>People often use rbenv to manage multiple Ruby versions. This is very useful when you need to be able to run a given Ruby version on a project.</p>
+<h2 id="Install-Jekyll"><a href="#Install-Jekyll" class="headerlink" title="Install Jekyll"></a>Install Jekyll</h2><p>Now all that is left is installing Bundler and Jekyll.</p>
+<pre><code>$ /bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)&quot;
+$ gem install --user-install bundler jekyll
+
+$ ruby -v
+ruby 2.7.1p83 (2020-03-31 revision a0c7c23c9c) [x86_64-darwin18]
+
+$ echo &#39;export PATH=&quot;$HOME/.gem/ruby/2.7.0/bin:$PATH&quot;&#39; &gt;&gt; ~/.bash_profile
+</code></pre>
+<h2 id="Create-the-First-Website"><a href="#Create-the-First-Website" class="headerlink" title="Create the First Website"></a>Create the First Website</h2><pre><code>$ jekyll new my-awesome-site
+$ cd my-awesome-site/
+
+$ bundle exec jekyll serve
+Could not find gem &#39;minima (~&gt; 2.5)&#39; in any of the gem sources listed in your Gemfile.
+Run `bundle install` to install missing gems.
+
+$ gem install minima
+$ gem install jekyll-feed
+
+$ bundle exec jekyll serve
+Configuration file: /Users/skyhawk/my-awesome-site/_config.yml
+            Source: /Users/skyhawk/my-awesome-site
+       Destination: /Users/skyhawk/my-awesome-site/_site
+ Incremental build: disabled. Enable with --incremental
+      Generating...
+       Jekyll Feed: Generating feed for posts
+                    done in 0.232 seconds.
+ Auto-regeneration: enabled for &#39;/Users/skyhawk/my-awesome-site&#39;
+    Server address: http://127.0.0.1:4000/
+  Server running... press ctrl-c to stop.
+</code></pre>
+<p>Check out the [Jekyll on macOS][Jekyll-on-macOS] for more info on how to install Jekyll on macOS.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://brew.sh/">https://brew.sh/</a></li>
+<li><a target="_blank" rel="noopener" href="https://jekyllrb.com/docs/installation/macos">https://jekyllrb.com/docs/installation/macos</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/transform-plain-text-into-static-websites-and-blogs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/transform-plain-text-into-static-websites-and-blogs/" class="post-title-link" itemprop="url">Transform Plain Text Into Static Websites And Blogs</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-07-11 07:00:00" itemprop="dateCreated datePublished" datetime="2020-07-11T07:00:00-07:00">2020-07-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Quick-start-instructions"><a href="#Quick-start-instructions" class="headerlink" title="Quick start instructions"></a>Quick start instructions</h2><pre><code>$ gem install bundler jekyll
+$ jekyll new my-awesome-site
+$ cd my-awesome-site
+$ bundle exec jekyll serve
+# =&gt; Now browse to http://localhost:4000
+</code></pre>
+<p>Check out the [Jekyll][jekyll] for more info on how to translate your plain text into static websites and blogs.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://jekyllrb.com/">https://jekyllrb.com/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

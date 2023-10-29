@@ -1,4 +1,8 @@
+https://www.flamingbytes.com/blog/dynamic-programming/
+https://www.flamingbytes.com/blog/hashmap-and-set/
+https://www.flamingbytes.com/blog/linked-list-in-python/
 https://www.flamingbytes.com/blog/bit-manipulation/
+https://www.flamingbytes.com/blog/best-time-to-buy-and-sell-stock/
 https://www.flamingbytes.com/blog/monotonic-stack/
 https://www.flamingbytes.com/blog/greedy-algorithm/
 https://www.flamingbytes.com/blog/trie/
@@ -16,7 +20,6 @@ https://www.flamingbytes.com/blog/Just-a-normal-summer-camp/
 https://www.flamingbytes.com/blog/Legends-of-the-Scarlet-Serpent/
 https://www.flamingbytes.com/blog/Operation-Insanity/
 https://www.flamingbytes.com/blog/The-beauty-of-fire/
-https://www.flamingbytes.com/blog/The-importance-of-hope/
 https://www.flamingbytes.com/blog/The-most-important-swim-meet/
 https://www.flamingbytes.com/blog/The-void-path-to-freedom/
 https://www.flamingbytes.com/blog/a-once-in-a-lifetime-opportunity/
@@ -105,7 +108,6 @@ https://www.flamingbytes.com/blog/go-ycsb-hangup/
 https://www.flamingbytes.com/blog/google-analytics-and-adsense-in-hexo-next/
 https://www.flamingbytes.com/blog/graph-implementation-in-python/
 https://www.flamingbytes.com/blog/hash-table-implementation-in-python/
-https://www.flamingbytes.com/blog/hashmap-and-set/
 https://www.flamingbytes.com/blog/hello-hexo-world/
 https://www.flamingbytes.com/blog/how-to-configure-sar-data-collection-on-rhel8/
 https://www.flamingbytes.com/blog/how-to-delete-partition-in-linux/
@@ -147,7 +149,6 @@ https://www.flamingbytes.com/blog/level-0-and-level-1-incremental-backups/
 https://www.flamingbytes.com/blog/libaio-init-failed-due-to-resource-temporarily-unavailable/
 https://www.flamingbytes.com/blog/limit-usable-memory-size-in-linux-grub/
 https://www.flamingbytes.com/blog/linked-list-implementation-in-python/
-https://www.flamingbytes.com/blog/linked-list-in-python/
 https://www.flamingbytes.com/blog/linux-performance-analysis-in-60-seconds/
 https://www.flamingbytes.com/blog/linux-software-raid/
 https://www.flamingbytes.com/blog/linux-system-administration/
@@ -255,6 +256,7 @@ https://www.flamingbytes.com/blog/what-is-performance-engineering/
 https://www.flamingbytes.com/blog/why-performance-tools-need-bpf/
 https://www.flamingbytes.com/blog/ycsb-performance-benchmark-on-cockroachdb/
 https://www.flamingbytes.com/blog/ycsb-benchmark-on-postgresql/
+https://www.flamingbytes.com/blog/the-importance-of-hope/
 https://www.flamingbytes.com/about/index.html
 https://www.flamingbytes.com/categories/index.html
 https://www.flamingbytes.com/
@@ -355,6 +357,8 @@ https://www.flamingbytes.com/tags/High-Availability/
 https://www.flamingbytes.com/tags/Heap/
 https://www.flamingbytes.com/tags/Priority-Queue/
 https://www.flamingbytes.com/tags/Bit-manipulation/
+https://www.flamingbytes.com/tags/Dynamic-programming/
+https://www.flamingbytes.com/tags/Recursive/
 https://www.flamingbytes.com/categories/Young-Author/
 https://www.flamingbytes.com/categories/Tech/
 https://www.flamingbytes.com/categories/Tech/Benchmarking/

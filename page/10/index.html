@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">97</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">256</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">258</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">256</span>
+          <span class="site-state-item-count">258</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">97</span>
+        <span class="site-state-item-count">99</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,283 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/keep-a-docker-container-running-and-not-exiting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/keep-a-docker-container-running-and-not-exiting/" class="post-title-link" itemprop="url">Keep a docker container running and not exiting</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-28 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-28T08:00:00-08:00">2022-12-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>In the kubernetes environment, we can keep a container(pod) alive and avoid it exits immediately after starting.</p>
+<h1 id="Method-one"><a href="#Method-one" class="headerlink" title="Method one"></a>Method one</h1><p>1.<br>Use a long-time-run command in Dockerfile</p>
+<pre><code>CMD [&quot;sh&quot;, &quot;-c&quot;, &quot;tail -f /dev/null&quot;]
+</code></pre>
+<p>or</p>
+<pre><code>CMD [&quot;sh&quot;, &quot;-c&quot;, &quot;sleep infinity&quot;]
+</code></pre>
+<p>2.<br>Build the docker image and push to docker repository</p>
+<p>3.<br>Launch the container</p>
+<pre><code>$ kubectl run mycontainer -it --image=&lt;docker-image-name&gt;
+</code></pre>
+<h1 id="Method-two"><a href="#Method-two" class="headerlink" title="Method two"></a>Method two</h1><p>When to deploy an application with kubernetes statefulset, we also can add it to the statefulset yaml file instead of adding it to the docker image through Dockerfile.</p>
+<pre><code>$ cat myapp.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: myapp
+spec:
+  serviceName: myapp
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: noname/myapp:latest
+        command: [&quot;sh&quot;, &quot;-c&quot;, &quot;tail -f /dev/null&quot;]
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: myapp-data
+          mountPath: /data
+        - name: myapp-log
+          mountPath: /log
+        securityContext:
+          privileged: true
+  volumeClaimTemplates:
+  - metadata:
+      name: myapp-data
+    spec:
+      storageClassName: &lt;storage-class&gt;
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 20Gi
+  - metadata:
+      name: myapp-log
+    spec:
+      storageClassName: &lt;storage-class&gt;
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+
+$ kubectl apply -f myapp.yaml          
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/ghost-github/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/ghost-github/" class="post-title-link" itemprop="url">Hosting the Ghost blog on GitHub</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-27 12:07:00" itemprop="dateCreated datePublished" datetime="2022-12-27T12:07:00-08:00">2022-12-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Install-Ghost-locally"><a href="#Install-Ghost-locally" class="headerlink" title="Install Ghost locally"></a>Install Ghost locally</h1><p><a target="_blank" rel="noopener" href="https://pages.github.com/">GitHub Pages</a> is a great solution for hosting static website. If you use the Ghost to manage your website, you can <a target="_blank" rel="noopener" href="https://ghost.org/docs/install/local/">install Ghost locally</a> and convert it to a static website in order to host it on Github.</p>
+<h2 id="Install-Ubuntu-virtual-machine-on-Windows-optional"><a href="#Install-Ubuntu-virtual-machine-on-Windows-optional" class="headerlink" title="Install Ubuntu virtual machine on Windows(optional)"></a>Install Ubuntu virtual machine on Windows(optional)</h2><h2 id="Install-Ghost-CLI"><a href="#Install-Ghost-CLI" class="headerlink" title="Install Ghost-CLI"></a>Install Ghost-CLI</h2><p>Ghost-CLI is a commandline tool to help you get Ghost installed and configured for use, quickly and easily.</p>
+<pre><code>$ npm install ghost-cli@latest -g
+</code></pre>
+<p>Ghost runs as background process and remains running until you stop or restart it. The following are some useful commands:</p>
+<pre><code>ghost help
+ghost ls
+ghost log
+ghost stop
+ghost start
+</code></pre>
+<h2 id="Install-Ghost"><a href="#Install-Ghost" class="headerlink" title="Install Ghost"></a>Install Ghost</h2><pre><code>$ mkdir my-ghost-website
+$ cd my-ghost-website
+$ ghost install local
+</code></pre>
+<p>Once the Ghost is installed you can access the website on <a target="_blank" rel="noopener" href="http://localhost:2368/ghost">http://localhost:2368/ghost</a> for Ghost Admin.</p>
+<h1 id="Generate-the-static-website"><a href="#Generate-the-static-website" class="headerlink" title="Generate the static website"></a>Generate the static website</h1><p>In order to generate the static website, we’ll use the Ghost static site generator. For the Linux and macOS, this tool can be used directly.</p>
+<pre><code>$ sudo npm install -g ghost-static-site-generator
+</code></pre>
+<p>Now, we can push the generated static pages to the Github repository named <strong>username.github.io</strong>.</p>
+<p>To generate the static pages, we can run the following command. The static pages are generated in a folder called <em>static</em>.</p>
+<pre><code>$ gssg --url https://username.github.io
+</code></pre>
+<h1 id="Push-the-static-pages-to-Github"><a href="#Push-the-static-pages-to-Github" class="headerlink" title="Push the static pages to Github"></a>Push the static pages to Github</h1><p>Before pushing the static pages to Github, a repository called <em>username.github.io</em> should be created on Github website.</p>
+<p>The static pages can be pushed to Github repository as below.</p>
+<pre><code>$ cd static
+$ git init .
+$ git remote add origin https://github.com/username/username.github.io.git
+$ git branch -M main
+$ git add .
+$ git commit -m &#39;Init my website&#39;
+$ git push -u origin main
+</code></pre>
+<p>After the push, Github will build and deploy the pages automatically. And the updated website will be available to access in a few minutes.</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://dev.to/bassel/hosting-your-ghost-blog-on-github-pages-for-free-53hl">https://dev.to/bassel/hosting-your-ghost-blog-on-github-pages-for-free-53hl</a></li>
+<li><a target="_blank" rel="noopener" href="https://zzamboni.org/post/hosting-a-ghost-blog-in-github/#:~:text=Install%20and%20run%20Ghost%20locally,static%20website%20to%20GitHub%20Pages">https://zzamboni.org/post/hosting-a-ghost-blog-in-github/#:~:text&#x3D;Install and run Ghost locally,static website to GitHub Pages</a></li>
+<li><a target="_blank" rel="noopener" href="https://ghost.org/docs/reinstall/">https://ghost.org/docs/reinstall/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1955,641 +2232,6 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://docs.kernel.org/admin-guide/cgroup-v1/memory.html">https://docs.kernel.org/admin-guide/cgroup-v1/memory.html</a></li>
 <li><a target="_blank" rel="noopener" href="https://engineering.linkedin.com/blog/2016/08/don_t-let-linux-control-groups-uncontrolled">https://engineering.linkedin.com/blog/2016/08/don_t-let-linux-control-groups-uncontrolled</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/cockroachdb-performance-benchmarking/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/cockroachdb-performance-benchmarking/" class="post-title-link" itemprop="url">CockroachDB performance benchmarking</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-12-04 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-04T08:00:00-08:00">2022-12-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="CockroachDB-key-concepts"><a href="#CockroachDB-key-concepts" class="headerlink" title="CockroachDB key concepts"></a>CockroachDB key concepts</h2><p>Range -	CockroachDB stores all user data (tables, indexes, etc.) and almost all system data in a giant sorted map of key-value pairs. This keyspace is divided into “ranges”, contiguous chunks of the keyspace, so that every key can always be found in a single range.</p>
-<p>From a SQL perspective, a table and its secondary indexes initially map to a single range, where each key-value pair in the range represents a single row in the table (also called the primary index because the table is sorted by the primary key) or a single row in a secondary index. As soon as that range reaches 512 MiB in size, it splits into two ranges. This process continues for these new ranges as the table and its indexes continue growing.</p>
-<pre><code>[root@host1 ~]# tail -f /var/log/cockroachdb_logs/cockroach.log
-I220908 17:54:02.220498 5523606 kv/kvserver/pkg/kv/kvserver/replica_command.go:420 ⋮ [n1,split,s1,r499/1:‹/Table/113/1/4&#123;394/6…-693/6…&#125;›] 1700  initiating a split of this range at key ‹/Table/113/1/4402/59627› [r501] (‹512 MiB above threshold size 512 MiB›)‹›
-</code></pre>
-<p>Replica -	CockroachDB replicates each range (3 times by default) and stores each replica on a different node.</p>
-<p>Refer to <a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/docs/stable/architecture/reads-and-writes-overview.html#cockroachdb-architecture-terms">here</a> for more.</p>
-<p><img src="/images/cockroachdb-arch-terms.png" alt="Image"></p>
-<h2 id="Production-checklist"><a href="#Production-checklist" class="headerlink" title="Production checklist"></a>Production checklist</h2><p>Check <a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/docs/stable/recommended-production-settings.html">here</a> for the important recommendations for production deployments of CockroachDB. The following only lists some of the recommended settings.</p>
-<h3 id="Memory"><a href="#Memory" class="headerlink" title="Memory"></a>Memory</h3><ul>
-<li>Disable Linux memory swapping. Over-allocating memory on production machines can lead to unexpected performance issues when pages have to be read back into memory.</li>
-<li>For production deployments, set –cache to 25% or higher. Avoid setting –cache and –max-sql-memory to a combined value of more than 75% of a machine’s total RAM. Doing so increases the risk of memory-related failures.</li>
-</ul>
-<h3 id="Storage"><a href="#Storage" class="headerlink" title="Storage"></a>Storage</h3><ul>
-<li>The maximum recommended storage capacity per node is 2.5 TiB, regardless of the number of vCPUs.</li>
-<li>Use dedicated volumes for the CockroachDB store. Do not share the store volume with any other I&#x2F;O activity.</li>
-<li>Store CockroachDB log files in a separate volume from the main data store so that logging is not impacted by I&#x2F;O throttling.</li>
-<li>The recommended Linux filesystems are ext4 and XFS.</li>
-</ul>
-<h3 id="Disk-I-O"><a href="#Disk-I-O" class="headerlink" title="Disk I&#x2F;O"></a>Disk I&#x2F;O</h3><ul>
-<li>Use sysbench to benchmark IOPS on your cluster. If IOPS decrease, add more nodes to your cluster to increase IOPS.</li>
-<li>Do not use LVM in the I&#x2F;O path. Dynamically resizing CockroachDB store volumes can result in significant performance degradation. Using LVM snapshots in lieu of CockroachDB backup and restore is also not supported.</li>
-<li>The optimal configuration for striping more than one device is RAID 10. RAID 0 and 1 are also acceptable from a performance perspective.</li>
-</ul>
-<h3 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h3><p>When starting a node, two main flags are used to control its network connections:</p>
-<ul>
-<li>–listen-addr determines which address(es) to listen on for connections from other nodes and clients.</li>
-<li>–advertise-addr determines which address to tell other nodes to use.</li>
-</ul>
-<p><img src="/images/cockroachdb-network.png" alt="Image"></p>
-<h3 id="Load-balancing"><a href="#Load-balancing" class="headerlink" title="Load balancing"></a>Load balancing</h3><p>Each CockroachDB node is an equally suitable SQL gateway to a cluster, but to ensure client performance and reliability, it’s important to use load balancing:</p>
-<ul>
-<li>Performance: Load balancers spread client traffic across nodes. This prevents any one node from being overwhelmed by requests and improves overall cluster performance (queries per second).</li>
-<li>Reliability: Load balancers decouple client health from the health of a single CockroachDB node. To ensure that traffic is not directed to failed nodes or nodes that are not ready to receive requests, load balancers should use CockroachDB’s readiness health check.</li>
-</ul>
-<h3 id="Cache-and-SQL-memory-size"><a href="#Cache-and-SQL-memory-size" class="headerlink" title="Cache and SQL memory size"></a>Cache and SQL memory size</h3><p>CockroachDB manages its own memory caches, independently of the operating system. These are configured via the –cache and –max-sql-memory flags.</p>
-<p>Each node has a default cache size of 128MiB that is passively consumed. The default was chosen to facilitate development and testing, where users are likely to run multiple CockroachDB nodes on a single machine. Increasing the cache size will generally improve the node’s read performance.</p>
-<p>Each node has a default SQL memory size of 25%. This memory is used as-needed by active operations to store temporary data for SQL queries.</p>
-<ul>
-<li>Increasing a node’s cache size will improve the node’s read performance.</li>
-<li>Increasing a node’s SQL memory size will increase the number of simultaneous client connections it allows, as well as the node’s capacity for in-memory processing of rows when using ORDER BY, GROUP BY, DISTINCT, joins, and window functions.</li>
-</ul>
-<p>You can check cache size and SQL memory pool size in the log. In the following example output, it matches with the specified 25% cache and SQL memory size setting.</p>
-<pre><code>$ vim cockroach.log
-I220905 17:49:33.671304 1 server/config.go:487 ⋮ [n?] 6  system total memory: 1008 GiB
-I220905 17:49:33.671318 1 server/config.go:489 ⋮ [n?] 7  server configuration:
-I220905 17:49:33.671318 1 server/config.go:489 ⋮ [n?] 7 +‹max offset             500000000›
-I220905 17:49:33.671318 1 server/config.go:489 ⋮ [n?] 7 +‹cache size             252 GiB›
-I220905 17:49:33.671318 1 server/config.go:489 ⋮ [n?] 7 +‹SQL memory pool size   252 GiB›
-</code></pre>
-<h2 id="CockroachDB-workloads"><a href="#CockroachDB-workloads" class="headerlink" title="CockroachDB workloads"></a>CockroachDB workloads</h2><p><img src="/images/rockroachdb_workloads.png" alt="Image"></p>
-<h3 id="bank-workload"><a href="#bank-workload" class="headerlink" title="bank workload"></a>bank workload</h3><pre><code>$ cockroach workload init bank &#39;postgresql://root@host1:26257?sslmode=disable&#39;
-I220831 23:52:14.593170 1 workload/workloadsql/dataload.go:146  [-] 1  imported bank (0s, 1000 rows)
-I220831 23:52:14.609421 1 workload/workloadsql/workloadsql.go:136  [-] 2  starting 9 splits
-
-
-$ cockroach workload run bank --duration=1m &#39;postgresql://root@host1:26257?sslmode=disable&#39;
-I220831 23:52:55.378492 1 workload/cli/run.go:414  [-] 1  creating load generator...
-I220831 23:52:55.380594 1 workload/cli/run.go:445  [-] 2  creating load generator... done (took 2.103665ms)
-_elapsed___errors__ops/sec(inst)___ops/sec(cum)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)
-    1.0s        0         2929.8         2936.4      3.0     15.2     50.3    234.9 transfer
-    2.0s        0         3387.3         3161.8      3.4     13.6     23.1     54.5 transfer
-    3.0s        0         2755.2         3026.3      3.9     13.6     23.1    302.0 transfer
-    4.0s        0         3295.5         3093.6      3.3     13.6     33.6    469.8 transfer
-    5.0s        0         3536.5         3182.2      3.5     12.1     18.9     35.7 transfer
-    6.0s        0         3558.1         3244.8      3.5     11.0     21.0     39.8 transfer
-    7.0s        0         3566.9         3290.8      3.7     11.0     17.8     39.8 transfer
-    8.0s        0         3317.6         3294.2      3.7     12.6     24.1     62.9 transfer
-    9.0s        0         2992.9         3260.7      4.1     14.7     22.0     39.8 transfer
-   10.0s        0         3628.2         3297.4      3.5     11.5     19.9     39.8 transfer
-   11.0s        0         3604.5         3325.3      3.5     11.5     17.8     37.7 transfer
-   12.0s        0         3668.4         3353.9      3.5     11.0     17.8     31.5 transfer
-   13.0s        0         3485.9         3364.1      3.7     11.5     18.9     31.5 transfer
-   14.0s        0         3377.9         3365.1      3.7     12.6     21.0     56.6 transfer
-   15.0s        0         3084.4         3346.3      4.1     13.6     21.0     92.3 transfer
-   16.0s        0         3650.1         3365.3      3.4     11.5     17.8     44.0 transfer
-   17.0s        0         3662.7         3382.8      3.5     11.5     17.8     37.7 transfer
-   18.0s        0         3461.8         3387.2      3.7     11.0     19.9    159.4 transfer
-   19.0s        0         3426.3         3389.3      3.7     12.1     19.9     41.9 transfer
-   20.0s        0         3196.0         3379.6      3.9     13.1     19.9     35.7 transfer
-&lt;omitted..&gt;
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
-   60.0s        0         206551         3442.5      4.6      3.7     12.1     19.9    469.8  transfer
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__result
-   60.0s        0         206551         3442.5      4.6      3.7     12.1     19.9    469.8
-</code></pre>
-<h3 id="TPC-C-workload"><a href="#TPC-C-workload" class="headerlink" title="TPC-C workload"></a>TPC-C workload</h3><blockquote>
-<p>–warehouses</p>
-<blockquote>
-<p>The number of warehouses for loading initial data, at approximately 200 MB per warehouse.</p>
-<p>Applicable commands: init or run</p>
-<p>Default: 1</p>
-</blockquote>
-</blockquote>
-<blockquote>
-<p>–workers</p>
-<blockquote>
-<p>The number of concurrent workers.</p>
-<p>Applicable commands: init or run</p>
-<p>Default: –warehouses * 10</p>
-</blockquote>
-</blockquote>
-<p>The number os wareshouses can be specified by “–warehouses” option. By default, only one warehouse is created.</p>
-<pre><code>$ cockroach workload init tpcc &#39;postgresql://root@host1:26257?sslmode=disable&#39;
-Error: failed insert into warehouse: pq: duplicate key value violates unique constraint &quot;warehouse_pkey&quot;
-
-$ cockroach workload init tpcc &#39;postgresql://root@host1:26257?sslmode=disable&#39; --drop
-I220901 00:32:56.365593 1 workload/workloadsql/dataload.go:146  [-] 1  imported warehouse (0s, 1 rows)
-I220901 00:32:56.372727 1 workload/workloadsql/dataload.go:146  [-] 2  imported district (0s, 10 rows)
-I220901 00:32:57.034349 1 workload/workloadsql/dataload.go:146  [-] 3  imported customer (1s, 30000 rows)
-I220901 00:32:57.248382 1 workload/workloadsql/dataload.go:146  [-] 4  imported history (0s, 30000 rows)
-I220901 00:32:57.462320 1 workload/workloadsql/dataload.go:146  [-] 5  imported order (0s, 30000 rows)
-I220901 00:32:57.490476 1 workload/workloadsql/dataload.go:146  [-] 6  imported new_order (0s, 9000 rows)
-I220901 00:32:57.921658 1 workload/workloadsql/dataload.go:146  [-] 7  imported item (0s, 100000 rows)
-I220901 00:32:59.267268 1 workload/workloadsql/dataload.go:146  [-] 8  imported stock (1s, 100000 rows)
-I220901 00:33:00.916392 1 workload/workloadsql/dataload.go:146  [-] 9  imported order_line (2s, 300343 rows)
-
-
-$ cockroach workload run tpcc --duration=10m &#39;postgresql://root@host1:26257?sslmode=disable&#39;
-I220901 00:34:17.147411 1 workload/cli/run.go:414  [-] 1  creating load generator...
-Initializing 2 connections...
-Initializing 0 idle connections...
-Initializing 10 workers and preparing statements...
-I220901 00:34:17.151817 1 workload/cli/run.go:445  [-] 2  creating load generator... done (took 4.411152ms)
-&lt;omitted..&gt;
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
-  600.0s        0             12            0.0     32.6     31.5     44.0     44.0     44.0  delivery
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
-  600.0s        0            120            0.2     17.9     17.8     26.2     41.9     54.5  newOrder
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
-  600.0s        0             13            0.0      6.7      5.8     14.2     15.2     15.2  orderStatus
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
-  600.0s        0            131            0.2     10.8     11.0     14.7     24.1     29.4  payment
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
-  600.0s        0             13            0.0     10.8     10.5     15.7     15.7     15.7  stockLevel
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__result
-  600.0s        0            289            0.5     14.4     13.1     28.3     41.9     54.5
-Audit check 9.2.1.7: SKIP: not enough delivery transactions to be statistically significant
-Audit check 9.2.2.5.1: SKIP: not enough orders to be statistically significant
-Audit check 9.2.2.5.2: SKIP: not enough orders to be statistically significant
-Audit check 9.2.2.5.5: SKIP: not enough payments to be statistically significant
-Audit check 9.2.2.5.6: SKIP: not enough order status transactions to be statistically significant
-Audit check 9.2.2.5.3: PASS
-Audit check 9.2.2.5.4: PASS
-
-_elapsed_______tpmC____efc__avg(ms)__p50(ms)__p90(ms)__p95(ms)__p99(ms)_pMax(ms)
-  600.0s       12.0  93.3%     17.9     17.8     23.1     26.2     41.9     54.5
-</code></pre>
-<h3 id="YCSB-workload"><a href="#YCSB-workload" class="headerlink" title="YCSB workload"></a>YCSB workload</h3><pre><code>$ cockroach workload init ycsb &#39;postgresql://root@host1:26257?sslmode=disable&#39;
-I220831 23:57:53.909658 1 workload/workloadsql/dataload.go:146  [-] 1  imported usertable (2s, 10000 rows)
-
-
-$ cockroach workload run ycsb --duration=10m &#39;postgresql://root@host1:26257?sslmode=disable&#39;
-I220831 23:58:24.410319 1 workload/cli/run.go:414  [-] 1  creating load generator...
-I220831 23:58:24.427528 1 workload/cli/run.go:445  [-] 2  creating load generator... done (took 17.212701ms)
-_elapsed___errors__ops/sec(inst)___ops/sec(cum)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)
-    1.0s        0        11011.5        11243.7      1.1      2.4      3.8     11.0 read
-    1.0s        0          581.7          593.9      3.0      5.5      7.3     12.6 update
-    2.0s        0        12105.1        11674.4      1.1      1.8      3.4     10.0 read
-    2.0s        0          636.9          615.4      2.8      3.9      6.6     11.0 update
-    3.0s        0        11590.6        11646.5      1.1      2.0      4.5     14.2 read
-    3.0s        0          607.1          612.7      2.8      6.0      9.4     12.1 update
-    4.0s        0        11813.5        11688.2      1.1      1.9      3.5     13.1 read
-    4.0s        0          622.0          615.0      2.8      4.5      7.6     13.6 update
-    5.0s        0        11959.5        11742.5      1.1      2.0      3.3      8.1 read
-    5.0s        0          607.0          613.4      2.6      4.7      7.1     12.1 update
-    6.0s        0        12186.2        11816.5      1.0      1.8      3.5     12.6 read
-    6.0s        0          638.0          617.5      2.6      4.1     10.0     16.8 update
-    7.0s        0        11815.8        11816.3      1.1      2.0      3.7      8.4 read
-    7.0s        0          646.0          621.6      2.8      4.7      6.8      9.4 update
-    8.0s        0        11850.8        11820.6      1.1      2.0      3.3      7.6 read
-    8.0s        0          617.9          621.1      2.8      4.5      6.6      9.4 update
-    9.0s        0        11713.5        11808.7      1.1      2.0      3.9     11.0 read
-    9.0s        0          609.1          619.8      2.8      4.5      7.6     11.5 update
-   10.0s        0        11949.6        11822.8      1.1      2.0      3.3     13.1 read
-   10.0s        0          622.0          620.0      2.8      4.2      6.0      8.4 update
-
-&lt;omitted..&gt;
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
-  600.0s        0        8576709        14294.5      1.0      1.0      1.6      2.9     62.9  read
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
-  600.0s        0         451026          751.7      2.5      2.5      3.8      6.6     27.3  update
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__result
-  600.0s        0        9027735        15046.2      1.1      1.0      2.2      3.5     62.9
-</code></pre>
-<h2 id="Restart-CockroachDB-cluster"><a href="#Restart-CockroachDB-cluster" class="headerlink" title="Restart CockroachDB cluster"></a>Restart CockroachDB cluster</h2><ol>
-<li><p>Stop the process on each node</p>
-<p> $ ps -ef | grep cock | grep -v grep<br> root     12217     1 99 Sep06 ?        2-20:28:09 cockroach start –log-dir&#x3D;&#x2F;var&#x2F;log&#x2F;cockroachdb_logs –store&#x3D;&#x2F;mnt&#x2F;cockroachdb_mnt1 –insecure –advertise-addr&#x3D;host1 –join&#x3D;host1,host2,host3 –cache&#x3D;.25 –max-sql-memory&#x3D;.25</p>
-<p> $ kill -9 12217<br> $ ps -ef | grep cock | grep -v grep</p>
-</li>
-<li><p>Start the process on each node</p>
-<p> $ cockroach start –store&#x3D;&#x2F;mnt&#x2F;cockroanchdb_mnt1 –insecure –advertise-addr&#x3D;host1 –join&#x3D;host1,host2,host3 –cache&#x3D;.25 -max-sql-memory&#x3D;.25 –background</p>
-</li>
-</ol>
-<h2 id="CockroachDB-commands"><a href="#CockroachDB-commands" class="headerlink" title="CockroachDB commands"></a>CockroachDB commands</h2><p>List node IDs:</p>
-<pre><code>$ cockroach node ls --insecure
-  id
-------
-   1
-   2
-   3
-(3 rows)
-</code></pre>
-<p>Show node status:</p>
-<pre><code>$ cockroach node status --insecure
-  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live
------+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+----------
-   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-03 16:24:12.001861 | 2022-09-03 22:23:09.022236 |          | true         | true
-   2 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-03 16:24:12.04249  | 2022-09-03 22:23:09.048582 |          | true         | true
-   3 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-03 16:24:12.390521 | 2022-09-03 22:23:09.402081 |          | true         | true
-(3 rows)
-</code></pre>
-<p>Show status and range&#x2F;replica details:</p>
-<pre><code>$ cockroach node status --ranges --insecure
-  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live | replicas_leaders | replicas_leaseholders | ranges | ranges_unavailable | ranges_underreplicated
------+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+---------
-   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-03 16:24:12.001861 | 2022-09-03 22:23:36.022463 |          | true         | true    |         306 |                   306 |    941 |                  0 |                      0
-   2 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-03 16:24:12.04249  | 2022-09-03 22:23:36.048508 |          | true         | true    |              310 |                   310 |    941 |                  0 |                      0
-   3 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-03 16:24:12.390521 | 2022-09-03 22:23:36.40421  |          | true         | true    |              325 |                   325 |    941 |                  0 |                      0
-(3 rows)
-</code></pre>
-<p>Show status and disk usage details:</p>
-<pre><code>$ cockroach node status --stats --insecure
-  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live |  live_bytes  |  key_bytes  | value_bytes  | intent_bytes | system_bytes
------+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+---------+--------------+-------------+--------------+--------------+---------------
-   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-03 16:24:12.001861 | 2022-09-03 22:23:45.022008 |          | true         | true    | 246665681135 | 47930398573 | 220956161393 |        40331 |       812555
-   2 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-03 16:24:12.04249  | 2022-09-03 22:23:45.048777 |          | true         | true    | 246665683880 | 47930401894 | 220956192532 |        28025 |       817028
-   3 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-03 16:24:12.390521 | 2022-09-03 22:23:45.40156  |          | true         | true    | 246666008478 | 47930560065 | 220957658233 |        74382 |       741028
-(3 rows)
-</code></pre>
-<p>Show status and decommissioning details for active and inactive nodes:</p>
-<pre><code>$ cockroach node status --decommission --insecure
-  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live | gossiped_replicas | is_decommissioning | membership | is_draining
------+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+---------
-   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-03 16:24:12.001861 | 2022-09-03 22:24:03.043432 |          | true         | true    |               941 | false              | active     | false
-   2 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-03 16:24:12.04249  | 2022-09-03 22:24:03.048948 |          | true         | true    |               941 | false              | active     | false
-   3 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-03 16:24:12.390521 | 2022-09-03 22:24:03.401953 |          | true         | true    |               941 | false              | active     | false
-(3 rows)
-</code></pre>
-<p>Show complete status details for active and inactive nodes:</p>
-<pre><code>$ cockroach node status --all --insecure
-  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live | replicas_leaders | replicas_leaseholders | ranges | ranges_unavailable | ranges_underreplicated |  live_bytes  |  key_bytes  | value_bytes  | intent_bytes | system_bytes | gossiped_replicas | is_decommissioning | membership | is_draining
------+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+---------
-   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-03 16:24:12.001861 | 2022-09-03 22:24:07.539077 |          |         true |    true |              306 |                   306 |    942 |                  0 |                      0 | 246677946612 | 47939212836 | 221027696131 |        81398 |       722359 |        941        |              false |   active   |    false
-   2 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-03 16:24:12.04249  | 2022-09-03 22:24:07.548886 |          |         true |    true |              311 |                   311 |    942 |                  0 |                      0 | 246677952989 | 47939228198 | 221027812276 |        67816 |       731258 |        941        |              false |   active   |    false
-   3 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-03 16:24:12.390521 | 2022-09-03 22:24:07.901765 |          |         true |    true |              325 |                   325 |    942 |                  0 |                      0 | 246678252011 | 47939394591 | 221029217819 |        55249 |       869542 |        941        |              false |   active   |    false
-(3 rows)
-</code></pre>
-<p>Show status details for a specific node:</p>
-<pre><code>$ cockroach node status 1 --insecure
-  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live
------+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+----------
-   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-03 16:24:12.001861 | 2022-09-03 22:24:30.044382 |          | true         | true
-(1 row)
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/cockroachdb/cockroach/blob/master/docs/design.md">https://github.com/cockroachdb/cockroach/blob/master/docs/design.md</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/cgroup-limit-cpu/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/cgroup-limit-cpu/" class="post-title-link" itemprop="url">Using cgroups to limit CPU utilization</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-12-03 12:09:00" itemprop="dateCreated datePublished" datetime="2022-12-03T12:09:00-08:00">2022-12-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Intro-to-cgroups"><a href="#Intro-to-cgroups" class="headerlink" title="Intro to cgroups"></a>Intro to cgroups</h2><p>Cgroups(control groups) make it possible to allocate system resources such as CPU time, memory, disk I&#x2F;O and network bandwidth, or combinations of them,  among a group of tasks(processes) running on a system.</p>
-<p>The following commands output the available subsystems(resource controllers) for the cgroups. Each subsystem has a bunch of tunables to control the resource allocation.</p>
-<pre><code>$ lssubsys -am
-cpuset /sys/fs/cgroup/cpuset
-cpu,cpuacct /sys/fs/cgroup/cpu,cpuacct
-blkio /sys/fs/cgroup/blkio
-memory /sys/fs/cgroup/memory
-devices /sys/fs/cgroup/devices
-freezer /sys/fs/cgroup/freezer
-net_cls,net_prio /sys/fs/cgroup/net_cls,net_prio
-perf_event /sys/fs/cgroup/perf_event
-hugetlb /sys/fs/cgroup/hugetlb
-pids /sys/fs/cgroup/pids
-rdma /sys/fs/cgroup/rdma
-
-$ mount | grep cgroup
-tmpfs on /sys/fs/cgroup type tmpfs (ro,nosuid,nodev,noexec,mode=755)
-cgroup on /sys/fs/cgroup/systemd type cgroup (rw,nosuid,nodev,noexec,relatime,xattr,release_agent=/usr/lib/systemd/systemd-cgroups-agent,name=systemd)
-cgroup on /sys/fs/cgroup/hugetlb type cgroup (rw,nosuid,nodev,noexec,relatime,hugetlb)
-cgroup on /sys/fs/cgroup/cpu,cpuacct type cgroup (rw,nosuid,nodev,noexec,relatime,cpu,cpuacct)
-cgroup on /sys/fs/cgroup/cpuset type cgroup (rw,nosuid,nodev,noexec,relatime,cpuset)
-cgroup on /sys/fs/cgroup/blkio type cgroup (rw,nosuid,nodev,noexec,relatime,blkio)
-cgroup on /sys/fs/cgroup/memory type cgroup (rw,nosuid,nodev,noexec,relatime,memory)
-cgroup on /sys/fs/cgroup/freezer type cgroup (rw,nosuid,nodev,noexec,relatime,freezer)
-cgroup on /sys/fs/cgroup/net_cls,net_prio type cgroup (rw,nosuid,nodev,noexec,relatime,net_cls,net_prio)
-cgroup on /sys/fs/cgroup/pids type cgroup (rw,nosuid,nodev,noexec,relatime,pids)
-cgroup on /sys/fs/cgroup/rdma type cgroup (rw,nosuid,nodev,noexec,relatime,rdma)
-cgroup on /sys/fs/cgroup/perf_event type cgroup (rw,nosuid,nodev,noexec,relatime,perf_event)
-cgroup on /sys/fs/cgroup/devices type cgroup (rw,nosuid,nodev,noexec,relatime,devices)
-</code></pre>
-<h2 id="CPU-subsystem-and-tunables"><a href="#CPU-subsystem-and-tunables" class="headerlink" title="CPU subsystem and tunables"></a>CPU subsystem and tunables</h2><h3 id="Ceiling-enforcement-parameters"><a href="#Ceiling-enforcement-parameters" class="headerlink" title="Ceiling enforcement parameters"></a>Ceiling enforcement parameters</h3><p>cpu.cfs_period_us</p>
-<p>specifies a period of time in microseconds (µs, represented here as “us”) for how regularly a cgroup’s access to CPU resources should be reallocated. If tasks in a cgroup should be able to access a single CPU for 0.2 seconds out of every 1 second, set cpu.cfs_quota_us to 200000 and cpu.cfs_period_us to 1000000. The upper limit of the cpu.cfs_quota_us parameter is 1 second and the lower limit is 1000 microseconds.</p>
-<p>cpu.cfs_quota_us</p>
-<p>specifies the total amount of time in microseconds (µs, represented here as “us”) for which all tasks in a cgroup can run during one period (as defined by cpu.cfs_period_us). As soon as tasks in a cgroup use up all the time specified by the quota, they are throttled for the remainder of the time specified by the period and not allowed to run until the next period. If tasks in a cgroup should be able to access a single CPU for 0.2 seconds out of every 1 second, set cpu.cfs_quota_us to 200000 and cpu.cfs_period_us to 1000000. Note that the quota and period parameters operate on a CPU basis. To allow a process to fully utilize two CPUs, for example, set cpu.cfs_quota_us to 200000 and cpu.cfs_period_us to 100000.</p>
-<p>Setting the value in cpu.cfs_quota_us to -1 indicates that the cgroup does not adhere to any CPU time restrictions. This is also the default value for every cgroup (except the root cgroup).</p>
-<h3 id="Relative-shares-parameter"><a href="#Relative-shares-parameter" class="headerlink" title="Relative shares parameter"></a>Relative shares parameter</h3><p>cpu.shares</p>
-<p>contains an integer value that specifies a relative share of CPU time available to the tasks in a cgroup. For example, tasks in two cgroups that have cpu.shares set to 100 will receive equal CPU time, but tasks in a cgroup that has cpu.shares set to 200 receive twice the CPU time of tasks in a cgroup where cpu.shares is set to 100. The value specified in the cpu.shares file must be 2 or higher.</p>
-<p>Note that shares of CPU time are distributed per all CPU cores on multi-core systems. Even if a cgroup is limited to less than 100% of CPU on a multi-core system, it may use 100% of each individual CPU core.</p>
-<p>Using relative shares to specify CPU access has two implications on resource management that should be considered:</p>
-<p>Because the CFS does not demand equal usage of CPU, it is hard to predict how much CPU time a cgroup will be allowed to utilize. When tasks in one   cgroup are idle and are not using any CPU time, the leftover time is collected in a global pool of unused CPU cycles. Other cgroups are allowed to borrow CPU cycles from this pool.</p>
-<p>The actual amount of CPU time that is available to a cgroup can vary depending on the number of cgroups that exist on the system. If a cgroup has a relative share of 1000 and two other cgroups have a relative share of 500, the first cgroup receives 50% of all CPU time in cases when processes in all cgroups attempt to use 100% of the CPU. However, if another cgroup is added with a relative share of 1000, the first cgroup is only allowed 33% of the CPU (the rest of the cgroups receive 16.5%, 16.5%, and 33% of CPU).</p>
-<h2 id="Using-libcgroup-tools"><a href="#Using-libcgroup-tools" class="headerlink" title="Using libcgroup tools"></a>Using libcgroup tools</h2><p>Install libcgroup package to manage cgroups:</p>
-<pre><code>$ yum install libcgroup libcgroup-tools
-</code></pre>
-<p>List the cgroups:</p>
-<pre><code>$ lscgroup
-hugetlb:/
-cpu,cpuacct:/
-cpuset:/
-blkio:/
-memory:/
-freezer:/
-net_cls,net_prio:/
-pids:/
-rdma:/
-perf_event:/
-devices:/
-devices:/system.slice
-devices:/system.slice/irqbalance.service
-devices:/system.slice/systemd-udevd.service
-devices:/system.slice/polkit.service
-devices:/system.slice/chronyd.service
-devices:/system.slice/auditd.service
-devices:/system.slice/tuned.service
-devices:/system.slice/systemd-journald.service
-devices:/system.slice/sshd.service
-devices:/system.slice/crond.service
-devices:/system.slice/NetworkManager.service
-devices:/system.slice/rsyslog.service
-devices:/system.slice/abrtd.service
-devices:/system.slice/lvm2-lvmetad.service
-devices:/system.slice/postfix.service
-devices:/system.slice/dbus.service
-devices:/system.slice/system-getty.slice
-devices:/system.slice/systemd-logind.service
-devices:/system.slice/abrt-oops.service
-
-$ ls /sys/fs/cgroup
-blkio  cpuacct      cpuset   freezer  memory   net_cls,net_prio  perf_event  rdma
-cpu    cpu,cpuacct  devices  hugetlb  net_cls  net_prio          pids        systemd
-</code></pre>
-<p>Create the cgroup:</p>
-<pre><code>$ cgcreate -g cpu:/cpulimited
-
-$ lscgroup | grep cpulimited
-cpu,cpuacct:/cpulimited
-
-$ ls cpulimited/
-cgroup.clone_children  cpuacct.usage_percpu       cpu.cfs_period_us  cpu.stat
-cgroup.procs           cpuacct.usage_percpu_sys   cpu.cfs_quota_us   notify_on_release
-cpuacct.stat           cpuacct.usage_percpu_user  cpu.rt_period_us   tasks
-cpuacct.usage          cpuacct.usage_sys          cpu.rt_runtime_us
-cpuacct.usage_all      cpuacct.usage_user         cpu.shares
-</code></pre>
-<p>Limit CPU utilization by percentage:</p>
-<pre><code>$ lscpu | grep ^CPU\(s\):
-CPU(s):                96
-
-$ cgset -r cpu.cfs_quota_us=200000 cpulimited
-</code></pre>
-<p>Check the cgroup settings:</p>
-<pre><code>$ cgget -r cpu.cfs_quota_us cpulimited
-cpulimited:
-cpu.cfs_quota_us: 200000
-
-$ cgget -g cpu:cpulimited
-cpulimited:
-cpu.cfs_period_us: 100000
-cpu.stat: nr_periods 2
-    nr_throttled 0
-    throttled_time 0
-cpu.shares: 1024
-cpu.cfs_quota_us: 200000
-cpu.rt_runtime_us: 0
-cpu.rt_period_us: 1000000
-</code></pre>
-<p>Delete the cgroup:</p>
-<pre><code>$ cgdelete cpu,cpuacct:/cpulimited
-</code></pre>
-<h2 id="Verify-the-CPU-utilization-with-fio-workload"><a href="#Verify-the-CPU-utilization-with-fio-workload" class="headerlink" title="Verify the CPU utilization with fio workload"></a>Verify the CPU utilization with fio workload</h2><p>Create a fio job file:</p>
-<pre><code>$ cat burn_cpu.job
-[burn_cpu]
-# Don&#39;t transfer any data, just burn CPU cycles
-ioengine=cpuio
-# Stress the CPU at 100%
-cpuload=100
-# Make 4 clones of the job
-numjobs=4
-</code></pre>
-<p>Run the fio jobs without CPU limit:</p>
-<pre><code>$ cgget -r cpu.cfs_quota_us cpulimited
-cpulimited:
-cpu.cfs_quota_us: -1
-
-$ cgexec -g cpu:cpulimited fio burn_cpu.job
-</code></pre>
-<p>Check the CPU usage:</p>
-<pre><code>$ top
-  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
-13775 root      20   0 1079912   4016   2404 R 100.0  0.0   0:11.65 fio
-13776 root      20   0 1079916   4004   2392 R 100.0  0.0   0:11.65 fio
-13777 root      20   0 1079920   4004   2392 R 100.0  0.0   0:11.65 fio
-13778 root      20   0 1079924   4004   2392 R 100.0  0.0   0:11.65 fio
-</code></pre>
-<p>The CPU utilization is 400% for the 4 fio jobs when there is no CPU limit set. Note that, there is totally 9600% CPU bandwidth available.</p>
-<p>Limit the CPU utilization to 200%:</p>
-<pre><code>$ cgset -r cpu.cfs_quota_us=200000 cpulimited
-
-$ cgget -r cpu.cfs_quota_us cpulimited
-cpulimited:
-cpu.cfs_quota_us: 200000
-</code></pre>
-<p>Run the fio jobs again:</p>
-<pre><code>$ cgexec -g cpu:cpulimited fio burn_cpu.job
-</code></pre>
-<p>Check the CPU usage:</p>
-<pre><code>$ top
-  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
-12908 root      20   0 1079916   3948   2336 R  50.3  0.0   0:06.91 fio
-12909 root      20   0 1079920   3948   2336 R  50.0  0.0   0:06.88 fio
-12910 root      20   0 1079924   3948   2336 R  50.0  0.0   0:06.93 fio
-12907 root      20   0 1079912   3948   2336 R  49.3  0.0   0:06.86 fio
-</code></pre>
-<p>The CPU utilization is 200% for the 4 fio jobs when the CPU utilization is limited to 200%.</p>
-<p>Check the processes are running on which CPU cores:</p>
-<pre><code>$ mpstat -P ALL 5 | awk &#39;&#123;if ($3==&quot;CPU&quot; || $NF&lt;99)print;&#125;&#39;
-
-12:40:32 AM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
-12:40:37 AM  all    2.11    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   97.89
-12:40:37 AM    0   20.52    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   79.48
-12:40:37 AM    1   50.60    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   49.40
-12:40:37 AM    2   50.10    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   49.90
-12:40:37 AM   24   29.74    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   70.26
-12:40:37 AM   87   50.20    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   49.80
-
-12:40:37 AM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
-12:40:42 AM  all    2.11    0.00    0.01    0.00    0.00    0.00    0.00    0.00    0.00   97.88
-12:40:42 AM    0   11.49    0.00    0.20    0.00    0.00    0.00    0.00    0.00    0.00   88.31
-12:40:42 AM    1   50.60    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   49.40
-12:40:42 AM    2   50.30    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   49.70
-12:40:42 AM   24   38.97    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   61.03
-12:40:42 AM   87   49.90    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   50.10
-</code></pre>
-<p>The 4 fio jobs are running on 5 CPU cores with total utilization of 200%. So, it indicates this method limits the total CPU utilization out of all the CPU cores. However, the number of CPU cores is not limited.</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://docs.kernel.org/admin-guide/cgroup-v1/cgroups.html">https://docs.kernel.org/admin-guide/cgroup-v1/cgroups.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/resource_management_guide/sec-cpu">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux&#x2F;6&#x2F;html&#x2F;resource_management_guide&#x2F;sec-cpu</a></li>
-<li><a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/resource_management_guide/chap-using_libcgroup_tools">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux&#x2F;7&#x2F;html&#x2F;resource_management_guide&#x2F;chap-using_libcgroup_tools</a></li>
-<li><a target="_blank" rel="noopener" href="https://scoutapm.com/blog/restricting-process-cpu-usage-using-nice-cpulimit-and-cgroups">https://scoutapm.com/blog/restricting-process-cpu-usage-using-nice-cpulimit-and-cgroups</a></li>
 </ul>
 
       

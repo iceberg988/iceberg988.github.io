@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">97</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">256</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">258</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">256</span>
+          <span class="site-state-item-count">258</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">97</span>
+        <span class="site-state-item-count">99</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,214 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/backup-and-restore-mysql-database/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/backup-and-restore-mysql-database/" class="post-title-link" itemprop="url">Backup and restore MySQL database</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-28 07:00:00" itemprop="dateCreated datePublished" datetime="2021-09-28T07:00:00-07:00">2021-09-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Backup-a-database"><a href="#Backup-a-database" class="headerlink" title="Backup a database"></a>Backup a database</h2><p>mysqldump is a command-line utility which can be used to generate backups of MySQL database.</p>
+<pre><code>$ mysqldump -u root --password=&lt;db_password&gt; mydb &gt; mydb_dump_`date +&quot;%Y%m%d_%H%M%S&quot;`.sql
+$  ls -ltr | grep mydb
+-rw-r--r--.   1 root root 4834575 Sep 28 21:11 mydb_dump_20210928_144610.sql
+</code></pre>
+<h2 id="Restore-a-database"><a href="#Restore-a-database" class="headerlink" title="Restore a database"></a>Restore a database</h2><p>Create an empty database before restore as below:</p>
+<pre><code>$ mysql -u root -p
+
+mysql&gt; create database mydb;
+mysql&gt; show databases;
+mysql&gt; exit
+</code></pre>
+<p>Restore the database:</p>
+<pre><code>$ mysql -u root -p mydb &lt; mydb_dump_20210928_144610.sql
+</code></pre>
+<p>Check the database size as below:</p>
+<pre><code>mysql&gt; SELECT table_schema &quot;DB Name&quot;, ROUND(SUM(data_length + index_length) / 1024 / 1024, 1) &quot;DB Size in MB&quot;  FROM information_schema.tables  GROUP BY table_schema;
++--------------------+---------------+
+| DB Name            | DB Size in MB |
++--------------------+---------------+
+| mydb               |           8.1 |
++--------------------+---------------+
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/create-image-gallery-in-jekyll-without-plugin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/create-image-gallery-in-jekyll-without-plugin/" class="post-title-link" itemprop="url">Create Image Gallery in Jekyll without Plugin</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-19 07:00:00" itemprop="dateCreated datePublished" datetime="2021-09-19T07:00:00-07:00">2021-09-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>An image gallery can be easily built by using <strong>LightBox</strong> and <strong>Image Gallery</strong> scripts in Jekyll.</p>
+<ol>
+<li>LightBox</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://jekyllcodex.org/without-plugin/lightbox/">Lightbox</a> is a solution that loads your image links, your Youtube links and your Vimeo links automatically in a minimalistic and responsive pseudo window&#x2F;overlay. No adjustment to your links is required, just follow the instructions to install the css and js script.</p>
+<ol start="2">
+<li>Image Gallery</li>
+</ol>
+<p>The script <a target="_blank" rel="noopener" href="https://jekyllcodex.org/without-plugin/image-gallery/">Image Gallery</a> creates an image gallery. The script reads all images from a specific (user-defined) folder in Jekyll, automagically crops them to 300px squares, using an image resize proxy service and shows them in rows of five. Just follow the very easy instrutions to install it and we are good to go.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2266,428 +2474,6 @@ Interface:    enp6s0f1, via: LLDP, RID: 1, Time: 0 day, 00:01:29
 <li><a target="_blank" rel="noopener" href="https://lwn.net/Articles/810414/">https://lwn.net/Articles/810414/</a></li>
 <li><a target="_blank" rel="noopener" href="https://lwn.net/Articles/776703/">https://lwn.net/Articles/776703/</a></li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/btrfs-a-modern-copy-on-write-cow-filesystem-for-linux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/btrfs-a-modern-copy-on-write-cow-filesystem-for-linux/" class="post-title-link" itemprop="url">btrfs - A modern copy on write(CoW) filesystem for Linux</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-08-03 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-03T07:00:00-07:00">2021-08-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>btrfs is a modern copy on write (CoW) filesystem for Linux aimed at implementing advanced features while also focusing on fault tolerance, repair and easy administration. Its main features and benefits are:</p>
-<ul>
-<li>Snapshots which do not make the full copy of files</li>
-<li>RAID - support for software-based RAID 0, RAID 1, RAID 10</li>
-<li>Self-healing - checksums for data and metadata, automatic detection of silent data corruptions</li>
-</ul>
-<p>Development of Btrfs started in 2007. Since that time, Btrfs is a part of the Linux kernel and is under active development.</p>
-<h2 id="Copy-on-Write-CoW"><a href="#Copy-on-Write-CoW" class="headerlink" title="Copy on Write (CoW)"></a>Copy on Write (CoW)</h2><ul>
-<li><p>The CoW operation is used on all writes to the filesystem (unless turned off, see below).</p>
-</li>
-<li><p>This makes it much easier to implement lazy copies, where the copy is initially just a reference to the original, but as the copy (or the original) is changed, the two versions diverge from each other in the expected way.</p>
-</li>
-<li><p>If you just write a file that didn’t exist before, then the data is written to empty space, and some of the metadata blocks that make up the filesystem are CoWed. In a “normal” filesystem, if you then go back and overwrite a piece of that file, then the piece you’re writing is put directly over the data it is replacing. In a CoW filesystem, the new data is written to a piece of free space on the disk, and only then is the file’s metadata changed to refer to the new data. At that point, the old data that was replaced can be freed up because nothing points to it any more.</p>
-</li>
-<li><p>If you make a snapshot (or a cp –reflink&#x3D;always) of a piece of data, you end up with two files that both reference the same data. If you modify one of those files, the CoW operation I described above still happens: the new data is written elsewhere, and the file’s metadata is updated to point at it, but the original data is kept, because it’s still referenced by the other file.</p>
-</li>
-<li><p>This leads to fragmentation in heavily updated-in-place files like VM images and database stores.</p>
-</li>
-<li><p>Note that this happens even if the data is not shared, because data is stored in segments, and only the newly updated part of a segment is subject to CoW.</p>
-</li>
-<li><p>If you mount the filesystem with nodatacow, or use chattr +C on the file, then it only does the CoW operation for data if there’s more than one copy referenced.</p>
-</li>
-<li><p>Some people insist that Btrfs does “Redirect-on-write” rather than “Copy-on-write” because Btrfs is based on a scheme for redirect-based updates of B-trees by Ohad Rodeh, and because understanding the code is easier with that mindset.</p>
-</li>
-</ul>
-<h2 id="Filesystem-creation"><a href="#Filesystem-creation" class="headerlink" title="Filesystem creation"></a>Filesystem creation</h2><p>A Btrfs filesystem can be created on top of many devices, and more devices can be added after the FS has been created.</p>
-<p>By default, metadata will be mirrored across two devices and data will be striped across all of the devices present. This is equivalent to mkfs.btrfs -m raid1 -d raid0.</p>
-<p>If only one device is present, metadata will be duplicated on that one device. For HDD mkfs.btrfs -m dup -d single, for SSD (or non-rotational device) mkfs.btrfs -m single -d single.</p>
-<p>mkfs.btrfs will accept more than one device on the command line. It has options to control the RAID configuration for data (-d) and metadata (-m). Valid choices are raid0, raid1, raid10, raid5, raid6, single and dup. The option -m single means that no duplication is done, which may be desired when using hardware RAID.</p>
-<pre><code># Create a filesystem across four drives (metadata mirrored, linear data allocation)
-$ mkfs.btrfs -d single /dev/sdb /dev/sdc /dev/sdd /dev/sde
-
-# Stripe the data without mirroring, metadata are mirrored
-$ mkfs.btrfs -d raid0 /dev/sdb /dev/sdc
-
-# Use raid10 for both data and metadata
-$ mkfs.btrfs -m raid10 -d raid10 /dev/sdb /dev/sdc /dev/sdd /dev/sde
-
-# Don&#39;t duplicate metadata on a single drive (default on single SSDs)
-$ mkfs.btrfs -m single /dev/sdb
-</code></pre>
-<p>Once you create a multi-device filesystem, you can use any device in the FS for the mount command. The btrfs file system size is the total size of the devices to create it.</p>
-<pre><code>$ mkfs.btrfs /dev/sdb /dev/sdc /dev/sde
-$ mount /dev/sde /mnt
-$ df -h
-</code></pre>
-<p>The following commands can be used to check filesystem usage.</p>
-<pre><code>$ btrfs filesystem show
-$ btrfs filesystem df -h /mnt
-$ btrfs filesystem usage /mnt
-</code></pre>
-<h2 id="Filesystem-deletion"><a href="#Filesystem-deletion" class="headerlink" title="Filesystem deletion"></a>Filesystem deletion</h2><pre><code>$ umount -f /mnt
-$ wipefs --all -t btrfs /dev/sdb /dev/sdc /dev/sde
-$ btrfs filesystem show
-</code></pre>
-<h2 id="Subvolumes-and-snapshots"><a href="#Subvolumes-and-snapshots" class="headerlink" title="Subvolumes and snapshots"></a>Subvolumes and snapshots</h2><p>Creating subvolumes and snapshots are the commonly used operations for btrfs.</p>
-<p>Create btrfs filesystem with two disks:</p>
-<pre><code>$ mkfs.btrfs -d raid0 /dev/sdd /dev/sdf
-btrfs-progs v4.9.1
-See http://btrfs.wiki.kernel.org for more information.
-
-Label:              (null)
-UUID:               6a154e4e-61d4-474e-9839-50d1fcd50bbb
-Node size:          16384
-Sector size:        4096
-Filesystem size:    1.75TiB
-Block group profiles:
-  Data:             RAID0             2.00GiB
-  Metadata:         RAID1             1.00GiB
-  System:           RAID1             8.00MiB
-SSD detected:       yes
-Incompat features:  extref, skinny-metadata
-Number of devices:  2
-Devices:
-   ID        SIZE  PATH
-    1   894.25GiB  /dev/sdd
-    2   894.25GiB  /dev/sdf
-
-$ mkdir /mnt/pool1
-$ mount -t btrfs /dev/sdd /mnt/pool1
-$ df -h  | egrep &quot;Filesystem|pool1&quot;
-Filesystem                 Size  Used Avail Use% Mounted on
-/dev/sdd                   1.8T  4.3M  1.8T   1% /mnt/pool1
-$ ls -la /mnt/pool1
-total 16
-drwxr-xr-x  1 root root  0 Mar 22 21:19 .
-drwxr-xr-x. 7 root root 69 Mar 22 21:20 ..
-</code></pre>
-<p>Create a subvolume:</p>
-<pre><code>$ btrfs subvolume create /mnt/pool1/subvol1
-Create subvolume &#39;/mnt/pool1/subvol1&#39;
-
-$ mkdir /mnt/testbtrfs
-$ mount -t btrfs -o subvol=subvol1 /dev/sdd /mnt/testbtrfs
-
-$ ls -la /mnt/pool1
-total 16
-drwxr-xr-x  1 root root 14 Mar 22 21:19 .
-drwxr-xr-x. 8 root root 86 Mar 22 21:22 ..
-drwxr-xr-x  1 root root  0 Mar 22 21:21 subvol1
-
-$ ls -la /mnt/pool1/subvol1/
-total 16
-drwxr-xr-x 1 root root  0 Mar 22 21:21 .
-drwxr-xr-x 1 root root 14 Mar 22 21:19 ..
-
-$ ls -la /mnt/testbtrfs
-total 0
-drwxr-xr-x  1 root root  0 Mar 22 21:21 .
-drwxr-xr-x. 8 root root 86 Mar 22 21:22 ..
-</code></pre>
-<p>Create snapshot of the subvolume:</p>
-<pre><code>$ btrfs subvolume snapshot
-btrfs subvolume snapshot: too few arguments
-usage: btrfs subvolume snapshot [-r] [-i &lt;qgroupid&gt;] &lt;source&gt; &lt;dest&gt;|[&lt;dest&gt;/]&lt;name&gt;
-
-    Create a snapshot of the subvolume
-
-    Create a writable/readonly snapshot of the subvolume &lt;source&gt; with
-    the name &lt;name&gt; in the &lt;dest&gt; directory.  If only &lt;dest&gt; is given,
-    the subvolume will be named the basename of &lt;source&gt;.
-
-    -r             create a readonly snapshot
-    -i &lt;qgroupid&gt;  add the newly created snapshot to a qgroup. This
-                   option can be given multiple times.
-
-$ btrfs subvolume snapshot /mnt/pool1/subvol1 /mnt/pool1/subvol1/subvol1-snap
-Create a snapshot of &#39;/mnt/pool1/subvol1&#39; in &#39;/mnt/pool1/subvol1/subvol1-snap&#39;
-
-$ ls -la /mnt/pool1/subvol1/
-total 16
-drwxr-xr-x 1 root root 24 Mar 22 21:26 .
-drwxr-xr-x 1 root root 14 Mar 22 21:19 ..
-drwxr-xr-x 1 root root  0 Mar 22 21:21 subvol1-snap
-
-$ ls -la /mnt/pool1/subvol1/subvol1-snap/
-total 0
-drwxr-xr-x 1 root root  0 Mar 22 21:21 .
-drwxr-xr-x 1 root root 24 Mar 22 21:26 ..
-
-$ ls -la /mnt/testbtrfs/
-total 0
-drwxr-xr-x  1 root root 24 Mar 22 21:26 .
-drwxr-xr-x. 8 root root 86 Mar 22 21:22 ..
-drwxr-xr-x  1 root root  0 Mar 22 21:21 subvol1-snap
-
-$ ls -la /mnt/testbtrfs/subvol1-snap/
-total 0
-drwxr-xr-x 1 root root  0 Mar 22 21:21 .
-drwxr-xr-x 1 root root 24 Mar 22 21:26 ..
-</code></pre>
-<p>List the subvoluems and snapshots:</p>
-<pre><code>$  btrfs subvolume list /mnt/pool1
-ID 258 gen 10 top level 5 path subvol1
-ID 259 gen 9 top level 258 path subvol1/subvol1-snap
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://btrfs.wiki.kernel.org/index.php/Main_Page">https://btrfs.wiki.kernel.org/index.php/Main_Page</a></li>
-<li><a target="_blank" rel="noopener" href="https://btrfs.wiki.kernel.org/index.php/SysadminGuide">https://btrfs.wiki.kernel.org/index.php/SysadminGuide</a></li>
-<li><a target="_blank" rel="noopener" href="http://marc.merlins.org/perso/btrfs/post_2014-05-21_My-Btrfs-Talk-at-Linuxcon-JP-2014.html">http://marc.merlins.org/perso/btrfs/post_2014-05-21_My-Btrfs-Talk-at-Linuxcon-JP-2014.html</a></li>
-<li><a target="_blank" rel="noopener" href="http://marc.merlins.org/linux/talks/Btrfs-LC2014-JP/Btrfs.pdf">http://marc.merlins.org/linux/talks/Btrfs-LC2014-JP/Btrfs.pdf</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/setting-up-lvm-volumes-on-a-mdraid-array/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/setting-up-lvm-volumes-on-a-mdraid-array/" class="post-title-link" itemprop="url">Setting up LVM volumes on a mdraid array</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-08-02 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-02T07:00:00-07:00">2021-08-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Setting-up-mdraid-array"><a href="#Setting-up-mdraid-array" class="headerlink" title="Setting up mdraid array"></a>Setting up mdraid array</h2><pre><code>$ mdadm --create /dev/md0 --name=mdvol --level=raid0 --raid-devices=2 /dev/nvme1n1 /dev/nvme2n1 /dev/nvme3n1 /dev/nvme4n1
-mdadm: Defaulting to version 1.2 metadata
-mdadm: array /dev/md0 started.
-
-$ cat /proc/mdstat
-Personalities : [raid0] [linear]
-md0 : active raid0 nvme4n1[3] nvme3n1[2] nvme2n1[1] nvme1n1[0]
-      15002423296 blocks super 1.2 512k chunks
-
-unused devices: &lt;none&gt;
-
-$ mdadm --detail /dev/md0
-/dev/md0:
-           Version : 1.2
-     Creation Time : Tue Feb  1 19:07:32 2022
-        Raid Level : raid0
-        Array Size : 15002423296 (13.97 TiB 15.36 TB)
-      Raid Devices : 4
-     Total Devices : 4
-       Persistence : Superblock is persistent
-
-       Update Time : Tue Feb  1 19:07:32 2022
-             State : clean
-    Active Devices : 4
-   Working Devices : 4
-    Failed Devices : 0
-     Spare Devices : 0
-
-        Chunk Size : 512K
-
-Consistency Policy : none
-
-              Name : mdvol
-              UUID : aa6fe868:3aa2391d:37a21dc8:d0f4c5f1
-            Events : 0
-
-    Number   Major   Minor   RaidDevice State
-       0     259        8        0      active sync   /dev/nvme1n1
-       1     259        9        1      active sync   /dev/nvme2n1
-       2     259       10        2      active sync   /dev/nvme3n1
-       3     259       11        3      active sync   /dev/nvme4n1
-</code></pre>
-<h2 id="Settup-LVM-volumes-on-mdraid-array"><a href="#Settup-LVM-volumes-on-mdraid-array" class="headerlink" title="Settup LVM volumes on mdraid array"></a>Settup LVM volumes on mdraid array</h2><pre><code>$ pvcreate /dev/md0
-$ pvs | egrep &quot;PV|md&quot;
-  PV             VG     Fmt  Attr PSize  PFree
-  /dev/md0              lvm2 ---  13.97t 13.97t
-$ vgcreate testvg /dev/md0  
-
-$ vgs | egrep &quot;VG|testvg&quot;
-  VG     #PV #LV #SN Attr   VSize  VFree
-  testvg   1   0   0 wz--n- 13.97t 13.97t
-
-$ lvcreate -n testlv11 -L 500G testvg -Wy --yes
-
-$ lvs | egrep &quot;LV|testvg&quot;
-  LV       VG     Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
-  testlv11 testvg -wi-a----- 500.00g  
-
-$ lvs -ao name,size,stripesize,chunksize,metadata_percent | egrep &quot;LV|testlv&quot;
-  LV       LSize   Stripe Chunk Meta%
-  testlv11 500.00g     0     0  
-
-$ mkfs.ext4 /dev/testvg/testlv11
-
-$ mkdir -p /mnt/testmnt11
-
-$ mount /dev/testvg/testlv11 /mnt/testmnt11
-
-$ lsblk
-NAME                MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
-&lt;omitted...&gt;
-nvme1n1             259:8    0  3.5T  0 disk
-└─md0                 9:0    0   14T  0 raid0
-  └─testvg-testlv11 253:3    0  500G  0 lvm   /mnt/testmnt11
-nvme2n1             259:11   0  3.5T  0 disk
-└─md0                 9:0    0   14T  0 raid0
-  └─testvg-testlv11 253:3    0  500G  0 lvm   /mnt/testmnt11
-nvme3n1             259:10   0  3.5T  0 disk
-└─md0                 9:0    0   14T  0 raid0
-  └─testvg-testlv11 253:3    0  500G  0 lvm   /mnt/testmnt11
-nvme4n1             259:9    0  3.5T  0 disk
-└─md0                 9:0    0   14T  0 raid0
-  └─testvg-testlv11 253:3    0  500G  0 lvm   /mnt/testmnt11  
-</code></pre>
 
       
     </div>
