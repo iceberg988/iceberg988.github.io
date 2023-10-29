@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="[Leetcode 198] House RobberYou are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of">
+    <meta name="description" content="What is Dynamic Programming?Dynamic Programming is mainly an optimization over plain recursion. Wherever we see a recursive solution that has repeated calls for same inputs, we can optimize it using D">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dynamic programming">
 <meta property="og:url" content="https://www.flamingbytes.com/blog/dynamic-programming/index.html">
 <meta property="og:site_name" content="FlamingBytes">
-<meta property="og:description" content="[Leetcode 198] House RobberYou are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of">
+<meta property="og:description" content="What is Dynamic Programming?Dynamic Programming is mainly an optimization over plain recursion. Wherever we see a recursive solution that has repeated calls for same inputs, we can optimize it using D">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-10-29T00:33:21.000Z">
-<meta property="article:modified_time" content="2023-10-29T01:02:36.000Z">
+<meta property="article:modified_time" content="2023-10-29T01:08:46.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="Dynamic programming">
@@ -155,7 +155,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-198-House-Robber"><span class="nav-number">1.</span> <span class="nav-text">[Leetcode 198] House Robber</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-746-Min-Cost-Climbing-Stairs"><span class="nav-number">2.</span> <span class="nav-text">[Leetcode 746] Min Cost Climbing Stairs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-790-Domino-and-Tromino-Tiling"><span class="nav-number">3.</span> <span class="nav-text">[Leetcode 790] Domino and Tromino Tiling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-1137-N-th-Tribonacci-Number"><span class="nav-number">4.</span> <span class="nav-text">[Leetcode 1137] N-th Tribonacci Number</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-Dynamic-Programming"><span class="nav-number">1.</span> <span class="nav-text">What is Dynamic Programming?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-198-House-Robber"><span class="nav-number">2.</span> <span class="nav-text">[Leetcode 198] House Robber</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-746-Min-Cost-Climbing-Stairs"><span class="nav-number">3.</span> <span class="nav-text">[Leetcode 746] Min Cost Climbing Stairs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-790-Domino-and-Tromino-Tiling"><span class="nav-number">4.</span> <span class="nav-text">[Leetcode 790] Domino and Tromino Tiling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-1137-N-th-Tribonacci-Number"><span class="nav-number">5.</span> <span class="nav-text">[Leetcode 1137] N-th Tribonacci Number</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -207,13 +207,6 @@
   </div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/bit-manipulation/" rel="bookmark">
-        <time class="popular-posts-time">2023-10-15</time>
-        <br>
-      Bit manipulation
-      </a>
-    </li>
-    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/blog/sliding-window/" rel="bookmark">
         <time class="popular-posts-time">2023-10-02</time>
         <br>
@@ -221,10 +214,10 @@
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/linked-list-in-python/" rel="bookmark">
-        <time class="popular-posts-time">2023-10-11</time>
+      <a class="popular-posts-link" href="/blog/bit-manipulation/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-15</time>
         <br>
-      Linked list in Python
+      Bit manipulation
       </a>
     </li>
     <li class="popular-posts-item">
@@ -232,6 +225,13 @@
         <time class="popular-posts-time">2023-10-09</time>
         <br>
       Backtracking
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/linked-list-in-python/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-11</time>
+        <br>
+      Linked list in Python
       </a>
     </li>
     <li class="popular-posts-item">
@@ -291,7 +291,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2023-10-28 17:33:21 / Modified: 18:02:36" itemprop="dateCreated datePublished" datetime="2023-10-28T17:33:21-07:00">2023-10-28</time>
+      <time title="Created: 2023-10-28 17:33:21 / Modified: 18:08:46" itemprop="dateCreated datePublished" datetime="2023-10-28T17:33:21-07:00">2023-10-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -323,7 +323,8 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h2 id="Leetcode-198-House-Robber"><a href="#Leetcode-198-House-Robber" class="headerlink" title="[Leetcode 198] House Robber"></a>[Leetcode 198] House Robber</h2><p>You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.</p>
+    <div class="post-body" itemprop="articleBody"><h2 id="What-is-Dynamic-Programming"><a href="#What-is-Dynamic-Programming" class="headerlink" title="What is Dynamic Programming?"></a>What is Dynamic Programming?</h2><p>Dynamic Programming is mainly an optimization over plain recursion. Wherever we see a recursive solution that has repeated calls for same inputs, we can optimize it using Dynamic Programming. The idea is to simply store the results of subproblems, so that we do not have to re-compute them when needed later. This simple optimization reduces time complexities from exponential to polynomial.<span id="more"></span></p>
+<h2 id="Leetcode-198-House-Robber"><a href="#Leetcode-198-House-Robber" class="headerlink" title="[Leetcode 198] House Robber"></a>[Leetcode 198] House Robber</h2><p>You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.</p>
 <p>Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.</p>
 <p>Example 1:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [1,2,3,1]</span><br><span class="line">Output: 4</span><br><span class="line">Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).</span><br><span class="line">Total amount you can rob = 1 + 3 = 4.</span><br></pre></td></tr></table></figure>
