@@ -1,3 +1,4 @@
+https://www.flamingbytes.com/blog/stack-and-queue-in-python/
 https://www.flamingbytes.com/blog/dynamic-programming/
 https://www.flamingbytes.com/blog/hashmap-and-set/
 https://www.flamingbytes.com/blog/linked-list-in-python/
@@ -191,7 +192,6 @@ https://www.flamingbytes.com/blog/sliding-window/
 https://www.flamingbytes.com/blog/solve-leetcode-problems-in-visual-studio-code/
 https://www.flamingbytes.com/blog/sorting-algorithm-in-python/
 https://www.flamingbytes.com/blog/sorting-algorithm/
-https://www.flamingbytes.com/blog/stack-and-queue-in-python/
 https://www.flamingbytes.com/blog/stack-implementation-in-python/
 https://www.flamingbytes.com/blog/start-jekyll-with-systemd-service/
 https://www.flamingbytes.com/blog/storage-concepts-you-should-know/

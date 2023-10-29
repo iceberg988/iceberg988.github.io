@@ -17648,7 +17648,7 @@ print(test_list_6)
       </tags>
   </entry>
   <entry>
-    <title>Stack and queue in python</title>
+    <title>Stack and queue in Python</title>
     <url>/blog/stack-and-queue-in-python/</url>
     <content><![CDATA[<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>A <a href="https://www.flamingbytes.com/blog/stack-implementation-in-python/">stack</a> is a linear data structure that stores items in a Last-In&#x2F;First-Out (LIFO) or First-In&#x2F;Last-Out (FILO) manner. In stack, a new element is added at one end and an element is removed from that end only. The insert and delete operations are often called push and pop.</p>
 <p><img src="/images/stack.png"></p>
