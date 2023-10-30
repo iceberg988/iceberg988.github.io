@@ -1,3 +1,5 @@
+https://www.flamingbytes.com/blog/algorithm-questions/
+https://www.flamingbytes.com/blog/implement-cpu-burner-using-python/
 https://www.flamingbytes.com/blog/stack-and-queue-in-python/
 https://www.flamingbytes.com/blog/dynamic-programming/
 https://www.flamingbytes.com/blog/hashmap-and-set/
@@ -126,7 +128,6 @@ https://www.flamingbytes.com/blog/how-to-setup-grafana-and-prometheus/
 https://www.flamingbytes.com/blog/how-to-setup-nfs-network-file-system-on-rhel-centos/
 https://www.flamingbytes.com/blog/how-to-uninstall-ceph-storage-cluster/
 https://www.flamingbytes.com/blog/how-to-use-sorted-and-sort-in-python/
-https://www.flamingbytes.com/blog/implement-cpu-burner-using-python/
 https://www.flamingbytes.com/blog/install-and-uninstall-debuginfo-package-on-centos/
 https://www.flamingbytes.com/blog/implementation-dynamic-array-in-python/
 https://www.flamingbytes.com/blog/install-gcc-from-source/

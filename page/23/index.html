@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">258</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">259</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">258</span>
+          <span class="site-state-item-count">259</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,138 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/semaphore/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/semaphore/" class="post-title-link" itemprop="url">Semaphore</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-03-03 08:00:00" itemprop="dateCreated datePublished" datetime="2021-03-03T08:00:00-08:00">2021-03-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="What-is-semaphore"><a href="#What-is-semaphore" class="headerlink" title="What is semaphore"></a>What is semaphore</h2><p>A semaphore is a very relaxed type of lockable object. A given semaphore has a predefined maximum count, and a current count. You take ownership of a semaphore with a wait operation, also referred to as decrementing the semaphore, or even just abstractly called P. You release ownership with a signal operation, also referred to as incrementing the semaphore, a post operation, or abstractly called V. The single-letter operation names are from Dijkstra’s original paper on semaphores.</p>
+<p>Every time you wait on a semaphore, you decrease the current count. If the count was greater than zero then the decrement just happens, and the wait call returns. If the count was already zero then it cannot be decremented, so the wait call will block until another thread increases the count by signaling the semaphore.</p>
+<h2 id="Semaphore-tuning"><a href="#Semaphore-tuning" class="headerlink" title="Semaphore tuning"></a>Semaphore tuning</h2><p>To display the semaphore limits:</p>
+<pre><code>$ cat /proc/sys/kernel/sem
+300	307200	32	1024
+
+$ sysctl -a | grep sem
+kernel.sem = 300	307200	32	1024
+
+$ ipcs -l | grep -i &quot;sem&quot;
+------ Semaphore Limits --------
+max semaphores per array = 300
+max semaphores system wide = 307200
+max ops per semop call = 32
+semaphore max value = 32767
+</code></pre>
+<p>The values of the semaphore parameters are displayed in the following order.</p>
+<ul>
+<li>SEMMSL - The maximum number of semaphores in a sempahore set.</li>
+<li>SEMMNS - A system-wide limit on the number of semaphores in all semaphore sets. The maximum number of sempahores in the system.</li>
+<li>SEMOPM - The maximum number of operations in a single semop call</li>
+<li>SEMMNI - A system-wide limit on the maximum number of semaphore identifiers (sempahore sets)</li>
+</ul>
+<p>To display the current semaphore status:</p>
+<pre><code>$ ipcs -u | egrep -i &quot;used arrays|sem&quot;
+------ Semaphore Status --------
+used arrays = 3
+allocated semaphores = 3
+</code></pre>
+<p>To display the active semaphore sets info:</p>
+<pre><code>$ ipcs -s
+------ Semaphore Arrays --------
+key        semid      owner      perms      nsems
+0x00000000 0          root       600        1
+0x00000000 32769      root       600        1
+0x00005653 229380     root       666        1
+</code></pre>
+<p>To adjust the semaphore values on the fly:</p>
+<pre><code>$ echo 300   307200   32   1024 &gt; /proc/sys/kernel/sem
+</code></pre>
+<p>To modify system semaphore values permanently:</p>
+<pre><code>$ echo &quot;kernel.sem = 300  307200  32  1024&quot; &gt;&gt; /etc/sysctl.conf
+$ sysctl -p 
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1998,113 +2130,6 @@ lrwx------ 1 root root 64 Feb 18 15:49 2 -&gt; socket:[39812186]
 <p>The main character of this story was Karana. She was a young girl who was left alone on the island she called home after her tribe left without her. After her father died, she took the responsibility to take care of Ramu. But soon, Ramu was killed by the wild dogs. Now that she was isolated on the island, Karana was forced to learn how to survive in the wild. Some values Karana showed was caring for nature and friendship. After she saw how brutal the Aleuts were to the sea otters, Karana began to question her practice of hunting. She learnt that animals and humans were truly equal, and that she should never hunt unless her life depended on it. By caring for the wild life, Karana also created a friendship with the animals. She made two friends that she became close with: a dog that killed her brother, and Tutok that belonged to the group of people that killed her father. She learnt that holding grudges was no good and she should learn to forgive. One example of this was her friendship with Tutok. Since Tutok was an Aleut, Karana was suspicious and scared that she would reveal her hiding place. But she was wrong. Tutok befriended Karana and gave her a gift. Karana chose mercy over justice, like when she saved Rontu’s life, even though he was the leader of the wild dogs. At first, Karana thought of herself as only a girl, and she was only fit to maintain the house. But when she was alone, she realized that the division of gender was really unnecessary if she was capable of doing the tasks that men did. From the choices she made, I learnt that I could not always rely on someone for help, and that friendship was very important.</p>
 <p>The major theme of the book was self-reliance. Karana’s village encouraged self-reliance. They have learnt to survive by using the resources on the island. When Karana was alone, she had to apply this value more than ever. She made her own weapons, shelter, clothing, and hunted her own food. She thought of ways to hunt animals like devilfish and sea elephants. She had no one to help her. She had to do what the men did, and survived using skills she learnt. She was resourceful and used her knowledge to survive without outside assistance.</p>
 <p>My favorite part of this book was when Karana became friends with Tutok because she learnt to forgive and decided that all Aleuts were not bad. Only the ones that chose to lie were unworthy of being forgiven. My least favorite part was when Rontu died because Karana lost her only companion on the island. Yes, I would recommend this book to a friend because people should learn not to rely on others and that making friends was very important.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/memory-mapped-i-o/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/memory-mapped-i-o/" class="post-title-link" itemprop="url">Memory-Mapped I/O</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-02-04 08:00:00" itemprop="dateCreated datePublished" datetime="2021-02-04T08:00:00-08:00">2021-02-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Memory-mapped I&#x2F;O lets us map a file on disk into a buffer in memory so that, when we fetch bytes from the buffer, the corresponding bytes of the file are read. Similarly, when we store data in the buffer, the corresponding bytes are automatically written to the file. This lets us perform I&#x2F;O without using read or write.</p>
-<pre><code>#include &lt;sys/mman.h&gt;
-
-void *mmap(void *addr, size_t len, int prot, int flag, int fd, off_t off );
-
-Returns: starting address of mapped region if OK, MAP_FAILED on error
-</code></pre>
-<p>The addr argument lets us specify the address where we want the mapped region to start. We normally set this value to 0 to allow the system to choose the starting address. The return value of this function is the starting address of the mapped area.</p>
-<p>The fd argument is the file descriptor specifying the file that is to be mapped. We have to open this file before we can map it into the address space. The len argument is the number of bytes to map, and off is the starting offset in the file of the bytes to map.</p>
-<p>The prot argument specifies the protection of the mapped region.</p>
-<pre><code>prot         Description
-PROT_READ    Region can be read.
-PROT_WRITE   Region can be written.
-PROT_EXEC    Region can be executed.
-PROT_NONE    Region cannot be accessed.
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li>Advanced Programming in the UNIX Environment</li>
-</ul>
 
       
     </div>
