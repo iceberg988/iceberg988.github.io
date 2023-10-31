@@ -23805,6 +23805,8 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
     <content><![CDATA[<h2 id="Leetcode-121-Best-Time-to-Buy-and-Sell-Stock"><a href="#Leetcode-121-Best-Time-to-Buy-and-Sell-Stock" class="headerlink" title="[Leetcode 121] Best Time to Buy and Sell Stock"></a>[Leetcode 121] Best Time to Buy and Sell Stock</h2><p>You are given an array prices where prices[i] is the price of a given stock on the ith day.</p>
 <p>You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.</p>
 <p>Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.</p>
+<span id="more"></span>
+
 <p>Example 1:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: prices = [7,1,5,3,6,4]</span><br><span class="line">Output: 5</span><br><span class="line">Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.</span><br><span class="line">Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.</span><br></pre></td></tr></table></figure>
 
@@ -23952,6 +23954,8 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
     <content><![CDATA[<h2 id="Greedy-Algorithm"><a href="#Greedy-Algorithm" class="headerlink" title="Greedy Algorithm"></a>Greedy Algorithm</h2><h3 id="Leetcode-122-Best-Time-to-Buy-and-Sell-Stock-II"><a href="#Leetcode-122-Best-Time-to-Buy-and-Sell-Stock-II" class="headerlink" title="[Leetcode 122] Best Time to Buy and Sell Stock II"></a>[Leetcode 122] Best Time to Buy and Sell Stock II</h3><p>You are given an integer array prices where prices[i] is the price of a given stock on the ith day.</p>
 <p>On each day, you may decide to buy and&#x2F;or sell the stock. You can only hold at most one share of the stock at any time. However, you can buy it then immediately sell it on the same day.</p>
 <p>Find and return the maximum profit you can achieve.</p>
+<span id="more"></span>
+
 <p>Example 1:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: prices = [7,1,5,3,6,4]</span><br><span class="line">Output: 7</span><br><span class="line">Explanation: Buy on day 2 (price = 1) and sell on day 3 (price = 5), profit = 5-1 = 4.</span><br><span class="line">Then buy on day 4 (price = 3) and sell on day 5 (price = 6), profit = 6-3 = 3.</span><br><span class="line">Total profit is 4 + 3 = 7.</span><br></pre></td></tr></table></figure>
 

@@ -705,7 +705,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-30 19:54:50" itemprop="dateModified" datetime="2023-10-30T19:54:50-07:00">2023-10-30</time>
+      <time title="Modified: 2023-10-30 20:35:22" itemprop="dateModified" datetime="2023-10-30T20:35:22-07:00">2023-10-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -734,40 +734,14 @@
           <h2 id="Greedy-Algorithm"><a href="#Greedy-Algorithm" class="headerlink" title="Greedy Algorithm"></a>Greedy Algorithm</h2><h3 id="Leetcode-122-Best-Time-to-Buy-and-Sell-Stock-II"><a href="#Leetcode-122-Best-Time-to-Buy-and-Sell-Stock-II" class="headerlink" title="[Leetcode 122] Best Time to Buy and Sell Stock II"></a>[Leetcode 122] Best Time to Buy and Sell Stock II</h3><p>You are given an integer array prices where prices[i] is the price of a given stock on the ith day.</p>
 <p>On each day, you may decide to buy and&#x2F;or sell the stock. You can only hold at most one share of the stock at any time. However, you can buy it then immediately sell it on the same day.</p>
 <p>Find and return the maximum profit you can achieve.</p>
-<p>Example 1:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input: prices = [7,1,5,3,6,4]</span><br><span class="line">Output: 7</span><br><span class="line">Explanation: Buy on day 2 (price = 1) and sell on day 3 (price = 5), profit = 5-1 = 4.</span><br><span class="line">Then buy on day 4 (price = 3) and sell on day 5 (price = 6), profit = 6-3 = 3.</span><br><span class="line">Total profit is 4 + 3 = 7.</span><br></pre></td></tr></table></figure>
-
-<p>Example 2:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Input: prices = [1,2,3,4,5]</span><br><span class="line">Output: 4</span><br><span class="line">Explanation: Buy on day 1 (price = 1) and sell on day 5 (price = 5), profit = 5-1 = 4.</span><br><span class="line">Total profit is 4.</span><br></pre></td></tr></table></figure>
-
-<p>Example 3:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: prices = [7,6,4,3,1]</span><br><span class="line">Output: 0</span><br><span class="line">Explanation: There is no way to make a positive profit, so we never buy the stock to achieve the maximum profit of 0.</span><br></pre></td></tr></table></figure>
-
-<p>Constraints:</p>
-<ul>
-<li>1 &lt;&#x3D; prices.length &lt;&#x3D; 3 * 104</li>
-<li>0 &lt;&#x3D; prices[i] &lt;&#x3D; 104</li>
-</ul>
-<p>Solution:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">maxProfit</span>(<span class="params">self, prices: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        n = <span class="built_in">len</span>(prices)</span><br><span class="line">        <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        profit = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">            <span class="keyword">if</span> prices[i] &gt; prices[i - <span class="number">1</span>]:</span><br><span class="line">                profit += prices[i] - prices[i - <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> profit</span><br></pre></td></tr></table></figure>
-
-<h2 id="Moore-Voting-Algorithm"><a href="#Moore-Voting-Algorithm" class="headerlink" title="Moore Voting Algorithm"></a>Moore Voting Algorithm</h2><h3 id="Leetcode-169-Majority-Element"><a href="#Leetcode-169-Majority-Element" class="headerlink" title="[Leetcode 169] Majority Element"></a>[Leetcode 169] Majority Element</h3><p>Given an array nums of size n, return the majority element.</p>
-<p>The majority element is the element that appears more than ⌊n &#x2F; 2⌋ times. You may assume that the majority element always exists in the array.</p>
-<p>Example 1:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [3,2,3]</span><br><span class="line">Output: 3</span><br></pre></td></tr></table></figure>
-
-<p>Example 2:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [2,2,1,1,1,2,2]</span><br><span class="line">Output: 2</span><br></pre></td></tr></table></figure>
-
-<p>Constraints:</p>
-<ul>
-<li>n &#x3D;&#x3D; nums.length</li>
-<li>1 &lt;&#x3D; n &lt;&#x3D; 5 * 104</li>
-<li>-109 &lt;&#x3D; nums[i] &lt;&#x3D; 109</li>
-</ul>
-<p>Follow-up: Could you solve the problem in linear time and in O(1) space?</p>
-<p>Solution:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="comment"># Moore Voting Algorithm</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">majorityElement</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        candidate = <span class="number">0</span></span><br><span class="line">        count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">            <span class="keyword">if</span> count == <span class="number">0</span>:</span><br><span class="line">                candidate = num</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> num == candidate:</span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                count -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> candidate</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">majorityElement_sort</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        nums.sort()</span><br><span class="line">        <span class="keyword">return</span> nums[<span class="built_in">len</span>(nums)//<span class="number">2</span>] </span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">majorityElement_hashmap</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        m = defaultdict(<span class="built_in">int</span>)</span><br><span class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">            m[num] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> m:</span><br><span class="line">            <span class="keyword">if</span> m[k] &gt; <span class="built_in">len</span>(nums) // <span class="number">2</span>:</span><br><span class="line">                <span class="keyword">return</span> k</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/algorithm-questions/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -829,7 +803,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-30 19:57:22" itemprop="dateModified" datetime="2023-10-30T19:57:22-07:00">2023-10-30</time>
+      <time title="Modified: 2023-10-30 20:35:12" itemprop="dateModified" datetime="2023-10-30T20:35:12-07:00">2023-10-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -858,39 +832,14 @@
           <h2 id="Leetcode-121-Best-Time-to-Buy-and-Sell-Stock"><a href="#Leetcode-121-Best-Time-to-Buy-and-Sell-Stock" class="headerlink" title="[Leetcode 121] Best Time to Buy and Sell Stock"></a>[Leetcode 121] Best Time to Buy and Sell Stock</h2><p>You are given an array prices where prices[i] is the price of a given stock on the ith day.</p>
 <p>You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.</p>
 <p>Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.</p>
-<p>Example 1:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Input: prices = [7,1,5,3,6,4]</span><br><span class="line">Output: 5</span><br><span class="line">Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.</span><br><span class="line">Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.</span><br></pre></td></tr></table></figure>
-
-<p>Example 2:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: prices = [7,6,4,3,1]</span><br><span class="line">Output: 0</span><br><span class="line">Explanation: In this case, no transactions are done and the max profit = 0.</span><br></pre></td></tr></table></figure>
-
-<p>Constraints:</p>
-<ul>
-<li>1 &lt;&#x3D; prices.length &lt;&#x3D; 105</li>
-<li>0 &lt;&#x3D; prices[i] &lt;&#x3D; 104</li>
-</ul>
-<p>Solution:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">maxProfit</span>(<span class="params">self, prices: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        profit = <span class="number">0</span></span><br><span class="line">        minPrice = prices[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(prices)):</span><br><span class="line">            <span class="keyword">if</span> prices[i] &lt; minPrice:</span><br><span class="line">                minPrice = prices[i]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                profit = <span class="built_in">max</span>(profit, prices[i] - minPrice)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> profit</span><br></pre></td></tr></table></figure>
-
-<h2 id="Leetcode-122-Best-Time-to-Buy-and-Sell-Stock-II"><a href="#Leetcode-122-Best-Time-to-Buy-and-Sell-Stock-II" class="headerlink" title="[Leetcode 122] Best Time to Buy and Sell Stock II"></a>[Leetcode 122] Best Time to Buy and Sell Stock II</h2><p>You are given an integer array prices where prices[i] is the price of a given stock on the ith day.</p>
-<p>On each day, you may decide to buy and&#x2F;or sell the stock. You can only hold at most one share of the stock at any time. However, you can buy it then immediately sell it on the same day.</p>
-<p>Find and return the maximum profit you can achieve.</p>
-<p>Example 1:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input: prices = [7,1,5,3,6,4]</span><br><span class="line">Output: 7</span><br><span class="line">Explanation: Buy on day 2 (price = 1) and sell on day 3 (price = 5), profit = 5-1 = 4.</span><br><span class="line">Then buy on day 4 (price = 3) and sell on day 5 (price = 6), profit = 6-3 = 3.</span><br><span class="line">Total profit is 4 + 3 = 7.</span><br></pre></td></tr></table></figure>
-
-<p>Example 2:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Input: prices = [1,2,3,4,5]</span><br><span class="line">Output: 4</span><br><span class="line">Explanation: Buy on day 1 (price = 1) and sell on day 5 (price = 5), profit = 5-1 = 4.</span><br><span class="line">Total profit is 4.</span><br></pre></td></tr></table></figure>
-
-<p>Example 3:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: prices = [7,6,4,3,1]</span><br><span class="line">Output: 0</span><br><span class="line">Explanation: There is no way to make a positive profit, so we never buy the stock to achieve the maximum profit of 0.</span><br></pre></td></tr></table></figure>
-
-<p>Constraints:</p>
-<ul>
-<li>1 &lt;&#x3D; prices.length &lt;&#x3D; 3 * 104</li>
-<li>0 &lt;&#x3D; prices[i] &lt;&#x3D; 104</li>
-</ul>
-<p>Solution:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">maxProfit</span>(<span class="params">self, prices: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        n = <span class="built_in">len</span>(prices)</span><br><span class="line">        <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        profit = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">            <span class="keyword">if</span> prices[i] &gt; prices[i - <span class="number">1</span>]:</span><br><span class="line">                profit += prices[i] - prices[i - <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> profit</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/best-time-to-buy-and-sell-stock/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
