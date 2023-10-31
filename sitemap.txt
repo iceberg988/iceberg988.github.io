@@ -1,3 +1,4 @@
+https://www.flamingbytes.com/blog/best-time-to-buy-and-sell-stock/
 https://www.flamingbytes.com/blog/algorithm-questions/
 https://www.flamingbytes.com/blog/implement-cpu-burner-using-python/
 https://www.flamingbytes.com/blog/stack-and-queue-in-python/
@@ -5,7 +6,6 @@ https://www.flamingbytes.com/blog/dynamic-programming/
 https://www.flamingbytes.com/blog/hashmap-and-set/
 https://www.flamingbytes.com/blog/linked-list-in-python/
 https://www.flamingbytes.com/blog/bit-manipulation/
-https://www.flamingbytes.com/blog/best-time-to-buy-and-sell-stock/
 https://www.flamingbytes.com/blog/monotonic-stack/
 https://www.flamingbytes.com/blog/greedy-algorithm/
 https://www.flamingbytes.com/blog/trie/

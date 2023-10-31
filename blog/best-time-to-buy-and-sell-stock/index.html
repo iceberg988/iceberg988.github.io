@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Stay hungry, stay foolish">
+    <meta name="description" content="[Leetcode 121] Best Time to Buy and Sell StockYou are given an array prices where prices[i] is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to b">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Best time to buy and sell stock">
 <meta property="og:url" content="https://www.flamingbytes.com/blog/best-time-to-buy-and-sell-stock/index.html">
 <meta property="og:site_name" content="FlamingBytes">
-<meta property="og:description" content="Stay hungry, stay foolish">
+<meta property="og:description" content="[Leetcode 121] Best Time to Buy and Sell StockYou are given an array prices where prices[i] is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to b">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-10-16T23:35:39.000Z">
-<meta property="article:modified_time" content="2023-10-29T00:28:30.000Z">
+<meta property="article:modified_time" content="2023-10-31T02:57:22.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="Leetcode">
@@ -141,7 +141,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -154,6 +154,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-121-Best-Time-to-Buy-and-Sell-Stock"><span class="nav-number">1.</span> <span class="nav-text">[Leetcode 121] Best Time to Buy and Sell Stock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-122-Best-Time-to-Buy-and-Sell-Stock-II"><span class="nav-number">2.</span> <span class="nav-text">[Leetcode 122] Best Time to Buy and Sell Stock II</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -198,6 +199,51 @@
     </div>
 
     
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/monotonic-stack/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-12</time>
+        <br>
+      Monotonic stack
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/algorithm-questions/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-17</time>
+        <br>
+      Leetcode algorithm questions
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/tracking-stock-financial-metrics-in-tradingview/" rel="bookmark">
+        <time class="popular-posts-time">2023-01-17</time>
+        <br>
+      Tracking stock financial metrics in tradingview
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/sliding-window/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-02</time>
+        <br>
+      Sliding window
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/bit-manipulation/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-15</time>
+        <br>
+      Bit manipulation
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
   </aside>
 
 
@@ -250,7 +296,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-28 17:28:30" itemprop="dateModified" datetime="2023-10-28T17:28:30-07:00">2023-10-28</time>
+      <time title="Modified: 2023-10-30 19:57:22" itemprop="dateModified" datetime="2023-10-30T19:57:22-07:00">2023-10-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -282,7 +328,42 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
+    <div class="post-body" itemprop="articleBody"><h2 id="Leetcode-121-Best-Time-to-Buy-and-Sell-Stock"><a href="#Leetcode-121-Best-Time-to-Buy-and-Sell-Stock" class="headerlink" title="[Leetcode 121] Best Time to Buy and Sell Stock"></a>[Leetcode 121] Best Time to Buy and Sell Stock</h2><p>You are given an array prices where prices[i] is the price of a given stock on the ith day.</p>
+<p>You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.</p>
+<p>Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Input: prices = [7,1,5,3,6,4]</span><br><span class="line">Output: 5</span><br><span class="line">Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.</span><br><span class="line">Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: prices = [7,6,4,3,1]</span><br><span class="line">Output: 0</span><br><span class="line">Explanation: In this case, no transactions are done and the max profit = 0.</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>1 &lt;&#x3D; prices.length &lt;&#x3D; 105</li>
+<li>0 &lt;&#x3D; prices[i] &lt;&#x3D; 104</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">maxProfit</span>(<span class="params">self, prices: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        profit = <span class="number">0</span></span><br><span class="line">        minPrice = prices[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(prices)):</span><br><span class="line">            <span class="keyword">if</span> prices[i] &lt; minPrice:</span><br><span class="line">                minPrice = prices[i]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                profit = <span class="built_in">max</span>(profit, prices[i] - minPrice)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> profit</span><br></pre></td></tr></table></figure>
+
+<h2 id="Leetcode-122-Best-Time-to-Buy-and-Sell-Stock-II"><a href="#Leetcode-122-Best-Time-to-Buy-and-Sell-Stock-II" class="headerlink" title="[Leetcode 122] Best Time to Buy and Sell Stock II"></a>[Leetcode 122] Best Time to Buy and Sell Stock II</h2><p>You are given an integer array prices where prices[i] is the price of a given stock on the ith day.</p>
+<p>On each day, you may decide to buy and&#x2F;or sell the stock. You can only hold at most one share of the stock at any time. However, you can buy it then immediately sell it on the same day.</p>
+<p>Find and return the maximum profit you can achieve.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input: prices = [7,1,5,3,6,4]</span><br><span class="line">Output: 7</span><br><span class="line">Explanation: Buy on day 2 (price = 1) and sell on day 3 (price = 5), profit = 5-1 = 4.</span><br><span class="line">Then buy on day 4 (price = 3) and sell on day 5 (price = 6), profit = 6-3 = 3.</span><br><span class="line">Total profit is 4 + 3 = 7.</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Input: prices = [1,2,3,4,5]</span><br><span class="line">Output: 4</span><br><span class="line">Explanation: Buy on day 1 (price = 1) and sell on day 5 (price = 5), profit = 5-1 = 4.</span><br><span class="line">Total profit is 4.</span><br></pre></td></tr></table></figure>
+
+<p>Example 3:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: prices = [7,6,4,3,1]</span><br><span class="line">Output: 0</span><br><span class="line">Explanation: There is no way to make a positive profit, so we never buy the stock to achieve the maximum profit of 0.</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>1 &lt;&#x3D; prices.length &lt;&#x3D; 3 * 104</li>
+<li>0 &lt;&#x3D; prices[i] &lt;&#x3D; 104</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">maxProfit</span>(<span class="params">self, prices: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        n = <span class="built_in">len</span>(prices)</span><br><span class="line">        <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        profit = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">            <span class="keyword">if</span> prices[i] &gt; prices[i - <span class="number">1</span>]:</span><br><span class="line">                profit += prices[i] - prices[i - <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> profit</span><br></pre></td></tr></table></figure>
     </div>
 
     
