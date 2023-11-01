@@ -24005,6 +24005,8 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
     <url>/blog/getting-started-with-vcluster/</url>
     <content><![CDATA[<h2 id="What-are-Virtual-Kubernetes-Clusters-VCluster"><a href="#What-are-Virtual-Kubernetes-Clusters-VCluster" class="headerlink" title="What are Virtual Kubernetes Clusters(VCluster)?"></a>What are Virtual Kubernetes Clusters(VCluster)?</h2><p>Virtual clusters are fully working Kubernetes clusters that run on top of other Kubernetes clusters. Compared to fully separate “real” clusters, virtual clusters reuse worker nodes and networking of the host cluster. They have their own control plane and schedule all workloads into a single namespace of the host cluster. Like virtual machines, virtual clusters partition a single physical cluster into multiple separate ones.</p>
 <p><img src="/images/vcluster-architecture.svg"></p>
+<span id="more"></span>
+
 <p>For more about the vcluster, please refer to its official website. The goal for this post is to learn how to deploy vcluster in an existing kubernetes cluster.</p>
 <h2 id="Install-vCluster-CLI"><a href="#Install-vCluster-CLI" class="headerlink" title="Install vCluster CLI"></a>Install vCluster CLI</h2><p>Requirements:</p>
 <ul>
