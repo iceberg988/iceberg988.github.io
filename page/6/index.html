@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">259</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">260</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">259</span>
+          <span class="site-state-item-count">260</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,203 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/shadow-copy-and-deep-copy-in-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/shadow-copy-and-deep-copy-in-python/" class="post-title-link" itemprop="url">Shadow copy and deep copy in Python</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-21 04:49:20" itemprop="dateCreated datePublished" datetime="2023-04-21T04:49:20-07:00">2023-04-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>In this post, we’ll try to understand the difference between shadow copy and deep copy in Python. We study the copy behavior with list data structure in Python.</p>
+<h2 id="Problem-statement"><a href="#Problem-statement" class="headerlink" title="Problem statement"></a>Problem statement</h2><p>Assuming we have the following list:</p>
+<pre><code>test_list = [1, 2, [3, 6], 4, 5]
+</code></pre>
+<p>We want to create a duplicate list so that we can modify the contents independently without affecting the original list.</p>
+<pre><code>test_list_clone = [1, 2, [3, 6], 4, 5]
+test_list_clone[0] = 11
+test_list_clone[2].append(11)
+print(test_list)
+print(test_list_clone)
+</code></pre>
+<p>The expected output should be:</p>
+<p>[1, 2, [3, 6], 4, 5]</p>
+<p>[11, 2, [3, 6, 11], 4, 5]</p>
+<p>How should we copy the original list?</p>
+<h2 id="Duplicate-reference"><a href="#Duplicate-reference" class="headerlink" title="Duplicate reference"></a>Duplicate reference</h2><p>It’s not uncommon that you may want to copy the list as below.</p>
+<pre><code>test_list_clone = test_list
+test_list_clone[0] = 11
+test_list_clone[2].append(11)
+print(test_list)
+print(test_list_clone)
+</code></pre>
+<p>Output:</p>
+<p>[11, 2, [3, 6, 11], 4, 5]</p>
+<p>[11, 2, [3, 6, 11], 4, 5]</p>
+<p>This doesn’t work since it simply stores the list reference to another variable. When the duplciate list is modified, the original list is also modified.</p>
+<h2 id="Copy-list-by-brute-force"><a href="#Copy-list-by-brute-force" class="headerlink" title="Copy list by brute force"></a>Copy list by brute force</h2><p>In this solution, we append each item in the original list to the duplicate list by using a list comprehensions(a short form of for loop).</p>
+<pre><code>test_list_clone = [item for item in test_list]
+test_list_clone[0] = 22
+test_list_clone[2][-1] = 22
+print(test_list)
+print(test_list_clone)
+</code></pre>
+<p>Output:</p>
+<p>[11, 2, [3, 6, 22], 4, 5]</p>
+<p>[22, 2, [3, 6, 22], 4, 5]</p>
+<p>This works partially but not for the nested list. This is because it only duplicates the outer list. But the inner list is still duplicated as a reference of original object. That’s why the number 22 is appended to both the duplciate list and original list.</p>
+<h2 id="Copy-list-with-slice"><a href="#Copy-list-with-slice" class="headerlink" title="Copy list with slice"></a>Copy list with slice</h2><p>We can get a subset of the list with slice in Python. The colon means to get the whole copy as original. Again, this only duplicates the outer list.</p>
+<pre><code>test_list_clone = test_list[:]
+test_list_clone[0] = 33
+test_list_clone[2][-1] = 33
+print(test_list)
+print(test_list_clone)
+</code></pre>
+<p>Output:</p>
+<p>[11, 2, [3, 6, 33], 4, 5]</p>
+<p>[33, 2, [3, 6, 33], 4, 5]</p>
+<h2 id="Copy-list-with-list-constructor"><a href="#Copy-list-with-list-constructor" class="headerlink" title="Copy list with list constructor"></a>Copy list with list constructor</h2><p>A more readable form might be using list constructor to duplciate the list. But it has the same issue without deep copy of inner list.</p>
+<pre><code>test_list_clone = list(test_list)
+test_list_clone[0] = 44
+test_list_clone[2][-1] = 44
+print(test_list)
+print(test_list_clone)
+</code></pre>
+<p>Output:</p>
+<p>[11, 2, [3, 6, 44], 4, 5]</p>
+<p>[44, 2, [3, 6, 44], 4, 5]</p>
+<h2 id="Copy-list-with-starred-expression"><a href="#Copy-list-with-starred-expression" class="headerlink" title="Copy list with starred expression"></a>Copy list with starred expression</h2><p>Another way is to use starred expression to duplciate the list.</p>
+<pre><code>test_list_clone = [*test_list]
+test_list_clone[0] = 55
+test_list_clone[2][-1] = 55
+print(test_list)
+print(test_list_clone)
+</code></pre>
+<p>Output:</p>
+<p>[11, 2, [3, 6, 55], 4, 5]</p>
+<p>[55, 2, [3, 6, 55], 4, 5]</p>
+<h2 id="Copy-list-with-copy-function-python-3-3"><a href="#Copy-list-with-copy-function-python-3-3" class="headerlink" title="Copy list with copy function, python 3.3+"></a>Copy list with copy function, python 3.3+</h2><p>In Python 3.3+, a copy function of the list is available. But it doesn’t do the deep copy either.</p>
+<pre><code>test_list_clone = test_list.copy()
+test_list_clone[0] = 66
+test_list_clone[2][-1] = 66
+print(test_list)
+print(test_list_clone)
+</code></pre>
+<p>Output:</p>
+<p>[11, 2, [3, 6, 66], 4, 5]</p>
+<p>[66, 2, [3, 6, 66], 4, 5]</p>
+<h2 id="Copy-list-with-multiplication"><a href="#Copy-list-with-multiplication" class="headerlink" title="Copy list with multiplication"></a>Copy list with multiplication</h2><p>A tricky way to duplciate the list is to use multiplication style.</p>
+<pre><code>test_list_clone = test_list * 1
+test_list_clone[0] = 77
+test_list_clone[2][-1] = 77
+print(test_list)
+print(test_list_clone)
+</code></pre>
+<p>Output:</p>
+<p>[11, 2, [3, 6, 77], 4, 5]</p>
+<p>[77, 2, [3, 6, 77], 4, 5]</p>
+<h2 id="Copy-list-with-copy-package"><a href="#Copy-list-with-copy-package" class="headerlink" title="Copy list with copy package"></a>Copy list with copy package</h2><p>Fortunately, a copy package is built in Python to do the shadow copy and deep copy for us.</p>
+<h3 id="Shadow-copy"><a href="#Shadow-copy" class="headerlink" title="Shadow copy"></a>Shadow copy</h3><pre><code>import copy
+
+test_list_clone = copy.copy(test_list)
+test_list_clone[0] = 88
+test_list_clone[2][-1] = 88
+print(test_list)
+print(test_list_clone)
+</code></pre>
+<p>Output:</p>
+<p>[11, 2, [3, 6, 88], 4, 5]</p>
+<p>[88, 2, [3, 6, 88], 4, 5]</p>
+<h3 id="Deep-copy"><a href="#Deep-copy" class="headerlink" title="Deep copy"></a>Deep copy</h3><pre><code>test_list_clone = copy.deepcopy(test_list)
+test_list_clone[0] = 99
+test_list_clone[2][-1] = 99
+print(test_list)
+print(test_list_clone)
+</code></pre>
+<p>Output:</p>
+<p>[11, 2, [3, 6, 88], 4, 5]</p>
+<p>[99, 2, [3, 6, 99], 4, 5]</p>
+<p>Finally, we got a way to do the deep copy for the nested list. Now, the nested list is modified without affecting the original list content.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2104,205 +2301,6 @@ print_heap(test_list_1)
 remove(test_list_1)
 print(test_list_1)
 print_heap(test_list_1)
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/queue-implementation-in-python/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/queue-implementation-in-python/" class="post-title-link" itemprop="url">Queue implementation in Python</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-04-05 07:35:00" itemprop="dateCreated datePublished" datetime="2023-04-05T07:35:00-07:00">2023-04-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="What-is-queue"><a href="#What-is-queue" class="headerlink" title="What is queue"></a>What is queue</h2><p>Like stack, queue is also a linear data structure in which the items are stored in a First-In-First-Out(FIFO)manner.</p>
-<p>The queue may include the following key functions.</p>
-<ul>
-<li>enqueue() - add an item to the end of the queue</li>
-<li>dequeue() - remove the front item</li>
-<li>size() - return the number of items in queue</li>
-<li>peek() - return the front item</li>
-<li>is_empty() - check if the queue is empty</li>
-</ul>
-<h2 id="How-to-implement"><a href="#How-to-implement" class="headerlink" title="How to implement"></a>How to implement</h2><p>There are various ways to implement a queue in Python. In this post, we will learn how to implement it with the following ways.</p>
-<ul>
-<li>list</li>
-<li>collections.deque</li>
-<li>queue.Queue</li>
-<li>linked list</li>
-</ul>
-<h3 id="using-list"><a href="#using-list" class="headerlink" title="using list"></a>using list</h3><p>In Python, list is like dynamic array. The items in list are stored contiguously in memory. Thus, the random access to list is as fast as array. However, inserting&#x2F;deleting item in front of the queue is slow because it requires shifting other items with time complexity O(n).</p>
-<pre><code>st = []
-st.append(1)
-st.append(2)
-st.append(3)
-print(&quot;stack size: &#123;&#125;&quot;.format(len(st)))
-print(st.pop(0))
-print(st.pop(0))
-print(st.pop(0))
-print(&quot;stack size: &#123;&#125;&quot;.format(len(st)))
-</code></pre>
-<h3 id="using-collections-deque"><a href="#using-collections-deque" class="headerlink" title="using collections.deque"></a>using collections.deque</h3><p>deque is pronounced “deck” and stands for “double-ended queue”. It is built upon a doubly linked list which allows insert&#x2F;remove nodes from both ends with constant time O(1). Deque is the prefered method to implement a queue in Python. Note that deque is not thread-safe.</p>
-<pre><code>from collections import deque
-
-st = deque()
-st.append(1)
-st.append(2)
-st.append(3)
-print(&quot;stack size: &#123;&#125;&quot;.format(len(st)))
-print(st.popleft())
-print(st.popleft())
-print(st.popleft())
-print(&quot;stack size: &#123;&#125;&quot;.format(len(st)))
-</code></pre>
-<h3 id="using-queue-Queue"><a href="#using-queue-Queue" class="headerlink" title="using queue.Queue"></a>using queue.Queue</h3><p>If you need multi-threading, you can use queue.Queue module. However, it comes at a performance cost to achieve the thread-safety.</p>
-<pre><code>from queue import Queue
-
-st = Queue()
-st.put(1)
-st.put(2)
-st.put(3)
-print(&quot;stack size: &#123;&#125;&quot;.format(st.qsize()))
-print(st.get())
-print(st.get())
-print(st.get())
-print(&quot;stack size: &#123;&#125;&quot;.format(st.qsize()))
-</code></pre>
-<h3 id="using-linked-list"><a href="#using-linked-list" class="headerlink" title="using linked list"></a>using linked list</h3><p>You also can implement your own queue with the linked list data structure.</p>
-<pre><code>class Node:
-    def __init__(self, val):
-        self.val = val
-        self.next = None
-
-
-class MyQueue:
-    def __init__(self):
-        self.front = self.rear = None
-        self.size = 0
-
-    def get_size(self):
-        return self.size
-
-    def is_empty(self):
-        return self.size == 0
-
-    def enqueue(self, val):
-        n = Node(val)
-        if self.rear == None:
-            self.front = n
-            self.rear = n
-        else:
-            self.rear.next = n
-            self.rear = n
-
-        self.size += 1
-
-    def dequeue(self):
-        if self.is_empty():
-            raise Exception(&quot;empty stack&quot;)
-
-        val = self.front.val
-        self.front = self.front.next
-        self.size -= 1
-        return val
-
-    def __str__(self):
-        curr = self.front
-        st_str = &quot;&quot;
-        while curr:
-            st_str += str(curr.val) + &quot;-&gt;&quot;
-            curr = curr.next
-        return st_str[:-2]
-
-
-qu = MyQueue()
-qu.enqueue(1)
-qu.enqueue(2)
-qu.enqueue(3)
-print(&quot;queue: &#123;&#125;&quot;.format(qu))
-print(&quot;queue size: &#123;&#125;&quot;.format(qu.size))
-print(qu.dequeue())
-print(qu.dequeue())
-print(qu.dequeue())
-print(&quot;queue size: &#123;&#125;&quot;.format(qu.size))
 </code></pre>
 
       

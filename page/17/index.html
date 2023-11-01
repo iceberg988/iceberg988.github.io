@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">259</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">260</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">259</span>
+          <span class="site-state-item-count">260</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,183 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/scale-a-system-to-support-millions-of-users/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/scale-a-system-to-support-millions-of-users/" class="post-title-link" itemprop="url">Scale a system to support millions of users</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-13 09:00:00" itemprop="dateCreated datePublished" datetime="2022-03-13T09:00:00-07:00">2022-03-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Start-from-single-server"><a href="#Start-from-single-server" class="headerlink" title="Start from single server"></a>Start from single server</h2><p>Building a large scale system is not one time effort, it should be an iterative process as the user workload increases. The journey could just start with single server and single user request.</p>
+<p><img src="/images/scale-million-users-1.png" alt="Image"></p>
+<ol>
+<li>User access a website through domain name, such as example.com</li>
+<li>IP address is returned to the browser or the mobile app.</li>
+<li>HTTP requests are sent to the web server.</li>
+<li>The web server returns the requested resources, such as a HTML page or JSON response.</li>
+</ol>
+<h2 id="Database"><a href="#Database" class="headerlink" title="Database"></a>Database</h2><p>With the growth of the user base, we can separate the web server and database server to allow them scale independently.</p>
+<p><img src="/images/scale-million-users-2.png" alt="Image"></p>
+<h3 id="SQL-vs-NoSQL"><a href="#SQL-vs-NoSQL" class="headerlink" title="SQL vs. NoSQL"></a>SQL vs. NoSQL</h3><p>We can choose between relational database and non-relational database.</p>
+<p>Relational database is also called relational database management system(RDBMS) or SQL database. The popular relational databases are MySQL, Oracle database, MS-SQL database, PostgreSQL and so on. Relational database stores data in tables and rows. Join operations can be performed across different database tables.</p>
+<p>Non-relational database is also called NoSQL database. The popular ones are MongoDB, CouchDB, Cassandra, HBase, Neo4j, Amazon DynamoDB and so on. They can be grouped into four categories: key-value stores, graph stores, column stores, and document stores. Generally, join operations are not supported in non-relational database.</p>
+<p>Non-relational database might be the choice if:</p>
+<ul>
+<li>very low latency is required</li>
+<li>data is unstructured or not relational</li>
+<li>the data needs to be serialized and deserialied(JSON, XML, YAML, etc)</li>
+<li>massive amount of data needs to be stored</li>
+</ul>
+<h2 id="Vertical-scaling-vs-horizontal-scaling"><a href="#Vertical-scaling-vs-horizontal-scaling" class="headerlink" title="Vertical scaling vs. horizontal scaling"></a>Vertical scaling vs. horizontal scaling</h2><p>Vertical scaling, also called “scale up”, means adding more compute power(CPU&#x2F;Memory), disk bandwidth, and network bandwidth to the servers. Vertical scaling is simple but it’s impossible to add unlimited resource to a single server. It doesn’t provide failover and redundancy and it may cause single point of failure.</p>
+<p>Horizontal scaling, also called “scale out”, means adding more servers to the resouce pool. It’s suitable for large scale applications.</p>
+<h2 id="Load-balancer"><a href="#Load-balancer" class="headerlink" title="Load balancer"></a>Load balancer</h2><p>With the single server setup, users won’t be able to access the website if the web server goes offline. Users may experience slow response(high latency) or failed connection if there are too many user requests to the server simultaneously.</p>
+<p>A load balancer can help evenly distribute incoming traffic among web servers.</p>
+<p><img src="/images/scale-million-users-3.png" alt="Image"></p>
+<p>Users connect to the public IP of the load balancer. The web servers sitting behind the load balancer are unreachable directly by the users anymore. The private IPs can be used for communications between load balancer and web servers.</p>
+<p>After the load balancer and more web servers are added, we improved the high availability of the web servers. For example, if web server 1 goes offline, the traffic can be routed to other web servers which are still healthy. As the website traffic grows rapidly, we can always add more web servers to scale and handle the incoming traffic.</p>
+<h2 id="Database-replication"><a href="#Database-replication" class="headerlink" title="Database replication"></a>Database replication</h2><p>Now that we can scale the web tier as needed, how about the data tier? Database replication is a common technique to address the problems like failover and redundancy.</p>
+<p>“Database replication can be used on many database management systems (DBMS), usually with a primary&#x2F;replica relationship between the original and the copies.” <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Replication_(computing)">Source</a></p>
+<p>A master database generally supports write operations only. A slave database replicates data from master and only supports read operations.</p>
+<p><img src="/images/scale-million-users-4.png" alt="Image"></p>
+<p>The master-slave model may not be the only method. We just use this model to learn about how to scale the database tier. We can achieve much better performance by spearating the write and read operations to master and slave databases. It also provides the data reliability in the case of natural disaster like earthquake.  The data is highly available even if a database is offline.</p>
+<ul>
+<li>If the master database goes offline, a slave database will be promoted as the new master. A new slave database will replace the old one for data replication. Promoting a master is not that simple process because the data in slave database may not be up to date. The missing data have to be recovered by some recovery mechanism.</li>
+<li>If the slave databases are go offline, read operations can be directed to master database temporarily until a new slave database is in place.</li>
+</ul>
+<h2 id="Cache"><a href="#Cache" class="headerlink" title="Cache"></a>Cache</h2><p>After we have the design of scalable web and data tier, it’s time to improve the system performance like response time. Adding a cache layer can help serve the user requests more quickly.</p>
+<ol>
+<li>If data exists in cache, read data from cache</li>
+<li>If data doesn’t exist in cache, fetch data from database and save data to cache. Then the cached data are returned to web servers. This is so called read-through cache.</li>
+</ol>
+<p><img src="/images/scale-million-users-5.png" alt="Image"></p>
+<p>Here are some considerations for using a cache system:</p>
+<ul>
+<li>Consider using cache when the data is read frequently but write(modification) infrequently</li>
+<li>Use an expiration policy to reload the data from data store</li>
+<li>Use an eviction policy to add data to the already full cache. Least-recently-used(LRU) or First in First Out(FIFO)?</li>
+<li>Maintain the consistency between data store and cache. MemCache solution?</li>
+<li>Avoid single point of failure of a cache system</li>
+</ul>
+<h2 id="Content-Delivery-Network-CDN"><a href="#Content-Delivery-Network-CDN" class="headerlink" title="Content Delivery Network(CDN)"></a>Content Delivery Network(CDN)</h2><p>A CDN is a network of geographially dispersed servers used to deliver static content. CDN servers cache static content like images, videos, CSS, Javascript files, etc.</p>
+<p>When a user visits a website, a CDN server closest to the user will deliver the static content. The website loads faster from a closer CDN server.</p>
+<p><img src="/images/scale-million-users-6.png" alt="Image"></p>
+<ol>
+<li>If the content to be loaded is not in CDN, get it from the origin server and store it in CDN server.</li>
+<li>If the content is in CDN, return it from CDN.</li>
+</ol>
+<p><img src="/images/scale-million-users-7.png" alt="Image"></p>
+<h2 id="Stateless-web-tier"><a href="#Stateless-web-tier" class="headerlink" title="Stateless web tier"></a>Stateless web tier</h2><p>In order to scale the web tier horizontally, we need to move the state(e.g. user session data) out of the web tier. A practice is to store the session data in the persistent storage such as SQL or NoSQL database. The web servers in the cluster can access the state data from the database. This is called stateless web tier.</p>
+<p>In the stateless architecture, the HTTP requests from many users can be sent to any web servers. The session data will be fetched from a shared data store which is separated from web servers.</p>
+<p><img src="/images/scale-million-users-8.png" alt="Image"></p>
+<p>After the session data is stored out of web servers, auto-scaling of the web tier becomes a lot more easier.</p>
+<p><img src="/images/scale-million-users-9.png" alt="Image"></p>
+<h2 id="Data-centers"><a href="#Data-centers" class="headerlink" title="Data centers"></a>Data centers</h2><p>As the website access grows internationally, supporting multiple data centers globally is crucial. In the event of any data center outage, the traffic can be directed to a healthy data center as well.</p>
+<p><img src="/images/scale-million-users-10.png" alt="Image"></p>
+<h2 id="Message-queue"><a href="#Message-queue" class="headerlink" title="Message queue"></a>Message queue</h2><p>To further scale the system, we can decouple the system components so that they can be scaled independently.</p>
+<p>A message queue is a durable component, stored in memory, that supports asynchronous communication. It serves as a buffer and distributes asynchronous requests. Typically, a message queue has an input service, also called producers&#x2F;publishers, to create message, and publish them to the message queue. The consumer services connect to the queue and process the messages asynchronously.</p>
+<p><img src="/images/scale-million-users-11.png" alt="Image"></p>
+<h2 id="Logging-monitoring-automation"><a href="#Logging-monitoring-automation" class="headerlink" title="Logging, monitoring, automation"></a>Logging, monitoring, automation</h2><p>As the system scale for a very large business, it’s necessary to invest in the logging, monitoring and automation. These tools can help troubleshoot issues, understand system insight and system health, and improve productivity.</p>
+<h2 id="Database-scaling"><a href="#Database-scaling" class="headerlink" title="Database scaling"></a>Database scaling</h2><p>Vertical scaling and horizontal scaling are the two approaches for database scaling.</p>
+<p>Vertical scaling, also known as scaling up, is to scale by adding more hardware components(CPU, Memory, Disk, Network) to the existing server. But it has a hardware limit and the cost can be high. Also there is risk of single point of failures.</p>
+<p>Horizontal scaling, also known as sharding, is a practice of adding more database servers. Sharding separates large databases to smaller ones which are called shards. A hash function(e.g. user_id % n) can be used to determine which shard should be accessed. In this example of hash function, the user_id is the sharding key which is an important factor to consider when to implement a sharding strategy. The goal is to choose a key which can evenly distribute the data across shards.</p>
+<p>With database sharding, it may introduce complexities and new challenges to the system.</p>
+<ul>
+<li>resharding data</li>
+<li>hotspot key</li>
+<li>join operations across database shards</li>
+</ul>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Scaling a system is an iterative process. As the user requests increase and system scales, more fine-tuning and new strategies are needed. In summary, we can scale the system to support millions of users by addressing the following areas.</p>
+<ul>
+<li>Keep web tier stateless by storing session data out of web servers</li>
+<li>Have redundancy for each tier</li>
+<li>Cache data as much as possible to improve response time</li>
+<li>Build multiple data centers</li>
+<li>Use CDN to serve static content</li>
+<li>Sharding the data tier if needed</li>
+<li>Decouple the components to increase throughput(e.g. message queue)</li>
+<li>Add tools to improve ease of use</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1589,98 +1766,6 @@ python                               3-alpine            c7100ae3ac4d        2 w
 <p>In other people’s opinion, children should be given a phone. They think children are responsible enough and can control their time. They need it to contact parents if there’s an emergency, or to keep in touch with their friends. They can also use it for research on projects. The parents think they can teach kids to have self-control and self-maintenance. Some children, who are responsible, might be able to use their time wisely and use the cell phones to enhance their life.</p>
 <p>Children are not old enough to be able to manage their time. They shouldn’t be trusted with a phone because they might lose their integrity. Cell phones are expensive items, so it would not be good if children accidentally lost them. If they really need to call a friend, they could borrow their parent’s phone. In times of emergency, they could borrow someone else’s phone to contact their parents. If they needed to do research, they could use the computer instead of a phone. Looking at a cell phone’s small screen could damage their vision, so they should use computers, which have a large screen. Overall, it is not a rational decision to let children have their own phones.</p>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/first-amendment/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/first-amendment/" class="post-title-link" itemprop="url">First Amendment</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-02-16 07:51:00" itemprop="dateCreated datePublished" datetime="2022-02-16T07:51:00-08:00">2022-02-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>The First Amendment is one of the most important amendments to the Constitution. It allows U.S. citizens to express their ideas through words and deeds. It guarantees freedom of speech, the press, assembly, petitioning, and religion.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/first-amendment/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 

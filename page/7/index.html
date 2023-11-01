@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">259</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">260</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">259</span>
+          <span class="site-state-item-count">260</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,205 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/queue-implementation-in-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/queue-implementation-in-python/" class="post-title-link" itemprop="url">Queue implementation in Python</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-05 07:35:00" itemprop="dateCreated datePublished" datetime="2023-04-05T07:35:00-07:00">2023-04-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="What-is-queue"><a href="#What-is-queue" class="headerlink" title="What is queue"></a>What is queue</h2><p>Like stack, queue is also a linear data structure in which the items are stored in a First-In-First-Out(FIFO)manner.</p>
+<p>The queue may include the following key functions.</p>
+<ul>
+<li>enqueue() - add an item to the end of the queue</li>
+<li>dequeue() - remove the front item</li>
+<li>size() - return the number of items in queue</li>
+<li>peek() - return the front item</li>
+<li>is_empty() - check if the queue is empty</li>
+</ul>
+<h2 id="How-to-implement"><a href="#How-to-implement" class="headerlink" title="How to implement"></a>How to implement</h2><p>There are various ways to implement a queue in Python. In this post, we will learn how to implement it with the following ways.</p>
+<ul>
+<li>list</li>
+<li>collections.deque</li>
+<li>queue.Queue</li>
+<li>linked list</li>
+</ul>
+<h3 id="using-list"><a href="#using-list" class="headerlink" title="using list"></a>using list</h3><p>In Python, list is like dynamic array. The items in list are stored contiguously in memory. Thus, the random access to list is as fast as array. However, inserting&#x2F;deleting item in front of the queue is slow because it requires shifting other items with time complexity O(n).</p>
+<pre><code>st = []
+st.append(1)
+st.append(2)
+st.append(3)
+print(&quot;stack size: &#123;&#125;&quot;.format(len(st)))
+print(st.pop(0))
+print(st.pop(0))
+print(st.pop(0))
+print(&quot;stack size: &#123;&#125;&quot;.format(len(st)))
+</code></pre>
+<h3 id="using-collections-deque"><a href="#using-collections-deque" class="headerlink" title="using collections.deque"></a>using collections.deque</h3><p>deque is pronounced “deck” and stands for “double-ended queue”. It is built upon a doubly linked list which allows insert&#x2F;remove nodes from both ends with constant time O(1). Deque is the prefered method to implement a queue in Python. Note that deque is not thread-safe.</p>
+<pre><code>from collections import deque
+
+st = deque()
+st.append(1)
+st.append(2)
+st.append(3)
+print(&quot;stack size: &#123;&#125;&quot;.format(len(st)))
+print(st.popleft())
+print(st.popleft())
+print(st.popleft())
+print(&quot;stack size: &#123;&#125;&quot;.format(len(st)))
+</code></pre>
+<h3 id="using-queue-Queue"><a href="#using-queue-Queue" class="headerlink" title="using queue.Queue"></a>using queue.Queue</h3><p>If you need multi-threading, you can use queue.Queue module. However, it comes at a performance cost to achieve the thread-safety.</p>
+<pre><code>from queue import Queue
+
+st = Queue()
+st.put(1)
+st.put(2)
+st.put(3)
+print(&quot;stack size: &#123;&#125;&quot;.format(st.qsize()))
+print(st.get())
+print(st.get())
+print(st.get())
+print(&quot;stack size: &#123;&#125;&quot;.format(st.qsize()))
+</code></pre>
+<h3 id="using-linked-list"><a href="#using-linked-list" class="headerlink" title="using linked list"></a>using linked list</h3><p>You also can implement your own queue with the linked list data structure.</p>
+<pre><code>class Node:
+    def __init__(self, val):
+        self.val = val
+        self.next = None
+
+
+class MyQueue:
+    def __init__(self):
+        self.front = self.rear = None
+        self.size = 0
+
+    def get_size(self):
+        return self.size
+
+    def is_empty(self):
+        return self.size == 0
+
+    def enqueue(self, val):
+        n = Node(val)
+        if self.rear == None:
+            self.front = n
+            self.rear = n
+        else:
+            self.rear.next = n
+            self.rear = n
+
+        self.size += 1
+
+    def dequeue(self):
+        if self.is_empty():
+            raise Exception(&quot;empty stack&quot;)
+
+        val = self.front.val
+        self.front = self.front.next
+        self.size -= 1
+        return val
+
+    def __str__(self):
+        curr = self.front
+        st_str = &quot;&quot;
+        while curr:
+            st_str += str(curr.val) + &quot;-&gt;&quot;
+            curr = curr.next
+        return st_str[:-2]
+
+
+qu = MyQueue()
+qu.enqueue(1)
+qu.enqueue(2)
+qu.enqueue(3)
+print(&quot;queue: &#123;&#125;&quot;.format(qu))
+print(&quot;queue size: &#123;&#125;&quot;.format(qu.size))
+print(qu.dequeue())
+print(qu.dequeue())
+print(qu.dequeue())
+print(&quot;queue size: &#123;&#125;&quot;.format(qu.size))
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1790,112 +1989,6 @@ KiB Swap:  4194300 total,  3991548 free,   202752 used. 53364460 avail Mem
 <p>So, to read a Flame Graph, we can look for the widest towers and understand them first since they consume much CPU cycles during sampling.</p>
 <p>The following is a real example of Flame Graph.</p>
 <p><img src="/images/Gregg4.svg" alt="Image"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/why-performance-tools-need-bpf/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/why-performance-tools-need-bpf/" class="post-title-link" itemprop="url">Why performance tools need BPF</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-02-23 12:39:00" itemprop="dateCreated datePublished" datetime="2023-02-23T12:39:00-08:00">2023-02-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>BPF is efficient, production safe and built into the Linux kernel. With BPF, you can use the performance tools in production environment without needing to add any new kernel components.</p>
-<p>The following example summarizes the block I&#x2F;O latency as a histogram.</p>
-<pre><code>$ biolatency
-Tracing block device I/O... Hit Ctrl-C to end.
-^C
-usecs           : count     distribution
-0 -&gt; 1          : 0        |                                        |
-2 -&gt; 3          : 0        |                                        |
-4 -&gt; 7          : 1        |                                        |
-8 -&gt; 15         : 1        |                                        |
-16 -&gt; 31        : 66       |****************************************|
-32 -&gt; 63        : 11       |******                                  |
-64 -&gt; 127       : 21       |************                            |
-128 -&gt; 255      : 28       |****************                        |
-</code></pre>
-<p>The following figure explains how BPF improves the efficiency of this tool.</p>
-<p><img src="/images/BPF.png" alt="Image"></p>
-<p>The BPF program is run in the kernel for each event. It fetches the block I&#x2F;O latency which is saved into a BPF map histogram. In the user space, the BPF map histogram can be read and printed out.</p>
 
       
     </div>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="What are Virtual Kubernetes Clusters(VCluster)?Virtual clusters are fully working Kubernetes clusters that run on top of other Kubernetes clusters. Compared to fully separate “real” clusters, virtual">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Getting started with vcluster">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/getting-started-with-vcluster/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="What are Virtual Kubernetes Clusters(VCluster)?Virtual clusters are fully working Kubernetes clusters that run on top of other Kubernetes clusters. Compared to fully separate “real” clusters, virtual">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.flamingbytes.com/images/vcluster-architecture.svg">
+<meta property="article:published_time" content="2023-10-21T21:59:18.000Z">
+<meta property="article:modified_time" content="2023-11-01T05:02:52.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="Kubernetes">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.flamingbytes.com/images/vcluster-architecture.svg">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/getting-started-with-vcluster/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/getting-started-with-vcluster/","path":"blog/getting-started-with-vcluster/","title":"Getting started with vcluster"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Getting started with vcluster | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">260</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-are-Virtual-Kubernetes-Clusters-VCluster"><span class="nav-number">1.</span> <span class="nav-text">What are Virtual Kubernetes Clusters(VCluster)?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-vCluster-CLI"><span class="nav-number">2.</span> <span class="nav-text">Install vCluster CLI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Method-1-Deploy-vcluster-with-kubectl"><span class="nav-number">3.</span> <span class="nav-text">Method 1 - Deploy vcluster with kubectl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Method-2-Deploy-vcluster-with-vcluster-CLI"><span class="nav-number">4.</span> <span class="nav-text">Method 2 - Deploy vcluster with vcluster CLI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">260</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-kubeconfig-to-configure-access-to-remote-kubernetes-cluster/" rel="bookmark">
+        <time class="popular-posts-time">2022-12-26</time>
+        <br>
+      Using kubeconfig to configure access to remote Kubernetes cluster
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/how-to-set-up-etcd-cluster/" rel="bookmark">
+        <time class="popular-posts-time">2023-05-08</time>
+        <br>
+      How to set up etcd cluster
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/pull-an-image-from-a-private-docker-registry-in-kubernetes-pod/" rel="bookmark">
+        <time class="popular-posts-time">2022-12-27</time>
+        <br>
+      Pull an image from a private docker registry in Kubernetes Pod
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/an-easy-guide-to-install-kubernetes-cluster-with-kubeadm/" rel="bookmark">
+        <time class="popular-posts-time">2021-08-29</time>
+        <br>
+      An easy guide to install kubernetes cluster with kubeadm
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/deploy-cockroachdb-in-kubernetes-cluster/" rel="bookmark">
+        <time class="popular-posts-time">2022-12-03</time>
+        <br>
+      Deploy CockroachDB in kubernetes cluster
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/getting-started-with-vcluster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Getting started with vcluster | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Getting started with vcluster
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-10-21 14:59:18" itemprop="dateCreated datePublished" datetime="2023-10-21T14:59:18-07:00">2023-10-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-31 22:02:52" itemprop="dateModified" datetime="2023-10-31T22:02:52-07:00">2023-10-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="What-are-Virtual-Kubernetes-Clusters-VCluster"><a href="#What-are-Virtual-Kubernetes-Clusters-VCluster" class="headerlink" title="What are Virtual Kubernetes Clusters(VCluster)?"></a>What are Virtual Kubernetes Clusters(VCluster)?</h2><p>Virtual clusters are fully working Kubernetes clusters that run on top of other Kubernetes clusters. Compared to fully separate “real” clusters, virtual clusters reuse worker nodes and networking of the host cluster. They have their own control plane and schedule all workloads into a single namespace of the host cluster. Like virtual machines, virtual clusters partition a single physical cluster into multiple separate ones.</p>
+<p><img src="/images/vcluster-architecture.svg"></p>
+<p>For more about the vcluster, please refer to its official website. The goal for this post is to learn how to deploy vcluster in an existing kubernetes cluster.</p>
+<h2 id="Install-vCluster-CLI"><a href="#Install-vCluster-CLI" class="headerlink" title="Install vCluster CLI"></a>Install vCluster CLI</h2><p>Requirements:</p>
+<ul>
+<li>kubectl (check via kubectl version)</li>
+<li>helm v3 (check with helm version)</li>
+<li>a working kube-context with access to a Kubernetes cluster (check with kubectl get namespaces)</li>
+</ul>
+<p>To install kubectl, refer to this <a href="https://www.flamingbytes.com/blog/using-kubeconfig-to-configure-access-to-remote-kubernetes-cluster/#Install-kubectl-binary">post</a>.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl version</span><br><span class="line">Kustomize Version: v4.5.7</span><br></pre></td></tr></table></figure>
+
+<p>To install Helm(Helm is the package manager for Kubernetes):</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">chmod</span> 700 get_helm.sh</span><br><span class="line"></span><br><span class="line">$ ./get_helm.sh</span><br><span class="line">Downloading https://get.helm.sh/helm-v3.13.1-linux-amd64.tar.gz</span><br><span class="line">Verifying checksum... Done.</span><br><span class="line">Preparing to install helm into /usr/local/bin</span><br><span class="line">helm installed into /usr/local/bin/helm</span><br><span class="line"></span><br><span class="line">$  helm version</span><br><span class="line">version.BuildInfo&#123;Version:<span class="string">&quot;v3.13.1&quot;</span> ...</span><br></pre></td></tr></table></figure>
+
+<p>To install vcluster CLI:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ curl -L -o vcluster <span class="string">&quot;https://github.com/loft-sh/vcluster/releases/latest/download/vcluster-linux-amd64&quot;</span> &amp;&amp; sudo install -c -m 0755 vcluster /usr/local/bin &amp;&amp; <span class="built_in">rm</span> -f vcluster</span><br><span class="line"></span><br><span class="line">$ vcluster --version</span><br><span class="line">vcluster version 0.16.4</span><br></pre></td></tr></table></figure>
+
+<h2 id="Method-1-Deploy-vcluster-with-kubectl"><a href="#Method-1-Deploy-vcluster-with-kubectl" class="headerlink" title="Method 1 - Deploy vcluster with kubectl"></a>Method 1 - Deploy vcluster with kubectl</h2><p>Check the kubernetes cluster nodes:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">export</span> KUBECONFIG=./kubeconfig</span><br><span class="line">$ kubectl get nodes -o wide</span><br><span class="line">NAME          STATUS   ROLES           AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION               CONTAINER-RUNTIME</span><br><span class="line">node11   Ready    &lt;none&gt;          39h   v1.27.2   10.10.0.11    &lt;none&gt;        CentOS Linux 7 (Core)   5.7.12-1.el7.elrepo.x86_64   docker://23.0.6</span><br><span class="line">node12   Ready    control-plane   39h   v1.27.2   10.10.0.12    &lt;none&gt;        CentOS Linux 7 (Core)   5.7.12-1.el7.elrepo.x86_64   docker://23.0.6</span><br><span class="line">node13   Ready    &lt;none&gt;          39h   v1.27.2   10.10.0.13    &lt;none&gt;        CentOS Linux 7 (Core)   5.7.12-1.el7.elrepo.x86_64   docker://24.0.6</span><br><span class="line">node14   Ready    &lt;none&gt;          39h   v1.27.2   10.10.0.14    &lt;none&gt;        CentOS Linux 7 (Core)   5.7.12-1.el7.elrepo.x86_64   docker://24.0.6</span><br></pre></td></tr></table></figure>
+
+<p>Create namespace for vcluster:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl create namespace vcluster-my-vcluster</span><br><span class="line">$ kubectl get ns</span><br><span class="line">NAME                   STATUS   AGE</span><br><span class="line">vcluster-my-vcluster   Active   7s</span><br><span class="line">[...]</span><br></pre></td></tr></table></figure>
+
+<p>Make a storageclass default for vcluster:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl patch storageclass px-db -p <span class="string">&#x27;&#123;&quot;metadata&quot;: &#123;&quot;annotations&quot;:&#123;&quot;storageclass.kubernetes.io/is-default-class&quot;:&quot;true&quot;&#125;&#125;&#125;&#x27;</span></span><br><span class="line">$ kubectl get sc</span><br><span class="line">NAME                                 PROVISIONER                     RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE</span><br><span class="line">px-db (default)                      kubernetes.io/portworx-volume   Delete          Immediate           <span class="literal">true</span>                   29h</span><br><span class="line">[...]</span><br></pre></td></tr></table></figure>
+
+<p>Deploy vcluster:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ helm template my-vcluster vcluster --repo https://charts.loft.sh -n vcluster-my-vcluster | kubectl apply -f -</span><br><span class="line">serviceaccount/vc-my-vcluster created</span><br><span class="line">serviceaccount/vc-workload-my-vcluster created</span><br><span class="line">configmap/my-vcluster-coredns created</span><br><span class="line">configmap/my-vcluster-init-manifests created</span><br><span class="line">role.rbac.authorization.k8s.io/my-vcluster created</span><br><span class="line">rolebinding.rbac.authorization.k8s.io/my-vcluster created</span><br><span class="line">service/my-vcluster created</span><br><span class="line">service/my-vcluster-headless created</span><br><span class="line">statefulset.apps/my-vcluster created</span><br></pre></td></tr></table></figure>
+
+<p>Verify vcluster:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl config get-contexts</span><br><span class="line">CURRENT   NAME                             CLUSTER         AUTHINFO           NAMESPACE</span><br><span class="line">*         kubernetes-admin@cluster.local   cluster.local   kubernetes-admin</span><br><span class="line"></span><br><span class="line">$ vcluster list</span><br><span class="line"></span><br><span class="line">       NAME     |      NAMESPACE       | STATUS  | VERSION | CONNECTED |            CREATED            |  AGE   | PRO</span><br><span class="line">  --------------+----------------------+---------+---------+-----------+-------------------------------+--------+------</span><br><span class="line">    my-vcluster | vcluster-my-vcluster | Running | 0.16.4  |           | 2023-10-31 21:40:04 +0000 UTC | 52m30s |</span><br><span class="line"></span><br><span class="line">$ kubectl get statefulset -n vcluster-my-vcluster</span><br><span class="line">NAME          READY   AGE</span><br><span class="line">my-vcluster   1/1     52m</span><br><span class="line"></span><br><span class="line">$ kubectl get pod -n vcluster-my-vcluster</span><br><span class="line">NAME                                                   READY   STATUS    RESTARTS   AGE</span><br><span class="line">coredns-68bdd584b4-79rpj-x-kube-system-x-my-vcluster   1/1     Running   0          27m</span><br><span class="line">my-vcluster-0                                          2/2     Running   0          52m</span><br><span class="line"></span><br><span class="line">$ kubectl get pvc -n vcluster-my-vcluster</span><br><span class="line">NAME                 STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE</span><br><span class="line">data-my-vcluster-0   Bound    pvc-97bddb5c-47ee-4b62-916a-240c96e84676   5Gi        RWO            px-db          52m</span><br><span class="line"></span><br><span class="line">$ kubectl get ns</span><br><span class="line">NAME                   STATUS   AGE</span><br><span class="line">vcluster-my-vcluster   Active   54m</span><br><span class="line">[...]</span><br><span class="line"></span><br><span class="line">$ kubectl get sc</span><br><span class="line">NAME                                 PROVISIONER                     RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE</span><br><span class="line">px-db (default)                      kubernetes.io/portworx-volume   Delete          Immediate           <span class="literal">true</span>                   30h</span><br><span class="line">[...]</span><br></pre></td></tr></table></figure>
+
+<p>Connect to vcluster:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ vcluster connect my-vcluster -n vcluster-my-vcluster</span><br><span class="line">22:08:33 <span class="keyword">done</span> Switched active kube context to vcluster_my-vcluster_vcluster-my-vcluster_kubernetes-admin@cluster.local</span><br><span class="line">22:08:33 warn Since you are using port-forwarding to connect, you will need to leave this terminal open</span><br><span class="line">- Use CTRL+C to <span class="built_in">return</span> to your previous kube context</span><br><span class="line">- Use `kubectl get namespaces` <span class="keyword">in</span> another terminal to access the vcluster</span><br><span class="line">Forwarding from 127.0.0.1:11459 -&gt; 8443</span><br><span class="line">Forwarding from [::1]:11459 -&gt; 8443</span><br><span class="line">Handling connection <span class="keyword">for</span> 11459</span><br></pre></td></tr></table></figure>
+
+<p>Open a new terminal and verify the vcluster nodes:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get nodes -o wide</span><br><span class="line">NAME          STATUS   ROLES    AGE     VERSION        INTERNAL-IP     EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION      CONTAINER-RUNTIME</span><br><span class="line">node11  Ready    &lt;none&gt;   4m43s   v1.28.2+k3s1   10.10.62.211   &lt;none&gt;        Fake Kubernetes Image   4.19.76-fakelinux   docker://19.3.12</span><br></pre></td></tr></table></figure>
+
+<p>Note: By default, there is only one node available for vcluster. </p>
+<p>Disconnect from vcluster:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ vcluster disconnect</span><br><span class="line">22:37:06 info Successfully disconnected from vcluster: my-vcluster and switched back to the original context: kubernetes-admin@cluster.local</span><br></pre></td></tr></table></figure>
+
+<p>Open a new bash with the vcluster KUBECONFIG defined:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ vcluster connect my-vcluster -n vcluster-my-vcluster -- bash</span><br><span class="line">$ kubectl config get-contexts</span><br><span class="line">CURRENT   NAME                                                                       CLUSTER                                                                    AUTHINFO                                                                   NAMESPACE</span><br><span class="line">*         vcluster_my-vcluster_vcluster-my-vcluster_kubernetes-admin@cluster.local   vcluster_my-vcluster_vcluster-my-vcluster_kubernetes-admin@cluster.local   vcluster_my-vcluster_vcluster-my-vcluster_kubernetes-admin@cluster.local</span><br><span class="line"></span><br><span class="line">$  kubectl get ns</span><br><span class="line">NAME              STATUS   AGE</span><br><span class="line">kube-system       Active   45m</span><br><span class="line">kube-public       Active   45m</span><br><span class="line">kube-node-lease   Active   45m</span><br><span class="line">default           Active   45m</span><br><span class="line"></span><br><span class="line">$ vcluster disconnect</span><br><span class="line">22:51:03 info Successfully disconnected from vcluster: my-vcluster and switched back to the original context: kubernetes-admin@cluster.local</span><br></pre></td></tr></table></figure>
+
+<p>Delete vcluster:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$  vcluster list</span><br><span class="line"></span><br><span class="line">       NAME     |      NAMESPACE       | STATUS  | VERSION | CONNECTED |            CREATED            |   AGE    | PRO</span><br><span class="line">  --------------+----------------------+---------+---------+-----------+-------------------------------+----------+------</span><br><span class="line">    my-vcluster | vcluster-my-vcluster | Running | 0.16.4  |           | 2023-10-31 21:40:04 +0000 UTC | 1h12m38s |</span><br><span class="line"></span><br><span class="line">$ kubectl delete namespace vcluster-my-vcluster</span><br><span class="line"></span><br><span class="line">$  vcluster list</span><br><span class="line"></span><br><span class="line">    NAME | NAMESPACE | STATUS | VERSION | CONNECTED | CREATED | AGE | PRO</span><br><span class="line">  -------+-----------+--------+---------+-----------+---------+-----+------</span><br></pre></td></tr></table></figure>
+
+<h2 id="Method-2-Deploy-vcluster-with-vcluster-CLI"><a href="#Method-2-Deploy-vcluster-with-vcluster-CLI" class="headerlink" title="Method 2 - Deploy vcluster with vcluster CLI"></a>Method 2 - Deploy vcluster with vcluster CLI</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> cluster_values.yaml</span><br><span class="line"><span class="built_in">sync</span>:</span><br><span class="line">  services:</span><br><span class="line">    enabled: <span class="literal">true</span></span><br><span class="line">  configmaps:</span><br><span class="line">    enabled: <span class="literal">true</span></span><br><span class="line">  secrets:</span><br><span class="line">    enabled: <span class="literal">true</span></span><br><span class="line">  endpoints:</span><br><span class="line">    enabled: <span class="literal">true</span></span><br><span class="line">  pods:</span><br><span class="line">    enabled: <span class="literal">true</span></span><br><span class="line">    ephemeralContainers: <span class="literal">false</span></span><br><span class="line">    status: <span class="literal">false</span></span><br><span class="line">  events:</span><br><span class="line">    enabled: <span class="literal">true</span></span><br><span class="line">  persistentvolumeclaims:</span><br><span class="line">    enabled: <span class="literal">true</span></span><br><span class="line">  ingresses:</span><br><span class="line">    enabled: <span class="literal">true</span></span><br><span class="line">  fake-nodes:</span><br><span class="line">    enabled: <span class="literal">true</span> <span class="comment"># will be ignored if nodes.enabled = true</span></span><br><span class="line">  fake-persistentvolumes:</span><br><span class="line">    enabled: <span class="literal">true</span> <span class="comment"># will be ignored if persistentvolumes.enabled = true</span></span><br><span class="line">  nodes:</span><br><span class="line">    enabled: <span class="literal">true</span></span><br><span class="line">    <span class="comment"># If nodes sync is enabled, and syncAllNodes = true, the virtual cluster</span></span><br><span class="line">    <span class="comment"># will sync all nodes instead of only the ones where some pods are running.</span></span><br><span class="line">    syncAllNodes: <span class="literal">true</span></span><br><span class="line">    <span class="comment"># nodeSelector is used to limit which nodes get synced to the vcluster,</span></span><br><span class="line">    <span class="comment"># and which nodes are used to run vcluster pods.</span></span><br><span class="line">    <span class="comment"># A valid string representation of a label selector must be used.</span></span><br><span class="line">    nodeSelector: <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="comment"># syncNodeChanges allows vcluster user edits of the nodes to be synced down to the host nodes.</span></span><br><span class="line">    <span class="comment"># Write permissions on node resource will be given to the vcluster.</span></span><br><span class="line">    syncNodeChanges: <span class="literal">false</span></span><br><span class="line">  persistentvolumes:</span><br><span class="line">    enabled: <span class="literal">true</span></span><br><span class="line">  storageclasses:</span><br><span class="line">    enabled: <span class="literal">false</span></span><br><span class="line">  legacy-storageclasses:</span><br><span class="line">    enabled: <span class="literal">true</span></span><br><span class="line">  priorityclasses:</span><br><span class="line">    enabled: <span class="literal">true</span></span><br><span class="line">  networkpolicies:</span><br><span class="line">    enabled: <span class="literal">true</span></span><br><span class="line">  volumesnapshots:</span><br><span class="line">    enabled: <span class="literal">false</span></span><br><span class="line">  poddisruptionbudgets:</span><br><span class="line">    enabled: <span class="literal">true</span></span><br><span class="line">  serviceaccounts:</span><br><span class="line">    enabled: <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Scale up etcd</span></span><br><span class="line">etcd:</span><br><span class="line">  replicas: 2</span><br><span class="line">  fsGroup: 12345</span><br><span class="line">  securityContext:</span><br><span class="line">    allowPrivilegeEscalation: <span class="literal">false</span></span><br><span class="line">    capabilities:</span><br><span class="line">      drop:</span><br><span class="line">      - ALL</span><br><span class="line">    readOnlyRootFilesystem: <span class="literal">true</span></span><br><span class="line">    runAsGroup: 12345</span><br><span class="line">    runAsNonRoot: <span class="literal">true</span></span><br><span class="line">    runAsUser: 12345</span><br><span class="line">    seccompProfile:</span><br><span class="line">      <span class="built_in">type</span>: RuntimeDefault</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Scale up controller manager</span></span><br><span class="line">controller:</span><br><span class="line">  replicas: 2</span><br><span class="line">  securityContext:</span><br><span class="line">    allowPrivilegeEscalation: <span class="literal">false</span></span><br><span class="line">    capabilities:</span><br><span class="line">      drop:</span><br><span class="line">      - ALL</span><br><span class="line">    readOnlyRootFilesystem: <span class="literal">true</span></span><br><span class="line">    runAsGroup: 12345</span><br><span class="line">    runAsNonRoot: <span class="literal">true</span></span><br><span class="line">    runAsUser: 12345</span><br><span class="line">    seccompProfile:</span><br><span class="line">      <span class="built_in">type</span>: RuntimeDefault</span><br><span class="line"></span><br><span class="line"><span class="comment"># Scale up api server</span></span><br><span class="line">api:</span><br><span class="line">  replicas: 2</span><br><span class="line">  securityContext:</span><br><span class="line">    allowPrivilegeEscalation: <span class="literal">false</span></span><br><span class="line">    capabilities:</span><br><span class="line">      drop:</span><br><span class="line">      - ALL</span><br><span class="line">    readOnlyRootFilesystem: <span class="literal">true</span></span><br><span class="line">    runAsGroup: 12345</span><br><span class="line">    runAsNonRoot: <span class="literal">true</span></span><br><span class="line">    runAsUser: 12345</span><br><span class="line">    seccompProfile:</span><br><span class="line">      <span class="built_in">type</span>: RuntimeDefault</span><br><span class="line"></span><br><span class="line"><span class="comment"># Scale up DNS server</span></span><br><span class="line">coredns:</span><br><span class="line">  replicas: 2</span><br><span class="line">  securityContext:</span><br><span class="line">    allowPrivilegeEscalation: <span class="literal">false</span></span><br><span class="line">    capabilities:</span><br><span class="line">      drop:</span><br><span class="line">      - ALL</span><br><span class="line">    readOnlyRootFilesystem: <span class="literal">true</span></span><br><span class="line">    runAsGroup: 12345</span><br><span class="line">    runAsNonRoot: <span class="literal">true</span></span><br><span class="line">    runAsUser: 12345</span><br><span class="line">    seccompProfile:</span><br><span class="line">      <span class="built_in">type</span>: RuntimeDefault</span><br><span class="line"></span><br><span class="line">ingress:</span><br><span class="line">  <span class="comment"># Enable ingress record generation</span></span><br><span class="line">  enabled: <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Ingress path type</span></span><br><span class="line">  pathType: ImplementationSpecific</span><br><span class="line">  apiVersion: networking.k8s.io/v1</span><br><span class="line">  ingressClassName: <span class="string">&quot;nginx&quot;</span></span><br><span class="line">  annotations:</span><br><span class="line">    nginx.ingress.kubernetes.io/backend-protocol: HTTPS</span><br><span class="line">    nginx.ingress.kubernetes.io/ssl-passthrough: <span class="string">&quot;true&quot;</span></span><br><span class="line">    nginx.ingress.kubernetes.io/ssl-redirect: <span class="string">&quot;true&quot;</span></span><br><span class="line"></span><br><span class="line">init:</span><br><span class="line">  helm:</span><br><span class="line">    <span class="comment"># public chart</span></span><br><span class="line">    - chart:</span><br><span class="line">        name: metrics-server</span><br><span class="line">        repo: https://kubernetes-sigs.github.io/metrics-server/</span><br><span class="line">        version: 3.9.0</span><br><span class="line">      <span class="comment"># optional field</span></span><br><span class="line">      values: |-</span><br><span class="line">        replicas: 2</span><br><span class="line">        defaultArgs:</span><br><span class="line">          - --cert-dir=/tmp</span><br><span class="line">          - --kubelet-use-node-status-port</span><br><span class="line">          - --metric-resolution=15s</span><br><span class="line">        args:</span><br><span class="line">          - /metrics-server</span><br><span class="line">          - --kubelet-insecure-tls=<span class="literal">true</span></span><br><span class="line">          - --kubelet-preferred-address-types=InternalIP,Hostname,InternalDNS,ExternalDNS,ExternalIP</span><br><span class="line">      release:</span><br><span class="line">        name: metrics-server</span><br><span class="line">        namespace: kube-system</span><br><span class="line"></span><br><span class="line">  multiNamespaceMode:</span><br><span class="line">    enabled: <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">$ vcluster create my-vcluster -f vcluster_values.yaml</span><br><span class="line">23:00:34 info Creating namespace vcluster-my-vcluster</span><br><span class="line">23:00:34 info Create vcluster my-vcluster...</span><br><span class="line">23:00:34 info execute <span class="built_in">command</span>: helm upgrade my-vcluster /tmp/vcluster-0.16.4.tgz-1464010202 --kubeconfig /tmp/2856381900 --namespace vcluster-my-vcluster --install --repository-config=<span class="string">&#x27;&#x27;</span> --values /tmp/901005439 --values vcluster_values.yaml</span><br><span class="line">23:00:35 <span class="keyword">done</span> Successfully created virtual cluster my-vcluster <span class="keyword">in</span> namespace vcluster-my-vcluster</span><br><span class="line">23:00:35 info Waiting <span class="keyword">for</span> vcluster to come up...</span><br><span class="line">23:00:51 warn vcluster is waiting, because vcluster pod my-vcluster-0 has status: ContainerCreating</span><br><span class="line">23:01:02 <span class="keyword">done</span> Switched active kube context to vcluster_my-vcluster_vcluster-my-vcluster_kubernetes-admin@cluster.local</span><br><span class="line">23:01:02 warn Since you are using port-forwarding to connect, you will need to leave this terminal open</span><br><span class="line">- Use CTRL+C to <span class="built_in">return</span> to your previous kube context</span><br><span class="line">- Use `kubectl get namespaces` <span class="keyword">in</span> another terminal to access the vcluster</span><br><span class="line">Forwarding from 127.0.0.1:11704 -&gt; 8443</span><br><span class="line">Forwarding from [::1]:11704 -&gt; 8443</span><br></pre></td></tr></table></figure>
+
+<p>Use CTRL+C to switch back to original context:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl config get-contexts</span><br><span class="line">CURRENT   NAME                             CLUSTER         AUTHINFO           NAMESPACE</span><br><span class="line">*         kubernetes-admin@cluster.local   cluster.local   kubernetes-admin</span><br></pre></td></tr></table></figure>
+
+<p>Check the vcluster nodes:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ vcluster connect my-vcluster -n vcluster-my-vcluster -- bash</span><br><span class="line">$ kubectl config get-contexts</span><br><span class="line">CURRENT   NAME                                                                       CLUSTER                                                                    AUTHINFO                                                                   NAMESPACE</span><br><span class="line">*         vcluster_my-vcluster_vcluster-my-vcluster_kubernetes-admin@cluster.local   vcluster_my-vcluster_vcluster-my-vcluster_kubernetes-admin@cluster.local   vcluster_my-vcluster_vcluster-my-vcluster_kubernetes-admin@cluster.local</span><br><span class="line"></span><br><span class="line">$ kubectl get nodes -o wide</span><br><span class="line">NAME          STATUS   ROLES           AGE     VERSION   INTERNAL-IP     EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION               CONTAINER-RUNTIME</span><br><span class="line">node12   Ready    control-plane   9m59s   v1.27.2   10.10.50.155   &lt;none&gt;        CentOS Linux 7 (Core)   5.7.12-1.el7.elrepo.x86_64   docker://23.0.6</span><br><span class="line">node13   Ready    &lt;none&gt;          9m59s   v1.27.2   10.10.9.202    &lt;none&gt;        CentOS Linux 7 (Core)   5.7.12-1.el7.elrepo.x86_64   docker://24.0.6</span><br><span class="line">node14   Ready    &lt;none&gt;          9m59s   v1.27.2   10.10.7.186    &lt;none&gt;        CentOS Linux 7 (Core)   5.7.12-1.el7.elrepo.x86_64   docker://24.0.6</span><br><span class="line">node11   Ready    &lt;none&gt;          9m59s   v1.27.2   10.10.53.174   &lt;none&gt;        CentOS Linux 7 (Core)   5.7.12-1.el7.elrepo.x86_64   docker://23.0.6</span><br></pre></td></tr></table></figure>
+
+<p>Check the node labels:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get nodes -o wide --show-labels</span><br><span class="line">NAME          STATUS   ROLES           AGE   VERSION   INTERNAL-IP     EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION               CONTAINER-RUNTIME   LABELS</span><br><span class="line">node14   Ready    &lt;none&gt;          14m   v1.27.2   10.10.7.186    &lt;none&gt;        CentOS Linux 7 (Core)   5.7.12-1.el7.elrepo.x86_64   docker://24.0.6     beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/fio=<span class="literal">true</span>,kubernetes.io/hostname=node14,kubernetes.io/os=linux</span><br><span class="line">[...]</span><br></pre></td></tr></table></figure>
+
+<p>Note: The node label which was created in host cluster is also available in vcluster. In this example, the label is “fio&#x3D;true”</p>
+<p>Disconnect from the vcluster:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ vcluster disconnect</span><br><span class="line">$ <span class="built_in">exit</span></span><br><span class="line">$ kubectl config get-contexts</span><br><span class="line">CURRENT   NAME                             CLUSTER         AUTHINFO           NAMESPACE</span><br><span class="line">*         kubernetes-admin@cluster.local   cluster.local   kubernetes-admin</span><br><span class="line"></span><br><span class="line">$ vcluster list</span><br><span class="line"></span><br><span class="line">       NAME     |      NAMESPACE       | STATUS  | VERSION | CONNECTED |            CREATED            | AGE  | PRO</span><br><span class="line">  --------------+----------------------+---------+---------+-----------+-------------------------------+------+------</span><br><span class="line">    my-vcluster | vcluster-my-vcluster | Running | 0.16.4  |           | 2023-10-31 23:00:35 +0000 UTC | 6m6s |</span><br></pre></td></tr></table></figure>
+
+<p>Create storageclass in host cluster:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> sc.yaml</span><br><span class="line">apiVersion: storage.k8s.io/v1</span><br><span class="line">kind: StorageClass</span><br><span class="line">metadata:</span><br><span class="line">  name: fio-sc</span><br><span class="line">provisioner: pxd.portworx.com</span><br><span class="line">parameters:</span><br><span class="line">  repl: <span class="string">&quot;1&quot;</span></span><br><span class="line">  sharedv4: <span class="string">&quot;true&quot;</span></span><br><span class="line">  nodes: <span class="string">&quot;20a547ae-b610-4939-94a8-3a87c87ee9b6&quot;</span></span><br><span class="line">reclaimPolicy: Retain</span><br><span class="line">allowVolumeExpansion: <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">$ kubectl apply -f sc.yaml</span><br></pre></td></tr></table></figure>
+
+<p>Verify the storageclass in vcluster:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ vcluster connect my-vcluster -n vcluster-my-vcluster -- bash</span><br><span class="line"></span><br><span class="line">$ kubectl get sc | grep fio-sc</span><br><span class="line">fio-sc    pxd.portworx.com                Retain          Immediate           <span class="literal">true</span>                   44s</span><br></pre></td></tr></table></figure>
+
+<p>Note: The storageclass created in host cluster is also available in vcluster.</p>
+<p>Create namespace in vcluster:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl create ns app-fio</span><br><span class="line"></span><br><span class="line">$ kubectl get ns</span><br><span class="line">NAME              STATUS   AGE</span><br><span class="line">default           Active   22m</span><br><span class="line">kube-system       Active   22m</span><br><span class="line">kube-public       Active   22m</span><br><span class="line">kube-node-lease   Active   22m</span><br><span class="line">app-fio           Active   4s</span><br></pre></td></tr></table></figure>
+
+<p>Verify namespace in host cluster context:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl config get-contexts</span><br><span class="line">CURRENT   NAME                             CLUSTER         AUTHINFO           NAMESPACE</span><br><span class="line">*         kubernetes-admin@cluster.local   cluster.local   kubernetes-admin</span><br><span class="line"></span><br><span class="line">$ kubectl get ns</span><br><span class="line">NAME                   STATUS   AGE</span><br><span class="line">default                Active   41h</span><br><span class="line">kube-node-lease        Active   41h</span><br><span class="line">kube-public            Active   41h</span><br><span class="line">kube-system            Active   41h</span><br><span class="line">portworx               Active   31h</span><br><span class="line">vcluster-my-vcluster   Active   24m</span><br></pre></td></tr></table></figure>
+
+<p>Note: The created namespace in vcluster does not appear in the host cluster context.</p>
+<p>Create fio pod in vcluster:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> fio-pod.yaml</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: PersistentVolumeClaim</span><br><span class="line">metadata:</span><br><span class="line">  name: fio-pvc1</span><br><span class="line">  namespace: app-fio</span><br><span class="line">  annotations:</span><br><span class="line">    volume.beta.kubernetes.io/storage-class: fio-sc</span><br><span class="line">spec:</span><br><span class="line">  accessModes:</span><br><span class="line">    - ReadWriteMany</span><br><span class="line">  resources:</span><br><span class="line">    requests:</span><br><span class="line">      storage: 500Gi</span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: fio-pod1</span><br><span class="line">  namespace: app-fio</span><br><span class="line">spec:</span><br><span class="line">  affinity:</span><br><span class="line">    nodeAffinity:</span><br><span class="line">      requiredDuringSchedulingIgnoredDuringExecution:</span><br><span class="line">        nodeSelectorTerms:</span><br><span class="line">        - matchExpressions:</span><br><span class="line">          - key: kubernetes.io/fio</span><br><span class="line">            operator: In</span><br><span class="line">            values:</span><br><span class="line">            - <span class="string">&quot;true&quot;</span></span><br><span class="line">  containers:</span><br><span class="line">  - name: fio-pod-container1</span><br><span class="line">    image: ljishen/fio:3.6</span><br><span class="line">    <span class="built_in">command</span>: [ <span class="string">&quot;sleep&quot;</span> ]</span><br><span class="line">    args: [ <span class="string">&quot;30d&quot;</span> ]</span><br><span class="line">    volumeMounts:</span><br><span class="line">      - name: fio-vol1</span><br><span class="line">        mountPath: /mnt/data1</span><br><span class="line">  volumes:</span><br><span class="line">    - name: fio-vol1</span><br><span class="line">      persistentVolumeClaim:</span><br><span class="line">        claimName: fio-pvc1</span><br><span class="line"></span><br><span class="line">$ kubectl apply -f fio-pod.yaml</span><br></pre></td></tr></table></figure>
+
+<p>Verfiy POD and PVCs in vcluster:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods -n app-fio -o wide</span><br><span class="line">NAME       READY   STATUS    RESTARTS   AGE     IP               NODE          NOMINATED NODE   READINESS GATES</span><br><span class="line">fio-pod1   1/1     Running   0          9m29s   10.10.126.209   node14   &lt;none&gt;           &lt;none&gt;</span><br><span class="line"></span><br><span class="line">$ kubectl get pvc -n app-fio</span><br><span class="line">NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS      AGE</span><br><span class="line">fio-pvc1   Bound    pvc-9997f6a0-b584-4b1b-b520-4ebe1afefffe   500Gi      RWX            fio-sc   4m2s</span><br></pre></td></tr></table></figure>
+
+<p>Connect to the POD in vcluster:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl <span class="built_in">exec</span> -it fio-pod1 -n app-fio -- sh</span><br><span class="line">/ <span class="comment"># hostname</span></span><br><span class="line">fio-pod1</span><br></pre></td></tr></table></figure>
+
+<p>Verify POD and PVCs in the host cluster context:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl config get-contexts</span><br><span class="line">CURRENT   NAME                             CLUSTER         AUTHINFO           NAMESPACE</span><br><span class="line">*         kubernetes-admin@cluster.local   cluster.local   kubernetes-admin</span><br><span class="line"></span><br><span class="line">$ kubectl get ns</span><br><span class="line">NAME                   STATUS   AGE</span><br><span class="line">default                Active   41h</span><br><span class="line">kube-node-lease        Active   41h</span><br><span class="line">kube-public            Active   41h</span><br><span class="line">kube-system            Active   41h</span><br><span class="line">portworx               Active   31h</span><br><span class="line">vcluster-my-vcluster   Active   51m</span><br><span class="line"></span><br><span class="line">$ kubectl get pod</span><br><span class="line">No resources found <span class="keyword">in</span> default namespace.</span><br><span class="line">$ kubectl get pvc</span><br><span class="line">No resources found <span class="keyword">in</span> default namespace.</span><br><span class="line"></span><br><span class="line">$ kubectl get pod -n app-fio</span><br><span class="line">No resources found <span class="keyword">in</span> app-fio namespace.</span><br><span class="line">$ kubectl get pvc -n app-fio</span><br><span class="line">No resources found <span class="keyword">in</span> app-fio namespace</span><br></pre></td></tr></table></figure>
+
+<p>Note: The created namespace <em>app-fio</em> doesn’t appear in the host cluster context. Thus, the related POD and PVCs doesn’t appear either.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.vcluster.com/docs/getting-started/setup">https://www.vcluster.com/docs/getting-started/setup</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Kubernetes/" rel="tag"><i class="fa fa-tag"></i> Kubernetes</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/common-used-functions-in-python/" rel="prev" title="Common used functions in Python">
+                  <i class="fa fa-angle-left"></i> Common used functions in Python
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/art-sketch-2023/" rel="next" title="Art - Sketch 2023">
+                  Art - Sketch 2023 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

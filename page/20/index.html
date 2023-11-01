@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">259</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">260</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">259</span>
+          <span class="site-state-item-count">260</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,281 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/fio-benchmark-on-multiple-files/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/fio-benchmark-on-multiple-files/" class="post-title-link" itemprop="url">fio benchmark on multiple files</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-10-13 07:00:00" itemprop="dateCreated datePublished" datetime="2021-10-13T07:00:00-07:00">2021-10-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="fio-directory-and-filename-options"><a href="#fio-directory-and-filename-options" class="headerlink" title="fio directory and filename options"></a>fio <em>directory</em> and <em>filename</em> options</h2><p>To run fio benchmark on multiple files or deives, we should understand the following fio options.</p>
+<ul>
+<li>directory&#x3D;str</li>
+</ul>
+<p>Prefix filenames with this directory. Used to place files in a different location than .&#x2F;. You can specify a number of directories by separating the names with a ‘:’ character. These directories will be assigned equally distributed to job clones created by numjobs as long as they are using generated filenames. If specific filename(s) are set fio will use the first listed directory, and thereby matching the filename semantic (which generates a file for each clone if not specified, but lets all clones use the same file if set).</p>
+<ul>
+<li>filename&#x3D;str</li>
+</ul>
+<p>Fio normally makes up a filename based on the job name, thread number, and file number (see filename_format). If you want to share files between threads in a job or several jobs with fixed file paths, specify a filename for each of them to override the default. If the ioengine is file based, you can specify a number of files by separating the names with a ‘:’ colon. So if you wanted a job to open &#x2F;dev&#x2F;sda and &#x2F;dev&#x2F;sdb as the two working files, you would use filename&#x3D;&#x2F;dev&#x2F;sda:&#x2F;dev&#x2F;sdb. This also means that whenever this option is specified, nrfiles is ignored. The size of regular files specified by this option will be size divided by number of files unless an explicit size is specified by filesize.</p>
+<h2 id="Run-fio-on-single-directory"><a href="#Run-fio-on-single-directory" class="headerlink" title="Run fio on single directory"></a>Run fio on single directory</h2><p>The following example runs four fio jobs on single directory <em>dir1</em>. Four different files are laid out automatically before the benchmark.</p>
+<pre><code>$ fio --name=4kwrite --ioengine=libaio --directory=dir1 --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+4kwrite: (g=0): rw=write, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=128
+...
+fio-3.7
+Starting 4 processes
+4kwrite: Laying out IO file (1 file / 10240MiB)
+4kwrite: Laying out IO file (1 file / 10240MiB)
+4kwrite: Laying out IO file (1 file / 10240MiB)
+4kwrite: Laying out IO file (1 file / 10240MiB)
+bs: 4 (f=4): [W(4)][4.5%][r=0KiB/s,w=394MiB/s][r=0,w=101k IOPS][eta 01m:46s]
+&lt;...&gt;
+
+$ ps -ef |grep fio | grep -v grep
+root     25940 27212 23 21:10 pts/1    00:00:00 fio --name=4kwrite --ioengine=libaio --directory=dir1 --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+root     25976 25940 27 21:10 ?        00:00:01 fio --name=4kwrite --ioengine=libaio --directory=dir1 --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+root     25977 25940 28 21:10 ?        00:00:01 fio --name=4kwrite --ioengine=libaio --directory=dir1 --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+root     25978 25940 28 21:10 ?        00:00:01 fio --name=4kwrite --ioengine=libaio --directory=dir1 --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+root     25979 25940 27 21:10 ?        00:00:01 fio --name=4kwrite --ioengine=libaio --directory=dir1 --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+
+$ lsof | egrep &quot;dir1&quot;
+fio       25976          root    3u      REG              253,2 10737418240   23782491 /dir1/4kwrite.0.0
+fio       25977          root    3u      REG              253,2 10737418240   23782492 /dir1/4kwrite.3.0
+fio       25978          root    3u      REG              253,2 10737418240   23782495 /dir1/4kwrite.2.0
+fio       25979          root    3u      REG              253,2 10737418240    5234528 /dir1/4kwrite.1.0
+
+$ ls -la dir1 | grep write
+-rw-r--r-- 1 root root 10737418240 Mar  1 21:11 4kwrite.0.0
+-rw-r--r-- 1 root root 10737418240 Mar  1 21:11 4kwrite.1.0
+-rw-r--r-- 1 root root 10737418240 Mar  1 21:11 4kwrite.2.0
+-rw-r--r-- 1 root root 10737418240 Mar  1 21:11 4kwrite.3.0
+</code></pre>
+<h2 id="Run-fio-on-multiple-directories"><a href="#Run-fio-on-multiple-directories" class="headerlink" title="Run fio on multiple directories"></a>Run fio on multiple directories</h2><p>The following example runs four fio jobs on two directories <em>dir1</em> and <em>dir2</em>. Two files are laid out automatically under each directory.</p>
+<pre><code>$ fio --name=4kwrite --ioengine=libaio --directory=dir1:dir2 --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+
+$ ps -ef |grep fio | grep write
+root     27362 27212  3 21:13 pts/1    00:00:01 fio --name=4kwrite --ioengine=libaio --directory=dir1:dir2 --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+root     27396 27362 29 21:13 ?        00:00:08 fio --name=4kwrite --ioengine=libaio --directory=dir1:dir2 --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+root     27397 27362 30 21:13 ?        00:00:08 fio --name=4kwrite --ioengine=libaio --directory=dir1:dir2 --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+root     27398 27362 31 21:13 ?        00:00:09 fio --name=4kwrite --ioengine=libaio --directory=dir1:dir2 --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+root     27399 27362 30 21:13 ?        00:00:08 fio --name=4kwrite --ioengine=libaio --directory=dir1:dir2 --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+
+$ lsof | egrep &quot;dir1|dir2&quot;
+fio       27396          root    3u      REG              253,2 10737418240   23782491 /dir1/4kwrite.0.0
+fio       27397          root    3u      REG              253,2 10737418240  538334779 /dir2/4kwrite.3.0
+fio       27398          root    3u      REG              253,2 10737418240   23782492 /dir1/4kwrite.2.0
+fio       27399          root    3u      REG              253,2 10737418240  538334780 /dir2/4kwrite.1.0
+
+$ ls -ltr dir*/
+dir2/:
+total 20971520
+-rw-r--r-- 1 root root 10737418240 Mar  1 21:13 4kwrite.3.0
+-rw-r--r-- 1 root root 10737418240 Mar  1 21:13 4kwrite.1.0
+
+dir1/:
+total 20971520
+-rw-r--r-- 1 root root 10737418240 Mar  1 21:13 4kwrite.2.0
+-rw-r--r-- 1 root root 10737418240 Mar  1 21:13 4kwrite.0.0
+</code></pre>
+<p>If the option <em>filename</em> is specified, only the first listed directory will be used to create files.</p>
+<pre><code>$ fio --name=4kwrite --ioengine=libaio --directory=dir1:dir2 --filename=testfile --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+
+$ ps -ef |grep fio | grep write
+root     29764 27212  8 21:17 pts/1    00:00:00 fio --name=4kwrite --ioengine=libaio --directory=dir1:dir2 --filename=testfile --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+root     29798 29764 33 21:17 ?        00:00:04 fio --name=4kwrite --ioengine=libaio --directory=dir1:dir2 --filename=testfile --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+root     29799 29764 35 21:17 ?        00:00:04 fio --name=4kwrite --ioengine=libaio --directory=dir1:dir2 --filename=testfile --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+root     29800 29764 35 21:17 ?        00:00:04 fio --name=4kwrite --ioengine=libaio --directory=dir1:dir2 --filename=testfile --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+root     29801 29764 33 21:17 ?        00:00:03 fio --name=4kwrite --ioengine=libaio --directory=dir1:dir2 --filename=testfile --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+
+$ lsof | egrep &quot;dir1|dir2&quot;
+fio       29798          root    3u      REG              253,2 10737418240   23782491 /dir1/testfile
+fio       29799          root    3u      REG              253,2 10737418240   23782491 /dir1/testfile
+fio       29800          root    3u      REG              253,2 10737418240   23782491 /dir1/testfile
+fio       29801          root    3u      REG              253,2 10737418240   23782491 /dir1/testfile
+
+$ ls -la dir*/
+dir1/:
+total 10485760
+drwxr-xr-x 2 root root          22 Mar  1 21:17 .
+drwxr-xr-x 7 root root         225 Mar  1 20:28 ..
+-rw-r--r-- 1 root root 10737418240 Mar  1 21:18 testfile
+
+dir2/:
+total 0
+drwxr-xr-x 2 root root   6 Mar  1 21:16 .
+drwxr-xr-x 7 root root 225 Mar  1 20:28 ..
+</code></pre>
+<h2 id="Run-multiple-fio-jobs-on-single-file"><a href="#Run-multiple-fio-jobs-on-single-file" class="headerlink" title="Run multiple fio jobs on single file"></a>Run multiple fio jobs on single file</h2><p>The following example runs four jobs on single file.</p>
+<pre><code>$ fio --name=4kwrite --ioengine=libaio --directory=dir1 --filename=testfile --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+
+$ ps -ef |grep fio | grep write
+root     28819 27212  9 21:16 pts/1    00:00:00 fio --name=4kwrite --ioengine=libaio --directory=dir1 --filename=testfile --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+root     28884 28819 34 21:16 ?        00:00:03 fio --name=4kwrite --ioengine=libaio --directory=dir1 --filename=testfile --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+root     28885 28819 33 21:16 ?        00:00:02 fio --name=4kwrite --ioengine=libaio --directory=dir1 --filename=testfile --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+root     28886 28819 36 21:16 ?        00:00:03 fio --name=4kwrite --ioengine=libaio --directory=dir1 --filename=testfile --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+root     28887 28819 35 21:16 ?        00:00:03 fio --name=4kwrite --ioengine=libaio --directory=dir1 --filename=testfile --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --numjobs=4 --iodepth=128 --direct=1 --group_reporting
+
+$ lsof | egrep &quot;dir1&quot;
+fio       28884          root    3u      REG              253,2 10737418240   23782491 /dir1/testfile
+fio       28885          root    3u      REG              253,2 10737418240   23782491 /dir1/testfile
+fio       28886          root    3u      REG              253,2 10737418240   23782491 /dir1/testfile
+fio       28887          root    3u      REG              253,2 10737418240   23782491 /dir1/testfile
+</code></pre>
+<h2 id="Run-fio-on-multiple-files-from-different-directories"><a href="#Run-fio-on-multiple-files-from-different-directories" class="headerlink" title="Run fio on multiple files from different directories"></a>Run fio on multiple files from different directories</h2><h3 id="One-job-writes-two-files"><a href="#One-job-writes-two-files" class="headerlink" title="One job writes two files"></a>One job writes two files</h3><p>In this example, there is one fio job to write two files from two different directories. The total iodepth on the two files is 128. Note that, the iodepth for each file is about 64 which is only half of the specified iodepth in the fio command.</p>
+<pre><code>$ fio --blocksize=4k --filename=/mnt/dir1/testfile:/mnt/dir2/testfile --ioengine=libaio --readwrite=write --size=50G --name=test --numjobs=1 --group_reporting --direct=1 --iodepth=128 --end_fsync=1
+test: (g=0): rw=write, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=128
+fio-3.7
+Starting 1 process
+&lt;...&gt;
+
+$ lsof | egrep &quot;/mnt/dir&quot;
+fio       74145                 root    3u      REG              252,1 53687091200         11 /mnt/dir1/testfile
+fio       74145                 root    4u      REG              252,2 53687091200         11 /mnt/dir2/testfile
+
+$ iostat -ktdx 2
+Device:                     rrqm/s   wrqm/s     r/s     w/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util
+pxd!pxd90182615933154185     0.00     0.00    0.00 98857.00     0.00 395428.00     8.00    62.86    0.64    0.00    0.64   0.01 100.00
+pxd!pxd798820514973607815     0.00     0.00    0.00 98858.00     0.00 395432.00     8.00    62.84    0.64    0.00    0.64   0.01 100.00
+</code></pre>
+<h3 id="Three-jobs-write-two-files"><a href="#Three-jobs-write-two-files" class="headerlink" title="Three jobs write two files"></a>Three jobs write two files</h3><p>In this example, there are three fio jobs and each job is to write two files. The actual iodepth on each file is ~184(roughly &#x3D; 128&#x2F;2 * 3) which is the accumulated iodepth from three jobs.</p>
+<pre><code>$ fio --blocksize=4k --filename=/mnt/dir1/testfile:/mnt/dir2/testfile --ioengine=libaio --readwrite=write --size=50G --name=test --numjobs=3 --group_reporting --direct=1 --iodepth=128 --end_fsync=1
+test: (g=0): rw=write, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=128
+...
+fio-3.7
+Starting 3 processes
+&lt;...&gt;
+
+$ lsof | egrep &quot;/mnt/dir&quot;
+fio       85081                 root    3u      REG              252,1 53687091200         11 /mnt/dir1/testfile
+fio       85081                 root    4u      REG              252,2 53687091200         11 /mnt/dir2/testfile
+fio       85082                 root    3u      REG              252,1 53687091200         11 /mnt/dir1/testfile
+fio       85082                 root    4u      REG              252,2 53687091200         11 /mnt/dir2/testfile
+fio       85083                 root    3u      REG              252,1 53687091200         11 /mnt/dir1/testfile
+fio       85083                 root    4u      REG              252,2 53687091200         11 /mnt/dir2/testfile
+
+$ iostat -ktex 2 
+pxd!pxd90182615933154185     0.00     0.50    0.00 99324.50     0.00 397300.00     8.00   184.13    1.85    0.00    1.85   0.01 100.00
+pxd!pxd798820514973607815     0.00     0.50    0.00 99324.50     0.00 397300.00     8.00   184.02    1.85    0.00    1.85   0.01 100.00
+</code></pre>
+<h3 id="Using-dedicated-jobs-writes-each-file"><a href="#Using-dedicated-jobs-writes-each-file" class="headerlink" title="Using dedicated jobs writes each file"></a>Using dedicated jobs writes each file</h3><p>In this example, there are two fio jobs and each job is to write a different file. The actual iodepth on each file is ~128 which is the same as the specified  iodepth in the fio command. This is usually expected pattern in the benchmark.</p>
+<pre><code>$ fio --blocksize=4k --ioengine=libaio --readwrite=write --size=50G --direct=1 --iodepth=128 --end_fsync=1 --group_reporting --numjobs=1 --name=job1 --filename=/mnt/dir1/testfile --name=job2 --filename=/mnt/dir2/testfile
+job1: (g=0): rw=write, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=128
+job2: (g=0): rw=write, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=128
+fio-3.7
+Starting 2 processes
+&lt;...&gt;
+
+$ lsof | egrep &quot;/mnt/dir&quot;
+fio       79794                 root    3u      REG              252,1 53687091200         11 /mnt/dir1/testfile
+fio       79795                 root    3u      REG              252,2 53687091200         11 /mnt/dir2/testfile
+
+$ iostat -ktdx 2
+pxd!pxd90182615933154185     0.00     0.00    0.00 94151.00     0.00 376604.00     8.00   127.01    1.35    0.00    1.35   0.01 100.00
+pxd!pxd798820514973607815     0.00     0.00    0.00 94152.50     0.00 376610.00     8.00   127.01    1.35    0.00    1.35   0.01 100.00
+</code></pre>
+<p>In this example, there are four fio jobs and each file is written by two jobs. The actual iodepth on each file is ~256 which is the twice of the specified  iodepth in the fio command.</p>
+<pre><code>$ fio --blocksize=4k --ioengine=libaio --readwrite=write --size=50G --direct=1 --iodepth=128 --end_fsync=1 --group_reporting --numjobs=2 --name=job1 --filename=/mnt/dir1/testfile --name=job2 --filename=/mnt/dir2/testfile
+job1: (g=0): rw=write, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=128
+...
+job2: (g=0): rw=write, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=128
+...
+fio-3.7
+Starting 4 processes
+&lt;...&gt;
+
+$ lsof | egrep &quot;/mnt/dir&quot;
+fio       81972                 root    3u      REG              252,1 53687091200         11 /mnt/dir1/testfile
+fio       81973                 root    3u      REG              252,1 53687091200         11 /mnt/dir1/testfile
+fio       81974                 root    3u      REG              252,2 53687091200         11 /mnt/dir2/testfile
+fio       81975                 root    3u      REG              252,2 53687091200         11 /mnt/dir2/testfile
+
+$ iostat -ktdx 2
+pxd!pxd90182615933154185     0.00     0.50    0.00 93394.50     0.00 373580.00     8.00   254.94    2.73    0.00    2.73   0.01 100.00
+pxd!pxd798820514973607815     0.00     0.50    0.00 93408.00     0.00 373634.00     8.00   254.96    2.73    0.00    2.73   0.01 100.00
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://fio.readthedocs.io/en/latest/fio_doc.html">https://fio.readthedocs.io/en/latest/fio_doc.html</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2740,187 +3015,6 @@ reading from file tcpdump.1000, link-type EN10MB (Ethernet)
 </li>
 </ul>
 <p>In the above example, the data are sending from 192.168.1.18 to 192.168.1.16. The average packet size is 16k which is sent over NFSv4.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/useful-tools-to-analyze-network-latency/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/useful-tools-to-analyze-network-latency/" class="post-title-link" itemprop="url">Useful tools to analyze network latency</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-08-13 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-13T07:00:00-07:00">2021-08-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h2><p>Ping is one of the most basic commands in network management, verifying network connectivity through the roundtrip times taken by the ICMP protocol packets sent to a target host.</p>
-<p>ping - send ICMP ECHO_REQUEST to network hosts</p>
-<ul>
-<li>-c count</li>
-</ul>
-<p>Stop after sending <em>count</em> ECHO_REQUEST packets. With deadline option, ping waits for count ECHO_REPLY packets, until the timeout expires.</p>
-<ul>
-<li>-i interval</li>
-</ul>
-<p>Wait interval seconds between sending each packet. The default is to wait for one  second  between each packet normally, or not to wait in flood mode. Only super-user may set interval to values less 0.2 seconds.</p>
-<pre><code>$ ping 10.10.1.17 -c 1000 -i 0.010
-PING 10.10.1.17 (10.10.1.17) 56(84) bytes of data.
-64 bytes from 10.10.1.17: icmp_seq=1 ttl=64 time=0.176 ms
-64 bytes from 10.10.1.17: icmp_seq=2 ttl=64 time=0.173 ms
-&lt;omitted...&gt;
-64 bytes from 10.10.1.17: icmp_seq=999 ttl=64 time=0.197 ms
-64 bytes from 10.10.1.17: icmp_seq=1000 ttl=64 time=0.195 ms
-
---- 10.10.1.17 ping statistics ---
-1000 packets transmitted, 1000 received, 0% packet loss, time 10992ms
-rtt min/avg/max/mdev = 0.096/0.173/0.210/0.025 ms
-</code></pre>
-<p>Round-trip time (RTT) is the duration, measured in milliseconds, from when the source server sends a request to when it receives a response from a target server. It’s a key performance metric to measure network latency.</p>
-<p>Actual round trip time can be influenced by:</p>
-<ul>
-<li>Distance – The length a signal has to travel correlates with the time taken for a request to reach a server.</li>
-<li>Transmission medium – The medium used to route a signal (e.g., copper wire, fiber optic cables) can impact how quickly a request is received by a server and routed back to a user.</li>
-<li>Number of network hops – Intermediate routers or servers take time to process a signal, increasing RTT. The more hops a signal has to travel through, the higher the RTT.</li>
-<li>Traffic levels – RTT typically increases when a network is congested with high levels of traffic. Conversely, low traffic times can result in decreased RTT.</li>
-<li>Server response time – The time taken for a target server to respond to a request depends on its processing capacity, the number of requests being handled and the nature of the request (i.e., how much server-side work is required). A longer server response time increases RTT.</li>
-</ul>
-<h2 id="traceroute"><a href="#traceroute" class="headerlink" title="traceroute"></a>traceroute</h2><p>A traceroute displays the path that the signal took as it traveled around the Internet to the website. It also displays times which are the response times that occurred at each stop along the route. If there is a connection problem or latency connecting to a site, it will show up in these times. You will be able to identify which of the stops (also called ‘hops’) along the route is the culprit.</p>
-<pre><code>$ for i in `seq 1 5`; do traceroute 10.10.1.17;sleep 3; done
-traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
- 1  10.10.1.17 (10.10.1.17)  0.181 ms  0.086 ms  0.084 ms
-traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
- 1  10.10.1.17 (10.10.1.17)  0.179 ms  0.087 ms  0.081 ms
-traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
- 1  10.10.1.17 (10.10.1.17)  0.175 ms  0.087 ms  0.081 ms
-traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
- 1  10.10.1.17 (10.10.1.17)  0.183 ms  0.073 ms  0.081 ms
-traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
- 1  10.10.1.17 (10.10.1.17)  0.177 ms  0.080 ms  0.081 ms
-</code></pre>
-<p>-<br>Hop Number – the first column is simply the number of the hop along the route.</p>
-<p>-<br>RTT Columns – The last three columns display the round trip time (RTT) for the packet to reach that point and return. It is listed in milliseconds. There are three columns because the traceroute sends three separate signal packets. This is to display consistency in the route.</p>
-<h2 id="netperf"><a href="#netperf" class="headerlink" title="netperf"></a>netperf</h2><p>Netperf is a benchmark that can be used to measure the performance of many different types of networking. It provides tests for both unidirectional throughput, and end-to-end latency. The environments currently measureable by netperf include:</p>
-<ul>
-<li><p>TCP and UDP via BSD Sockets for both IPv4 and IPv6</p>
-</li>
-<li><p>DLPI</p>
-</li>
-<li><p>Unix Domain Sockets</p>
-</li>
-<li><p>SCTP for both IPv4 and IPv6</p>
-<p>  netperf -h</p>
-<p>  Usage: netperf [global options] – [test options]</p>
-<p>  Global options:<br>  -a send,recv      Set the local send,recv buffer alignment<br>  -A send,recv      Set the remote send,recv buffer alignment<br>  -B brandstr       Specify a string to be emitted with brief output<br>  -c [cpu_rate]     Report local CPU usage<br>  -C [cpu_rate]     Report remote CPU usage<br>  -d                Increase debugging output<br>  -D [secs,units] * Display interim results at least every secs seconds<br>                    using units as the initial guess for units per second<br>  -f G|M|K|g|m|k    Set the output units<br>  -F fill_file      Pre-fill buffers with data from fill_file<br>  -h                Display this text<br>  -H name|ip,fam *  Specify the target machine and&#x2F;or local ip and family<br>  -i max,min        Specify the max and min number of iterations (15,1)<br>  -I lvl[,intvl]    Specify confidence level (95 or 99) (99)<br>                    and confidence interval in percentage (10)<br>  -j                Keep additional timing statistics<br>  -l testlen        Specify test duration (&gt;0 secs) (&lt;0 bytes|trans)<br>  -L name|ip,fam *  Specify the local ip|name and address family<br>  -o send,recv      Set the local send,recv buffer offsets<br>  -O send,recv      Set the remote send,recv buffer offset<br>  -n numcpu         Set the number of processors for CPU util<br>  -N                Establish no control connection, do ‘send’ side only<br>  -p port,lport*    Specify netserver port number and&#x2F;or local port<br>  -P 0|1            Donot&#x2F;Do display test headers<br>  -r                Allow confidence to be hit on result only<br>  -s seconds        Wait seconds between test setup and test start<br>  -S                Set SO_KEEPALIVE on the data connection<br>  -t testname       Specify test to perform<br>  -T lcpu,rcpu      Request netperf&#x2F;netserver be bound to local&#x2F;remote cpu<br>  -v verbosity      Specify the verbosity level<br>  -W send,recv      Set the number of send,recv buffers<br>  -v level          Set the verbosity level (default 1, min 0)<br>  -V                Display the netperf version and exit<br>  For those options taking two parms, at least one must be specified;<br>  specifying one value without a comma will set both parms to that<br>  value, specifying a value with a leading comma will set just the second<br>  parm, a value with a trailing comma will set just the first. To set<br>  each parm to unique values, specify both and separate them with a<br>  comma.</p>
-<ul>
-<li>For these options taking two parms, specifying one value with no comma<br>  will only set the first parms and will leave the second at the default<br>  value. To set the second value it must be preceded with a comma or be a<br>  comma-separated pair. This is to retain previous netperf behaviour.</li>
-</ul>
-<p>  $ wget -O netperf-2.5.0.tar.gz -c <a target="_blank" rel="noopener" href="https://codeload.github.com/HewlettPackard/netperf/tar.gz/netperf-2.5.0">https://codeload.github.com/HewlettPackard/netperf/tar.gz/netperf-2.5.0</a><br>  $ tar xf netperf-2.5.0.tar.gz &amp;&amp; cd netperf-netperf-2.5.0<br>  $ .&#x2F;configure &amp;&amp; make &amp;&amp; make install</p>
-<p>  [<a href="mailto:&#x72;&#111;&#x6f;&#116;&#x40;&#49;&#x30;&#x2e;&#x30;&#46;&#48;&#46;&#49;&#x37;">&#x72;&#111;&#x6f;&#116;&#x40;&#49;&#x30;&#x2e;&#x30;&#46;&#48;&#46;&#49;&#x37;</a>]$ netserver -D<br>  [<a href="mailto:&#x72;&#x6f;&#x6f;&#x74;&#64;&#x31;&#x30;&#46;&#x30;&#46;&#x30;&#46;&#x31;&#54;">&#x72;&#x6f;&#x6f;&#x74;&#64;&#x31;&#x30;&#46;&#x30;&#46;&#x30;&#46;&#x31;&#54;</a>]$ netperf -H 10.10.1.17 -l -1000000 -t TCP_RR -w 10ms -b 1 -v 2 – -O min_latency,mean_latency,max_latency,stddev_latency,transaction_rate<br>  Packet rate control is not compiled in.<br>  Packet burst size is not compiled in.<br>  MIGRATED TCP REQUEST&#x2F;RESPONSE TEST from 0.0.0.0 (0.0.0.0) port 0 AF_INET to 10.10.1.17 (10.10.1.17) port 0 AF_INET : first burst 0<br>  Minimum      Mean         Maximum      Stddev       Transaction<br>  Latency      Latency      Latency      Latency      Rate<br>  Microseconds Microseconds Microseconds Microseconds Tran&#x2F;s</p>
-<p>  63           84.92        2980         7.86         11740.092</p>
-</li>
-</ul>
-<h2 id="iperf"><a href="#iperf" class="headerlink" title="iperf"></a>iperf</h2><p>iPerf3 is a tool for active measurements of the maximum achievable bandwidth on IP networks. It supports tuning of various parameters related to timing, buffers and protocols (TCP, UDP, SCTP with IPv4 and IPv6). For each test it reports the bandwidth, loss, and other parameters.</p>
-<h2 id="lldp"><a href="#lldp" class="headerlink" title="lldp"></a>lldp</h2><p>LLDP (Link Layer Discovery Protocol) can be essential in the situations of complex network-server infrastructure configurations and it’s extremely helpful in case there is no direct access to our setup but we need to determine what network ports on the switches are our servers NIC cards connected to.</p>
-<p>Below example shows how to install and enable LLDP Daemon on CentOS and check what are the corresponding neighbor ports connected to the server network cards.</p>
-<pre><code>$ yum install lldpd
-$ systemctl --now enable lldpd
-  
-$ lldpcli show neighbors
--------------------------------------------------------------------------------
-LLDP neighbors:
--------------------------------------------------------------------------------
-Interface:    enp6s0f1, via: LLDP, RID: 1, Time: 0 day, 00:01:29
-  Chassis:
-    ChassisID:    mac 00:1c:73:82:07:ee
-    SysName:      xx-ay-01.06.09
-    SysDescr:     Arista Networks EOS version 4.16.6M running on an Arista Networks Lab-71x-28
-    MgmtIP:       10.0.254.9
-    Capability:   Bridge, on
-    Capability:   Router, on
-  Port:
-    PortID:       ifname Ethernet17
-    TTL:          120
--------------------------------------------------------------------------------
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://hewlettpackard.github.io/netperf/">https://hewlettpackard.github.io/netperf/</a></li>
-<li><a target="_blank" rel="noopener" href="https://iperf.fr/">https://iperf.fr/</a></li>
-</ul>
 
       
     </div>
