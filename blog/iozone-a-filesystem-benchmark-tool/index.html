@@ -28,7 +28,7 @@
 <meta property="og:description" content="IntroductionIOzone is a filesystem benchmark tool. The benchmark generates and measures a variety of file operations. Iozone is useful for performing a broad filesystem analysis of a vendor’s computer">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-03-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-11-02T04:22:12.000Z">
+<meta property="article:modified_time" content="2023-11-02T04:30:30.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="Iozone">
 <meta name="twitter:card" content="summary">
@@ -205,24 +205,31 @@
   </div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/thread-synchronization/" rel="bookmark">
-        <time class="popular-posts-time">2021-04-11</time>
+      <a class="popular-posts-link" href="/blog/vdbench-performance-test-on-filesystem/" rel="bookmark">
+        <time class="popular-posts-time">2021-08-24</time>
         <br>
-      Thread synchronization
+      Vdbench performance test on filesystem
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/difference-between-soft-links-and-hard-links/" rel="bookmark">
-        <time class="popular-posts-time">2023-05-20</time>
+      <a class="popular-posts-link" href="/blog/using-ftrace-to-analyze-latency-of-the-kernel-module-function/" rel="bookmark">
+        <time class="popular-posts-time">2022-07-14</time>
         <br>
-      Difference between soft links and hard links
+      Using ftrace to analyze latency of the kernel module function
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/tuned-dynamic-adaptive-system-tuning-daemon/" rel="bookmark">
-        <time class="popular-posts-time">2022-07-12</time>
+      <a class="popular-posts-link" href="/blog/surprised-how-can-the-write-throughput-be-10x-faster-than-the-cloud-native-disk-performance/" rel="bookmark">
+        <time class="popular-posts-time">2023-01-25</time>
         <br>
-      tuned - dynamic adaptive system tuning daemon
+      Surprised! How can the write IOPS be 10x faster than the cloud native disk performance
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/btrfs-a-modern-copy-on-write-cow-filesystem-for-linux/" rel="bookmark">
+        <time class="popular-posts-time">2021-08-03</time>
+        <br>
+      btrfs - A modern copy on write(CoW) filesystem for Linux
       </a>
     </li>
     <li class="popular-posts-item">
@@ -230,13 +237,6 @@
         <time class="popular-posts-time">2023-03-05</time>
         <br>
       General steps for system performance analysis
-      </a>
-    </li>
-    <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/vdbench-performance-test-on-filesystem/" rel="bookmark">
-        <time class="popular-posts-time">2021-08-24</time>
-        <br>
-      Vdbench performance test on filesystem
       </a>
     </li>
   </ul>
@@ -295,7 +295,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-11-01 21:22:12" itemprop="dateModified" datetime="2023-11-01T21:22:12-07:00">2023-11-01</time>
+      <time title="Modified: 2023-11-01 21:30:30" itemprop="dateModified" datetime="2023-11-01T21:30:30-07:00">2023-11-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -334,7 +334,7 @@
 </ul>
 <h2 id="Example-for-throughput-benchmark"><a href="#Example-for-throughput-benchmark" class="headerlink" title="Example for throughput benchmark"></a>Example for throughput benchmark</h2><p>In this example, the target is to measure the filesystem throughput(KB&#x2F;s) for different workloads with 4k iosize. The workload operations include sequential read&#x2F;write, random read&#x2F;write and mix random read&#x2F;write.</p>
 <p>We run iozone on 6 mounted filesystems and 1GB files are read and written in each filesystem.</p>
-<pre><code>$ /opt/iozone/bin/iozone -h
+<pre><code class="bash">$ /opt/iozone/bin/iozone -h
     -r #  record size in Kb
     -s #  file size in Kb
     -t #  Number of threads or processes to use in throughput test
@@ -346,93 +346,82 @@
         11=pwritev/Re-pwritev, 12=preadv/Re-preadv)
     [...]    
 
-$ /opt/iozone/bin/iozone -i 0 -i 1 -i 2 -i 8 -r 4k -s 1g -t 6 -I -F /testmnt1/testfile1 /testmnt2/testfile1 /testmnt3/testfile1 /testmnt4/testfile1 /testmnt5/testfile1 /testmnt6/testfile1 &gt; iozone.out
+$ /opt/iozone/bin/iozone -i 0 -i 1 -i 2 -i 8 -r 4k -s 1g -t 6 -I -F /testmnt1/testfile1 /testmnt2/testfile1 /testmnt3/testfile1 /testmnt4/testfile1 /testmnt5testfile1 /testmnt6/testfile1 &gt; iozone.out
 
 $ cat iozone.out
-    Iozone: Performance Test of File I/O
-            Version $Revision: 3.489 $
-        Compiled for 64 bit mode.
-        Build: linux-AMD64
-
-    Contributors:William Norcott, Don Capps, Isom Crawford, Kirby Collins
-                 Al Slater, Scott Rhine, Mike Wisner, Ken Goss
-                 Steve Landherr, Brad Smith, Mark Kelly, Dr. Alain CYR,
-                 Randy Dunlap, Mark Montague, Dan Million, Gavin Brebner,
-                 Jean-Marc Zucconi, Jeff Blomberg, Benny Halevy, Dave Boone,
-                 Erik Habbinga, Kris Strecker, Walter Wong, Joshua Root,
-                 Fabrice Bacchella, Zhenghua Xue, Qin Li, Darren Sawyer,
-                 Vangel Bojaxhi, Ben England, Vikentsi Lapa,
-                 Alexey Skidanov, Sudhir Kumar.
-
-    Run began: Mon Mar  1 12:25:11 2021
-
-    Record Size 4 kB
-    File size set to 1048576 kB
-    O_DIRECT feature enabled
-    Command line used: /opt/iozone/bin/iozone -i 0 -i 1 -i 2 -i 8 -r 4k -s 1g -t 6 -I -F /testmnt1/testfile1 /testmnt2/testfile1 /testmnt3/testfile1 /testmnt4/testfile1 /testmnt5/testfile1 /testmnt6/testfile1
-    Output is in kBytes/sec
-    Time Resolution = 0.000001 seconds.
-    Processor cache size set to 1024 kBytes.
-    Processor cache line size set to 32 bytes.
-    File stride size set to 17 * record size.
-    Throughput test with 6 processes
-    Each process writes a 1048576 kByte file in 4 kByte records
-
-    Children see throughput for  6 initial writers 	=  151721.80 kB/sec
-    Parent sees throughput for  6 initial writers 	=  146366.56 kB/sec
-    Min throughput per process 			=   24712.40 kB/sec
-    Max throughput per process 			=   25707.35 kB/sec
-    Avg throughput per process 			=   25286.97 kB/sec
-    Min xfer 					= 1007996.00 kB
-
-    Children see throughput for  6 rewriters 	=  152089.88 kB/sec
-    Parent sees throughput for  6 rewriters 	=  152084.55 kB/sec
-    Min throughput per process 			=   25109.69 kB/sec
-    Max throughput per process 			=   25674.81 kB/sec
-    Avg throughput per process 			=   25348.31 kB/sec
-    Min xfer 					= 1025500.00 kB
-
-     Children see throughput for  6 readers 		=    7618.06 kB/sec
-    Parent sees throughput for  6 readers 		=    7618.04 kB/sec
-    Min throughput per process 			=    1268.31 kB/sec
-    Max throughput per process 			=    1270.73 kB/sec
-    Avg throughput per process 			=    1269.68 kB/sec
-    Min xfer 					= 1046580.00 kB
-
-    Children see throughput for 6 re-readers 	=    7629.77 kB/sec
-    Parent sees throughput for 6 re-readers 	=    7629.74 kB/sec
-    Min throughput per process 			=    1270.79 kB/sec
-    Max throughput per process 			=    1273.63 kB/sec
-    Avg throughput per process 			=    1271.63 kB/sec
-    Min xfer 					= 1046240.00 kB
-
-    Children see throughput for 6 random readers 	=    7605.91 kB/sec
-    Parent sees throughput for 6 random readers 	=    7605.89 kB/sec
-    Min throughput per process 			=    1266.91 kB/sec
-    Max throughput per process 			=    1268.54 kB/sec
-    Avg throughput per process 			=    1267.65 kB/sec
-    Min xfer 					= 1047228.00 kB
-
-    Children see throughput for 6 mixed workload 	=   79687.92 kB/sec
-    Parent sees throughput for 6 mixed workload 	=   78974.22 kB/sec
-    Min throughput per process 			=    1275.41 kB/sec
-    Max throughput per process 			=   25449.38 kB/sec
-    Avg throughput per process 			=   13281.32 kB/sec
-    Min xfer 					=   52552.00 kB
-
-    Children see throughput for 6 random writers 	=  146210.38 kB/sec
-    Parent sees throughput for 6 random writers 	=  143822.17 kB/sec
-    Min throughput per process 			=   24206.99 kB/sec
-    Max throughput per process 			=   24653.06 kB/sec
-    Avg throughput per process 			=   24368.40 kB/sec
-    Min xfer 					= 1029604.00 kB
-
+Iozone: Performance Test of File I/O
+        Version $Revision: 3.489 $
+    Compiled for 64 bit mode.
+    Build: linux-AMD64
+Contributors:William Norcott, Don Capps, Isom Crawford, Kirby Collins
+             Al Slater, Scott Rhine, Mike Wisner, Ken Goss
+             Steve Landherr, Brad Smith, Mark Kelly, Dr. Alain CYR,
+             Randy Dunlap, Mark Montague, Dan Million, Gavin Brebner,
+             Jean-Marc Zucconi, Jeff Blomberg, Benny Halevy, Dave Boone,
+             Erik Habbinga, Kris Strecker, Walter Wong, Joshua Root,
+             Fabrice Bacchella, Zhenghua Xue, Qin Li, Darren Sawyer,
+             Vangel Bojaxhi, Ben England, Vikentsi Lapa,
+             Alexey Skidanov, Sudhir Kumar.
+Run began: Mon Mar  1 12:25:11 2021
+Record Size 4 kB
+File size set to 1048576 kB
+O_DIRECT feature enabled
+Command line used: /opt/iozone/bin/iozone -i 0 -i 1 -i 2 -i 8 -r 4k -s 1g -t 6 -I -F /testmnt1/testfile1 /testmnt2/testfile1 /testmnt3/testfile1 /testmnt4testfile1 /testmnt5/testfile1 /testmnt6/testfile1
+Output is in kBytes/sec
+Time Resolution = 0.000001 seconds.
+Processor cache size set to 1024 kBytes.
+Processor cache line size set to 32 bytes.
+File stride size set to 17 * record size.
+Throughput test with 6 processes
+Each process writes a 1048576 kByte file in 4 kByte records
+Children see throughput for  6 initial writers 	=  151721.80 kB/sec
+Parent sees throughput for  6 initial writers 	=  146366.56 kB/sec
+Min throughput per process 			=   24712.40 kB/sec
+Max throughput per process 			=   25707.35 kB/sec
+Avg throughput per process 			=   25286.97 kB/sec
+Min xfer 					= 1007996.00 kB
+Children see throughput for  6 rewriters 	=  152089.88 kB/sec
+Parent sees throughput for  6 rewriters 	=  152084.55 kB/sec
+Min throughput per process 			=   25109.69 kB/sec
+Max throughput per process 			=   25674.81 kB/sec
+Avg throughput per process 			=   25348.31 kB/sec
+Min xfer 					= 1025500.00 kB
+Children see throughput for  6 readers 		=    7618.06 kB/sec
+Parent sees throughput for  6 readers 		=    7618.04 kB/sec
+Min throughput per process 			=    1268.31 kB/sec
+Max throughput per process 			=    1270.73 kB/sec
+Avg throughput per process 			=    1269.68 kB/sec
+Min xfer 					= 1046580.00 kB
+Children see throughput for 6 re-readers 	=    7629.77 kB/sec
+Parent sees throughput for 6 re-readers 	=    7629.74 kB/sec
+Min throughput per process 			=    1270.79 kB/sec
+Max throughput per process 			=    1273.63 kB/sec
+Avg throughput per process 			=    1271.63 kB/sec
+Min xfer 					= 1046240.00 kB
+Children see throughput for 6 random readers 	=    7605.91 kB/sec
+Parent sees throughput for 6 random readers 	=    7605.89 kB/sec
+Min throughput per process 			=    1266.91 kB/sec
+Max throughput per process 			=    1268.54 kB/sec
+Avg throughput per process 			=    1267.65 kB/sec
+Min xfer 					= 1047228.00 kB
+Children see throughput for 6 mixed workload 	=   79687.92 kB/sec
+Parent sees throughput for 6 mixed workload 	=   78974.22 kB/sec
+Min throughput per process 			=    1275.41 kB/sec
+Max throughput per process 			=   25449.38 kB/sec
+Avg throughput per process 			=   13281.32 kB/sec
+Min xfer 					=   52552.00 kB
+Children see throughput for 6 random writers 	=  146210.38 kB/sec
+Parent sees throughput for 6 random writers 	=  143822.17 kB/sec
+Min throughput per process 			=   24206.99 kB/sec
+Max throughput per process 			=   24653.06 kB/sec
+Avg throughput per process 			=   24368.40 kB/sec
+Min xfer 					= 1029604.00 kB
 iozone test complete.   
 </code></pre>
 <h2 id="iostat"><a href="#iostat" class="headerlink" title="iostat"></a>iostat</h2><p>In the above test, we use a flash array with single 500TB LUN created. There are 4 active paths from host to the single LUN. Six logical volumes and filesystems are created on the single LUN.</p>
 <p>The following is a piece of iostat output for one of the four disks(paths) when the mix random read&#x2F;write workload is running. The read throughput is ~940KB&#x2F;s and the write throughput is 19MB&#x2F;s.</p>
 <p>To measure the maximum throughput, we need keep increasing the number of read&#x2F;write threads until the throughput(KB&#x2F;s) is capped. Also, the iosize has big impact on the throughput. We may test with different I&#x2F;O sizes.</p>
-<pre><code>Device:         rrqm/s   wrqm/s     r/s     w/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util
+<pre><code class="bash">Device:         rrqm/s   wrqm/s     r/s     w/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util
 sdd               0.00     0.00  189.80 4255.20   759.20 17020.80     8.00     1.13    0.25    3.07    0.13   0.18  81.80
 sdd               0.00     0.00  237.20 4708.20   948.80 18832.80     8.00     1.35    0.27    3.08    0.13   0.20  96.94
 sdd               0.00     0.00  235.40 4898.20   941.60 19592.80     8.00     1.37    0.27    3.06    0.13   0.19  99.54
