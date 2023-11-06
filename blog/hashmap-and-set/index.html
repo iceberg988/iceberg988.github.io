@@ -28,7 +28,7 @@
 <meta property="og:description" content="IntroHashmap is indexed data structures. A hash map makes use of a hash function to compute an index with a key into an array of buckets or slots. Its value is mapped to the bucket with the correspond">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-10-03T22:06:23.000Z">
-<meta property="article:modified_time" content="2023-10-29T00:31:40.000Z">
+<meta property="article:modified_time" content="2023-11-06T04:24:52.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="Data structure">
@@ -156,7 +156,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-1657-Determine-if-Two-Strings-Are-Close"><span class="nav-number">2.</span> <span class="nav-text">[Leetcode 1657] Determine if Two Strings Are Close</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-380-Insert-Delete-GetRandom-O-1"><span class="nav-number">2.</span> <span class="nav-text">[Leetcode 380] Insert Delete GetRandom O(1)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-1657-Determine-if-Two-Strings-Are-Close"><span class="nav-number">3.</span> <span class="nav-text">[Leetcode 1657] Determine if Two Strings Are Close</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -215,24 +215,10 @@
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/array-and-string/" rel="bookmark">
-        <time class="popular-posts-time">2023-10-01</time>
+      <a class="popular-posts-link" href="/blog/algorithm-questions/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-17</time>
         <br>
-      Array and string
-      </a>
-    </li>
-    <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/stringbuilder-implementation-in-python/" rel="bookmark">
-        <time class="popular-posts-time">2023-04-12</time>
-        <br>
-      StringBuilder implementation in Python
-      </a>
-    </li>
-    <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/trie/" rel="bookmark">
-        <time class="popular-posts-time">2023-10-08</time>
-        <br>
-      Trie (Prefix Tree)
+      Leetcode algorithm questions
       </a>
     </li>
     <li class="popular-posts-item">
@@ -240,6 +226,20 @@
         <time class="popular-posts-time">2023-10-20</time>
         <br>
       Common used functions in Python
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/sliding-window/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-02</time>
+        <br>
+      Sliding window
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/trie/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-08</time>
+        <br>
+      Trie (Prefix Tree)
       </a>
     </li>
   </ul>
@@ -298,7 +298,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-28 17:31:40" itemprop="dateModified" datetime="2023-10-28T17:31:40-07:00">2023-10-28</time>
+      <time title="Modified: 2023-11-05 20:24:52" itemprop="dateModified" datetime="2023-11-05T20:24:52-08:00">2023-11-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -332,6 +332,25 @@
     
     <div class="post-body" itemprop="articleBody"><h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p><strong>Hashmap</strong> is indexed data structures. A hash map makes use of a hash function to compute an index with a key into an array of buckets or slots. Its value is mapped to the bucket with the corresponding index. The key is unique and immutable. Hash function is the core of <a href="https://www.flamingbytes.com/blog/hash-table-implementation-in-python/">implementing a hash map</a>. It takes in the key and translates it to the index of a bucket in the bucket list. Ideal hashing should produce a different index for each key. However, collisions can occur. When hashing gives an existing index, we can simply use a bucket for multiple values by appending a list or by rehashing.<span id="more"></span></p>
 <p>A <strong>Set</strong> in Python is an unordered collection data type that is iterable, mutable and has no duplicate elements. Set are represented by {} (values enclosed in curly braces). The major advantage of using a set, as opposed to a list, is that it has a highly optimized method for checking whether a specific element is contained in the set. This is based on a data structure known as a hash table. Since sets are unordered, we cannot access items using indexes as we do in lists.</p>
+<h2 id="Leetcode-380-Insert-Delete-GetRandom-O-1"><a href="#Leetcode-380-Insert-Delete-GetRandom-O-1" class="headerlink" title="[Leetcode 380] Insert Delete GetRandom O(1)"></a>[Leetcode 380] Insert Delete GetRandom O(1)</h2><p>Implement the RandomizedSet class:</p>
+<ul>
+<li>RandomizedSet() Initializes the RandomizedSet object.</li>
+<li>bool insert(int val) Inserts an item val into the set if not present. Returns true if the item was not present, false otherwise.</li>
+<li>bool remove(int val) Removes an item val from the set if present. Returns true if the item was present, false otherwise.</li>
+<li>int getRandom() Returns a random element from the current set of elements (it’s guaranteed that at least one element exists when this method is called). Each element must have the same probability of being returned.</li>
+</ul>
+<p>You must implement the functions of the class such that each function works in average O(1) time complexity.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Input:</span><br><span class="line">[&quot;RandomizedSet&quot;, &quot;insert&quot;, &quot;remove&quot;, &quot;insert&quot;, &quot;getRandom&quot;, &quot;remove&quot;, &quot;insert&quot;, &quot;getRandom&quot;]</span><br><span class="line">[[], [1], [2], [2], [], [1], [2], []]</span><br><span class="line">Output:</span><br><span class="line">[null, true, false, true, 2, true, false, 2]</span><br><span class="line"></span><br><span class="line">Explanation</span><br><span class="line">RandomizedSet randomizedSet = new RandomizedSet();</span><br><span class="line">randomizedSet.insert(1); // Inserts 1 to the set. Returns true as 1 was inserted successfully.</span><br><span class="line">randomizedSet.remove(2); // Returns false as 2 does not exist in the set.</span><br><span class="line">randomizedSet.insert(2); // Inserts 2 to the set, returns true. Set now contains [1,2].</span><br><span class="line">randomizedSet.getRandom(); // getRandom() should return either 1 or 2 randomly.</span><br><span class="line">randomizedSet.remove(1); // Removes 1 from the set, returns true. Set now contains [2].</span><br><span class="line">randomizedSet.insert(2); // 2 was already in the set, so return false.</span><br><span class="line">randomizedSet.getRandom(); // Since 2 is the only number in the set, getRandom() will always return 2.</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>-231 &lt;&#x3D; val &lt;&#x3D; 231 - 1</li>
+<li>At most 2 * 105 calls will be made to insert, remove, and getRandom.</li>
+<li>There will be at least one element in the data structure when getRandom is called.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RandomizedSet</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.nums = [] <span class="comment"># for random access</span></span><br><span class="line">        self.<span class="built_in">map</span> = &#123;&#125;  <span class="comment"># value to index map helps locate the target value in array to be removed</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">insert</span>(<span class="params">self, val: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">if</span> val <span class="keyword">in</span> self.<span class="built_in">map</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        self.nums.append(val)  <span class="comment"># always append to the end of list</span></span><br><span class="line">        self.<span class="built_in">map</span>[val] = <span class="built_in">len</span>(self.nums) - <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">remove</span>(<span class="params">self, val: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">if</span> val <span class="keyword">not</span> <span class="keyword">in</span> self.<span class="built_in">map</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># get the index of target value</span></span><br><span class="line">        index = self.<span class="built_in">map</span>[val]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># swap the target value with the last value in array</span></span><br><span class="line">        <span class="keyword">if</span> index != <span class="built_in">len</span>(self.nums) - <span class="number">1</span>:</span><br><span class="line">            <span class="comment"># replace with the last element</span></span><br><span class="line">            lastIdx = <span class="built_in">len</span>(self.nums) - <span class="number">1</span></span><br><span class="line">            lastVal = self.nums[lastIdx]</span><br><span class="line">            self.nums[index], self.nums[lastIdx] = lastVal, val</span><br><span class="line">            self.<span class="built_in">map</span>[lastVal] = index</span><br><span class="line"></span><br><span class="line">        <span class="comment"># remove the target value from array</span></span><br><span class="line">        self.nums.pop()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># remove the target value from map</span></span><br><span class="line">        <span class="keyword">del</span> self.<span class="built_in">map</span>[val]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># random access to the array</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">getRandom</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">return</span> self.nums[random.randint(<span class="number">0</span>, <span class="built_in">len</span>(self.nums) - <span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Your RandomizedSet object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"># obj = RandomizedSet()</span></span><br><span class="line"><span class="comment"># param_1 = obj.insert(val)</span></span><br><span class="line"><span class="comment"># param_2 = obj.remove(val)</span></span><br><span class="line"><span class="comment"># param_3 = obj.getRandom()</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="Leetcode-1657-Determine-if-Two-Strings-Are-Close"><a href="#Leetcode-1657-Determine-if-Two-Strings-Are-Close" class="headerlink" title="[Leetcode 1657] Determine if Two Strings Are Close"></a>[Leetcode 1657] Determine if Two Strings Are Close</h2><p>Two strings are considered close if you can attain one from the other using the following operations:</p>
 <ul>
 <li>Operation 1: Swap any two existing characters.<br>For example, abcde -&gt; aecdb</li>
