@@ -1,3 +1,5 @@
+https://www.flamingbytes.com/blog/binary-tree-in-python/
+https://www.flamingbytes.com/blog/binary-tree-traversal-inorder-preorder-and-postorder/
 https://www.flamingbytes.com/blog/common-used-functions-in-python/
 https://www.flamingbytes.com/blog/greedy-algorithm/
 https://www.flamingbytes.com/blog/algorithm-questions/
@@ -52,7 +54,6 @@ https://www.flamingbytes.com/blog/art-spiderman/
 https://www.flamingbytes.com/blog/benchmark-es-cluster-with-rally/
 https://www.flamingbytes.com/blog/binary-search-tree-in-python/
 https://www.flamingbytes.com/blog/big-red-book-report/
-https://www.flamingbytes.com/blog/binary-tree-traversal-inorder-preorder-and-postorder/
 https://www.flamingbytes.com/blog/art-water-color/
 https://www.flamingbytes.com/blog/blktrace-a-block-layer-io-tracing-utility/
 https://www.flamingbytes.com/blog/backup-and-restore-mysql-database/

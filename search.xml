@@ -2831,143 +2831,29 @@ open files                      (-n) 1048576
   <entry>
     <title>Binary tree traversal - inorder, preorder and postorder</title>
     <url>/blog/binary-tree-traversal-inorder-preorder-and-postorder/</url>
-    <content><![CDATA[<h2 id="Tree-node-definition"><a href="#Tree-node-definition" class="headerlink" title="Tree node definition"></a>Tree node definition</h2><pre><code>class Node:
-    def __init__(self, val):
-        self.val = val
-        self.left = None
-        self.right = None
-</code></pre>
+    <content><![CDATA[<h2 id="Tree-node-definition"><a href="#Tree-node-definition" class="headerlink" title="Tree node definition"></a>Tree node definition</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Node</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, val</span>):</span><br><span class="line">        self.val = val</span><br><span class="line">        self.left = <span class="literal">None</span></span><br><span class="line">        self.right = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
 <p>To build the tree nodes:</p>
-<pre><code>root = Node(0)
-n1 = Node(1)
-n2 = Node(2)
-root.left = n1
-root.right = n2
-n3 = Node(3)
-n4 = Node(4)
-n1.left = n3
-n1.right = n4
-n5 = Node(5)
-n6 = Node(6)
-n2.left = n5
-n2.right = n6
-n7 = Node(7)
-n8 = Node(8)
-n3.left = n7
-n3.right = n8
-</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">root = Node(<span class="number">0</span>)</span><br><span class="line">n1 = Node(<span class="number">1</span>)</span><br><span class="line">n2 = Node(<span class="number">2</span>)</span><br><span class="line">root.left = n1</span><br><span class="line">root.right = n2</span><br><span class="line">n3 = Node(<span class="number">3</span>)</span><br><span class="line">n4 = Node(<span class="number">4</span>)</span><br><span class="line">n1.left = n3</span><br><span class="line">n1.right = n4</span><br><span class="line">n5 = Node(<span class="number">5</span>)</span><br><span class="line">n6 = Node(<span class="number">6</span>)</span><br><span class="line">n2.left = n5</span><br><span class="line">n2.right = n6</span><br><span class="line">n7 = Node(<span class="number">7</span>)</span><br><span class="line">n8 = Node(<span class="number">8</span>)</span><br><span class="line">n3.left = n7</span><br><span class="line">n3.right = n8</span><br></pre></td></tr></table></figure>
+
 <p>The tree looks like below:</p>
-<pre><code>               0
-             /   \
-            1     2
-           / \   / \
-          3   4 5   6
-         / \
-        7   8 
-</code></pre>
-<h2 id="Pre-order-traversal"><a href="#Pre-order-traversal" class="headerlink" title="Pre-order traversal"></a>Pre-order traversal</h2><pre><code>def pre_order_traverse(node):
-    if node == None:
-        return
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">               <span class="number">0</span></span><br><span class="line">             /   \</span><br><span class="line">            <span class="number">1</span>     <span class="number">2</span></span><br><span class="line">           / \   / \</span><br><span class="line">          <span class="number">3</span>   <span class="number">4</span> <span class="number">5</span>   <span class="number">6</span></span><br><span class="line">         / \</span><br><span class="line">        <span class="number">7</span>   <span class="number">8</span> </span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Node</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, val</span>):</span><br><span class="line">        self.val = val</span><br><span class="line">        self.left = <span class="literal">None</span></span><br><span class="line">        self.right = <span class="literal">None</span></span><br><span class="line">```  </span><br><span class="line">   </span><br><span class="line">To build the tree nodes:</span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">root = Node(<span class="number">0</span>)</span><br><span class="line">n1 = Node(<span class="number">1</span>)</span><br><span class="line">n2 = Node(<span class="number">2</span>)</span><br><span class="line">root.left = n1</span><br><span class="line">root.right = n2</span><br><span class="line">n3 = Node(<span class="number">3</span>)</span><br><span class="line">n4 = Node(<span class="number">4</span>)</span><br><span class="line">n1.left = n3</span><br><span class="line">n1.right = n4</span><br><span class="line">n5 = Node(<span class="number">5</span>)</span><br><span class="line">n6 = Node(<span class="number">6</span>)</span><br><span class="line">n2.left = n5</span><br><span class="line">n2.right = n6</span><br><span class="line">n7 = Node(<span class="number">7</span>)</span><br><span class="line">n8 = Node(<span class="number">8</span>)</span><br><span class="line">n3.left = n7</span><br><span class="line">n3.right = n8</span><br></pre></td></tr></table></figure>
 
-    print(f&quot;&#123;node.val&#125; &quot;, end=&quot;&quot;)
-    pre_order_traverse(node.left)
-    pre_order_traverse(node.right)
-    
-pre_order_traverse(root)
-print()
-</code></pre>
-<p>Output: 0 1 3 7 8 4 2 5 6</p>
-<h2 id="In-order-traversal"><a href="#In-order-traversal" class="headerlink" title="In-order traversal"></a>In-order traversal</h2><pre><code>def in_order_traverse(node):
-    if node == None:
-        return
+<p>The tree looks like below:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">       <span class="number">0</span></span><br><span class="line">     /   \</span><br><span class="line">    <span class="number">1</span>     <span class="number">2</span></span><br><span class="line">   / \   / \</span><br><span class="line">  <span class="number">3</span>   <span class="number">4</span> <span class="number">5</span>   <span class="number">6</span></span><br><span class="line"> / \</span><br><span class="line"><span class="number">7</span>   <span class="number">8</span> </span><br></pre></td></tr></table></figure>
 
-    in_order_traverse(node.left)
-    print(f&quot;&#123;node.val&#125; &quot;, end=&quot;&quot;)
-    in_order_traverse(node.right)
+<h2 id="Pre-order-traversal"><a href="#Pre-order-traversal" class="headerlink" title="Pre-order traversal"></a>Pre-order traversal</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">pre_order_traverse</span>(<span class="params">node</span>):</span><br><span class="line">    <span class="keyword">if</span> node == <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;node.val&#125;</span> &quot;</span>, end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    pre_order_traverse(node.left)</span><br><span class="line">    pre_order_traverse(node.right)</span><br><span class="line">    </span><br><span class="line">pre_order_traverse(root)</span><br><span class="line"><span class="built_in">print</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">#Output: 0 1 3 7 8 4 2 5 6</span></span><br></pre></td></tr></table></figure>
 
-in_order_traverse(root)
-print()
-</code></pre>
-<p>Output: 7 3 8 1 4 0 5 2 6</p>
-<h2 id="Post-order-traversal"><a href="#Post-order-traversal" class="headerlink" title="Post-order traversal"></a>Post-order traversal</h2><pre><code>def post_order_traverse(node):
-    if node == None:
-        return
+<h2 id="In-order-traversal"><a href="#In-order-traversal" class="headerlink" title="In-order traversal"></a>In-order traversal</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">in_order_traverse</span>(<span class="params">node</span>):</span><br><span class="line">    <span class="keyword">if</span> node == <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    in_order_traverse(node.left)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;node.val&#125;</span> &quot;</span>, end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    in_order_traverse(node.right)</span><br><span class="line"></span><br><span class="line">in_order_traverse(root)</span><br><span class="line"><span class="built_in">print</span>()</span><br><span class="line">    </span><br><span class="line"><span class="comment">#Output: 7 3 8 1 4 0 5 2 6</span></span><br></pre></td></tr></table></figure>
 
-    post_order_traverse(node.left)
-    post_order_traverse(node.right)
-    print(f&quot;&#123;node.val&#125; &quot;, end=&quot;&quot;)
+<h2 id="Post-order-traversal"><a href="#Post-order-traversal" class="headerlink" title="Post-order traversal"></a>Post-order traversal</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">post_order_traverse</span>(<span class="params">node</span>):</span><br><span class="line">    <span class="keyword">if</span> node == <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    post_order_traverse(node.left)</span><br><span class="line">    post_order_traverse(node.right)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;node.val&#125;</span> &quot;</span>, end=<span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line">post_order_traverse(root)</span><br><span class="line"><span class="built_in">print</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">#Output: 7 8 3 4 1 5 6 2 0</span></span><br></pre></td></tr></table></figure>
 
-post_order_traverse(root)
-print()
-</code></pre>
-<p>Output: 7 8 3 4 1 5 6 2 0</p>
-<h2 id="Get-tree-size"><a href="#Get-tree-size" class="headerlink" title="Get tree size"></a>Get tree size</h2><pre><code>def size(node):
-    if node == None:
-        return 0
+<h2 id="Get-tree-size"><a href="#Get-tree-size" class="headerlink" title="Get tree size"></a>Get tree size</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">size</span>(<span class="params">node</span>):</span><br><span class="line">    <span class="keyword">if</span> node == <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> size(node.left) + <span class="number">1</span> + size(node.right)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;size: <span class="subst">&#123;size(root)&#125;</span>&quot;</span>)</span><br><span class="line">    </span><br><span class="line"><span class="comment">#Output:</span></span><br><span class="line"><span class="comment">#size: 9</span></span><br></pre></td></tr></table></figure>
 
-    return size(node.left) + 1 + size(node.right)
+<h2 id="Get-tree-depth"><a href="#Get-tree-depth" class="headerlink" title="Get tree depth"></a>Get tree depth</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">depth</span>(<span class="params">node</span>):</span><br><span class="line">    <span class="keyword">if</span> node == <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">max</span>(depth(node.left), depth(node.right)) + <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;depth: <span class="subst">&#123;depth(root)&#125;</span>&quot;</span>)</span><br><span class="line">    </span><br><span class="line"><span class="comment">#Output:</span></span><br><span class="line"><span class="comment">#depth: 4</span></span><br></pre></td></tr></table></figure>
 
-print(f&quot;size: &#123;size(root)&#125;&quot;)
-</code></pre>
-<p>Output:</p>
-<p>size: 9</p>
-<h2 id="Get-tree-depth"><a href="#Get-tree-depth" class="headerlink" title="Get tree depth"></a>Get tree depth</h2><pre><code>def depth(node):
-    if node == None:
-        return 0
+<h2 id="Print-all-the-paths-in-the-tree"><a href="#Print-all-the-paths-in-the-tree" class="headerlink" title="Print all the paths in the tree"></a>Print all the paths in the tree</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">printPaths</span>(<span class="params">node, path</span>):</span><br><span class="line">    <span class="keyword">if</span> node == <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># add node to the path</span></span><br><span class="line">    path.append(node.val)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> node.left == <span class="literal">None</span> <span class="keyword">and</span> node.right == <span class="literal">None</span>:</span><br><span class="line">        <span class="comment"># this is leaf node</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;path : &quot;</span>, end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">        <span class="keyword">for</span> n <span class="keyword">in</span> path:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;n&#125;</span> &quot;</span>, end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># search left subtree</span></span><br><span class="line">        printPaths(node.left, path)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># search right subtree</span></span><br><span class="line">        printPaths(node.right, path)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># remove node from path</span></span><br><span class="line">    path.pop()</span><br><span class="line">    </span><br><span class="line">printPaths(root, <span class="built_in">list</span>())</span><br><span class="line"></span><br><span class="line"><span class="comment">#Output:</span></span><br><span class="line"><span class="comment">#path : 0 1 3 7</span></span><br><span class="line"><span class="comment">#path : 0 1 3 8</span></span><br><span class="line"><span class="comment">#path : 0 1 4</span></span><br><span class="line"><span class="comment">#path : 0 2 5</span></span><br><span class="line"><span class="comment">#path : 0 2 6</span></span><br></pre></td></tr></table></figure>
 
-    return max(depth(node.left), depth(node.right)) + 1
-
-print(f&quot;depth: &#123;depth(root)&#125;&quot;)
-</code></pre>
-<p>Output:</p>
-<p>depth: 4</p>
-<h2 id="Print-all-the-paths-in-the-tree"><a href="#Print-all-the-paths-in-the-tree" class="headerlink" title="Print all the paths in the tree"></a>Print all the paths in the tree</h2><pre><code>def printPaths(node, path):
-    if node == None:
-        return
-
-    # add node to the path
-    path.append(node.val)
-
-    if node.left == None and node.right == None:
-        # this is leaf node
-        print(&quot;path : &quot;, end=&quot;&quot;)
-        for n in path:
-            print(f&quot;&#123;n&#125; &quot;, end=&quot;&quot;)
-        print()
-    else:
-        # search left subtree
-        printPaths(node.left, path)
-
-        # search right subtree
-        printPaths(node.right, path)
-
-    # remove node from path
-    path.pop()
-    
-printPaths(root, list())
-</code></pre>
-<p>Output:</p>
-<p>path : 0 1 3 7</p>
-<p>path : 0 1 3 8</p>
-<p>path : 0 1 4</p>
-<p>path : 0 2 5</p>
-<p>path : 0 2 6</p>
-<h2 id="Check-if-path-exists-for-target-sum"><a href="#Check-if-path-exists-for-target-sum" class="headerlink" title="Check if path exists for target sum"></a>Check if path exists for target sum</h2><pre><code>def hasPathSum(node, sum):
-    if node == None:
-        return sum == 0
-
-    sum -= node.val
-
-    return hasPathSum(node.left, sum) or hasPathSum(node.right, sum)
-    
-print(hasPathSum(root, 7))
-print(hasPathSum(root, 12))
-print(hasPathSum(root, 10))
-</code></pre>
-<p>Output:</p>
-<p>True</p>
-<p>True</p>
-<p>False</p>
+<h2 id="Check-if-path-exists-for-target-sum"><a href="#Check-if-path-exists-for-target-sum" class="headerlink" title="Check if path exists for target sum"></a>Check if path exists for target sum</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">hasPathSum</span>(<span class="params">node, <span class="built_in">sum</span></span>):</span><br><span class="line">    <span class="keyword">if</span> node == <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">sum</span> == <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">sum</span> -= node.val</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> hasPathSum(node.left, <span class="built_in">sum</span>) <span class="keyword">or</span> hasPathSum(node.right, <span class="built_in">sum</span>)</span><br><span class="line">    </span><br><span class="line"><span class="built_in">print</span>(hasPathSum(root, <span class="number">7</span>))</span><br><span class="line"><span class="built_in">print</span>(hasPathSum(root, <span class="number">12</span>))</span><br><span class="line"><span class="built_in">print</span>(hasPathSum(root, <span class="number">10</span>))</span><br><span class="line">    </span><br><span class="line"><span class="comment">#Output:</span></span><br><span class="line"><span class="comment">#True</span></span><br><span class="line"><span class="comment">#True</span></span><br><span class="line"><span class="comment">#False</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Tech</category>
@@ -24196,6 +24082,34 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
       </categories>
       <tags>
         <tag>Kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Binary tree in Python</title>
+    <url>/blog/binary-tree-in-python/</url>
+    <content><![CDATA[<h2 id="Leetcode-226-Invert-Binary-Tree"><a href="#Leetcode-226-Invert-Binary-Tree" class="headerlink" title="[Leetcode 226] Invert Binary Tree"></a>[Leetcode 226] Invert Binary Tree</h2><p>Given the root of a binary tree, invert the tree, and return its root.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: root = [4,2,7,1,3,6,9]</span><br><span class="line">Output: [4,7,2,9,6,3,1]</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: root = [2,1,3]</span><br><span class="line">Output: [2,3,1]</span><br></pre></td></tr></table></figure>
+
+<p>Example 3:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: root = []</span><br><span class="line">Output: []</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>The number of nodes in the tree is in the range [0, 100].</li>
+<li>-100 &lt;&#x3D; Node.val &lt;&#x3D; 100</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"># class TreeNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, val=0, left=None, right=None):</span></span><br><span class="line"><span class="comment">#         self.val = val</span></span><br><span class="line"><span class="comment">#         self.left = left</span></span><br><span class="line"><span class="comment">#         self.right = right</span></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">invertTree</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode]</span>) -&gt; <span class="type">Optional</span>[TreeNode]:</span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> root</span><br><span class="line"></span><br><span class="line">        qu = deque()</span><br><span class="line">        qu.append(root)</span><br><span class="line">        <span class="keyword">while</span> <span class="built_in">len</span>(qu) &gt; <span class="number">0</span>:</span><br><span class="line">            node = qu.popleft()</span><br><span class="line">            node.left, node.right = node.right, node.left</span><br><span class="line">            <span class="keyword">if</span> node.left != <span class="literal">None</span>:</span><br><span class="line">                qu.append(node.left)</span><br><span class="line">            <span class="keyword">if</span> node.right != <span class="literal">None</span>:</span><br><span class="line">                qu.append(node.right)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> root</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">invertTree_recursive</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode]</span>) -&gt; <span class="type">Optional</span>[TreeNode]:</span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> root</span><br><span class="line"></span><br><span class="line">        root.left, root.right = root.right, root.left</span><br><span class="line"></span><br><span class="line">        self.invertTree(root.left)</span><br><span class="line">        self.invertTree(root.right)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> root</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">invertTree_preorder</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode]</span>) -&gt; <span class="type">Optional</span>[TreeNode]:</span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> root</span><br><span class="line"></span><br><span class="line">        st = []</span><br><span class="line">        st.append(root)</span><br><span class="line">        <span class="keyword">while</span> <span class="built_in">len</span>(st) &gt; <span class="number">0</span>:</span><br><span class="line">            node = st.pop()</span><br><span class="line">            node.left, node.right = node.right, node.left</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> node.left != <span class="literal">None</span>:</span><br><span class="line">                st.append(node.left)</span><br><span class="line">            <span class="keyword">if</span> node.right != <span class="literal">None</span>:</span><br><span class="line">                st.append(node.right)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> root</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Tech</category>
+        <category>Programming</category>
+      </categories>
+      <tags>
+        <tag>Leetcode</tag>
+        <tag>Binary Search</tag>
       </tags>
   </entry>
 </search>

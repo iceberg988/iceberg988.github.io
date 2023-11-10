@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">260</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">261</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">260</span>
+          <span class="site-state-item-count">261</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,103 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/binary-tree-in-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/binary-tree-in-python/" class="post-title-link" itemprop="url">Binary tree in Python</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-11-09 22:33:06 / Modified: 22:35:44" itemprop="dateCreated datePublished" datetime="2023-11-09T22:33:06-08:00">2023-11-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Leetcode-226-Invert-Binary-Tree"><a href="#Leetcode-226-Invert-Binary-Tree" class="headerlink" title="[Leetcode 226] Invert Binary Tree"></a>[Leetcode 226] Invert Binary Tree</h2><p>Given the root of a binary tree, invert the tree, and return its root.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: root = [4,2,7,1,3,6,9]</span><br><span class="line">Output: [4,7,2,9,6,3,1]</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: root = [2,1,3]</span><br><span class="line">Output: [2,3,1]</span><br></pre></td></tr></table></figure>
+
+<p>Example 3:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: root = []</span><br><span class="line">Output: []</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>The number of nodes in the tree is in the range [0, 100].</li>
+<li>-100 &lt;&#x3D; Node.val &lt;&#x3D; 100</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"># class TreeNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, val=0, left=None, right=None):</span></span><br><span class="line"><span class="comment">#         self.val = val</span></span><br><span class="line"><span class="comment">#         self.left = left</span></span><br><span class="line"><span class="comment">#         self.right = right</span></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">invertTree</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode]</span>) -&gt; <span class="type">Optional</span>[TreeNode]:</span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> root</span><br><span class="line"></span><br><span class="line">        qu = deque()</span><br><span class="line">        qu.append(root)</span><br><span class="line">        <span class="keyword">while</span> <span class="built_in">len</span>(qu) &gt; <span class="number">0</span>:</span><br><span class="line">            node = qu.popleft()</span><br><span class="line">            node.left, node.right = node.right, node.left</span><br><span class="line">            <span class="keyword">if</span> node.left != <span class="literal">None</span>:</span><br><span class="line">                qu.append(node.left)</span><br><span class="line">            <span class="keyword">if</span> node.right != <span class="literal">None</span>:</span><br><span class="line">                qu.append(node.right)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> root</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">invertTree_recursive</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode]</span>) -&gt; <span class="type">Optional</span>[TreeNode]:</span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> root</span><br><span class="line"></span><br><span class="line">        root.left, root.right = root.right, root.left</span><br><span class="line"></span><br><span class="line">        self.invertTree(root.left)</span><br><span class="line">        self.invertTree(root.right)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> root</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">invertTree_preorder</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode]</span>) -&gt; <span class="type">Optional</span>[TreeNode]:</span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> root</span><br><span class="line"></span><br><span class="line">        st = []</span><br><span class="line">        st.append(root)</span><br><span class="line">        <span class="keyword">while</span> <span class="built_in">len</span>(st) &gt; <span class="number">0</span>:</span><br><span class="line">            node = st.pop()</span><br><span class="line">            node.left, node.right = node.right, node.left</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> node.left != <span class="literal">None</span>:</span><br><span class="line">                st.append(node.left)</span><br><span class="line">            <span class="keyword">if</span> node.right != <span class="literal">None</span>:</span><br><span class="line">                st.append(node.right)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> root</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1060,105 +1157,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/monotonic-stack/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/monotonic-stack/" class="post-title-link" itemprop="url">Monotonic stack</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-10-12 22:02:28" itemprop="dateCreated datePublished" datetime="2023-10-12T22:02:28-07:00">2023-10-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-28 16:37:38" itemprop="dateModified" datetime="2023-10-28T16:37:38-07:00">2023-10-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="What-is-a-Monotonic-Stack"><a href="#What-is-a-Monotonic-Stack" class="headerlink" title="What is a Monotonic Stack"></a>What is a Monotonic Stack</h2><p>A monotonic stack is a stack whose elements are monotonically increasing or decreasing. It contains all properties that a typical stack has and its elements are  monotonic decreasing or increasing.</p>
-<p>Monotonic increasing stack: [2  3  5  6  9]<br>Monotonic decreasing stack: [9  6  5  3  2]</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/monotonic-stack/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

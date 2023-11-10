@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">260</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">261</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">260</span>
+          <span class="site-state-item-count">261</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,702 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/crdb-sysbench/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/crdb-sysbench/" class="post-title-link" itemprop="url">Use sysbench for CockroachDB performance benchmarking</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-08 12:08:00" itemprop="dateCreated datePublished" datetime="2022-12-08T12:08:00-08:00">2022-12-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>Cockroach uses TPC-C as the official OLTP workload benchmark since it’s a more realistic measurement by modeling the real world applications.</p>
+<p>However, <a target="_blank" rel="noopener" href="https://github.com/akopytov/sysbench">sysbench</a> is a straight-forward throughput&#x2F;latency benchmarking tool. It is a scriptable multi-threaded benchmark tool based on LuaJIT. It is most frequently used for database benchmarks, but can also be used to create arbitrarily complex workloads that do not involve a database server.</p>
+<ul>
+<li>oltp_*.lua: a collection of OLTP-like database benchmarks</li>
+<li>fileio: a filesystem-level benchmark</li>
+<li>cpu: a simple CPU benchmark</li>
+<li>memory: a memory access benchmark</li>
+<li>threads: a thread-based scheduler benchmark</li>
+<li>mutex: a POSIX mutex benchmark</li>
+</ul>
+<p>This Cockroach <a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/blog/unpacking-competitive-benchmarks/">blog</a> explains why we use sysbench for competitive benchmarks.</p>
+<p>Sysbench contains a collection of simple SQL workloads. These workloads perform low-level SQL operations. For example, they run concurrent INSERT or UPDATE statements on rows as fast as possible. It gives us a picture on the system performance under different access patterns. Unlike TPC-C, Sysbench does not attempt to model a real application.</p>
+<p>Sysbench includes the following workloads:</p>
+<ul>
+<li>oltp_point_select: single-row point selects</li>
+<li>oltp_insert: single-row inserts</li>
+<li>oltp_delete: single-row deletes</li>
+<li>oltp_update_index: single-row update on column that requires update to secondary index</li>
+<li>oltp_update_non_index single-row: update on column that does not require update to secondary index</li>
+<li>oltp_read_only: transactions that run collection of small scans</li>
+<li>oltp_read_write: transactions that run collection of small scans and writes</li>
+<li>oltp_write_only: transactions that run collection of writes</li>
+</ul>
+<p>Sysbench supports the following two database drivers.</p>
+<ul>
+<li>mysql - MySQL driver</li>
+<li>pgsql - PostgreSQL driver</li>
+</ul>
+<p>From this Cockroach <a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/blog/why-postgres/">blog</a>, CockroachDB is compatible with PostgreSQL.</p>
+<p>In this article, we will explore how to run sysbench with CockroachDB using pqsql driver.</p>
+<h2 id="Install-the-CockroachDB-cluster"><a href="#Install-the-CockroachDB-cluster" class="headerlink" title="Install the CockroachDB cluster"></a>Install the CockroachDB cluster</h2><p>Refer to this <a href="https://www.flamingbytes.com/blog/cockroachdb-performance-benchmarking/">post</a> on how to deploy CockroachDB cluster.</p>
+<pre><code>[root@crdb_node1 ~]# cockroach version
+Build Tag:        v22.1.6
+Build Time:       2022/08/23 17:05:04
+Distribution:     CCL
+Platform:         linux amd64 (x86_64-pc-linux-gnu)
+Go Version:       go1.17.11
+C Compiler:       gcc 6.5.0
+Build Commit ID:  760a8253ae6478d69da0330133e3efec8e950e4e
+Build Type:       release
+</code></pre>
+<h2 id="Interact-with-the-CockroachDB"><a href="#Interact-with-the-CockroachDB" class="headerlink" title="Interact with the CockroachDB"></a>Interact with the CockroachDB</h2><h3 id="Use-the-CockroachDB-built-in-client"><a href="#Use-the-CockroachDB-built-in-client" class="headerlink" title="Use the CockroachDB built-in client"></a>Use the CockroachDB built-in client</h3><p>CockroachDB comes with a built-in client for executing SQL statements from an interactive shell or directly from the command line.</p>
+<p>To use this client, run the cockroach sql command as following:</p>
+<pre><code>[root@node0 ~]# cockroach sql --insecure --host=node1:26257 -e &#39;create database testdb&#39;
+
+[root@node0 ~]# cockroach sql --insecure --host=node1:26257 -e &#39;show databases&#39;
+  database_name | owner | primary_region | regions | survival_goal
+----------------+-------+----------------+---------+----------------
+  defaultdb     | root  | NULL           | &#123;&#125;      | NULL
+  postgres      | root  | NULL           | &#123;&#125;      | NULL
+  system        | node  | NULL           | &#123;&#125;      | NULL
+  testdb        | root  | NULL           | &#123;&#125;      | NULL
+(4 rows)
+
+[root@node0 ~]# cockroach sql --insecure --host=node1:26257 -e &#39;show tables from testdb&#39;
+SHOW TABLES 0
+
+[root@node0 ~]# cockroach sql --insecure --host=node1:26257 -e &#39;drop database testdb&#39;
+</code></pre>
+<h3 id="Use-the-Postgres-client"><a href="#Use-the-Postgres-client" class="headerlink" title="Use the Postgres client"></a>Use the Postgres client</h3><p>The cockroachDB can also be interacted by using Postgres client.</p>
+<p>To install the Postgres client:</p>
+<pre><code>[root@node0 ~]# yum -y install postgresql postgresql-libs
+Installed:
+  postgresql.x86_64 0:9.2.24-8.el7_9
+</code></pre>
+<p>To create the database and user:</p>
+<pre><code>[root@node0 ~]# psql -h node1 -U root -p 26257
+psql (9.2.24, server 13.0.0)
+
+root=&gt; create database testdb;
+root=&gt; create user tester;
+root=&gt; grant all on database testdb to tester;
+
+root=&gt; show databases;
+ database_name | owner | primary_region | regions | survival_goal
+---------------+-------+----------------+---------+---------------
+ defaultdb     | root  |                | &#123;&#125;      |
+ postgres      | root  |                | &#123;&#125;      |
+ system        | node  |                | &#123;&#125;      |
+ testdb        | root  |                | &#123;&#125;      |
+(4 rows)
+
+root=&gt; show users;
+ username | options | member_of
+----------+---------+-----------
+ admin    |         | &#123;&#125;
+ root     |         | &#123;admin&#125;
+ tester   |         | &#123;&#125;
+(3 rows)
+
+root=&gt; \c testdb;
+psql (9.2.24, server 13.0.0)
+WARNING: psql version 9.2, server version 13.0.
+         Some psql features might not work.
+You are now connected to database &quot;testdb&quot; as user &quot;root&quot;.
+
+testdb=&gt; \dt;
+                          List of relations
+    Schema    |       Name        | Type  |          Owner
+--------------+-------------------+-------+--------------------------
+ pg_extension | geography_columns | table | unknown (OID=3233629770)
+ pg_extension | geometry_columns  | table | unknown (OID=3233629770)
+ pg_extension | spatial_ref_sys   | table | unknown (OID=3233629770)
+(3 rows)
+
+testdb=&gt;  SELECT * FROM pg_catalog.pg_tables where schemaname != &#39;pg_catalog&#39; AND schemaname != &#39;information_schema&#39; and schemaname != &#39;crdb_internal&#39;;
+  schemaname  |     tablename     | tableowner | tablespace | hasindexes | hasrules | hastriggers | rowsecurity
+--------------+-------------------+------------+------------+------------+----------+-------------+-------------
+ pg_extension | geography_columns | node       |            | f          | f        | f           | f
+ pg_extension | geometry_columns  | node       |            | f          | f        | f           | f
+ pg_extension | spatial_ref_sys   | node       |            | f          | f        | f           | f
+(3 rows)
+</code></pre>
+<h2 id="Install-sysbench"><a href="#Install-sysbench" class="headerlink" title="Install sysbench"></a>Install sysbench</h2><p>To install sysbench:</p>
+<pre><code>[root@node0 ~]# curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.rpm.sh | sudo bash^C
+[root@node0 ~]# sudo yum -y install sysbench
+[root@node0 ~]# sysbench --version
+sysbench 1.0.20
+</code></pre>
+<p>To get familiar with the sysbench parameters:</p>
+<pre><code>[root@node0 ~]# sysbench --help
+Usage:
+  sysbench [options]... [testname] [command]
+
+Commands implemented by most tests: prepare run cleanup help
+
+General options:
+  --threads=N                     number of threads to use [1]
+  --events=N                      limit for total number of events [0]
+  --time=N                        limit for total execution time in seconds [10]
+  --forced-shutdown=STRING        number of seconds to wait after the --time limit before forcing shutdown, or &#39;off&#39; to disable [off]
+  --thread-stack-size=SIZE        size of stack per thread [64K]
+  --rate=N                        average transactions rate. 0 for unlimited rate [0]
+  --report-interval=N             periodically report intermediate statistics with a specified interval in seconds. 0 disables intermediate reports [0]
+  --report-checkpoints=[LIST,...] dump full statistics and reset all counters at specified points in time. The argument is a list of comma-separated values representing the amount of time in seconds elapsed from start of test when report checkpoint(s) must be performed. Report checkpoints are off by default. []
+  --debug[=on|off]                print more debugging info [off]
+  --validate[=on|off]             perform validation checks where possible [off]
+  --help[=on|off]                 print help and exit [off]
+  --version[=on|off]              print version and exit [off]
+  --config-file=FILENAME          File containing command line options
+  --tx-rate=N                     deprecated alias for --rate [0]
+  --max-requests=N                deprecated alias for --events [0]
+  --max-time=N                    deprecated alias for --time [0]
+  --num-threads=N                 deprecated alias for --threads [1]
+
+Pseudo-Random Numbers Generator options:
+  --rand-type=STRING random numbers distribution &#123;uniform,gaussian,special,pareto&#125; [special]
+  --rand-spec-iter=N number of iterations used for numbers generation [12]
+  --rand-spec-pct=N  percentage of values to be treated as &#39;special&#39; (for special distribution) [1]
+  --rand-spec-res=N  percentage of &#39;special&#39; values to use (for special distribution) [75]
+  --rand-seed=N      seed for random number generator. When 0, the current time is used as a RNG seed. [0]
+  --rand-pareto-h=N  parameter h for pareto distribution [0.2]
+
+Log options:
+  --verbosity=N verbosity level &#123;5 - debug, 0 - only critical messages&#125; [3]
+
+  --percentile=N       percentile to calculate in latency statistics (1-100). Use the special value of 0 to disable percentile calculations [95]
+  --histogram[=on|off] print latency histogram in report [off]
+
+General database options:
+
+  --db-driver=STRING  specifies database driver to use (&#39;help&#39; to get list of available drivers) [mysql]
+  --db-ps-mode=STRING prepared statements usage mode &#123;auto, disable&#125; [auto]
+  --db-debug[=on|off] print database-specific debug information [off]
+
+
+Compiled-in database drivers:
+  mysql - MySQL driver
+  pgsql - PostgreSQL driver
+
+mysql options:
+  --mysql-host=[LIST,...]          MySQL server host [localhost]
+  --mysql-port=[LIST,...]          MySQL server port [3306]
+  --mysql-socket=[LIST,...]        MySQL socket
+  --mysql-user=STRING              MySQL user [sbtest]
+  --mysql-password=STRING          MySQL password []
+  --mysql-db=STRING                MySQL database name [sbtest]
+  --mysql-ssl[=on|off]             use SSL connections, if available in the client library [off]
+  --mysql-ssl-cipher=STRING        use specific cipher for SSL connections []
+  --mysql-compression[=on|off]     use compression, if available in the client library [off]
+  --mysql-debug[=on|off]           trace all client library calls [off]
+  --mysql-ignore-errors=[LIST,...] list of errors to ignore, or &quot;all&quot; [1213,1020,1205]
+  --mysql-dry-run[=on|off]         Dry run, pretend that all MySQL client API calls are successful without executing them [off]
+
+pgsql options:
+  --pgsql-host=STRING     PostgreSQL server host [localhost]
+  --pgsql-port=N          PostgreSQL server port [5432]
+  --pgsql-user=STRING     PostgreSQL user [sbtest]
+  --pgsql-password=STRING PostgreSQL password []
+  --pgsql-db=STRING       PostgreSQL database name [sbtest]
+
+Compiled-in tests:
+  fileio - File I/O test
+  cpu - CPU performance test
+  memory - Memory functions speed test
+  threads - Threads subsystem performance test
+  mutex - Mutex performance test
+
+See &#39;sysbench &lt;testname&gt; help&#39; for a list of options for each test.
+</code></pre>
+<p>Sysbench includes the following lua scripts to simulate OLTP workloads.</p>
+<pre><code>[root@node0 ~]# ls -l /usr/share/sysbench/
+total 60
+-rwxr-xr-x   1 root root  1452 Apr 24  2020 bulk_insert.lua
+-rw-r--r--   1 root root 14369 Apr 24  2020 oltp_common.lua
+-rwxr-xr-x   1 root root  1290 Apr 24  2020 oltp_delete.lua
+-rwxr-xr-x   1 root root  2415 Apr 24  2020 oltp_insert.lua
+-rwxr-xr-x   1 root root  1265 Apr 24  2020 oltp_point_select.lua
+-rwxr-xr-x   1 root root  1649 Apr 24  2020 oltp_read_only.lua
+-rwxr-xr-x   1 root root  1824 Apr 24  2020 oltp_read_write.lua
+-rwxr-xr-x   1 root root  1118 Apr 24  2020 oltp_update_index.lua
+-rwxr-xr-x   1 root root  1127 Apr 24  2020 oltp_update_non_index.lua
+-rwxr-xr-x   1 root root  1440 Apr 24  2020 oltp_write_only.lua
+-rwxr-xr-x   1 root root  1919 Apr 24  2020 select_random_points.lua
+-rwxr-xr-x   1 root root  2118 Apr 24  2020 select_random_ranges.lua
+drwxr-xr-x   4 root root    49 Dec  8 20:39 tests
+
+[root@node0 ~]# ls -l /usr/share/sysbench/tests/include/oltp_legacy/
+total 52
+-rw-r--r-- 1 root root 1195 Apr 24  2020 bulk_insert.lua
+-rw-r--r-- 1 root root 4696 Apr 24  2020 common.lua
+-rw-r--r-- 1 root root  366 Apr 24  2020 delete.lua
+-rw-r--r-- 1 root root 1171 Apr 24  2020 insert.lua
+-rw-r--r-- 1 root root 3004 Apr 24  2020 oltp.lua
+-rw-r--r-- 1 root root  368 Apr 24  2020 oltp_simple.lua
+-rw-r--r-- 1 root root  527 Apr 24  2020 parallel_prepare.lua
+-rw-r--r-- 1 root root  369 Apr 24  2020 select.lua
+-rw-r--r-- 1 root root 1448 Apr 24  2020 select_random_points.lua
+-rw-r--r-- 1 root root 1556 Apr 24  2020 select_random_ranges.lua
+-rw-r--r-- 1 root root  369 Apr 24  2020 update_index.lua
+-rw-r--r-- 1 root root  578 Apr 24  2020 update_non_index.lua
+</code></pre>
+<p>To get more options for each specific lua workload:</p>
+<pre><code>[root@node0 ~]# sysbench /usr/share/sysbench/oltp_insert.lua help
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+oltp_insert.lua options:
+  --auto_inc[=on|off]           Use AUTO_INCREMENT column as Primary Key (for MySQL), or its alternatives in other DBMS. When disabled, use client-generated IDs [on]
+  --create_secondary[=on|off]   Create a secondary index in addition to the PRIMARY KEY [on]
+  --delete_inserts=N            Number of DELETE/INSERT combinations per transaction [1]
+  --distinct_ranges=N           Number of SELECT DISTINCT queries per transaction [1]
+  --index_updates=N             Number of UPDATE index queries per transaction [1]
+  --mysql_storage_engine=STRING Storage engine, if MySQL is used [innodb]
+  --non_index_updates=N         Number of UPDATE non-index queries per transaction [1]
+  --order_ranges=N              Number of SELECT ORDER BY queries per transaction [1]
+  --pgsql_variant=STRING        Use this PostgreSQL variant when running with the PostgreSQL driver. The only currently supported variant is &#39;redshift&#39;. When enabled, create_secondary is automatically disabled, and delete_inserts is set to 0
+  --point_selects=N             Number of point SELECT queries per transaction [10]
+  --range_selects[=on|off]      Enable/disable all range SELECT queries [on]
+  --range_size=N                Range size for range SELECT queries [100]
+  --secondary[=on|off]          Use a secondary index in place of the PRIMARY KEY [off]
+  --simple_ranges=N             Number of simple range SELECT queries per transaction [1]
+  --skip_trx[=on|off]           Don&#39;t start explicit transactions and execute all queries in the AUTOCOMMIT mode [off]
+  --sum_ranges=N                Number of SELECT SUM() queries per transaction [1]
+  --table_size=N                Number of rows per table [10000]
+  --tables=N                    Number of tables [1]
+
+[root@node0 ~]# sysbench /usr/share/sysbench/oltp_write_only.lua help
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+oltp_write_only.lua options:
+  --auto_inc[=on|off]           Use AUTO_INCREMENT column as Primary Key (for MySQL), or its alternatives in other DBMS. When disabled, use client-generated IDs [on]
+  --create_secondary[=on|off]   Create a secondary index in addition to the PRIMARY KEY [on]
+  --delete_inserts=N            Number of DELETE/INSERT combinations per transaction [1]
+  --distinct_ranges=N           Number of SELECT DISTINCT queries per transaction [1]
+  --index_updates=N             Number of UPDATE index queries per transaction [1]
+  --mysql_storage_engine=STRING Storage engine, if MySQL is used [innodb]
+  --non_index_updates=N         Number of UPDATE non-index queries per transaction [1]
+  --order_ranges=N              Number of SELECT ORDER BY queries per transaction [1]
+  --pgsql_variant=STRING        Use this PostgreSQL variant when running with the PostgreSQL driver. The only currently supported variant is &#39;redshift&#39;. When enabled, create_secondary is automatically disabled, and delete_inserts is set to 0
+  --point_selects=N             Number of point SELECT queries per transaction [10]
+  --range_selects[=on|off]      Enable/disable all range SELECT queries [on]
+  --range_size=N                Range size for range SELECT queries [100]
+  --secondary[=on|off]          Use a secondary index in place of the PRIMARY KEY [off]
+  --simple_ranges=N             Number of simple range SELECT queries per transaction [1]
+  --skip_trx[=on|off]           Don&#39;t start explicit transactions and execute all queries in the AUTOCOMMIT mode [off]
+  --sum_ranges=N                Number of SELECT SUM() queries per transaction [1]
+  --table_size=N                Number of rows per table [10000]
+  --tables=N                    Number of tables [1]
+
+[root@node0 ~]# sysbench /usr/share/sysbench/oltp_read_only.lua help
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+oltp_read_only.lua options:
+  --auto_inc[=on|off]           Use AUTO_INCREMENT column as Primary Key (for MySQL), or its alternatives in other DBMS. When disabled, use client-generated IDs [on]
+  --create_secondary[=on|off]   Create a secondary index in addition to the PRIMARY KEY [on]
+  --delete_inserts=N            Number of DELETE/INSERT combinations per transaction [1]
+  --distinct_ranges=N           Number of SELECT DISTINCT queries per transaction [1]
+  --index_updates=N             Number of UPDATE index queries per transaction [1]
+  --mysql_storage_engine=STRING Storage engine, if MySQL is used [innodb]
+  --non_index_updates=N         Number of UPDATE non-index queries per transaction [1]
+  --order_ranges=N              Number of SELECT ORDER BY queries per transaction [1]
+  --pgsql_variant=STRING        Use this PostgreSQL variant when running with the PostgreSQL driver. The only currently supported variant is &#39;redshift&#39;. When enabled, create_secondary is automatically disabled, and delete_inserts is set to 0
+  --point_selects=N             Number of point SELECT queries per transaction [10]
+  --range_selects[=on|off]      Enable/disable all range SELECT queries [on]
+  --range_size=N                Range size for range SELECT queries [100]
+  --secondary[=on|off]          Use a secondary index in place of the PRIMARY KEY [off]
+  --simple_ranges=N             Number of simple range SELECT queries per transaction [1]
+  --skip_trx[=on|off]           Don&#39;t start explicit transactions and execute all queries in the AUTOCOMMIT mode [off]
+  --sum_ranges=N                Number of SELECT SUM() queries per transaction [1]
+  --table_size=N                Number of rows per table [10000]
+  --tables=N                    Number of tables [1]
+
+[root@node0 ~]# sysbench /usr/share/sysbench/oltp_point_select.lua help
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+oltp_point_select.lua options:
+  --auto_inc[=on|off]           Use AUTO_INCREMENT column as Primary Key (for MySQL), or its alternatives in other DBMS. When disabled, use client-generated IDs [on]
+  --create_secondary[=on|off]   Create a secondary index in addition to the PRIMARY KEY [on]
+  --delete_inserts=N            Number of DELETE/INSERT combinations per transaction [1]
+  --distinct_ranges=N           Number of SELECT DISTINCT queries per transaction [1]
+  --index_updates=N             Number of UPDATE index queries per transaction [1]
+  --mysql_storage_engine=STRING Storage engine, if MySQL is used [innodb]
+  --non_index_updates=N         Number of UPDATE non-index queries per transaction [1]
+  --order_ranges=N              Number of SELECT ORDER BY queries per transaction [1]
+  --pgsql_variant=STRING        Use this PostgreSQL variant when running with the PostgreSQL driver. The only currently supported variant is &#39;redshift&#39;. When enabled, create_secondary is automatically disabled, and delete_inserts is set to 0
+  --point_selects=N             Number of point SELECT queries per transaction [10]
+  --range_selects[=on|off]      Enable/disable all range SELECT queries [on]
+  --range_size=N                Range size for range SELECT queries [100]
+  --secondary[=on|off]          Use a secondary index in place of the PRIMARY KEY [off]
+  --simple_ranges=N             Number of simple range SELECT queries per transaction [1]
+  --skip_trx[=on|off]           Don&#39;t start explicit transactions and execute all queries in the AUTOCOMMIT mode [off]
+  --sum_ranges=N                Number of SELECT SUM() queries per transaction [1]
+  --table_size=N                Number of rows per table [10000]
+  --tables=N                    Number of tables [1]
+</code></pre>
+<h2 id="Prepare-for-the-benchmark"><a href="#Prepare-for-the-benchmark" class="headerlink" title="Prepare for the benchmark"></a>Prepare for the benchmark</h2><p>Before running the benchmark, the database should be created and the data tables should be populated.</p>
+<p>To create the database:</p>
+<pre><code>[root@node0 ~]# cockroach sql --insecure --host=node1:26257 -e &#39;create database testdb;&#39;
+</code></pre>
+<p>To populate the database:</p>
+<pre><code>[root@node0 ~]# sysbench /usr/share/sysbench/oltp_write_only.lua --pgsql-host=node1 --pgsql-port=26257 --pgsql-db=testdb --pgsql-user=tester --pgsql-password= --table_size=100000 --tables=24 --threads=1 --db-driver=pgsql prepare
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+Creating table &#39;sbtest1&#39;...
+Inserting 100000 records into &#39;sbtest1&#39;
+Creating a secondary index on &#39;sbtest1&#39;...
+Creating table &#39;sbtest2&#39;...
+Inserting 100000 records into &#39;sbtest2&#39;
+Creating a secondary index on &#39;sbtest2&#39;...
+Creating table &#39;sbtest3&#39;...
+Inserting 100000 records into &#39;sbtest3&#39;
+Creating a secondary index on &#39;sbtest3&#39;...
+Creating table &#39;sbtest4&#39;...
+Inserting 100000 records into &#39;sbtest4&#39;
+Creating a secondary index on &#39;sbtest4&#39;...
+Creating table &#39;sbtest5&#39;...
+Inserting 100000 records into &#39;sbtest5&#39;
+Creating a secondary index on &#39;sbtest5&#39;...
+Creating table &#39;sbtest6&#39;...
+Inserting 100000 records into &#39;sbtest6&#39;
+Creating a secondary index on &#39;sbtest6&#39;...
+Creating table &#39;sbtest7&#39;...
+Inserting 100000 records into &#39;sbtest7&#39;
+Creating a secondary index on &#39;sbtest7&#39;...
+Creating table &#39;sbtest8&#39;...
+Inserting 100000 records into &#39;sbtest8&#39;
+Creating a secondary index on &#39;sbtest8&#39;...
+Creating table &#39;sbtest9&#39;...
+Inserting 100000 records into &#39;sbtest9&#39;
+Creating a secondary index on &#39;sbtest9&#39;...
+Creating table &#39;sbtest10&#39;...
+Inserting 100000 records into &#39;sbtest10&#39;
+Creating a secondary index on &#39;sbtest10&#39;...
+Creating table &#39;sbtest11&#39;...
+Inserting 100000 records into &#39;sbtest11&#39;
+Creating a secondary index on &#39;sbtest11&#39;...
+Creating table &#39;sbtest12&#39;...
+Inserting 100000 records into &#39;sbtest12&#39;
+Creating a secondary index on &#39;sbtest12&#39;...
+Creating table &#39;sbtest13&#39;...
+Inserting 100000 records into &#39;sbtest13&#39;
+Creating a secondary index on &#39;sbtest13&#39;...
+Creating table &#39;sbtest14&#39;...
+Inserting 100000 records into &#39;sbtest14&#39;
+Creating a secondary index on &#39;sbtest14&#39;...
+Creating table &#39;sbtest15&#39;...
+Inserting 100000 records into &#39;sbtest15&#39;
+Creating a secondary index on &#39;sbtest15&#39;...
+Creating table &#39;sbtest16&#39;...
+Inserting 100000 records into &#39;sbtest16&#39;
+Creating a secondary index on &#39;sbtest16&#39;...
+Creating table &#39;sbtest17&#39;...
+Inserting 100000 records into &#39;sbtest17&#39;
+Creating a secondary index on &#39;sbtest17&#39;...
+Creating table &#39;sbtest18&#39;...
+Inserting 100000 records into &#39;sbtest18&#39;
+Creating a secondary index on &#39;sbtest18&#39;...
+Creating table &#39;sbtest19&#39;...
+Inserting 100000 records into &#39;sbtest19&#39;
+Creating a secondary index on &#39;sbtest19&#39;...
+Creating table &#39;sbtest20&#39;...
+Inserting 100000 records into &#39;sbtest20&#39;
+Creating a secondary index on &#39;sbtest20&#39;...
+Creating table &#39;sbtest21&#39;...
+Inserting 100000 records into &#39;sbtest21&#39;
+Creating a secondary index on &#39;sbtest21&#39;...
+Creating table &#39;sbtest22&#39;...
+Inserting 100000 records into &#39;sbtest22&#39;
+Creating a secondary index on &#39;sbtest22&#39;...
+Creating table &#39;sbtest23&#39;...
+Inserting 100000 records into &#39;sbtest23&#39;
+Creating a secondary index on &#39;sbtest23&#39;...
+Creating table &#39;sbtest24&#39;...
+Inserting 100000 records into &#39;sbtest24&#39;
+
+testdb=&gt;  show tables from testdb;
+ schema_name | table_name | type  | owner  | estimated_row_count | locality
+-------------+------------+-------+--------+---------------------+----------
+ public      | sbtest1    | table | tester |              100000 |
+ public      | sbtest10   | table | tester |              100000 |
+ public      | sbtest11   | table | tester |              100000 |
+ public      | sbtest12   | table | tester |              100000 |
+ public      | sbtest13   | table | tester |              100000 |
+ public      | sbtest14   | table | tester |              100000 |
+ public      | sbtest15   | table | tester |              100000 |
+ public      | sbtest16   | table | tester |              100000 |
+ public      | sbtest17   | table | tester |              100000 |
+ public      | sbtest18   | table | tester |              100000 |
+ public      | sbtest19   | table | tester |              100000 |
+ public      | sbtest2    | table | tester |              100000 |
+ public      | sbtest20   | table | tester |              100000 |
+ public      | sbtest21   | table | tester |              100000 |
+ public      | sbtest22   | table | tester |              100000 |
+ public      | sbtest23   | table | tester |              100000 |
+ public      | sbtest24   | table | tester |              100000 |
+ public      | sbtest3    | table | tester |              100000 |
+ public      | sbtest4    | table | tester |              100000 |
+ public      | sbtest5    | table | tester |              100000 |
+ public      | sbtest6    | table | tester |              100000 |
+ public      | sbtest7    | table | tester |              100000 |
+ public      | sbtest8    | table | tester |              100000 |
+ public      | sbtest9    | table | tester |              100000 |
+(24 rows)
+
+testdb=&gt; select sum(range_size)/1000 from crdb_internal.ranges where database_name=&#39;testdb&#39;;
+       ?column?
+-----------------------
+ 602418.53400000000000
+(1 row)
+</code></pre>
+<p>To populate the database with 2 or more threads:</p>
+<pre><code>[root@node0 ~]# sysbench /usr/share/sysbench/oltp_write_only.lua --pgsql-host=node1 --pgsql-port=26257 --pgsql-db=testdb --pgsql-user=root --pgsql-password= --table_size=1000000 --tables=24 --threads=2 --db-driver=pgsql prepare
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+Initializing worker threads...
+
+Creating table &#39;sbtest2&#39;...
+Creating table &#39;sbtest1&#39;...
+Inserting 1000000 records into &#39;sbtest1&#39;
+Inserting 1000000 records into &#39;sbtest2&#39;
+Creating a secondary index on &#39;sbtest2&#39;...
+Creating table &#39;sbtest4&#39;...
+Inserting 1000000 records into &#39;sbtest4&#39;
+Creating a secondary index on &#39;sbtest1&#39;...
+Creating table &#39;sbtest3&#39;...
+Inserting 1000000 records into &#39;sbtest3&#39;
+Creating a secondary index on &#39;sbtest4&#39;...
+Creating a secondary index on &#39;sbtest3&#39;...
+Creating table &#39;sbtest6&#39;...
+Inserting 1000000 records into &#39;sbtest6&#39;
+Creating table &#39;sbtest5&#39;...
+Inserting 1000000 records into &#39;sbtest5&#39;
+Creating a secondary index on &#39;sbtest5&#39;...
+Creating a secondary index on &#39;sbtest6&#39;...
+Creating table &#39;sbtest7&#39;...
+Inserting 1000000 records into &#39;sbtest7&#39;
+Creating table &#39;sbtest8&#39;...
+Inserting 1000000 records into &#39;sbtest8&#39;
+Creating a secondary index on &#39;sbtest7&#39;...
+Creating a secondary index on &#39;sbtest8&#39;...
+Creating table &#39;sbtest9&#39;...
+Inserting 1000000 records into &#39;sbtest9&#39;
+Creating table &#39;sbtest10&#39;...
+Inserting 1000000 records into &#39;sbtest10&#39;
+Creating a secondary index on &#39;sbtest10&#39;...
+Creating table &#39;sbtest12&#39;...
+Inserting 1000000 records into &#39;sbtest12&#39;
+Creating a secondary index on &#39;sbtest9&#39;...
+Creating table &#39;sbtest11&#39;...
+Inserting 1000000 records into &#39;sbtest11&#39;
+Creating a secondary index on &#39;sbtest12&#39;...
+Creating table &#39;sbtest14&#39;...
+Inserting 1000000 records into &#39;sbtest14&#39;
+Creating a secondary index on &#39;sbtest11&#39;...
+Creating table &#39;sbtest13&#39;...
+Inserting 1000000 records into &#39;sbtest13&#39;
+Creating a secondary index on &#39;sbtest14&#39;...
+Creating table &#39;sbtest16&#39;...
+Inserting 1000000 records into &#39;sbtest16&#39;
+Creating a secondary index on &#39;sbtest13&#39;...
+Creating table &#39;sbtest15&#39;...
+Inserting 1000000 records into &#39;sbtest15&#39;
+Creating a secondary index on &#39;sbtest16&#39;...
+Creating table &#39;sbtest18&#39;...
+Inserting 1000000 records into &#39;sbtest18&#39;
+Creating a secondary index on &#39;sbtest15&#39;...
+Creating table &#39;sbtest17&#39;...
+Inserting 1000000 records into &#39;sbtest17&#39;
+Creating a secondary index on &#39;sbtest18&#39;...
+Creating table &#39;sbtest20&#39;...
+Inserting 1000000 records into &#39;sbtest20&#39;
+Creating a secondary index on &#39;sbtest17&#39;...
+Creating table &#39;sbtest19&#39;...
+Inserting 1000000 records into &#39;sbtest19&#39;
+Creating a secondary index on &#39;sbtest20&#39;...
+Creating table &#39;sbtest22&#39;...
+Inserting 1000000 records into &#39;sbtest22&#39;
+Creating a secondary index on &#39;sbtest19&#39;...
+Creating table &#39;sbtest21&#39;...
+Inserting 1000000 records into &#39;sbtest21&#39;
+Creating a secondary index on &#39;sbtest22&#39;...
+Creating table &#39;sbtest24&#39;...
+Inserting 1000000 records into &#39;sbtest24&#39;
+Creating a secondary index on &#39;sbtest21&#39;...
+Creating table &#39;sbtest23&#39;...
+Inserting 1000000 records into &#39;sbtest23&#39;
+Creating a secondary index on &#39;sbtest24&#39;...
+Creating a secondary index on &#39;sbtest23&#39;...
+</code></pre>
+<h2 id="Run-sysbench"><a href="#Run-sysbench" class="headerlink" title="Run sysbench"></a>Run sysbench</h2><p>Now we can run sysbench on the populated database. We can increase the threads to stress the database with more workloads in order to measure the system performance limit.</p>
+<pre><code>[root@node0 ~]# sysbench /usr/share/sysbench/oltp_write_only.lua --pgsql-host=node1 --pgsql-port=26257 --pgsql-db=testdb --pgsql-user=tester --pgsql-password= --table_size=100000 --tables=24 --threads=1 --time=60 --report-interval=10 --db-driver=pgsql run
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+Running the test with following options:
+Number of threads: 1
+Report intermediate results every 10 second(s)
+Initializing random number generator from current time
+
+Initializing worker threads...
+
+Threads started!
+
+[ 10s ] thds: 1 tps: 80.86 qps: 485.66 (r/w/o: 0.00/84.66/401.00) lat (ms,95%): 20.37 err/s: 0.00 reconn/s: 0.00
+[ 20s ] thds: 1 tps: 82.60 qps: 495.41 (r/w/o: 0.00/92.00/403.41) lat (ms,95%): 20.74 err/s: 0.00 reconn/s: 0.00
+[ 30s ] thds: 1 tps: 81.00 qps: 485.79 (r/w/o: 0.00/94.10/391.69) lat (ms,95%): 20.74 err/s: 0.00 reconn/s: 0.00
+[ 40s ] thds: 1 tps: 81.00 qps: 486.21 (r/w/o: 0.00/102.90/383.31) lat (ms,95%): 20.37 err/s: 0.00 reconn/s: 0.00
+[ 50s ] thds: 1 tps: 79.20 qps: 474.90 (r/w/o: 0.00/103.10/371.80) lat (ms,95%): 21.50 err/s: 0.00 reconn/s: 0.00
+[ 60s ] thds: 1 tps: 78.20 qps: 469.39 (r/w/o: 0.00/107.30/362.09) lat (ms,95%): 21.11 err/s: 0.00 reconn/s: 0.00
+SQL statistics:
+    queries performed:
+        read:                            0
+        write:                           5842
+        other:                           23138
+        total:                           28980
+    transactions:                        4830   (80.48 per sec.)
+    queries:                             28980  (482.90 per sec.)
+    ignored errors:                      0      (0.00 per sec.)
+    reconnects:                          0      (0.00 per sec.)
+
+General statistics:
+    total time:                          60.0081s
+    total number of events:              4830
+
+Latency (ms):
+         min:                                    6.87
+         avg:                                   12.42
+         max:                                   32.90
+         95th percentile:                       21.11
+         sum:                                59978.07
+
+Threads fairness:
+    events (avg/stddev):           4830.0000/0.00
+    execution time (avg/stddev):   59.9781/0.00
+</code></pre>
+<h2 id="Cleanup-the-database"><a href="#Cleanup-the-database" class="headerlink" title="Cleanup the database"></a>Cleanup the database</h2><p>Once the sysbench is done, we can cleanup the test data as below.</p>
+<pre><code>[root@node0 ~]# sysbench /usr/share/sysbench/oltp_write_only.lua --pgsql-host=node1 --pgsql-port=26257 --pgsql-db=testdb --pgsql-user=tester --pgsql-password= --table_size=100000 --tables=24 --threads=1 --db-driver=pgsql cleanup
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+Dropping table &#39;sbtest1&#39;...
+Dropping table &#39;sbtest2&#39;...
+Dropping table &#39;sbtest3&#39;...
+Dropping table &#39;sbtest4&#39;...
+Dropping table &#39;sbtest5&#39;...
+Dropping table &#39;sbtest6&#39;...
+Dropping table &#39;sbtest7&#39;...
+Dropping table &#39;sbtest8&#39;...
+Dropping table &#39;sbtest9&#39;...
+Dropping table &#39;sbtest10&#39;...
+Dropping table &#39;sbtest11&#39;...
+Dropping table &#39;sbtest12&#39;...
+Dropping table &#39;sbtest13&#39;...
+Dropping table &#39;sbtest14&#39;...
+Dropping table &#39;sbtest15&#39;...
+Dropping table &#39;sbtest16&#39;...
+Dropping table &#39;sbtest17&#39;...
+Dropping table &#39;sbtest18&#39;...
+Dropping table &#39;sbtest19&#39;...
+Dropping table &#39;sbtest20&#39;...
+Dropping table &#39;sbtest21&#39;...
+Dropping table &#39;sbtest22&#39;...
+Dropping table &#39;sbtest23&#39;...
+Dropping table &#39;sbtest24&#39;...
+
+testdb=&gt; show tables from testdb;
+ schema_name | table_name | type | owner | estimated_row_count | locality
+-------------+------------+------+-------+---------------------+----------
+(0 rows)
+
+[root@node0 ~]# cockroach sql --insecure --host=node1:26257 -e &quot;drop database testdb&quot;
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/akopytov/sysbench">https://github.com/akopytov/sysbench</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/blog/why-postgres/">https://www.cockroachlabs.com/blog/why-postgres/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/compare/cockroachdb-vs-postgresql/">https://www.cockroachlabs.com/compare/cockroachdb-vs-postgresql/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/blog/postgresql-vs-cockroachdb/">https://www.cockroachlabs.com/blog/postgresql-vs-cockroachdb/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/blog/unpacking-competitive-benchmarks/">https://www.cockroachlabs.com/blog/unpacking-competitive-benchmarks/</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.purestorage.com/purely-informational/how-to-benchmark-mysql-performance/">https://blog.purestorage.com/purely-informational/how-to-benchmark-mysql-performance/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2186,501 +2882,8 @@ nvme1n1                      259:10   0  1.5T  0 disk
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/benchmark-es-cluster-with-rally/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/benchmark-es-cluster-with-rally/" class="post-title-link" itemprop="url">Benchmarking Elasticsearch cluster with Rally</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-10-26 12:34:00" itemprop="dateCreated datePublished" datetime="2022-10-26T12:34:00-07:00">2022-10-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Install-Rally-on-each-node"><a href="#Install-Rally-on-each-node" class="headerlink" title="Install Rally on each node"></a>Install Rally on each node</h2><p>Prerequisites</p>
-<pre><code>$ yum update
-$ yum install openssl-devel bzip2-devel libffi-devel
-$ yum groupinstall &quot;Development Tools&quot;
-</code></pre>
-<p>Install Python 3.8+</p>
-<pre><code>$ wget https://www.python.org/ftp/python/3.8.15/Python-3.8.15.tar.xz
-$ tar xf Python-3.8.15.tar.xz
-$ vim Python-3.8.15/Modules/Setup
-SSL=/usr/local/ssl
-_ssl _ssl.c \
-        -DUSE_SSL -I$(SSL)/include -I$(SSL)/include/openssl \
-        -L$(SSL)/lib -lssl -lcrypto
-$ mv Python-3.8.15 /usr/src
-$ cd /usr/src/Python-3.8.15/
-$ ./configure --enable-optimizations
-$ make altinstall
-$ python3.8 -m ssl
-$ pip3.8 install --upgrade pip
-</code></pre>
-<p>Install Git (Not required for load generator node)</p>
-<pre><code>$ yum install libcurl-devel
-$ wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.38.1.tar.xz
-$ tar xvf git-2.38.1.tar.xz
-$ cd git-2.38.1/
-$ make configure
-$ ./configure --prefix=/usr/local
-$ make install
-$ git --version
-git version 2.38.1
-</code></pre>
-<p>Install JDK (Not required for load generator node)</p>
-<pre><code>$ yum install java
-$ java -version
-openjdk version &quot;1.8.0_352&quot;
-</code></pre>
-<p>Install esrally</p>
-<pre><code>$ pip3.8 install esrally
-$ esrally --version
-esrally 2.6.0
-</code></pre>
-<p>Elasticsearch can not be launched as root. Create a non-root user on each node.</p>
-<pre><code>$ groupadd es
-$ useradd es -g es
-$ passwd es
-$ cd /home/es
-$ su - es
-</code></pre>
-<p>Set JAVA_HOME path</p>
-<pre><code>$ vim .bash_profile
-JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.352.b08-2.el7_9.x86_64/jre
-export JAVA_HOME
-$ source .bash_profile
-$ echo $JAVA_HOME
-/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.352.b08-2.el7_9.x86_64/jre
-</code></pre>
-<h2 id="Benchmarking-a-Single-Node"><a href="#Benchmarking-a-Single-Node" class="headerlink" title="Benchmarking a Single Node"></a>Benchmarking a Single Node</h2><p>Install Elasticsearch</p>
-<pre><code>$ esrally install --distribution-version=7.17.0 --node-name=&quot;rally-node-0&quot; --network-host=&quot;127.0.0.1&quot; --http-port=39200 --master-nodes=&quot;rally-node-0&quot; --seed-hosts=&quot;127.0.0.1:39300&quot;
-
-    ____        ____
-   / __ \____ _/ / /_  __
-  / /_/ / __ `/ / / / / /
- / _, _/ /_/ / / / /_/ /
-/_/ |_|\__,_/_/_/\__, /
-                /____/
-
-[INFO] Downloading Elasticsearch 7.17.0 (297.0 MB total size)                       [100%]
-&#123;
-  &quot;installation-id&quot;: &quot;10735bfa-f1b8-44c4-8e7f-8932c8daa201&quot;
-&#125;
-
---------------------------------
-[INFO] SUCCESS (took 10 seconds)
---------------------------------
-</code></pre>
-<p>Start the Elasticsearch node</p>
-<pre><code>$ export INSTALLATION_ID=10735bfa-f1b8-44c4-8e7f-8932c8daa201
-$ export RACE_ID=$(uuidgen)
-$ esrally start --installation-id=&quot;$&#123;INSTALLATION_ID&#125;&quot; --race-id=&quot;$&#123;RACE_ID&#125;&quot;
-
-    ____        ____
-   / __ \____ _/ / /_  __
-  / /_/ / __ `/ / / / / /
- / _, _/ /_/ / / / /_/ /
-/_/ |_|\__,_/_/_/\__, /
-                /____/
-
-
--------------------------------
-[INFO] SUCCESS (took 3 seconds)
--------------------------------
-</code></pre>
-<p>Run a benchmark</p>
-<pre><code>$ esrally race --pipeline=benchmark-only --target-host=127.0.0.1:39200 --track=geonames --challenge=append-no-conflicts-index-only --on-error=abort --race-id=$&#123;RACE_ID&#125;
-
-    ____        ____
-   / __ \____ _/ / /_  __
-  / /_/ / __ `/ / / / / /
- / _, _/ /_/ / / / /_/ /
-/_/ |_|\__,_/_/_/\__, /
-                /____/
-
-[INFO] Race id is [4e93324a-9326-49e8-be72-9f77cc837657]
-[INFO] Downloading track data (252.9 MB total size)                               [100.0%]
-[INFO] Decompressing track data from [/home/es/.rally/benchmarks/data/geonames/documents-2.json.bz2] to [/home/es/.rally/benchmarks/data/geonames/documents-2.json] (resulting size: [3.30] GB) ... [OK]
-[INFO] Preparing file offset table for [/home/es/.rally/benchmarks/data/geonames/documents-2.json] ... [OK]
-[INFO] Racing on track [geonames], challenge [append-no-conflicts-index-only] and car [&#39;external&#39;] with version [7.17.0].
-
-Running delete-index                                                           [100% done]
-Running create-index                                                           [100% done]
-Running check-cluster-health                                                   [100% done]
-Running index-append                                                           [100% done]
-Running force-merge                                                            [100% done]
-Running wait-until-merges-finish                                               [100% done]
-
-------------------------------------------------------
-    _______             __   _____
-   / ____(_)___  ____ _/ /  / ___/_________  ________
-  / /_  / / __ \/ __ `/ /   \__ \/ ___/ __ \/ ___/ _ \
- / __/ / / / / / /_/ / /   ___/ / /__/ /_/ / /  /  __/
-/_/   /_/_/ /_/\__,_/_/   /____/\___/\____/_/   \___/
-------------------------------------------------------
-
-|                                                         Metric |         Task |           Value |   Unit |
-|---------------------------------------------------------------:|-------------:|----------------:|-------:|
-|                     Cumulative indexing time of primary shards |              |    12.5856      |    min |
-|             Min cumulative indexing time across primary shards |              |     0.0190333   |    min |
-|          Median cumulative indexing time across primary shards |              |     2.49065     |    min |
-|             Max cumulative indexing time across primary shards |              |     2.61288     |    min |
-|            Cumulative indexing throttle time of primary shards |              |     0.0081      |    min |
-|    Min cumulative indexing throttle time across primary shards |              |     0           |    min |
-| Median cumulative indexing throttle time across primary shards |              |     0           |    min |
-|    Max cumulative indexing throttle time across primary shards |              |     0.0061      |    min |
-|                        Cumulative merge time of primary shards |              |     6.75938     |    min |
-|                       Cumulative merge count of primary shards |              |    55           |        |
-|                Min cumulative merge time across primary shards |              |     0           |    min |
-|             Median cumulative merge time across primary shards |              |     1.32735     |    min |
-|                Max cumulative merge time across primary shards |              |     1.47518     |    min |
-|               Cumulative merge throttle time of primary shards |              |     1.72393     |    min |
-|       Min cumulative merge throttle time across primary shards |              |     0           |    min |
-|    Median cumulative merge throttle time across primary shards |              |     0.323533    |    min |
-|       Max cumulative merge throttle time across primary shards |              |     0.42085     |    min |
-|                      Cumulative refresh time of primary shards |              |     2.97073     |    min |
-|                     Cumulative refresh count of primary shards |              |   246           |        |
-|              Min cumulative refresh time across primary shards |              |     0.00185     |    min |
-|           Median cumulative refresh time across primary shards |              |     0.5943      |    min |
-|              Max cumulative refresh time across primary shards |              |     0.599217    |    min |
-|                        Cumulative flush time of primary shards |              |     0.237767    |    min |
-|                       Cumulative flush count of primary shards |              |     8           |        |
-|                Min cumulative flush time across primary shards |              |     0.00241667  |    min |
-|             Median cumulative flush time across primary shards |              |     0.0473      |    min |
-|                Max cumulative flush time across primary shards |              |     0.0492167   |    min |
-|                                        Total Young Gen GC time |              |    14.009       |      s |
-|                                       Total Young Gen GC count |              |  1159           |        |
-|                                          Total Old Gen GC time |              |     3.491       |      s |
-|                                         Total Old Gen GC count |              |    66           |        |
-|                                                     Store size |              |     3.20482     |     GB |
-|                                                  Translog size |              |     3.07336e-07 |     GB |
-|                                         Heap used for segments |              |     1.00685     |     MB |
-|                                       Heap used for doc values |              |     0.0602913   |     MB |
-|                                            Heap used for terms |              |     0.77124     |     MB |
-|                                            Heap used for norms |              |     0.104492    |     MB |
-|                                           Heap used for points |              |     0           |     MB |
-|                                    Heap used for stored fields |              |     0.0708237   |     MB |
-|                                                  Segment count |              |   141           |        |
-|                                    Total Ingest Pipeline count |              |     0           |        |
-|                                     Total Ingest Pipeline time |              |     0           |      s |
-|                                   Total Ingest Pipeline failed |              |     0           |        |
-|                                                 Min Throughput | index-append | 86654           | docs/s |
-|                                                Mean Throughput | index-append | 87091.9         | docs/s |
-|                                              Median Throughput | index-append | 87152.4         | docs/s |
-|                                                 Max Throughput | index-append | 87276.3         | docs/s |
-|                                        50th percentile latency | index-append |   315.247       |     ms |
-|                                        90th percentile latency | index-append |   573.935       |     ms |
-|                                        99th percentile latency | index-append |  1139.89        |     ms |
-|                                       100th percentile latency | index-append |  1153.22        |     ms |
-|                                   50th percentile service time | index-append |   315.247       |     ms |
-|                                   90th percentile service time | index-append |   573.935       |     ms |
-|                                   99th percentile service time | index-append |  1139.89        |     ms |
-|                                  100th percentile service time | index-append |  1153.22        |     ms |
-|                                                     error rate | index-append |     0           |      % |
-
-
----------------------------------
-[INFO] SUCCESS (took 255 seconds)
----------------------------------
-</code></pre>
-<p>Stop the Elasticsearch node</p>
-<pre><code>$ esrally stop --installation-id=&quot;$&#123;INSTALLATION_ID&#125;&quot;
-</code></pre>
-<p>If you only want to shutdown the node but don’t want to delete the node and the data, pass –preserve-install additionally.</p>
-<h2 id="Benchmarking-a-Cluster"><a href="#Benchmarking-a-Cluster" class="headerlink" title="Benchmarking a Cluster"></a>Benchmarking a Cluster</h2><p>Install and start Elasticsearch on each cluster node</p>
-<pre><code>$ esrally install --distribution-version=7.17.0 --node-name=&quot;rally-node-0&quot; --network-host=&quot;10.10.10.2&quot; --http-port=39200 --master-nodes=&quot;rally-node-0,rally-node-1,rally-node-2&quot; --seed-hosts=&quot;10.10.10.2:39300,10.10.10.3:39300,10.10.10.4:39300&quot;
-[INFO] Downloading Elasticsearch 7.17.0 (297.0 MB total size)  [100%]
-&#123;
-  &quot;installation-id&quot;: &quot;aa826112-d371-4f09-9b68-f9084e7c9e0b&quot;
-&#125;
-</code></pre>
-<p>Generate a race id on one of the nodes</p>
-<pre><code>$ uuidgen
-734bb4b3-8b7a-4c0b-9fa6-aaeb4659569f
-</code></pre>
-<p><strong>Note</strong>: The same race id is set on all the nodes including the one where will generate load.</p>
-<p>Start the cluster by running the following command on each node</p>
-<pre><code>$ export INSTALLATION_ID=aa826112-d371-4f09-9b68-f9084e7c9e0b
-$ export RACE_ID=734bb4b3-8b7a-4c0b-9fa6-aaeb4659569f
-$ esrally start --installation-id=&quot;$&#123;INSTALLATION_ID&#125;&quot; --race-id=&quot;$&#123;RACE_ID&#125;&quot;
-</code></pre>
-<p><strong>Note</strong>: The INSTALLATION_ID is specific to each node and the RACI_ID is identical for all the nodes.</p>
-<p>Once the cluster is started, check the cluster status with the _cat&#x2F;health API</p>
-<pre><code>[es@node1 ~]$ curl http://10.10.10.2:39200/_cat/health\?v
-epoch      timestamp cluster         status node.total node.data shards pri relo init unassign pending_tasks max_task_wait_time active_shards_percent
-1667015754 03:55:54  rally-benchmark green           3         3      6   3    0    0        0             0                  -                100.0%
-</code></pre>
-<p>On each cluster node, check the elastic process and port</p>
-<pre><code>$ ps -ef | egrep -i &quot;rally|elastic&quot; | grep -v grep
-es        2258     1 91 20:52 ?        00:58:39 /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.352.b08-2.el7_9.x86_64/jre/bin/java -Xshare:auto -Des.networkaddress.cache.ttl=60 -Des.networkaddress.cache.negative.ttl=10 -XX:+AlwaysPreTouch -Xss1m -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Djna.nosys=true -XX:-OmitStackTraceInFastThrow -Dio.netty.noUnsafe=true -Dio.netty.noKeySetOptimization=true -Dio.netty.recycler.maxCapacityPerThread=0 -Dio.netty.allocator.numDirectArenas=0 -Dlog4j.shutdownHookEnabled=false -Dlog4j2.disable.jmx=true -Dlog4j2.formatMsgNoLookups=true -Djava.locale.providers=SPI,JRE -Xms1g -Xmx1g -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -Des.networkaddress.cache.ttl=60 -Des.networkaddress.cache.negative.ttl=10 -XX:+AlwaysPreTouch -Xss1m -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Djna.nosys=true -XX:-OmitStackTraceInFastThrow -Dio.netty.noUnsafe=true -Dio.netty.noKeySetOptimization=true -Dio.netty.recycler.maxCapacityPerThread=0 -Dlog4j.shutdownHookEnabled=false -Dlog4j2.disable.jmx=true -Djava.io.tmpdir=/tmp/elasticsearch-1322059221495755520 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/heapdump -XX:ErrorFile=/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/logs/server/hs_err_pid%p.log -XX:+ExitOnOutOfMemoryError -XX:MaxDirectMemorySize=536870912 -Des.path.home=/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/install/elasticsearch-7.17.0 -Des.path.conf=/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/install/elasticsearch-7.17.0/config -Des.distribution.flavor=default -Des.distribution.type=tar -Des.bundled_jdk=true -cp /home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/install/elasticsearch-7.17.0/lib/* org.elasticsearch.bootstrap.Elasticsearch -d -p ./pid
-es        2285  2258  0 20:52 ?        00:00:00 /home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/install/elasticsearch-7.17.0/modules/x-pack-ml/platform/linux-x86_64/bin/controller
-
-$ netstat -anop | grep 39200
-tcp6       0      0 10.10.10.2:39200       :::*                    LISTEN      2258/java            off (0.00/0/0)
-</code></pre>
-<p>Start the benchmark on the load generator node (remember to set the race id there)</p>
-<pre><code>[es@node1 ~]$ export RACE_ID=734bb4b3-8b7a-4c0b-9fa6-aaeb4659569f
-[es@node1 ~]$ esrally race --pipeline=benchmark-only --target-host=10.10.10.2:39200,10.10.10.3:39200,10.10.10.4:39200 --track=geonames --challenge=append-no-conflicts --on-error=abort --race-id=$&#123;RACE_ID&#125;
-    ____        ____
-   / __ \____ _/ / /_  __
-  / /_/ / __ `/ / / / / /
- / _, _/ /_/ / / / /_/ /
-/_/ |_|\__,_/_/_/\__, /
-                /____/
-
-[INFO] Race id is [734bb4b3-8b7a-4c0b-9fa6-aaeb4659569f]
-[INFO] Racing on track [geonames], challenge [append-no-conflicts] and car [&#39;external&#39;] with version [7.17.0].
-
-[WARNING] merges_total_time is 420149 ms indicating that the cluster is not in a defined clean state. Recorded index time metrics may be misleading.
-[WARNING] merges_total_throttled_time is 81765 ms indicating that the cluster is not in a defined clean state. Recorded index time metrics may be misleading.
-[WARNING] indexing_total_time is 825388 ms indicating that the cluster is not in a defined clean state. Recorded index time metrics may be misleading.
-[WARNING] refresh_total_time is 76340 ms indicating that the cluster is not in a defined clean state. Recorded index time metrics may be misleading.
-[WARNING] flush_total_time is 10787 ms indicating that the cluster is not in a defined clean state. Recorded index time metrics may be misleading.
-Running delete-index                                                           [100% done]
-Running create-index                                                           [100% done]
-Running check-cluster-health                                                   [100% done]
-Running index-append                                                           [100% done]
-Running refresh-after-index                                                    [100% done]
-Running force-merge                                                            [100% done]
-Running refresh-after-force-merge                                              [100% done]
-Running wait-until-merges-finish                                               [100% done]
-Running index-stats                                                            [100% done]
-Running node-stats                                                             [100% done]
-Running default                                                                [100% done]
-Running term                                                                   [100% done]
-Running phrase                                                                 [100% done]
-Running country_agg_uncached                                                   [100% done]
-Running country_agg_cached                                                     [100% done]
-Running scroll                                                                 [100% done]
-Running expression                                                             [100% done]
-Running painless_static                                                        [100% done]
-Running painless_dynamic                                                       [100% done]
-Running decay_geo_gauss_function_score                                         [100% done]
-Running decay_geo_gauss_script_score                                           [100% done]
-Running field_value_function_score                                             [100% done]
-Running field_value_script_score                                               [100% done]
-Running large_terms                                                            [100% done]
-Running large_filtered_terms                                                   [100% done]
-Running large_prohibited_terms                                                 [100% done]
-Running desc_sort_population                                                   [100% done]
-Running asc_sort_population                                                    [100% done]
-Running asc_sort_with_after_population                                         [100% done]
-Running desc_sort_geonameid                                                    [100% done]
-Running desc_sort_with_after_geonameid                                         [100% done]
-Running asc_sort_geonameid                                                     [100% done]
-Running asc_sort_with_after_geonameid                                          [100% done]
-
-------------------------------------------------------
-    _______             __   _____
-   / ____(_)___  ____ _/ /  / ___/_________  ________
-  / /_  / / __ \/ __ `/ /   \__ \/ ___/ __ \/ ___/ _ \
- / __/ / / / / / /_/ / /   ___/ / /__/ /_/ / /  /  __/
-/_/   /_/_/ /_/\__,_/_/   /____/\___/\____/_/   \___/
-------------------------------------------------------
-
-|                                                         Metric |                           Task |          Value |    Unit |
-|---------------------------------------------------------------:|-------------------------------:|---------------:|--------:|
-|                     Cumulative indexing time of primary shards |                                |   13.3055      |     min |
-|             Min cumulative indexing time across primary shards |                                |    0           |     min |
-|          Median cumulative indexing time across primary shards |                                |    2.68572     |     min |
-|             Max cumulative indexing time across primary shards |                                |    2.74885     |     min |
-|            Cumulative indexing throttle time of primary shards |                                |    0           |     min |
-|    Min cumulative indexing throttle time across primary shards |                                |    0           |     min |
-| Median cumulative indexing throttle time across primary shards |                                |    0           |     min |
-|    Max cumulative indexing throttle time across primary shards |                                |    0           |     min |
-|                        Cumulative merge time of primary shards |                                |    4.82182     |     min |
-|                       Cumulative merge count of primary shards |                                |   57           |         |
-|                Min cumulative merge time across primary shards |                                |    0           |     min |
-|             Median cumulative merge time across primary shards |                                |    0.984917    |     min |
-|                Max cumulative merge time across primary shards |                                |    1.06472     |     min |
-|               Cumulative merge throttle time of primary shards |                                |    0.978367    |     min |
-|       Min cumulative merge throttle time across primary shards |                                |    0           |     min |
-|    Median cumulative merge throttle time across primary shards |                                |    0.195508    |     min |
-|       Max cumulative merge throttle time across primary shards |                                |    0.265933    |     min |
-|                      Cumulative refresh time of primary shards |                                |    1.20573     |     min |
-|                     Cumulative refresh count of primary shards |                                |  148           |         |
-|              Min cumulative refresh time across primary shards |                                |    3.33333e-05 |     min |
-|           Median cumulative refresh time across primary shards |                                |    0.258775    |     min |
-|              Max cumulative refresh time across primary shards |                                |    0.283433    |     min |
-|                        Cumulative flush time of primary shards |                                |    0.172783    |     min |
-|                       Cumulative flush count of primary shards |                                |   11           |         |
-|                Min cumulative flush time across primary shards |                                |    1.66667e-05 |     min |
-|             Median cumulative flush time across primary shards |                                |    0.0345      |     min |
-|                Max cumulative flush time across primary shards |                                |    0.0385167   |     min |
-|                                        Total Young Gen GC time |                                |   16.263       |       s |
-|                                       Total Young Gen GC count |                                | 2821           |         |
-|                                          Total Old Gen GC time |                                |    2.312       |       s |
-|                                         Total Old Gen GC count |                                |   41           |         |
-|                                                     Store size |                                |    3.03867     |      GB |
-|                                                  Translog size |                                |    3.58559e-07 |      GB |
-|                                         Heap used for segments |                                |    0.701981    |      MB |
-|                                       Heap used for doc values |                                |    0.0314178   |      MB |
-|                                            Heap used for terms |                                |    0.54541     |      MB |
-|                                            Heap used for norms |                                |    0.0736694   |      MB |
-|                                           Heap used for points |                                |    0           |      MB |
-|                                    Heap used for stored fields |                                |    0.0514832   |      MB |
-|                                                  Segment count |                                |  102           |         |
-|                                    Total Ingest Pipeline count |                                |    0           |         |
-|                                     Total Ingest Pipeline time |                                |    0           |       s |
-|                                   Total Ingest Pipeline failed |                                |    0           |         |
-|                                                     error rate |                   index-append |    0           |       % |
-|                                                 Min Throughput |                    index-stats |   90.01        |   ops/s |
-|                                                Mean Throughput |                    index-stats |   90.02        |   ops/s |
-|                                              Median Throughput |                    index-stats |   90.02        |   ops/s |
-|                                                 Max Throughput |                    index-stats |   90.04        |   ops/s |
-|                                        50th percentile latency |                    index-stats |    5.16153     |      ms |
-|                                        90th percentile latency |                    index-stats |    6.00114     |      ms |
-|                                        99th percentile latency |                    index-stats |    6.61081     |      ms |
-|                                      99.9th percentile latency |                    index-stats |   10.4064      |      ms |
-|                                       100th percentile latency |                    index-stats |   10.8105      |      ms |
-|                                   50th percentile service time |                    index-stats |    4.00402     |      ms |
-|                                   90th percentile service time |                    index-stats |    4.6339      |      ms |
-|                                   99th percentile service time |                    index-stats |    5.10083     |      ms |
-|                                 99.9th percentile service time |                    index-stats |    9.17415     |      ms |
-|                                  100th percentile service time |                    index-stats |    9.22474     |      ms |
-[..]
-
-[WARNING] No throughput metrics available for [index-append]. Likely cause: The benchmark ended already during warmup.
-
-----------------------------------
-[INFO] SUCCESS (took 4008 seconds)
-----------------------------------
-</code></pre>
-<p>Shutdown the cluster on each node</p>
-<pre><code>$ esrally stop --installation-id=&quot;$&#123;INSTALLATION_ID&#125;&quot;
-</code></pre>
-<p><strong>Note</strong>: If you only want to shutdown the node but don’t want to delete the node and the data, add the option “–preserve-install” additionally.</p>
-<h2 id="Troubleshooting"><a href="#Troubleshooting" class="headerlink" title="Troubleshooting"></a>Troubleshooting</h2><p>Elasticsearch start failure due to max virtual memory is too low</p>
-<pre><code>$ cat /home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/logs/server/rally-benchmark.log
-[..]
-[2022-10-28T16:58:41,041][ERROR][o.e.b.Bootstrap          ] [rally-node-0] node validation exception
-[1] bootstrap checks failed. You must address the points described in the following [1] lines before starting Elasticsearch.
-bootstrap check failure [1] of [1]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
-[..]
-
-$ sysctl -a | grep max_map_count
-vm.max_map_count = 65530
-</code></pre>
-<p>To fix this issue, change the kernel parameter</p>
-<pre><code>$ vim /etc/sysctl.conf
-vm.max_map_count=1048576
-$ sysctl -p
-vm.max_map_count = 1048576
-</code></pre>
-<p>Restart Elasticsearch and verify the process and port</p>
-<pre><code>$ esrally stop --installation-id=&quot;$&#123;INSTALLATION_ID&#125;&quot; --preserve-install
-$ esrally start --installation-id=&quot;$&#123;INSTALLATION_ID&#125;&quot; --race-id=&quot;$&#123;RACE_ID&#125;&quot;
-
-$ netstat -anop | grep 39200
-tcp6       0      0 10.10.10.2:39200       :::*                    LISTEN      23726/java           off (0.00/0/0)
-
-$ ps -ef | egrep -i &quot;rally|elastic&quot; | grep -v grep
-es       23726     1 18 18:01 ?        00:00:42 /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.352.b08-2.el7_9.x86_64/jre/bin/java -Xshare:auto -Des.networkaddress.cache.ttl=60 -Des.networkaddress.cache.negative.ttl=10 -XX:+AlwaysPreTouch -Xss1m -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Djna.nosys=true -XX:-OmitStackTraceInFastThrow -Dio.netty.noUnsafe=true -Dio.netty.noKeySetOptimization=true -Dio.netty.recycler.maxCapacityPerThread=0 -Dio.netty.allocator.numDirectArenas=0 -Dlog4j.shutdownHookEnabled=false -Dlog4j2.disable.jmx=true -Dlog4j2.formatMsgNoLookups=true -Djava.locale.providers=SPI,JRE -Xms1g -Xmx1g -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -Des.networkaddress.cache.ttl=60 -Des.networkaddress.cache.negative.ttl=10 -XX:+AlwaysPreTouch -Xss1m -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Djna.nosys=true -XX:-OmitStackTraceInFastThrow -Dio.netty.noUnsafe=true -Dio.netty.noKeySetOptimization=true -Dio.netty.recycler.maxCapacityPerThread=0 -Dlog4j.shutdownHookEnabled=false -Dlog4j2.disable.jmx=true -Djava.io.tmpdir=/tmp/elasticsearch-7969870787666953814 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/heapdump -XX:ErrorFile=/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/logs/server/hs_err_pid%p.log -XX:+ExitOnOutOfMemoryError -XX:MaxDirectMemorySize=536870912 -Des.path.home=/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/install/elasticsearch-7.17.0 -Des.path.conf=/home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/install/elasticsearch-7.17.0/config -Des.distribution.flavor=default -Des.distribution.type=tar -Des.bundled_jdk=true -cp /home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/install/elasticsearch-7.17.0/lib/* org.elasticsearch.bootstrap.Elasticsearch -d -p ./pid
-es       23752 23726  0 18:01 ?        00:00:00 /home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/install/elasticsearch-7.17.0/modules/x-pack-ml/platform/linux-x86_64/bin/controller
-</code></pre>
-<p>Elasticsearch start failure due to max file descriptors is too low</p>
-<pre><code>$ cat /home/es/.rally/benchmarks/races/aa826112-d371-4f09-9b68-f9084e7c9e0b/rally-node-0/logs/server/rally-benchmark.log
-[..]
-[2022-10-28T18:02:09,107][ERROR][o.e.b.Bootstrap          ] [rally-node-1] node validation exception
-[1] bootstrap checks failed. You must address the points described in the following [1] lines before starting Elasticsearch.
-bootstrap check failure [1] of [1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65535]
-[..]
-</code></pre>
-<p>To fix this issue, change the max open files value in &#x2F;etc&#x2F;security&#x2F;limits.conf</p>
-<pre><code>$ vim /etc/security/limits.conf
-*              soft     nofile          1048576
-*              hard     nofile          1048576
-</code></pre>
-<p>Exit and login back to the shell to see the changed value</p>
-<pre><code>ulimit -a  | grep &quot;open files&quot;
-open files                      (-n) 1048576
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://esrally.readthedocs.io/en/stable/">Rally User Guide</a></li>
-<li><a target="_blank" rel="noopener" href="https://elasticsearch-benchmarks.elastic.co/#">https://elasticsearch-benchmarks.elastic.co/#</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/elastic/rally-eventdata-track">https://github.com/elastic/rally-eventdata-track</a></li>
-<li><a target="_blank" rel="noopener" href="https://esrally.readthedocs.io/en/stable/configuration.html#reporting">https://esrally.readthedocs.io/en/stable/configuration.html#reporting</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/12/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/12/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

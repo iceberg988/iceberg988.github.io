@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">260</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">261</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">260</span>
+          <span class="site-state-item-count">261</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,143 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/capture-and-analyze-network-packets-with-tcpdump/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/capture-and-analyze-network-packets-with-tcpdump/" class="post-title-link" itemprop="url">Capture and analyze network packets with tcpdump</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-20 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-20T07:00:00-07:00">2021-08-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Capture-packets-with-tcpdump"><a href="#Capture-packets-with-tcpdump" class="headerlink" title="Capture packets with tcpdump"></a>Capture packets with tcpdump</h2><p>In this example, we only capture 1000 packets(-c1000) and use IP addresses and ports(-nn) for easier analysis. The raw packets are written to file “tcpdump.1000” for further analsis.</p>
+<pre><code>$ tcpdump -i eth5 -c1000 -nn -w tcpdump.1000
+</code></pre>
+<h2 id="View-the-packets-data"><a href="#View-the-packets-data" class="headerlink" title="View the packets data"></a>View the packets data</h2><p>We can use tcpdump to view the packets directly.</p>
+<pre><code>$ tcpdump -nn -r tcpdump.1000 | more
+
+reading from file tcpdump.1000, link-type EN10MB (Ethernet)
+
+22:42:10.018758 IP 192.168.1.18.980 &gt; 192.168.1.16.2049: Flags [P.], seq 1:16545, ack 72, win 501, options [nop,nop,TS val 4292822374 ecr 2230894482], length 16544: NFS request xid 2912663971 16540 getattr fh 0,0/22
+22:42:10.018895 IP 192.168.1.16.2049 &gt; 192.168.1.18.980: Flags [.], ack 16545, win 9508, options [nop,nop,TS val 2230894483 ecr 4292822374], length 0
+22:42:10.021125 IP 192.168.1.16.2049 &gt; 192.168.1.18.980: Flags [P.], seq 72:144, ack 16545, win 9596, options [nop,nop,TS val 2230894485 ecr 4292822374], length 72: NFS reply xid 781957539 reply ok 68
+
+
+22:42:10.021400 IP 192.168.1.18.980 &gt; 192.168.1.16.2049: Flags [P.], seq 16545:33089, ack 144, win 501, options [nop,nop,TS val 4292822377 ecr 2230894485], length 16544: NFS request xid 2929441187 16540 getattr fh 0,0/22
+22:42:10.021536 IP 192.168.1.16.2049 &gt; 192.168.1.18.980: Flags [.], ack 33089, win 9508, options [nop,nop,TS val 2230894485 ecr 4292822377], length 0
+22:42:10.023219 ARP, Request who-has 70.0.69.235 tell 70.0.193.122, length 46
+22:42:10.023558 IP 192.168.1.16.2049 &gt; 192.168.1.18.980: Flags [P.], seq 144:216, ack 33089, win 9596, options [nop,nop,TS val 2230894487 ecr 4292822377], length 72: NFS reply xid 798734755 reply ok 68
+
+
+22:42:10.023844 IP 192.168.1.18.980 &gt; 192.168.1.16.2049: Flags [P.], seq 33089:49633, ack 216, win 501, options [nop,nop,TS val 4292822379 ecr 2230894487], length 16544: NFS request xid 2946218403 16540 getattr fh 0,0/22
+22:42:10.023962 IP 192.168.1.16.2049 &gt; 192.168.1.18.980: Flags [.], ack 49633, win 9508, options [nop,nop,TS val 2230894488 ecr 4292822379], length 0
+22:42:10.025962 IP 192.168.1.16.2049 &gt; 192.168.1.18.980: Flags [P.], seq 216:288, ack 49633, win 9596, options [nop,nop,TS val 2230894490 ecr 4292822379], length 72: NFS reply xid 815511971 reply ok 68
+
+&lt;omitted...&gt;
+</code></pre>
+<p>We also can view the data with wireshark GUI. We can use the filter to only display the data we are interested in. In this case, we only display the data related the ip address “192.168.1.18”. The wireshare can be installed on the desktop and open the captured packets data file.</p>
+<p><img src="/images/tcpdump-wireshark.png" alt="Image"></p>
+<h2 id="Understand-the-tcpdump-output"><a href="#Understand-the-tcpdump-output" class="headerlink" title="Understand the tcpdump output"></a>Understand the tcpdump output</h2><ul>
+<li><p>The first field, <strong>22:42:10.021125</strong>, represents the timestamp of the captured packet.</p>
+</li>
+<li><p>The next field, <strong>IP</strong>, represents the network layer protocol, in this case, IPv4.</p>
+</li>
+<li><p>The next field, <strong>192.168.1.16.2049 &gt; 192.168.1.18.980</strong>, is the source and destination IP address and port.</p>
+</li>
+<li><p>The next field, <strong>Flags [P.]</strong>, represents the TCP flags. The typical values for this field include the following.</p>
+</li>
+</ul>
+<p><img src="/images/tcpdump-tcp-flags.png" alt="Image"></p>
+<ul>
+<li><p>The next field, <strong>seq 72:144</strong>, is the sequence number of the data contained in the packet.  It means the packet contains bytes 72 to 144.</p>
+</li>
+<li><p>The next field, <strong>ack 16545</strong>, is the Ack number. For the side of receiving data, this field represents the next expected byte of data. In this case, the Ack number for the next expected packet would be 16545.</p>
+</li>
+<li><p>The next field, <strong>win 9596</strong>, is the window size. It represents the number of bytes available in the receiving buffer.</p>
+</li>
+<li><p>Followed by a field, <strong>length 72</strong>, which represents the length in bytes of the data.</p>
+</li>
+</ul>
+<p>In the above example, the data are sending from 192.168.1.18 to 192.168.1.16. The average packet size is 16k which is sent over NFSv4.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1556,113 +1693,8 @@ $ docker inspect 1cd20ecd897d | grep RootDir
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-gstack-for-docker-container-process/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/using-gstack-for-docker-container-process/" class="post-title-link" itemprop="url">Using gstack for docker container process</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-27 07:00:00" itemprop="dateCreated datePublished" datetime="2021-04-27T07:00:00-07:00">2021-04-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>In a Docker container environment, we won’t get a valid stack trace directly on the container host as below.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$  ps -ef |grep smbd</span><br><span class="line">root     171118 167977  0 Apr22 ?        00:00:02 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root     171166 171118  0 Apr22 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root     171168 171118  0 Apr22 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root     171208 171118  0 Apr22 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root     190574 186140  0 15:01 pts/3    00:00:00 grep --color=auto smbd</span><br><span class="line">    </span><br><span class="line">$  gstack 171118</span><br><span class="line">#0  0x00007fb66768afb3 in ?? () from /lib64/libc.so.6</span><br><span class="line">#1  0x00007fb667b70f1b in ?? ()</span><br><span class="line">#2  0x0000000000000060 in ?? ()</span><br><span class="line">#3  0x00007fb668a92f5c in ?? ()</span><br><span class="line">#4  0x0000000000000000 in ?? () </span><br></pre></td></tr></table></figure>
-
-
-<p>To print the stack trace for a process running inside container, we can do the following.</p>
-<ol>
-<li><p>Get the process id inside container</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec -it iNfcP_9-0-1 bash</span><br><span class="line">bash-4.2# ps -ef | grep smbd</span><br><span class="line">root       1864      1  0 Apr22 ?        00:00:02 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root       1908   1864  0 Apr22 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root       1910   1864  0 Apr22 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root       1950   1864  0 Apr22 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root     177346 177338  0 15:02 ?        00:00:00 grep smbd </span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>Get the container instance pid</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ /bin/docker inspect --format &#x27;\&#123;\&#123; .State.Pid &#125;&#125;&#x27; e2590333640e</span><br><span class="line">167977</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Print stack trace with gstack as below</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$  /bin/nsenter -Z -m -n -p -t 167977 /bin/gstack 1864</span><br><span class="line">#0  0x00007fb66768afb3 in __epoll_wait_nocancel () from /lib64/libc.so.6</span><br><span class="line">#1  0x00007fb667b70f1b in epoll_event_loop_once () from /lib64/libtevent.so.0</span><br><span class="line">#2  0x00007fb667b6f057 in std_event_loop_once () from /lib64/libtevent.so.0</span><br><span class="line">#3  0x00007fb667b6a25d in _tevent_loop_once () from /lib64/libtevent.so.0</span><br><span class="line">#4  0x00007fb667b6a4bb in tevent_common_loop_wait () from /lib64/libtevent.so.0</span><br><span class="line">#5  0x00007fb667b6eff7 in std_event_loop_wait () from /lib64/libtevent.so.0</span><br><span class="line">#6  0x00005588a9175a98 in main ()</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>We use nsenter to get the stack trace of the target process in contaienr namespace.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">$ man nsenter</span><br><span class="line">   </span><br><span class="line">NAME</span><br><span class="line">       nsenter - run program with namespaces of other processes</span><br><span class="line">    </span><br><span class="line">SYNOPSIS</span><br><span class="line">       nsenter [options] [program [arguments]]</span><br><span class="line">    </span><br><span class="line">DESCRIPTION</span><br><span class="line">       Enters the namespaces of one or more other processes and then executes the specified program.  Enterable namespaces are:</span><br><span class="line">    </span><br><span class="line">       mount namespace</span><br><span class="line">              Mounting  and  unmounting  filesystems  will  not affect the rest of the system (CLONE_NEWNS flag), except for filesystems which are explicitly marked as</span><br><span class="line">              shared (with mount --make-shared; see /proc/self/mountinfo for the shared flag).</span><br><span class="line">    </span><br><span class="line">       UTS namespace</span><br><span class="line">              Setting hostname or domainname will not affect the rest of the system.  (CLONE_NEWUTS flag)</span><br><span class="line">    </span><br><span class="line">       IPC namespace</span><br><span class="line">              The process will have an independent namespace for System V message queues, semaphore sets and shared memory segments.  (CLONE_NEWIPC flag)</span><br><span class="line">    </span><br><span class="line">       network namespace</span><br><span class="line">              The process will have independent IPv4 and IPv6 stacks, IP routing tables, firewall rules, the /proc/net and  /sys/class/net  directory  trees,  sockets,</span><br><span class="line">              etc.  (CLONE_NEWNET flag)</span><br><span class="line">    </span><br><span class="line">       PID namespace</span><br><span class="line">              Children  will have a set of PID to process mappings separate from the nsenter process (CLONE_NEWPID flag).  nsenter will fork by default if changing the</span><br><span class="line">              PID namespace, so that the new program and its children share the same PID namespace and are visible to each other.  If --no-fork is used, the  new  pro‐</span><br><span class="line">              gram will be exec&#x27;ed without forking.</span><br><span class="line">    </span><br><span class="line">       user namespace</span><br><span class="line">              The process will have a distinct set of UIDs, GIDs and capabilities.  (CLONE_NEWUSER flag)</span><br><span class="line">    </span><br><span class="line">       See clone(2) for the exact semantics of the flags.</span><br><span class="line">    </span><br><span class="line">       If program is not given, then ``$&#123;SHELL&#125;&#x27;&#x27; is run (default: /bin/sh).</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/20/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/22/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/20/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/22/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
