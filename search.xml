@@ -24087,7 +24087,9 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
   <entry>
     <title>Binary tree in Python</title>
     <url>/blog/binary-tree-in-python/</url>
-    <content><![CDATA[<h2 id="Leetcode-226-Invert-Binary-Tree"><a href="#Leetcode-226-Invert-Binary-Tree" class="headerlink" title="[Leetcode 226] Invert Binary Tree"></a>[Leetcode 226] Invert Binary Tree</h2><p>Given the root of a binary tree, invert the tree, and return its root.</p>
+    <content><![CDATA[<span id="more"></span>
+
+<h2 id="Leetcode-226-Invert-Binary-Tree"><a href="#Leetcode-226-Invert-Binary-Tree" class="headerlink" title="[Leetcode 226] Invert Binary Tree"></a>[Leetcode 226] Invert Binary Tree</h2><p>Given the root of a binary tree, invert the tree, and return its root.</p>
 <p>Example 1:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: root = [4,2,7,1,3,6,9]</span><br><span class="line">Output: [4,7,2,9,6,3,1]</span><br></pre></td></tr></table></figure>
 
