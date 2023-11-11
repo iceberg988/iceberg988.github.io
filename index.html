@@ -341,7 +341,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-11-09 22:37:16" itemprop="dateModified" datetime="2023-11-09T22:37:16-08:00">2023-11-09</time>
+      <time title="Modified: 2023-11-11 08:55:18" itemprop="dateModified" datetime="2023-11-11T08:55:18-08:00">2023-11-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -367,24 +367,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <span id="more"></span>
-
-<h2 id="Leetcode-226-Invert-Binary-Tree"><a href="#Leetcode-226-Invert-Binary-Tree" class="headerlink" title="[Leetcode 226] Invert Binary Tree"></a>[Leetcode 226] Invert Binary Tree</h2><p>Given the root of a binary tree, invert the tree, and return its root.</p>
-<p>Example 1:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: root = [4,2,7,1,3,6,9]</span><br><span class="line">Output: [4,7,2,9,6,3,1]</span><br></pre></td></tr></table></figure>
-
-<p>Example 2:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: root = [2,1,3]</span><br><span class="line">Output: [2,3,1]</span><br></pre></td></tr></table></figure>
-
-<p>Example 3:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: root = []</span><br><span class="line">Output: []</span><br></pre></td></tr></table></figure>
-
-<p>Constraints:</p>
-<ul>
-<li>The number of nodes in the tree is in the range [0, 100].</li>
-<li>-100 &lt;&#x3D; Node.val &lt;&#x3D; 100</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"># class TreeNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, val=0, left=None, right=None):</span></span><br><span class="line"><span class="comment">#         self.val = val</span></span><br><span class="line"><span class="comment">#         self.left = left</span></span><br><span class="line"><span class="comment">#         self.right = right</span></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">invertTree</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode]</span>) -&gt; <span class="type">Optional</span>[TreeNode]:</span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> root</span><br><span class="line"></span><br><span class="line">        qu = deque()</span><br><span class="line">        qu.append(root)</span><br><span class="line">        <span class="keyword">while</span> <span class="built_in">len</span>(qu) &gt; <span class="number">0</span>:</span><br><span class="line">            node = qu.popleft()</span><br><span class="line">            node.left, node.right = node.right, node.left</span><br><span class="line">            <span class="keyword">if</span> node.left != <span class="literal">None</span>:</span><br><span class="line">                qu.append(node.left)</span><br><span class="line">            <span class="keyword">if</span> node.right != <span class="literal">None</span>:</span><br><span class="line">                qu.append(node.right)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> root</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">invertTree_recursive</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode]</span>) -&gt; <span class="type">Optional</span>[TreeNode]:</span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> root</span><br><span class="line"></span><br><span class="line">        root.left, root.right = root.right, root.left</span><br><span class="line"></span><br><span class="line">        self.invertTree(root.left)</span><br><span class="line">        self.invertTree(root.right)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> root</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">invertTree_preorder</span>(<span class="params">self, root: <span class="type">Optional</span>[TreeNode]</span>) -&gt; <span class="type">Optional</span>[TreeNode]:</span><br><span class="line">        <span class="keyword">if</span> root == <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> root</span><br><span class="line"></span><br><span class="line">        st = []</span><br><span class="line">        st.append(root)</span><br><span class="line">        <span class="keyword">while</span> <span class="built_in">len</span>(st) &gt; <span class="number">0</span>:</span><br><span class="line">            node = st.pop()</span><br><span class="line">            node.left, node.right = node.right, node.left</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> node.left != <span class="literal">None</span>:</span><br><span class="line">                st.append(node.left)</span><br><span class="line">            <span class="keyword">if</span> node.right != <span class="literal">None</span>:</span><br><span class="line">                st.append(node.right)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> root</span><br></pre></td></tr></table></figure>
+          <p>A binary tree is a tree data structure in which each node has at most two children, referred to as the left child and the right child.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/binary-tree-in-python/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1006,7 +997,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-11-05 20:57:58" itemprop="dateModified" datetime="2023-11-05T20:57:58-08:00">2023-11-05</time>
+      <time title="Modified: 2023-11-11 08:53:38" itemprop="dateModified" datetime="2023-11-11T08:53:38-08:00">2023-11-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1034,21 +1025,14 @@
     <div class="post-body" itemprop="articleBody">
           <h2 id="Moore-Voting-Algorithm"><a href="#Moore-Voting-Algorithm" class="headerlink" title="Moore Voting Algorithm"></a>Moore Voting Algorithm</h2><h3 id="Leetcode-169-Majority-Element"><a href="#Leetcode-169-Majority-Element" class="headerlink" title="[Leetcode 169] Majority Element"></a>[Leetcode 169] Majority Element</h3><p>Given an array nums of size n, return the majority element.</p>
 <p>The majority element is the element that appears more than ⌊n &#x2F; 2⌋ times. You may assume that the majority element always exists in the array.</p>
-<p>Example 1:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [3,2,3]</span><br><span class="line">Output: 3</span><br></pre></td></tr></table></figure>
-
-<p>Example 2:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [2,2,1,1,1,2,2]</span><br><span class="line">Output: 2</span><br></pre></td></tr></table></figure>
-
-<p>Constraints:</p>
-<ul>
-<li>n &#x3D;&#x3D; nums.length</li>
-<li>1 &lt;&#x3D; n &lt;&#x3D; 5 * 104</li>
-<li>-109 &lt;&#x3D; nums[i] &lt;&#x3D; 109</li>
-</ul>
-<p>Follow-up: Could you solve the problem in linear time and in O(1) space?</p>
-<p>Solution:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="comment"># Moore Voting Algorithm</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">majorityElement</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        candidate = <span class="number">0</span></span><br><span class="line">        count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">            <span class="keyword">if</span> count == <span class="number">0</span>:</span><br><span class="line">                candidate = num</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> num == candidate:</span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                count -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> candidate</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">majorityElement_sort</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        nums.sort()</span><br><span class="line">        <span class="keyword">return</span> nums[<span class="built_in">len</span>(nums)//<span class="number">2</span>] </span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">majorityElement_hashmap</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        m = defaultdict(<span class="built_in">int</span>)</span><br><span class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">            m[num] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> m:</span><br><span class="line">            <span class="keyword">if</span> m[k] &gt; <span class="built_in">len</span>(nums) // <span class="number">2</span>:</span><br><span class="line">                <span class="keyword">return</span> k</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/algorithm-questions/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

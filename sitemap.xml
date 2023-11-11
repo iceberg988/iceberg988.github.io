@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.flamingbytes.com/blog/cacheline/</loc>
+    <loc>https://www.flamingbytes.com/blog/binary-tree-in-python/</loc>
     
     <lastmod>2023-11-11</lastmod>
     
@@ -11,9 +11,18 @@
   </url>
   
   <url>
-    <loc>https://www.flamingbytes.com/blog/binary-tree-in-python/</loc>
+    <loc>https://www.flamingbytes.com/blog/algorithm-questions/</loc>
     
-    <lastmod>2023-11-10</lastmod>
+    <lastmod>2023-11-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flamingbytes.com/blog/cacheline/</loc>
+    
+    <lastmod>2023-11-11</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -39,15 +48,6 @@
   
   <url>
     <loc>https://www.flamingbytes.com/blog/greedy-algorithm/</loc>
-    
-    <lastmod>2023-11-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flamingbytes.com/blog/algorithm-questions/</loc>
     
     <lastmod>2023-11-06</lastmod>
     
