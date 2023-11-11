@@ -24114,4 +24114,33 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
         <tag>Binary Search</tag>
       </tags>
   </entry>
+  <entry>
+    <title>CPU cache and cacheline</title>
+    <url>/blog/cacheline/</url>
+    <content><![CDATA[<p>A CPU cache is a hardware cache which helps reduce the cost from main memory access. It is a smaller and faster memory part which locates closer to a CPU core than the main memory. Most modern CPUs have mulitple level of caches like L1, L2, and L3. When trying to read and write the main memory, the processor will first check if the data already exists in its local cache. <span id="more"></span></p>
+<p>The modern CPUs have at least three independent caches:</p>
+<ul>
+<li>Instruction cache - Used to speed executable instruction fetch</li>
+<li>Data cache - Used to speed data fetch and store</li>
+<li>Translation lookaside buffer (TLB) - Used to speed virtual-to-physical address translation for both executable instructions and data. The TLB cache is part of the memory management unit (MMU) but not directly related to the CPU cache</li>
+</ul>
+<p>Let’s take an example to see how the CPU and cache looks like in a physical server.</p>
+<p>In the following server, there are 48 CPU cores and each core processor has three levels of caches(L1, L2 and L3). L1 cache has both instruction cache and data cache.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@init531-e43 ~]<span class="comment"># lscpu</span></span><br><span class="line">Architecture:          x86_64</span><br><span class="line">CPU op-mode(s):        32-bit, 64-bit</span><br><span class="line">Byte Order:            Little Endian</span><br><span class="line">CPU(s):                48</span><br><span class="line">On-line CPU(s) list:   0-47</span><br><span class="line">Thread(s) per core:    2</span><br><span class="line">Core(s) per socket:    12</span><br><span class="line">Socket(s):             2</span><br><span class="line">NUMA node(s):          2</span><br><span class="line">Vendor ID:             GenuineIntel</span><br><span class="line">CPU family:            6</span><br><span class="line">Model:                 106</span><br><span class="line">Model name:            Intel(R) Xeon(R) Gold 5317 CPU @ 3.00GHz</span><br><span class="line">Stepping:              6</span><br><span class="line">CPU MHz:               1506.042</span><br><span class="line">CPU max MHz:           3600.0000</span><br><span class="line">CPU min MHz:           800.0000</span><br><span class="line">BogoMIPS:              6000.00</span><br><span class="line">Virtualization:        VT-x</span><br><span class="line">L1d cache:             48K</span><br><span class="line">L1i cache:             32K</span><br><span class="line">L2 cache:              1280K</span><br><span class="line">L3 cache:              18432K</span><br><span class="line">NUMA node0 CPU(s):     0-11,24-35</span><br><span class="line">NUMA node1 CPU(s):     12-23,36-47</span><br><span class="line">Flags:                 [...]</span><br></pre></td></tr></table></figure>
+
+<p>The <em>getconf</em> command outputs the detail cache size for each level.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@init531-e43 ~]<span class="comment"># getconf -a | grep CACHE</span></span><br><span class="line">LEVEL1_ICACHE_SIZE                 32768</span><br><span class="line">LEVEL1_ICACHE_ASSOC                8</span><br><span class="line">LEVEL1_ICACHE_LINESIZE             64</span><br><span class="line">LEVEL1_DCACHE_SIZE                 49152</span><br><span class="line">LEVEL1_DCACHE_ASSOC                12</span><br><span class="line">LEVEL1_DCACHE_LINESIZE             64</span><br><span class="line">LEVEL2_CACHE_SIZE                  1310720</span><br><span class="line">LEVEL2_CACHE_ASSOC                 20</span><br><span class="line">LEVEL2_CACHE_LINESIZE              64</span><br><span class="line">LEVEL3_CACHE_SIZE                  18874368</span><br><span class="line">LEVEL3_CACHE_ASSOC                 12</span><br><span class="line">LEVEL3_CACHE_LINESIZE              64</span><br><span class="line">LEVEL4_CACHE_SIZE                  0</span><br><span class="line">LEVEL4_CACHE_ASSOC                 0</span><br><span class="line">LEVEL4_CACHE_LINESIZE              0</span><br></pre></td></tr></table></figure>
+
+<p>From the above output, we can see cacheline size for each cache level. It’s all 64 bytes in this example.</p>
+<p>When the processor accesses a memory portion which is not already in the cache, it will load a chunk of the memory around the accessed address into the cache such that the cached data could be reused. The chunks of memory loaded by the cache are called cache lines. The size of chunk is called the cache line size. The common cache line sizes are 32, 64 and 128 bytes. </p>
+<p>The limited number of cache lines can be held by the cache, which is determined by the cache size. In this example, the size of L1 data cache is 48k and it can hold 768 cache lines(49152&#x2F;64).</p>
+]]></content>
+      <categories>
+        <category>Tech</category>
+        <category>Performance</category>
+      </categories>
+      <tags>
+        <tag>Cache</tag>
+      </tags>
+  </entry>
 </search>

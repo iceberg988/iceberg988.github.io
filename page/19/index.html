@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">99</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">261</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">100</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">262</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">261</span>
+          <span class="site-state-item-count">262</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-count">100</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,108 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/latency-numbers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/latency-numbers/" class="post-title-link" itemprop="url">Latency numbers</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-02-02 08:00:00" itemprop="dateCreated datePublished" datetime="2022-02-02T08:00:00-08:00">2022-02-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Latency-Comparison-Numbers-2012"><a href="#Latency-Comparison-Numbers-2012" class="headerlink" title="Latency Comparison Numbers (~2012)"></a>Latency Comparison Numbers (~2012)</h2><p><img src="/images/latency-numbers.png" alt="Image"></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><ul>
+<li>Disk is much slower than the memory</li>
+<li>Avoid the disk seek if possible</li>
+<li>Compressing data is worth to consider before sending over network</li>
+<li>It takes time to send data between data centers if they are in different regions</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://computers-are-fast.github.io/">https://computers-are-fast.github.io/</a></li>
+<li><a target="_blank" rel="noopener" href="http://research.google.com/people/jeff/">http://research.google.com/people/jeff/</a> by Jeff Dean</li>
+<li><a target="_blank" rel="noopener" href="http://norvig.com/21-days.html#answers">http://norvig.com/21-days.html#answers</a> by Peter Norvig</li>
+<li>Humanized comparison: <a target="_blank" rel="noopener" href="https://gist.github.com/hellerbarde/2843375">https://gist.github.com/hellerbarde/2843375</a></li>
+<li>Visual comparison chart: <a target="_blank" rel="noopener" href="http://i.imgur.com/k0t1e.png">http://i.imgur.com/k0t1e.png</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1354,94 +1456,6 @@ fs.aio-max-nr = 1048576
 <p>Because Rationality Island has a variety of landforms on it, there is a wide range of natural resources available.  The city is surrounded by water and there are exotic fish, which traders from all over the world come to buy. To the North of the main city lies the Crystal Mountains, where miners mine an abundant amount of gold, silver, and other precious metals. These metals are either crafted into jewelry or traded in the market. On the opposite side of the island, woodchoppers get a large amount of lumber, which is used for building ships for trading or used for houses and furniture. Trade is also an important factor in the economy. Goods are imported in the East Harbor and exported in the North Harbor. Hundreds of ships arrive every day and merchants trade spices and extraordinary furniture like Persian rugs for the supreme jewelry that craftsmen produce. The citizens  of Rationality Island are productive entrepreneurs who use their resources to enhance their life.</p>
 <p>To live in Rationality Island, the citizens must follow one guiding principle: Respect everyone’s natural rights. Everyone is equal regardless of race and skin color because they enjoy the same natural rights. Also the citizens must be honest and honor their contract. Those who don’t show integrity and steal other’s property will be sentenced to jail with a fair trial. Even if anyone is caught doing a dishonorable act, the judges must listen to the defendant’s argument before giving the judgement. The citizens of Rationality Island believe that rationality should be used to enhance your life. Therefore, everyone must go to school to gain valuable knowledge. The citizens are free to produce and trade in a  place where violence is unacceptable and contracts are reliable.</p>
 <p>The flag of Rationality Island is a symbol of the values that the citizens exhibit. The gold bar on the island represents the discoveries and opportunities that people make and receive. The purple mountains indicate the precious metals that are mined in the Crystal Mountains. The lush, green tree and bushes symbolize the large amount of lumber that is chopped. The sun symbolizes hope for citizens to improve and enhance their lives. The fish stands for the exotic salmon and tuna available. The blue ocean represents the peace and freedom that people enjoy. Finally, the light blue sky symbolizes the trade and success in the city.  Rationality Island is a prosperous city, for people demonstrate the values of rationality and independence.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/separating-from-pangaea/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/separating-from-pangaea/" class="post-title-link" itemprop="url">Separating from Pangaea</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-10-25 07:00:00" itemprop="dateCreated datePublished" datetime="2021-10-25T07:00:00-07:00">2021-10-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>All the continents of Planet Earth rest on giant slabs of rock called plate tectonics. Due to the movement of the plates, the continents drifted around until they completely separated from the supercontinent “Pangaea”. Over the past millions of years, the continents moved to where they are now. They are still moving today and the location of the continents will be very different after millions of years.</p>
-<p>Alfred Wegener created the theory of Continental Drift. He thought that the continents were kind of like a jigsaw puzzle. Mountain ranges seemed to start on one continent and continue on another. For example, the Appalachian Mountains in North America matched up neatly with the Scottish Highlands. Fossils in various places showed that the climate there a long time ago had been different. Fossils of fresh water reptile Mesosaurus were discovered in both Africa and South America. It could not have swum across the salty ocean so scientists conclude that the two continents were once joined.</p>
-<p>This theory was supported by the theory of plate tectonics. This theory explains how forces deep within Earth caused ocean floors to spread and continents to move. It describes how the lithosphere is made up of huge plates of solid rock. The continents rest on these plates. The asthenosphere is made up of almost melted rock and acts as a slippery surface for the plates to move on. Magma is pushed from the mantle toward the movement when the plates move. Tension is caused by the upward movement. It moves the ocean floor apart and separates the plates. The continents that rest on these plates also move apart.</p>
-<p>Based on fossils, rocks, and other geological evidence, scientists concluded that the continents were once part of the supercontinents “Pangaea”. Over time, the continents spread apart due to the movement of plate tectonics. Even now, the continents are still moving and North America is drifting closer to Asia and Australia.</p>
 
       
     </div>
