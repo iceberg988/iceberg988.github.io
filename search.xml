@@ -23617,7 +23617,9 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
   <entry>
     <title>Common used functions in Python</title>
     <url>/blog/common-used-functions-in-python/</url>
-    <content><![CDATA[<h2 id="isalnum"><a href="#isalnum" class="headerlink" title="isalnum()"></a>isalnum()</h2><p>The isalnum() method returns True if all the characters are alphanumeric, meaning alphabet letter (a-z) and numbers (0-9).</p>
+    <content><![CDATA[<h2 id="set"><a href="#set" class="headerlink" title="set()"></a>set()</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">triplets = <span class="built_in">set</span>() <span class="comment"># automatically remove duplicates</span></span><br><span class="line">triplets.add((<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>))</span><br><span class="line">triplets.add((<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>))</span><br><span class="line">triplets.add((<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>))</span><br><span class="line"><span class="built_in">print</span>(triplets)</span><br><span class="line"><span class="comment"># output: &#123;(1, 2, 3), (1, 2, 4)&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="isalnum"><a href="#isalnum" class="headerlink" title="isalnum()"></a>isalnum()</h2><p>The isalnum() method returns True if all the characters are alphanumeric, meaning alphabet letter (a-z) and numbers (0-9).</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">isPalindrome</span>(<span class="params">self, s: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        left, right = <span class="number">0</span>, <span class="built_in">len</span>(s) - <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> left &lt; right:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> s[left].isalnum():</span><br><span class="line">                left += <span class="number">1</span></span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> s[right].isalnum():</span><br><span class="line">                right -= <span class="number">1</span></span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> s[left].lower() != s[right].lower():</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            </span><br><span class="line">            left += <span class="number">1</span></span><br><span class="line">            right -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="ord"><a href="#ord" class="headerlink" title="ord()"></a>ord()</h2><p>ord() function returns the Unicode code from a given character. <span id="more"></span></p>
@@ -24163,6 +24165,46 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
       </categories>
       <tags>
         <tag>Cache</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Two pointers technique</title>
+    <url>/blog/two-pointers/</url>
+    <content><![CDATA[<p>Two pointers is typically used for searching pairs in a sorted array satisfying some condition in linear time.</p>
+<span id="more"></span>
+
+<h2 id="Leetcode-15-3Sum"><a href="#Leetcode-15-3Sum" class="headerlink" title="[Leetcode 15] 3Sum"></a>[Leetcode 15] 3Sum</h2><p>Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i !&#x3D; j, i !&#x3D; k, and j !&#x3D; k, and nums[i] + nums[j] + nums[k] &#x3D;&#x3D; 0.</p>
+<p>Notice that the solution set must not contain duplicate triplets.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: nums = [-1,0,1,2,-1,-4]</span><br><span class="line">Output: [[-1,-1,2],[-1,0,1]]</span><br><span class="line">Explanation: </span><br><span class="line">nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.</span><br><span class="line">nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.</span><br><span class="line">nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.</span><br><span class="line">The distinct triplets are [-1,0,1] and [-1,-1,2].</span><br><span class="line">Notice that the order of the output and the order of the triplets does not matter.</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: nums = [0,1,1]</span><br><span class="line">Output: []</span><br><span class="line">Explanation: The only possible triplet does not sum up to 0.</span><br></pre></td></tr></table></figure>
+
+<p>Example 3:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: nums = [0,0,0]</span><br><span class="line">Output: [[0,0,0]]</span><br><span class="line">Explanation: The only possible triplet sums up to 0.</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>3 &lt;&#x3D; nums.length &lt;&#x3D; 3000</li>
+<li>-10^5 &lt;&#x3D; nums[i] &lt;&#x3D; 10^5</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">threeSum</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]:</span><br><span class="line">        nums.sort()</span><br><span class="line">        triplets = <span class="built_in">set</span>() <span class="comment"># automatically remove duplicates</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums) - <span class="number">2</span>):</span><br><span class="line">            j = i + <span class="number">1</span></span><br><span class="line">            k = <span class="built_in">len</span>(nums) - <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> j &lt; k:</span><br><span class="line">                <span class="built_in">sum</span> = nums[i] + nums[j] + nums[k]</span><br><span class="line">                <span class="keyword">if</span> <span class="built_in">sum</span> &gt; <span class="number">0</span>:</span><br><span class="line">                    k -= <span class="number">1</span></span><br><span class="line">                <span class="keyword">elif</span> <span class="built_in">sum</span> &lt; <span class="number">0</span>:</span><br><span class="line">                    j += <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    triplets.add((nums[i],nums[j],nums[k]))</span><br><span class="line">                    j += <span class="number">1</span></span><br><span class="line">                    k -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> triplets</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://leetcode.com/tag/two-pointers/">https://leetcode.com/tag/two-pointers/</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Tech</category>
+        <category>Programming</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Leetcode</tag>
+        <tag>Algorithm</tag>
+        <tag>Two pointers</tag>
       </tags>
   </entry>
 </search>

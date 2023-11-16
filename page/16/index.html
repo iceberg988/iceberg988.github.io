@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">100</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">262</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">101</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">263</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">262</span>
+          <span class="site-state-item-count">263</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">101</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,143 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/angularjs-table-creation-for-dynamic-number-of-columns/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/angularjs-table-creation-for-dynamic-number-of-columns/" class="post-title-link" itemprop="url">AngularJS table creation for dynamic number of columns</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-22 07:00:00" itemprop="dateCreated datePublished" datetime="2022-04-22T07:00:00-07:00">2022-04-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <pre><code>&lt;head&gt;
+    &lt;link href=&quot;css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;script src=&quot;js/bootstrap.bundle.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;js/angular.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body ng-app=&quot;myApp&quot;&gt;
+&lt;div ng-controller=&quot;MyCtrl&quot;&gt;
+    &lt;div class=&quot;table-responsive&quot; id=&quot;table1&quot;&gt;
+        &lt;table class=&quot;table table-sm table-hover&quot;&gt;
+            &lt;thead class=&quot;thead-light&quot;&gt;
+                &lt;tr&gt;
+                    &lt;th ng-repeat=&quot;column in cols&quot;&gt;&#123;&#123;column&#125;&#125;&lt;/th&gt;
+                &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tr ng-repeat=&quot;row in rows&quot;&gt;
+                &lt;td ng-repeat=&quot;column in cols&quot;&gt;&#123;&#123;row[column]&#125;&#125;&lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/table&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+
+
+var myApp = angular.module(&#39;myApp&#39;,[]);
+
+function MyCtrl($scope) &#123;
+    $scope.rows = [
+    &#123;
+        &quot;#&quot;: &quot;1&quot;, 
+        &quot;name&quot;: &quot;aa&quot;, 
+        &quot;score&quot;: &quot;3.8&quot;
+    &#125;, 
+    &#123;
+        &quot;#&quot;: &quot;2&quot;, 
+        &quot;name&quot;: &quot;bb&quot;, 
+        &quot;score&quot;: &quot;4.0&quot;
+    &#125;, 
+    &#123;
+        &quot;#&quot;: &quot;3&quot;, 
+        &quot;name&quot;: &quot;cc&quot;, 
+        &quot;score&quot;: &quot;3.6&quot;
+    &#125;];
+    $scope.cols = Object.keys($scope.rows[0]);
+&#125;
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://jsfiddle.net/v6ruo7mj/1/">http://jsfiddle.net/v6ruo7mj/1/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1696,155 +1833,6 @@ $ yum remove zfs-release
 <li><a target="_blank" rel="noopener" href="https://www.symmcom.com/docs/how-tos/storages/how-to-install-zfs-on-centos-7">https://www.symmcom.com/docs/how-tos/storages/how-to-install-zfs-on-centos-7</a></li>
 <li><a target="_blank" rel="noopener" href="https://zfsonlinux.org/">https://zfsonlinux.org/</a></li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/fio-initial-write-overwrite-and-append-write/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/fio-initial-write-overwrite-and-append-write/" class="post-title-link" itemprop="url">Fio initial write, overwrite and append write</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-03-15 07:00:00" itemprop="dateCreated datePublished" datetime="2022-03-15T07:00:00-07:00">2022-03-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>In this post, we try to study how the overwrite and file_append options work in fio benchmark.</p>
-<h2 id="overwrite-and-file-append-options"><a href="#overwrite-and-file-append-options" class="headerlink" title="overwrite and file_append options"></a>overwrite and file_append options</h2><ul>
-<li>overwrite&#x3D;bool</li>
-</ul>
-<p>If true, writes to a file will always overwrite existing data. If the file doesn’t already exist, it will be created before the write phase begins. If the file exists and is large enough for the specified write phase, nothing will be done. Default: false.</p>
-<ul>
-<li>file_append&#x3D;bool</li>
-</ul>
-<p>Perform I&#x2F;O after the end of the file. Normally fio will operate within the size of a file. If this option is set, then fio will append to the file instead. This has identical behavior to setting offset to the size of a file. This option is ignored on non-regular files.</p>
-<ul>
-<li>offset&#x3D;int</li>
-</ul>
-<p>Start I&#x2F;O at the provided offset in the file, given as either a fixed size in bytes, zones or a percentage. If a percentage is given, the generated offset will be aligned to the minimum blocksize or to the value of offset_align if provided. Data before the given offset will not be touched. This effectively caps the file size at real_size - offset. Can be combined with size to constrain the start and end range of the I&#x2F;O workload. A percentage can be specified by a number between 1 and 100 followed by ‘%’, for example, offset&#x3D;20% to specify 20%. In ZBD mode, value can be set as number of zones using ‘z’.</p>
-<h2 id="Fio-commands"><a href="#Fio-commands" class="headerlink" title="Fio commands"></a>Fio commands</h2><p>The following fio commands are used to study initial write, overwrite and append write. We also have one more randread run at the last. Before each command run, we drop kernel cache with command “echo 3&gt;&#x2F;proc&#x2F;sys&#x2F;vm&#x2F;drop_caches”.</p>
-<pre><code>$ fio --name=test --ioengine=libaio --blocksize=4k --readwrite=randwrite --directory=/mnt/bench1 --nrfiles=1 --size=1g --end_fsync=1 --numjobs=1 --direct=1
-$ fio --name=test --ioengine=libaio --blocksize=4k --readwrite=randwrite --directory=/mnt/bench1 --nrfiles=1 --size=1g --end_fsync=1 --numjobs=1 --direct=1
-$ fio --name=test --ioengine=libaio --blocksize=4k --readwrite=randwrite --directory=/mnt/bench1 --nrfiles=1 --size=1g --end_fsync=1 --numjobs=1 --direct=1 --overwrite=1
-$ fio --name=test --ioengine=libaio --blocksize=4k --readwrite=randwrite --directory=/mnt/bench1 --nrfiles=1 --size=1g --end_fsync=1 --numjobs=1 --direct=1 --file_append=1
-$ fio --name=test --ioengine=libaio --blocksize=4k --readwrite=randread --directory=/mnt/bench1 --nrfiles=1 --size=1g --end_fsync=1 --numjobs=1 --direct=1
-</code></pre>
-<h2 id="Fio-results"><a href="#Fio-results" class="headerlink" title="Fio results"></a>Fio results</h2><p>With the option “–file_append&#x3D;1”, fio will append to the end of the file and expand it to the proper size. The write performance is similar to the initial write.</p>
-<p>With the option “–overwrite&#x3D;1”, fio will overwrite the existing data. If the file doesn’t already exist, it will be created before the write phase begins. If the file exists and is large enough for the specified write phase, nothing will be done.</p>
-<p>The following table shows the fio results.<br>Test NameFio OptionsResultFile SizeInitial Writewrite: IOPS&#x3D;7009, BW&#x3D;27.4MiB&#x2F;s0GB -&gt; 1GBOverwrite–overwrite&#x3D;0(default)write: IOPS&#x3D;10.4k, BW&#x3D;40.4MiB&#x2F;s1GBOverwrite–overwrite&#x3D;1write: IOPS&#x3D;10.0k, BW&#x3D;39.2MiB&#x2F;s1GBAppend Write–file_append&#x3D;1write: IOPS&#x3D;6667, BW&#x3D;26.0MiB&#x2F;s1GB -&gt; 2GBRandom Readread: IOPS&#x3D;7769, BW&#x3D;30.3MiB&#x2F;s2GB</p>
-<h2 id="Fio-syscalls-for-create-write-and-read"><a href="#Fio-syscalls-for-create-write-and-read" class="headerlink" title="Fio syscalls for create, write and read"></a>Fio syscalls for create, write and read</h2><p>The file space will be allocated when to lay out the file.</p>
-<pre><code>29247 write(1, &quot;Starting 1 process\n&quot;, 19) = 19
-29247 stat(&quot;/mnt/bench1/test.0.0&quot;, 0x7ffd59df9db0) = -1 ENOENT (No such file or directory)
-29247 write(1, &quot;test: Laying out IO file (1 file&quot;..., 44) = 44
-29247 unlink(&quot;/mnt/bench1/test.0.0&quot;)    = -1 ENOENT (No such file or directory)
-29247 open(&quot;/mnt/bench1/test.0.0&quot;, O_WRONLY|O_CREAT, 0644) = 3
-29247 fallocate(3, 0, 0, 1073741824)    = 0
-29247 fadvise64(3, 0, 1073741824, POSIX_FADV_DONTNEED) = 0
-29247 close(3)
-</code></pre>
-<p>The following are the syscalls when fio writes data with ioengine <em>libaio</em>.</p>
-<pre><code>29429 open(&quot;/mnt/bench1/test.0.0&quot;, O_RDWR|O_CREAT|O_DIRECT, 0600) = 3
-29429 fadvise64(3, 1073741824, 1073741824, POSIX_FADV_DONTNEED) = 0
-29429 fadvise64(3, 1073741824, 1073741824, POSIX_FADV_RANDOM) = 0
-29429 io_submit(0x7fbe9301c000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;5\340(\3148\240\231\26\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=4096, aio_offset=1138499584&#125;]) = 1
-29429 io_getevents(0x7fbe9301c000, 1, 1, [&#123;data=0, obj=0xa77de0, res=4096, res2=0&#125;], NULL) = 1
-29429 io_submit(0x7fbe9301c000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;\0\340`o\0\0\0\0\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=4096, aio_offset=1868619776&#125;]) = 1
-29429 io_getevents(0x7fbe9301c000, 1, 1, [&#123;data=0, obj=0xa77de0, res=4096, res2=0&#125;], NULL) = 1
-[..]
-29429 io_submit(0x7fbe9301c000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;\0\300\357y\0\0\0\0\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=4096, aio_offset=2046550016&#125;]) = 1
-29429 io_getevents(0x7fbe9301c000, 1, 1, [&#123;data=0, obj=0xa77de0, res=4096, res2=0&#125;], NULL) = 1
-29429 fsync(3)                          = 0
-29429 close(3)
-</code></pre>
-<p>The following are the syscalls when fio reads data with ioengine <em>libaio</em>.</p>
-<pre><code>29484 open(&quot;/mnt/bench1/test.0.0&quot;, O_RDONLY|O_DIRECT) = 3
-29484 fadvise64(3, 0, 1073741824, POSIX_FADV_DONTNEED) = 0
-29484 fadvise64(3, 0, 1073741824, POSIX_FADV_RANDOM) = 0
-29484 io_submit(0x7f069d23a000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PREAD, aio_fildes=3, aio_buf=0x9d1000, aio_nbytes=4096, aio_offset=64757760&#125;]) = 1
-29484 io_getevents(0x7f069d23a000, 1, 1, [&#123;data=0, obj=0x9d3da0, res=4096, res2=0&#125;], NULL) = 1
-29484 io_submit(0x7f069d23a000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PREAD, aio_fildes=3, aio_buf=0x9d1000, aio_nbytes=4096, aio_offset=794877952&#125;]) = 1
-29484 io_getevents(0x7f069d23a000, 1, 1, [&#123;data=0, obj=0x9d3da0, res=4096, res2=0&#125;], NULL) = 1
-[..]
-29484 io_submit(0x7f069d23a000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PREAD, aio_fildes=3, aio_buf=0x9d1000, aio_nbytes=4096, aio_offset=972808192&#125;]) = 1
-29484 io_getevents(0x7f069d23a000, 1, 1, [&#123;data=0, obj=0x9d3da0, res=4096, res2=0&#125;], NULL) = 1
-29484 getrusage(RUSAGE_THREAD, &#123;ru_utime=&#123;tv_sec=1, tv_usec=706077&#125;, ru_stime=&#123;tv_sec=7, tv_usec=828474&#125;, ...&#125;) = 0
-29484 close(3)
-</code></pre>
 
       
     </div>

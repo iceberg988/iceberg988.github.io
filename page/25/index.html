@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">100</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">262</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">101</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">263</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">262</span>
+          <span class="site-state-item-count">263</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">101</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,220 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/useful-hba-commands/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/useful-hba-commands/" class="post-title-link" itemprop="url">Useful HBA commands</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-11-10 08:00:00" itemprop="dateCreated datePublished" datetime="2020-11-10T08:00:00-08:00">2020-11-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Check-HBA-card-type"><a href="#Check-HBA-card-type" class="headerlink" title="Check HBA card type"></a>Check HBA card type</h2><pre><code>$  lspci | grep -i fibre
+18:00.0 Fibre Channel: QLogic Corp. ISP2722-based 16/32Gb Fibre Channel to PCIe Adapter (rev 01)
+18:00.1 Fibre Channel: QLogic Corp. ISP2722-based 16/32Gb Fibre Channel to PCIe Adapter (rev 01)
+</code></pre>
+<h2 id="Physical-slot-driver-module-information"><a href="#Physical-slot-driver-module-information" class="headerlink" title="Physical slot, driver, module information"></a>Physical slot, driver, module information</h2><pre><code>$  lspci -v -s 18:00.0
+18:00.0 Fibre Channel: QLogic Corp. ISP2722-based 16/32Gb Fibre Channel to PCIe Adapter (rev 01)
+    Subsystem: QLogic Corp. QLE2692 Dual Port 16Gb Fibre Channel to PCIe Adapter
+    Flags: bus master, fast devsel, latency 0, IRQ 231, NUMA node 0
+    Memory at aab05000 (64-bit, prefetchable) [size=4K]
+    Memory at aab02000 (64-bit, prefetchable) [size=8K]
+    Memory at aaa00000 (64-bit, prefetchable) [size=1M]
+    Expansion ROM at 9d900000 [disabled] [size=256K]
+    Capabilities: [44] Power Management version 3
+    Capabilities: [4c] Express Endpoint, MSI 00
+    Capabilities: [88] Vital Product Data
+    Capabilities: [90] MSI-X: Enable+ Count=16 Masked-
+    Capabilities: [9c] Vendor Specific Information: Len=0c &lt;?&gt;
+    Capabilities: [100] Advanced Error Reporting
+    Capabilities: [154] Alternative Routing-ID Interpretation (ARI)
+    Capabilities: [1c0] #19
+    Capabilities: [1f4] Vendor Specific Information: ID=0001 Rev=1 Len=014 &lt;?&gt;
+    Kernel driver in use: qla2xxx
+    Kernel modules: qla2xxx
+</code></pre>
+<h2 id="Check-if-the-driver-module-loaded"><a href="#Check-if-the-driver-module-loaded" class="headerlink" title="Check if the driver&#x2F;module loaded"></a>Check if the driver&#x2F;module loaded</h2><pre><code>$  lsmod | grep qla2xxx
+qla2xxx               792059  246
+nvme_fc                33640  1 qla2xxx
+scsi_transport_fc      64007  1 qla2xxx
+</code></pre>
+<h2 id="Check-module-file-name"><a href="#Check-module-file-name" class="headerlink" title="Check module file name"></a>Check module file name</h2><pre><code>$  modinfo -n qla2xxx
+/lib/modules/3.10.0-1062.12.1.el7.x86_64/kernel/drivers/scsi/qla2xxx/qla2xxx.ko
+</code></pre>
+<h2 id="Check-HBA-driver-and-version"><a href="#Check-HBA-driver-and-version" class="headerlink" title="Check HBA driver and version"></a>Check HBA driver and version</h2><pre><code>$  modinfo -d qla2xxx
+QLogic Fibre Channel HBA Driver
+QLogic Fibre Channel HBA Driver (Target Mode Support, including 24xx+ ISP)
+
+$  modinfo qla2xxx | grep version
+version:        8.07.00.34.Trunk-SCST.19-k
+rhelversion:    7.7
+srcversion:     B6770D64FCF8A0A0273AD2C
+vermagic:       3.10.0-1062.12.1.el7.x86_64 SMP mod_unload modversions
+</code></pre>
+<h2 id="Check-if-the-running-driver-is-same-as-kernel"><a href="#Check-if-the-running-driver-is-same-as-kernel" class="headerlink" title="Check if the running driver is same as kernel"></a>Check if the running driver is same as kernel</h2><pre><code>$  modinfo -k `uname -r` -n qla2xxx
+/lib/modules/3.10.0-1062.12.1.el7.x86_64/kernel/drivers/scsi/qla2xxx/qla2xxx.ko
+</code></pre>
+<h2 id="Remove-current-module-driver"><a href="#Remove-current-module-driver" class="headerlink" title="Remove current module&#x2F;driver"></a>Remove current module&#x2F;driver</h2><pre><code>$  modprobe -r qla2xxx
+</code></pre>
+<h2 id="Show-dependent-devices-modules"><a href="#Show-dependent-devices-modules" class="headerlink" title="Show dependent devices&#x2F;modules"></a>Show dependent devices&#x2F;modules</h2><pre><code>$  modprobe --show-depends qla2xxx
+insmod /lib/modules/3.10.0-1062.12.1.el7.x86_64/kernel/drivers/scsi/scsi_tgt.ko.xz
+insmod /lib/modules/3.10.0-1062.12.1.el7.x86_64/kernel/drivers/scsi/scsi_transport_fc.ko.xz
+insmod /lib/modules/3.10.0-1062.12.1.el7.x86_64/kernel/drivers/scsi/qla2xxx/qla2xxx.ko ql2xfwloadbin=2
+</code></pre>
+<h2 id="Check-the-available-HBA-ports"><a href="#Check-the-available-HBA-ports" class="headerlink" title="Check the available HBA ports"></a>Check the available HBA ports</h2><pre><code>$  ls -l /sys/class/fc_host
+total 0
+lrwxrwxrwx. 1 root root 0 Mar  9 13:01 host2 -&gt; ../../devices/pci0000:17/0000:17:00.0/0000:18:00.0/host2/fc_host/host2
+lrwxrwxrwx. 1 root root 0 Mar  9 13:01 host3 -&gt; ../../devices/pci0000:17/0000:17:00.0/0000:18:00.1/host3/fc_host/host3
+</code></pre>
+<h2 id="View-used-HBA-ports-on-server"><a href="#View-used-HBA-ports-on-server" class="headerlink" title="View used HBA ports on server"></a>View used HBA ports on server</h2><pre><code>$  ls -ltr /sys/class/fc_transport/
+total 0
+lrwxrwxrwx. 1 root root 0 Mar  9 13:01 target6:0:0 -&gt; ../../devices/pci0000:85/0000:85:02.0/0000:87:00.0/host6/rport-6:0-0/target6:0:0/fc_transport/target6:0:0
+lrwxrwxrwx. 1 root root 0 Mar  9 13:01 target4:0:0 -&gt; ../../devices/pci0000:85/0000:85:00.0/0000:86:00.0/host4/rport-4:0-0/target4:0:0/fc_transport/target4:0:0
+[...]
+</code></pre>
+<h2 id="Find-the-WWN-numbers-for-your-fc-host"><a href="#Find-the-WWN-numbers-for-your-fc-host" class="headerlink" title="Find the WWN numbers for your fc host"></a>Find the WWN numbers for your fc host</h2><pre><code>$  cat /sys/class/fc_host/host?/port_name
+0x210034800d6baa70
+0x210034800d6baa71
+</code></pre>
+<h2 id="Port-state"><a href="#Port-state" class="headerlink" title="Port state"></a>Port state</h2><pre><code>$  cat /sys/class/fc_host/host?/port_state
+Online
+Online
+</code></pre>
+<h2 id="Queue-depth"><a href="#Queue-depth" class="headerlink" title="Queue depth"></a>Queue depth</h2><pre><code>$  cat /sys/module/qla2xxx/parameters/ql2xmaxqdepth
+64
+</code></pre>
+<p>To set&#x2F;change the qdepth value on the fly:</p>
+<pre><code>$ echo 16 &gt; /sys/module/qla2xxx/parameters/ql2xmaxqdepth
+</code></pre>
+<p>To set the qdepth value permanently:</p>
+<pre><code>$ modinfo qla2xxx | grep ql2xmaxqdepth
+parm: ql2xmaxqdepth:Maximum queue depth to set for each LUN. Default is 32. (int)
+
+$ vi /etc/modprobe.conf
+alias scsi_hostadapter1 qla2xxx
+options qla2xxx ql2xmaxqdepth=16
+</code></pre>
+<h2 id="Scan-disks"><a href="#Scan-disks" class="headerlink" title="Scan disks"></a>Scan disks</h2><pre><code>$  ls /sys/class/scsi_host
+host1  host2  host3  host4  host5  host6  host7
+
+$  for x in `ls /sys/class/scsi_host`
+&gt; do
+&gt; echo &quot;- - -&quot; &gt; /sys/class/scsi_host/$x/scan
+&gt; done
+</code></pre>
+<h2 id="Check-number-of-LUNs"><a href="#Check-number-of-LUNs" class="headerlink" title="Check number of LUNs"></a>Check number of LUNs</h2><pre><code>$  pwd
+/opt/QLogic_Corporation/QConvergeConsoleCLI
+
+$ ./scli -t 
+HBA Instance 1: QLE2692 Port 2 WWPN 21-00-34-80-0D-6B-AA-71 PortID 02-1D-00
+Link: Online
+
+Path                           : 0
+Target                         : 0
+Device ID                      : 0xffff
+Product Vendor                 : PURE
+Product ID                     : FlashArray
+Product Revision               : 8888
+Serial Number                  : 7CA43045E3514BF700011025
+Node Name                      : 52-4A-93-77-BB-B4-74-03
+Port Name                      : 52-4A-93-77-BB-B4-74-03
+Port ID                        : 02-2C-00
+Product Type                   : FCP Disk
+LUN Count(s)                   : 16
+Status                         : Online
+</code></pre>
+<h2 id="Check-HBA-speed"><a href="#Check-HBA-speed" class="headerlink" title="Check HBA speed"></a>Check HBA speed</h2><pre><code>$  grep -Hv &quot;zz&quot; /sys/class/fc_host/host*/speed
+/sys/class/fc_host/host2/speed:16 Gbit
+/sys/class/fc_host/host3/speed:16 Gbit
+</code></pre>
+<h2 id="Collect-QLogic-HBA-stats"><a href="#Collect-QLogic-HBA-stats" class="headerlink" title="Collect QLogic HBA stats"></a>Collect QLogic HBA stats</h2><pre><code>$  pwd
+/opt/QLogic_Corporation/QConvergeConsoleCLI
+
+$  ./qaucli -gs 8 SetRate 10 LogToFile /tmp/fs.stat.csv
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://linoxide.com/storage/scandetect-luns-redhat-linux-outputs-remember/">https://linoxide.com/storage/scandetect-luns-redhat-linux-outputs-remember/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1398,152 +1612,6 @@ done
 <p>During her training, Mulan overcame many troubles. She didn’t want to shower with men, so she offered to be on night guard duty. When she wanted to take a bath, she would do it at the lake. But it also made her a tough warrior. Her fighting skills surpassed any men. When the soldiers were forced to carry two buckets of water up a mountain, Mulan was the first to reach the peak.</p>
 <p>After a few months of training, the commander said that it was time to enter the war. They were losing the moment they started. Khan’s army even had fireballs. While the rest of the army struggled to defend themselves, mulan targeted on Khan. When Khan saw Mulan coming, he hopped on a horse and ran away. Mulan darted after him but was soon lost in a canyon. Suddenly, the witch came and shot an arrow at Mulan. Mulan died for a lie can only live so long. But the chi inside her wasn’t held back. Like a phoenix, Mulan rebirthed. She revealed her true identity. When she went back, she grabbed a few helmets with her. She put the helmets on a rock so they looked like soldiers. She hid behind the rock and shot an arrow at the enemy. The enemy saw the fake soldiers and launched a fireball at them. This fireball caused a snowstorm down from the mountain. Though Mulan saved her general and the rest of the army, the leader thought she was an imposter. But when Mulan said that Khan was planning a sneak attack on the emperor, her friends believed in her and made her their leader. They rushed back to the palace. Using her chi, Mulan defeated the enemy and saved the emperor. The emperor, who owed his life to Mulan, asked her what reward she wanted. Mulan said that she wanted to apologize to her parents for stealing their armor and sword. After that, she would take care of them. The emperor granted the wish after making Mulan an officer in the army.</p>
 <p>People admire Mulan for her bravery, honesty, loyalty to the army, and filial piety to her parents.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/linux-system-administration/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/linux-system-administration/" class="post-title-link" itemprop="url">Linux System Administration</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-09-02 07:00:00" itemprop="dateCreated datePublished" datetime="2020-09-02T07:00:00-07:00">2020-09-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Package-management"><a href="#Package-management" class="headerlink" title="Package management"></a>Package management</h2><p>Install the package:</p>
-<pre><code>$ rpm -ivh blktrace
-</code></pre>
-<p>Upgrade the package:</p>
-<pre><code>$ rpm -Uvh blktrace
-</code></pre>
-<p>Remove the installed package:</p>
-<pre><code>$ rpm -ev blktrace
-$ rpm -ev --nodeps blktrace
-</code></pre>
-<p>Display the installed package info:</p>
-<pre><code>$ rpm -qi blktrace
-Name        : blktrace                     Relocations: (not relocatable)
-Version     : 1.0.1                             Vendor: Red Hat, Inc.
-Release     : 6.el6                         Build Date: Wed 07 Sep 2011 12:51:04 PM PDT
-Install Date: Fri 23 Dec 2016 12:15:57 PM PST      Build Host: x86-006.build.bos.redhat.com
-Group       : Development/System            Source RPM: blktrace-1.0.1-6.el6.src.rpm
-Size        : 1042319                          License: GPLv2+
-Signature   : RSA/8, Fri 23 Sep 2011 04:19:31 AM PDT, Key ID 199e2f91fd431d51
-Packager    : Red Hat, Inc. &lt;http://bugzilla.redhat.com/bugzilla&gt;
-URL         : http://brick.kernel.dk/snaps
-Summary     : Utilities for performing block layer IO tracing in the linux kernel
-Description :
-blktrace is a block layer IO tracing mechanism which provides detailed
-information about request queue operations to user space.  This package
-includes both blktrace, a utility which gathers event traces from the kernel;
-and blkparse, a utility which formats trace data collected by blktrace.
-
-You should install the blktrace package if you need to gather detailed
-information about IO patterns.
-</code></pre>
-<p>Find out what package a file belongs to:</p>
-<pre><code>$ rpm -qf /usr/bin/blktrace
-blktrace-1.0.1-6.el6.x86_64
-</code></pre>
-<p>Display list of configuration files for a package or command:</p>
-<pre><code>$ rpm -qc &lt;package-name&gt;
-$ rpm -qcf /path/to/file
-</code></pre>
-<p>Download a package and its dependencies:</p>
-<pre><code>$ yum install yum-utils
-$ yumdownloader --destdir=./ --resolve blktrace
-</code></pre>
-<h2 id="Network-bonding"><a href="#Network-bonding" class="headerlink" title="Network bonding"></a>Network bonding</h2><p>Configure LACP bonding without reboot:</p>
-<pre><code>$  cat /sys/class/net/bond0/bonding/mode
-802.3ad 4
-$  cat /sys/class/net/bond0/bonding/xmit_hash_policy
-layer2 0
-$  echo 1 &gt; /sys/class/net/bond0/bonding/xmit_hash_policy
-$  cat /sys/class/net/bond0/bonding/xmit_hash_policy
-layer3+4 1
-</code></pre>
-<p>Configure LACP bonding permanent to reboot:</p>
-<pre><code>$ vi /etc/sysconfig/network-scripts/ifcfg-bond0
-BONDING_OPTS=&quot;mode=802.3ad xmit_hash_policy=layer3+4&quot;
-
-$ service network restart
-</code></pre>
 
       
     </div>
