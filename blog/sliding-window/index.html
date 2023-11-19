@@ -28,7 +28,7 @@
 <meta property="og:description" content="IntroWindow Sliding Technique is a computational technique that aims to reduce the use of nested loops and replace it with a single loop, thereby reducing the time complexity.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-10-02T17:36:15.000Z">
-<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:modified_time" content="2023-11-19T21:57:18.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="Leetcode">
@@ -105,7 +105,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">101</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">263</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">267</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -156,7 +156,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-1004-Max-Consecutive-Ones-III"><span class="nav-number">2.</span> <span class="nav-text">[Leetcode 1004] Max Consecutive Ones III</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-1456-Maximum-Number-of-Vowels-in-a-Substring-of-Given-Length"><span class="nav-number">3.</span> <span class="nav-text">[Leetcode 1456] Maximum Number of Vowels in a Substring of Given Length</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-1493-Longest-Subarray-of-1%E2%80%99s-After-Deleting-One-Element"><span class="nav-number">4.</span> <span class="nav-text">[Leetcode 1493] Longest Subarray of 1’s After Deleting One Element</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-3-Longest-Substring-Without-Repeating-Characters"><span class="nav-number">2.</span> <span class="nav-text">[Leetcode 3] Longest Substring Without Repeating Characters</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-1004-Max-Consecutive-Ones-III"><span class="nav-number">3.</span> <span class="nav-text">[Leetcode 1004] Max Consecutive Ones III</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-1456-Maximum-Number-of-Vowels-in-a-Substring-of-Given-Length"><span class="nav-number">4.</span> <span class="nav-text">[Leetcode 1456] Maximum Number of Vowels in a Substring of Given Length</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-1493-Longest-Subarray-of-1%E2%80%99s-After-Deleting-One-Element"><span class="nav-number">5.</span> <span class="nav-text">[Leetcode 1493] Longest Subarray of 1’s After Deleting One Element</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -171,7 +171,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">263</span>
+          <span class="site-state-item-count">267</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -182,7 +182,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">101</span>
+        <span class="site-state-item-count">103</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -208,6 +208,13 @@
   </div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/algorithm-questions/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-17</time>
+        <br>
+      Leetcode algorithm questions
+      </a>
+    </li>
+    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/blog/trie/" rel="bookmark">
         <time class="popular-posts-time">2023-10-08</time>
         <br>
@@ -215,31 +222,24 @@
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/greedy-algorithm/" rel="bookmark">
-        <time class="popular-posts-time">2023-10-10</time>
+      <a class="popular-posts-link" href="/blog/bit-manipulation/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-15</time>
         <br>
-      Greedy algorithm
+      Bit manipulation
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/linked-list-in-python/" rel="bookmark">
-        <time class="popular-posts-time">2023-10-11</time>
+      <a class="popular-posts-link" href="/blog/two-pointers/" rel="bookmark">
+        <time class="popular-posts-time">2023-11-15</time>
         <br>
-      Linked list in Python
+      Two pointers technique
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/array-and-string/" rel="bookmark">
-        <time class="popular-posts-time">2023-10-01</time>
+      <a class="popular-posts-link" href="/blog/best-time-to-buy-and-sell-stock/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-16</time>
         <br>
-      Array and string
-      </a>
-    </li>
-    <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/binary-search/" rel="bookmark">
-        <time class="popular-posts-time">2023-10-05</time>
-        <br>
-      Binary search
+      Best time to buy and sell stock
       </a>
     </li>
   </ul>
@@ -298,7 +298,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+      <time title="Modified: 2023-11-19 13:57:18" itemprop="dateModified" datetime="2023-11-19T13:57:18-08:00">2023-11-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -331,6 +331,24 @@
     
     
     <div class="post-body" itemprop="articleBody"><h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/window-sliding-technique/">Window Sliding Technique</a> is a computational technique that aims to reduce the use of nested loops and replace it with a single loop, thereby reducing the time complexity.<span id="more"></span></p>
+<h2 id="Leetcode-3-Longest-Substring-Without-Repeating-Characters"><a href="#Leetcode-3-Longest-Substring-Without-Repeating-Characters" class="headerlink" title="[Leetcode 3] Longest Substring Without Repeating Characters"></a>[Leetcode 3] Longest Substring Without Repeating Characters</h2><p>Given a string s, find the length of the longest substring without repeating characters.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: s = &quot;abcabcbb&quot;</span><br><span class="line">Output: 3</span><br><span class="line">Explanation: The answer is &quot;abc&quot;, with the length of 3.</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: s = &quot;bbbbb&quot;</span><br><span class="line">Output: 1</span><br><span class="line">Explanation: The answer is &quot;b&quot;, with the length of 1.</span><br></pre></td></tr></table></figure>
+
+<p>Example 3:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Input: s = &quot;pwwkew&quot;</span><br><span class="line">Output: 3</span><br><span class="line">Explanation: The answer is &quot;wke&quot;, with the length of 3.</span><br><span class="line">Notice that the answer must be a substring, &quot;pwke&quot; is a subsequence and not a substring.</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>0 &lt;&#x3D; s.length &lt;&#x3D; 5 * 10^4</li>
+<li>s consists of English letters, digits, symbols and spaces.</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">lengthOfLongestSubstring</span>(<span class="params">self, s: <span class="built_in">str</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> s:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">            </span><br><span class="line">        longestLen = <span class="number">0</span></span><br><span class="line">        left, currLen = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">        idxMap = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> right <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(s)):</span><br><span class="line">            c = s[right]</span><br><span class="line">            <span class="keyword">if</span> c <span class="keyword">not</span> <span class="keyword">in</span> idxMap:</span><br><span class="line">                <span class="comment"># extend right pointer</span></span><br><span class="line">                idxMap[c] = right</span><br><span class="line">                </span><br><span class="line">                <span class="comment"># calculate current length</span></span><br><span class="line">                currLen += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># calculate longest length</span></span><br><span class="line">                longestLen = <span class="built_in">max</span>(longestLen, currLen)</span><br><span class="line"></span><br><span class="line">                <span class="comment"># reset left pointer</span></span><br><span class="line">                <span class="keyword">if</span> left &lt;= idxMap[c]:</span><br><span class="line">                    left = idxMap[c] + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">                <span class="comment"># update index for the duplicate item</span></span><br><span class="line">                idxMap[c] = right</span><br><span class="line"></span><br><span class="line">                <span class="comment"># reset current length</span></span><br><span class="line">                currLen = right - left + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">max</span>(longestLen, currLen)</span><br></pre></td></tr></table></figure>
+
 <h2 id="Leetcode-1004-Max-Consecutive-Ones-III"><a href="#Leetcode-1004-Max-Consecutive-Ones-III" class="headerlink" title="[Leetcode 1004] Max Consecutive Ones III"></a>[Leetcode 1004] Max Consecutive Ones III</h2><p>Given a binary array nums and an integer k, return the maximum number of consecutive 1’s in the array if you can flip at most k 0’s.</p>
 <p>Example 1:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [1,1,1,0,0,0,1,1,1,1,0], k = 2</span><br><span class="line">Output: 6</span><br><span class="line">Explanation: [1,1,1,0,0,1,1,1,1,1,1]</span><br></pre></td></tr></table></figure>

@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">101</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">263</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">267</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">263</span>
+          <span class="site-state-item-count">267</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">101</span>
+        <span class="site-state-item-count">103</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,915 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/hash-table-implementation-in-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/hash-table-implementation-in-python/" class="post-title-link" itemprop="url">Hash Table implementation in Python</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-16 02:38:49" itemprop="dateCreated datePublished" datetime="2023-04-16T02:38:49-07:00">2023-04-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>Hash Table is a data structure which maps keys to values for highly efficient data search. It stores data in an array by using a hash function to generate a slot to insert the data value.</p>
+<p>The following are the general steps to insert a key&#x2F;value pair to the Hash Table.</p>
+<ol>
+<li>Compute the key’s hash code with a hash function</li>
+<li>Find the available slot by mapping the hash code to an index of array</li>
+<li>Insert the value to the available slot</li>
+</ol>
+<h2 id="Initial-implementation"><a href="#Initial-implementation" class="headerlink" title="Initial implementation"></a>Initial implementation</h2><p>Create an empty hash table of size 10:</p>
+<pre><code>hash_table = [None] * 10
+</code></pre>
+<p>To create a hash function, we simply return the modulus of the array length. The modulo operator(%) yields the remainder from the division of the key by the length of hash table. This ensures the hash key always falls into the range of [0,len(hash_table)-1]. So a slot in the array can be always retrieved.</p>
+<pre><code>def hash_func(key):
+    return key % len(hash_table)
+</code></pre>
+<p>To insert key&#x2F;value pair to the hash table, we firstly get the hash key and then stores the value to the retrieved slot.</p>
+<pre><code>def insert(key, value):
+    hash_key = hash_func(key)
+    hash_table[hash_key] = value
+</code></pre>
+<p>To test the code, we insert two key&#x2F;value pairs (5,6) and (5,8). Both values are stored in the slot 5 of the array. However, the value 8 replaces the existing value 6 at the same slot(with the same key 5).</p>
+<pre><code>hash_table = [None] * 10
+print(hash_table)
+insert(5,6)
+print(hash_table)
+
+insert(5,8)
+print(hash_table)
+
+# Output:
+# [None, None, None, None, None, None, None, None, None, None]
+# [None, None, None, None, None, 6, None, None, None, None]
+# [None, None, None, None, None, 8, None, None, None, None]
+</code></pre>
+<h2 id="Solve-the-collision"><a href="#Solve-the-collision" class="headerlink" title="Solve the collision"></a>Solve the collision</h2><p>A hash key collision would occur when the multiple keys hit the same slot(index) in the hash table(array).</p>
+<p>There are generally two techniques to resolve a collision:</p>
+<ul>
+<li>Linear probing(open addressing)</li>
+<li>Separate chaining(open hashing)</li>
+</ul>
+<h3 id="Linear-probing"><a href="#Linear-probing" class="headerlink" title="Linear probing"></a>Linear probing</h3><p>In linear probing(aka open addressing), all the entries are stored in the array itself instead of linked list. If the slot to insert entry is already occupied, the next slot will be searched sequentially.</p>
+<pre><code>hash_key = hash_func(key)
+while hash_table[hash_key]:
+    hash_key = (hash_key + 1) % len(hash_table)
+</code></pre>
+<h3 id="Separate-chaining"><a href="#Separate-chaining" class="headerlink" title="Separate chaining"></a>Separate chaining</h3><p>Separate chaining is a very commonly used technique for collision resolution. It is usually implemented with linked list. All the entries will be inserted into a specific linked list.</p>
+<p>In python, we create a hash table as nested list below. Each hash table bucket contains a list to store data entries.</p>
+<pre><code>hash_table = [[] for _ in range(10)] # init with empty list
+</code></pre>
+<p>The same hash function can be used.</p>
+<pre><code>def hash_func(key):
+    return key % len(hash_table)
+</code></pre>
+<p>To insert an entry to the hash table, we simply append it to the list positioned by the hash key.</p>
+<pre><code>def insert(key, value):
+    hash_key = hash_func(key)
+    hash_table[hash_key].append(value)
+</code></pre>
+<p>To test the code, we still insert two key&#x2F;value pairs (5,6) and (5,8). Now, the two values 6 and 8 are stored in the slot 5 of the same list.</p>
+<pre><code>hash_table = [[] for _ in range(10)] # init with empty list
+print(hash_table)
+insert(5,6)
+print(hash_table)
+insert(5,8)
+print(hash_table)
+
+# Output:
+# [[], [], [], [], [], [], [], [], [], []]
+# [[], [], [], [], [], [6], [], [], [], []]
+# [[], [], [], [], [], [6, 8], [], [], [], []]
+</code></pre>
+<h2 id="Final-implementation"><a href="#Final-implementation" class="headerlink" title="Final implementation"></a>Final implementation</h2><p>Now that we know about the hash function and how to resolve hash collision, we can implement the hash table with insert, delete and search functions. We use Python built-in function hash() to generate hash code from an generic object. This allows the hash table to support generic types like integer, string and so on.</p>
+<pre><code>def hash_func(key):
+    hash_key = hash(key)
+    print(&quot;Hash key is &#123;&#125;&quot;.format(hash_key))
+    return hash_key % len(hash_table)
+
+
+def insert(key, value):
+    hash_key = hash_func(key)
+    bucket = hash_table[hash_key]
+
+    # check if the key already exists
+    existed = False
+    for idx, pair in enumerate(bucket):
+        k, v = pair
+        if key == k:
+            existed = True
+            break
+
+    if existed:
+        # update the existing value
+        bucket[idx] = (key, value)
+    else:
+        # add the new key/value pair
+        bucket.append((key, value))
+
+
+def delete(key):
+    hash_key = hash_func(key)
+    bucket = hash_table[hash_key]
+
+    # check if the key already exists
+    existed = False
+    for idx, pair in enumerate(bucket):
+        k, v = pair
+        if key == k:
+            existed = True
+            break
+
+    if existed:
+        # delete the key/value pair
+        del bucket[idx]
+        print(&quot;key &#123;&#125; deleted&quot;.format(key))
+    else:
+        # key does not exist
+        print(&quot;key &#123;&#125; not found&quot;.format(key))
+
+
+def search(key):
+    hash_key = hash_func(key)
+    bucket = hash_table[hash_key]
+
+    # check if the key already exists
+    for idx, pair in enumerate(bucket):
+        k, v = pair
+        if key == k:
+            return v
+
+
+hash_table = [[] for _ in range(10)]  # init with empty list
+print(hash_table)
+insert(5, 6)
+print(hash_table)
+insert(5, 8)
+print(hash_table)
+insert(3, 4)
+print(hash_table)
+insert(9, 999)
+print(hash_table)
+insert(11, 111)
+print(hash_table)
+insert(20, 20)
+print(hash_table)
+insert(1000, 1000)
+print(hash_table)
+print(search(11))
+delete(11)
+insert(&quot;11&quot;, 222)
+print(hash_table)
+insert(&quot;aa&quot;, &quot;val&quot;)
+print(hash_table)
+
+# Output:
+# [[], [], [], [], [], [], [], [], [], []]
+# Hash key is 5
+# [[], [], [], [], [], [(5, 6)], [], [], [], []]
+# Hash key is 5
+# [[], [], [], [], [], [(5, 8)], [], [], [], []]
+# Hash key is 3
+# [[], [], [], [(3, 4)], [], [(5, 8)], [], [], [], []]
+# Hash key is 9
+# [[], [], [], [(3, 4)], [], [(5, 8)], [], [], [], [(9, 999)]]
+# Hash key is 11
+# [[], [(11, 111)], [], [(3, 4)], [], [(5, 8)], [], [], [], [(9, 999)]]
+# Hash key is 20
+#[[(20, 20)], [(11, 111)], [], [(3, 4)], [], [(5, 8)], [], [], [], [(9, 999)]]
+# Hash key is 1000
+# [[(20, 20), (1000, 1000)], [(11, 111)], [], [(3, 4)], [], [(5, 8)], [], [], [], [(9, 999)]]
+# Hash key is 11
+# 111
+# Hash key is 11
+# key 11 deleted
+# Hash key is 3453933796215988004
+# [[(20, 20), (1000, 1000)], [], [], [(3, 4)], [(&#39;11&#39;, 222)], [(5, 8)], [], [], [], [(9, 999)]]
+# Hash key is -185426594550641729
+# [[(20, 20), (1000, 1000)], [(&#39;aa&#39;, &#39;val&#39;)], [], [(3, 4)], [(&#39;11&#39;, 222)], [(5, 8)], [], [], [], [(9, 999)]]
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/implementation-dynamic-array-in-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/implementation-dynamic-array-in-python/" class="post-title-link" itemprop="url">Dynamic array Implementation in Python</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-15 04:27:00" itemprop="dateCreated datePublished" datetime="2023-04-15T04:27:00-07:00">2023-04-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>In languages like Python, array(aka list) is automatially resizable. The array will grow as you append items. You don’t have to resize it manually.</p>
+<p>In some languages like Java, array comes with fixed length. The size is defined when you create it. When you need a data structure with dynamic resizing, you can use ArrayList.</p>
+<p>In this post, we learn to implement the dynamic array in Python. This is to understand how dynamic array works regardless of any programming language.</p>
+<pre><code>class ArrayList:
+    def __init__(self, size=10):
+        self.capacity = size  # max size
+        self.list = [None] * self.capacity
+        self.size = 0  # current size
+
+    def add(self, value):
+        # check if there is enough capacity
+        if self.size &gt;= self.capacity:
+            self._increase_capacity()
+
+        # add value to the list
+        self.list[self.size] = value
+        self.size += 1
+
+        print(&quot;&#123;&#125; is added to list&quot;.format(value))
+
+    def _increase_capacity(self):
+        # double the capacity
+        new_capacity = self.capacity * 2
+
+        # create a new list with new capacity
+        new_list = [None] * new_capacity
+
+        # copy the items from old to new list
+        for i in range(self.capacity):
+            new_list[i] = self.list[i]
+
+        # update new capacity and list
+        self.capacity = new_capacity
+        self.list = new_list
+
+        print(&quot;capacity is doubled to &#123;&#125;&quot;.format(self.capacity))
+
+    def get(self, index):
+        if index &lt; 0 or index &gt;= self.size:
+            raise Exception(&quot;invalid index&quot;)
+
+        return self.list[index]
+
+    def delete(self, index):
+        if index &lt; 0 or index &gt;= self.size:
+            raise Exception(&quot;invalid index&quot;)
+
+        # check if this is the last item to be deleted
+        if index == self.size - 1:
+            self.list[index] = None
+            return
+
+        # shift items left
+        for i in range(index, self.size - 1):
+            self.list[i] = self.list[i + 1]
+
+        # update the last item to None
+        self.list[self.size - 1] = None
+
+        # update the size
+        self.size -= 1
+</code></pre>
+<p>To test the code:</p>
+<pre><code>list1 = ArrayList(5)
+list1.add(1)
+list1.add(2)
+list1.add(3)
+list1.add(4)
+list1.add(5)
+list1.add(6)
+list1.add(7)
+print(list1.list)
+list1.delete(6)
+print(list1.list)
+</code></pre>
+<p>Output:</p>
+<pre><code>1 is added to list
+2 is added to list
+3 is added to list
+4 is added to list
+5 is added to list
+capacity is doubled to 10
+6 is added to list
+7 is added to list
+[1, 2, 3, 4, 5, 6, 7, None, None, None]
+[1, 2, 3, 4, 5, 6, None, None, None, None]
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/stringbuilder-implementation-in-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/stringbuilder-implementation-in-python/" class="post-title-link" itemprop="url">StringBuilder implementation in Python</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-12 08:12:00" itemprop="dateCreated datePublished" datetime="2023-04-12T08:12:00-07:00">2023-04-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>A string is a collection of characters. In Java, StringBuilder class is used to create mutable string. But there isn’t a built-in StringBuilder in Python. In Python, string is an immutable object. New memory has to be allocated for every string.</p>
+<p>In Pythin, there are following ways to implement a StringBuilder.</p>
+<ol>
+<li>string concatenation(append)</li>
+<li>join() function</li>
+<li>string IO module</li>
+</ol>
+<h2 id="String-concatenation-append"><a href="#String-concatenation-append" class="headerlink" title="String concatenation(append)"></a>String concatenation(append)</h2><pre><code>def method1():
+    string = &quot;&quot;
+    for i in range(count):
+        string += str(i)
+    return string
+</code></pre>
+<h2 id="join-function"><a href="#join-function" class="headerlink" title="join() function"></a>join() function</h2><pre><code>def method2():
+    strings = []
+    for i in range(count):
+        strings.append(str(i))
+    return &quot;&quot;.join(strings)
+</code></pre>
+<h2 id="StringIO-module"><a href="#StringIO-module" class="headerlink" title="StringIO module"></a>StringIO module</h2><pre><code>def method3():
+    si = StringIO()
+    for i in range(count):
+        si.write(str(i))
+
+    return si.getvalue()
+</code></pre>
+<h2 id="Efficiency-measurement"><a href="#Efficiency-measurement" class="headerlink" title="Efficiency measurement"></a>Efficiency measurement</h2><p>I’m interested to see which method is more efficient. So, we are building a long string with one million numbers in order to measure the run time of each method.</p>
+<pre><code>from io import StringIO
+import time
+from array import array
+
+
+# using string concatenation(append)
+def method1():
+    string = &quot;&quot;
+    for i in range(count):
+        string += str(i)
+    return string
+
+
+# using join()
+def method2():
+    strings = []
+    for i in range(count):
+        strings.append(str(i))
+    return &quot;&quot;.join(strings)
+
+
+# using StringIO module
+def method3():
+    si = StringIO()
+    for i in range(count):
+        si.write(str(i))
+
+    return si.getvalue()
+
+
+# implement a StringBuilder in Python
+class StringBuilder:
+    def __init__(self):
+        self.sb = StringIO()
+
+    def add(self, str):
+        self.sb.write(str)
+
+    def toString(self):
+        return self.sb.getvalue()
+
+
+# using array
+def method4():
+    char_array = array(&quot;L&quot;)
+    for i in range(count):
+        char_array.append(i)
+    return char_array
+
+
+# test function
+def run_test(method):
+    start_time = time.perf_counter()
+    eval(&quot;method&quot; + str(method))()
+    end_time = time.perf_counter()
+    print(&quot;elapsed time &#123;&#125;&quot;.format(round(end_time - start_time, 2)))
+</code></pre>
+<p>We run the tests for the four different methods twice to measure the efficiency.</p>
+<pre><code># tests
+count = 1000000
+run_test(1)
+run_test(2)
+run_test(3)
+run_test(4)
+
+
+run_test(4)
+run_test(3)
+run_test(2)
+run_test(1)
+
+# Output:
+# elapsed time 0.29
+# elapsed time 0.16
+# elapsed time 0.19
+# elapsed time 0.09
+
+# elapsed time 0.08
+# elapsed time 0.19
+# elapsed time 0.15
+# elapsed time 0.31
+</code></pre>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>The string appending method is the slowest. The join() function is relative efficient. Using an array seems efficient as well. However, we don’t count the array to string convention time yet.</p>
+<p>In general, the join() functions seems fast enough for long string construction.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/linked-list-implementation-in-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/linked-list-implementation-in-python/" class="post-title-link" itemprop="url">Linked List implementation in Python</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-11 08:37:00" itemprop="dateCreated datePublished" datetime="2023-04-11T08:37:00-07:00">2023-04-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>A linked list is a data structure which represents a sequence of nodes. In a singly linked list, each node points to the next node. In a doubly linked list, each node points to both the next and previous node.</p>
+<p>To find nth element in the linked list, you have to iterate through n nodes which results in linear time complexity O(n). This is less efficient than array which has constant time complexity O(1) to access an element.</p>
+<p>However, the advantage to use linked list is for insert and delete operation since it can be achieved in the constant time without shifting nodes around.</p>
+<p>The following are the key methods to be implemented:</p>
+<ul>
+<li>insert(): add an item to the linked list</li>
+<li>remove(): remove a specified item from the linked list</li>
+<li>insertAt(index): insert an item at a given index</li>
+<li>deleteAt(index): delete an item at a given index</li>
+<li>find(): search an item in the linked list</li>
+<li>is_empty(): return if the linked list is empty or not</li>
+<li>count(): return the number of items in the linked list</li>
+</ul>
+<h2 id="Construct-a-node-class"><a href="#Construct-a-node-class" class="headerlink" title="Construct a node class"></a>Construct a node class</h2><p>Before we implement a singly linked list, we need to construct a node class. The linked list would contain one or more nodes. Each node has a value and a pointer linked to the next node.</p>
+<pre><code>class Node:
+    def __init__(self):
+        self.val = None
+        self.next = None
+
+    def set_val(self, val):
+        self.val = val
+
+    def get_val(self):
+        return self.val
+
+    def set_next(self, next):
+        self.next = next
+
+    def get_next(self):
+        return self.next
+</code></pre>
+<h2 id="Build-a-singly-Linked-List"><a href="#Build-a-singly-Linked-List" class="headerlink" title="Build a singly Linked List"></a>Build a singly Linked List</h2><p>The first function in the linked list class is the constructor, which will be called whenever a linked list is initialized.</p>
+<p>It can include three attributes:</p>
+<ul>
+<li>head: the first node in the linked list</li>
+<li>tail: the last node in the linked list</li>
+<li>count: the number of nodes in the linked list</li>
+</ul>
+<p>Then we can build the other required functions according to the node pointer manipulations.</p>
+<pre><code>class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        self.count = 0
+
+    def count_nodes(self):
+        return self.count
+
+    # insert at the tail of list
+    def insert(self, val):
+        new_node = Node()
+        new_node.set_val(val)
+
+        if self.head == None:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            self.tail.next = new_node
+            self.tail = new_node
+
+        self.count += 1
+
+    # insert at the given index
+    def insertAt(self, val, index):
+        new_node = Node()
+        new_node.set_val(val)
+
+        current_idx = 0
+        current_node = self.head
+        previous_node = current_node
+
+        while current_idx &lt; index and current_node.next != None:
+            previous_node = current_node
+            current_node = current_node.next
+            current_idx += 1
+
+        if current_idx == index:
+            # found the index
+            new_node.next = current_node
+            previous_node.next = new_node
+
+            # increase counter
+            self.count += 1
+        else:
+            print(&quot;the specified index &#123;&#125; is invalid&quot;.format(index))
+
+    # delete the specified node
+    def deleteAt(self, index):
+        current_idx = 0
+        current_node = self.head
+        previous_node = current_node
+
+        while True:
+            if current_idx &lt; index:
+                if current_node.next != None:
+                    # move on to the next node
+                    previous_node = current_node
+                    current_node = current_node.next
+                    current_idx += 1
+                else:
+                    print(&quot;invalid index &#123;&#125;&quot;.format(index))
+                    break
+            else:
+                # found the index, delete it
+                if current_node.next == None:
+                    # this is tail
+                    previous_node.next = None
+                    self.tail = previous_node
+                else:
+                    # this is not tail
+                    previous_node.next = current_node.next
+
+                # decrease the counter
+                self.count -= 1
+
+                break
+
+    def find(self, index):
+        current_node = self.head
+        current_idx = 0
+
+        while current_node.next != None:
+            if current_idx == index:
+                return current_node.get_val()
+            else:
+                current_node = current_node.next
+
+        print(&quot;invalid index &#123;&#125;&quot;.format(index))
+
+    def print_list(self):
+        current_node = self.head
+        current_idx = 0
+
+        while current_node.next != None:
+            print(current_node.get_val())
+            current_node = current_node.next
+
+        # print the last node
+        print(current_node.get_val())
+        print(&quot;count: &#123;&#125;&quot;.format(self.count_nodes()))
+        print()
+</code></pre>
+<h2 id="Test-the-Linked-List-class"><a href="#Test-the-Linked-List-class" class="headerlink" title="Test the Linked List class"></a>Test the Linked List class</h2><pre><code>ll = LinkedList()
+ll.insert(1)
+ll.insert(2)
+ll.insert(5)
+ll.print_list()
+
+ll.insertAt(4, 2)
+ll.print_list()
+
+ll.insertAt(3, 3)
+ll.print_list()
+
+ll.deleteAt(3)
+ll.print_list()
+</code></pre>
+<p>Output:</p>
+<pre><code>1
+2
+5
+count: 3
+
+1
+2
+4
+5
+count: 4
+
+1
+2
+4
+3
+5
+count: 5
+
+1
+2
+4
+5
+count: 4
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1331,706 +2240,6 @@ print(&quot;stack size: &#123;&#125;&quot;.format(st.size))
 <p>useradd and usermod - Add new user or change existing users data</p>
 <p>passwd - Create or update passwords for existing users</p>
 <p><a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/linux-commands">https://www.digitalocean.com/community/tutorials/linux-commands</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/upgrade-linux-kernel-on-centos-7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/upgrade-linux-kernel-on-centos-7/" class="post-title-link" itemprop="url">Upgrade Linux kernel on CentOS 7</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-03-16 12:43:48" itemprop="dateCreated datePublished" datetime="2023-03-16T12:43:48-07:00">2023-03-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Before-upgrade"><a href="#Before-upgrade" class="headerlink" title="Before upgrade"></a>Before upgrade</h2><pre><code>$ cat /etc/centos-release
-CentOS Linux release 7.4.1708 (Core)
-
-$ uname -r
-3.10.0-693.el7.x86_64
-
-$ cat /boot/grub2/grubenv
-saved_entry=CentOS Linux (3.10.0-693.el7.x86_64) 7 (Core)
-</code></pre>
-<h2 id="Install-the-newer-kernel-package"><a href="#Install-the-newer-kernel-package" class="headerlink" title="Install the newer kernel package"></a>Install the newer kernel package</h2><pre><code>$ rpm -ivh kernel-ml-5.7.12-1.el7.elrepo.x86_64.rpm
-warning: kernel-ml-5.7.12-1.el7.elrepo.x86_64.rpm: Header V4 DSA/SHA1 Signature, key ID baadae52: NOKEY
-Preparing...                          ################################# [100%]
-Updating / installing...
-   1:kernel-ml-5.7.12-1.el7.elrepo    ################################# [100%]
-
-$ rpm -ivh kernel-ml-devel-5.7.12-1.el7.elrepo.x86_64.rpm
-warning: kernel-ml-devel-5.7.12-1.el7.elrepo.x86_64.rpm: Header V4 DSA/SHA1 Signature, key ID baadae52: NOKEY
-Preparing...                          ################################# [100%]
-Updating / installing...
-   1:kernel-ml-devel-5.7.12-1.el7.elre################################# [100%]
-
-$  rpm -qa | grep kernel
-kernel-ml-devel-5.7.12-1.el7.elrepo.x86_64
-kernel-3.10.0-693.el7.x86_64
-kernel-tools-3.10.0-693.el7.x86_64
-kernel-ml-5.7.12-1.el7.elrepo.x86_64
-kernel-tools-libs-3.10.0-693.el7.x86_64
-</code></pre>
-<h2 id="Set-the-default-boot-kernel-entry"><a href="#Set-the-default-boot-kernel-entry" class="headerlink" title="Set the default boot kernel entry"></a>Set the default boot kernel entry</h2><p><strong>Notes:</strong> if &#x2F;etc&#x2F;grub2.cfg does not exist, do next step to rebuild the GRUB2 and come back later after that.</p>
-<pre><code>$ awk -F\&#39; &#39;$1==&quot;menuentry &quot; &#123;print $2&#125;&#39; /etc/grub2.cfg
-CentOS Linux (5.7.12-1.el7.elrepo.x86_64) 7 (Core)
-CentOS Linux (3.10.0-693.el7.x86_64) 7 (Core)
-CentOS Linux (0-rescue-8ef36acf9f544b90bf0621450fe05f75) 7 (Core)
-
-$ grub2-set-default 0 
-$ grep saved /boot/grub2/grubenv
-saved_entry=0
-</code></pre>
-<h2 id="Rebuild-the-GRUB2-configuration"><a href="#Rebuild-the-GRUB2-configuration" class="headerlink" title="Rebuild the GRUB2 configuration"></a>Rebuild the GRUB2 configuration</h2><pre><code>$ grub2-mkconfig -o /boot/grub2/grub.cfg
-Generating grub configuration file ...
-Found linux image: /boot/vmlinuz-5.7.12-1.el7.elrepo.x86_64
-Found initrd image: /boot/initramfs-5.7.12-1.el7.elrepo.x86_64.img
-Found linux image: /boot/vmlinuz-3.10.0-693.el7.x86_64
-Found initrd image: /boot/initramfs-3.10.0-693.el7.x86_64.img
-Found linux image: /boot/vmlinuz-0-rescue-8ef36acf9f544b90bf0621450fe05f75
-Found initrd image: /boot/initramfs-0-rescue-8ef36acf9f544b90bf0621450fe05f75.img
-done
-</code></pre>
-<h2 id="Reboot-the-system"><a href="#Reboot-the-system" class="headerlink" title="Reboot the system"></a>Reboot the system</h2><pre><code>$ reboot
-</code></pre>
-<h2 id="Verify-the-new-kernel-version"><a href="#Verify-the-new-kernel-version" class="headerlink" title="Verify the new kernel version"></a>Verify the new kernel version</h2><pre><code>$ uname -r
-5.7.12-1.el7.elrepo.x86_64
-$ cat /etc/centos-release
-CentOS Linux release 7.4.1708 (Core)
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.golinuxcloud.com/set-default-boot-kernel-version-old-previous-rhel-linux/">https://www.golinuxcloud.com/set-default-boot-kernel-version-old-previous-rhel-linux/</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.tecmint.com/install-upgrade-kernel-version-in-centos-7/">https://www.tecmint.com/install-upgrade-kernel-version-in-centos-7/</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/uninstall-ceph-storage-cluster/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/uninstall-ceph-storage-cluster/" class="post-title-link" itemprop="url">Uninstall ceph storage cluster</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-03-15 12:36:00" itemprop="dateCreated datePublished" datetime="2023-03-15T12:36:00-07:00">2023-03-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Check-the-pools-images-and-OSDs"><a href="#Check-the-pools-images-and-OSDs" class="headerlink" title="Check the pools, images and OSDs"></a>Check the pools, images and OSDs</h2><pre><code>[ceph: root@host1 /]$ ceph osd tree
-ID  CLASS  WEIGHT    TYPE NAME             STATUS  REWEIGHT  PRI-AFF
--1         83.83411  root default
--3         27.94470      host host1
- 0    ssd   3.49309          osd.0             up   1.00000  1.00000
- 1    ssd   3.49309          osd.1             up   1.00000  1.00000
- 2    ssd   3.49309          osd.2             up   1.00000  1.00000
- 3    ssd   3.49309          osd.3             up   1.00000  1.00000
- 4    ssd   3.49309          osd.4             up   1.00000  1.00000
- 5    ssd   3.49309          osd.5             up   1.00000  1.00000
- 6    ssd   3.49309          osd.6             up   1.00000  1.00000
- 7    ssd   3.49309          osd.7             up   1.00000  1.00000
--5         27.94470      host host2
- 8    ssd   3.49309          osd.8             up   1.00000  1.00000
- 9    ssd   3.49309          osd.9             up   1.00000  1.00000
-10    ssd   3.49309          osd.10            up   1.00000  1.00000
-11    ssd   3.49309          osd.11            up   1.00000  1.00000
-12    ssd   3.49309          osd.12            up   1.00000  1.00000
-13    ssd   3.49309          osd.13            up   1.00000  1.00000
-14    ssd   3.49309          osd.14            up   1.00000  1.00000
-15    ssd   3.49309          osd.15            up   1.00000  1.00000
--7         27.94470      host host3
-16    ssd   3.49309          osd.16            up   1.00000  1.00000
-17    ssd   3.49309          osd.17            up   1.00000  1.00000
-18    ssd   3.49309          osd.18            up   1.00000  1.00000
-19    ssd   3.49309          osd.19            up   1.00000  1.00000
-20    ssd   3.49309          osd.20            up   1.00000  1.00000
-21    ssd   3.49309          osd.21            up   1.00000  1.00000
-22    ssd   3.49309          osd.22            up   1.00000  1.00000
-23    ssd   3.49309          osd.23            up   1.00000  1.00000
-
-[ceph: root@host1 /]$ ceph osd lspools
-1 device_health_metrics
-2 datapool
-
-[ceph: root@host1 /]$ rbd showmapped
-id  pool      namespace  image    snap  device
-0   datapool             rbdvol1  -     /dev/rbd0
-1   datapool             rbdvol2  -     /dev/rbd1
-2   datapool             rbdvol3  -     /dev/rbd2
-3   datapool             rbdvol4  -     /dev/rbd3
-</code></pre>
-<h2 id="Remove-the-images-and-pools"><a href="#Remove-the-images-and-pools" class="headerlink" title="Remove the images and pools"></a>Remove the images and pools</h2><pre><code>[ceph: root@host1 /]$ rbd unmap /dev/rbd0
-[ceph: root@host1 /]$ rbd unmap /dev/rbd1
-[ceph: root@host1 /]$ rbd unmap /dev/rbd2
-[ceph: root@host1 /]$ rbd unmap /dev/rbd3
-
-[ceph: root@host1 /]$ rbd showmapped
-
-[ceph: root@host1 /]$ rbd rm datapool/rbdvol1
-Removing image: 100% complete...done.
-[ceph: root@host1 /]$ rbd rm datapool/rbdvol2
-Removing image: 100% complete...done.
-[ceph: root@host1 /]$ rbd rm datapool/rbdvol3
-Removing image: 100% complete...done.
-[ceph: root@host1 /]$ rbd rm datapool/rbdvol4
-Removing image: 100% complete...done.
-
-[ceph: root@host1 /]$ ceph osd pool rm datapool datapool --yes-i-really-really-mean-it
-Error EPERM: pool deletion is disabled; you must first set the mon_allow_pool_delete config option to true before you can destroy a pool
-
-[ceph: root@host1 /]$ ceph tell mon.\* injectargs &#39;--mon-allow-pool-delete=true&#39;
-mon.host1: mon_allow_pool_delete = &#39;true&#39;
-mon.host1: &#123;&#125;
-mon.host3: mon_allow_pool_delete = &#39;true&#39;
-mon.host3: &#123;&#125;
-mon.host2: mon_allow_pool_delete = &#39;true&#39;
-mon.host2: &#123;&#125;
-[ceph: root@host1 /]$ ceph osd pool rm datapool datapool --yes-i-really-really-mean-it
-pool &#39;datapool&#39; removed
-</code></pre>
-<h2 id="Remove-the-OSDs"><a href="#Remove-the-OSDs" class="headerlink" title="Remove the OSDs"></a>Remove the OSDs</h2><pre><code>[ceph: root@host1 /]$ for i in `seq 0 23`
-&gt; do
-&gt; ceph osd down $i &amp;&amp; ceph osd destroy $i --force
-&gt; done
-marked down osd.0.
-destroyed osd.0
-[omitted...]
-
-[ceph: root@host1 /]$  ceph osd tree
-ID  CLASS  WEIGHT    TYPE NAME             STATUS     REWEIGHT  PRI-AFF
--1         83.83411  root default
--3         27.94470      host host1
- 0    ssd   3.49309          osd.0         destroyed   1.00000  1.00000
- 1    ssd   3.49309          osd.1         destroyed   1.00000  1.00000
- 2    ssd   3.49309          osd.2         destroyed   1.00000  1.00000
- 3    ssd   3.49309          osd.3         destroyed   1.00000  1.00000
- 4    ssd   3.49309          osd.4         destroyed   1.00000  1.00000
- 5    ssd   3.49309          osd.5         destroyed   1.00000  1.00000
- 6    ssd   3.49309          osd.6         destroyed   1.00000  1.00000
- 7    ssd   3.49309          osd.7         destroyed   1.00000  1.00000
--5         27.94470      host host2
- 8    ssd   3.49309          osd.8         destroyed   1.00000  1.00000
- 9    ssd   3.49309          osd.9         destroyed   1.00000  1.00000
-10    ssd   3.49309          osd.10        destroyed   1.00000  1.00000
-11    ssd   3.49309          osd.11        destroyed   1.00000  1.00000
-12    ssd   3.49309          osd.12        destroyed   1.00000  1.00000
-13    ssd   3.49309          osd.13        destroyed   1.00000  1.00000
-14    ssd   3.49309          osd.14        destroyed   1.00000  1.00000
-15    ssd   3.49309          osd.15        destroyed   1.00000  1.00000
--7         27.94470      host host3
-16    ssd   3.49309          osd.16        destroyed   1.00000  1.00000
-17    ssd   3.49309          osd.17        destroyed   1.00000  1.00000
-18    ssd   3.49309          osd.18        destroyed   1.00000  1.00000
-19    ssd   3.49309          osd.19        destroyed   1.00000  1.00000
-20    ssd   3.49309          osd.20        destroyed   1.00000  1.00000
-21    ssd   3.49309          osd.21        destroyed   1.00000  1.00000
-22    ssd   3.49309          osd.22        destroyed   1.00000  1.00000
-23    ssd   3.49309          osd.23               up   1.00000  1.00000
-</code></pre>
-<h2 id="Remove-the-cluster-hosts"><a href="#Remove-the-cluster-hosts" class="headerlink" title="Remove the cluster hosts"></a>Remove the cluster hosts</h2><pre><code>[ceph: root@host1 /]$ ceph orch host rm host3
-Removed host &#39;host3&#39;
-[ceph: root@host1 /]$ ceph orch host rm host2
-Removed host &#39;host2&#39;
-[ceph: root@host1 /]$ ceph orch host rm host1
-Removed host &#39;host1&#39;
-</code></pre>
-<h2 id="Check-if-there-is-ceph-daemon-running"><a href="#Check-if-there-is-ceph-daemon-running" class="headerlink" title="Check if there is ceph daemon running"></a>Check if there is ceph daemon running</h2><pre><code>[ceph: root@host1 /]$ ceph orch ps host3
-No daemons reported
-[ceph: root@host1 /]$ ceph orch ps host2
-No daemons reported
-[ceph: root@host1 /]$ ceph orch ps host1
-No daemons reported
-</code></pre>
-<h2 id="Remove-the-ceph-storage-cluster"><a href="#Remove-the-ceph-storage-cluster" class="headerlink" title="Remove the ceph storage cluster"></a>Remove the ceph storage cluster</h2><pre><code>[root@host1 ~]$ cephadm rm-cluster --fsid fec2332e-1b0b-11ec-abbe-ac1f6bc8d268 --force
-[root@host1 ~]$ cephadm ls
-[]
-</code></pre>
-<h2 id="Cleanup-the-ceph-configuration-files"><a href="#Cleanup-the-ceph-configuration-files" class="headerlink" title="Cleanup the ceph configuration files"></a>Cleanup the ceph configuration files</h2><pre><code>[root@host1 ~]$ rm -rf /etc/ceph
-[root@host1 ~]$ rm -rf /var/lib/ce
-ceph/       cephadm/    certmonger/
-[root@host1 ~]$ rm -rf /var/lib/ceph*
-</code></pre>
-<h2 id="Cleanup-the-ceph-block-devices"><a href="#Cleanup-the-ceph-block-devices" class="headerlink" title="Cleanup the ceph block devices"></a>Cleanup the ceph block devices</h2><p>Do the following on each cluster node.</p>
-<pre><code>[root@host1 ~]$ lsblk
-NAME                                                                                                  MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-nvme0n1                                                                                               259:0    0  3.5T  0 disk
-├─nvme0n1p3                                                                                           259:4    0  3.5T  0 part
-│ ├─vgroot-lvswap01                                                                                   253:1    0    4G  0 lvm
-│ └─vgroot-lvroot                                                                                     253:0    0  3.5T  0 lvm  /
-├─nvme0n1p1                                                                                           259:2    0    1G  0 part /boot/efi
-└─nvme0n1p2                                                                                           259:3    0  500M  0 part /boot
-nvme3n1                                                                                               259:6    0  3.5T  0 disk
-└─ceph--ab144c40--73d6--49bc--921b--65025c383bb1-osd--block--2b965e29--b194--4363--8c96--20ab5b97db33 253:3    0  3.5T  0 lvm
-nvme2n1                                                                                               259:5    0  3.5T  0 disk
-└─ceph--b1ffe76d--1043--43a2--848b--6ba117e71a75-osd--block--0d6ff85d--9c49--43a0--98a3--c519fbb20b9c 253:4    0  3.5T  0 lvm
-nvme1n1                                                                                               259:1    0  3.5T  0 disk
-
-[root@host1 ~]$ for i in `seq 2 9`; do dd if=/dev/zero of=/dev/nvme$&#123;i&#125;n1 bs=1M count=1000; done
-[root@host1 ~]$ reboot
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/general-steps-for-system-performance-analysis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/general-steps-for-system-performance-analysis/" class="post-title-link" itemprop="url">General steps for system performance analysis</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-03-05 09:52:00" itemprop="dateCreated datePublished" datetime="2023-03-05T09:52:00-08:00">2023-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>This post tries to provide general steps for system performance analysis. We are going to cover the following objectives.</p>
-<ul>
-<li>The performance goals</li>
-<li>Workload characterization</li>
-<li>Drill-down analysis</li>
-<li>Traditional performance tools</li>
-<li>BCC&#x2F;BPF performance tools</li>
-</ul>
-<h2 id="The-Goals-of-performance-analysis"><a href="#The-Goals-of-performance-analysis" class="headerlink" title="The Goals of performance analysis"></a>The Goals of performance analysis</h2><p>In general, the goals of performance analysis are to improve end-user performance and reduce the operating cost. To achieve this, it’s important to make the performance measurable. We often use the following metrics to measure performance.</p>
-<ul>
-<li>Rates - operation or request rates per second</li>
-<li>Throughput - data transferred per second</li>
-<li>Latency - the time to accomplish a operation or request in milliseconds</li>
-<li>Resource utilization - the resource usage in percentage</li>
-<li>Cost - Price&#x2F;performance ratio</li>
-</ul>
-<p>The rates, throughput and latency are usually the most important metrics to check if the certain performance goal is met. For example, the throughput measured in MiB&#x2F;s for a daily database backup is too slow to complete in a given backup window. We need to investigate the issue from the backup application to system layer in order to find a solution to improve the performance. For a second example, the latency at cloud native storage volume layer is as high as 20ms while the underneath SSD disk latency shows less than 1ms. This requires further analysis at volume layer in order to find out the cause for the 19ms latency.</p>
-<p>Performance optimization is endless effort. It depends on the goal you are targeting. So, setting the goals is the first step before you involve further performance analysis activities.</p>
-<h2 id="Workload-characterization"><a href="#Workload-characterization" class="headerlink" title="Workload characterization"></a>Workload characterization</h2><p>Performance analysis is a process to analyze systematically. Understanding the system&#x2F;application configuration and applied workload are often needed before you do further performance analysis. This is the workload characterization.</p>
-<p>The workload characterization tries to answer the following questions:</p>
-<ul>
-<li>What’s the running application? What’s the major components&#x2F;features used in the application?</li>
-<li>What is the schedule to run the workload? What is the job concurrency?</li>
-<li>What are the read&#x2F;write patterns? Mixed read and write, or read&#x2F;write only workload?</li>
-<li>What are the rates, throughput and latency at application level?</li>
-<li>What is the performance concern?</li>
-</ul>
-<p>Sometimes, you may get a description of the workload from end-users. However, the workload and its configuraiton are usualaly not described clearly enough by the users. It’s worth to characterize the workload with custom profiler. An application level workload profiler can be developed for this purpose. But this often requires application expertise.  At system level, you may leverage the BCC&#x2F;BPF performance tools to profile the workload.</p>
-<h2 id="Drill-down-analysis"><a href="#Drill-down-analysis" class="headerlink" title="Drill-down analysis"></a>Drill-down analysis</h2><p>The drill-down analysis is to find a clue and drill deeper until you find the root cause for the performance issue.</p>
-<p>The general process for drill-down analysis would be like these steps.</p>
-<ol>
-<li>Examine the high level performance metrics and identify the degraded performance point</li>
-<li>For the target workload point with degradation, lazer focus on the four major system resources(CPU, memory, disk I&#x2F;O and network) to see what is the potential bottleneck</li>
-<li>If it’s hardware bottleneck, it might be resolved by scaling up and scaling out the system resources. Otherwise, it could be a software bottleneck either from kernel space or user space.</li>
-<li>Find a clue based on the collected metrics to drill down to the next level. Software bottleneck analysis often requires profiling and tracing effort to pinpoint the culprit.</li>
-</ol>
-<p>To identify a hardware bottleneck, you would check if any of the four major resources are saturated. For example, the system must be CPU bound if the CPU utilization is above 90%. The system must be disk I&#x2F;O bound if the disk is 100% busy and wait queue is unexpected large.</p>
-<p>It’s likely that you could not find the root cause with one round of analysis if you go with the wrong direction. You have to repeat the above steps to identify the right direction for RCA. Keep in mind, finding a needle in haystack is not an easy work. You must be patient.</p>
-<h2 id="Traditional-performance-tools"><a href="#Traditional-performance-tools" class="headerlink" title="Traditional performance tools"></a>Traditional performance tools</h2><p>During the drill-down performance analysis, you can use the following Linux built-in tools. They are simple but very powerful to help determine the next direction on the way of performance analysis.</p>
-<ul>
-<li>uptime - system loads in past 1 minute, 5 minutes and 15 minutes</li>
-<li>dmesg - system error messages</li>
-<li>vmstat - overview of system resource usage(CPU, Memory and disk&#x2F;network I&#x2F;O)</li>
-<li>mpstat - per-CPU usage in different states</li>
-<li>pidstat - CPU usage per process</li>
-<li>iostat - disk I&#x2F;O statistics(throughput, IOPS, latency, etc)</li>
-<li>netstat&#x2F;sar - network throughput, TCP&#x2F;IP connection stats</li>
-<li>top - CPU&#x2F;Memory usage per process and more</li>
-</ul>
-<p>Please refer to this <a href="https://www.flamingbytes.com/blog/performance-analysis-in-60-seconds">post</a> for more detail on how to use Linux traditional tools to analyze performance.</p>
-<h2 id="BCC-BPF-performance-tools"><a href="#BCC-BPF-performance-tools" class="headerlink" title="BCC&#x2F;BPF performance tools"></a>BCC&#x2F;BPF performance tools</h2><p>While the traditional tools always gives us a first look at the system performance especially on the resource usage, we can use(or create) BCC&#x2F;BPF tools for further performance analysis. Please refer to this <a href="https://www.flamingbytes.com/blog/bcc-performance-tools-checklist">post</a> for more detail.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-aws-cli-to-manage-ebs-volumes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/using-aws-cli-to-manage-ebs-volumes/" class="post-title-link" itemprop="url">Using AWS CLI to manage EBS volumes</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-03-04 14:30:26" itemprop="dateCreated datePublished" datetime="2023-03-04T14:30:26-08:00">2023-03-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Intro-to-AWS-CLI"><a href="#Intro-to-AWS-CLI" class="headerlink" title="Intro to AWS CLI"></a>Intro to AWS CLI</h2><p>The AWS Command Line Interface (AWS CLI) is a unified tool to manage your AWS services. With just one tool to download and configure, you can control multiple AWS services from the command line and automate them through scripts.</p>
-<h2 id="AWS-CLI-install"><a href="#AWS-CLI-install" class="headerlink" title="AWS CLI install"></a>AWS CLI install</h2><p>To install AWS CLI on MacOS:</p>
-<pre><code>$ curl &quot;https://awscli.amazonaws.com/AWSCLIV2.pkg&quot; -o &quot;AWSCLIV2.pkg&quot;
-$ sudo installer -pkg AWSCLIV2.pkg -target /
-$ which aws
-/usr/local/bin/aws
-$ aws --version
-aws-cli/2.10.3 Python/3.9.11 Darwin/20.4.0 exe/x86_64 prompt/off
-</code></pre>
-<h2 id="Configure-AWS-credentials"><a href="#Configure-AWS-credentials" class="headerlink" title="Configure AWS credentials"></a>Configure AWS credentials</h2><p>The AWS CLI stores sensitive credential information that you specify with <em>aws configure</em> in a local file ~&#x2F;.aws&#x2F;credentials.</p>
-<p>$ aws configure</p>
-<p>AWS Access Key ID [****************6N7Q]: [Your AWS access Key ID]</p>
-<p>AWS Secret Access Key [****************+Ic+]: [Your AWS Secret Access Key]</p>
-<p>Default region name [None]: [Your Region Name]</p>
-<p>Default output format [None]:</p>
-<p>$ cat ~&#x2F;.aws&#x2F;credentials</p>
-<p>[default]</p>
-<p>aws_access_key_id &#x3D;  [Your AWS access Key ID]</p>
-<p>aws_secret_access_key &#x3D; [Your AWS Secret Access Key]</p>
-<p>aws_region &#x3D; [Your Region Name]</p>
-<h2 id="AWS-CLI-Commands"><a href="#AWS-CLI-Commands" class="headerlink" title="AWS CLI Commands"></a>AWS CLI Commands</h2><p>To get commands help:</p>
-<pre><code>$ aws eks help
-$ aws ec2 help
-</code></pre>
-<p>To list and describe clusters:</p>
-<pre><code>$ aws eks list-clusters
-$ aws eks describe-cluster --name [your-cluster-name]
-</code></pre>
-<p>To list and describe nodegroups:</p>
-<pre><code>$ aws eks list-nodegroups --cluster-name [your-cluster-name]
-$ aws eks describe-nodegroup --cluster-name [your-cluster-name] --nodegroup-name [you-nodegroup-name]
-</code></pre>
-<p>To delete multiple EBS volumes(example):</p>
-<pre><code>$ aws ec2 describe-volumes --filters &quot;Name=tag:Name,Values=gp3-volume-*&quot;  | egrep &quot;VolumeId&quot; | awk &#39;&#123;print $NF&#125;&#39; | sed &#39;s/\&quot;//g;s/\,//&#39; &gt; vol_ids
-
-$ for id in `cat vol_ids`
-do
-    aws ec2 delete-volume --volume-id $id
-done
-
-$ aws ec2 describe-volumes --filters &quot;Name=tag:Name,Values=gp3-volume-*&quot;  | egrep &quot;VolumeId&quot; | awk &#39;&#123;print $NF&#125;&#39;  | wc -l
-0
-</code></pre>
-<p>To create multiple EBS volumes(example):</p>
-<pre><code>$ for i in `seq 1 8`
-do
-aws ec2 create-volume --volume-type gp3 --size 256 --iops 16000 --throughput 1000 --availability-zone us-east-1a --tag-specifications &quot;ResourceType=volume,Tags=[&#123;Key=Name,Value=gp3-volume-$i&#125;]&quot;
-done
-</code></pre>
-<p>To attach EBS volume to EC2 instance:</p>
-<pre><code>$ aws ec2 describe-volumes --filters &quot;Name=tag:Name,Values=gp3-volume-1&quot; --query &quot;Volumes[*].&#123;ID:VolumeId&#125;&quot;
-[
-    &#123;
-        &quot;ID&quot;: &quot;vol-0101002b66d4fc211&quot;
-    &#125;
-]
-
-$ aws ec2 attach-volume --volume-id vol-0101002b66d4fc211 --instance-id i-0c2b7553a99a7277b --device /dev/sdf
-&#123;
-    &quot;AttachTime&quot;: &quot;2023-03-04T01:58:37.155000+00:00&quot;,
-    &quot;Device&quot;: &quot;/dev/sdf&quot;,
-    &quot;InstanceId&quot;: &quot;i-0c2b7553a99a7277b&quot;,
-    &quot;State&quot;: &quot;attaching&quot;,
-    &quot;VolumeId&quot;: &quot;vol-0101002b66d4fc211&quot;
-&#125;
-</code></pre>
-<p>To describe instance:</p>
-<pre><code>$ aws ec2 describe-instances --instance-ids i-0c2b7553a99a7277b | egrep &quot;DeviceName|Status|VolumeId&quot;
-&quot;DeviceName&quot;: &quot;/dev/sdf&quot;,
-&quot;Status&quot;: &quot;attached&quot;,
-&quot;VolumeId&quot;: &quot;vol-0101002b66d4fc211&quot;
-&quot;Status&quot;: &quot;attached&quot;
-</code></pre>
-<p>To verify the attached volumes in EC2 instance:</p>
-<pre><code>[ec2-user@ip-192-168-25-183 ~]$ ls -la /dev/sdf
-lrwxrwxrwx 1 root root 7 Mar  4 01:58 /dev/sdf -&gt; nvme1n1
-
-[ec2-user@ip-192-168-25-183 ~]$ lsblk
-NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-nvme0n1       259:0    0  256G  0 disk
-├─nvme0n1p1   259:1    0  256G  0 part /
-└─nvme0n1p128 259:2    0    1M  0 part
-nvme1n1       259:3    0  256G  0 disk
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html</a></li>
-</ul>
 
       
     </div>

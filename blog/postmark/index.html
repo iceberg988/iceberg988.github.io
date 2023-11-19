@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="IntroPostmark is a benchmark designed to simulate the behavior of mail servers. Postmark consists of three phases. In the first phase a pool of files are created. In the next phase four types of trans">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Getting started with PostMark">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/postmark/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="IntroPostmark is a benchmark designed to simulate the behavior of mail servers. Postmark consists of three phases. In the first phase a pool of files are created. In the next phase four types of trans">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.flamingbytes.com/images/phoronix-test-suite-result-1.png">
+<meta property="og:image" content="https://www.flamingbytes.com/images/phoronix-test-suite-result-2.png">
+<meta property="article:published_time" content="2023-11-14T00:00:38.000Z">
+<meta property="article:modified_time" content="2023-11-16T05:26:26.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="PostMark">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.flamingbytes.com/images/phoronix-test-suite-result-1.png">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/postmark/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/postmark/","path":"blog/postmark/","title":"Getting started with PostMark"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Getting started with PostMark | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">267</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Installation"><span class="nav-number">2.</span> <span class="nav-text">Installation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-first-run"><span class="nav-number">3.</span> <span class="nav-text">The first run</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Result-file-location"><span class="nav-number">4.</span> <span class="nav-text">Result file location</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Batch-mode"><span class="nav-number">5.</span> <span class="nav-text">Batch mode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Compare-multiple-runs"><span class="nav-number">6.</span> <span class="nav-text">Compare multiple runs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Export-result"><span class="nav-number">7.</span> <span class="nav-text">Export result</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">8.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">267</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">103</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/phoronix-test-suite/" rel="bookmark">
+        <time class="popular-posts-time">2023-11-12</time>
+        <br>
+      How to install phoronix test suite on CentOS
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/what-is-performance-engineering/" rel="bookmark">
+        <time class="popular-posts-time">2022-04-08</time>
+        <br>
+      What is Performance Engineering
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/lambda-architecture-in-big-data-system/" rel="bookmark">
+        <time class="popular-posts-time">2022-12-25</time>
+        <br>
+      Lambda architecture in big data system
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/art-painting/" rel="bookmark">
+        <time class="popular-posts-time">2022-08-02</time>
+        <br>
+      Art - Painting
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/art-saint-drawing/" rel="bookmark">
+        <time class="popular-posts-time">2020-04-02</time>
+        <br>
+      Art - Saint Drawing
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/postmark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Getting started with PostMark | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Getting started with PostMark
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-11-13 16:00:38" itemprop="dateCreated datePublished" datetime="2023-11-13T16:00:38-08:00">2023-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-11-15 21:26:26" itemprop="dateModified" datetime="2023-11-15T21:26:26-08:00">2023-11-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>Postmark is a benchmark designed to simulate the behavior of mail servers. Postmark consists of three phases. In the first phase a pool of files are created. In the next phase four types of transactions are executed: files are created, deleted, read, and appended to. In the last phase, all files in the pool are deleted.<span id="more"></span></p>
+<h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><p>The PostMark can be run with phoronix-test-suite. Refer to <a href="https://www.flamingbytes.com/blog/phoronix-test-suite/">this blog</a> on how to install phoronix-test-suite.</p>
+<h2 id="The-first-run"><a href="#The-first-run" class="headerlink" title="The first run"></a>The first run</h2><p>When you have first run of PostMark, it will have the additional dependent packages installed automatically.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 phoronix-test-suite]<span class="comment"># phoronix-test-suite benchmark postmark</span></span><br><span class="line"></span><br><span class="line">    Evaluating External Test Dependencies ......</span><br><span class="line"></span><br><span class="line">The following dependencies are needed and will be installed:</span><br><span class="line"></span><br><span class="line">- gcc</span><br><span class="line">- gcc-c++</span><br><span class="line">- make</span><br><span class="line">- autoconf</span><br><span class="line">- automake</span><br><span class="line">- patch</span><br><span class="line">- expat-devel</span><br><span class="line">- unzip</span><br><span class="line">- bzip2</span><br><span class="line"></span><br><span class="line">This process may take several minutes.</span><br><span class="line">Please enter your SUDO password below:</span><br><span class="line">Password:</span><br><span class="line"></span><br><span class="line">[...]</span><br><span class="line"></span><br><span class="line">Installed:</span><br><span class="line">  autoconf.noarch 0:2.69-11.el7             automake.noarch 0:1.13.4-3.el7</span><br><span class="line">  expat-devel.x86_64 0:2.1.0-15.el7_9       gcc.x86_64 0:4.8.5-44.el7</span><br><span class="line">  gcc-c++.x86_64 0:4.8.5-44.el7             patch.x86_64 0:2.7.1-12.el7_7</span><br><span class="line">  unzip.x86_64 0:6.0-24.el7_9</span><br><span class="line"></span><br><span class="line">Dependency Installed:</span><br><span class="line">  cpp.x86_64 0:4.8.5-44.el7</span><br><span class="line">  glibc-devel.x86_64 0:2.17-326.el7_9</span><br><span class="line">  glibc-headers.x86_64 0:2.17-326.el7_9</span><br><span class="line">  kernel-headers.x86_64 0:3.10.0-1160.102.1.el7</span><br><span class="line">  libmpc.x86_64 0:1.0.1-3.el7</span><br><span class="line">  libstdc++-devel.x86_64 0:4.8.5-44.el7</span><br><span class="line">  m4.x86_64 0:1.4.16-10.el7</span><br><span class="line">  mpfr.x86_64 0:3.1.1-4.el7</span><br><span class="line">  perl-Data-Dumper.x86_64 0:2.145-3.el7</span><br><span class="line">  perl-Test-Harness.noarch 0:3.28-3.el7</span><br><span class="line">  perl-Thread-Queue.noarch 0:3.02-2.el7</span><br><span class="line"></span><br><span class="line">Dependency Updated:</span><br><span class="line">  expat.x86_64 0:2.1.0-15.el7_9              glibc.x86_64 0:2.17-326.el7_9</span><br><span class="line">  glibc-common.x86_64 0:2.17-326.el7_9</span><br><span class="line"></span><br><span class="line">Complete!</span><br><span class="line"></span><br><span class="line">Phoronix Test Suite v10.8.4</span><br><span class="line"></span><br><span class="line">    To Install:    pts/postmark-1.1.2</span><br><span class="line"></span><br><span class="line">    Determining File Requirements ........................................................................................................................................................................................................</span><br><span class="line">    Searching Download Caches ............................................................................................................................................................................................................</span><br><span class="line"></span><br><span class="line">    1 Test To Install</span><br><span class="line">        1 File To Download [0.01MB]</span><br><span class="line">        1MB Of Disk Space Is Needed</span><br><span class="line">        2 Seconds Estimated Install Time</span><br><span class="line"></span><br><span class="line">    pts/postmark-1.1.2:</span><br><span class="line">        Test Installation 1 of 1</span><br><span class="line">        1 File Needed [0.01 MB]</span><br><span class="line">        Downloading: postmark_1.51.orig.tar.gz                                                                                                                                                                                    [0.01MB]</span><br><span class="line">        Downloading ......................................................................................................................................................................................................................</span><br><span class="line">        Approximate Install Size: 1 MB</span><br><span class="line">        Estimated Install Time: 2 Seconds</span><br><span class="line">        Installing Test @ 23:56:49</span><br><span class="line">[...]</span><br></pre></td></tr></table></figure>
+
+<h2 id="Result-file-location"><a href="#Result-file-location" class="headerlink" title="Result file location"></a>Result file location</h2><p>By default, the result from benchmarking is saved under &#x2F;var&#x2F;lib&#x2F;phoronix-test-suite. </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 phoronix-test-suite]<span class="comment"># ls -la /var/lib/phoronix-test-suite</span></span><br><span class="line">total 20</span><br><span class="line">drwxr-xr-x.  8 root root  167 Nov 14 03:07 .</span><br><span class="line">drwxr-xr-x. 34 root root 4096 Nov 13 23:31 ..</span><br><span class="line">-rw-------.  1 root root 8290 Nov 14 03:07 core.pt2so</span><br><span class="line">-rw-r--r--.  1 root root  979 Nov 14 03:07 graph-config.json</span><br><span class="line">drwxr-xr-x.  3 root root   17 Nov 13 23:32 installed-tests</span><br><span class="line">drwxr-xr-x.  2 root root    6 Nov 13 23:31 modules</span><br><span class="line">drwxr-xr-x.  2 root root    6 Nov 13 23:31 modules-data</span><br><span class="line">drwxr-xr-x.  6 root root   55 Nov 13 23:31 test-profiles</span><br><span class="line">drwxr-xr-x.  3 root root   38 Nov 13 23:57 test-results</span><br><span class="line">drwxr-xr-x.  4 root root   30 Nov 13 23:31 test-suites</span><br></pre></td></tr></table></figure>
+
+<p>This can be modified by editing &#x2F;etc&#x2F;phoronix-test-suite.xml</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 phoronix-test-suite]<span class="comment"># vim /etc/phoronix-test-suite.xml</span></span><br><span class="line">&lt;ResultsDirectory&gt;/root/phoronix-test-suite/test-results/&lt;/ResultsDirectory&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Batch-mode"><a href="#Batch-mode" class="headerlink" title="Batch mode"></a>Batch mode</h2><p>If you don’t want to answer the prompted questions during the test execution, you can setup batch mode before test execution.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 phoronix-test-suite]<span class="comment"># phoronix-test-suite batch-setup</span></span><br><span class="line"></span><br><span class="line">These are the default configuration options <span class="keyword">for</span> when running the Phoronix Test Suite <span class="keyword">in</span> a batch mode (i.e. running phoronix-test-suite batch-benchmark universe). Running <span class="keyword">in</span> a batch mode is designed to be as autonomous as possible, except <span class="keyword">for</span> <span class="built_in">where</span> you<span class="string">&#x27;d like any end-user interaction.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Save test results when in batch mode (Y/n): y</span></span><br><span class="line"><span class="string">    Open the web browser automatically when in batch mode (y/N): n</span></span><br><span class="line"><span class="string">    Auto upload the results to OpenBenchmarking.org (Y/n): n</span></span><br><span class="line"><span class="string">    Prompt for test identifier (Y/n): n</span></span><br><span class="line"><span class="string">    Prompt for test description (Y/n): n</span></span><br><span class="line"><span class="string">    Prompt for saved results file-name (Y/n): n</span></span><br><span class="line"><span class="string">    Run all test options (Y/n): n</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Batch settings saved.</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+<p>After setting up batch mode, you can run the test as below.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 phoronix-test-suite]<span class="comment">#  phoronix-test-suite batch-benchmark pts/postmark</span></span><br><span class="line"></span><br><span class="line">    Evaluating External Test Dependencies ......</span><br><span class="line"></span><br><span class="line">Phoronix Test Suite v10.8.4</span><br><span class="line"></span><br><span class="line">    Installed:     pts/postmark-1.1.2</span><br><span class="line"></span><br><span class="line">System Information</span><br><span class="line"></span><br><span class="line">  PROCESSOR:              2 x Intel Xeon Gold 5317 @ 3.60GHz</span><br><span class="line">    Core Count:           24</span><br><span class="line">    Thread Count:         48</span><br><span class="line">    Extensions:           SSE 4.2</span><br><span class="line">                          + AVX512_VNNI</span><br><span class="line">                          + AVX512CD</span><br><span class="line">                          + AVX2</span><br><span class="line">                          + AVX</span><br><span class="line">                          + RDRAND</span><br><span class="line">                          + FSGSBASE</span><br><span class="line">    Cache Size:           18 MB</span><br><span class="line">    Microcode:            0xd000390</span><br><span class="line">    Core Family:          Ice Lake</span><br><span class="line">    Scaling Driver:       acpi-cpufreq conservative (Boost: Enabled)</span><br><span class="line"></span><br><span class="line">  GRAPHICS:               ASPEED</span><br><span class="line">    Screen:               1024x768</span><br><span class="line"></span><br><span class="line">  MOTHERBOARD:            Supermicro X12DDW-A6 v1.01</span><br><span class="line">    BIOS Version:         1.5</span><br><span class="line">    Chipset:              Intel Device 0998</span><br><span class="line">    Network:              2 x Mellanox MT27800 + 4 x Intel I350 + 2 x Mellanox MT2892</span><br><span class="line"></span><br><span class="line">  MEMORY:                 8 x 64 GB DDR4-2933MT/s Samsung M393A8G40BB4-CWE</span><br><span class="line"></span><br><span class="line">  DISK:                   4 x 1600GB Micron_7450_MTFDKCC1T6TFS + 6 x 1920GB Micron_5400_MTFD</span><br><span class="line">    File-System:          xfs</span><br><span class="line">    Mount Options:        attr2 inode64 logbsize=32k logbufs=8 noquota relatime rw seclabel</span><br><span class="line">    Disk Scheduler:       NONE</span><br><span class="line">    Disk Details:         Block Size: 4096</span><br><span class="line"></span><br><span class="line">  OPERATING SYSTEM:       CentOS Linux 7</span><br><span class="line">    Kernel:               5.7.12-1.el7.elrepo.x86_64 (x86_64)</span><br><span class="line">    Compiler:             GCC 4.8.5 20150623</span><br><span class="line">    Security:             SELinux</span><br><span class="line">                          + itlb_multihit: Not affected</span><br><span class="line">                          + l1tf: Not affected</span><br><span class="line">                          + mds: Not affected</span><br><span class="line">                          + meltdown: Not affected</span><br><span class="line">                          + spec_store_bypass: Mitigation of SSB disabled via prctl and seccomp</span><br><span class="line">                          + spectre_v1: Mitigation of usercopy/swapgs barriers and __user pointer sanitization</span><br><span class="line">                          + spectre_v2: Mitigation of Enhanced IBRS IBPB: conditional RSB filling</span><br><span class="line">                          + srbds: Not affected</span><br><span class="line">                          + tsx_async_abort: Not affected</span><br><span class="line"></span><br><span class="line">PostMark 1.51:</span><br><span class="line">    pts/postmark-1.1.2</span><br><span class="line">    Test 1 of 1</span><br><span class="line">    Estimated Trial Run Count:    3</span><br><span class="line">    Estimated Time To Completion: 3 Minutes [01:15 UTC]</span><br><span class="line">        Started Run 1 @ 01:13:06</span><br><span class="line">        Started Run 2 @ 01:14:02</span><br><span class="line">        Started Run 3 @ 01:14:58</span><br><span class="line"></span><br><span class="line">    Disk Transaction Performance:</span><br><span class="line">        4901</span><br><span class="line">        4807</span><br><span class="line">        4901</span><br><span class="line"></span><br><span class="line">    Average: 4870 TPS</span><br><span class="line">    Deviation: 1.11%</span><br></pre></td></tr></table></figure>
+
+<h2 id="Compare-multiple-runs"><a href="#Compare-multiple-runs" class="headerlink" title="Compare multiple runs"></a>Compare multiple runs</h2><p>In the case you need to tweak some settings and run it again, and you want to compare the results for multipe runs. You can use the <em>phoronix-test-suite merge-results</em> command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 phoronix-test-suite]<span class="comment"># ls -ltr test-results/</span></span><br><span class="line">total 0</span><br><span class="line">drwxr-xr-x. 5 root root 88 Nov 14 01:15 2023-11-14-0113</span><br><span class="line">drwxr-xr-x. 5 root root 88 Nov 14 01:25 2023-11-14-0122</span><br><span class="line"></span><br><span class="line">[root@vm1 phoronix-test-suite]<span class="comment"># phoronix-test-suite merge-results 2023-11-14-0113 2023-11-14-0122</span></span><br><span class="line"></span><br><span class="line">Merged Results Saved To: /home/wali/phoronix-test-suite/test-results/merge-7632/composite.xml</span><br><span class="line"></span><br><span class="line">    Do you want to view the <span class="built_in">test</span> results? (Y/n): n</span><br><span class="line"></span><br><span class="line">[root@vm1 phoronix-test-suite]<span class="comment"># ls -ltr test-results/</span></span><br><span class="line">total 0</span><br><span class="line">drwxr-xr-x. 5 root root 88 Nov 14 01:15 2023-11-14-0113</span><br><span class="line">drwxr-xr-x. 5 root root 88 Nov 14 01:25 2023-11-14-0122</span><br><span class="line">drwxr-xr-x. 2 root root 27 Nov 14 02:11 merge-7789</span><br></pre></td></tr></table></figure>
+
+<h2 id="Export-result"><a href="#Export-result" class="headerlink" title="Export result"></a>Export result</h2><p>The test result can be exported to the following format.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 phoronix-test-suite]<span class="comment"># phoronix-test-suite -h</span></span><br><span class="line">[...]</span><br><span class="line">    result-file-raw-to-csv [Test Result]</span><br><span class="line">    result-file-to-csv     [Test Result]</span><br><span class="line">    result-file-to-html    [Test Result]</span><br><span class="line">    result-file-to-json    [Test Result]</span><br><span class="line">    result-file-to-pdf     [Test Result]</span><br><span class="line">    result-file-to-suite   [Test Result]</span><br><span class="line">    result-file-to-text    [Test Result]</span><br></pre></td></tr></table></figure>
+
+<p>To export it as html, you can run the following command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 phoronix-test-suite]<span class="comment"># phoronix-test-suite result-file-to-html merge-7789</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/phoronix-test-suite-result-1.png" alt="Image"><br><img src="/images/phoronix-test-suite-result-2.png" alt="Image"></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://openbenchmarking.org/test/pts/postmark">https://openbenchmarking.org/test/pts/postmark</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.filesystems.org/docs/auto-pilot/Postmark.html">https://www.filesystems.org/docs/auto-pilot/Postmark.html</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/PostMark/" rel="tag"><i class="fa fa-tag"></i> PostMark</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/phoronix-test-suite/" rel="prev" title="How to install phoronix test suite on CentOS">
+                  <i class="fa fa-angle-left"></i> How to install phoronix test suite on CentOS
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/sysbench/" rel="next" title="sysbench">
+                  sysbench <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

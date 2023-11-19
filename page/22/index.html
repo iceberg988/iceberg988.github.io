@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">101</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">263</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">267</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">263</span>
+          <span class="site-state-item-count">267</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">101</span>
+        <span class="site-state-item-count">103</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,613 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/setting-up-lvm-volumes-on-a-mdraid-array/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/setting-up-lvm-volumes-on-a-mdraid-array/" class="post-title-link" itemprop="url">Setting up LVM volumes on a mdraid array</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-02 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-02T07:00:00-07:00">2021-08-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Setting-up-mdraid-array"><a href="#Setting-up-mdraid-array" class="headerlink" title="Setting up mdraid array"></a>Setting up mdraid array</h2><pre><code>$ mdadm --create /dev/md0 --name=mdvol --level=raid0 --raid-devices=2 /dev/nvme1n1 /dev/nvme2n1 /dev/nvme3n1 /dev/nvme4n1
+mdadm: Defaulting to version 1.2 metadata
+mdadm: array /dev/md0 started.
+
+$ cat /proc/mdstat
+Personalities : [raid0] [linear]
+md0 : active raid0 nvme4n1[3] nvme3n1[2] nvme2n1[1] nvme1n1[0]
+      15002423296 blocks super 1.2 512k chunks
+
+unused devices: &lt;none&gt;
+
+$ mdadm --detail /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Tue Feb  1 19:07:32 2022
+        Raid Level : raid0
+        Array Size : 15002423296 (13.97 TiB 15.36 TB)
+      Raid Devices : 4
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Tue Feb  1 19:07:32 2022
+             State : clean
+    Active Devices : 4
+   Working Devices : 4
+    Failed Devices : 0
+     Spare Devices : 0
+
+        Chunk Size : 512K
+
+Consistency Policy : none
+
+              Name : mdvol
+              UUID : aa6fe868:3aa2391d:37a21dc8:d0f4c5f1
+            Events : 0
+
+    Number   Major   Minor   RaidDevice State
+       0     259        8        0      active sync   /dev/nvme1n1
+       1     259        9        1      active sync   /dev/nvme2n1
+       2     259       10        2      active sync   /dev/nvme3n1
+       3     259       11        3      active sync   /dev/nvme4n1
+</code></pre>
+<h2 id="Settup-LVM-volumes-on-mdraid-array"><a href="#Settup-LVM-volumes-on-mdraid-array" class="headerlink" title="Settup LVM volumes on mdraid array"></a>Settup LVM volumes on mdraid array</h2><pre><code>$ pvcreate /dev/md0
+$ pvs | egrep &quot;PV|md&quot;
+  PV             VG     Fmt  Attr PSize  PFree
+  /dev/md0              lvm2 ---  13.97t 13.97t
+$ vgcreate testvg /dev/md0  
+
+$ vgs | egrep &quot;VG|testvg&quot;
+  VG     #PV #LV #SN Attr   VSize  VFree
+  testvg   1   0   0 wz--n- 13.97t 13.97t
+
+$ lvcreate -n testlv11 -L 500G testvg -Wy --yes
+
+$ lvs | egrep &quot;LV|testvg&quot;
+  LV       VG     Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  testlv11 testvg -wi-a----- 500.00g  
+
+$ lvs -ao name,size,stripesize,chunksize,metadata_percent | egrep &quot;LV|testlv&quot;
+  LV       LSize   Stripe Chunk Meta%
+  testlv11 500.00g     0     0  
+
+$ mkfs.ext4 /dev/testvg/testlv11
+
+$ mkdir -p /mnt/testmnt11
+
+$ mount /dev/testvg/testlv11 /mnt/testmnt11
+
+$ lsblk
+NAME                MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
+&lt;omitted...&gt;
+nvme1n1             259:8    0  3.5T  0 disk
+└─md0                 9:0    0   14T  0 raid0
+  └─testvg-testlv11 253:3    0  500G  0 lvm   /mnt/testmnt11
+nvme2n1             259:11   0  3.5T  0 disk
+└─md0                 9:0    0   14T  0 raid0
+  └─testvg-testlv11 253:3    0  500G  0 lvm   /mnt/testmnt11
+nvme3n1             259:10   0  3.5T  0 disk
+└─md0                 9:0    0   14T  0 raid0
+  └─testvg-testlv11 253:3    0  500G  0 lvm   /mnt/testmnt11
+nvme4n1             259:9    0  3.5T  0 disk
+└─md0                 9:0    0   14T  0 raid0
+  └─testvg-testlv11 253:3    0  500G  0 lvm   /mnt/testmnt11  
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/linux-software-raid/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/linux-software-raid/" class="post-title-link" itemprop="url">Linux Software RAID</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-01 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-01T07:00:00-07:00">2021-08-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="What-is-RAID"><a href="#What-is-RAID" class="headerlink" title="What is RAID?"></a>What is RAID?</h2><p>RAID stands for either Redundant Array of Independent Disks, or Redundant Array of Inexpensive Disks. The intention of RAID is to spread your data across several disks, such that a single disk failure will not lose that data.</p>
+<p>The current RAID drivers in Linux support the following levels:</p>
+<ul>
+<li>Linear Mode : JBOD</li>
+<li>RAID0&#x2F;Stripe : Two or more disks. No redundancy.</li>
+<li>RAID1&#x2F;Mirror : Two or more disks. Redundancy.</li>
+<li>RAID-4 : Three or more disks. Redundancy. Not used very often.</li>
+<li>RAID-5 : Three or more disks. Redundancy. Allows one disk failure.</li>
+<li>RAID-6 : Four or more disks. Redundancy. Allows two disks failure.</li>
+<li>RAID-10 : Four or more disks. Combination of RAID-1 and RAID-0.</li>
+</ul>
+<p>Linux Software RAID (often called mdraid or MD&#x2F;RAID) makes the use of RAID possible without a hardware RAID controller.</p>
+<h2 id="mdadm-utility"><a href="#mdadm-utility" class="headerlink" title="mdadm utility"></a>mdadm utility</h2><p>The mdadm utility can be used to create and manage storage arrays using Linux’s software RAID capabilities.</p>
+<h3 id="Creating-a-RAID-Array"><a href="#Creating-a-RAID-Array" class="headerlink" title="Creating a RAID Array"></a>Creating a RAID Array</h3><p>The following example shows the creation of a RAID 0 array with 8 NVME disks.</p>
+<pre><code>$ mdadm --create /dev/md0 --name=mdvol --level=raid0 --raid-devices=8 /dev/nvme2n1 /dev/nvme3n1 /dev/nvme4n1 /dev/nvme5n1 /dev/nvme6n1 /dev/nvme7n1 /dev/nvme8n1 /dev/nvme9n1
+</code></pre>
+<h2 id="Check-RAID-array-status"><a href="#Check-RAID-array-status" class="headerlink" title="Check RAID array status"></a>Check RAID array status</h2><pre><code>$ cat /proc/mdstat
+    Personalities : [raid0]
+    md0 : active raid0 nvme9n1[7] nvme8n1[6] nvme7n1[5] nvme6n1[4] nvme5n1[3] nvme4n1[2] nvme3n1[1] nvme2n1[0]
+      30004846592 blocks super 1.2 512k chunks
+
+$  mdadm --detail /dev/md0
+    /dev/md0:
+               Version : 1.2
+         Creation Time : Mon Sep 20 17:39:47 2021
+            Raid Level : raid0
+            Array Size : 30004846592 (27.94 TiB 30.72 TB)
+          Raid Devices : 8
+         Total Devices : 8
+           Persistence : Superblock is persistent
+    
+           Update Time : Mon Sep 20 17:39:47 2021
+                 State : clean
+        Active Devices : 8
+       Working Devices : 8
+        Failed Devices : 0
+         Spare Devices : 0
+    
+            Chunk Size : 512K
+    
+    Consistency Policy : none
+    
+                  Name : host1:mdvol
+                  UUID : 5908fc3f:8c8b8851:c0875278:ea274fec
+                Events : 0
+    
+        Number   Major   Minor   RaidDevice State
+           0     259        2        0      active sync   /dev/nvme2n1
+           1     259        6        1      active sync   /dev/nvme3n1
+           2     259        7        2      active sync   /dev/nvme4n1
+           3     259        8        3      active sync   /dev/nvme5n1
+           4     259       11        4      active sync   /dev/nvme6n1
+           5     259       12        5      active sync   /dev/nvme7n1
+           6     259       10        6      active sync   /dev/nvme8n1
+           7     259        9        7      active sync   /dev/nvme9n1 
+</code></pre>
+<h3 id="Deleting-a-RAID-Array"><a href="#Deleting-a-RAID-Array" class="headerlink" title="Deleting a RAID Array"></a>Deleting a RAID Array</h3><p>If a RAID volume is no longer required, it can be deactivated using the following commands:</p>
+<pre><code>$ mdadm --stop /dev/md0
+mdadm: stopped /dev/md0
+</code></pre>
+<p>A Linux software RAID array stores all of the necessary information about a RAID array in a superblock. The superblock for the individual devices can be deleted by the following commands. By doing this, you can re-use these disks for new RAID arrays.</p>
+<pre><code>$ mdadm --zero-superblock /dev/nvme2n1 /dev/nvme3n1 /dev/nvme4n1 /dev/nvme5n1 /dev/nvme6n1 /dev/nvme7n1 /dev/nvme8n1 /dev/nvme9n1
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://raid.wiki.kernel.org/index.php/Linux_Raid">https://raid.wiki.kernel.org/index.php/Linux_Raid</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.thomas-krenn.com/en/wiki/Linux_Software_RAID_Information">https://www.thomas-krenn.com/en/wiki/Linux_Software_RAID_Information</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/raid-redundant-array-of-inexpensive-disks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/raid-redundant-array-of-inexpensive-disks/" class="post-title-link" itemprop="url">RAID - Redundant Array of Inexpensive Disks</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-31 07:00:00" itemprop="dateCreated datePublished" datetime="2021-07-31T07:00:00-07:00">2021-07-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>RAID stands for Redundant Array of Inexpensive (Independent) Disks.</p>
+<p>On most situations you will be using one of the following four levels of RAIDs.</p>
+<ul>
+<li>RAID 0</li>
+<li>RAID 1</li>
+<li>RAID 5(6)</li>
+<li>RAID 10 (also known as RAID 1+0)</li>
+</ul>
+<h2 id="RAID-0"><a href="#RAID-0" class="headerlink" title="RAID 0"></a>RAID 0</h2><p><img src="/images/raid0.svg" alt="Image"></p>
+<p>Following are the key points to remember for RAID level 0.</p>
+<ul>
+<li>Minimum 2 disks.</li>
+<li>Excellent performance (as blocks are striped).</li>
+<li>No redundancy (no mirror, no parity).</li>
+<li>Don’t use this for any critical system.</li>
+</ul>
+<h2 id="RAID-1"><a href="#RAID-1" class="headerlink" title="RAID 1"></a>RAID 1</h2><p><img src="/images/raid1.svg" alt="Image"></p>
+<p>Following are the key points to remember for RAID level 1.</p>
+<ul>
+<li>Minimum 2 disks.</li>
+<li>Good performance (no striping. no parity).</li>
+<li>Excellent redundancy (as blocks are mirrored).</li>
+</ul>
+<h2 id="RAID-5-6"><a href="#RAID-5-6" class="headerlink" title="RAID 5(6)"></a>RAID 5(6)</h2><p><img src="/images/raid5.svg" alt="Image"></p>
+<p>Following are the key points to remember for RAID level 5.</p>
+<ul>
+<li>Minimum 3 disks.</li>
+<li>Good performance (as blocks are striped).</li>
+<li>Good redundancy (distributed parity).</li>
+<li>Best cost-effective option providing both performance and redundancy. Use this for DB that is heavily read oriented. Write operations will be slow.</li>
+</ul>
+<p>RAID6 allows two disks failure while RAID5 allows only one disk failure.</p>
+<h2 id="RAID-10"><a href="#RAID-10" class="headerlink" title="RAID 10"></a>RAID 10</h2><p><img src="/images/raid10.svg" alt="Image"></p>
+<p>Following are the key points to remember for RAID level 10.</p>
+<ul>
+<li>Minimum 4 disks.</li>
+<li>This is also called as “stripe of mirrors”</li>
+<li>Excellent redundancy (as blocks are mirrored)</li>
+<li>Excellent performance (as blocks are striped)</li>
+<li>If you can afford the dollar, this is the BEST option for any mission critical applications (especially databases).</li>
+</ul>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.prepressure.com/library/technology/raid">https://www.prepressure.com/library/technology/raid</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.thegeekstuff.com/2010/08/raid-levels-tutorial/">https://www.thegeekstuff.com/2010/08/raid-levels-tutorial/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/upgrade-kernel-version-in-centos-7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/upgrade-kernel-version-in-centos-7/" class="post-title-link" itemprop="url">Upgrade kernel version in centos 7</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-18 07:00:00" itemprop="dateCreated datePublished" datetime="2021-07-18T07:00:00-07:00">2021-07-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Before-upgrade"><a href="#Before-upgrade" class="headerlink" title="Before upgrade"></a>Before upgrade</h2><pre><code>$ cat /etc/centos-release
+CentOS Linux release 7.4.1708 (Core)
+
+$ uname -r
+3.10.0-693.el7.x86_64
+
+$ cat /boot/grub2/grubenv
+saved_entry=CentOS Linux (3.10.0-693.el7.x86_64) 7 (Core)
+</code></pre>
+<h2 id="Install-the-newer-kernel-package"><a href="#Install-the-newer-kernel-package" class="headerlink" title="Install the newer kernel package"></a>Install the newer kernel package</h2><pre><code>$ rpm -ivh kernel-ml-5.7.12-1.el7.elrepo.x86_64.rpm
+warning: kernel-ml-5.7.12-1.el7.elrepo.x86_64.rpm: Header V4 DSA/SHA1 Signature, key ID baadae52: NOKEY
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:kernel-ml-5.7.12-1.el7.elrepo    ################################# [100%]
+
+$ rpm -ivh kernel-ml-devel-5.7.12-1.el7.elrepo.x86_64.rpm
+warning: kernel-ml-devel-5.7.12-1.el7.elrepo.x86_64.rpm: Header V4 DSA/SHA1 Signature, key ID baadae52: NOKEY
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:kernel-ml-devel-5.7.12-1.el7.elre################################# [100%]
+
+$  rpm -qa | grep kernel
+kernel-ml-devel-5.7.12-1.el7.elrepo.x86_64
+kernel-3.10.0-693.el7.x86_64
+kernel-tools-3.10.0-693.el7.x86_64
+kernel-ml-5.7.12-1.el7.elrepo.x86_64
+kernel-tools-libs-3.10.0-693.el7.x86_64
+</code></pre>
+<h2 id="Set-the-default-boot-kernel-entry"><a href="#Set-the-default-boot-kernel-entry" class="headerlink" title="Set the default boot kernel entry"></a>Set the default boot kernel entry</h2><p><strong>Notes:</strong> if &#x2F;etc&#x2F;grub2.cfg does not exist, do next step to rebuild the GRUB2 and come back later after that.</p>
+<pre><code>$ awk -F\&#39; &#39;$1==&quot;menuentry &quot; &#123;print $2&#125;&#39; /etc/grub2.cfg
+CentOS Linux (5.7.12-1.el7.elrepo.x86_64) 7 (Core)
+CentOS Linux (3.10.0-693.el7.x86_64) 7 (Core)
+CentOS Linux (0-rescue-8ef36acf9f544b90bf0621450fe05f75) 7 (Core)
+
+$ grub2-set-default 0 
+$ grep saved /boot/grub2/grubenv
+saved_entry=0
+</code></pre>
+<h2 id="Rebuild-the-GRUB2-configuration"><a href="#Rebuild-the-GRUB2-configuration" class="headerlink" title="Rebuild the GRUB2 configuration"></a>Rebuild the GRUB2 configuration</h2><pre><code>$ grub2-mkconfig -o /boot/grub2/grub.cfg
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-5.7.12-1.el7.elrepo.x86_64
+Found initrd image: /boot/initramfs-5.7.12-1.el7.elrepo.x86_64.img
+Found linux image: /boot/vmlinuz-3.10.0-693.el7.x86_64
+Found initrd image: /boot/initramfs-3.10.0-693.el7.x86_64.img
+Found linux image: /boot/vmlinuz-0-rescue-8ef36acf9f544b90bf0621450fe05f75
+Found initrd image: /boot/initramfs-0-rescue-8ef36acf9f544b90bf0621450fe05f75.img
+done
+</code></pre>
+<h2 id="Reboot-the-system"><a href="#Reboot-the-system" class="headerlink" title="Reboot the system"></a>Reboot the system</h2><pre><code>$ reboot
+</code></pre>
+<h2 id="Verify-the-new-kernel-version"><a href="#Verify-the-new-kernel-version" class="headerlink" title="Verify the new kernel version"></a>Verify the new kernel version</h2><pre><code>$ uname -r
+5.7.12-1.el7.elrepo.x86_64
+$ cat /etc/centos-release
+CentOS Linux release 7.4.1708 (Core)
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.golinuxcloud.com/set-default-boot-kernel-version-old-previous-rhel-linux/">https://www.golinuxcloud.com/set-default-boot-kernel-version-old-previous-rhel-linux/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.tecmint.com/install-upgrade-kernel-version-in-centos-7/">https://www.tecmint.com/install-upgrade-kernel-version-in-centos-7/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -848,479 +1455,6 @@ ulimit -aS
 <pre><code>$ docker run -it --ulimit as=1024 fedora /bin/bash
 </code></pre>
 <p>The values are sent to the appropriate syscall as they are set. Docker doesn’t perform any byte conversion. Take this into account when setting the values.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/sorting-algorithm/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/sorting-algorithm/" class="post-title-link" itemprop="url">Sorting algorithm</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-16 07:00:00" itemprop="dateCreated datePublished" datetime="2021-04-16T07:00:00-07:00">2021-04-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>In this post, it includes the following sorting algorithms. The code is self explained.</p>
-<ul>
-<li><p>selection sort</p>
-</li>
-<li><p>insert sort</p>
-</li>
-<li><p>bubble sort</p>
-</li>
-<li><p>quick sort</p>
-</li>
-<li><p>merge sort</p>
-<p>  import java.util.Arrays;</p>
-<p>  public class Sort {<br>  public static void selection_sort(int[] arr) {<br>      for (int i &#x3D; 0; i &lt; arr.length - 1; i++) {<br>          int min_idx &#x3D; i;<br><br>          &#x2F;&#x2F; find the minimum value from right of arr[i] and swap with arr[i]<br>          for (int j &#x3D; i + 1; j &lt; arr.length; j++) {<br>              if (arr[j] &lt; arr[min_idx]) {<br>                  min_idx &#x3D; j;<br>              }<br>          }<br><br>          &#x2F;&#x2F; move the min value to the beginning of array<br>          int temp &#x3D; arr[i];<br>          arr[i] &#x3D; arr[min_idx];<br>          arr[min_idx] &#x3D; temp;<br>      }<br>  }<br><br>  public static void insert_sort(int[] arr) {<br>      &#x2F;&#x2F; sort from the second element since the first one is already sorted for itself<br>      for (int i &#x3D; 1; i &lt; arr.length; i++) {<br>          int curr &#x3D; arr[i];<br>          int j &#x3D; i - 1;<br><br>          &#x2F;&#x2F; move all the greater values(than curr) to one position right<br>          while (j &gt;&#x3D; 0 &amp;&amp; arr[j] &gt; curr) {<br>              arr[j + 1] &#x3D; arr[j];<br>              j–;<br>          }<br><br>          arr[j + 1] &#x3D; curr;<br>      }<br>  }<br><br>  public static void bubble_sort(int[] arr) {<br>      &#x2F;&#x2F; bubble sort for n - 1 rounds<br>      for (int i &#x3D; 0; i &lt; arr.length - 1; i++) {<br>          boolean swapped &#x3D; false;<br>          &#x2F;&#x2F; For each round, bubble up the maximum element to the right<br>          for (int j &#x3D; 0; j &lt; arr.length - i - 1; j++) {<br>              if (arr[j] &gt; arr[j + 1]) {<br>                  int temp &#x3D; arr[j];<br>                  arr[j] &#x3D; arr[j + 1];<br>                  arr[j + 1] &#x3D; temp;<br>                  swapped &#x3D; true;<br>              }<br>          }<br><br>          if (!swapped)<br>              break;<br>      }<br>  }<br><br>  public static void quick_sort(int[] arr, int left, int right) {<br>      if (left &lt; right) {<br>          int pivot &#x3D; partition(arr, left, right);<br>          quick_sort(arr, left, pivot - 1);<br>          quick_sort(arr, pivot + 1, right);<br>      }<br>  }<br><br>  private static int partition(int[] arr, int left, int right) {<br>      int pivot &#x3D; arr[right];<br>      int curr &#x3D; left - 1;<br><br>      for (int i &#x3D; left; i &lt; right; i++) {<br>          if (arr[i] &lt;&#x3D; pivot) {<br>              curr++;<br>              int temp &#x3D; arr[curr];<br>              arr[curr] &#x3D; arr[i];<br>              arr[i] &#x3D; temp;<br>          }<br>      }<br><br>      curr++;<br>      int temp &#x3D; arr[curr];<br>      arr[curr] &#x3D; pivot;<br>      arr[right] &#x3D; temp;<br>      return curr;<br>  }<br><br>  public static void merge_sort(int[] arr, int left, int right) {<br>      if (left &lt; right) {<br>          &#x2F;&#x2F;int mid &#x3D; (left + right) &#x2F; 2;<br>          int mid &#x3D; left + (right - left) &#x2F; 2; &#x2F;&#x2F; avoid overflow<br>          merge_sort(arr, left, mid);<br>          merge_sort(arr, mid + 1, right);<br>          merge(arr, left, mid, right);<br>      }<br>  }<br><br>  private static void merge(int[] arr, int left, int mid, int right) {<br>      int l1 &#x3D; mid - left + 1;<br>      int l2 &#x3D; right - mid;<br><br>      &#x2F;&#x2F; copy left and right to the temporary array<br>      int[] a1 &#x3D; new int[l1];<br>      int[] a2 &#x3D; new int[l2];<br><br><br>      for (int i &#x3D; 0; i &lt; l1; i++) {<br>          a1[i] &#x3D; arr[left + i];<br>      }<br><br>      for (int i &#x3D; 0; i &lt; l2; i++) {<br>          a2[i] &#x3D; arr[mid + 1 + i];<br>      }<br><br>      &#x2F;&#x2F; merge back to the original array<br>      int i &#x3D; 0, j &#x3D; 0, k &#x3D; left;<br>      while (i &lt; l1 &amp;&amp; j &lt; l2) {<br>          if (a1[i] &lt;&#x3D; a2[j]) {<br>              arr[k++] &#x3D; a1[i++];<br>          } else {<br>              arr[k++] &#x3D; a2[j++];<br>          }<br>      }<br><br>      while (i &lt; l1) {<br>          arr[k++] &#x3D; a1[i++];<br>      }<br>      while (j &lt; l2) {<br>          arr[k++] &#x3D; a2[j++];<br>      }<br>  }<br><br>  public static void main(String[] args) {<br>      &#x2F;&#x2F; TODO Auto-generated method stub<br>      int[] arr &#x3D; { 11, 25, 12, 22, 64 };<br>      selection_sort(arr);<br>      System.out.println(Arrays.toString(arr));<br><br>      int[] arr1 &#x3D; { 11, 25, 12, 22, 64 };<br>      insert_sort(arr1);<br>      System.out.println(Arrays.toString(arr1));<br><br>      int[] arr2 &#x3D; { 11, 25, 12, 22, 64 };<br>      bubble_sort(arr2);<br>      System.out.println(Arrays.toString(arr2));<br><br>      int[] arr3 &#x3D; { 11, 25, 12, 22, 64 };<br>      quick_sort(arr3, 0, arr3.length - 1);<br>      System.out.println(Arrays.toString(arr3));<br><br>      int[] arr4 &#x3D; { 11, 25, 12, 22, 64 };<br>      merge_sort(arr4, 0, arr4.length - 1);<br>      System.out.println(Arrays.toString(arr4));<br>  }<br>  }</p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/thread-synchronization/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/thread-synchronization/" class="post-title-link" itemprop="url">Thread synchronization</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-11 07:00:00" itemprop="dateCreated datePublished" datetime="2021-04-11T07:00:00-07:00">2021-04-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Mutexes"><a href="#Mutexes" class="headerlink" title="Mutexes"></a>Mutexes</h2><p>A mutex is basically a lock that we set (lock) before accessing a shared resource and release (unlock) when we’re done. While it is set, any other thread that tries to set it will block until we release it. If more than one thread is blocked when we unlock the mutex, then all threads blocked on the lock will be made runnable, and the first one to run will be able to set the lock. The others will see that the mutex is still locked and go back to waiting for it to become available again. In this way, only one thread will proceed at a time.</p>
-<p>This mutual-exclusion mechanism works only if we design our threads to follow the same data-access rules. The operating system doesn’t serialize access to data for us. If we allow one thread to access a shared resource without first acquiring a lock, then inconsistencies can occur even though the rest of our threads do acquire the lock before attempting to access the shared resource.</p>
-<h2 id="Reader-Wrtier-lock"><a href="#Reader-Wrtier-lock" class="headerlink" title="Reader&#x2F;Wrtier lock"></a>Reader&#x2F;Wrtier lock</h2><p>Reader–writer locks are similar to mutexes, except that they allow for higher degrees of parallelism. With a mutex, the state is either locked or unlocked, and only one thread can lock it at a time. Three states are possible with a reader–writer lock: locked in read mode, locked in write mode, and unlocked. Only one thread at a time can hold a reader–writer lock in write mode, but multiple threads can hold a reader–writer lock in read mode at the same time.</p>
-<p>When a reader–writer lock is write locked, all threads attempting to lock it block until it is unlocked. When a reader–writer lock is read locked, all threads attempting to lock it in read mode are given access, but any threads attempting to lock it in write mode block until all the threads have released their read locks. Although implementations vary, reader–writer locks usually block additional readers if a lock is already held in read mode and a thread is blocked trying to acquire the lock in write mode. This prevents a constant stream of readers from starving waiting writers.</p>
-<p>Reader–writer locks are well suited for situations in which data structures are read more often than they are modified. When a reader–writer lock is held in write mode, the data structure it protects can be modified safely, since only one thread at a time can hold the lock in write mode. When the reader–writer lock is held in read mode, the data structure it protects can be read by multiple threads, as long as the threads first acquire the lock in read mode.</p>
-<p>Reader–writer locks are also called shared–exclusive locks. When a reader–writer lock is read locked, it is said to be locked in shared mode. When it is write locked, it is said to be locked in exclusive mode</p>
-<h2 id="Spin-Locks"><a href="#Spin-Locks" class="headerlink" title="Spin Locks"></a>Spin Locks</h2><p>A spin lock is like a mutex, except that instead of blocking a process by sleeping, the process is blocked by busy-waiting (spinning) until the lock can be acquired. A spin lock could be used in situations where locks are held for short periods of times and threads don’t want to incur the cost of being descheduled.</p>
-<p>Spin locks are often used as low-level primitives to implement other types of locks. Depending on the system architecture, they can be implemented efficiently using test- and-set instructions. Although efficient, they can lead to wasting CPU resources: while a thread is spinning and waiting for a lock to become available, the CPU can’t do anything else. This is why spin locks should be held only for short periods of time.</p>
-<h2 id="Barriers"><a href="#Barriers" class="headerlink" title="Barriers"></a>Barriers</h2><p>Barriers are a synchronization mechanism that can be used to coordinate multiple threads working in parallel. A barrier allows each thread to wait until all cooperating threads have reached the same point, and then continue executing from there. We’ve already seen one form of barrier—the pthread_join function acts as a barrier to allow one thread to wait until another thread exits.</p>
-<p>Barrier objects are more general than this, however. They allow an arbitrary number of threads to wait until all of the threads have completed processing, but the threads don’t have to exit. They can continue working after all threads have reached the barrier.</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li>Advanced Programming in the UNIX Environment</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/interprocess-communication-ipc/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/interprocess-communication-ipc/" class="post-title-link" itemprop="url">Interprocess communication(IPC)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-10 07:00:00" itemprop="dateCreated datePublished" datetime="2021-04-10T07:00:00-07:00">2021-04-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Pipes"><a href="#Pipes" class="headerlink" title="Pipes"></a>Pipes</h2><p>Pipes are the oldest form of UNIX System IPC and are provided by all UNIX systems. Pipes have two limitations.</p>
-<ol>
-<li>Historically, they have been half duplex (i.e., data flows in only one direction). Some systems now provide full-duplex pipes, but for maximum portability, we should never assume that this is the case.</li>
-<li>Pipes can be used only between processes that have a common ancestor. Normally, a pipe is created by a process, that process calls fork, and the pipe is used between the parent and the child.</li>
-</ol>
-<p>FIFOs get around the second limitation, and UNIX domain sockets get around both limitations.</p>
-<h2 id="FIFOs"><a href="#FIFOs" class="headerlink" title="FIFOs"></a>FIFOs</h2><p>FIFOs are sometimes called named pipes. Unnamed pipes can be used only between related processes when a common ancestor has created the pipe. With FIFOs, however, unrelated processes can exchange data.</p>
-<p>Creating a FIFO is similar to creating a file. Indeed, the pathname for a FIFO exists in the file system.</p>
-<h2 id="Message-Queues"><a href="#Message-Queues" class="headerlink" title="Message Queues"></a>Message Queues</h2><p>A message queue is a linked list of messages stored within the kernel and identified by a message queue identifier. We’ll call the message queue just a queue and its identifier a queue ID.</p>
-<p>A new queue is created or an existing queue opened by msgget. New messages are added to the end of a queue by msgsnd. Every message has a positive long integer type field, a non-negative length, and the actual data bytes (corresponding to the length), all of which are specified to msgsnd when the message is added to a queue. Messages are fetched from a queue by msgrcv. We don’t have to fetch the messages in a first-in, first-out order. Instead, we can fetch messages based on their type field.</p>
-<h2 id="Semaphores"><a href="#Semaphores" class="headerlink" title="Semaphores"></a>Semaphores</h2><p>A semaphore isn’t a form of IPC similar to the others that we’ve described (pipes, FIFOs, and message queues). A semaphore is a counter used to provide access to a shared data object for multiple processes.</p>
-<p>To obtain a shared resource, a process needs to do the following:</p>
-<ol>
-<li>Test the semaphore that controls the resource.</li>
-<li>If the value of the semaphore is positive, the process can use the resource. In this case, the process decrements the semaphore value by 1, indicating that it has used one unit of the resource.</li>
-<li>Otherwise, if the value of the semaphore is 0, the process goes to sleep until the semaphore value is greater than 0. When the process wakes up, it returns to step 1.</li>
-</ol>
-<p>When a process is done with a shared resource that is controlled by a semaphore, the semaphore value is incremented by 1. If any other processes are asleep, waiting for the semaphore, they are awakened.</p>
-<p>To implement semaphores correctly, the test of a semaphore’s value and the decrementing of this value must be an atomic operation. For this reason, semaphores are normally implemented inside the kernel.</p>
-<h2 id="Shared-Memory"><a href="#Shared-Memory" class="headerlink" title="Shared Memory"></a>Shared Memory</h2><p>Shared memory allows two or more processes to share a given region of memory. This is the fastest form of IPC, because the data does not need to be copied between the client and the server. The only trick in using shared memory is synchronizing access to a given region among multiple processes. If the server is placing data into a shared memory region, the client shouldn’t try to access the data until the server is done. Often, semaphores are used to synchronize shared memory access. But record locking or mutexes can also be used.</p>
-<h2 id="Network-IPC-Sockets"><a href="#Network-IPC-Sockets" class="headerlink" title="Network IPC: Sockets"></a>Network IPC: Sockets</h2><p>The socket network IPC interface can be used by processes to communicate with other processes, regardless of where they are running, on the same machine or on different machines. Indeed, this was one of the design goals of the socket interface. The same interfaces can be used for both intermachine communication and intramachine communication.</p>
-<p>A socket is an abstraction of a communication endpoint. Just as they would use file descriptors to access files, applications use socket descriptors to access sockets. Socket descriptors are implemented as file descriptors in the UNIX System. Indeed, many of the functions that deal with file descriptors, such as read and write, will work with a socket descriptor.</p>
-<p>Normally, the recv functions will block when no data is immediately available. Similarly, the send functions will block when there is not enough room in the socket’s output queue to send the message. This behavior changes when the socket is in nonblocking mode.</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li>Advanced Programming in the UNIX Environment</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-bcc-tools-for-dynamic-kernel-tracing/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/using-bcc-tools-for-dynamic-kernel-tracing/" class="post-title-link" itemprop="url">Using bcc-tools for dynamic kernel tracing</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-03-25 07:00:00" itemprop="dateCreated datePublished" datetime="2021-03-25T07:00:00-07:00">2021-03-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>In Red Hat Enterprise Linux 8.1, Red Hat ships a set of fully supported on x86_64 dynamic kernel tracing tools, called bcc-tools, that make use of a kernel technology called extended Berkeley Packet Filter (eBPF). With these tools, you can quickly gain insight into certain aspects of system performance that would have previously required more time and effort from the system and operator.</p>
-<p>The eBPF technology allows dynamic kernel tracing without requiring kernel modules (like systemtap) or rebooting of the kernel (as with debug kernels). eBPF accomplishes this while maintaining minimal overhead for each trace point, making these tools an ideal way to instrument running kernels in production.</p>
-<p>To ensure that an eBPF program will not harm the running kernel, tools built on eBPF go through the following process when instantiated by root on the command line:</p>
-<ul>
-<li>The program is compiled into eBPF bytecode.</li>
-<li>Loaded into the kernel.</li>
-<li>Run through a technology called the eBPF verifier to ensure that the program will not harm the running kernel.</li>
-<li>Upon passing the verifier, it begins execution. If it does not pass the verifier, the code is unloaded and does not execute.</li>
-</ul>
-<p>That said, bear in mind that you are still inserting tracing and some system calls are called significantly more than others, so depending on what you are tracing, there may be increased overhead.</p>
-<p>If you are interested in more information on eBPF in general, please see Stanislav Kozina’s blog: <a target="_blank" rel="noopener" href="https://www.redhat.com/en/blog/introduction-ebpf-red-hat-enterprise-linux-7">Introduction to eBPF in Red Hat Enterprise Linux 7</a>.</p>
-<h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><p>With RHEL 8.1, bcc-tools has gone fully supported on x86. To install bcc-tools on RHEL 7 (7.6+) and RHEL 8, run yum install as root:</p>
-<pre><code>$ uname -r
-3.10.0-1062.40.1.el7.x86_64
-$  cat /etc/redhat-release
-Red Hat Enterprise Linux Server release 7.7 (Maipo)
-$ yum install bcc-tools
-Installed:
-  bcc-tools.x86_64 0:0.10.0-1.el7
-Dependency Installed:
-  bcc.x86_64 0:0.10.0-1.el7                kernel-devel.x86_64 0:3.10.0-1160.21.1.el7
-  llvm-private.x86_64 0:7.0.1-1.el7        python-bcc.x86_64 0:0.10.0-1.el7
-
-$ pwd
-/usr/share/bcc/tools
-$  ls
-argdist       drsnoop         memleak         pythonstat   tclobjnew
-bashreadline  execsnoop       mountsnoop      reset-trace  tclstat
-biolatency    ext4dist        mysqld_qslower  rubycalls    tcpaccept
-biosnoop      ext4slower      nfsdist         rubyflow     tcpconnect
-biotop        filelife        nfsslower       rubygc       tcpconnlat
-bitesize      fileslower      nodegc          rubyobjnew   tcpdrop
-bpflist       filetop         nodestat        rubystat     tcplife
-btrfsdist     funccount       offcputime      runqlat      tcpretrans
-btrfsslower   funclatency     offwaketime     runqlen      tcpsubnet
-cachestat     funcslower      oomkill         runqslower   tcptop
-cachetop      gethostlatency  opensnoop       shmsnoop     tcptracer
-capable       hardirqs        perlcalls       slabratetop  tplist
-cobjnew       javacalls       perlflow        sofdsnoop    trace
-cpudist       javaflow        perlstat        softirqs     ttysnoop
-cpuunclaimed  javagc          phpcalls        solisten     vfscount
-dbslower      javaobjnew      phpflow         sslsniff     vfsstat
-dbstat        javastat        phpstat         stackcount   wakeuptime
-dcsnoop       javathreads     pidpersec       statsnoop    xfsdist
-dcstat        killsnoop       profile         syncsnoop    xfsslower
-deadlock      lib             pythoncalls     syscount
-deadlock.c    llcstat         pythonflow      tclcalls
-doc           mdflush         pythongc        tclflow  
-</code></pre>
-<h2 id="bcc-tools-Framework"><a href="#bcc-tools-Framework" class="headerlink" title="bcc-tools Framework"></a>bcc-tools Framework</h2><p>Before we dive into the different types of tools that are included in bcc-tools, it’s important to note a few things:</p>
-<ul>
-<li>All of these tools live in &#x2F;usr&#x2F;share&#x2F;bcc&#x2F;tools.</li>
-<li>These tools must run as the root user as any eBPF program can read kernel data. As such, injecting eBPF bytecode as a regular user is not allowed in RHEL 8.1.</li>
-<li>Each tool has a man page. To view the man page, run man . These man pages include descriptions of the tools, provide the options that can be called, and have information on the expected overhead of the specific tool.</li>
-</ul>
-<p>Since there are a lot of tools in bcc-tools, I’m going to divide the tools into the following classes and then we’ll dive into each class:</p>
-<ul>
-<li>The Snoops</li>
-<li>Latency Detectors</li>
-<li>Slower</li>
-<li>Top Up with bcc-tools</li>
-<li>Java&#x2F;Perl&#x2F;Python&#x2F;Ruby</li>
-</ul>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.redhat.com/en/blog/introduction-ebpf-red-hat-enterprise-linux-7">https://www.redhat.com/en/blog/introduction-ebpf-red-hat-enterprise-linux-7</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.redhat.com/en/blog/bcc-tools-brings-dynamic-kernel-tracing-red-hat-enterprise-linux-81">https://www.redhat.com/en/blog/bcc-tools-brings-dynamic-kernel-tracing-red-hat-enterprise-linux-81</a></li>
-</ul>
 
       
     </div>

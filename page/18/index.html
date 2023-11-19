@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">101</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">263</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">267</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">263</span>
+          <span class="site-state-item-count">267</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">101</span>
+        <span class="site-state-item-count">103</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,738 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/vdbench-file-system-operations/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/vdbench-file-system-operations/" class="post-title-link" itemprop="url">Vdbench file system operations</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-10 08:00:00" itemprop="dateCreated datePublished" datetime="2022-03-10T08:00:00-08:00">2022-03-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Specify-file-system-operations-in-FWD-and-RD"><a href="#Specify-file-system-operations-in-FWD-and-RD" class="headerlink" title="Specify file system operations in FWD and RD"></a>Specify file system operations in FWD and RD</h2><p>In the File system Workload Definition(FWD), we can specify a single file sysetm operation that must be executed for the workload, with the parameter ‘operation&#x3D;’. The valid operation can be mkdir,rmdir,create,delete,open,close,read,write,getattr and setattr. We can specify ‘fwd&#x3D;xxx,rdpct&#x3D;nn’ to allow for mixed read and write operations against the same file.</p>
+<p>If one or more operations need to be specified, the parameter ‘fwd&#x3D;xxx,operations&#x3D;’ in Run Definition(RD) can be leveraged to override the single operation in FWD. For example, the parameter ‘operations&#x3D;mkdir’ or ‘operations&#x3D;(read,getattr)’ can be specified in RD. Vdbench will fail the operation if the file structure is not created before it is accessed.</p>
+<p>In the following example, we will run vdbench to make directories, create files, getattr, delete files and remove directories.</p>
+<h2 id="Make-directories"><a href="#Make-directories" class="headerlink" title="Make directories"></a>Make directories</h2><p>Prepare the job file to make the directories:</p>
+<pre><code>$ cat jobfile/vdb_mkdir.job
+hd=default,vdbench=/home/tester/vdbench_test,shell=ssh,user=root
+hd=host1,jvms=1,system=192.168.1.2
+
+fsd=fsd1,anchor=/mnt/bench1,depth=5,width=5,files=2,size=4k
+fwd=fwd1,fsd=fsd1,host=host1,operation=mkdir
+rd=rd1,fwd=fwd1,format=no,fwdrate=max
+</code></pre>
+<p>Run vdbench job to make the directories:</p>
+<pre><code>$ ./vdbench -f jobfile/vdb_mkdir.job
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+Vdbench distribution: vdbench50407 Tue June 05  9:49:29 MDT 2018
+For documentation, see &#39;vdbench.pdf&#39;.
+
+02:06:05.755 input argument scanned: &#39;-fjobfile/vdb_mkdir.job&#39;
+02:06:05.833 Anchor size: anchor=/mnt/bench1: dirs:        3,905; files:        6,250; bytes:    24.414m (25,600,000)
+02:06:06.097 Starting slave: ssh 192.168.1.2 -l root /home/tester/vdbench_test/vdbench SlaveJvm -m 192.168.1.3 -n 192.168.1.2-10-220316-02.06.05.716 -l host1-0 -p 5570
+02:06:06.527 All slaves are now connected
+02:06:08.002 Starting RD=rd1; elapsed=30; fwdrate=max. For loops: None
+
+Mar 16, 2022 ..Interval.. .ReqstdOps... ...cpu%...  read ....read..... ....write.... ..mb/sec... mb/sec .xfer.. ...mkdir.... ....open.... ...close....
+                            rate   resp total  sys   pct   rate   resp   rate   resp  read write  total    size  rate   resp  rate   resp  rate   resp
+02:06:09.065            1 3905.0  0.018   3.7 0.41   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0  3905  0.018   0.0  0.000   0.0  0.000
+02:06:09.102      avg_2-1    NaN  0.000   NaN  NaN   0.0    NaN  0.000    NaN  0.000   NaN   NaN    NaN       0   NaN  0.000   NaN  0.000   NaN  0.000
+02:06:09.102      std_2-1
+02:06:09.103      max_2-1
+02:06:09.216
+02:06:09.216 Miscellaneous statistics:
+02:06:09.216 (These statistics do not include activity between the last reported interval and shutdown.)
+02:06:09.216 DIRECTORY_CREATES   Directories created:                          3,905      3,905/sec
+02:06:09.216
+02:06:09.932 Vdbench execution completed successfully. Output directory: /home/tester/vdbench_test/output
+
+$ ls -la /mnt/bench1/vdb.1_1.dir/vdb.2_1.dir/vdb.3_1.dir/vdb.4_1.dir/vdb.5_1.dir/
+total 8
+drwxr-xr-x 2 root root 4096 Mar 16 02:06 .
+drwxr-xr-x 7 root root 4096 Mar 16 02:06 ..
+</code></pre>
+<h2 id="Create-files-in-the-existing-directories"><a href="#Create-files-in-the-existing-directories" class="headerlink" title="Create files in the existing directories"></a>Create files in the existing directories</h2><p>Prepare the job file to create files in the existing directories:</p>
+<pre><code>$ cat jobfile/vdb_create.job
+hd=default,vdbench=/home/tester/vdbench_test,shell=ssh,user=root
+hd=host1,jvms=1,system=192.168.1.2
+
+fsd=fsd1,anchor=/mnt/bench1,depth=5,width=5,files=2,size=4k
+fwd=fwd1,fsd=fsd1,host=host1,operation=create
+rd=rd1,fwd=fwd1,format=restart,fwdrate=max
+</code></pre>
+<p>Note that we specify the parameter <strong>‘format&#x3D;restart’</strong>. It will create files that have not been created and will also expand files that have not reached the proper file size.</p>
+<p>Run vdbench job to create files:</p>
+<pre><code>$ ./vdbench -f jobfile/vdb_create.job
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+Vdbench distribution: vdbench50407 Tue June 05  9:49:29 MDT 2018
+For documentation, see &#39;vdbench.pdf&#39;.
+
+02:06:11.387 input argument scanned: &#39;-fjobfile/vdb_create.job&#39;
+02:06:11.468 Anchor size: anchor=/mnt/bench1: dirs:        3,905; files:        6,250; bytes:    24.414m (25,600,000)
+02:06:11.719 Starting slave: ssh 192.168.1.2 -l root /home/tester/vdbench_test/vdbench SlaveJvm -m 192.168.1.3 -n 192.168.1.2-10-220316-02.06.11.352 -l host1-0 -p 5570
+02:06:12.148 All slaves are now connected
+02:06:13.002 Starting RD=format_for_rd1
+02:06:13.238 host1-0: anchor=/mnt/bench1 mkdir complete.
+02:06:13.418 host1-0: anchor=/mnt/bench1 create complete.
+
+Mar 16, 2022 ..Interval.. .ReqstdOps... ...cpu%...  read ....read..... ....write.... ..mb/sec... mb/sec .xfer.. ...mkdir.... ...rmdir.... ...create... ....open.... ...close.... ...delete...
+                            rate   resp total  sys   pct   rate   resp   rate   resp  read write  total    size  rate   resp  rate   resp  rate   resp  rate   resp  rate   resp  rate   resp
+02:06:14.063            1 6250.0  0.019  12.7 0.99   0.0    0.0  0.000 6250.0  0.019  0.00 24.41  24.41    4096   0.0  0.000   0.0  0.000  6250  0.219  6250  0.071  6250  0.006   0.0  0.000
+02:06:14.103      avg_2-1    NaN  0.000   NaN  NaN   0.0    NaN  0.000    NaN  0.000   NaN   NaN    NaN       0   NaN  0.000   NaN  0.000   NaN  0.000   NaN  0.000   NaN  0.000   NaN  0.000
+02:06:14.103      std_2-1
+02:06:14.103      max_2-1
+02:06:14.217
+02:06:14.217 Miscellaneous statistics:
+02:06:14.217 (These statistics do not include activity between the last reported interval and shutdown.)
+02:06:14.218 FILE_CREATES        Files created:                                6,250      6,250/sec
+02:06:14.218 WRITE_OPENS         Files opened for write activity:              6,250      6,250/sec
+02:06:14.218 DIR_EXISTS          Directory may not exist (yet):                    7          7/sec
+02:06:14.218 FILE_CLOSES         Close requests:                               6,250      6,250/sec
+02:06:14.218
+02:06:15.001 Starting RD=rd1; elapsed=30; fwdrate=max. For loops: None
+02:06:15.344
+02:06:15.344 Message from slave host1-0:
+02:06:15.345 Anchor: /mnt/bench1
+02:06:15.345 Vdbench is trying to create a new file, but all files already exist,
+02:06:15.345 and no threads are currently active deleting files
+02:06:15.345 FwgThread.canWeGetMoreFiles(): Shutting down threads for operation=create
+02:06:15.345
+
+Mar 16, 2022 ..Interval.. .ReqstdOps... ...cpu%...  read ....read..... ....write.... ..mb/sec... mb/sec .xfer.. ...mkdir.... ...rmdir.... ...create... ....open.... ...close.... ...delete...
+                            rate   resp total  sys   pct   rate   resp   rate   resp  read write  total    size  rate   resp  rate   resp  rate   resp  rate   resp  rate   resp  rate   resp
+02:06:16.021            1    0.0  0.000   1.8 0.09   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000   0.0  0.000   0.0  0.000   0.0  0.000   0.0  0.000
+02:06:16.030      avg_2-1    NaN  0.000   NaN  NaN   0.0    NaN  0.000    NaN  0.000   NaN   NaN    NaN       0   NaN  0.000   NaN  0.000   NaN  0.000   NaN  0.000   NaN  0.000   NaN  0.000
+02:06:16.030      std_2-1
+02:06:16.030      max_2-1
+02:06:16.135 Miscellaneous statistics: All counters are zero
+02:06:16.602 Vdbench execution completed successfully. Output directory: /home/tester/vdbench_test/output
+
+$ ls -la /mnt/bench1/vdb.1_1.dir/vdb.2_1.dir/vdb.3_1.dir/vdb.4_1.dir/vdb.5_1.dir/
+total 16
+drwxr-xr-x 2 root root 4096 Mar 16 02:06 .
+drwxr-xr-x 7 root root 4096 Mar 16 02:06 ..
+-rw-r--r-- 1 root root 4096 Mar 16 02:06 vdb_f0000.file
+-rw-r--r-- 1 root root 4096 Mar 16 02:06 vdb_f0001.file
+</code></pre>
+<h2 id="Getattr"><a href="#Getattr" class="headerlink" title="Getattr"></a>Getattr</h2><p>Prepare the job file to getattr:</p>
+<pre><code>$ cat jobfile/vdb_getattr.job
+hd=default,vdbench=/home/tester/vdbench_test,shell=ssh,user=root
+hd=host1,jvms=1,system=192.168.1.2
+
+fsd=fsd1,anchor=/mnt/bench1,depth=5,width=5,files=2,size=4k
+fwd=fwd1,fsd=fsd1,host=host1,operation=getattr
+rd=rd1,fwd=fwd1,format=no,fwdrate=max
+</code></pre>
+<p>Run vdbench job to getattr:</p>
+<pre><code>$ ./vdbench -f jobfile/vdb_getattr.job
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+Vdbench distribution: vdbench50407 Tue June 05  9:49:29 MDT 2018
+For documentation, see &#39;vdbench.pdf&#39;.
+
+02:06:18.059 input argument scanned: &#39;-fjobfile/vdb_getattr.job&#39;
+02:06:18.145 Anchor size: anchor=/mnt/bench1: dirs:        3,905; files:        6,250; bytes:    24.414m (25,600,000)
+02:06:18.408 Starting slave: ssh 192.168.1.2 -l root /home/tester/vdbench_test/vdbench SlaveJvm -m 192.168.1.3 -n 192.168.1.2-10-220316-02.06.18.020 -l host1-0 -p 5570
+02:06:18.778 All slaves are now connected
+02:06:20.002 Starting RD=rd1; elapsed=30; fwdrate=max. For loops: None
+
+Mar 16, 2022 ..Interval.. .ReqstdOps... ...cpu%...  read ....read..... ....write.... ..mb/sec... mb/sec .xfer.. ....open.... ...close.... ..getattr...
+                            rate   resp total  sys   pct   rate   resp   rate   resp  read write  total    size  rate   resp  rate   resp  rate   resp
+02:06:21.062            1  39541  0.015   8.1 0.84   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 39541  0.015
+02:06:22.032            2  77608  0.010   5.3 1.47   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 77608  0.010
+02:06:23.016            3  83661  0.009   4.5 1.26   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 83661  0.009
+02:06:24.014            4  83054  0.009   4.4 1.35   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 83054  0.009
+02:06:25.014            5  83753  0.009   4.3 1.26   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 83753  0.009
+02:06:26.012            6  83907  0.009   4.3 1.23   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 83907  0.009
+02:06:27.012            7  83520  0.009   4.3 1.26   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 83520  0.009
+02:06:28.011            8  82677  0.009   4.4 1.19   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82677  0.009
+02:06:29.016            9  83093  0.009   4.6 1.19   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 83093  0.009
+02:06:30.012           10  84090  0.009   4.5 1.23   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 84090  0.009
+02:06:31.011           11  83013  0.009   4.2 1.16   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 83013  0.009
+02:06:32.013           12  83158  0.010   4.3 1.38   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 83158  0.010
+02:06:33.010           13  74121  0.011   4.3 1.19   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 74121  0.011
+02:06:34.009           14  77405  0.010   4.4 1.35   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 77405  0.010
+02:06:35.011           15  82874  0.010   4.6 1.28   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82874  0.010
+02:06:36.011           16  82855  0.010   4.6 1.34   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82855  0.010
+02:06:37.010           17  82508  0.010   4.6 1.38   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82508  0.010
+02:06:38.007           18  82766  0.010   4.6 1.38   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82766  0.010
+02:06:39.009           19  82048  0.010   4.3 1.22   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82048  0.010
+02:06:40.010           20  81357  0.010   4.4 1.25   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 81357  0.010
+02:06:41.008           21  82723  0.010   4.4 1.28   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82723  0.010
+02:06:42.007           22  82702  0.010   4.5 1.50   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82702  0.010
+02:06:43.008           23  82793  0.010   4.3 1.41   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82793  0.010
+02:06:44.009           24  82465  0.010   4.4 1.28   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82465  0.010
+02:06:45.009           25  82695  0.010   4.4 1.32   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82695  0.010
+02:06:46.008           26  82119  0.010   4.6 1.47   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82119  0.010
+02:06:47.008           27  82297  0.010   4.8 1.72   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82297  0.010
+02:06:48.007           28  82508  0.010   4.4 1.35   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82508  0.010
+02:06:49.008           29  82545  0.010   4.4 1.41   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82545  0.010
+02:06:50.007           30  82641  0.010   4.7 1.44   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82641  0.010
+02:06:50.015     avg_2-30  82170  0.010   4.5 1.33   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000 82170  0.010
+02:06:50.015     std_2-30 2147.1  0.018                                                                                                    2147  0.018
+02:06:50.016     max_2-30  84090  5.854                                                                                                   84090  5.854
+02:06:50.234
+02:06:50.234 Miscellaneous statistics:
+02:06:50.234 (These statistics do not include activity between the last reported interval and shutdown.)
+02:06:50.234 GET_ATTR            Getattr requests:                         2,422,766     80,758/sec
+02:06:50.234
+02:06:51.201 Vdbench execution completed successfully. Output directory: /home/tester/vdbench_test/output
+
+$ ls -la /mnt/bench1/vdb.1_1.dir/vdb.2_1.dir/vdb.3_1.dir/vdb.4_1.dir/vdb.5_1.dir/
+total 16
+drwxr-xr-x 2 root root 4096 Mar 16 02:06 .
+drwxr-xr-x 7 root root 4096 Mar 16 02:06 ..
+-rw-r--r-- 1 root root 4096 Mar 16 02:06 vdb_f0000.file
+-rw-r--r-- 1 root root 4096 Mar 16 02:06 vdb_f0001.file
+</code></pre>
+<h2 id="Delete-files"><a href="#Delete-files" class="headerlink" title="Delete files"></a>Delete files</h2><p>Prepare the job file to delete files:</p>
+<pre><code>$ cat jobfile/vdb_delete.job
+hd=default,vdbench=/home/tester/vdbench_test,shell=ssh,user=root
+hd=host1,jvms=1,system=192.168.1.2
+
+fsd=fsd1,anchor=/mnt/bench1,depth=5,width=5,files=2,size=4k
+fwd=fwd1,fsd=fsd1,host=host1,operation=delete
+rd=rd1,fwd=fwd1,format=no,fwdrate=max
+</code></pre>
+<p>Run vdbench job to delete files:</p>
+<pre><code>$ ./vdbench -f jobfile/vdb_delete.job
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+Vdbench distribution: vdbench50407 Tue June 05  9:49:29 MDT 2018
+For documentation, see &#39;vdbench.pdf&#39;.
+
+02:06:52.656 input argument scanned: &#39;-fjobfile/vdb_delete.job&#39;
+02:06:52.757 Anchor size: anchor=/mnt/bench1: dirs:        3,905; files:        6,250; bytes:    24.414m (25,600,000)
+02:06:53.060 Starting slave: ssh 192.168.1.2 -l root /home/tester/vdbench_test/vdbench SlaveJvm -m 192.168.1.3 -n 192.168.1.2-10-220316-02.06.52.608 -l host1-0 -p 5570
+02:06:53.542 All slaves are now connected
+02:06:55.002 Starting RD=rd1; elapsed=30; fwdrate=max. For loops: None
+02:06:55.403
+02:06:55.403 Message from slave host1-0:
+02:06:55.403 Anchor: /mnt/bench1
+02:06:55.403 Vdbench is trying to delete a file, but no files are available, and no
+02:06:55.404 threads are currently active creating new files.
+02:06:55.404 FwgThread.canWeGetMoreFiles(): Shutting down threads for operation=delete
+02:06:55.404
+
+Mar 16, 2022 ..Interval.. .ReqstdOps... ...cpu%...  read ....read..... ....write.... ..mb/sec... mb/sec .xfer.. ....open.... ...close.... ...delete...
+                            rate   resp total  sys   pct   rate   resp   rate   resp  read write  total    size  rate   resp  rate   resp  rate   resp
+02:06:56.061            1 6250.0  0.044   7.3 0.61   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0   0.0  0.000   0.0  0.000  6250  0.044
+02:06:56.096      avg_2-1    NaN  0.000   NaN  NaN   0.0    NaN  0.000    NaN  0.000   NaN   NaN    NaN       0   NaN  0.000   NaN  0.000   NaN  0.000
+02:06:56.096      std_2-1
+02:06:56.097      max_2-1
+02:06:56.210
+02:06:56.210 Miscellaneous statistics:
+02:06:56.210 (These statistics do not include activity between the last reported interval and shutdown.)
+02:06:56.210 FILE_DELETES        Files deleted:                                6,250      6,250/sec
+02:06:56.211 FILE_MUST_EXIST     File does not exist (yet):                        1          1/sec
+02:06:56.211
+02:06:56.949 Vdbench execution completed successfully. Output directory: /home/tester/vdbench_test/output
+
+$ ls -la /mnt/bench1/vdb.1_1.dir/vdb.2_1.dir/vdb.3_1.dir/vdb.4_1.dir/vdb.5_1.dir/
+total 8
+drwxr-xr-x 2 root root 4096 Mar 16 02:06 .
+drwxr-xr-x 7 root root 4096 Mar 16 02:06 ..
+</code></pre>
+<h2 id="Remove-directories"><a href="#Remove-directories" class="headerlink" title="Remove directories"></a>Remove directories</h2><p>Prepare the job file to remove directories:</p>
+<pre><code>$ cat jobfile/vdb_rmdir.job
+hd=default,vdbench=/home/tester/vdbench_test,shell=ssh,user=root
+hd=host1,jvms=1,system=192.168.1.2
+
+fsd=fsd1,anchor=/mnt/bench1,depth=5,width=5,files=2,size=4k
+fwd=fwd1,fsd=fsd1,host=host1,operation=rmdir
+rd=rd1,fwd=fwd1,format=no,fwdrate=max
+</code></pre>
+<p>Run vdbench job to remove directories:</p>
+<pre><code>$ ./vdbench -f jobfile/vdb_rmdir.job
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+Vdbench distribution: vdbench50407 Tue June 05  9:49:29 MDT 2018
+For documentation, see &#39;vdbench.pdf&#39;.
+
+02:06:58.406 input argument scanned: &#39;-fjobfile/vdb_rmdir.job&#39;
+02:06:58.484 Anchor size: anchor=/mnt/bench1: dirs:        3,905; files:        6,250; bytes:    24.414m (25,600,000)
+02:06:58.736 Starting slave: ssh 192.168.1.2 -l root /home/tester/vdbench_test/vdbench SlaveJvm -m 192.168.1.3 -n 192.168.1.2-10-220316-02.06.58.369 -l host1-0 -p 5570
+02:06:59.158 All slaves are now connected
+02:07:00.002 Starting RD=rd1; elapsed=30; fwdrate=max. For loops: None
+
+Mar 16, 2022 ..Interval.. .ReqstdOps... ...cpu%...  read ....read..... ....write.... ..mb/sec... mb/sec .xfer.. ...rmdir.... ....open.... ...close....
+                            rate   resp total  sys   pct   rate   resp   rate   resp  read write  total    size  rate   resp  rate   resp  rate   resp
+02:07:01.051            1 3905.0  0.039   5.4 0.65   0.0    0.0  0.000    0.0  0.000  0.00  0.00   0.00       0  3905  0.039   0.0  0.000   0.0  0.000
+02:07:01.089      avg_2-1    NaN  0.000   NaN  NaN   0.0    NaN  0.000    NaN  0.000   NaN   NaN    NaN       0   NaN  0.000   NaN  0.000   NaN  0.000
+02:07:01.089      std_2-1
+02:07:01.090      max_2-1
+02:07:01.204
+02:07:01.205 Miscellaneous statistics:
+02:07:01.205 (These statistics do not include activity between the last reported interval and shutdown.)
+02:07:01.205 DIRECTORY_DELETES   Directories deleted:                          3,905      3,905/sec
+02:07:01.205
+02:07:01.550 Vdbench execution completed successfully. Output directory: /home/tester/vdbench_test/output
+
+$ ls -la /mnt/bench1/vdb.1_1.dir/vdb.2_1.dir/vdb.3_1.dir/vdb.4_1.dir/vdb.5_1.dir/
+ls: cannot access /mnt/bench1/vdb.1_1.dir/vdb.2_1.dir/vdb.3_1.dir/vdb.4_1.dir/vdb.5_1.dir/: No such file or directory
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.oracle.com/technetwork/server-storage/vdbench-1901683.pdf">https://www.oracle.com/technetwork/server-storage/vdbench-1901683.pdf</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/proc-filesystem-diskstats/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/proc-filesystem-diskstats/" class="post-title-link" itemprop="url">Proc filesystem - diskstats</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-05 08:00:00" itemprop="dateCreated datePublished" datetime="2022-03-05T08:00:00-08:00">2022-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>The &#x2F;proc&#x2F;diskstats file displays the I&#x2F;O statistics of block devices.</p>
+<p>Here we have a system which has one disk <em>sda</em> used by Linux operating system and two disks <em>sdb sdc</em> for other purpose.</p>
+<pre><code>$ cat /etc/centos-release
+CentOS Linux release 7.9.2009 (Core)
+
+$ uname -r
+3.10.0-1160.11.1.el7.x86_64
+
+$ lsblk
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda      8:0    0   128G  0 disk
+├─sda1   8:1    0   3.7G  0 part /boot
+└─sda2   8:2    0 124.3G  0 part /
+sdb      8:16   0    60G  0 disk
+sdc      8:32   0    60G  0 disk
+</code></pre>
+<p>The following is the content of &#x2F;proc&#x2F;diskstats file.</p>
+<pre><code>$ cat /proc/diskstats
+   8       0 sda 20076 3 798556 75864 23573766 4732398 253002144 24887356 0 9814563 24947775
+   8       1 sda1 143 0 22434 681 44 21 21664 588 0 397 1269
+   8       2 sda2 19905 3 774042 75034 23573722 4732377 252980480 24886768 0 9814404 24946360
+   8      32 sdc 88 0 4160 4 0 0 0 0 0 4 4
+   8      16 sdb 88 0 4160 2 0 0 0 0 0 2 2
+</code></pre>
+<p>Taking the <em>sda</em> line for example, the following explains the meaning of each column.</p>
+<ul>
+<li>8          - major number</li>
+<li>0          - minor number</li>
+<li>sda        - device name</li>
+<li>20076      - reads completed successfully</li>
+<li>3          - reads merged</li>
+<li>798556     - sectors read</li>
+<li>75864      - time spent reading (ms)</li>
+<li>23573766   - writes completed</li>
+<li>4732398    - writes merged</li>
+<li>253002144  - sectors written</li>
+<li>24887356   - time spent writing (ms)</li>
+<li>0          - I&#x2F;Os currently in progress</li>
+<li>9814563    - time spent doing I&#x2F;Os (ms)</li>
+<li>24947775   - weighted time spent doing I&#x2F;Os (ms)</li>
+</ul>
+<p>You may see more columns from the &#x2F;proc&#x2F;diskstats file if the kernel version is 4.18+ or 5.5+. For the detailed explanation, please refer to the <a target="_blank" rel="noopener" href="https://www.kernel.org/doc/Documentation/ABI/testing/procfs-diskstats">documentation</a>.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/dstat-a-replacement-for-vmstat-iostat-and-ifstat/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/dstat-a-replacement-for-vmstat-iostat-and-ifstat/" class="post-title-link" itemprop="url">dstat - A replacement for vmstat, iostat and ifstat</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-04 08:00:00" itemprop="dateCreated datePublished" datetime="2022-03-04T08:00:00-08:00">2022-03-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>dstat is a versatile tool for generating system resource statistics. It can be a replacement for vmstat, iostat and ifstat. It overcomes some of the limitations and adds some extra features.</p>
+<p>Dstat allows you to view all of your system resources instantly, you can eg. compare disk usage in combination with interrupts from your IDE controller, or compare the network bandwidth numbers directly with the disk throughput (in the same interval).</p>
+<h2 id="Usage-examples"><a href="#Usage-examples" class="headerlink" title="Usage examples"></a>Usage examples</h2><p>Display statistics of major OS components:</p>
+<p><img src="/images/dstat-1.png" alt="Image"></p>
+<p>Relate disk-throughput with network-usage (eth0), total CPU-usage and system counters:</p>
+<p><img src="/images/dstat-1.png" alt="Image"></p>
+<p>Check dstat’s behaviour and the system impact of dstat:</p>
+<p><img src="/images/dstat-2.png" alt="Image"></p>
+<p>Use the time plugin together with cpu, net, disk, system, load, proc and top_cpu plugins:</p>
+<p><img src="/images/dstat-3.png" alt="Image"></p>
+<p>Display stats of process using most of the CPU or memory:</p>
+<p><img src="/images/dstat-top-cpu-mem.png" alt="Image"></p>
+<p>Display stats of process using most of the CPU and memory:</p>
+<p><img src="/images/dstat-top-cpu-and-mem.png" alt="Image"></p>
+<p>Relate cpu stats with interrupts per device:</p>
+<p><img src="/images/dstat-4.png" alt="Image"></p>
+<p>Display information that was to be displayed by vmstat tool:</p>
+<p><img src="/images/dstat-vmstat.png" alt="Image"></p>
+<p>Display the list of all plugins:</p>
+<pre><code>root ~$ dstat --list
+internal:
+    aio, cpu, cpu24, disk, disk24, disk24old, epoch, fs, int, int24, io, ipc, load, lock, mem, net, page, page24, proc, raw, socket, swap, swapold, sys, tcp, time, udp, unix, vm
+/usr/share/dstat:
+    battery, battery-remain, cpufreq, dbus, disk-tps, disk-util, dstat, dstat-cpu, dstat-ctxt, dstat-mem, fan, freespace, gpfs, gpfs-ops, helloworld, innodb-buffer, innodb-io, innodb-ops, lustre, memcache-hits, mysql-io, mysql-keys, mysql5-cmds, mysql5-conn,
+    mysql5-io, mysql5-keys, net-packets, nfs3, nfs3-ops, nfsd3, nfsd3-ops, ntp, postfix, power, proc-count, qmail, rpc, rpcd, sendmail, snooze, squid, test, thermal, top-bio, top-bio-adv, top-childwait, top-cpu, top-cpu-adv, top-cputime, top-cputime-avg, top-int,
+    top-io, top-io-adv, top-latency, top-latency-avg, top-mem, top-oom, utmp, vm-memctl, vmk-hba, vmk-int, vmk-nic, vz-cpu, vz-io, vz-ubc, wifi
+</code></pre>
+<p>Force float values to be printed:</p>
+<pre><code>root ~$ dstat --float 2
+You did not select any stats, using -cdngy by default.
+----total-cpu-usage---- -dsk/total- -net/total- ---paging-- ---system--
+usr sys idl wai hiq siq| read  writ| recv  send|  in   out | int   csw
+4.5 1.8  94 0.1   0 0.1| 251B 76.1k|   0     0 |   0     0 |4619  8021
+2.3 1.1  96 0.1   0 0.1|   0  54.0k|15.9k 7215B|   0     0 |3497  6381
+5.3 2.4  92 0.1   0 0.1|   0   112k|18.1k 17.4k|   0     0 |5323  9184
+9.4 2.3  88 0.1   0 0.3|   0   116k|24.5k  193k|   0     0 |5370  9091
+2.3 1.3  96 0.1   0   0|   0  82.0k|18.0k 10.6k|   0     0 |3448  6127 ^C
+</code></pre>
+<p>Display the time, cpu, mem, network, disk, system load, process stats with 2 seconds delay between 5 updates, and save output to a csv file:</p>
+<p><img src="/images/dstat-output-csv.png" alt="Image"></p>
+<p>Learn more about how the dstat is implemented:</p>
+<p>Check out the source code <a target="_blank" rel="noopener" href="https://github.com/dstat-real/dstat">here</a>. Credit to <em>Dag Wieers</em>.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://linux.die.net/man/1/dstat">https://linux.die.net/man/1/dstat</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/dstat-command-in-linux-with-examples/">https://www.geeksforgeeks.org/dstat-command-in-linux-with-examples/</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/dstat-real/dstat">https://github.com/dstat-real/dstat</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/scottchiefbaker/dool">https://github.com/scottchiefbaker/dool</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/art-sketch-2022/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/art-sketch-2022/" class="post-title-link" itemprop="url">Art - Sketch 2022</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-04 06:13:00" itemprop="dateCreated datePublished" datetime="2022-03-04T06:13:00-08:00">2022-03-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="/images/drawing/IMG_0297.jpeg"></p>
+<p><img src="/images/drawing/IMG_0298.jpeg"></p>
+<p><img src="/images/drawing/IMG_0299.jpeg"></p>
+<p><img src="/images/drawing/IMG_0301.jpeg"></p>
+<p><img src="/images/drawing/IMG_0302.jpeg"></p>
+<p><img src="/images/drawing/IMG_0303.jpeg"></p>
+<p><img src="/images/drawing/IMG_0304.jpeg"></p>
+<p><img src="/images/drawing/IMG_0305.jpeg"></p>
+<p><img src="/images/drawing/IMG_0295.jpeg"></p>
+<p><img src="/images/drawing/IMG_0306.jpeg"></p>
+<p><img src="/images/drawing/IMG_0307.jpeg"></p>
+<p><img src="/images/drawing/IMG_0308.jpeg"></p>
+<p><img src="/images/drawing/IMG_0309.jpeg"></p>
+<p><img src="/images/drawing/IMG_0312.jpeg"></p>
+<p><img src="/images/drawing/IMG_0313.jpeg"></p>
+<p><img src="/images/drawing/IMG_0314.jpeg"></p>
+<p><img src="/images/drawing/IMG_0315.jpeg"></p>
+<p><img src="/images/drawing/IMG_0316.jpeg"></p>
+<p><img src="/images/drawing/IMG_0317.jpeg"></p>
+<p><img src="/images/drawing/IMG_0318.jpeg"></p>
+<p><img src="/images/drawing/IMG_0320.jpeg"></p>
+<p><img src="/images/drawing/IMG_0321.jpeg"></p>
+<p><img src="/images/drawing/IMG_0322.jpeg"></p>
+<p><img src="/images/drawing/IMG_0323.jpeg"></p>
+<p><img src="/images/drawing/IMG_0324.jpeg"></p>
+<p><img src="/images/drawing/IMG_0325.jpeg"></p>
+<p><img src="/images/drawing/IMG_0326.jpeg"></p>
+<p><img src="/images/drawing/IMG_20220213_124048__01.jpg"></p>
+<p><img src="/images/drawing/IMG_20220213_124129__01.jpg"></p>
+<p><img src="/images/drawing/IMG_20220313_201632__01.jpg"></p>
+<p><img src="/images/drawing/IMG_20220313_201650__01.jpg"></p>
+<p><img src="/images/drawing/IMG_0296.jpeg"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -892,597 +1624,6 @@ python                               3-alpine            c7100ae3ac4d        2 w
 <p><a target="_blank" rel="noopener" href="https://www.netapp.com/data-storage/storagegrid/what-is-object-storage/">Source</a></p>
 <h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><p>Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache, and message broker. Redis provides data structures such as strings, hashes, lists, sets, sorted sets with range queries, bitmaps, hyperloglogs, geospatial indexes, and streams. Redis has built-in replication, Lua scripting, LRU eviction, transactions, and different levels of on-disk persistence, and provides high availability via Redis Sentinel and automatic partitioning with Redis Cluster.</p>
 <p><a target="_blank" rel="noopener" href="https://redis.io/">Source</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/network-concepts-you-should-know/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/network-concepts-you-should-know/" class="post-title-link" itemprop="url">Network concepts you should know</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-02-13 08:00:00" itemprop="dateCreated datePublished" datetime="2022-02-13T08:00:00-08:00">2022-02-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="IP-address"><a href="#IP-address" class="headerlink" title="IP address"></a>IP address</h2><p>Networking is about one computer sending a message to another computer. This message is called packet in the IP world. It is just like a postcard in the postal service. The postal service can take a postcard addressed to someone and deliver it. Similarly, it needs to provide a network address when a computer to ask the network to deliver a packet to another computer. The network address is called IP address.</p>
-<p>An Internet Protocol address is a numerical label such as 192.0.2.1 that is connected to a computer network that uses the Internet Protocol for communication. An IP address serves two main functions: network interface identification and location addressing. Internet Protocol version 4 (IPv4) defines an IP address as a 32-bit number. However, because of the growth of the Internet and the depletion of available IPv4 addresses, a new version of IP (IPv6) uses 128 bits for the IP address. <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/IP_address">Source</a></p>
-<h2 id="Network-Routing"><a href="#Network-Routing" class="headerlink" title="Network Routing"></a>Network Routing</h2><p>In order for a souce computer to deliver the addressed packet to the destination computer, it needs to understand the IP address similar to how the postal service understands a mailing address. For example, if the destination address is in the same postal code as sender’s, the mail probably never leaves the same neighbourhood. But if the destination mailing address is in a different postal code, the postal service has to leverage some mechanism to get to the destination. Network routing is very similar. If a packet is sent from 192.168.0.2 to 192.168.0.5, it is likely the two computers are close to each other and the routing is simple, probably just a single hop to get to the target computer. However, if a packet is sent from 192.168.1.2 to 7.7.0.5, it probably requires many hops across complicated network.</p>
-<h2 id="Network-Port"><a href="#Network-Port" class="headerlink" title="Network Port"></a>Network Port</h2><p>On a postcard, the name of recipient is usually written. It is because there might be more than one person living at a particular mailing address. In the computer world, there may be many processes on a computer to use the network. The packet can only be sent to the target computer if all we have is a network address. There is no way to decide which process should receive the packet. This is solved by the use of a network port. It’s usually represented with the form of <em>ip:port</em>, for example, 7.7.0.5:80.</p>
-<h2 id="Transmission-Control-Protocol-TCP"><a href="#Transmission-Control-Protocol-TCP" class="headerlink" title="Transmission Control Protocol(TCP)"></a>Transmission Control Protocol(TCP)</h2><p>TCP is a layer on top of the Internet Protocol(IP) but they are often used together as “TCP&#x2F;IP”.</p>
-<p>Similar to the postal service, networking protocols also set an upper limit to how many bytes can be sent in a single IP packet. TCP can establish a connection to a particular port on the target computer and the desired data can be sent with multiple packets while each packet has a upper limit. TCP will ensure all the data arrives at the destination in the proper order by chopping it up into individually numbered IP packets. In the case of packet loss in transit, it can be resent. TCP also has mechanisms to notice if packets are not getting through for an extended period of time and notifying you of a “broken” connection.</p>
-<p>TCP provides reliable, ordered, and error-checked delivery of a stream of octets (bytes) between applications running on hosts communicating via an IP network. Major internet applications such as the World Wide Web, email, remote administration, and file transfer rely on TCP, which is part of the Transport Layer of the TCP&#x2F;IP suite. SSL&#x2F;TLS often runs on top of TCP. TCP is connection-oriented, and a connection between client and server is established before data can be sent. The server must be listening (passive open) for connection requests from clients before a connection is established. Three-way handshake (active open), retransmission, and error detection adds to reliability but lengthens latency. Applications that do not require reliable data stream service may use the User Datagram Protocol (UDP), which provides a connectionless datagram service that prioritizes time over reliability. TCP employs network congestion avoidance. However, there are vulnerabilities to TCP, including denial of service, connection hijacking, TCP veto, and reset attack. <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol">Source</a></p>
-<h2 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h2><p>In computer networking, the User Datagram Protocol (UDP) is one of the core members of the Internet protocol suite. With UDP, computer applications can send messages, in this case referred to as datagrams, to other hosts on an Internet Protocol (IP) network. Prior communications are not required in order to set up communication channels or data paths. UDP uses a simple connectionless communication model with a minimum of protocol mechanisms. UDP provides checksums for data integrity, and port numbers for addressing different functions at the source and destination of the datagram. It has no handshaking dialogues, and thus exposes the user’s program to any unreliability of the underlying network; there is no guarantee of delivery, ordering, or duplicate protection. If error-correction facilities are needed at the network interface level, an application may instead use Transmission Control Protocol (TCP) or Stream Control Transmission Protocol (SCTP) which are designed for this purpose. UDP is suitable for purposes where error checking and correction are either not necessary or are performed in the application; UDP avoids the overhead of such processing in the protocol stack. Time-sensitive applications often use UDP because dropping packets is preferable to waiting for packets delayed due to retransmission, which may not be an option in a real-time system. The protocol was designed by David P. Reed in 1980 and formally defined in RFC 768. <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/User_Datagram_Protocol">Source</a></p>
-<h2 id="Domain-Name-System-DNS"><a href="#Domain-Name-System-DNS" class="headerlink" title="Domain Name System(DNS)"></a>Domain Name System(DNS)</h2><p>The destination computer can be addressed with IP in network. However, it’s hard to remember the IP address directly for a user. When the computer and network are upgraded over time, it’s likely to assign a different IP address to a computer. The same destination computer would be unaccessible with the old IP address. Thus, a “phone book” called Domain Name System(DNS) is used to solve these issues.</p>
-<p>The <strong>dig</strong> utility can be used to query DNS. In the follow example, the domain name <em>google.com</em> is eventually translated to the IP address <em>142.250.191.46</em>.</p>
-<pre><code>$ dig google.com
-[..]
-;; QUESTION SECTION:
-;google.com.			IN	A
-
-;; ANSWER SECTION:
-google.com.		222	IN	A	142.250.191.46
-[..]
-</code></pre>
-<h2 id="Hypertext-Transfer-Protocol-HTTP"><a href="#Hypertext-Transfer-Protocol-HTTP" class="headerlink" title="Hypertext Transfer Protocol(HTTP)"></a>Hypertext Transfer Protocol(HTTP)</h2><p>The Hypertext Transfer Protocol is an application layer protocol in the Internet protocol suite model for distributed, collaborative, hypermedia information systems. HTTP is the foundation of data communication for the World Wide Web, where hypertext documents include hyperlinks to other resources that the user can easily access, for example by a mouse click or by tapping the screen in a web browser. <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol">Source</a></p>
-<p>When we type a web address, such as <em><a target="_blank" rel="noopener" href="http://example.com/hello">http://example.com/hello</a></em>, into a web browser. Firstly, the browser consults DNS to translate the domain name into a IP address. Then, the web browser establishes a TCP connection to the translated IP address of the web server on port 80 which is the default “well known” port for the HTTP. Once a connection is established, the web browser send a GET message to the server to ask for a particular resource. The server will reply with an OK message and the requested content.</p>
-<p><strong>curl</strong> is a commonly used CLI tool that you can use to issue GET requests.</p>
-<pre><code>$ curl -v http://7.7.0.2/hello
-* About to connect() to 7.7.0.2 port 80 (#0)
-*   Trying 7.7.0.2...
-* Connected to 7.7.0.2 (7.7.0.2) port 80 (#0)
-&gt; GET /hello HTTP/1.1
-&gt; User-Agent: curl/7.29.0
-&gt; Host: 7.7.0.2
-&gt; Accept: */*
-&gt; 
-&lt; HTTP/1.1 200 OK
-&lt; Server: nginx/1.17.10
-&lt; Date: Sun, 13 Mar 2022 01:50:19 GMT
-&lt; Content-Type: text/html; charset=utf-8
-&lt; Content-Length: 15
-&lt; Connection: keep-alive
-&lt; 
-* Connection #0 to host 7.7.0.2 left intact
-Hello world
-</code></pre>
-<p>Here we use curl utility to issue a simple GET request. In this case, we don’t have DNS setup. We issue the GET request to the target server with IP address directly. It establishes a TCP connection on default port 80 of that address. Then it sends a GET message for the resource <em>&#x2F;hello</em>. Finally, a response of <em>200 OK</em> is received, along with the content <em>Hello world</em>.</p>
-<p>In the example output, there are additional lines in both the request and response which look like <em>Name: Value</em>. These are called <strong>headers</strong> which convey additional information about the request and response. For example, the request contains header Accept: <em>&#x2F;</em> which means the client can accept the response in any format. In the response, we see the header <em>Content-Type: text&#x2F;html; charset&#x3D;utf-8</em>, which is the server telling the client the body of response is just a text.</p>
-<h2 id="OSI-layer-architecture"><a href="#OSI-layer-architecture" class="headerlink" title="OSI layer architecture"></a>OSI layer architecture</h2><p><img src="/images/osi-layer-arch.png" alt="Image"></p>
-<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/OSI_model">Source</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/database-concepts-you-should-know/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/database-concepts-you-should-know/" class="post-title-link" itemprop="url">Database concepts you should know</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-02-12 08:00:00" itemprop="dateCreated datePublished" datetime="2022-02-12T08:00:00-08:00">2022-02-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="SQL-vs-NoSQL"><a href="#SQL-vs-NoSQL" class="headerlink" title="SQL vs. NoSQL"></a>SQL vs. NoSQL</h2><p><img src="/images/sql-vs-nosql.png" alt="Image"></p>
-<p><a target="_blank" rel="noopener" href="https://www.mongodb.com/nosql-explained/nosql-vs-sql">Source</a></p>
-<p><strong>Benefits of NoSQL databases</strong></p>
-<p>NoSQL databases offer many benefits over relational databases. NoSQL databases have flexible data models, scale horizontally, have incredibly fast queries, and are easy for developers to work with.</p>
-<ul>
-<li>Flexible data models</li>
-</ul>
-<p>NoSQL databases typically have very flexible schemas. A flexible schema allows you to easily make changes to your database as requirements change. You can iterate quickly and continuously integrate new application features to provide value to your users faster.</p>
-<ul>
-<li>Horizontal scaling</li>
-</ul>
-<p>Most SQL databases require you to scale-up vertically (migrate to a larger, more expensive server) when you exceed the capacity requirements of your current server. Conversely, most NoSQL databases allow you to scale-out horizontally, meaning you can add cheaper, commodity servers whenever you need to.</p>
-<ul>
-<li>Fast queries</li>
-</ul>
-<p>Queries in NoSQL databases can be faster than SQL databases. Why? Data in SQL databases is typically normalized, so queries for a single object or entity require you to join data from multiple tables. As your tables grow in size, the joins can become expensive. However, data in NoSQL databases is typically stored in a way that is optimized for queries. The rule of thumb when you use MongoDB is Data that is accessed together should be stored together. Queries typically do not require joins, so the queries are very fast.</p>
-<ul>
-<li>Easy for developers</li>
-</ul>
-<p>Some NoSQL databases like MongoDB map their data structures to those of popular programming languages. This mapping allows developers to store their data in the same way that they use it in their application code. While it may seem like a trivial advantage, this mapping can allow developers to write less code, leading to faster development time and fewer bugs.</p>
-<p><a target="_blank" rel="noopener" href="https://www.mongodb.com/nosql-explained/nosql-vs-sql">Source</a></p>
-<h2 id="Apache-Cassandra"><a href="#Apache-Cassandra" class="headerlink" title="Apache Cassandra"></a>Apache Cassandra</h2><p>Cassandra is a NoSQL distributed database. By design, NoSQL databases are lightweight, open-source, non-relational, and largely distributed. Counted among their strengths are horizontal scalability, distributed architectures, and a flexible approach to schema definition.</p>
-<p>NoSQL databases enable rapid, ad-hoc organization and analysis of extremely high-volume, disparate data types. That’s become more important in recent years, with the advent of Big Data and the need to rapidly scale databases in the cloud. Cassandra is among the NoSQL databases that have addressed the constraints of previous data management technologies, such as SQL databases.</p>
-<p><img src="/images/apache-cassandra-diagrams.jpeg" alt="Image"></p>
-<p><a target="_blank" rel="noopener" href="https://cassandra.apache.org/_/cassandra-basics.html">Source</a></p>
-<h2 id="ACID-and-CAP-theorem"><a href="#ACID-and-CAP-theorem" class="headerlink" title="ACID and CAP theorem"></a>ACID and CAP theorem</h2><p>A clear explanation can be referenced <a target="_blank" rel="noopener" href="https://medium.com/@pranabj.aec/acid-cap-and-base-cc73dee43f8c">here</a></p>
-<h2 id="Database-Index"><a href="#Database-Index" class="headerlink" title="Database Index"></a>Database Index</h2><p>A database index is a data structure that improves the speed of data retrieval operations on a database table at the cost of additional writes and storage space to maintain the index data structure. Indexes are used to quickly locate data without having to search every row in a database table every time a database table is accessed. Indexes can be created using one or more columns of a database table, providing the basis for both rapid random lookups and efficient access of ordered records.</p>
-<p>An index is a copy of selected columns of data, from a table, that is designed to enable very efficient search. An index normally includes a “key” or direct link to the original row of data from which it was copied, to allow the complete row to be retrieved efficiently. Some databases extend the power of indexing by letting developers create indexes on column values that have been transformed by functions or expressions. For example, an index could be created on upper(last_name), which would only store the upper-case versions of the last_name field in the index. Another option sometimes supported is the use of partial indices, where index entries are created only for those records that satisfy some conditional expression. A further aspect of flexibility is to permit indexing on user-defined functions, as well as expressions formed from an assortment of built-in functions.</p>
-<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Database_index#:~:text=A%20database%20index%20is%20a,maintain%20the%20index%20data%20structure.">Source</a></p>
-<p><strong>How are indexes created?</strong></p>
-<p>In a database, data is stored in rows which are organized into tables. Each row has a unique key which distinguishes it from all other rows and those keys are stored in an index for quick retrieval.</p>
-<p>Since keys are stored in indexes, each time a new row with a unique key is added, the index is automatically updated. However, sometimes we need to be able to quickly lookup data that is not stored as a key. For example, we may need to quickly lookup customers by telephone number. It would not be a good idea to use a unique constraint because we can have multiple customers with the same phone number. In these cases, we can create our own indexes.</p>
-<p><a target="_blank" rel="noopener" href="https://www.codecademy.com/article/sql-indexes">Source</a></p>
-<h2 id="Sharding"><a href="#Sharding" class="headerlink" title="Sharding"></a>Sharding</h2><p>Sharding is a method of splitting and storing a single logical dataset in multiple databases. By distributing the data among multiple machines, a cluster of database systems can store larger dataset and handle additional requests. Sharding is necessary if a dataset is too large to be stored in a single database. Moreover, many sharding strategies allow additional machines to be added. Sharding allows a database cluster to scale along with its data and traffic growth.</p>
-<p>Sharding is also referred as horizontal partitioning. The distinction of horizontal vs vertical comes from the traditional tabular view of a database. A database can be split vertically — storing different tables &amp; columns in a separate database, or horizontally — storing rows of a same table in multiple database nodes.</p>
-<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Shard_(database_architecture)">Source1</a><br><a target="_blank" rel="noopener" href="https://medium.com/@jeeyoungk/how-sharding-works-b4dec46b3f6#:~:text=Sharding%20is%20a%20method%20of,stored%20in%20a%20single%20database.">Source2</a></p>
-<h2 id="Amazon-DynamoDB"><a href="#Amazon-DynamoDB" class="headerlink" title="Amazon DynamoDB"></a>Amazon DynamoDB</h2><p>Amazon DynamoDB is a fully managed, serverless, key-value NoSQL database designed to run high-performance applications at any scale. DynamoDB offers built-in security, continuous backups, automated multi-region replication, in-memory caching, and data export tools.</p>
-<p><a target="_blank" rel="noopener" href="https://aws.amazon.com/dynamodb/">Source</a></p>
-<h2 id="SSTable"><a href="#SSTable" class="headerlink" title="SSTable"></a>SSTable</h2><p>Sorted Strings Table (SSTable) is a persistent file format used by Scylla, Apache Cassandra, and other NoSQL databases to take the in-memory data stored in memtables, order it for fast access, and store it on disk in a persistent, ordered, immutable set of files. Immutable means SSTables are never modified. They are later merged into new SSTables or deleted as data is updated.</p>
-<p><img src="/images/sstable-diagram.png" alt="Image"></p>
-<p><a target="_blank" rel="noopener" href="http://distributeddatastore.blogspot.com/2013/08/cassandra-sstable-storage-format.html">Source1</a><br><a target="_blank" rel="noopener" href="https://www.scylladb.com/glossary/sstable/#:~:text=Sorted%20Strings%20Table%20(SSTable)%20is,means%20SSTables%20are%20never%20modified.">Source2</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/distributed-system-concepts-you-should-know/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/distributed-system-concepts-you-should-know/" class="post-title-link" itemprop="url">Distributed system concepts you should know</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-02-11 08:00:00" itemprop="dateCreated datePublished" datetime="2022-02-11T08:00:00-08:00">2022-02-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>This post contains basic explanations for concepts you should know related to distributed system.</p>
-<h2 id="API-and-REST-API"><a href="#API-and-REST-API" class="headerlink" title="API and REST API"></a>API and REST API</h2><p>Application Programming Interface, abbreviated as API, enables connection between computers or computer programs. It is a Software Interface that offers services to other software to enhance the required functionalities.</p>
-<p>REST API is an API that follows a set of rules for an application and services to communicate with each other. As it is constrained to REST architecture, REST API is referred to as RESTful API. REST APIs provide a way of accessing web services in a flexible way without massive processing capabilities.</p>
-<p><img src="/images/rest-api-model.png" alt="Image"></p>
-<p><a target="_blank" rel="noopener" href="https://www.rlogical.com/wp-content/uploads/2021/08/rest-api-model.png">Source</a></p>
-<p>Below are the underlying rules of REST API:</p>
-<ul>
-<li>Statelessness - Systems aligning with the REST paradigm are bound to become stateless. For Client-Server communication, stateless constraint enforces servers to remain unaware of the client state and vice-versa. A constraint is applied by using resources instead of commands, and they are nouns of the web that describe any object, document, or thing to store&#x2F;send to other resources.</li>
-<li>Cacheable - Cache helps servers to mitigate some constraints of statelessness. It is a critical factor that has improved the performance of modern web applications. Caching not only enhances the performance on the client-side but also scales significant results on the server-side. A well-established cache mechanism would drastically reduce the average response time of your server.</li>
-<li>Decoupled - REST is a distributed approach, where client and server applications are decoupled from each other. Irrespective of where the requests are initiated, the only information the client application knows is the Uniform Resource Identifier (URI) of the requested resource. A server application should pass requested data via HTTP but should not try modifying the client application.</li>
-<li>Layered - A Layered system makes a REST architecture scalable. With RESTful architecture, Client and Server applications are decoupled, so the calls and responses of REST APIs go through different layers. As REST API is layered, it should be designed such that neither Client nor Server identifies its communication with end applications or an intermediary.</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://hevodata.com/learn/api-vs-rest-api/">Source</a></p>
-<h2 id="Concurrency"><a href="#Concurrency" class="headerlink" title="Concurrency"></a>Concurrency</h2><p>Concurrency allows different parts of a program to run at the same time without affecting the outcome. For example, two people tried to withdraw $1000 from the same bank account in which only has $1500. Concurrency ensures the two people can’t overdraw the account.</p>
-<p>There are three common tactics to ensure concurrency.</p>
-<ul>
-<li>Locking - A mechanism where a process has the right to update or write data. When a process acquires a lock, other processes can’t update or write.</li>
-<li>Atomicity - An atomic action is an action whose intermediate state can’t be seen by other processes or threads.</li>
-<li>Transaction - A sequence of atomic operations.</li>
-</ul>
-<h2 id="Message-Queues"><a href="#Message-Queues" class="headerlink" title="Message Queues"></a>Message Queues</h2><p>Queues are a component of service-based architectures. It accept client messages for delivery to a service, then hold the message until the service requests delivery.Once a queue has accepted a message, it provides a strong guarantee that the message will eventually be read and processed.Messages remain in the queue and available for delivery until the server confirms that it has finished with the message and deletes it.</p>
-<h2 id="Microservice-Architecture"><a href="#Microservice-Architecture" class="headerlink" title="Microservice Architecture"></a>Microservice Architecture</h2><p>A microservice architecture – a variant of the service-oriented architecture (SOA) structural style – arranges an application as a collection of loosely-coupled services. In a microservices architecture, services are fine-grained and the protocols are lightweight. The goal is that teams can bring their services to life independent of others. Loose coupling reduces all types of dependencies and the complexities around it, as service developers do not need to care about the users of the service, they do not force their changes onto users of the service. Therefore it allows organizations developing software to grow fast, and big, as well as use off the shelf services easier. Communication requirements are less. But it comes at a cost to maintain the decoupling. Interfaces need to be designed carefully and treated as a public API. Techniques like having multiple interfaces on the same service, or multiple versions of the same service, to not break existing users code.</p>
-<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Microservices">Source</a></p>
-<h2 id="Proxy-vs-Reverse-Proxy"><a href="#Proxy-vs-Reverse-Proxy" class="headerlink" title="Proxy vs. Reverse Proxy"></a>Proxy vs. Reverse Proxy</h2><p>A proxy server, sometimes referred to as a forward proxy, is a server that routes traffic between client(s) and another system, usually external to the network. By doing so, it can regulate traffic according to preset policies, convert and mask client IP addresses, enforce security protocols, and block unknown traffic.</p>
-<p>A reverse proxy is a type of proxy server.  Unlike a traditional proxy server, which is used to protect clients, a reverse proxy is used to protect servers. A reverse proxy is a server that accepts a request from a client, forwards the request to another one of many other servers, and returns the results from the server that actually processed the request to the client as if the proxy server had processed the request itself. The client only communicates directly with the reverse proxy server and it does not know that some other server actually processed its request.</p>
-<p><a target="_blank" rel="noopener" href="https://www.strongdm.com/blog/difference-between-proxy-and-reverse-proxy#:~:text=A%20traditional%20forward%20proxy%20server,traffic%20to%20an%20external%20network.&amp;text=A%20reverse%20proxy%2C%20on%20the,%2C%20users%2C%20and%20application%20servers.">Source</a></p>
-<h2 id="Horzontal-vs-Vertical-Scaling"><a href="#Horzontal-vs-Vertical-Scaling" class="headerlink" title="Horzontal vs. Vertical Scaling"></a>Horzontal vs. Vertical Scaling</h2><p>Horizontal scaling (aka scaling out) refers to adding additional nodes or machines to your infrastructure to cope with new demands. If you are hosting an application on a server and find that it no longer has the capacity or capabilities to handle traffic, adding a server may be your solution.</p>
-<p>While horizontal scaling refers to adding additional nodes, vertical scaling describes adding more power to your current machines. For instance, if your server requires more processing power, vertical scaling would mean upgrading the CPUs. You can also vertically scale the memory, storage, or network speed.</p>
-<p><a target="_blank" rel="noopener" href="https://www.cloudzero.com/blog/horizontal-vs-vertical-scaling#:~:text=While%20horizontal%20scaling%20refers%20to,%2C%20storage%2C%20or%20network%20speed.">Source</a></p>
-<h2 id="Distributed-Cache"><a href="#Distributed-Cache" class="headerlink" title="Distributed Cache"></a>Distributed Cache</h2><p><strong>Caching</strong> means saving frequently accessed data in-memory, that is in RAM instead of the hard drive. Accessing data from RAM is always faster than accessing it from the hard drive.</p>
-<p><img src="/images/caching-in-a-web-app.jpeg" alt="Image"></p>
-<p>Caching serves the below-stated purposes in web applications.</p>
-<ol>
-<li>It reduces application latency by notches. Simply, due to the fact that it has all the frequently accessed data stored in RAM, it doesn’t has to talk to the hard drive when the user requests for the data. This makes the application response times faster.</li>
-<li>It intercepts all the user data requests before they go to the database. This averts the database bottleneck issue. The database is hit with comparatively lesser number of requests eventually making the application as a whole performant.</li>
-<li>Caching often comes in really handy in bringing the application running costs down.</li>
-</ol>
-<p>Caching can be leveraged at every layer of the web application architecture be it a database, CDN, DNS etc.</p>
-<p>A <strong>distributed cache</strong> is a cache which has its data spread across several nodes in a cluster also across several clusters across several data centres located around the globe.</p>
-<p><img src="/images/distributed-cache.jpeg" alt="Image"></p>
-<p>Being deployed on multiple nodes helps with the horizontal scalability, instances can be added on the fly as per the demand.</p>
-<p>Distributed caching is being primarily used in the industry today, for having the potential to scale on demand &amp; being highly available.</p>
-<p>Scalability, High Availability, Fault-tolerance are crucial to the large scale services running online today. Businesses cannot afford to have their services go offline. Think about health services, stock markets, military. They have no scope for going down. They are distributed across multiple nodes with a pretty solid amount of redundancy.</p>
-<p>Distributed cache, &amp; not just cache, distributed systems are the preferred choice for cloud computing. Solely due to the ability to scale &amp; being available.</p>
-<p>Google Cloud uses Memcache for caching data on its public cloud platform. Redis is used by internet giants for caching, NoSQL datastore &amp; several other use cases.</p>
-<p><a target="_blank" rel="noopener" href="https://www.scaleyourapp.com/distributed-cache-101-the-only-guide-youll-ever-need/">Source1</a><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Distributed_cache">Source2</a><br><a target="_blank" rel="noopener" href="https://hazelcast.com/glossary/distributed-cache/">Source3</a></p>
-<h2 id="Content-Delivery-Network-CDN"><a href="#Content-Delivery-Network-CDN" class="headerlink" title="Content Delivery Network(CDN)"></a>Content Delivery Network(CDN)</h2><p>A content delivery network (CDN) refers to a geographically distributed group of servers which work together to provide fast delivery of Internet content.</p>
-<p>A CDN allows for the quick transfer of assets needed for loading Internet content including HTML pages, javascript files, stylesheets, images, and videos. The popularity of CDN services continues to grow, and today the majority of web traffic is served through CDNs, including traffic from major sites like Facebook, Netflix, and Amazon.</p>
-<p><a target="_blank" rel="noopener" href="https://www.cloudflare.com/learning/cdn/what-is-a-cdn/">Source</a></p>
-<h2 id="Hadoop-Distributed-File-System-HDFS"><a href="#Hadoop-Distributed-File-System-HDFS" class="headerlink" title="Hadoop Distributed File System(HDFS)"></a>Hadoop Distributed File System(HDFS)</h2><p>The Apache™ Hadoop® project develops open-source software for reliable, scalable, distributed computing.</p>
-<p>The Apache Hadoop software library is a framework that allows for the distributed processing of large data sets across clusters of computers using simple programming models. It is designed to scale up from single servers to thousands of machines, each offering local computation and storage. Rather than rely on hardware to deliver high-availability, the library itself is designed to detect and handle failures at the application layer, so delivering a highly-available service on top of a cluster of computers, each of which may be prone to failures.</p>
-<p><a target="_blank" rel="noopener" href="https://hadoop.apache.org/">Source</a></p>
-<h2 id="Map-Reduce"><a href="#Map-Reduce" class="headerlink" title="Map Reduce"></a>Map Reduce</h2><p>MapReduce is a programming model and an associated implementation for processing and generating big data sets with a parallel, distributed algorithm on a cluster.</p>
-<p>A MapReduce program is composed of a map procedure, which performs filtering and sorting (such as sorting students by first name into queues, one queue for each name), and a reduce method, which performs a summary operation (such as counting the number of students in each queue, yielding name frequencies). The “MapReduce System” (also called “infrastructure” or “framework”) orchestrates the processing by marshalling the distributed servers, running the various tasks in parallel, managing all communications and data transfers between the various parts of the system, and providing for redundancy and fault tolerance.</p>
-<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/MapReduce">Source</a><br><a target="_blank" rel="noopener" href="https://www.talend.com/resources/what-is-mapreduce/">Example</a></p>
-<h2 id="Apache-Zookeeper"><a href="#Apache-Zookeeper" class="headerlink" title="Apache Zookeeper"></a>Apache Zookeeper</h2><p>ZooKeeper is a centralized service for maintaining configuration information, naming, providing distributed synchronization, and providing group services. All of these kinds of services are used in some form or another by distributed applications. Each time they are implemented there is a lot of work that goes into fixing the bugs and race conditions that are inevitable. Because of the difficulty of implementing these kinds of services, applications initially usually skimp on them ,which make them brittle in the presence of change and difficult to manage. Even when done correctly, different implementations of these services lead to management complexity when the applications are deployed.</p>
-<p>ZooKeeper aims at distilling the essence of these different services into a very simple interface to a centralized coordination service. The service itself is distributed and highly reliable. Consensus, group management, and presence protocols will be implemented by the service so that the applications do not need to implement them on their own. Application specific uses of these will consist of a mixture of specific components of Zoo Keeper and application specific conventions. ZooKeeper Recipes shows how this simple service can be used to build much more powerful abstractions.</p>
-<p><a target="_blank" rel="noopener" href="https://zookeeper.apache.org/">Source</a></p>
-<h2 id="Apache-Kafka"><a href="#Apache-Kafka" class="headerlink" title="Apache Kafka"></a>Apache Kafka</h2><p>Apache Kafka is an open-source distributed event streaming platform used by thousands of companies for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.</p>
-<p><a target="_blank" rel="noopener" href="https://kafka.apache.org/">Source</a></p>
-<h2 id="Read-write-quorum"><a href="#Read-write-quorum" class="headerlink" title="Read-write quorum"></a>Read-write quorum</h2><p>Read-write quorums define two configurable parameters, R and W. R is the minimum number of nodes that must participate in a read operation, and W the minimum number of nodes that must participate in a write operation.</p>
-<p>Read-Write Quorum Systems Made Practical - Michael Whittaker, Aleksey Charapko, Joseph M. Hellerstein, Heidi Howard, Ion Stoica</p>
-<p>This <a target="_blank" rel="noopener" href="https://code.likeagirl.io/distributed-computing-quorum-consistency-in-replication-96e64f7b5c6">paper</a> reviews some concepts of the quorum systems, and it presents a concrete tool named “Quoracle” that explores the trade-offs of the read-write quorum systems.</p>
-<p>Quoracle provides an alternative to the majority quorum systems that are widely adopted in distributed systems. The majority quorum can be defined as</p>
-<p>\frac{n}{2} where n&#x3D;number of nodes</p>
-<p>In the case of a read-write quorum systems the majority is represented in a similar way:</p>
-<p>r &#x3D; w &#x3D; \frac{n}{2} + 1</p>
-<p>where r and w are the read and write quorums.</p>
-<p><a target="_blank" rel="noopener" href="https://mwhittaker.github.io/publications/quoracle.pdf">Source</a></p>
-<h2 id="Gossip-protocol"><a href="#Gossip-protocol" class="headerlink" title="Gossip protocol"></a>Gossip protocol</h2><p>Gossip protocol is a communication protocol that allows state sharing in distributed systems. Most modern systems use this peer-to-peer protocol to disseminate information to all the members in a network or cluster.</p>
-<p>This protocol is used in a decentralized system that does not have any central node to keep track of all nodes and know if a node is down or not.</p>
-<p><strong>Gathering state information by multicasting</strong></p>
-<p>So, how does a node know every other node’s current state in a decentralized distributed system?</p>
-<p>The simplest way to do this is to have every node maintain heartbeats with every other node. Heartbeat is a periodic message sent to a central monitoring server or other servers in the system to show that it is alive and functioning. When a node goes down, it stops sending out heartbeats, and everyone else finds out immediately. But then O(N^2) messages get sent to every tick (N being the number of nodes), which is an expensive operation in any sizable cluster.</p>
-<p><strong>How the protocol works</strong></p>
-<p>The Gossip protocol is used to repair the problems caused by multicasting; it is a type of communication where a piece of information or gossip in this scenario, is sent from one or more nodes to a set of other nodes in a network. This is useful when a group of clients in the network require the same data at the same time. But there are many problems that occur during multicasting, if there are many nodes present at the recipient end, latency increases; the average time for a receiver to receive a multicast.</p>
-<p>To get this multicast message or gossip across the desired targets in the group, the gossip protocol sends out the gossip periodically to random nodes in the network, once a random node receives the gossip, it is said to be infected due to the gossip. Now the random node that receives the gossip does the same thing as the sender, it sends multiple copies of the gossip to random targets. This process continues until the target nodes get the multicast. This process turns the infected nodes to uninfected nodes after sending the gossip out to random nodes.</p>
-<p><a target="_blank" rel="noopener" href="https://www.educative.io/edpresso/what-is-gossip-protocol">Source1</a><br><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/the-gossip-protocol-in-cloud-computing/">Source2</a></p>
-<h2 id="Fan-Out"><a href="#Fan-Out" class="headerlink" title="Fan Out"></a>Fan Out</h2><p>Let’s try to understand how fan out apporach works based on the system design of twitter <a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/design-twitter-a-system-design-interview-question/">here</a>.</p>
-<p>Fanout simply means spreading the data from a single point. Let’s see how to use it. Whenever a tweet is made by a user (Followee) do a lot of preprocessing and distribute the data into different users (followers) home timelines. In this process, you won’t have to make any database queries. You just need to go to the cache by user_id and access the home timeline data in Redis. So this process will be much faster and easier because it is an in-memory we get the list of tweets. Here is the complete flow of this approach.</p>
-<ul>
-<li>User X is followed by three people and this user has a cache called user timeline. X Tweeted something.</li>
-<li>Through Load Balancer tweet will flow into back-end servers.</li>
-<li>Server node will save tweet in DB&#x2F;cache</li>
-<li>Server node will fetch all the users that follow User X from the cache.</li>
-<li>Server node will inject this tweet into in-memory timelines of his followers (fanout)</li>
-<li>All followers of User X will see the tweet of User X in their timeline. It will be refreshed and updated every time a user will visit on his&#x2F;her timeline.</li>
-</ul>
-<p><img src="/images/Fanout-System-Design-Twitter.png" alt="Image"></p>
-<p><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/design-twitter-a-system-design-interview-question/">Source</a></p>
-<h2 id="GUID-and-UUID"><a href="#GUID-and-UUID" class="headerlink" title="GUID and UUID"></a>GUID and UUID</h2><p>GUID (aka UUID) is an acronym for ‘Globally Unique Identifier’ (or ‘Universally Unique Identifier’). It is a 128-bit integer number used to identify resources. The term GUID is generally used by developers working with Microsoft technologies, while UUID is used everywhere else.</p>
-<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Universally_unique_identifier">Source1</a><br><a target="_blank" rel="noopener" href="https://www.guidgenerator.com/">Source2</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/estimate-the-scale-of-the-system/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/estimate-the-scale-of-the-system/" class="post-title-link" itemprop="url">Estimate the scale of the system</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-02-05 08:00:00" itemprop="dateCreated datePublished" datetime="2022-02-05T08:00:00-08:00">2022-02-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>It is always a good idea to estimate the scale of the system as it help reflect if the designed system could fulfill the functional requirements. The requirements might include:</p>
-<ul>
-<li>Number of users</li>
-<li>Number of active users(NAU)</li>
-<li>Requrests per second(RPS)</li>
-<li>Logins per seconds</li>
-<li>Transactions per second(TPS) for E-commerce</li>
-<li>Likes&#x2F;dislikes per second, shares per second, comments per second for social media sites</li>
-<li>Searches per second for sites with a search feature</li>
-<li>Storage needed</li>
-<li>Servers needed</li>
-<li>Network bandwidth needed</li>
-</ul>
-<p>To estimate hardware resource needed, we need to understand that there are four major resources in a computer system.</p>
-<ul>
-<li>CPU</li>
-<li>Memory</li>
-<li>Storage</li>
-<li>Network</li>
-</ul>
-<h2 id="Estimate-servers-needed"><a href="#Estimate-servers-needed" class="headerlink" title="Estimate servers needed"></a>Estimate servers needed</h2><p>The modern computer system is a multi-processor system. It varies from single CPU core to multiple CPU cores. The following is a 32 CPU threads system.</p>
-<pre><code>$ lscpu
-Architecture:          x86_64
-CPU op-mode(s):        32-bit, 64-bit
-Byte Order:            Little Endian
-CPU(s):                32
-On-line CPU(s) list:   0-31
-Thread(s) per core:    2
-Core(s) per socket:    8
-Socket(s):             2
-NUMA node(s):          2
-Vendor ID:             GenuineIntel
-CPU family:            6
-Model:                 63
-Model name:            Intel(R) Xeon(R) CPU E5-2630 v3 @ 2.40GHz
-</code></pre>
-<p>In order to estimate how many servers are needed, we can approach in the following manner.</p>
-<ol>
-<li>How much work can single CPU do?</li>
-<li>How much work can single server do?</li>
-<li>How many servers are needed?</li>
-</ol>
-<p>Let’s have an example to go through this approach.</p>
-<p>Let’s say it takes 100ms for a sinlge-core CPU system to handle single client request. It means the system can handle 10 requests per second. So, we can extrapolate a 32-core system can handle 320 requests per second. Let’s say we have to handle 320,000 requests per second(RPS). It means 1000 servers are needed.</p>
-<p>Notice that this is a rough calculation only considering CPU needs. In real case, there might be other performance bottleneck to handle 320 requests per second in a system. For example, the system might be already I&#x2F;O bound before running out of CPU bandwidth. But this method still gives us a estimation at the high level.</p>
-<h2 id="Estimate-storage-needed"><a href="#Estimate-storage-needed" class="headerlink" title="Estimate storage needed"></a>Estimate storage needed</h2><p>To estimate storage needed, we can approach as below.</p>
-<ol>
-<li>Identify the different data types</li>
-<li>Estimate the space needed for each data type</li>
-<li>Get the total space needed</li>
-</ol>
-<p>Let’s take YouTube as an example to understand this approach.</p>
-<ul>
-<li>Data types: videos, thumbnail images and comments.</li>
-<li>Let’s assume there are roughly 2B users and 5% users(100M users) upload videos consistently. On average, each user has a weekly upload(~50 videos per year). Roughly, 13M videos(100M*50&#x2F;365) are uploaded daily. Let’s assume the video is 10 minutes long on average and it takes 50MB storage space after compression. Let’s say each video has a thumbnail image of 20KB. Each video has about 5 comments and the size of each comment is 200 bytes. In total, the space need for each video is 50MB + 20KB + 1KB, roughly 50MB. By multiplying 13M videos, it needs 619TB storage in a day.</li>
-</ul>
-<h2 id="Estimate-network-bandwidth-needed"><a href="#Estimate-network-bandwidth-needed" class="headerlink" title="Estimate network bandwidth needed"></a>Estimate network bandwidth needed</h2><p>Determine the incoming and outgoing data for network bandwidth estimation</p>
-<ul>
-<li>We already know there would be ~619TB data uploaded to YouTube in a day. Dividing this by the number of seconds in a day(619TB&#x2F;86400 seconds), the incoming data to YouTube would be 7.3GB&#x2F;s.</li>
-<li>Let’s say 10% of YouTube users are daily active users. With approximately 200M daily users, let’s assume a user watches 10 videos a day. Then YouTube would have 2B views in a day. This would result in ~93PB outgoing data in a day. Dividing this by the number of seconds in a day(93PB&#x2F;86400 seconds), the outgoing speed would be 1128GB&#x2F;s.</li>
-</ul>
 
       
     </div>

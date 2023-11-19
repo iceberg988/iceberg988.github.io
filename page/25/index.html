@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">101</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">263</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">267</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">263</span>
+          <span class="site-state-item-count">267</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">101</span>
+        <span class="site-state-item-count">103</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,554 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/memory-overcommit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/memory-overcommit/" class="post-title-link" itemprop="url">Memory overcommit</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-02-02 08:00:00" itemprop="dateCreated datePublished" datetime="2021-02-02T08:00:00-08:00">2021-02-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>The Linux kernel supports the following overcommit handling modes</p>
+<p>0	-	Heuristic overcommit handling. Obvious overcommits of</p>
+<p>address space are refused. Used for a typical system. It</p>
+<p>ensures a seriously wild allocation fails while allowing</p>
+<p>overcommit to reduce swap usage.  root is allowed to</p>
+<p>allocate slightly more memory in this mode. This is the</p>
+<p>default.</p>
+<p>1	-	Always overcommit. Appropriate for some scientific</p>
+<p>applications. Classic example is code using sparse arrays</p>
+<p>and just relying on the virtual memory consisting almost</p>
+<p>entirely of zero pages.</p>
+<p>2	-	Don’t overcommit. The total address space commit</p>
+<p>for the system is not permitted to exceed swap + a</p>
+<p>configurable amount (default is 50%) of physical RAM.</p>
+<p>Depending on the amount you use, in most situations</p>
+<p>this means a process will not be killed while accessing</p>
+<p>pages but will receive errors on memory allocation as</p>
+<p>appropriate.</p>
+<pre><code>    Useful for applications that want to guarantee their
+    memory allocations will be available in the future
+    without having to initialize every page.
+</code></pre>
+<p>The overcommit policy is set via the sysctl &#96;vm.overcommit_memory’.</p>
+<p>The overcommit amount can be set via <code>vm.overcommit_ratio&#39; (percentage) or </code>vm.overcommit_kbytes’ (absolute value).</p>
+<p>The current overcommit limit and amount committed are viewable in</p>
+<p>&#x2F;proc&#x2F;meminfo as CommitLimit and Committed_AS respectively.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/kmalloc-and-vmalloc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/kmalloc-and-vmalloc/" class="post-title-link" itemprop="url">kmalloc and vmalloc</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-02-01 08:00:00" itemprop="dateCreated datePublished" datetime="2021-02-01T08:00:00-08:00">2021-02-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="kmalloc"><a href="#kmalloc" class="headerlink" title="kmalloc"></a>kmalloc</h2><p>The function allocates contiguous region in physical memory. It’s fast and doesn’t clear the allocated memory content.</p>
+<p>kmalloc function is defined in <a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/source/include/linux/slab.h#L538">include&#x2F;linux&#x2F;slab.h</a></p>
+<pre><code>/**
+ * kmalloc - allocate memory
+ * @size: how many bytes of memory are required.
+ * @flags: the type of memory to allocate.
+ *
+ * kmalloc is the normal method of allocating memory
+ * for objects smaller than page size in the kernel.
+ *
+ * The allocated object address is aligned to at least ARCH_KMALLOC_MINALIGN
+ * bytes. For @size of power of two bytes, the alignment is also guaranteed
+ * to be at least to the size.
+ *
+ * The @flags argument may be one of the GFP flags defined at
+ * include/linux/gfp.h and described at
+ * :ref:`Documentation/core-api/mm-api.rst &lt;mm-api-gfp-flags&gt;`
+ *
+ * The recommended usage of the @flags is described at
+ * :ref:`Documentation/core-api/memory-allocation.rst &lt;memory_allocation&gt;`
+ *
+ * Below is a brief outline of the most useful GFP flags
+ *
+ * %GFP_KERNEL
+ *	Allocate normal kernel ram. May sleep.
+ *
+ * %GFP_NOWAIT
+ *	Allocation will not sleep.
+ *
+ * %GFP_ATOMIC
+ *	Allocation will not sleep.  May use emergency pools.
+ *
+ * %GFP_HIGHUSER
+ *	Allocate memory from high memory on behalf of user.
+ *
+ * Also it is possible to set different flags by OR&#39;ing
+ * in one or more of the following additional @flags:
+ *
+ * %__GFP_HIGH
+ *	This allocation has high priority and may use emergency pools.
+ *
+ * %__GFP_NOFAIL
+ *	Indicate that this allocation is in no way allowed to fail
+ *	(think twice before using).
+ *
+ * %__GFP_NORETRY
+ *	If memory is not immediately available,
+ *	then give up at once.
+ *
+ * %__GFP_NOWARN
+ *	If allocation fails, don&#39;t issue any warnings.
+ *
+ * %__GFP_RETRY_MAYFAIL
+ *	Try really hard to succeed the allocation but fail
+ *	eventually.
+ */
+static __always_inline void *kmalloc(size_t size, gfp_t flags)&#123;
+      if (__builtin_constant_p(size)) &#123;
+#ifndef CONFIG_SLOB
+        unsigned int index;
+#endif
+        if (size &gt; KMALLOC_MAX_CACHE_SIZE)
+            return kmalloc_large(size, flags);
+#ifndef CONFIG_SLOB
+        index = kmalloc_index(size);
+
+        if (!index)
+            return ZERO_SIZE_PTR;
+
+        return kmem_cache_alloc_trace(
+                kmalloc_caches[kmalloc_type(flags)][index],
+                flags, size);
+#endif
+    &#125;
+    return __kmalloc(size, flags);
+&#125;
+</code></pre>
+<p>The first argument is the size of the blocks to be allocated. The second argument is the memory allocation type flags. It controls the behavior of kmalloc.</p>
+<ul>
+<li>GFP_KERNEL is the most commonly used flag. It means the allocation is performed on behalf of a process running in kernel space. kmalloc can put the current process to sleep while waiting for the page allocation if the system is in memory starvation. The free memory can be optained either by flushing buffer to disk or swapping out user process memory.</li>
+<li>GFP_ATOMIC is used if the kmalloc call is from outside process context. The kernel can use the reserved free pages to serve the allocation. The allocation can fail if there is no last free page.</li>
+</ul>
+<h2 id="vmalloc"><a href="#vmalloc" class="headerlink" title="vmalloc"></a>vmalloc</h2><p>vmalloc allocates a contiguous memory region in the virtual address space. The allocated pages in physical memory are not consecutive and each page is retrieved with separate call to alloc_page. Thus, the vmalloc function is less efficient than kmalloc.</p>
+<p>vmalloc function is defined in <a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/source/mm/vmalloc.c#L2650">mm&#x2F;vmalloc.c</a></p>
+<pre><code>/**
+ * vmalloc - allocate virtually contiguous memory
+ * @size:    allocation size
+ *
+ * Allocate enough pages to cover @size from the page level
+ * allocator and map them into contiguous kernel virtual space.
+ *
+ * For tight control over page level allocator and protection flags
+ * use __vmalloc() instead.
+ *
+ * Return: pointer to the allocated memory or %NULL on error
+ */
+void *vmalloc(unsigned long size)
+&#123;
+    return __vmalloc_node(size, 1, GFP_KERNEL, NUMA_NO_NODE,
+                __builtin_return_address(0));
+&#125;
+</code></pre>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.oreilly.com/library/view/linux-device-drivers/0596005903/ch08.html">https://www.oreilly.com/library/view/linux-device-drivers/0596005903/ch08.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/source/include/linux/slab.h#L538">https://elixir.bootlin.com/linux/latest/source/include/linux/slab.h#L538</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/cooking-masters/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/cooking-masters/" class="post-title-link" itemprop="url">Cooking Masters</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-01-16 07:49:00" itemprop="dateCreated datePublished" datetime="2021-01-16T07:49:00-08:00">2021-01-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>It was my most regrettable decision ever. I was playing with Alex, who was my next door neighbor and my best friend in fourth grade. Suddenly, Alex said: “You know what, I think it’s time for us to compare our cooking skills now that I practiced my recipes for two years now.”  I did not know what to say. I knew Alex was teasing me. He had enrolled for a master cooking class and practiced for two years already. I was only a home cook, and I never thought about entering a cooking competition. I wanted to decline the offer but that would show that I was afraid. I did not like people calling me a loser so I foolishly accepted the challenge. We decided we were going to hold the cooking contest in my school’s cafeteria.</p>
+<p>When I told my parents about the contest, they said that I should cook something really fancy so it will increase my chance of winning. I got really stressed then. I only knew one type of dish which was a burger. I knew how to make many kinds of burgers but nothing else. I decided to go online to search up some recipes for other foods. I bought the ingredients and started to try new recipes. But none of them tasted better than my masterpiece burger.</p>
+<p>I wondered if I was doing something wrong. The recipes were more complicated so they should taste better. But they didn’t. I told my mom that I did not think the new dishes tasted any better than my burger. She said that I should be patient and practice more. I disagreed with her. I only had a few days to practice and mastering new recipes would take me weeks. I decided to continue with my burger. I was best at making that so it should have the highest chance of winning the contest. I created new kinds of burgers everyday from then on and tasted each of them to see if they were the best I could make.</p>
+<p>Then, on the day before the contest, my mom asked me what dish I prepared. When I told her I was going to make a burger, she advised me that next time I should make a more complicated recipe. “A tasty recipe matters on how delicious it is, not how fancy or complicated it is.” I said. Even if many people think a burger would not stand a chance against a chocolate cake, I refused to change my topic.</p>
+<p>Finally, the day of the competition arrived. I entered the stadium and put my ingredients on the right side of the table. I felt the tension in the kitchen. Alex was there and he was sitting on the left side of the table. When he saw that I had only a few ingredients needed to make my dish, he asked me what I was going to cook. A confident smile grew on his face when I told him I was going to make a smash burger. He told me I could forfeit if I was scared. I stared at him. I knew what he was going for. But it was not so easy to make me give up. Seeing that I would not back up, Alex had no choice but to start a cooking fight with me. Then the competition began. I first carefully spread some butter on the brioche buns. Then I toasted the buns. I took out the ground beef and rolled it into a patty. Meanwhile, Alex was making a chocolate cake. I wondered if the judge would like salty or sweet food better. While I was thinking, the judge said that we had thirty minutes left. I continued to make my Bacon King smash burger.</p>
+<p>I could feel my heart beating fast. I shakily put the patty into the pan and fried them. I then put the juicy meat on the toasted bun. Alex was watching me the whole time. He was already done baking his cake. I felt a thousand pairs of eyes looking at me. There was no time to be nervous. I put the butter lettuce on the meat and assembled the burger.</p>
+<p>Alex looked toward me. “It is no use trying to act tough. A loser will always remain a loser,” he said. But I ignored his words.</p>
+<p>Then we presented our finished results to the judge. He first took a bite out of the chocolate cake. He said that the sweetness of the chocolate cake mixed with the sourness of the strawberry on top was perfect. Then he ate my burger. He did not say anything. Cold sweat fell on my face. The whole room was so quiet that you could hear a pin drop on the ground.</p>
+<p>I gulped. Did the judge dislike my burger? That was when I saw him take another bite out of the burger. After that, he looked at Alex and me. “Well?” said Alex impatiently. “Who won?” The judge stood up. He said it was very hard to decide which recipe was tastier than the other. Though he equally liked the two foods, he said that my burger had the perfect attributes a burger should have. I grinned because I knew I won the contest.</p>
+<p>If I had made a fancy unfamiliar recipe, I may have never won this contest. I learnt that we should always play to our strengths and do what we are good at.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/art-sketch-2021/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/art-sketch-2021/" class="post-title-link" itemprop="url">Art - Sketch 2021</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-01-02 08:00:00" itemprop="dateCreated datePublished" datetime="2021-01-02T08:00:00-08:00">2021-01-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="/images/drawing/IMG_0341.jpeg"></p>
+<p><img src="/images/drawing/IMG_0380.jpeg"></p>
+<p><img src="/images/drawing/IMG_0381-1.jpeg"></p>
+<p><img src="/images/drawing/IMG_20210919_134430.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_134437.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_134444.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_134454.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_134503.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_134509.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_134516.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_134520.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_134525.jpg"></p>
+<hr>
+<p><img src="/images/drawing/IMG_20210919_134531.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_134536.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_134541.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_134548.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_134556.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_134600.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_134612.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_134617.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135038.jpg"></p>
+<hr>
+<p><img src="/images/drawing/IMG_20210919_135114.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135134.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135140.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135148.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135209.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135216.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135248.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135259.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135305.jpg"></p>
+<hr>
+<p><img src="/images/drawing/IMG_20210919_135323.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135334.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135420.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135442.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135453.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135502.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135534.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135543.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135603.jpg"></p>
+<hr>
+<p><img src="/images/drawing/IMG_20210919_135607.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135630.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135707.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135718.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135726.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135734.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135753.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135802.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135825.jpg"></p>
+<hr>
+<p><img src="/images/drawing/IMG_20210919_135837.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135856.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135903.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135914.jpg"></p>
+<p><img src="/images/drawing/IMG_20210919_135920.jpg"></p>
+<p><img src="/images/drawing/IMG_20211125_171239__01.jpg"></p>
+<p><img src="/images/drawing/IMG_20211231_201653__01.jpg"></p>
+<p><img src="/images/drawing/mmexport1632282808724.jpg"></p>
+<p><img src="/images/drawing/mmexport1632282830539.jpg"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1166,452 +1714,6 @@ TOTAL_GB
 <li>In Disabled Mode, Patrol Read cannot be started manually.</li>
 </ul>
 <h2 id="Performance-issues"><a href="#Performance-issues" class="headerlink" title="Performance issues"></a>Performance issues</h2><p>We have observed a few performance issues that were caused by Patrol read. When Patrol read is running, much higher IO service time (svctm) can be seen.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/the-civil-and-revolutionary-war/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/the-civil-and-revolutionary-war/" class="post-title-link" itemprop="url">The Civil and Revolutionary War</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-11-02 00:59:00" itemprop="dateCreated datePublished" datetime="2020-11-02T00:59:00-08:00">2020-11-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>The Revolutionary and Civil War were two of the most well known wars in American history. They greatly impacted America in different ways. The Civil War abolished slavery while the Revolutionary War created our nation.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/the-civil-and-revolutionary-war/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/shell-sed-and-awk-scripting/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/shell-sed-and-awk-scripting/" class="post-title-link" itemprop="url">Shell, sed and awk scripting</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-11-01 06:00:00" itemprop="dateCreated datePublished" datetime="2020-11-01T06:00:00-08:00">2020-11-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Shell"><a href="#Shell" class="headerlink" title="Shell"></a>Shell</h1><h2 id="Special-variables-in-Shell"><a href="#Special-variables-in-Shell" class="headerlink" title="Special variables in Shell:"></a>Special variables in Shell:</h2><ul>
-<li>$0 - The filename of the current script.</li>
-<li>$# - The number of arguments supplied to a script.</li>
-<li>$* - All the arguments are double quoted. If a script receives two arguments, $* is equivalent to $1 $2.</li>
-<li>$@ - All the arguments are individually double quoted. If a script receives two arguments, $@ is equivalent to $1 $2.</li>
-<li>$? - The exit status of the last command executed.</li>
-<li>$$ - The process number of the current shell. For shell scripts, this is the process ID under which they are executing.</li>
-<li>$! - The process number of the last background command.</li>
-</ul>
-<h2 id="Enable-ssh-passwordless-login-for-multiple-servers"><a href="#Enable-ssh-passwordless-login-for-multiple-servers" class="headerlink" title="Enable ssh passwordless login for multiple servers:"></a>Enable ssh passwordless login for multiple servers:</h2><pre><code>$ rpm -ivh sshpass-1.06-1.el7.x86_64.rpm
-
-$ for i in `seq 0 239`
-do
-    sshpass -p &quot;password&quot; ssh-copy-id -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no server$i
-done
-</code></pre>
-<h1 id="Sed"><a href="#Sed" class="headerlink" title="Sed"></a>Sed</h1><h2 id="Print-specific-line-from-a-file"><a href="#Print-specific-line-from-a-file" class="headerlink" title="Print specific line from a file:"></a>Print specific line from a file:</h2><pre><code>$ sed -n 5p &lt;file&gt;
-</code></pre>
-<h2 id="Replace-specific-line-with-new-string"><a href="#Replace-specific-line-with-new-string" class="headerlink" title="Replace specific line with new string:"></a>Replace specific line with new string:</h2><pre><code>$ sed -i &#39;2s/.*/aa/&#39; /file/path
-</code></pre>
-<h2 id="Add-line-after-string-match"><a href="#Add-line-after-string-match" class="headerlink" title="Add line after string match:"></a>Add line after string match:</h2><pre><code>$ sed -i &#39;/SERVER = str1/a SERVER = &quot;str2&quot;&#39; /file/path
-</code></pre>
-<h2 id="Remove-strings-from-beginning-of-lines"><a href="#Remove-strings-from-beginning-of-lines" class="headerlink" title="Remove strings from beginning of lines:"></a>Remove strings from beginning of lines:</h2><pre><code># Remove 40 characters from beginning of lines
-$ cat file | sed -r &#39;s/.&#123;40&#125;//&#39; 
-</code></pre>
-<h2 id="Remove-leading-and-tailing-spaces"><a href="#Remove-leading-and-tailing-spaces" class="headerlink" title="Remove leading and tailing spaces:"></a>Remove leading and tailing spaces:</h2><pre><code>$ echo $diskstats
-252       2 dev/dev1029144966969016657 150 0 1200 8031 2297170 2606 165332568 46106742 0 684017 44948515 5 0 72 4
-$ echo $diskstats | awk &#39;&#123;$1=&quot;&quot;;$2=&quot;&quot;;$3=&quot;&quot;;print&#125;&#39; | sed &#39;s/^[ \t]*//;s/[ \t]*$//;&#39;
-150 0 1200 8031 2297170 2606 165332568 46106742 0 684017 44948515 5 0 72 4
-</code></pre>
-<h2 id="Replace-multiple-digits-in-a-string"><a href="#Replace-multiple-digits-in-a-string" class="headerlink" title="Replace multiple digits in a string"></a>Replace multiple digits in a string</h2><pre><code>$ echo fio.read_16k_8jobs_20210927_103626.out | sed &#39;s/fio\.//g;s/\.out//g;&#39; | awk &#39;&#123;gsub(&quot;_[0-9]&#123;5,&#125;&quot;,&quot;&quot;,$1); print&#125;&#39;
-read_16k_8jobs
-</code></pre>
-<h1 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h1><h2 id="Use-awk-regex-to-match-variable-passed-from-shell"><a href="#Use-awk-regex-to-match-variable-passed-from-shell" class="headerlink" title="Use awk regex to match variable passed from shell"></a>Use awk regex to match variable passed from shell</h2><pre><code>str=abc
-awk  &#39;/&#39;$str&#39;/ &#123;print $0 &#125;&#39; filename
-</code></pre>
-<p>Or</p>
-<pre><code>str=abc
-awk  -v pattern=$str &#39;$0 ~ pattern&#123;print $0 &#125;&#39; filename
-</code></pre>
-<h1 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h1><h2 id="download-a-file"><a href="#download-a-file" class="headerlink" title="download a file"></a>download a file</h2><pre><code>$ sudo curl -vL -o testfile.zip &#39;https://example.com/remote_testfile.zip&#39;
-</code></pre>
-<p>wget directory:</p>
-<pre><code>$ wget -r -np -R &quot;index.html*&quot; http://example.com/configs/.vim/
-</code></pre>
-<h2 id="Sync-Mac-Address-during-boot"><a href="#Sync-Mac-Address-during-boot" class="headerlink" title="Sync Mac Address during boot"></a>Sync Mac Address during boot</h2><pre><code>$ cat /etc/rc.d/rc.local
-new_mac=`cat /sys/class/net/eno16780032/address`
-sed -i &quot;s/HWADDR=.*/HWADDR=$new_mac/&quot; /etc/sysconfig/network-scripts/ifcfg-eno16780032
-service network restart
-</code></pre>
-<h2 id="Check-command-exit-status"><a href="#Check-command-exit-status" class="headerlink" title="Check command exit status"></a>Check command exit status</h2><pre><code>for pool in $pools 
-do 
-    for vol in $vols
-    do 
-        pxctl v i $vol | grep $pool &gt; /dev/null 2&gt;&amp;1
-        if [ $? -eq 0 ]; then echo $vol; break; fi
-    done
-done
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/courage/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/courage/" class="post-title-link" itemprop="url">Courage</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-09-16 06:50:00" itemprop="dateCreated datePublished" datetime="2020-09-16T06:50:00-07:00">2020-09-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>by Edgar Albert Guest</p>
-<p>Courage isn’t a brilliant dash,</p>
-<p>A daring deed in a moment’s flash;</p>
-<p>It isn’t an instantaneous thing</p>
-<p>Born of despair with a sudden spring</p>
-<p>It isn’t a creature of flickered hope</p>
-<p>Or the final tug at a slipping rope;</p>
-<p>But it’s something deep in the soul of man</p>
-<p>That is working always to serve some plan.</p>
-<p>Courage isn’t the last resort</p>
-<p>In the work of life or the game of sport;</p>
-<p>It isn’t a thing that a man can call</p>
-<p>At some future time when he’s apt to fall;</p>
-<p>If he hasn’t it now, he will have it not</p>
-<p>When the strain is great and the pace is hot.</p>
-<p>For who would strive for a distant goal</p>
-<p>Must always have courage within his soul.</p>
-<p>Courage isn’t a dazzling light</p>
-<p>That flashes and passes away from sight;</p>
-<p>It’s a slow, unwavering, ingrained trait</p>
-<p>With the patience to work and the strength to wait.</p>
-<p>It’s part of a man when his skies are blue,</p>
-<p>It’s part of him when he has work to do.</p>
-<p>The brave man never is freed of it.</p>
-<p>He has it when there is no need of it.</p>
-<p>Courage was never designed for show;</p>
-<p>It isn’t a thing that can come and go;</p>
-<p>It’s written in victory and defeat</p>
-<p>And every trial a man may meet.</p>
-<p>It’s part of his hours, his days and his years,</p>
-<p>Back of his smiles and behind his tears.</p>
-<p>Courage is more than a daring deed:</p>
-<p>It’s the breath of life and a strong man’s creed.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/mulan/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/mulan/" class="post-title-link" itemprop="url">Mulan</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-09-07 07:00:00" itemprop="dateCreated datePublished" datetime="2020-09-07T07:00:00-07:00">2020-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><img src="/images/mulan.jpeg"></p>
-<p>In the Northern and Southern Dynasties of china, there lived a heroine named Hua Mulan. Mulan was born in a small village, and she lived with her veteran father, who served in war for the emperor, and her kind hearted mother. Mulan also had an nice little sister. From a very young age, Mulan developed a great interest in the life of a warrior. In his spare time, Mulan’s father trained her in fighting skills at the riverside, everything from riding a horse to shooting an arrow, from swinging a sword to wielding a staff.</p>
-<p>One day, in the small village, an shocking event happened. Boai Khan’s army was invading the emperor’s land once again. Guards of the emperor said that one man from every family must volunteer to fight in the war. Mulan knew what this meant. Father was the only man in the family, so he had to join the army. But if he joined and fought, he may never come back. Mulan knew what was necessary. She would take her father’s place in the military. She took his armor, sword, and horse. At dawn, she rode to the military camp.</p>
-<p>During her training, Mulan overcame many troubles. She didn’t want to shower with men, so she offered to be on night guard duty. When she wanted to take a bath, she would do it at the lake. But it also made her a tough warrior. Her fighting skills surpassed any men. When the soldiers were forced to carry two buckets of water up a mountain, Mulan was the first to reach the peak.</p>
-<p>After a few months of training, the commander said that it was time to enter the war. They were losing the moment they started. Khan’s army even had fireballs. While the rest of the army struggled to defend themselves, mulan targeted on Khan. When Khan saw Mulan coming, he hopped on a horse and ran away. Mulan darted after him but was soon lost in a canyon. Suddenly, the witch came and shot an arrow at Mulan. Mulan died for a lie can only live so long. But the chi inside her wasn’t held back. Like a phoenix, Mulan rebirthed. She revealed her true identity. When she went back, she grabbed a few helmets with her. She put the helmets on a rock so they looked like soldiers. She hid behind the rock and shot an arrow at the enemy. The enemy saw the fake soldiers and launched a fireball at them. This fireball caused a snowstorm down from the mountain. Though Mulan saved her general and the rest of the army, the leader thought she was an imposter. But when Mulan said that Khan was planning a sneak attack on the emperor, her friends believed in her and made her their leader. They rushed back to the palace. Using her chi, Mulan defeated the enemy and saved the emperor. The emperor, who owed his life to Mulan, asked her what reward she wanted. Mulan said that she wanted to apologize to her parents for stealing their armor and sword. After that, she would take care of them. The emperor granted the wish after making Mulan an officer in the army.</p>
-<p>People admire Mulan for her bravery, honesty, loyalty to the army, and filial piety to her parents.</p>
 
       
     </div>

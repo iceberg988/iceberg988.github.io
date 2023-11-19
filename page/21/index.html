@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">101</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">263</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">267</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">263</span>
+          <span class="site-state-item-count">267</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">101</span>
+        <span class="site-state-item-count">103</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,1038 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/create-image-gallery-in-jekyll-without-plugin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/create-image-gallery-in-jekyll-without-plugin/" class="post-title-link" itemprop="url">Create Image Gallery in Jekyll without Plugin</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-19 07:00:00" itemprop="dateCreated datePublished" datetime="2021-09-19T07:00:00-07:00">2021-09-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>An image gallery can be easily built by using <strong>LightBox</strong> and <strong>Image Gallery</strong> scripts in Jekyll.</p>
+<ol>
+<li>LightBox</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://jekyllcodex.org/without-plugin/lightbox/">Lightbox</a> is a solution that loads your image links, your Youtube links and your Vimeo links automatically in a minimalistic and responsive pseudo window&#x2F;overlay. No adjustment to your links is required, just follow the instructions to install the css and js script.</p>
+<ol start="2">
+<li>Image Gallery</li>
+</ol>
+<p>The script <a target="_blank" rel="noopener" href="https://jekyllcodex.org/without-plugin/image-gallery/">Image Gallery</a> creates an image gallery. The script reads all images from a specific (user-defined) folder in Jekyll, automagically crops them to 300px squares, using an image resize proxy service and shows them in rows of five. Just follow the very easy instrutions to install it and we are good to go.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-sysbench-for-oltp-workload-performance-benchmark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/using-sysbench-for-oltp-workload-performance-benchmark/" class="post-title-link" itemprop="url">Using sysbench for OLTP workload performance benchmark</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-07 07:00:00" itemprop="dateCreated datePublished" datetime="2021-09-07T07:00:00-07:00">2021-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Intro-to-Sysbench"><a href="#Intro-to-Sysbench" class="headerlink" title="Intro to Sysbench"></a>Intro to Sysbench</h2><p>sysbench is a scriptable multi-threaded benchmark tool based on LuaJIT. It is most frequently used for database benchmarks, but can also be used to create arbitrarily complex workloads that do not involve a database server.</p>
+<p>sysbench comes with the following bundled benchmarks:</p>
+<ul>
+<li>oltp_*.lua: a collection of OLTP-like database benchmarks</li>
+<li>fileio: a filesystem-level benchmark</li>
+<li>cpu: a simple CPU benchmark</li>
+<li>memory: a memory access benchmark</li>
+<li>threads: a thread-based scheduler benchmark</li>
+<li>mutex: a POSIX mutex benchmark</li>
+</ul>
+<p>Below is a description of typical test commands and their purpose:</p>
+<ul>
+<li>prepare: performs preparative actions for those tests which need them, e.g. creating the necessary files on disk for the fileio test, or filling the test database for database benchmarks.</li>
+<li>run: runs the actual test specified with the testname argument. This command is provided by all tests.</li>
+<li>cleanup: removes temporary data after the test run in those tests which create one.</li>
+<li>help: displays usage information for the test specified with the testname argument. This includes the full list of commands provided by the test, so it should be used to get the available commands.</li>
+</ul>
+<h2 id="Install-sysbench-on-CentOS-7-5"><a href="#Install-sysbench-on-CentOS-7-5" class="headerlink" title="Install sysbench on CentOS 7.5"></a>Install sysbench on CentOS 7.5</h2><pre><code>$ cat /etc/centos-release
+CentOS Linux release 7.5.1804 (Core)
+$ uname -r
+5.7.12-1.el7.elrepo.x86_64
+
+$ curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.rpm.sh | sudo bash
+$ sudo yum -y install sysbench
+
+$ sysbench --version
+sysbench 1.0.20
+
+$ sysbench --help
+Usage:
+  sysbench [options]... [testname] [command]
+
+Commands implemented by most tests: prepare run cleanup help
+
+General options:
+  --threads=N                     number of threads to use [1]
+  --events=N                      limit for total number of events [0]
+  --time=N                        limit for total execution time in seconds [10]
+  --forced-shutdown=STRING        number of seconds to wait after the --time limit before forcing shutdown, or &#39;off&#39; to disable [off]
+  --thread-stack-size=SIZE        size of stack per thread [64K]
+  --rate=N                        average transactions rate. 0 for unlimited rate [0]
+  --report-interval=N             periodically report intermediate statistics with a specified interval in seconds. 0 disables intermediate reports [0]
+  --report-checkpoints=[LIST,...] dump full statistics and reset all counters at specified points in time. The argument is a list of comma-separated values representing the amount of time in seconds elapsed from start of test when report checkpoint(s) must be performed. Report checkpoints are off by default. []
+  --debug[=on|off]                print more debugging info [off]
+  --validate[=on|off]             perform validation checks where possible [off]
+  --help[=on|off]                 print help and exit [off]
+  --version[=on|off]              print version and exit [off]
+  --config-file=FILENAME          File containing command line options
+  --tx-rate=N                     deprecated alias for --rate [0]
+  --max-requests=N                deprecated alias for --events [0]
+  --max-time=N                    deprecated alias for --time [0]
+  --num-threads=N                 deprecated alias for --threads [1]
+
+Pseudo-Random Numbers Generator options:
+  --rand-type=STRING random numbers distribution &#123;uniform,gaussian,special,pareto&#125; [special]
+  --rand-spec-iter=N number of iterations used for numbers generation [12]
+  --rand-spec-pct=N  percentage of values to be treated as &#39;special&#39; (for special distribution) [1]
+  --rand-spec-res=N  percentage of &#39;special&#39; values to use (for special distribution) [75]
+  --rand-seed=N      seed for random number generator. When 0, the current time is used as a RNG seed. [0]
+  --rand-pareto-h=N  parameter h for pareto distribution [0.2]
+
+Log options:
+  --verbosity=N verbosity level &#123;5 - debug, 0 - only critical messages&#125; [3]
+
+  --percentile=N       percentile to calculate in latency statistics (1-100). Use the special value of 0 to disable percentile calculations [95]
+  --histogram[=on|off] print latency histogram in report [off]
+
+General database options:
+
+  --db-driver=STRING  specifies database driver to use (&#39;help&#39; to get list of available drivers) [mysql]
+  --db-ps-mode=STRING prepared statements usage mode &#123;auto, disable&#125; [auto]
+  --db-debug[=on|off] print database-specific debug information [off]
+
+
+Compiled-in database drivers:
+  mysql - MySQL driver
+  pgsql - PostgreSQL driver
+
+mysql options:
+  --mysql-host=[LIST,...]          MySQL server host [localhost]
+  --mysql-port=[LIST,...]          MySQL server port [3306]
+  --mysql-socket=[LIST,...]        MySQL socket
+  --mysql-user=STRING              MySQL user [sbtest]
+  --mysql-password=STRING          MySQL password []
+  --mysql-db=STRING                MySQL database name [sbtest]
+  --mysql-ssl[=on|off]             use SSL connections, if available in the client library [off]
+  --mysql-ssl-cipher=STRING        use specific cipher for SSL connections []
+  --mysql-compression[=on|off]     use compression, if available in the client library [off]
+  --mysql-debug[=on|off]           trace all client library calls [off]
+  --mysql-ignore-errors=[LIST,...] list of errors to ignore, or &quot;all&quot; [1213,1020,1205]
+  --mysql-dry-run[=on|off]         Dry run, pretend that all MySQL client API calls are successful without executing them [off]
+
+pgsql options:
+  --pgsql-host=STRING     PostgreSQL server host [localhost]
+  --pgsql-port=N          PostgreSQL server port [5432]
+  --pgsql-user=STRING     PostgreSQL user [sbtest]
+  --pgsql-password=STRING PostgreSQL password []
+  --pgsql-db=STRING       PostgreSQL database name [sbtest]
+
+Compiled-in tests:
+  fileio - File I/O test
+  cpu - CPU performance test
+  memory - Memory functions speed test
+  threads - Threads subsystem performance test
+  mutex - Mutex performance test
+
+See &#39;sysbench &lt;testname&gt; help&#39; for a list of options for each test.
+
+$ ls -la /usr/share/sysbench/tests/include/oltp_legacy/
+total 56
+drwxr-xr-x 2 root root  284 Sep  7 20:53 .
+drwxr-xr-x 3 root root 4096 Sep  7 20:53 ..
+-rw-r--r-- 1 root root 1195 Apr 24  2020 bulk_insert.lua
+-rw-r--r-- 1 root root 4696 Apr 24  2020 common.lua
+-rw-r--r-- 1 root root  366 Apr 24  2020 delete.lua
+-rw-r--r-- 1 root root 1171 Apr 24  2020 insert.lua
+-rw-r--r-- 1 root root 3004 Apr 24  2020 oltp.lua
+-rw-r--r-- 1 root root  368 Apr 24  2020 oltp_simple.lua
+-rw-r--r-- 1 root root  527 Apr 24  2020 parallel_prepare.lua
+-rw-r--r-- 1 root root  369 Apr 24  2020 select.lua
+-rw-r--r-- 1 root root 1448 Apr 24  2020 select_random_points.lua
+-rw-r--r-- 1 root root 1556 Apr 24  2020 select_random_ranges.lua
+-rw-r--r-- 1 root root  369 Apr 24  2020 update_index.lua
+-rw-r--r-- 1 root root  578 Apr 24  2020 update_non_index.lua
+</code></pre>
+<h2 id="MariaDB-vs-MySQL"><a href="#MariaDB-vs-MySQL" class="headerlink" title="MariaDB vs. MySQL"></a>MariaDB vs. MySQL</h2><p>MariaDB is a community-developed, commercially supported fork of the MySQL relational database management system (RDBMS), intended to remain free and open-source software under the GNU General Public License. Development is led by some of the original developers of MySQL, who forked it due to concerns over its acquisition by Oracle Corporation in 2009. Refer to <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/MariaDB">wiki</a> for more information.</p>
+<h2 id="Create-the-MariaDB-database"><a href="#Create-the-MariaDB-database" class="headerlink" title="Create the MariaDB database"></a>Create the MariaDB database</h2><h3 id="Provision-the-MariaDB-docker-instance"><a href="#Provision-the-MariaDB-docker-instance" class="headerlink" title="Provision the MariaDB docker instance"></a>Provision the MariaDB docker instance</h3><p>In this example, we use Portworx to manage the disk storage. A volume <em>testVol</em> is created to store MariaDB data.</p>
+<pre><code>$ pxctl v create testVol --size 1024 --repl 1
+
+$ docker run --name mariadbtest -v testVol:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=password -p 3306:3306 -d docker.io/library/mariadb:latest
+
+$ docker ps | egrep &quot;CONTAINER|mariadbtest&quot;
+CONTAINER ID   IMAGE                        COMMAND                  CREATED          STATUS          PORTS                                       NAMES
+2e5fe8ca177d   mariadb:latest               &quot;docker-entrypoint.s…&quot;   39 seconds ago   Up 37 seconds   0.0.0.0:3306-&gt;3306/tcp, :::3306-&gt;3306/tcp   mariadbtest
+</code></pre>
+<h3 id="Create-a-database"><a href="#Create-a-database" class="headerlink" title="Create a database"></a>Create a database</h3><pre><code>$ docker exec -it mariadbtest bash
+
+root@2e5fe8ca177d:/# ip a | grep eth
+139: eth0@if140: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:ac:11:00:05 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.17.0.5/16 brd 172.17.255.255 scope global eth0
+
+root@2e5fe8ca177d:/# df -h 
+Filesystem                       Size  Used Avail Use% Mounted on
+overlay                           50G   23G   28G  45% /
+tmpfs                             64M     0   64M   0% /dev
+tmpfs                            126G     0  126G   0% /sys/fs/cgroup
+shm                               64M     0   64M   0% /dev/shm
+/dev/mapper/centos-root           50G   23G   28G  45% /etc/hosts
+/dev/pxd/pxd1020609855122786711 1007G  209M  956G   1% /var/lib/mysql
+tmpfs                            126G     0  126G   0% /proc/acpi
+tmpfs                            126G     0  126G   0% /proc/scsi
+tmpfs                            126G     0  126G   0% /sys/firmware
+
+root@2e5fe8ca177d:/# ls -la /var/lib/mysql
+total 123332
+drwxr-xr-x. 5 mysql mysql      4096 Sep  7 21:02 .
+drwxr-xr-x  1 root  root         68 Aug 31 03:44 ..
+-rw-rw----  1 mysql mysql    417792 Sep  7 21:02 aria_log.00000001
+-rw-rw----  1 mysql mysql        52 Sep  7 21:02 aria_log_control
+-rw-rw----  1 mysql mysql         9 Sep  7 21:02 ddl_recovery.log
+-rw-rw----  1 mysql mysql       946 Sep  7 21:02 ib_buffer_pool
+-rw-rw----  1 mysql mysql 100663296 Sep  7 21:02 ib_logfile0
+-rw-rw----  1 mysql mysql  12582912 Sep  7 21:02 ibdata1
+-rw-rw----  1 mysql mysql  12582912 Sep  7 21:02 ibtmp1
+-rw-rw----  1 mysql mysql         0 Sep  7 21:00 multi-master.info
+drwx------  2 mysql mysql      4096 Sep  7 21:00 mysql
+drwx------  2 mysql mysql      4096 Sep  7 21:00 performance_schema
+drwx------  2 mysql mysql     12288 Sep  7 21:00 sys
+
+root@2e5fe8ca177d:/#  mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 3
+Server version: 10.6.4-MariaDB-1:10.6.4+maria~focal mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type &#39;help;&#39; or &#39;\h&#39; for help. Type &#39;\c&#39; to clear the current input statement.
+
+MariaDB [(none)]&gt; SHOW VARIABLES LIKE &quot;%version%&quot;;
++-----------------------------------+------------------------------------------+
+| Variable_name                     | Value                                    |
++-----------------------------------+------------------------------------------+
+| in_predicate_conversion_threshold | 1000                                     |
+| innodb_version                    | 10.6.4                                   |
+| protocol_version                  | 10                                       |
+| slave_type_conversions            |                                          |
+| system_versioning_alter_history   | ERROR                                    |
+| system_versioning_asof            | DEFAULT                                  |
+| tls_version                       | TLSv1.1,TLSv1.2,TLSv1.3                  |
+| version                           | 10.6.4-MariaDB-1:10.6.4+maria~focal      |
+| version_comment                   | mariadb.org binary distribution          |
+| version_compile_machine           | x86_64                                   |
+| version_compile_os                | debian-linux-gnu                         |
+| version_malloc_library            | system                                   |
+| version_source_revision           | 2db692f5b4d6bb31a331dab44544171c455f6aca |
+| version_ssl_library               | OpenSSL 1.1.1f  31 Mar 2020              |
+| wsrep_patch_version               | wsrep_26.22                              |
++-----------------------------------+------------------------------------------+
+15 rows in set (0.002 sec)
+
+MariaDB [(none)]&gt; SHOW VARIABLES WHERE Variable_Name LIKE &quot;%dir&quot;;
++---------------------------+----------------------------+
+| Variable_name             | Value                      |
++---------------------------+----------------------------+
+| aria_sync_log_dir         | NEWFILE                    |
+| basedir                   | /usr                       |
+| character_sets_dir        | /usr/share/mysql/charsets/ |
+| datadir                   | /var/lib/mysql/            |
+| innodb_data_home_dir      |                            |
+| innodb_log_group_home_dir | ./                         |
+| innodb_tmpdir             |                            |
+| lc_messages_dir           | /usr/share/mysql           |
+| plugin_dir                | /usr/lib/mysql/plugin/     |
+| slave_load_tmpdir         | /tmp                       |
+| tmpdir                    | /tmp                       |
+| wsrep_data_home_dir       | /var/lib/mysql/            |
++---------------------------+----------------------------+
+12 rows in set (0.002 sec)
+
+MariaDB [(none)]&gt; CREATE DATABASE sbtest;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]&gt; CREATE USER sbtest@localhost;
+Query OK, 0 rows affected (0.004 sec)
+
+MariaDB [(none)]&gt; GRANT ALL PRIVILEGES ON sbtest.* TO sbtest@localhost;
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [(none)]&gt; use sbtest;
+Database changed
+
+MariaDB [sbtest]&gt; select database();
++------------+
+| database() |
++------------+
+| sbtest     |
++------------+
+1 row in set (0.000 sec)
+
+MariaDB [sbtest]&gt; show tables;
+Empty set (0.000 sec)
+
+MariaDB [(none)]&gt;  exit
+Bye
+root@2e5fe8ca177d:/# exit
+exit
+
+root@2e5fe8ca177d:/# ls -la /var/lib/mysql
+total 123336
+drwxr-xr-x. 6 mysql mysql      4096 Sep  7 21:07 .
+drwxr-xr-x  1 root  root         68 Aug 31 03:44 ..
+-rw-rw----  1 mysql mysql    417792 Sep  7 21:07 aria_log.00000001
+-rw-rw----  1 mysql mysql        52 Sep  7 21:02 aria_log_control
+-rw-rw----  1 mysql mysql         9 Sep  7 21:02 ddl_recovery.log
+-rw-rw----  1 mysql mysql       946 Sep  7 21:02 ib_buffer_pool
+-rw-rw----  1 mysql mysql 100663296 Sep  7 21:02 ib_logfile0
+-rw-rw----  1 mysql mysql  12582912 Sep  7 21:02 ibdata1
+-rw-rw----  1 mysql mysql  12582912 Sep  7 21:02 ibtmp1
+-rw-rw----  1 mysql mysql         0 Sep  7 21:00 multi-master.info
+drwx------  2 mysql mysql      4096 Sep  7 21:00 mysql
+drwx------  2 mysql mysql      4096 Sep  7 21:00 performance_schema
+drwx------  2 mysql mysql      4096 Sep  7 21:07 sbtest
+drwx------  2 mysql mysql     12288 Sep  7 21:00 sys
+root@2e5fe8ca177d:/# ls -la /var/lib/mysql/sbtest/
+total 12
+drwx------  2 mysql mysql 4096 Sep  7 21:07 .
+drwxr-xr-x. 6 mysql mysql 4096 Sep  7 21:07 ..
+-rw-rw----  1 mysql mysql   67 Sep  7 21:07 db.opt
+</code></pre>
+<h3 id="Build-the-database"><a href="#Build-the-database" class="headerlink" title="Build the database"></a>Build the database</h3><p>On the host, using sysbench to create tables and insert data rows in the database. We need know how much data should be created in the database. 1 million rows will result in ~240MB of data. So, 32 tables, 2 millions rows each create 15GB data.</p>
+<pre><code>$ sysbench /usr/share/sysbench/tests/include/oltp_legacy/oltp.lua --threads=1 --mysql-host=172.17.0.5 --mysql-password=password  --mysql-user=root --mysql-db=sbtest --oltp-tables-count=32 --oltp-table-size=2000000 prepare
+sysbench 1.0.20 (using bundled LuaJIT 2.1.0-beta2)
+
+Creating table &#39;sbtest1&#39;...
+Inserting 2000000 records into &#39;sbtest1&#39;
+Creating secondary indexes on &#39;sbtest1&#39;...
+[omitted...]
+</code></pre>
+<p>In the MariaDB container, we can check the created data and table size.</p>
+<pre><code>root@2e5fe8ca177d:/#  mysql -u root -p
+MariaDB [sbtest]&gt; select * from sbtest1 limit 6;
++----+---------+-------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------+
+| id | k       | c                                                                                                                       | pad                                                         |
++----+---------+-------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------+
+|  1 |  998567 | 83868641912-28773972837-60736120486-75162659906-27563526494-20381887404-41576422241-93426793964-56405065102-33518432330 | 67847967377-48000963322-62604785301-91415491898-96926520291 |
+|  2 | 1003937 | 38014276128-25250245652-62722561801-27818678124-24890218270-18312424692-92565570600-36243745486-21199862476-38576014630 | 23183251411-36241541236-31706421314-92007079971-60663066966 |
+|  3 | 1008521 | 33973744704-80540844748-72700647445-87330233173-87249600839-07301471459-22846777364-58808996678-64607045326-48799346817 | 38615512647-91458489257-90681424432-95014675832-60408598704 |
+|  4 | 1004027 | 37002370280-58842166667-00026392672-77506866252-09658311935-56926959306-83464667271-94685475868-28264244556-14550208498 | 63947013338-98809887124-59806726763-79831528812-45582457048 |
+|  5 |  999625 | 44257470806-17967007152-32809666989-26174672567-29883439075-95767161284-94957565003-35708767253-53935174705-16168070783 | 34551750492-67990399350-81179284955-79299808058-21257255869 |
+|  6 | 1001169 | 37216201353-39109531021-11197415756-87798784755-02463049870-83329763120-57551308766-61100580113-80090253566-30971527105 | 05161542529-00085727016-35134775864-52531204064-98744439797 |
++----+---------+-------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------+
+6 rows in set (0.004 sec)
+
+MariaDB [sbtest]&gt; SELECT   TABLE_NAME AS `Table`,   ROUND((DATA_LENGTH + INDEX_LENGTH) / 1024 / 1024) AS `Size (MB)` FROM   information_schema.TABLES WHERE   TABLE_SCHEMA = &quot;sbtest&quot; ORDER BY   (DATA_LENGTH + INDEX_LENGTH) DESC;
++---------+-----------+
+| Table   | Size (MB) |
++---------+-----------+
+| sbtest3 |       459 |
+| sbtest1 |       459 |
+| sbtest4 |       459 |
+| sbtest2 |       459 |
+| sbtest5 |       459 |
+| sbtest6 |       146 |
++---------+-----------+
+6 rows in set (0.002 sec)
+
+MariaDB [sbtest]&gt; SELECT table_schema &quot;DB Name&quot;, ROUND(SUM(data_length + index_length) / 1024 / 1024, 1) &quot;DB Size in MB&quot;  FROM information_schema.tables  GROUP BY table_schema;
++--------------------+---------------+
+| DB Name            | DB Size in MB |
++--------------------+---------------+
+| information_schema |           0.2 |
+| mysql              |          10.5 |
+| performance_schema |           0.0 |
+| sbtest             |       14702.0 |
+| sys                |           0.0 |
++--------------------+---------------+
+5 rows in set (0.033 sec)
+</code></pre>
+<p>We also can check the running process in the MariaDB.</p>
+<pre><code>MariaDB [sbtest]&gt; show processlist;
++----+------+------------------+--------+---------+------+----------
+| Id | User | Host             | db     | Command | Time | State    | Info                                                                                                 | Progress |
++----+------+------------------+--------+---------+------+----------
+|  7 | root | 172.17.0.1:55000 | sbtest | Query   |    0 | Update   | INSERT INTO sbtest13(k, c, pad) VALUES(1185731, &#39;26498931212-26730519067-66264645428-09623019003-787&#39; |    0.000 |
+| 11 | root | localhost        | sbtest | Query   |    0 | starting | show processlist                                                                                     |    0.000 |
++----+------+------------------+--------+---------+------+----------
+2 rows in set (0.000 sec)
+</code></pre>
+<h2 id="Run-sysbench-benchmark"><a href="#Run-sysbench-benchmark" class="headerlink" title="Run sysbench benchmark"></a>Run sysbench benchmark</h2><pre><code>$ threads=1; seconds=1800; interval=60
+$ sysbench /usr/share/sysbench/tests/include/oltp_legacy/oltp.lua --threads=$threads --mysql-host=172.17.0.5 --mysql-password=password  --mysql-user=root  --oltp-tables-count=32 --oltp-table-size=2000000 --events=0 --time=$seconds --report-interval=$interval --delete_inserts=10 --index_updates=10 --non_index_updates=10 --db-ps-mode=disable run
+
+SQL statistics:
+    queries performed:
+        read:                            1315888
+        write:                           375968
+        other:                           187984
+        total:                           1879840
+    transactions:                        93992  (52.22 per sec.)
+    queries:                             1879840 (1044.35 per sec.)
+    ignored errors:                      0      (0.00 per sec.)
+    reconnects:                          0      (0.00 per sec.)
+
+General statistics:
+    total time:                          1800.0066s
+    total number of events:              93992
+
+Latency (ms):
+         min:                                    6.52
+         avg:                                   19.14
+         max:                                 1018.82
+         95th percentile:                       25.28
+         sum:                              1799473.52
+
+Threads fairness:
+    events (avg/stddev):           93992.0000/0.00
+    execution time (avg/stddev):   1799.4735/0.00
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/MariaDB">https://en.wikipedia.org/wiki/MariaDB</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/akopytov/sysbench">https://github.com/akopytov/sysbench</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/an-easy-guide-to-install-kubernetes-cluster-with-kubeadm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/an-easy-guide-to-install-kubernetes-cluster-with-kubeadm/" class="post-title-link" itemprop="url">An easy guide to install kubernetes cluster with kubeadm</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-29 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-29T07:00:00-07:00">2021-08-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Kubernetes can be installed with the following deployments tools.</p>
+<ul>
+<li>Bootstrapping clusters with kubeadm</li>
+<li>Installing Kubernetes with kops</li>
+<li>Installing Kubernetes with Kubespray</li>
+</ul>
+<p>In this article, we learn to install Kubernetes cluster with kubeadm.</p>
+<h2 id="Prepare-the-cluster-nodes"><a href="#Prepare-the-cluster-nodes" class="headerlink" title="Prepare the cluster nodes"></a>Prepare the cluster nodes</h2><p>We have three Centos nodes to install Kubernetes cluster.</p>
+<pre><code>$ cat /etc/centos-release
+CentOS Linux release 7.9.2009 (Core)
+$ uname -r
+3.10.0-1160.11.1.el7.x86_64
+</code></pre>
+<h2 id="Configuring-network-firewall-and-selinux"><a href="#Configuring-network-firewall-and-selinux" class="headerlink" title="Configuring network, firewall and selinux"></a>Configuring network, firewall and selinux</h2><p>We disable firewall and selinux to make deployment easier and this is only for study purpose.</p>
+<p>You can configure network by following the <a target="_blank" rel="noopener" href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/">official document</a>.</p>
+<h2 id="Installing-container-runtime"><a href="#Installing-container-runtime" class="headerlink" title="Installing container runtime"></a>Installing container runtime</h2><p>To run containers in Pods, Kubernetes uses a container runtime. We need to install a container runtime into each node in the cluster so that Pods can run there. The following are the common container runtimes with Kubernetes on Linux:</p>
+<ul>
+<li>containerd</li>
+<li>CRI-O</li>
+<li>Docker</li>
+</ul>
+<h3 id="Install-Docker-runtime"><a href="#Install-Docker-runtime" class="headerlink" title="Install Docker runtime"></a>Install Docker runtime</h3><p>On each node, install Docker Engine as below:</p>
+<pre><code>$ yum install -y yum-utils
+$ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+$ yum install docker-ce docker-ce-cli containerd.io
+$ systemctl start docker
+$ systemctl status docker
+</code></pre>
+<h3 id="Configure-Docker-daemon"><a href="#Configure-Docker-daemon" class="headerlink" title="Configure Docker daemon"></a>Configure Docker daemon</h3><p>On each node, configure the Docker daemon, in particular to use systemd for the management of the container’s cgroups.</p>
+<pre><code>$ sudo mkdir /etc/docker
+$ cat &lt;&lt;EOF | sudo tee /etc/docker/daemon.json
+&#123;
+  &quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;],
+  &quot;log-driver&quot;: &quot;json-file&quot;,
+  &quot;log-opts&quot;: &#123;
+    &quot;max-size&quot;: &quot;100m&quot;
+  &#125;,
+  &quot;storage-driver&quot;: &quot;overlay2&quot;
+&#125;
+EOF
+
+$ sudo systemctl enable docker
+$ sudo systemctl daemon-reload
+$ sudo systemctl restart docker
+</code></pre>
+<p><strong>Note</strong>: overlay2 is the preferred storage driver for systems running Linux kernel version 4.0 or higher, or RHEL or CentOS using version 3.10.0-514 and above.</p>
+<h2 id="Installing-kubeadm-kubelet-and-kubectl"><a href="#Installing-kubeadm-kubelet-and-kubectl" class="headerlink" title="Installing kubeadm, kubelet and kubectl"></a>Installing kubeadm, kubelet and kubectl</h2><p>We need to install the following packages on all of cluster nodes:</p>
+<ul>
+<li><p>kubeadm: the command to bootstrap the cluster.</p>
+</li>
+<li><p>kubelet: the component that runs on all of the machines in the cluster and does things like starting pods and containers.</p>
+</li>
+<li><p>kubectl: the command line util to talk to the cluster.</p>
+<p>  $ cat &lt;&lt;EOF | sudo tee &#x2F;etc&#x2F;yum.repos.d&#x2F;kubernetes.repo<br>  [kubernetes]<br>  name&#x3D;Kubernetes<br>  baseurl&#x3D;<a target="_blank" rel="noopener" href="https://packages.cloud.google.com/yum/repos/kubernetes-el7-/$basearch">https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch</a><br>  enabled&#x3D;1<br>  gpgcheck&#x3D;1<br>  repo_gpgcheck&#x3D;1<br>  gpgkey&#x3D;<a target="_blank" rel="noopener" href="https://packages.cloud.google.com/yum/doc/yum-key.gpg">https://packages.cloud.google.com/yum/doc/yum-key.gpg</a> <a target="_blank" rel="noopener" href="https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg">https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg</a><br>  exclude&#x3D;kubelet kubeadm kubectl<br>  EOF</p>
+<p>  $ sudo yum install -y kubelet kubeadm kubectl –disableexcludes&#x3D;kubernetes<br>  Installed:<br>kubeadm.x86_64 0:1.22.1-0                      kubectl.x86_64 0:1.22.1-0                      kubelet.x86_64 0:1.22.1-0<br>  $ sudo systemctl enable –now kubelet</p>
+</li>
+</ul>
+<h2 id="Configuring-a-cgroup-driver"><a href="#Configuring-a-cgroup-driver" class="headerlink" title="Configuring a cgroup driver"></a>Configuring a cgroup driver</h2><p>Both the container runtime and the kubelet have a property called “cgroup driver”, which is important for the management of cgroups on Linux machines.</p>
+<p>kubeadm allows you to pass a KubeletConfiguration structure during kubeadm init. This KubeletConfiguration can include the cgroupDriver field which controls the cgroup driver of the kubelet.</p>
+<p>A minimal example of configuring the field explicitly:</p>
+<pre><code>[root@node1 ~]# cat kubeadm-config.yaml
+kind: ClusterConfiguration
+apiVersion: kubeadm.k8s.io/v1beta3
+kubernetesVersion: v1.22.1
+---
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+cgroupDriver: systemd
+</code></pre>
+<p>Such a configuration file can then be passed to the kubeadm command:</p>
+<pre><code>[root@node1 ~]# kubeadm init --config kubeadm-config.yaml
+[init] Using Kubernetes version: v1.22.1
+[preflight] Running pre-flight checks
+[preflight] Pulling images required for setting up a Kubernetes cluster
+[preflight] This might take a minute or two, depending on the speed of your internet connection
+[preflight] You can also perform this action in beforehand using &#39;kubeadm config images pull&#39;
+[certs] Using certificateDir folder &quot;/etc/kubernetes/pki&quot;
+[certs] Generating &quot;ca&quot; certificate and key
+[certs] Generating &quot;apiserver&quot; certificate and key
+[certs] apiserver serving cert is signed for DNS names [node1 kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.96.0.1 &lt;node1-ip&gt;]
+[certs] Generating &quot;apiserver-kubelet-client&quot; certificate and key
+[certs] Generating &quot;front-proxy-ca&quot; certificate and key
+[certs] Generating &quot;front-proxy-client&quot; certificate and key
+[certs] Generating &quot;etcd/ca&quot; certificate and key
+[certs] Generating &quot;etcd/server&quot; certificate and key
+[certs] etcd/server serving cert is signed for DNS names [node1 localhost] and IPs [&lt;node1-ip&gt; 127.0.0.1 ::1]
+[certs] Generating &quot;etcd/peer&quot; certificate and key
+[certs] etcd/peer serving cert is signed for DNS names [node1 localhost] and IPs [&lt;node1-ip&gt; 127.0.0.1 ::1]
+[certs] Generating &quot;etcd/healthcheck-client&quot; certificate and key
+[certs] Generating &quot;apiserver-etcd-client&quot; certificate and key
+[certs] Generating &quot;sa&quot; key and public key
+[kubeconfig] Using kubeconfig folder &quot;/etc/kubernetes&quot;
+[kubeconfig] Writing &quot;admin.conf&quot; kubeconfig file
+[kubeconfig] Writing &quot;kubelet.conf&quot; kubeconfig file
+[kubeconfig] Writing &quot;controller-manager.conf&quot; kubeconfig file
+[kubeconfig] Writing &quot;scheduler.conf&quot; kubeconfig file
+[kubelet-start] Writing kubelet environment file with flags to file &quot;/var/lib/kubelet/kubeadm-flags.env&quot;
+[kubelet-start] Writing kubelet configuration to file &quot;/var/lib/kubelet/config.yaml&quot;
+[kubelet-start] Starting the kubelet
+[control-plane] Using manifest folder &quot;/etc/kubernetes/manifests&quot;
+[control-plane] Creating static Pod manifest for &quot;kube-apiserver&quot;
+[control-plane] Creating static Pod manifest for &quot;kube-controller-manager&quot;
+[control-plane] Creating static Pod manifest for &quot;kube-scheduler&quot;
+[etcd] Creating static Pod manifest for local etcd in &quot;/etc/kubernetes/manifests&quot;
+[wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory &quot;/etc/kubernetes/manifests&quot;. This can take up to 4m0s
+[apiclient] All control plane components are healthy after 9.002713 seconds
+[upload-config] Storing the configuration used in ConfigMap &quot;kubeadm-config&quot; in the &quot;kube-system&quot; Namespace
+[kubelet] Creating a ConfigMap &quot;kubelet-config-1.22&quot; in namespace kube-system with the configuration for the kubelets in the cluster
+[upload-certs] Skipping phase. Please see --upload-certs
+[mark-control-plane] Marking the node node1 as control-plane by adding the labels: [node-role.kubernetes.io/master(deprecated) node-role.kubernetes.io/control-plane node.kubernetes.io/exclude-from-external-load-balancers]
+[mark-control-plane] Marking the node node1 as control-plane by adding the taints [node-role.kubernetes.io/master:NoSchedule]
+[bootstrap-token] Using token: un7mhw.i9enhg84xl2tpgup
+[bootstrap-token] Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles
+[bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to get nodes
+[bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials
+[bootstrap-token] configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
+[bootstrap-token] configured RBAC rules to allow certificate rotation for all node client certificates in the cluster
+[bootstrap-token] Creating the &quot;cluster-info&quot; ConfigMap in the &quot;kube-public&quot; namespace
+[kubelet-finalize] Updating &quot;/etc/kubernetes/kubelet.conf&quot; to point to a rotatable kubelet client certificate and key
+[addons] Applied essential addon: CoreDNS
+[addons] Applied essential addon: kube-proxy
+
+Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Alternatively, if you are the root user, you can run:
+
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+
+You should now deploy a pod network to the cluster.
+Run &quot;kubectl apply -f [podnetwork].yaml&quot; with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join &lt;node1-ip&gt;:6443 --token un7mhw.i9enhg84xl2tpgup \
+    --discovery-token-ca-cert-hash sha256:5553ba3acbbec95383fc4a274e4f21126ac8101c39dfe5262718a9f0fd1b3c32
+</code></pre>
+<h2 id="Creating-a-cluster-with-kubeadm"><a href="#Creating-a-cluster-with-kubeadm" class="headerlink" title="Creating a cluster with kubeadm"></a>Creating a cluster with kubeadm</h2><p>Using kubeadm, you can create a minimum viable Kubernetes cluster that conforms to best practices.</p>
+<p>The kubeadm tool is good if you need:</p>
+<ul>
+<li>A simple way for you to try out Kubernetes, possibly for the first time.</li>
+<li>A way for existing users to automate setting up a cluster and test their application.</li>
+<li>A building block in other ecosystem and&#x2F;or installer tools with a larger scope.</li>
+</ul>
+<h3 id="Initializing-the-control-plane-node"><a href="#Initializing-the-control-plane-node" class="headerlink" title="Initializing the control-plane node"></a>Initializing the control-plane node</h3><p>The control-plane node is the machine where the control plane components run, including etcd (the cluster database) and the API Server (which the kubectl command line tool communicates with).</p>
+<ol>
+<li>(Recommended) If you have plans to upgrade this single control-plane kubeadm cluster to high availability you should specify the –control-plane-endpoint to set the shared endpoint for all control-plane nodes. Such an endpoint can be either a DNS name or an IP address of a load-balancer.</li>
+<li>Choose a Pod network add-on, and verify whether it requires any arguments to be passed to kubeadm init. Depending on which third-party provider you choose, you might need to set the –pod-network-cidr to a provider-specific value.</li>
+<li>(Optional) Since version 1.14, kubeadm tries to detect the container runtime on Linux by using a list of well known domain socket paths. To use different container runtime or if there are more than one installed on the provisioned node, specify the –cri-socket argument to kubeadm init.</li>
+<li>(Optional) Unless otherwise specified, kubeadm uses the network interface associated with the default gateway to set the advertise address for this particular control-plane node’s API server. To use a different network interface, specify the –apiserver-advertise-address&#x3D; argument to kubeadm init. To deploy an IPv6 Kubernetes cluster using IPv6 addressing, you must specify an IPv6 address, for example –apiserver-advertise-address&#x3D;fd00::101</li>
+<li>(Optional) Run kubeadm config images pull prior to kubeadm init to verify connectivity to the gcr.io container image registry</li>
+</ol>
+<p>To initialize the control-plane node run “kubeadm init “.</p>
+<pre><code>$ kubeadm init --pod-network-cidr=192.168.0.0/16 
+</code></pre>
+<p><strong>kubeadm init</strong> first runs a series of prechecks to ensure that the machine is ready to run Kubernetes. These prechecks expose warnings and exit on errors. kubeadm init then downloads and installs the cluster control plane components. This may take several minutes.</p>
+<p>In previous section <strong>Configuring a cgroup driver</strong>, we have run the command to initialize the control-plane node.</p>
+<p>If you need to run kubeadm init again, you must first <a target="_blank" rel="noopener" href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#tear-down">tear down the cluster</a>.</p>
+<pre><code>[root@node1 ~]# kubeadm reset
+</code></pre>
+<p>Execute the following commands to configure kubectl (also returned by kubeadm init) if you are the root user.</p>
+<pre><code>[root@node1 ~]# export KUBECONFIG=/etc/kubernetes/admin.conf
+</code></pre>
+<h2 id="Installing-a-Pod-network-add-on"><a href="#Installing-a-Pod-network-add-on" class="headerlink" title="Installing a Pod network add-on"></a>Installing a Pod network add-on</h2><p>In this practice, we install <a target="_blank" rel="noopener" href="https://docs.projectcalico.org/getting-started/kubernetes/quickstart">Calico</a> which is an open source networking and network security solution for containers, virtual machines, and native host-based workloads.</p>
+<pre><code>[root@node1 ~]# kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+[root@node1 ~]# kubectl create -f https://docs.projectcalico.org/manifests/custom-resources.yaml
+
+Note: Before creating this manifest, read its contents and make sure its settings are correct for your environment. For example, you may need to change the default IP pool CIDR to match your pod network CIDR.
+
+[root@node1 ~]# kubectl get nodes
+NAME                                 STATUS   ROLES                  AGE   VERSION
+node1   Ready    control-plane,master   11m   v1.22.1
+
+[root@node1 ~]# kubectl get pods -n calico-system
+NAME                                       READY   STATUS    RESTARTS   AGE
+calico-kube-controllers-868b656ff4-gv2tq   1/1     Running   0          2m41s
+calico-node-wclb2                          1/1     Running   0          2m41s
+calico-typha-d8c5c85c5-kldfh               1/1     Running   0          2m42s
+
+[root@node1 ~]# kubectl get pods --all-namespaces
+NAMESPACE          NAME                                        READY   STATUS    RESTARTS   AGE
+calico-apiserver   calico-apiserver-554fbf9554-45d6l           1/1     Running   0          15m
+calico-system      calico-kube-controllers-868b656ff4-gv2tq    1/1     Running   0          16m
+calico-system      calico-node-wclb2                           1/1     Running   0          16m
+calico-system      calico-typha-d8c5c85c5-kldfh                1/1     Running   0          16m
+kube-system        coredns-78fcd69978-lq9pp                    1/1     Running   0          18m
+kube-system        coredns-78fcd69978-nm29f                    1/1     Running   0          18m
+kube-system        etcd-node1                                  1/1     Running   1          19m
+kube-system        kube-apiserver-node1                        1/1     Running   1          19m
+kube-system        kube-controller-manager-node1               1/1     Running   0          19m
+kube-system        kube-proxy-m48qn                            1/1     Running   0          18m
+kube-system        kube-scheduler-node1                        1/1     Running   1          19m
+tigera-operator    tigera-operator-698876cbb5-dghgv            1/1     Running   0          17m
+</code></pre>
+<p>You can install only one Pod network per cluster.</p>
+<h2 id="Control-plane-node-isolation"><a href="#Control-plane-node-isolation" class="headerlink" title="Control plane node isolation"></a>Control plane node isolation</h2><p>Untaint the master so that it will be available for scheduling workloads</p>
+<pre><code>[root@node1 ~]# kubectl taint nodes --all node-role.kubernetes.io/master-
+node/node1 untainted
+</code></pre>
+<h2 id="Joining-your-nodes"><a href="#Joining-your-nodes" class="headerlink" title="Joining your nodes"></a>Joining your nodes</h2><p>The nodes are where your workloads (containers and Pods, etc) run. To add new nodes to your cluster do the following for each machine:</p>
+<ul>
+<li><p>SSH to the machine</p>
+</li>
+<li><p>Become root (e.g. sudo su -)</p>
+</li>
+<li><p>Run the command that was output by kubeadm init</p>
+<p>  [root@node2 ~]# kubeadm join <node1-ip>:6443 –token un7mhw.i9enhg84xl2tpgup –discovery-token-ca-cert-hash sha256:5553ba3acbbec95383fc4a274e4f21126ac8101c39dfe5262718a9f0fd1b3c32<br>  [root@node3 ~]# kubeadm join <node1-ip>:6443 –token un7mhw.i9enhg84xl2tpgup –discovery-token-ca-cert-hash sha256:5553ba3acbbec95383fc4a274e4f21126ac8101c39dfe5262718a9f0fd1b3c32<br>  [preflight] Running pre-flight checks<br>  [preflight] Reading configuration from the cluster…<br>  [preflight] FYI: You can look at this config file with ‘kubectl -n kube-system get cm kubeadm-config -o yaml’<br>  [kubelet-start] Writing kubelet configuration to file “&#x2F;var&#x2F;lib&#x2F;kubelet&#x2F;config.yaml”<br>  [kubelet-start] Writing kubelet environment file with flags to file “&#x2F;var&#x2F;lib&#x2F;kubelet&#x2F;kubeadm-flags.env”<br>  [kubelet-start] Starting the kubelet<br>  [kubelet-start] Waiting for the kubelet to perform the TLS Bootstrap…</p>
+<p>  This node has joined the cluster:</p>
+<ul>
+<li>Certificate signing request was sent to apiserver and a response was received.</li>
+<li>The Kubelet was informed of the new secure connection details.</li>
+</ul>
+<p>  Run ‘kubectl get nodes’ on the control-plane to see this node join the cluster.</p>
+</li>
+</ul>
+<p>If you do not have the token, you can get it by running the following command on the control-plane node:</p>
+<pre><code>$ kubeadm token list
+</code></pre>
+<p>By default, tokens expire after 24 hours. If you are joining a node to the cluster after the current token has expired, you can create a new token by running the following command on the control-plane node:</p>
+<pre><code>$ kubeadm token create
+</code></pre>
+<p>If you don’t have the value of –discovery-token-ca-cert-hash, you can get it by running the following command chain on the control-plane node:</p>
+<pre><code>$ openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2&gt;/dev/null | openssl dgst -sha256 -hex | sed &#39;s/^.* //&#39; 
+</code></pre>
+<p>We can check the cluster nodes as below.</p>
+<pre><code>[root@node1 ~]#  kubectl get nodes
+NAME    STATUS   ROLES                  AGE     VERSION
+node1   Ready    control-plane,master   37m     v1.22.1
+node2   Ready    &lt;none&gt;                 4m56s   v1.22.1
+node3   Ready    &lt;none&gt;                 7m49s   v1.22.1
+
+[root@node1 ~]# kubectl get pods --all-namespaces
+NAMESPACE          NAME                                        READY   STATUS    RESTARTS   AGE
+calico-apiserver   calico-apiserver-554fbf9554-45d6l           1/1     Running   0          34m
+calico-system      calico-kube-controllers-868b656ff4-gv2tq    1/1     Running   0          35m
+calico-system      calico-node-cl5kt                           1/1     Running   0          7m51s
+calico-system      calico-node-rtgcs                           1/1     Running   0          4m58s
+calico-system      calico-node-wclb2                           1/1     Running   0          35m
+calico-system      calico-typha-d8c5c85c5-7knvv                1/1     Running   0          7m46s
+calico-system      calico-typha-d8c5c85c5-kldfh                1/1     Running   0          35m
+calico-system      calico-typha-d8c5c85c5-qflvv                1/1     Running   0          4m56s
+kube-system        coredns-78fcd69978-lq9pp                    1/1     Running   0          37m
+kube-system        coredns-78fcd69978-nm29f                    1/1     Running   0          37m
+kube-system        etcd-node1                                  1/1     Running   1          37m
+kube-system        kube-apiserver-node1                        1/1     Running   1          37m
+kube-system        kube-controller-manager-node1               1/1     Running   0          37m
+kube-system        kube-proxy-d55xr                            1/1     Running   0          7m51s
+kube-system        kube-proxy-m48qn                            1/1     Running   0          37m
+kube-system        kube-proxy-m7drg                            1/1     Running   0          4m58s
+kube-system        kube-scheduler-node1                        1/1     Running   1          37m
+tigera-operator    tigera-operator-698876cbb5-dghgv            1/1     Running   0          35m
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/setup/production-environment/tools/">https://kubernetes.io/docs/setup/production-environment/tools/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.projectcalico.org/about/about-calico">https://docs.projectcalico.org/about/about-calico</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.projectcalico.org/getting-started/kubernetes/quickstart">https://docs.projectcalico.org/getting-started/kubernetes/quickstart</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/vdbench-performance-test-on-filesystem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/vdbench-performance-test-on-filesystem/" class="post-title-link" itemprop="url">Vdbench performance test on filesystem</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-24 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-24T07:00:00-07:00">2021-08-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="File-system-testing-Method-1"><a href="#File-system-testing-Method-1" class="headerlink" title="File system testing - Method 1"></a>File system testing - Method 1</h2><p><strong>Vdbench filesystem testing terminologies:</strong></p>
+<ul>
+<li>Anchor - A directory or a filesystme mount point. A file system structure will be created by specifying the structure information including directory depth, width, number of files and file size. Multiple anchor can be defined and used by filesystem workloads.</li>
+<li>Operation - File system operations. For example, directory create&#x2F;delete, file create&#x2F;delete, file read&#x2F;write, file open&#x2F;close, setattr and getattr.</li>
+</ul>
+<p><strong>Vdbench parameters for filesystem benchmark:</strong></p>
+<ul>
+<li>File system definition(FSD) - Describe the directory structure.</li>
+<li>File system workload definition(FWD) - Describe the workload parameters.</li>
+<li>Run definition(RD) - Describe how the workload will be run.</li>
+</ul>
+<p><strong>The following is an example of the vdbench job file.</strong></p>
+<pre><code>hd=default,vdbench=/home/tester/vdbench_test,shell=ssh,user=root
+hd=host1,jvms=1,system=192.168.1.50
+fsd=fsd1,anchor=/mnt/testdir1,depth=1,width=1,files=4,size=50g,openflag=o_direct
+fsd=fsd2,anchor=/mnt/testdir2,depth=1,width=1,files=4,size=50g,openflag=o_direct
+fwd=fwd1,fsd=fsd1,host=host1,fileio=random,operation=write,xfersize=4k,fileselect=random,threads=$th
+fwd=fwd2,fsd=fsd2,host=host1,fileio=random,operation=write,xfersize=4k,fileselect=random,threads=$th
+rd=rd1,fwd=fwd*,fwdrate=max,format=yes,elapsed=180,interval=30
+</code></pre>
+<p>Explanation:</p>
+<ol>
+<li><p>hd - it specifies which host to run the filesystem workload. The number of jvms is default to 1. It can be increased if the number of jvms can not handle very high iops with a fast system.</p>
+</li>
+<li><p>fsd - it specifies under which directory to create the filesystem structures. “depth” defines how many level of directories will be created. “width” defines how many sub-directories will be created under each parent directory. “files” defines how many files will be created under each directory. “size” defines the file size. “openflag” controls how the file will be opened.</p>
+</li>
+<li><p>fwd - it specifies what workload will be run on the target filesystems. In this example, it will run random write with 4k blocksize. The specified number of threads will be used to write corresponding number of files. The files will be randomly selected for the workload to run. Note that, the number of threads should less than or equal to the number of files. Note that, the writes to the file is single threaded unless “filiio&#x3D;(random,shared) is specified.</p>
+</li>
+<li><p>rd - it controls how the workload will be run. In this example, the workload will be run for 3 minutes. The “format” option is very useful. It will recreate the filesystem structure before the workload run. It will give us more repeatable results. “fwdrate” indicates the iorate will be unlimited in order to stress the system as much as possible.</p>
+</li>
+<li><p>In this example, we run the 4k random write workload concurrently on two filesystems. The number of threads to write each filesystem can be controlled by passing from shell variable during run time as below.</p>
+<p> .&#x2F;vdbench jobfile&#x2F;vdb.job th&#x3D;2</p>
+</li>
+</ol>
+<h2 id="File-system-testing-Method-2"><a href="#File-system-testing-Method-2" class="headerlink" title="File system testing - Method 2"></a>File system testing - Method 2</h2><p>The similar workload in the method one can also be run as below.</p>
+<pre><code>hd=default,vdbench=/home/tester/vdbench_test,shell=ssh,user=root
+hd=host1,system=192.168.1.50
+sd=sd1,host=host1,lun=/mnt/testdir1/testfile,hitarea=1m,openflag=o_direct,size=50g
+sd=sd2,host=host1,lun=/mnt/testdir2/testfile,hitarea=1m,openflag=o_direct,size=50g
+wd=wd1,sd=sd*,seekpct=100
+rd=rd1,wd=wd1,iorate=max,rdpct=0,xfersize=4K,elapsed=180,interval=30,th=$th
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.oracle.com/technetwork/server-storage/vdbench-1901683.pdf">https://www.oracle.com/technetwork/server-storage/vdbench-1901683.pdf</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1580,613 +2612,6 @@ ID 259 gen 9 top level 258 path subvol1/subvol1-snap
 <li><a target="_blank" rel="noopener" href="https://btrfs.wiki.kernel.org/index.php/SysadminGuide">https://btrfs.wiki.kernel.org/index.php/SysadminGuide</a></li>
 <li><a target="_blank" rel="noopener" href="http://marc.merlins.org/perso/btrfs/post_2014-05-21_My-Btrfs-Talk-at-Linuxcon-JP-2014.html">http://marc.merlins.org/perso/btrfs/post_2014-05-21_My-Btrfs-Talk-at-Linuxcon-JP-2014.html</a></li>
 <li><a target="_blank" rel="noopener" href="http://marc.merlins.org/linux/talks/Btrfs-LC2014-JP/Btrfs.pdf">http://marc.merlins.org/linux/talks/Btrfs-LC2014-JP/Btrfs.pdf</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/setting-up-lvm-volumes-on-a-mdraid-array/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/setting-up-lvm-volumes-on-a-mdraid-array/" class="post-title-link" itemprop="url">Setting up LVM volumes on a mdraid array</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-08-02 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-02T07:00:00-07:00">2021-08-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Setting-up-mdraid-array"><a href="#Setting-up-mdraid-array" class="headerlink" title="Setting up mdraid array"></a>Setting up mdraid array</h2><pre><code>$ mdadm --create /dev/md0 --name=mdvol --level=raid0 --raid-devices=2 /dev/nvme1n1 /dev/nvme2n1 /dev/nvme3n1 /dev/nvme4n1
-mdadm: Defaulting to version 1.2 metadata
-mdadm: array /dev/md0 started.
-
-$ cat /proc/mdstat
-Personalities : [raid0] [linear]
-md0 : active raid0 nvme4n1[3] nvme3n1[2] nvme2n1[1] nvme1n1[0]
-      15002423296 blocks super 1.2 512k chunks
-
-unused devices: &lt;none&gt;
-
-$ mdadm --detail /dev/md0
-/dev/md0:
-           Version : 1.2
-     Creation Time : Tue Feb  1 19:07:32 2022
-        Raid Level : raid0
-        Array Size : 15002423296 (13.97 TiB 15.36 TB)
-      Raid Devices : 4
-     Total Devices : 4
-       Persistence : Superblock is persistent
-
-       Update Time : Tue Feb  1 19:07:32 2022
-             State : clean
-    Active Devices : 4
-   Working Devices : 4
-    Failed Devices : 0
-     Spare Devices : 0
-
-        Chunk Size : 512K
-
-Consistency Policy : none
-
-              Name : mdvol
-              UUID : aa6fe868:3aa2391d:37a21dc8:d0f4c5f1
-            Events : 0
-
-    Number   Major   Minor   RaidDevice State
-       0     259        8        0      active sync   /dev/nvme1n1
-       1     259        9        1      active sync   /dev/nvme2n1
-       2     259       10        2      active sync   /dev/nvme3n1
-       3     259       11        3      active sync   /dev/nvme4n1
-</code></pre>
-<h2 id="Settup-LVM-volumes-on-mdraid-array"><a href="#Settup-LVM-volumes-on-mdraid-array" class="headerlink" title="Settup LVM volumes on mdraid array"></a>Settup LVM volumes on mdraid array</h2><pre><code>$ pvcreate /dev/md0
-$ pvs | egrep &quot;PV|md&quot;
-  PV             VG     Fmt  Attr PSize  PFree
-  /dev/md0              lvm2 ---  13.97t 13.97t
-$ vgcreate testvg /dev/md0  
-
-$ vgs | egrep &quot;VG|testvg&quot;
-  VG     #PV #LV #SN Attr   VSize  VFree
-  testvg   1   0   0 wz--n- 13.97t 13.97t
-
-$ lvcreate -n testlv11 -L 500G testvg -Wy --yes
-
-$ lvs | egrep &quot;LV|testvg&quot;
-  LV       VG     Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
-  testlv11 testvg -wi-a----- 500.00g  
-
-$ lvs -ao name,size,stripesize,chunksize,metadata_percent | egrep &quot;LV|testlv&quot;
-  LV       LSize   Stripe Chunk Meta%
-  testlv11 500.00g     0     0  
-
-$ mkfs.ext4 /dev/testvg/testlv11
-
-$ mkdir -p /mnt/testmnt11
-
-$ mount /dev/testvg/testlv11 /mnt/testmnt11
-
-$ lsblk
-NAME                MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
-&lt;omitted...&gt;
-nvme1n1             259:8    0  3.5T  0 disk
-└─md0                 9:0    0   14T  0 raid0
-  └─testvg-testlv11 253:3    0  500G  0 lvm   /mnt/testmnt11
-nvme2n1             259:11   0  3.5T  0 disk
-└─md0                 9:0    0   14T  0 raid0
-  └─testvg-testlv11 253:3    0  500G  0 lvm   /mnt/testmnt11
-nvme3n1             259:10   0  3.5T  0 disk
-└─md0                 9:0    0   14T  0 raid0
-  └─testvg-testlv11 253:3    0  500G  0 lvm   /mnt/testmnt11
-nvme4n1             259:9    0  3.5T  0 disk
-└─md0                 9:0    0   14T  0 raid0
-  └─testvg-testlv11 253:3    0  500G  0 lvm   /mnt/testmnt11  
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/linux-software-raid/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/linux-software-raid/" class="post-title-link" itemprop="url">Linux Software RAID</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-08-01 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-01T07:00:00-07:00">2021-08-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="What-is-RAID"><a href="#What-is-RAID" class="headerlink" title="What is RAID?"></a>What is RAID?</h2><p>RAID stands for either Redundant Array of Independent Disks, or Redundant Array of Inexpensive Disks. The intention of RAID is to spread your data across several disks, such that a single disk failure will not lose that data.</p>
-<p>The current RAID drivers in Linux support the following levels:</p>
-<ul>
-<li>Linear Mode : JBOD</li>
-<li>RAID0&#x2F;Stripe : Two or more disks. No redundancy.</li>
-<li>RAID1&#x2F;Mirror : Two or more disks. Redundancy.</li>
-<li>RAID-4 : Three or more disks. Redundancy. Not used very often.</li>
-<li>RAID-5 : Three or more disks. Redundancy. Allows one disk failure.</li>
-<li>RAID-6 : Four or more disks. Redundancy. Allows two disks failure.</li>
-<li>RAID-10 : Four or more disks. Combination of RAID-1 and RAID-0.</li>
-</ul>
-<p>Linux Software RAID (often called mdraid or MD&#x2F;RAID) makes the use of RAID possible without a hardware RAID controller.</p>
-<h2 id="mdadm-utility"><a href="#mdadm-utility" class="headerlink" title="mdadm utility"></a>mdadm utility</h2><p>The mdadm utility can be used to create and manage storage arrays using Linux’s software RAID capabilities.</p>
-<h3 id="Creating-a-RAID-Array"><a href="#Creating-a-RAID-Array" class="headerlink" title="Creating a RAID Array"></a>Creating a RAID Array</h3><p>The following example shows the creation of a RAID 0 array with 8 NVME disks.</p>
-<pre><code>$ mdadm --create /dev/md0 --name=mdvol --level=raid0 --raid-devices=8 /dev/nvme2n1 /dev/nvme3n1 /dev/nvme4n1 /dev/nvme5n1 /dev/nvme6n1 /dev/nvme7n1 /dev/nvme8n1 /dev/nvme9n1
-</code></pre>
-<h2 id="Check-RAID-array-status"><a href="#Check-RAID-array-status" class="headerlink" title="Check RAID array status"></a>Check RAID array status</h2><pre><code>$ cat /proc/mdstat
-    Personalities : [raid0]
-    md0 : active raid0 nvme9n1[7] nvme8n1[6] nvme7n1[5] nvme6n1[4] nvme5n1[3] nvme4n1[2] nvme3n1[1] nvme2n1[0]
-      30004846592 blocks super 1.2 512k chunks
-
-$  mdadm --detail /dev/md0
-    /dev/md0:
-               Version : 1.2
-         Creation Time : Mon Sep 20 17:39:47 2021
-            Raid Level : raid0
-            Array Size : 30004846592 (27.94 TiB 30.72 TB)
-          Raid Devices : 8
-         Total Devices : 8
-           Persistence : Superblock is persistent
-    
-           Update Time : Mon Sep 20 17:39:47 2021
-                 State : clean
-        Active Devices : 8
-       Working Devices : 8
-        Failed Devices : 0
-         Spare Devices : 0
-    
-            Chunk Size : 512K
-    
-    Consistency Policy : none
-    
-                  Name : host1:mdvol
-                  UUID : 5908fc3f:8c8b8851:c0875278:ea274fec
-                Events : 0
-    
-        Number   Major   Minor   RaidDevice State
-           0     259        2        0      active sync   /dev/nvme2n1
-           1     259        6        1      active sync   /dev/nvme3n1
-           2     259        7        2      active sync   /dev/nvme4n1
-           3     259        8        3      active sync   /dev/nvme5n1
-           4     259       11        4      active sync   /dev/nvme6n1
-           5     259       12        5      active sync   /dev/nvme7n1
-           6     259       10        6      active sync   /dev/nvme8n1
-           7     259        9        7      active sync   /dev/nvme9n1 
-</code></pre>
-<h3 id="Deleting-a-RAID-Array"><a href="#Deleting-a-RAID-Array" class="headerlink" title="Deleting a RAID Array"></a>Deleting a RAID Array</h3><p>If a RAID volume is no longer required, it can be deactivated using the following commands:</p>
-<pre><code>$ mdadm --stop /dev/md0
-mdadm: stopped /dev/md0
-</code></pre>
-<p>A Linux software RAID array stores all of the necessary information about a RAID array in a superblock. The superblock for the individual devices can be deleted by the following commands. By doing this, you can re-use these disks for new RAID arrays.</p>
-<pre><code>$ mdadm --zero-superblock /dev/nvme2n1 /dev/nvme3n1 /dev/nvme4n1 /dev/nvme5n1 /dev/nvme6n1 /dev/nvme7n1 /dev/nvme8n1 /dev/nvme9n1
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://raid.wiki.kernel.org/index.php/Linux_Raid">https://raid.wiki.kernel.org/index.php/Linux_Raid</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.thomas-krenn.com/en/wiki/Linux_Software_RAID_Information">https://www.thomas-krenn.com/en/wiki/Linux_Software_RAID_Information</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/raid-redundant-array-of-inexpensive-disks/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/raid-redundant-array-of-inexpensive-disks/" class="post-title-link" itemprop="url">RAID - Redundant Array of Inexpensive Disks</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-07-31 07:00:00" itemprop="dateCreated datePublished" datetime="2021-07-31T07:00:00-07:00">2021-07-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>RAID stands for Redundant Array of Inexpensive (Independent) Disks.</p>
-<p>On most situations you will be using one of the following four levels of RAIDs.</p>
-<ul>
-<li>RAID 0</li>
-<li>RAID 1</li>
-<li>RAID 5(6)</li>
-<li>RAID 10 (also known as RAID 1+0)</li>
-</ul>
-<h2 id="RAID-0"><a href="#RAID-0" class="headerlink" title="RAID 0"></a>RAID 0</h2><p><img src="/images/raid0.svg" alt="Image"></p>
-<p>Following are the key points to remember for RAID level 0.</p>
-<ul>
-<li>Minimum 2 disks.</li>
-<li>Excellent performance (as blocks are striped).</li>
-<li>No redundancy (no mirror, no parity).</li>
-<li>Don’t use this for any critical system.</li>
-</ul>
-<h2 id="RAID-1"><a href="#RAID-1" class="headerlink" title="RAID 1"></a>RAID 1</h2><p><img src="/images/raid1.svg" alt="Image"></p>
-<p>Following are the key points to remember for RAID level 1.</p>
-<ul>
-<li>Minimum 2 disks.</li>
-<li>Good performance (no striping. no parity).</li>
-<li>Excellent redundancy (as blocks are mirrored).</li>
-</ul>
-<h2 id="RAID-5-6"><a href="#RAID-5-6" class="headerlink" title="RAID 5(6)"></a>RAID 5(6)</h2><p><img src="/images/raid5.svg" alt="Image"></p>
-<p>Following are the key points to remember for RAID level 5.</p>
-<ul>
-<li>Minimum 3 disks.</li>
-<li>Good performance (as blocks are striped).</li>
-<li>Good redundancy (distributed parity).</li>
-<li>Best cost-effective option providing both performance and redundancy. Use this for DB that is heavily read oriented. Write operations will be slow.</li>
-</ul>
-<p>RAID6 allows two disks failure while RAID5 allows only one disk failure.</p>
-<h2 id="RAID-10"><a href="#RAID-10" class="headerlink" title="RAID 10"></a>RAID 10</h2><p><img src="/images/raid10.svg" alt="Image"></p>
-<p>Following are the key points to remember for RAID level 10.</p>
-<ul>
-<li>Minimum 4 disks.</li>
-<li>This is also called as “stripe of mirrors”</li>
-<li>Excellent redundancy (as blocks are mirrored)</li>
-<li>Excellent performance (as blocks are striped)</li>
-<li>If you can afford the dollar, this is the BEST option for any mission critical applications (especially databases).</li>
-</ul>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.prepressure.com/library/technology/raid">https://www.prepressure.com/library/technology/raid</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.thegeekstuff.com/2010/08/raid-levels-tutorial/">https://www.thegeekstuff.com/2010/08/raid-levels-tutorial/</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/upgrade-kernel-version-in-centos-7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/upgrade-kernel-version-in-centos-7/" class="post-title-link" itemprop="url">Upgrade kernel version in centos 7</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-07-18 07:00:00" itemprop="dateCreated datePublished" datetime="2021-07-18T07:00:00-07:00">2021-07-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Before-upgrade"><a href="#Before-upgrade" class="headerlink" title="Before upgrade"></a>Before upgrade</h2><pre><code>$ cat /etc/centos-release
-CentOS Linux release 7.4.1708 (Core)
-
-$ uname -r
-3.10.0-693.el7.x86_64
-
-$ cat /boot/grub2/grubenv
-saved_entry=CentOS Linux (3.10.0-693.el7.x86_64) 7 (Core)
-</code></pre>
-<h2 id="Install-the-newer-kernel-package"><a href="#Install-the-newer-kernel-package" class="headerlink" title="Install the newer kernel package"></a>Install the newer kernel package</h2><pre><code>$ rpm -ivh kernel-ml-5.7.12-1.el7.elrepo.x86_64.rpm
-warning: kernel-ml-5.7.12-1.el7.elrepo.x86_64.rpm: Header V4 DSA/SHA1 Signature, key ID baadae52: NOKEY
-Preparing...                          ################################# [100%]
-Updating / installing...
-   1:kernel-ml-5.7.12-1.el7.elrepo    ################################# [100%]
-
-$ rpm -ivh kernel-ml-devel-5.7.12-1.el7.elrepo.x86_64.rpm
-warning: kernel-ml-devel-5.7.12-1.el7.elrepo.x86_64.rpm: Header V4 DSA/SHA1 Signature, key ID baadae52: NOKEY
-Preparing...                          ################################# [100%]
-Updating / installing...
-   1:kernel-ml-devel-5.7.12-1.el7.elre################################# [100%]
-
-$  rpm -qa | grep kernel
-kernel-ml-devel-5.7.12-1.el7.elrepo.x86_64
-kernel-3.10.0-693.el7.x86_64
-kernel-tools-3.10.0-693.el7.x86_64
-kernel-ml-5.7.12-1.el7.elrepo.x86_64
-kernel-tools-libs-3.10.0-693.el7.x86_64
-</code></pre>
-<h2 id="Set-the-default-boot-kernel-entry"><a href="#Set-the-default-boot-kernel-entry" class="headerlink" title="Set the default boot kernel entry"></a>Set the default boot kernel entry</h2><p><strong>Notes:</strong> if &#x2F;etc&#x2F;grub2.cfg does not exist, do next step to rebuild the GRUB2 and come back later after that.</p>
-<pre><code>$ awk -F\&#39; &#39;$1==&quot;menuentry &quot; &#123;print $2&#125;&#39; /etc/grub2.cfg
-CentOS Linux (5.7.12-1.el7.elrepo.x86_64) 7 (Core)
-CentOS Linux (3.10.0-693.el7.x86_64) 7 (Core)
-CentOS Linux (0-rescue-8ef36acf9f544b90bf0621450fe05f75) 7 (Core)
-
-$ grub2-set-default 0 
-$ grep saved /boot/grub2/grubenv
-saved_entry=0
-</code></pre>
-<h2 id="Rebuild-the-GRUB2-configuration"><a href="#Rebuild-the-GRUB2-configuration" class="headerlink" title="Rebuild the GRUB2 configuration"></a>Rebuild the GRUB2 configuration</h2><pre><code>$ grub2-mkconfig -o /boot/grub2/grub.cfg
-Generating grub configuration file ...
-Found linux image: /boot/vmlinuz-5.7.12-1.el7.elrepo.x86_64
-Found initrd image: /boot/initramfs-5.7.12-1.el7.elrepo.x86_64.img
-Found linux image: /boot/vmlinuz-3.10.0-693.el7.x86_64
-Found initrd image: /boot/initramfs-3.10.0-693.el7.x86_64.img
-Found linux image: /boot/vmlinuz-0-rescue-8ef36acf9f544b90bf0621450fe05f75
-Found initrd image: /boot/initramfs-0-rescue-8ef36acf9f544b90bf0621450fe05f75.img
-done
-</code></pre>
-<h2 id="Reboot-the-system"><a href="#Reboot-the-system" class="headerlink" title="Reboot the system"></a>Reboot the system</h2><pre><code>$ reboot
-</code></pre>
-<h2 id="Verify-the-new-kernel-version"><a href="#Verify-the-new-kernel-version" class="headerlink" title="Verify the new kernel version"></a>Verify the new kernel version</h2><pre><code>$ uname -r
-5.7.12-1.el7.elrepo.x86_64
-$ cat /etc/centos-release
-CentOS Linux release 7.4.1708 (Core)
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.golinuxcloud.com/set-default-boot-kernel-version-old-previous-rhel-linux/">https://www.golinuxcloud.com/set-default-boot-kernel-version-old-previous-rhel-linux/</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.tecmint.com/install-upgrade-kernel-version-in-centos-7/">https://www.tecmint.com/install-upgrade-kernel-version-in-centos-7/</a></li>
 </ul>
 
       
