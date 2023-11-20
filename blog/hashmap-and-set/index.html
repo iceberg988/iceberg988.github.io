@@ -28,7 +28,7 @@
 <meta property="og:description" content="IntroHashmap is indexed data structures. A hash map makes use of a hash function to compute an index with a key into an array of buckets or slots. Its value is mapped to the bucket with the correspond">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-10-03T22:06:23.000Z">
-<meta property="article:modified_time" content="2023-11-06T04:24:52.000Z">
+<meta property="article:modified_time" content="2023-11-20T00:44:40.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="Data structure">
@@ -156,7 +156,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-380-Insert-Delete-GetRandom-O-1"><span class="nav-number">2.</span> <span class="nav-text">[Leetcode 380] Insert Delete GetRandom O(1)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-1657-Determine-if-Two-Strings-Are-Close"><span class="nav-number">3.</span> <span class="nav-text">[Leetcode 1657] Determine if Two Strings Are Close</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-128-Longest-Consecutive-Sequence"><span class="nav-number">2.</span> <span class="nav-text">[Leetcode 128] Longest Consecutive Sequence</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-380-Insert-Delete-GetRandom-O-1"><span class="nav-number">3.</span> <span class="nav-text">[Leetcode 380] Insert Delete GetRandom O(1)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-1657-Determine-if-Two-Strings-Are-Close"><span class="nav-number">4.</span> <span class="nav-text">[Leetcode 1657] Determine if Two Strings Are Close</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -208,13 +208,6 @@
   </div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/hash-table-implementation-in-python/" rel="bookmark">
-        <time class="popular-posts-time">2023-04-16</time>
-        <br>
-      Hash Table implementation in Python
-      </a>
-    </li>
-    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/blog/algorithm-questions/" rel="bookmark">
         <time class="popular-posts-time">2023-10-17</time>
         <br>
@@ -222,10 +215,10 @@
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/common-used-functions-in-python/" rel="bookmark">
-        <time class="popular-posts-time">2023-10-20</time>
+      <a class="popular-posts-link" href="/blog/hash-table-implementation-in-python/" rel="bookmark">
+        <time class="popular-posts-time">2023-04-16</time>
         <br>
-      Common used functions in Python
+      Hash Table implementation in Python
       </a>
     </li>
     <li class="popular-posts-item">
@@ -233,6 +226,13 @@
         <time class="popular-posts-time">2023-10-02</time>
         <br>
       Sliding window
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/common-used-functions-in-python/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-20</time>
+        <br>
+      Common used functions in Python
       </a>
     </li>
     <li class="popular-posts-item">
@@ -298,7 +298,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-11-05 20:24:52" itemprop="dateModified" datetime="2023-11-05T20:24:52-08:00">2023-11-05</time>
+      <time title="Modified: 2023-11-19 16:44:40" itemprop="dateModified" datetime="2023-11-19T16:44:40-08:00">2023-11-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -332,6 +332,22 @@
     
     <div class="post-body" itemprop="articleBody"><h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p><strong>Hashmap</strong> is indexed data structures. A hash map makes use of a hash function to compute an index with a key into an array of buckets or slots. Its value is mapped to the bucket with the corresponding index. The key is unique and immutable. Hash function is the core of <a href="https://www.flamingbytes.com/blog/hash-table-implementation-in-python/">implementing a hash map</a>. It takes in the key and translates it to the index of a bucket in the bucket list. Ideal hashing should produce a different index for each key. However, collisions can occur. When hashing gives an existing index, we can simply use a bucket for multiple values by appending a list or by rehashing.<span id="more"></span></p>
 <p>A <strong>Set</strong> in Python is an unordered collection data type that is iterable, mutable and has no duplicate elements. Set are represented by {} (values enclosed in curly braces). The major advantage of using a set, as opposed to a list, is that it has a highly optimized method for checking whether a specific element is contained in the set. This is based on a data structure known as a hash table. Since sets are unordered, we cannot access items using indexes as we do in lists.</p>
+<h2 id="Leetcode-128-Longest-Consecutive-Sequence"><a href="#Leetcode-128-Longest-Consecutive-Sequence" class="headerlink" title="[Leetcode 128] Longest Consecutive Sequence"></a>[Leetcode 128] Longest Consecutive Sequence</h2><p>Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.</p>
+<p>You must write an algorithm that runs in O(n) time.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [100,4,200,1,3,2]</span><br><span class="line">Output: 4</span><br><span class="line">Explanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefore its length is 4.</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: nums = [0,3,7,2,5,8,4,6,0,1]</span><br><span class="line">Output: 9</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>0 &lt;&#x3D; nums.length &lt;&#x3D; 10^5</li>
+<li>-10^9 &lt;&#x3D; nums[i] &lt;&#x3D; 10^9</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">longestConsecutive</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        s1 = <span class="built_in">set</span>(nums)</span><br><span class="line">        longest = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">            <span class="comment"># found a new sequence and count its length</span></span><br><span class="line">            <span class="keyword">if</span> num - <span class="number">1</span> <span class="keyword">not</span> <span class="keyword">in</span> s1:</span><br><span class="line">                count = <span class="number">0</span></span><br><span class="line">                <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">                    <span class="keyword">if</span> num <span class="keyword">in</span> s1:</span><br><span class="line">                        count += <span class="number">1</span></span><br><span class="line">                        num += <span class="number">1</span></span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">                <span class="comment"># save to longest</span></span><br><span class="line">                longest = <span class="built_in">max</span>(longest, count)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> longest</span><br></pre></td></tr></table></figure>
+
 <h2 id="Leetcode-380-Insert-Delete-GetRandom-O-1"><a href="#Leetcode-380-Insert-Delete-GetRandom-O-1" class="headerlink" title="[Leetcode 380] Insert Delete GetRandom O(1)"></a>[Leetcode 380] Insert Delete GetRandom O(1)</h2><p>Implement the RandomizedSet class:</p>
 <ul>
 <li>RandomizedSet() Initializes the RandomizedSet object.</li>
