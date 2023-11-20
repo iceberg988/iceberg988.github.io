@@ -10080,6 +10080,25 @@ print(hash_table)
     <url>/blog/hashmap-and-set/</url>
     <content><![CDATA[<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p><strong>Hashmap</strong> is indexed data structures. A hash map makes use of a hash function to compute an index with a key into an array of buckets or slots. Its value is mapped to the bucket with the corresponding index. The key is unique and immutable. Hash function is the core of <a href="https://www.flamingbytes.com/blog/hash-table-implementation-in-python/">implementing a hash map</a>. It takes in the key and translates it to the index of a bucket in the bucket list. Ideal hashing should produce a different index for each key. However, collisions can occur. When hashing gives an existing index, we can simply use a bucket for multiple values by appending a list or by rehashing.<span id="more"></span></p>
 <p>A <strong>Set</strong> in Python is an unordered collection data type that is iterable, mutable and has no duplicate elements. Set are represented by {} (values enclosed in curly braces). The major advantage of using a set, as opposed to a list, is that it has a highly optimized method for checking whether a specific element is contained in the set. This is based on a data structure known as a hash table. Since sets are unordered, we cannot access items using indexes as we do in lists.</p>
+<h2 id="Leetcode-49-Group-Anagrams"><a href="#Leetcode-49-Group-Anagrams" class="headerlink" title="[Leetcode 49] Group Anagrams"></a>[Leetcode 49] Group Anagrams</h2><p>Given an array of strings strs, group the anagrams together. You can return the answer in any order. An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: strs = [&quot;eat&quot;,&quot;tea&quot;,&quot;tan&quot;,&quot;ate&quot;,&quot;nat&quot;,&quot;bat&quot;]</span><br><span class="line">Output: [[&quot;bat&quot;],[&quot;nat&quot;,&quot;tan&quot;],[&quot;ate&quot;,&quot;eat&quot;,&quot;tea&quot;]]</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: strs = [&quot;&quot;]</span><br><span class="line">Output: [[&quot;&quot;]]</span><br></pre></td></tr></table></figure>
+
+<p>Example 3:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input: strs = [&quot;a&quot;]</span><br><span class="line">Output: [[&quot;a&quot;]]</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>1 &lt;&#x3D; strs.length &lt;&#x3D; 10^4</li>
+<li>0 &lt;&#x3D; strs[i].length &lt;&#x3D; 100</li>
+<li>strs[i] consists of lowercase English letters.</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">groupAnagrams</span>(<span class="params">self, strs: <span class="type">List</span>[<span class="built_in">str</span>]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">str</span>]]:</span><br><span class="line">        m1 = defaultdict(<span class="built_in">list</span>)</span><br><span class="line">        <span class="keyword">for</span> s <span class="keyword">in</span> strs:</span><br><span class="line">            s1 = <span class="string">&#x27;&#x27;</span>.join(<span class="built_in">sorted</span>(s))</span><br><span class="line">            m1[s1].append(s)</span><br><span class="line"></span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">for</span> group <span class="keyword">in</span> m1.values():</span><br><span class="line">            res.append(group)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
 <h2 id="Leetcode-128-Longest-Consecutive-Sequence"><a href="#Leetcode-128-Longest-Consecutive-Sequence" class="headerlink" title="[Leetcode 128] Longest Consecutive Sequence"></a>[Leetcode 128] Longest Consecutive Sequence</h2><p>Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.</p>
 <p>You must write an algorithm that runs in O(n) time.</p>
 <p>Example 1:</p>
