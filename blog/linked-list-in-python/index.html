@@ -28,7 +28,7 @@
 <meta property="og:description" content="IntroA linked list is a data structure which represents a sequence of nodes. In a singly linked list, each node points to the next node. In a doubly linked list, each node points to both the next and">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-10-11T19:39:01.000Z">
-<meta property="article:modified_time" content="2023-10-29T00:31:08.000Z">
+<meta property="article:modified_time" content="2023-11-20T05:24:16.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="Data structure">
@@ -155,7 +155,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-2130-Maximum-Twin-Sum-of-a-Linked-List"><span class="nav-number">2.</span> <span class="nav-text">[Leetcode 2130] Maximum Twin Sum of a Linked List</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-92-Reverse-Linked-List-II"><span class="nav-number">2.</span> <span class="nav-text">[Leetcode 92] Reverse Linked List II</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-2130-Maximum-Twin-Sum-of-a-Linked-List"><span class="nav-number">3.</span> <span class="nav-text">[Leetcode 2130] Maximum Twin Sum of a Linked List</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -214,24 +214,10 @@
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/sliding-window/" rel="bookmark">
-        <time class="popular-posts-time">2023-10-02</time>
+      <a class="popular-posts-link" href="/blog/binary-tree-in-python/" rel="bookmark">
+        <time class="popular-posts-time">2023-11-01</time>
         <br>
-      Sliding window
-      </a>
-    </li>
-    <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/stack-implementation-in-python/" rel="bookmark">
-        <time class="popular-posts-time">2023-04-04</time>
-        <br>
-      Stack implementation in Python
-      </a>
-    </li>
-    <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/queue-implementation-in-python/" rel="bookmark">
-        <time class="popular-posts-time">2023-04-05</time>
-        <br>
-      Queue implementation in Python
+      Binary tree in Python
       </a>
     </li>
     <li class="popular-posts-item">
@@ -239,6 +225,20 @@
         <time class="popular-posts-time">2023-10-15</time>
         <br>
       Bit manipulation
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/sliding-window/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-02</time>
+        <br>
+      Sliding window
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/binary-search-tree-in-python/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-06</time>
+        <br>
+      Binary search tree in Python
       </a>
     </li>
   </ul>
@@ -297,7 +297,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-28 17:31:08" itemprop="dateModified" datetime="2023-10-28T17:31:08-07:00">2023-10-28</time>
+      <time title="Modified: 2023-11-19 21:24:16" itemprop="dateModified" datetime="2023-11-19T21:24:16-08:00">2023-11-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -330,6 +330,23 @@
     
     
     <div class="post-body" itemprop="articleBody"><h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>A <a href="https://www.flamingbytes.com/blog/linked-list-implementation-in-python">linked list</a> is a data structure which represents a sequence of nodes. In a singly linked list, each node points to the next node. In a doubly linked list, each node points to both the next and previous node.<span id="more"></span></p>
+<h2 id="Leetcode-92-Reverse-Linked-List-II"><a href="#Leetcode-92-Reverse-Linked-List-II" class="headerlink" title="[Leetcode 92] Reverse Linked List II"></a>[Leetcode 92] Reverse Linked List II</h2><p>Given the head of a singly linked list and two integers left and right where left &lt;&#x3D; right, reverse the nodes of the list from position left to position right, and return the reversed list.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: head = [1,2,3,4,5], left = 2, right = 4</span><br><span class="line">Output: [1,4,3,2,5]</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: head = [5], left = 1, right = 1</span><br><span class="line">Output: [5]</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>The number of nodes in the list is n.</li>
+<li>1 &lt;&#x3D; n &lt;&#x3D; 500</li>
+<li>-500 &lt;&#x3D; Node.val &lt;&#x3D; 500</li>
+<li>1 &lt;&#x3D; left &lt;&#x3D; right &lt;&#x3D; n</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"># class ListNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, val=0, next=None):</span></span><br><span class="line"><span class="comment">#         self.val = val</span></span><br><span class="line"><span class="comment">#         self.next = next</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">reverseBetween</span>(<span class="params">self, head: <span class="type">Optional</span>[ListNode], left: <span class="built_in">int</span>, right: <span class="built_in">int</span></span>) -&gt; <span class="type">Optional</span>[ListNode]:</span><br><span class="line">        dummy = ListNode(<span class="number">0</span>)</span><br><span class="line">        dummy.<span class="built_in">next</span> = head</span><br><span class="line">        prev = dummy</span><br><span class="line"></span><br><span class="line">        mthNode = head</span><br><span class="line"></span><br><span class="line">        i = <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> i &lt; left:</span><br><span class="line">            prev = mthNode</span><br><span class="line">            mthNode = mthNode.<span class="built_in">next</span></span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        nthNode = mthNode</span><br><span class="line">        <span class="keyword">while</span> i &lt; right:</span><br><span class="line">            nthNode = nthNode.<span class="built_in">next</span></span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># disconnect prev and first node</span></span><br><span class="line">        prev.<span class="built_in">next</span> = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># disconnect last node and its next</span></span><br><span class="line">        second = nthNode.<span class="built_in">next</span></span><br><span class="line">        nthNode.<span class="built_in">next</span> = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># reverse list between first and last node</span></span><br><span class="line">        curr = mthNode</span><br><span class="line">        tempHead = curr</span><br><span class="line">        <span class="keyword">while</span> curr.<span class="built_in">next</span>:</span><br><span class="line">            temp = curr.<span class="built_in">next</span></span><br><span class="line">            curr.<span class="built_in">next</span> = curr.<span class="built_in">next</span>.<span class="built_in">next</span></span><br><span class="line"></span><br><span class="line">            temp.<span class="built_in">next</span> = tempHead</span><br><span class="line">            tempHead = temp</span><br><span class="line"></span><br><span class="line">        <span class="comment"># connect prev and new head of reversed list</span></span><br><span class="line">        prev.<span class="built_in">next</span> = tempHead</span><br><span class="line"></span><br><span class="line">        <span class="comment"># connect the new last node and second half list</span></span><br><span class="line">        curr.<span class="built_in">next</span> = second</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dummy.<span class="built_in">next</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="Leetcode-2130-Maximum-Twin-Sum-of-a-Linked-List"><a href="#Leetcode-2130-Maximum-Twin-Sum-of-a-Linked-List" class="headerlink" title="[Leetcode 2130] Maximum Twin Sum of a Linked List"></a>[Leetcode 2130] Maximum Twin Sum of a Linked List</h2><p>In a linked list of size n, where n is even, the ith node (0-indexed) of the linked list is known as the twin of the (n-1-i)th node, if 0 &lt;&#x3D; i &lt;&#x3D; (n &#x2F; 2) - 1.</p>
 <ul>
 <li>For example, if n &#x3D; 4, then node 0 is the twin of node 3, and node 1 is the twin of node 2. These are the only nodes with twins for n &#x3D; 4.</li>
