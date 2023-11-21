@@ -24572,7 +24572,9 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
   <entry>
     <title>A collection of top classic coding questions</title>
     <url>/blog/top-classic-coding-questions/</url>
-    <content><![CDATA[<h2 id="Leetcoe-146-LRU-Cache"><a href="#Leetcoe-146-LRU-Cache" class="headerlink" title="[Leetcoe 146] LRU Cache"></a>[Leetcoe 146] LRU Cache</h2><p>Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.</p>
+    <content><![CDATA[<span id="more"></span>
+
+<h2 id="Leetcoe-146-LRU-Cache"><a href="#Leetcoe-146-LRU-Cache" class="headerlink" title="[Leetcoe 146] LRU Cache"></a>[Leetcoe 146] LRU Cache</h2><p>Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.</p>
 <p>Implement the LRUCache class:</p>
 <ul>
 <li>LRUCache(int capacity) Initialize the LRU cache with positive size capacity.</li>
