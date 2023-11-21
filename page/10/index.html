@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">267</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">268</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">267</span>
+          <span class="site-state-item-count">268</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,242 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-r-to-analyze-us-covid-waves-and-peaks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/using-r-to-analyze-us-covid-waves-and-peaks/" class="post-title-link" itemprop="url">Using R to analyze US COVID pandemic waves and peaks</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-01-12 02:33:00" itemprop="dateCreated datePublished" datetime="2023-01-12T02:33:00-08:00">2023-01-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h2><p>According to weekly data between 2020 to 2022, we want to get to know the waves and peaks of COVID pandemic in these years.</p>
+<h2 id="Download-the-data"><a href="#Download-the-data" class="headerlink" title="Download the data"></a>Download the data</h2><p>We will continue to use NCHS(National Center for Health Statistics) as our data source.</p>
+<p>Visit <a target="_blank" rel="noopener" href="https://data.cdc.gov/browse?category=NCHS&amp;sortBy=last_modified">https://data.cdc.gov/browse?category=NCHS&sortBy=last_modified</a>, and search <code>Provisional COVID-19 Death Counts by Week</code>, we will find the data we are intrest.</p>
+<p><a target="_blank" rel="noopener" href="https://data.cdc.gov/NCHS/Provisional-COVID-19-Death-Counts-by-Week-Ending-D/r8kw-7aab">https://data.cdc.gov/NCHS/Provisional-COVID-19-Death-Counts-by-Week-Ending-D/r8kw-7aab</a>, in this page, we can export data into csv file.</p>
+<p>With that, we may get the data source csv, <code>Provisional_COVID-19_Death_Counts_by_Week_Ending_Date_and_State.csv</code>.</p>
+<h2 id="Load-the-data"><a href="#Load-the-data" class="headerlink" title="Load the data"></a>Load the data</h2><pre><code>library(&quot;dplyr&quot;)
+library(&quot;janitor&quot;)
+library(&quot;tidyr&quot;)
+library(&quot;readr&quot;)
+df &lt;- readr::read_csv(file.path(getwd(), &quot;Provisional_COVID-19_Death_Counts_by_Week_Ending_Date_and_State.csv&quot;), col_names = TRUE)
+df &lt;- clean_names(df)
+tmp_start_date &lt;- strptime(df$start_date, &quot;%m/%d/%Y&quot;)
+df$start_date &lt;- format(tmp_start_date, &quot;%Y-%m-%d&quot;)
+
+ &gt; glimpse(df)
+ Rows: 10,800
+ Columns: 17
+ $ data_as_of                             &lt;chr&gt; &quot;01/09/2023&quot;, &quot;01/09/2023&quot;, &quot;01…
+ $ start_date                             &lt;chr&gt; &quot;2019-12-29&quot;, &quot;2020-01-05&quot;, &quot;20…
+ $ end_date                               &lt;chr&gt; &quot;01/04/2020&quot;, &quot;01/11/2020&quot;, &quot;01…
+ $ group                                  &lt;chr&gt; &quot;By Week&quot;, &quot;By Week&quot;, &quot;By Week&quot;…
+ $ year                                   &lt;chr&gt; &quot;2019/2020&quot;, &quot;2020&quot;, &quot;2020&quot;, &quot;2…
+ $ month                                  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA,…
+ $ mmwr_week                              &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, …
+ $ week_ending_date                       &lt;chr&gt; &quot;01/04/2020&quot;, &quot;01/11/2020&quot;, &quot;01…
+ $ state                                  &lt;chr&gt; &quot;United States&quot;, &quot;United States…
+ $ covid_19_deaths                        &lt;dbl&gt; 0, 1, 2, 3, 0, 4, 6, 6, 9, 38, …
+ $ total_deaths                           &lt;dbl&gt; 60176, 60734, 59362, 59162, 588…
+ $ percent_of_expected_deaths             &lt;dbl&gt; 98, 97, 98, 99, 99, 100, 100, 1…
+ $ pneumonia_deaths                       &lt;dbl&gt; 4111, 4153, 4066, 3915, 3818, 3…
+ $ pneumonia_and_covid_19_deaths          &lt;dbl&gt; 0, 1, 2, 0, 0, 1, 1, 3, 5, 19, …
+ $ influenza_deaths                       &lt;dbl&gt; 434, 475, 468, 500, 481, 520, 5…
+ $ pneumonia_influenza_or_covid_19_deaths &lt;dbl&gt; 4545, 4628, 4534, 4418, 4299, 4…
+ $ footnote                               &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA,…
+
+ !&gt; df
+ # A tibble: 10,800 × 17
+    data_as_of start_date end_d…¹ group year  month mmwr_…² week_…³ state covid…⁴
+    &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;
+  1 01/09/2023 2019-12-29 01/04/… By W… 2019…    NA       1 01/04/… Unit…       0
+  2 01/09/2023 2020-01-05 01/11/… By W… 2020     NA       2 01/11/… Unit…       1
+  3 01/09/2023 2020-01-12 01/18/… By W… 2020     NA       3 01/18/… Unit…       2
+  4 01/09/2023 2020-01-19 01/25/… By W… 2020     NA       4 01/25/… Unit…       3
+  5 01/09/2023 2020-01-26 02/01/… By W… 2020     NA       5 02/01/… Unit…       0
+  6 01/09/2023 2020-02-02 02/08/… By W… 2020     NA       6 02/08/… Unit…       4
+  7 01/09/2023 2020-02-09 02/15/… By W… 2020     NA       7 02/15/… Unit…       6
+  8 01/09/2023 2020-02-16 02/22/… By W… 2020     NA       8 02/22/… Unit…       6
+  9 01/09/2023 2020-02-23 02/29/… By W… 2020     NA       9 02/29/… Unit…       9
+ 10 01/09/2023 2020-03-01 03/07/… By W… 2020     NA      10 03/07/… Unit…      38
+ # … with 10,790 more rows, 7 more variables: total_deaths &lt;dbl&gt;,
+ #   percent_of_expected_deaths &lt;dbl&gt;, pneumonia_deaths &lt;dbl&gt;,
+ #   pneumonia_and_covid_19_deaths &lt;dbl&gt;, influenza_deaths &lt;dbl&gt;,
+ #   pneumonia_influenza_or_covid_19_deaths &lt;dbl&gt;, footnote &lt;chr&gt;, and
+ #   abbreviated variable names ¹ end_date, ² mmwr_week, ³ week_ending_date,
+ #   ⁴ covid_19_deaths
+ # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
+</code></pre>
+<h2 id="Identify-the-data-we-want-to-focus"><a href="#Identify-the-data-we-want-to-focus" class="headerlink" title="Identify the data we want to focus"></a>Identify the data we want to focus</h2><p>As we can see, there are 4 diffrent groups, and it has the <code>whole United states</code> and each state’s data</p>
+<pre><code>&gt; unique(df$group)
+[1] &quot;By Week&quot;  &quot;By Month&quot; &quot;By Year&quot;  &quot;By Total&quot;
+&gt;
+</code></pre>
+<p>We only want to get the weekly data, so we may want to <code>filter</code> with “group&#x3D;By Week”, and “state&#x3D;United states”</p>
+<p>in the mean time, we may only want to <code>select</code> only 2 columns.</p>
+<ul>
+<li><p>start_date</p>
+</li>
+<li><p>covid_19_deaths</p>
+<blockquote>
+<p>df1 &lt;- df %&gt;%<br>      filter(state &#x3D;&#x3D; “United States” &amp; group &#x3D;&#x3D; “By Week”) %&gt;%<br>      select(start_date, covid_19_deaths)<br>print(df1,n&#x3D;20)</p>
+</blockquote>
+<ul>
+<li><blockquote>
+<h1 id="A-tibble-158-×-2"><a href="#A-tibble-158-×-2" class="headerlink" title="A tibble: 158 × 2"></a>A tibble: 158 × 2</h1><p> start_date covid_19_deaths<br> <chr>                <dbl><br>   1 2019-12-29               0<br>   2 2020-01-05               1<br>   3 2020-01-12               2<br>   4 2020-01-19               3<br>   5 2020-01-26               0<br>   6 2020-02-02               4<br>   7 2020-02-09               6<br>   8 2020-02-16               6<br>   9 2020-02-23               9<br>  10 2020-03-01              38<br>  11 2020-03-08              60<br>  12 2020-03-15             588<br>  13 2020-03-22            3226<br>  14 2020-03-29           10141<br>  15 2020-04-05           16347<br>  16 2020-04-12           17221<br>  17 2020-04-19           15557<br>  18 2020-04-26           13223<br>  19 2020-05-03           11243<br>  20 2020-05-10            9239<br>  …</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Draw-the-graph-to-see-the-wave"><a href="#Draw-the-graph-to-see-the-wave" class="headerlink" title="Draw the graph to see the wave"></a>Draw the graph to see the wave</h2><pre><code>library(&quot;ggplot2&quot;)
+library(&quot;sjPlot&quot;)
+p = ggplot(df1, aes( x=start_date, y=covid_19_deaths, group=1)) +
+    geom_line(color=&quot;blue&quot;) +
+    theme(axis.text.x=element_text(angle=45,hjust=1,size=5))
+save_plot(&quot;covid_plot_weekly_wave.svg&quot;, fig = p, width=60, height=20)
+</code></pre>
+<p><img src="/images/covid_plot_weekly_wave.svg" alt="Image"></p>
+<h2 id="Find-the-peak-by-R-mark-it-in-the-graph"><a href="#Find-the-peak-by-R-mark-it-in-the-graph" class="headerlink" title="Find the peak by R mark it in the graph"></a>Find the peak by R mark it in the graph</h2><p>From above graph, we can easily to figure out the waves and peaks, but we also can let R help us to do it, it’s pretty useful if we have to deal with many data and many graphs.</p>
+<p>To achive it, firstly we can call <code>findpeaks</code> from <code>pracma</code> library to find the peaks</p>
+<pre><code>library(&quot;pracma&quot;)
++ peaks = findpeaks(df1$covid_19_deaths, npeaks=5,  sortstr=TRUE)
+&gt; &gt; peaks
+      [,1] [,2] [,3] [,4]
+[1,] 26027   54   40   66
+[2,] 21364  108   98  121
+[3,] 17221   16    8   26
+[4,] 15536   88   79   98
+[5,]  8308   31   26   38
+&gt;
+</code></pre>
+<p>The 2nd column means the the row index of the peak. in this case, we can tell, the 54th row has the top peak covid death number <code>26027</code>.</p>
+<p>It’s not very obvious which week(start_date) is hitting the peak, so we can do something like this.</p>
+<pre><code>is_peak &lt;- vector( &quot;logical&quot; , length(df1$covid_19_deaths ))
+df1$is_peak = is_peak
+
+for (x in peaks[,2]) &#123;
+  df1$is_peak[x] = TRUE
+&#125;
+</code></pre>
+<p>As you can see, we added a new column <code>is_peak</code>, so we can use it to filter out those none peak data, sort the peak data points.</p>
+<pre><code>!&gt; df2 = df1 %&gt;% filter(is_peak == TRUE)
+ + df2[order(-df2$covid_19_deaths),]
+ &gt; # A tibble: 5 × 3
+   start_date covid_19_deaths is_peak
+   &lt;chr&gt;                &lt;dbl&gt; &lt;lgl&gt;
+ 1 2021-01-03           26027 TRUE
+ 2 2022-01-16           21364 TRUE
+ 3 2020-04-12           17221 TRUE
+ 4 2021-08-29           15536 TRUE
+ 5 2020-07-26            8308 TRUE
+ &gt; &gt;
+</code></pre>
+<h2 id="Hightlight-the-peak-points"><a href="#Hightlight-the-peak-points" class="headerlink" title="Hightlight the peak points"></a>Hightlight the peak points</h2><pre><code>p = ggplot(df1, aes(x=start_date, y=covid_19_deaths, group=1)) +
+    geom_line(color=&quot;blue&quot;) +
+    geom_point(data = . %&gt;% filter(is_peak == TRUE), stat=&quot;identity&quot;, size = 4, color = &quot;red&quot;) +
+    scale_y_continuous(breaks=seq(0,30000,4000)) +
+    theme(axis.text.x=element_text(angle=45,hjust=1,size=5))
+
+save_plot(&quot;covid_plot_weekly_peak.svg&quot;, fig = p, width=60, height=20)
+</code></pre>
+<p><img src="/images/covid_plot_weekly_peak.svg" alt="Image"></p>
+<h2 id="Other-finding"><a href="#Other-finding" class="headerlink" title="Other finding"></a>Other finding</h2><pre><code>!&gt; &gt; sum(df1$covid_19_deaths)
+ [1] 1089714   ===&gt; the total covid_19_deaths death number from 2020 to 2022
+
+!&gt; summary(df1$covid_19_deaths)
+    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
+       0    2223    4428    6897    9862   26027
+ &gt;
+!&gt; df3 &lt;- df %&gt;%
+ +     filter(state == &quot;United States&quot; &amp; group == &quot;By Week&quot;) %&gt;%
+ +     select(start_date, total_deaths)
+ + sum(df3$total_deaths)
+ + &gt; [1] 10077273  ===&gt; the total death number from 2020 to 2022 
+ + summary(df3$total_deaths)
+ &gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
+    7100   58522   60451   63780   68610   87415
+ &gt;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1500,156 +1736,6 @@ $ kubectl exec -it perfbench-0 -- bash
 <li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/storage/storage-classes/">https://kubernetes.io/docs/concepts/storage/storage-classes/</a></li>
 <li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/containers/images/">https://kubernetes.io/docs/concepts/containers/images/</a></li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/keep-a-docker-container-running-and-not-exiting/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/keep-a-docker-container-running-and-not-exiting/" class="post-title-link" itemprop="url">Keep a docker container running and not exiting</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-12-28 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-28T08:00:00-08:00">2022-12-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>In the kubernetes environment, we can keep a container(pod) alive and avoid it exits immediately after starting.</p>
-<h1 id="Method-one"><a href="#Method-one" class="headerlink" title="Method one"></a>Method one</h1><p>1.<br>Use a long-time-run command in Dockerfile</p>
-<pre><code>CMD [&quot;sh&quot;, &quot;-c&quot;, &quot;tail -f /dev/null&quot;]
-</code></pre>
-<p>or</p>
-<pre><code>CMD [&quot;sh&quot;, &quot;-c&quot;, &quot;sleep infinity&quot;]
-</code></pre>
-<p>2.<br>Build the docker image and push to docker repository</p>
-<p>3.<br>Launch the container</p>
-<pre><code>$ kubectl run mycontainer -it --image=&lt;docker-image-name&gt;
-</code></pre>
-<h1 id="Method-two"><a href="#Method-two" class="headerlink" title="Method two"></a>Method two</h1><p>When to deploy an application with kubernetes statefulset, we also can add it to the statefulset yaml file instead of adding it to the docker image through Dockerfile.</p>
-<pre><code>$ cat myapp.yaml
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: myapp
-spec:
-  serviceName: myapp
-  replicas: 1
-  selector:
-    matchLabels:
-      app: myapp
-  template:
-    metadata:
-      labels:
-        app: myapp
-    spec:
-      containers:
-      - name: myapp
-        image: noname/myapp:latest
-        command: [&quot;sh&quot;, &quot;-c&quot;, &quot;tail -f /dev/null&quot;]
-        imagePullPolicy: Always
-        volumeMounts:
-        - name: myapp-data
-          mountPath: /data
-        - name: myapp-log
-          mountPath: /log
-        securityContext:
-          privileged: true
-  volumeClaimTemplates:
-  - metadata:
-      name: myapp-data
-    spec:
-      storageClassName: &lt;storage-class&gt;
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 20Gi
-  - metadata:
-      name: myapp-log
-    spec:
-      storageClassName: &lt;storage-class&gt;
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 1Gi
-
-$ kubectl apply -f myapp.yaml          
-</code></pre>
 
       
     </div>

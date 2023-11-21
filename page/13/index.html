@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">267</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">268</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">267</span>
+          <span class="site-state-item-count">268</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,554 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/key-concepts-in-esrally/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/key-concepts-in-esrally/" class="post-title-link" itemprop="url">Key concepts in Elastic Rally</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-23 12:24:00" itemprop="dateCreated datePublished" datetime="2022-10-23T12:24:00-07:00">2022-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-11-01 21:22:12" itemprop="dateModified" datetime="2023-11-01T21:22:12-07:00">2023-11-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Pipelines"><a href="#Pipelines" class="headerlink" title="Pipelines"></a>Pipelines</h2><p>A pipeline is a series of steps that are performed to get benchmark results. This is not intended to customize the actual benchmark but rather what happens before and after a benchmark.</p>
+<p>An example will clarify the concept: If you want to benchmark a binary distribution of Elasticsearch, Rally has to download a distribution archive, decompress it, start Elasticsearch and then run the benchmark. However, if you want to benchmark a source build of Elasticsearch, it first has to build a distribution using the Gradle Wrapper. So, in both cases, different steps are involved and that’s what pipelines are for.</p>
+<p>You can get a list of all pipelines with <em>esrally list pipelines</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">$ esrally --version</span><br><span class="line">esrally 2.6.0</span><br><span class="line"></span><br><span class="line">$ esrally list pipelines</span><br><span class="line"></span><br><span class="line">    ____        ____</span><br><span class="line">   / __ \____ _/ / /_  __</span><br><span class="line">  / /_/ / __ `/ / / / / /</span><br><span class="line"> / _, _/ /_/ / / / /_/ /</span><br><span class="line">/_/ |_|\__,_/_/_/\__, /</span><br><span class="line">                /____/</span><br><span class="line"></span><br><span class="line">Available pipelines:</span><br><span class="line"></span><br><span class="line">Name               Description</span><br><span class="line">-----------------  ---------------------------------------------------------------------------------------------</span><br><span class="line">from-sources       Builds and provisions Elasticsearch, runs a benchmark and reports results.</span><br><span class="line">from-distribution  Downloads an Elasticsearch distribution, provisions it, runs a benchmark and reports results.</span><br><span class="line">benchmark-only     Assumes an already running Elasticsearch instance, runs a benchmark and reports results</span><br><span class="line"></span><br><span class="line">-------------------------------</span><br><span class="line">[INFO] SUCCESS (took 0 seconds)</span><br><span class="line">-------------------------------</span><br></pre></td></tr></table></figure>
+
+<h3 id="benchmark-only"><a href="#benchmark-only" class="headerlink" title="benchmark-only"></a>benchmark-only</h3><p>This is intended if you want to provision a cluster by yourself. Do not use this pipeline unless you are absolutely sure you need to. As Rally has not provisioned the cluster, results are not easily reproducable and it also cannot gather a lot of metrics (like CPU usage).</p>
+<p>To benchmark a cluster, you also have to specify the hosts to connect to.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ esrally race --pipeline=benchmark-only --target-host=10.10.10.1:39200,10.10.10.2:39200,10.10.10.3:39200 --track=geonames</span><br></pre></td></tr></table></figure>
+
+<h3 id="from-distribution"><a href="#from-distribution" class="headerlink" title="from-distribution"></a>from-distribution</h3><p>This pipeline allows to benchmark an official Elasticsearch distribution which will be automatically downloaded by Rally. An example invocation:</p>
+<pre><code class="bash">$ esrally race --track=geonames --pipeline=from-distribution --distribution-version=7.17.0
+</code></pre>
+<h3 id="from-sources"><a href="#from-sources" class="headerlink" title="from-sources"></a>from-sources</h3><p>You should use this pipeline when you want to build and benchmark Elasticsearch from sources.</p>
+<p>Remember that you also need git installed. You have to specify a revision.</p>
+<pre><code class="bash">$ esrally race --track=geonames --pipeline=from-sources --revision=latest
+</code></pre>
+<h2 id="track"><a href="#track" class="headerlink" title="track"></a>track</h2><p>A track is the description of one or more benchmarking scenarios with a specific document corpus. It defines for example the involved indices, data files and which operations are invoked. List the available tracks with <em>esrally list tracks</em>. Although Rally ships with some tracks out of the box, you should usually create your own track based on your own data.</p>
+<ul>
+<li>Geonames: for evaluating the performance of structured data.</li>
+<li>Geopoint: for evaluating the performance of geopoint queries.</li>
+<li>Geopointshape: for evaluating the performance of geopointshape queries.</li>
+<li>Geoshape: for evaluating the performance of geoshape data.</li>
+<li>Percolator: for evaluating the performance of percolation queries.</li>
+<li>PMC: for evaluating the performance of full text search.</li>
+<li>NYC taxis: for evaluating the performance for highly structured data.</li>
+<li>NYC taxis (ARM): for evaluating the performance for highly structured data and detect ARM-specific regressions.</li>
+<li>Nested: for evaluating the performance for nested documents.</li>
+<li>HTTP Logs: for evaluating the performance of (Web) server logs.</li>
+<li>NOAA: for evaluating the performance of range fields.</li>
+<li>EQL: for evaluating the performance of EQL.</li>
+<li>SQL: for evaluating the performance of SQL.</li>
+<li>SO (Transform): for evaluating the performance of the transform feature.</li>
+<li>SO (Frequent Items): for evaluating the performance of the frequent items aggregation.</li>
+<li>Logging: for evaluating the performance of the Log Monitoring part of Elastic’s Observability solution.</li>
+<li>Logging (Many Shards): for evaluating the performance of the Log Monitoring part of Elastic’s Observability solution with a large amount of shards.</li>
+<li>Logging (Snapshots): for evaluating snapshot performance when taking snapshot with a large of amount of shards.</li>
+<li>Dense Vector: for evaluating the performance of vectors search.</li>
+<li>Security: for evaluating the performance of Elastic’s Security solution.</li>
+<li>TSDB: for evaluating the performance of TSDB (time series database).</li>
+<li>Logging (CCS): for evaluating the performance of CCS (cross cluster search).</li>
+</ul>
+<pre><code class="bash">$ esrally list tracks
+
+    ____        ____
+   / __ \____ _/ / /_  __
+  / /_/ / __ `/ / / / / /
+ / _, _/ /_/ / / / /_/ /
+/_/ |_|\__,_/_/_/\__, /
+                /____/
+
+Available tracks:
+
+Name              Description                                                              Documents    Compressed Size   Uncompressed Size    Default Challenge        All Challenges
+----------------  -----------------------------------------------------------------------  -----------  ----------------- -------------------  ----------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+elastic/logs      Track for simulating logging workloads                                   14,009,078   N/A                NA                  logging-indexing         logging-indexing-querying,logging-indexing,logging-querying,logging-snapshot-mountlogging-snapshot-restore,logging-snapshot,cross-clusters-search,logging-disk-usage,many-shards-quantitative,many-shards-snapshots
+elastic/security  Track for simulating Elastic Security workloads                          77,513,777   N/A                NA                  security-querying        security-indexing-querying,security-indexing,security-querying,index-alert-source-events
+elastic/endpoint  Endpoint track                                                           0            0 bytes            0bytes              default                  default
+eql               EQL benchmarks based on endgame index of SIEM demo cluster               60,782,211   4.5 GB             109.2GB             default                  default,index-sorting
+geonames          POIs from Geonames                                                       11,396,503   252.9 MB           3.3GB               append-no-conflicts      append-no-conflicts,append-no-conflicts-index-only,append-fast-with-conflictssignificant-text
+geopoint          Point coordinates from PlanetOSM                                         60,844,404   482.1 MB           2.3GB               append-no-conflicts      append-no-conflicts,append-no-conflicts-index-only,append-fast-with-conflicts
+geopointshape     Point coordinates from PlanetOSM indexed as geoshapes                    60,844,404   470.8 MB           2.6GB               append-no-conflicts      append-no-conflicts,append-no-conflicts-index-only,append-fast-with-conflicts
+geoshape          Shapes from PlanetOSM                                                    84,220,567   17.0 GB            58.7GB              append-no-conflicts      append-no-conflicts,append-no-conflicts-big
+http_logs         HTTP server log data                                                     247,249,096  1.2 GB             31.1GB              append-no-conflicts      append-no-conflicts,runtime-fields,append-no-conflicts-index-onlyappend-sorted-no-conflicts,append-index-only-with-ingest-pipeline,update,append-no-conflicts-index-reindex-only
+metricbeat        Metricbeat data                                                          1,079,600    87.7 MB            1.2GB               append-no-conflicts      append-no-conflicts
+nested            StackOverflow Q&amp;A stored as nested docs                                  11,203,029   663.3 MB           3.4GB               nested-search-challenge  nested-search-challenge,index-only
+noaa              Global daily weather measurements from NOAA                              33,659,481   949.4 MB           9.0GB               append-no-conflicts      append-no-conflicts,append-no-conflicts-index-only,aggs,filter-aggs
+nyc_taxis         Taxi rides in New York in 2015                                           165,346,692  4.5 GB             74.3GB              append-no-conflicts      append-no-conflicts,append-no-conflicts-index-only,append-sorted-no-conflicts-index-onlyupdate,append-ml,aggs
+percolator        Percolator benchmark based on AOL queries                                2,000,000    121.1 kB           104.9MB             append-no-conflicts      append-no-conflicts
+pmc               Full text benchmark with academic papers from PMC                        574,199      5.5 GB             21.7GB              append-no-conflicts      append-no-conflicts,append-no-conflicts-index-only,append-sorted-no-conflictsappend-fast-with-conflicts,indexing-querying
+so                Indexing benchmark using up to questions and answers from StackOverflow  36,062,278   8.9 GB             33.1GB              append-no-conflicts      append-no-conflicts,transform,frequent-items
+sql               SQL query performance based on NOAA Weather data                         33,659,481   949.4 MB           9.0GB               sql                      sql
+dense_vector      Benchmark for dense vector indexing and search                           10,000,000   7.2 GB             19.5GB              index-and-search         index-and-search
+so_vector         Benchmark for vector search with StackOverflow data                      2,000,000    12.3 GB            32.2GB              index-and-search         index-and-search
+tsdb              metricbeat information for elastic-app k8s cluster                       116,633,698  N/A                123.0GB             append-no-conflicts      append-no-conflicts,downsample
+
+-------------------------------
+[INFO] SUCCESS (took 2 seconds)
+-------------------------------
+
+$ esrally info --track=geonames
+
+    ____        ____
+   / __ \____ _/ / /_  __
+  / /_/ / __ `/ / / / / /
+ / _, _/ /_/ / / / /_/ /
+/_/ |_|\__,_/_/_/\__, /
+                /____/
+
+Showing details for track [geonames]:
+
+* Description: POIs from Geonames
+* Documents: 11,396,503
+* Compressed Size: 252.9 MB
+* Uncompressed Size: 3.3 GB
+
+================================================
+Challenge [append-no-conflicts] (run by default)
+================================================
+
+Indexes the whole document corpus using Elasticsearch default settings. We only adjust the number of replicas as we benchmark asingle node cluster and Rally will only start the benchmark if the cluster turns green. Document ids are unique so all indexoperations are append only. After that a couple of queries are run.
+
+Schedule:
+----------
+
+1. delete-index
+2. create-index
+3. check-cluster-health
+4. index-append (8 clients)
+5. refresh-after-index
+6. force-merge
+7. refresh-after-force-merge
+8. wait-until-merges-finish
+9. index-stats
+10. node-stats
+11. default
+12. term
+13. phrase
+14. country_agg_uncached
+15. country_agg_cached
+16. scroll
+17. expression
+18. painless_static
+19. painless_dynamic
+20. decay_geo_gauss_function_score
+21. decay_geo_gauss_script_score
+22. field_value_function_score
+23. field_value_script_score
+24. large_terms
+25. large_filtered_terms
+26. large_prohibited_terms
+27. desc_sort_population
+28. asc_sort_population
+29. asc_sort_with_after_population
+30. desc_sort_geonameid
+31. desc_sort_with_after_geonameid
+32. asc_sort_geonameid
+33. asc_sort_with_after_geonameid
+
+==========================================
+Challenge [append-no-conflicts-index-only]
+==========================================
+
+Indexes the whole document corpus using Elasticsearch default settings. We only adjust the number of replicas as we benchmark asingle node cluster and Rally will only start the benchmark if the cluster turns green. Document ids are unique so all indexoperations are append only.
+
+Schedule:
+----------
+
+1. delete-index
+2. create-index
+3. check-cluster-health
+4. index-append (8 clients)
+5. force-merge
+6. wait-until-merges-finish
+
+======================================
+Challenge [append-fast-with-conflicts]
+======================================
+
+Indexes the whole document corpus using a setup that will lead to a larger indexing throughput than the default settings. Rallywill produce duplicate ids in 25% of all documents (not configurable) so we can simulate a scenario with appends most of the timeand some updates in between.
+
+Schedule:
+----------
+
+1. delete-index
+2. create-index
+3. check-cluster-health
+4. index-update (8 clients)
+5. force-merge
+6. wait-until-merges-finish
+
+============================
+Challenge [significant-text]
+============================
+
+Indexes the whole document corpus using Elasticsearch default settings. We only adjust the number of replicas as we benchmark asingle node cluster and Rally will only start the benchmark if the cluster turns green. Document ids are unique so all indexoperations are append only.
+
+Schedule:
+----------
+
+1. delete-index
+2. create-index
+3. check-cluster-health
+4. index-append (8 clients)
+5. force-merge
+6. wait-until-merges-finish
+7. significant_text_selective
+8. significant_text_sampled_selective
+9. significant_text_unselective
+10. significant_text_sampled_unselective
+
+
+-------------------------------
+[INFO] SUCCESS (took 1 seconds)
+-------------------------------
+</code></pre>
+<p>A track is specified in a JSON file. A track JSON file can include the following sections:</p>
+<ul>
+<li>indices&#x2F;templates: define the relevant indices and index templates</li>
+<li>data-streams: define the relevant data streams</li>
+<li>composable-templates&#x2F;component-templates: define the relevant composable and component templates</li>
+<li>corpora: define all document corpora (i.e. data files) that Rally should use for this track</li>
+<li>challenge(s): describe more than one set of operations, in the event your track needs to test more than one set of scenarios</li>
+<li>schedule: describe the workload for the benchmark, for example index with two clients at maximum throughput while searching with another two clients with ten operations per second</li>
+<li>operations: describe which operations are available for this track and how they are parametrized</li>
+<li>dependencies</li>
+</ul>
+<pre><code class="bash">$ ls .rally/benchmarks/tracks/default/geonames
+challenges  files.txt  index.json  operations  __pycache__  README.md  terms.txt  track.json  track.py
+
+$ cat .rally/benchmarks/tracks/default/geonames/track.json
+&#123;
+  &quot;version&quot;: 2,
+  &quot;description&quot;: &quot;POIs from Geonames&quot;,
+  &quot;data-url&quot;: &quot;http://benchmarks.elasticsearch.org.s3.amazonaws.com/corpora/geonames&quot;,
+  &quot;indices&quot;: [
+    &#123;
+      &quot;name&quot;: &quot;geonames&quot;,
+      &quot;body&quot;: &quot;index.json&quot;
+    &#125;
+  ],
+  &quot;corpora&quot;: [
+    &#123;
+      &quot;name&quot;: &quot;geonames&quot;,
+      &quot;base-url&quot;: &quot;https://rally-tracks.elastic.co/geonames&quot;,
+      &quot;documents&quot;: [
+        &#123;
+          &quot;source-file&quot;: &quot;documents-2.json.bz2&quot;,
+          &quot;document-count&quot;: 11396503,
+          &quot;compressed-bytes&quot;: 265208777,
+          &quot;uncompressed-bytes&quot;: 3547613828
+        &#125;
+      ]
+    &#125;
+  ],
+  &quot;operations&quot;: [
+    &#123;&#123; rally.collect(parts="operations/*.json") &#125;&#125;
+  ],
+  &quot;challenges&quot;: [
+    &#123;&#123; rally.collect(parts="challenges/*.json") &#125;&#125;
+  ]
+&#125;
+
+$ cat .rally/benchmarks/tracks/default/geonames/index.json
+&#123;
+  &quot;settings&quot;: &#123;
+    &quot;index.number_of_shards&quot;: &#123;&#123;number_of_shards | default(5)&#125;&#125;,
+    &quot;index.number_of_replicas&quot;: &#123;&#123;number_of_replicas | default(0)&#125;&#125;,
+    &quot;index.store.type&quot;: &quot;&#123;&#123;store_type | default('fs')&#125;&#125;&quot;,
+    &quot;index.requests.cache.enable&quot;: false
+  &#125;,
+  &quot;mappings&quot;: &#123;
+    &quot;dynamic&quot;: &quot;strict&quot;,
+    &quot;_source&quot;: &#123;
+      &quot;enabled&quot;: &#123;&#123; source_enabled | default(true) | tojson &#125;&#125;
+    &#125;,
+    &quot;properties&quot;: &#123;
+    [..]
+  &#125;
+&#125;
+</code></pre>
+<h2 id="challenge"><a href="#challenge" class="headerlink" title="challenge"></a>challenge</h2><p>A challenge describes one benchmarking scenario, for example indexing documents at maximum throughput with 4 clients while issuing term and phrase queries from another two clients rate-limited at 10 queries per second each. It is always specified in the context of a track. See the available challenges by listing the corresponding tracks with <em>esrally list tracks</em>.</p>
+<h2 id="car"><a href="#car" class="headerlink" title="car"></a>car</h2><p>A car is a specific configuration of an Elasticsearch cluster that is benchmarked, for example the out-of-the-box configuration, a configuration with a specific heap size or a custom logging configuration. List the available cars with <em>esrally list cars</em>.</p>
+<pre><code class="bash">$ esrally list cars
+
+    ____        ____
+   / __ \____ _/ / /_  __
+  / /_/ / __ `/ / / / / /
+ / _, _/ /_/ / / / /_/ /
+/_/ |_|\__,_/_/_/\__, /
+                /____/
+
+Available cars:
+
+Name                     Type    Description
+-----------------------  ------  --------------------------------------
+16gheap                  car     Sets the Java heap to 16GB
+1gheap                   car     Sets the Java heap to 1GB
+24gheap                  car     Sets the Java heap to 24GB
+2gheap                   car     Sets the Java heap to 2GB
+4gheap                   car     Sets the Java heap to 4GB
+8gheap                   car     Sets the Java heap to 8GB
+defaults                 car     Sets the Java heap to 1GB
+basic-license            mixin   Basic License
+debug-non-safepoints     mixin   More accurate CPU profiles
+ea                       mixin   Enables Java assertions
+fp                       mixin   Preserves frame pointers
+g1gc                     mixin   Enables the G1 garbage collector
+parallelgc               mixin   Enables the Parallel garbage collector
+trial-license            mixin   Trial License
+unpooled                 mixin   Enables Netty&#39;s unpooled allocator
+x-pack-ml                mixin   X-Pack Machine Learning
+x-pack-monitoring-http   mixin   X-Pack Monitoring (HTTP exporter)
+x-pack-monitoring-local  mixin   X-Pack Monitoring (local exporter)
+x-pack-security          mixin   X-Pack Security
+zgc                      mixin   Enables the ZGC garbage collector
+
+-------------------------------
+[INFO] SUCCESS (took 1 seconds)
+-------------------------------
+</code></pre>
+<h2 id="telemetry"><a href="#telemetry" class="headerlink" title="telemetry"></a>telemetry</h2><p>Telemetry is used in Rally to gather metrics about the car, for example CPU usage or index size.</p>
+<pre><code class="bash">$ esrally list telemetry
+
+    ____        ____
+   / __ \____ _/ / /_  __
+  / /_/ / __ `/ / / / / /
+ / _, _/ /_/ / / / /_/ /
+/_/ |_|\__,_/_/_/\__, /
+                /____/
+
+Available telemetry devices:
+
+Command                     Name                        Description
+--------------------------  --------------------------  --------------------------------------------------------------------
+jit                         JIT Compiler Profiler       Enables JIT compiler logs.
+gc                          GC log                      Enables GC logs.
+jfr                         Flight Recorder             Enables Java Flight Recorder (requires an Oracle JDK or OpenJDK 11+)
+heapdump                    Heap Dump                   Captures a heap dump.
+node-stats                  Node Stats                  Regularly samples node stats
+recovery-stats              Recovery Stats              Regularly samples shard recovery stats
+ccr-stats                   CCR Stats                   Regularly samples Cross Cluster Replication (CCR) related stats
+segment-stats               Segment Stats               Determines segment stats at the end of the benchmark.
+transform-stats             Transform Stats             Regularly samples transform stats
+searchable-snapshots-stats  Searchable Snapshots Stats  Regularly samples searchable snapshots stats
+shard-stats                 Shard Stats                 Regularly samples nodes stats at shard level
+data-stream-stats           Data Stream Stats           Regularly samples data stream stats
+ingest-pipeline-stats       Ingest Pipeline Stats       Reports Ingest Pipeline stats at the end of the benchmark.
+disk-usage-stats            Disk usage of each field    Runs the indices disk usage API after benchmarking
+
+Keep in mind that each telemetry device may incur a runtime overhead which can skew results.
+
+-------------------------------
+[INFO] SUCCESS (took 0 seconds)
+-------------------------------
+</code></pre>
+<h2 id="race"><a href="#race" class="headerlink" title="race"></a>race</h2><p>A race is one invocation of the Rally binary. Another name for that is one “benchmarking trial”. During a race, Rally runs one challenge on a track with the given car.</p>
+<pre><code class="bash">$ esrally race --pipeline=benchmark-only --target-host=10.10.10.1:39200,10.10.10.2:39200,10.10.10.3:39200 --track=geonames--track-params=&quot;number_of_shards:3,number_of_replicas:1&quot; --challenge=append-no-conflicts --on-error=abort --race-id=$&#123;RACE_ID&#125;
+
+$ esrally list races
+
+    ____        ____
+   / __ \____ _/ / /_  __
+  / /_/ / __ `/ / / / / /
+ / _, _/ /_/ / / / /_/ /
+/_/ |_|\__,_/_/_/\__, /
+                /____/
+
+
+Recent races:
+
+Race ID                               Race Timestamp    Track     Track Parameters                          Challenge           Car       User Tags                  Track Revision    Team Revision
+------------------------------------  ----------------  --------  ----------------------------------------  ------------------- --------  -------------------------  ----------------  ---------------
+066e02fa-a71a-4239-b515-984f705d5f02  20221031T230044Z  geonames  number_of_replicas=1, number_of_shards=3  append-no-conflicts external  intention=3shards1replica  a64a92a
+734bb4b3-8b7a-4c0b-9fa6-aaeb4659569f  20221031T214254Z  geonames  number_of_replicas=0, number_of_shards=3  append-no-conflicts external  intention=3shards0replica  a64a92a
+</code></pre>
+<h2 id="tournament"><a href="#tournament" class="headerlink" title="tournament"></a>tournament</h2><p>A tournament is a comparison of two races. Looks like <a target="_blank" rel="noopener" href="https://github.com/elastic/rally/issues/57">Rally</a> doesn’t have the tournament mode support yet. Instead, the comparison can be made as the following command between two races. Note that, we should NOT run the same benchmark multiple times without data cleanup between the benchmarks. It will give us unreproducible results.</p>
+<pre><code class="bash">$ esrally compare --baseline=066e02fa-a71a-4239-b515-984f705d5f02 --contender=734bb4b3-8b7a-4c0b-9fa6-aaeb4659569f
+
+    ____        ____
+   / __ \____ _/ / /_  __
+  / /_/ / __ `/ / / / / /
+ / _, _/ /_/ / / / /_/ /
+/_/ |_|\__,_/_/_/\__, /
+                /____/
+
+
+Comparing baseline
+  Race ID: 066e02fa-a71a-4239-b515-984f705d5f02
+  Race timestamp: 2022-10-31 23:00:44
+  Challenge: append-no-conflicts
+  Car: external
+  User tags: intention=3shards1replica
+
+with contender
+  Race ID: 734bb4b3-8b7a-4c0b-9fa6-aaeb4659569f
+  Race timestamp: 2022-10-31 21:42:54
+  Challenge: append-no-conflicts
+  Car: external
+  User tags: intention=3shards0replica
+
+------------------------------------------------------
+    _______             __   _____
+   / ____(_)___  ____ _/ /  / ___/_________  ________
+  / /_  / / __ \/ __ `/ /   \__ \/ ___/ __ \/ ___/ _ \
+ / __/ / / / / / /_/ / /   ___/ / /__/ /_/ / /  /  __/
+/_/   /_/_/ /_/\__,_/_/   /____/\___/\____/_/   \___/
+------------------------------------------------------
+
+|                                                        Metric |                           Task |        Baseline |      Contender |         Diff |    Unit |   Diff % |
+|--------------------------------------------------------------:|-------------------------------:|----------------:----------------:|-------------:|--------:|---------:|
+|                    Cumulative indexing time of primary shards |                                |    14.3493      |    140125      |     -0.33683 |     min |   -2.35% |
+|             Min cumulative indexing time across primary shard |                                |     0           |    0           |      0       |     min |    0.00% |
+|          Median cumulative indexing time across primary shard |                                |     0.00696667  |     000696667  |      0       |     min |    0.00% |
+|             Max cumulative indexing time across primary shard |                                |     4.954       |     473868     |     -0.21532 |     min |   -4.35% |
+|           Cumulative indexing throttle time of primary shards |                                |     0           |    0           |      0       |     min |    0.00% |
+|    Min cumulative indexing throttle time across primary shard |                                |     0           |    0           |      0       |     min |    0.00% |
+| Median cumulative indexing throttle time across primary shard |                                |     0           |    0           |      0       |     min |    0.00% |
+|    Max cumulative indexing throttle time across primary shard |                                |     0           |    0           |      0       |     min |    0.00% |
+|                       Cumulative merge time of primary shards |                                |     9.5478      |     486773     |     -4.68007 |     min |  -49.02% |
+|                      Cumulative merge count of primary shards |                                |    93           |   70           |    -23       |         |  -24.73% |
+|                Min cumulative merge time across primary shard |                                |     0           |    0           |      0       |     min |    0.00% |
+|             Median cumulative merge time across primary shard |                                |     0.00276667  |     000276667  |      0       |     min |    0.00% |
+|                Max cumulative merge time across primary shard |                                |     3.61232     |     171572     |     -1.8966  |     min |  -52.50% |
+|              Cumulative merge throttle time of primary shards |                                |     2.62635     |     0569683    |     -2.05667 |     min |  -78.31% |
+|       Min cumulative merge throttle time across primary shard |                                |     0           |    0           |      0       |     min |    0.00% |
+|    Median cumulative merge throttle time across primary shard |                                |     0           |    0           |      0       |     min |    0.00% |
+|       Max cumulative merge throttle time across primary shard |                                |     1.06415     |     021315     |     -0.851   |     min |  -79.97% |
+|                     Cumulative refresh time of primary shards |                                |     1.37218     |     045075     |     -0.92143 |     min |  -67.15% |
+|                    Cumulative refresh count of primary shards |                                |   421           |  327           |    -94       |         |  -22.33% |
+|              Min cumulative refresh time across primary shard |                                |     0           |    0           |      0       |     min |    0.00% |
+|           Median cumulative refresh time across primary shard |                                |     0.0191417   |     00191417   |      0       |     min |    0.00% |
+|              Max cumulative refresh time across primary shard |                                |     0.4631      |     0152433    |     -0.31067 |     min |  -67.08% |
+|                       Cumulative flush time of primary shards |                                |     0.144633    |     0185383    |      0.04075 |     min |  +28.17% |
+|                      Cumulative flush count of primary shards |                                |    14           |   14           |      0       |         |    0.00% |
+|                Min cumulative flush time across primary shard |                                |     0           |    0           |      0       |     min |    0.00% |
+|             Median cumulative flush time across primary shard |                                |     0.000191667 |     0000191667 |      0       |     min |    0.00% |
+|                Max cumulative flush time across primary shard |                                |     0.0575833   |     00674167   |      0.00983 |     min |  +17.08% |
+|                                       Total Young Gen GC time |                                |    30.494       |    14511       |    -15.983   |       s |  -52.41% |
+|                                      Total Young Gen GC count |                                |  3888           | 2381           |  -1507       |         |  -38.76% |
+|                                         Total Old Gen GC time |                                |     7.329       |     3247       |     -4.082   |       s |  -55.70% |
+|                                        Total Old Gen GC count |                                |   109           |   48           |    -61       |         |  -55.96% |
+|                                                    Store size |                                |     5.78897     |     301044     |     -2.77854 |      GB |  -48.00% |
+|                                                 Translog size |                                |     8.19564e-07 |     665896e-07 |     -0       |      GB |  -18.75% |
+|                                        Heap used for segments |                                |     0.513947    |     0385025    |     -0.12892 |      MB |  -25.08% |
+|                                      Heap used for doc values |                                |     0.037796    |     00160522   |     -0.02174 |      MB |  -57.53% |
+|                                           Heap used for terms |                                |     0.383759    |     0296478    |     -0.08728 |      MB |  -22.74% |
+|                                           Heap used for norms |                                |     0.0499268   |     00380859   |     -0.01184 |      MB |  -23.72% |
+|                                          Heap used for points |                                |     0           |    0           |      0       |      MB |    0.00% |
+|                                   Heap used for stored fields |                                |     0.0424652   |     00344086   |     -0.00806 |      MB |  -18.97% |
+|                                                 Segment count |                                |    82           |   66           |    -16       |         |  -19.51% |
+|                                   Total Ingest Pipeline count |                                |     0           |    0           |      0       |         |    0.00% |
+|                                    Total Ingest Pipeline time |                                |     0           |    0           |      0       |      ms |    0.00% |
+|                                  Total Ingest Pipeline failed |                                |     0           |    0           |      0       |         |    0.00% |
+|                                                    error rate |                   index-append |     0           |    0           |      0       |       % |    0.00% |
+|                                                Min Throughput |                    index-stats |    90.001       |    900126      |      0.01165 |   ops/s |   +0.01% |
+|                                               Mean Throughput |                    index-stats |    90.0055      |    900241      |      0.01854 |   ops/s |   +0.02% |
+|                                             Median Throughput |                    index-stats |    90.0048      |    900219      |      0.01715 |   ops/s |   +0.02% |
+|                                                Max Throughput |                    index-stats |    90.0142      |    900422      |      0.02796 |   ops/s |   +0.03% |
+|                                       50th percentile latency |                    index-stats |     5.80729     |     540389     |     -0.40339 |      ms |   -6.95% |
+|                                       90th percentile latency |                    index-stats |     6.71673     |     622462     |     -0.49211 |      ms |   -7.33% |
+|                                       99th percentile latency |                    index-stats |     7.26607     |     68574      |     -0.40867 |      ms |   -5.62% |
+|                                     99.9th percentile latency |                    index-stats |    11.3788      |    111477      |     -0.23112 |      ms |   -2.03% |
+|                                      100th percentile latency |                    index-stats |    13.6309      |    140192      |      0.38829 |      ms |   +2.85% |
+|                                  50th percentile service time |                    index-stats |     4.61601     |     424021     |     -0.37579 |      ms |   -8.14% |
+|                                  90th percentile service time |                    index-stats |     5.40477     |     493823     |     -0.46654 |      ms |   -8.63% |
+|                                  99th percentile service time |                    index-stats |     5.85565     |     534821     |     -0.50744 |      ms |   -8.67% |
+|                                99.9th percentile service time |                    index-stats |     9.8608      |     774023     |     -2.12057 |      ms |  -21.51% |
+|                                 100th percentile service time |                    index-stats |    12.6355      |     944686     |     -3.18866 |      ms |  -25.24% |
+|                                                    error rate |                    index-stats |     0           |    0           |      0       |
+[..]
+
+-------------------------------
+[INFO] SUCCESS (took 0 seconds)
+-------------------------------
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://esrally.readthedocs.io/en/stable/track.html">https://esrally.readthedocs.io/en/stable/track.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://esrally.readthedocs.io/en/stable/tournament.html">https://esrally.readthedocs.io/en/stable/tournament.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/elastic/rally/issues/57">https://github.com/elastic/rally/issues/57</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1585,115 +2133,6 @@ READ   - Takes(s): 2517.3, Count: 94554325, OPS: 37561.2, Avg(us): 2131, Min(us)
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/understanding-azure-disk-bursting/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/understanding-azure-disk-bursting/" class="post-title-link" itemprop="url">Understanding Azure disk bursting</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-09-15 07:00:00" itemprop="dateCreated datePublished" datetime="2022-09-15T07:00:00-07:00">2022-09-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Currently, there are two managed disk types that can burst, premium SSDs, and standard SSDs. Other disk types cannot currently burst. There are two models of bursting for disks:</p>
-<p>An on-demand bursting model, where the disk bursts whenever its needs exceed its current capacity. This model incurs additional charges anytime the disk bursts. On-demand bursting is only available for premium SSDs larger than 512 GiB.</p>
-<p>A credit-based model, where the disk will burst only if it has burst credits accumulated in its credit bucket. This model does not incur additional charges when the disk bursts. Credit-based bursting is only available for premium SSDs 512 GiB and smaller, and standard SSDs 1024 GiB and smaller.</p>
-<p>Azure premium SSDs can use either bursting model, but standard SSDs currently only offer credit-based bursting.</p>
-<p><strong>On-demand bursting</strong></p>
-<p>Premium SSDs using the on-demand bursting model of disk bursting can burst beyond original provisioned targets, as often as needed by their workload, up to the max burst target. For example, on a 1-TiB P30 disk, the provisioned IOPS is 5000 IOPS. When disk bursting is enabled on this disk, your workloads can issue IOs to this disk up to the max burst performance of 30,000 IOPS and 1,000 MBps. For the max burst targets on each supported disk, see Scalability and performance targets for VM disks.</p>
-<p>If you expect your workloads to frequently run beyond the provisioned perf target, disk bursting won’t be cost-effective. In this case, we recommend that you change your disk’s performance tier to a higher tier instead, for better baseline performance. Review your billing details and assess that against the traffic pattern of your workloads.</p>
-<p>Before you enable on-demand bursting, understand the following:</p>
-<ul>
-<li>On-demand bursting cannot be enabled on a premium SSD that has less than or equal to 512 GiB. Premium SSDs less than or equal to 512 GiB will always use credit-based bursting.</li>
-<li>On-demand bursting is only supported on premium SSDs. If a premium SSD with on-demand bursting enabled is switched to another disk type, then disk bursting is disabled.</li>
-<li>On-demand bursting doesn’t automatically disable itself when the performance tier is changed. If you want to change your performance tier but do not want to keep disk bursting, you must disable it.</li>
-<li>On-demand bursting can only be enabled when the disk is detached from a VM or when the VM is stopped. On-demand bursting can be disabled 12 hours after it has been enabled.</li>
-</ul>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/azure/virtual-machines/disks-types#premium-ssds">Azure managed disk types</a></li>
-<li><a target="_blank" rel="noopener" href="https://nicolgit.github.io/azure-disk-burst-in-a-nutshell/">Azure Disk Burst in a nutshell</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/azure/virtual-machines/disk-bursting">Managed disk bursting</a></li>
-<li><a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/pricing/details/managed-disks/">Managed disk pricing</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/azure/virtual-machines/disks-enable-bursting?tabs=azure-powershell">Enable on-demand bursting</a></li>
-</ul>
-
       
     </div>
 

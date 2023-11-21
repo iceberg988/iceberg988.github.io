@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">267</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">268</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">267</span>
+          <span class="site-state-item-count">268</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,363 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/cockroachdb-performance-benchmarking/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/cockroachdb-performance-benchmarking/" class="post-title-link" itemprop="url">CockroachDB performance benchmarking</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-04 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-04T08:00:00-08:00">2022-12-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="CockroachDB-key-concepts"><a href="#CockroachDB-key-concepts" class="headerlink" title="CockroachDB key concepts"></a>CockroachDB key concepts</h2><p>Range -	CockroachDB stores all user data (tables, indexes, etc.) and almost all system data in a giant sorted map of key-value pairs. This keyspace is divided into “ranges”, contiguous chunks of the keyspace, so that every key can always be found in a single range.</p>
+<p>From a SQL perspective, a table and its secondary indexes initially map to a single range, where each key-value pair in the range represents a single row in the table (also called the primary index because the table is sorted by the primary key) or a single row in a secondary index. As soon as that range reaches 512 MiB in size, it splits into two ranges. This process continues for these new ranges as the table and its indexes continue growing.</p>
+<pre><code>[root@host1 ~]# tail -f /var/log/cockroachdb_logs/cockroach.log
+I220908 17:54:02.220498 5523606 kv/kvserver/pkg/kv/kvserver/replica_command.go:420 ⋮ [n1,split,s1,r499/1:‹/Table/113/1/4&#123;394/6…-693/6…&#125;›] 1700  initiating a split of this range at key ‹/Table/113/1/4402/59627› [r501] (‹512 MiB above threshold size 512 MiB›)‹›
+</code></pre>
+<p>Replica -	CockroachDB replicates each range (3 times by default) and stores each replica on a different node.</p>
+<p>Refer to <a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/docs/stable/architecture/reads-and-writes-overview.html#cockroachdb-architecture-terms">here</a> for more.</p>
+<p><img src="/images/cockroachdb-arch-terms.png" alt="Image"></p>
+<h2 id="Production-checklist"><a href="#Production-checklist" class="headerlink" title="Production checklist"></a>Production checklist</h2><p>Check <a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/docs/stable/recommended-production-settings.html">here</a> for the important recommendations for production deployments of CockroachDB. The following only lists some of the recommended settings.</p>
+<h3 id="Memory"><a href="#Memory" class="headerlink" title="Memory"></a>Memory</h3><ul>
+<li>Disable Linux memory swapping. Over-allocating memory on production machines can lead to unexpected performance issues when pages have to be read back into memory.</li>
+<li>For production deployments, set –cache to 25% or higher. Avoid setting –cache and –max-sql-memory to a combined value of more than 75% of a machine’s total RAM. Doing so increases the risk of memory-related failures.</li>
+</ul>
+<h3 id="Storage"><a href="#Storage" class="headerlink" title="Storage"></a>Storage</h3><ul>
+<li>The maximum recommended storage capacity per node is 2.5 TiB, regardless of the number of vCPUs.</li>
+<li>Use dedicated volumes for the CockroachDB store. Do not share the store volume with any other I&#x2F;O activity.</li>
+<li>Store CockroachDB log files in a separate volume from the main data store so that logging is not impacted by I&#x2F;O throttling.</li>
+<li>The recommended Linux filesystems are ext4 and XFS.</li>
+</ul>
+<h3 id="Disk-I-O"><a href="#Disk-I-O" class="headerlink" title="Disk I&#x2F;O"></a>Disk I&#x2F;O</h3><ul>
+<li>Use sysbench to benchmark IOPS on your cluster. If IOPS decrease, add more nodes to your cluster to increase IOPS.</li>
+<li>Do not use LVM in the I&#x2F;O path. Dynamically resizing CockroachDB store volumes can result in significant performance degradation. Using LVM snapshots in lieu of CockroachDB backup and restore is also not supported.</li>
+<li>The optimal configuration for striping more than one device is RAID 10. RAID 0 and 1 are also acceptable from a performance perspective.</li>
+</ul>
+<h3 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h3><p>When starting a node, two main flags are used to control its network connections:</p>
+<ul>
+<li>–listen-addr determines which address(es) to listen on for connections from other nodes and clients.</li>
+<li>–advertise-addr determines which address to tell other nodes to use.</li>
+</ul>
+<p><img src="/images/cockroachdb-network.png" alt="Image"></p>
+<h3 id="Load-balancing"><a href="#Load-balancing" class="headerlink" title="Load balancing"></a>Load balancing</h3><p>Each CockroachDB node is an equally suitable SQL gateway to a cluster, but to ensure client performance and reliability, it’s important to use load balancing:</p>
+<ul>
+<li>Performance: Load balancers spread client traffic across nodes. This prevents any one node from being overwhelmed by requests and improves overall cluster performance (queries per second).</li>
+<li>Reliability: Load balancers decouple client health from the health of a single CockroachDB node. To ensure that traffic is not directed to failed nodes or nodes that are not ready to receive requests, load balancers should use CockroachDB’s readiness health check.</li>
+</ul>
+<h3 id="Cache-and-SQL-memory-size"><a href="#Cache-and-SQL-memory-size" class="headerlink" title="Cache and SQL memory size"></a>Cache and SQL memory size</h3><p>CockroachDB manages its own memory caches, independently of the operating system. These are configured via the –cache and –max-sql-memory flags.</p>
+<p>Each node has a default cache size of 128MiB that is passively consumed. The default was chosen to facilitate development and testing, where users are likely to run multiple CockroachDB nodes on a single machine. Increasing the cache size will generally improve the node’s read performance.</p>
+<p>Each node has a default SQL memory size of 25%. This memory is used as-needed by active operations to store temporary data for SQL queries.</p>
+<ul>
+<li>Increasing a node’s cache size will improve the node’s read performance.</li>
+<li>Increasing a node’s SQL memory size will increase the number of simultaneous client connections it allows, as well as the node’s capacity for in-memory processing of rows when using ORDER BY, GROUP BY, DISTINCT, joins, and window functions.</li>
+</ul>
+<p>You can check cache size and SQL memory pool size in the log. In the following example output, it matches with the specified 25% cache and SQL memory size setting.</p>
+<pre><code>$ vim cockroach.log
+I220905 17:49:33.671304 1 server/config.go:487 ⋮ [n?] 6  system total memory: 1008 GiB
+I220905 17:49:33.671318 1 server/config.go:489 ⋮ [n?] 7  server configuration:
+I220905 17:49:33.671318 1 server/config.go:489 ⋮ [n?] 7 +‹max offset             500000000›
+I220905 17:49:33.671318 1 server/config.go:489 ⋮ [n?] 7 +‹cache size             252 GiB›
+I220905 17:49:33.671318 1 server/config.go:489 ⋮ [n?] 7 +‹SQL memory pool size   252 GiB›
+</code></pre>
+<h2 id="CockroachDB-workloads"><a href="#CockroachDB-workloads" class="headerlink" title="CockroachDB workloads"></a>CockroachDB workloads</h2><p><img src="/images/rockroachdb_workloads.png" alt="Image"></p>
+<h3 id="bank-workload"><a href="#bank-workload" class="headerlink" title="bank workload"></a>bank workload</h3><pre><code>$ cockroach workload init bank &#39;postgresql://root@host1:26257?sslmode=disable&#39;
+I220831 23:52:14.593170 1 workload/workloadsql/dataload.go:146  [-] 1  imported bank (0s, 1000 rows)
+I220831 23:52:14.609421 1 workload/workloadsql/workloadsql.go:136  [-] 2  starting 9 splits
+
+
+$ cockroach workload run bank --duration=1m &#39;postgresql://root@host1:26257?sslmode=disable&#39;
+I220831 23:52:55.378492 1 workload/cli/run.go:414  [-] 1  creating load generator...
+I220831 23:52:55.380594 1 workload/cli/run.go:445  [-] 2  creating load generator... done (took 2.103665ms)
+_elapsed___errors__ops/sec(inst)___ops/sec(cum)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)
+    1.0s        0         2929.8         2936.4      3.0     15.2     50.3    234.9 transfer
+    2.0s        0         3387.3         3161.8      3.4     13.6     23.1     54.5 transfer
+    3.0s        0         2755.2         3026.3      3.9     13.6     23.1    302.0 transfer
+    4.0s        0         3295.5         3093.6      3.3     13.6     33.6    469.8 transfer
+    5.0s        0         3536.5         3182.2      3.5     12.1     18.9     35.7 transfer
+    6.0s        0         3558.1         3244.8      3.5     11.0     21.0     39.8 transfer
+    7.0s        0         3566.9         3290.8      3.7     11.0     17.8     39.8 transfer
+    8.0s        0         3317.6         3294.2      3.7     12.6     24.1     62.9 transfer
+    9.0s        0         2992.9         3260.7      4.1     14.7     22.0     39.8 transfer
+   10.0s        0         3628.2         3297.4      3.5     11.5     19.9     39.8 transfer
+   11.0s        0         3604.5         3325.3      3.5     11.5     17.8     37.7 transfer
+   12.0s        0         3668.4         3353.9      3.5     11.0     17.8     31.5 transfer
+   13.0s        0         3485.9         3364.1      3.7     11.5     18.9     31.5 transfer
+   14.0s        0         3377.9         3365.1      3.7     12.6     21.0     56.6 transfer
+   15.0s        0         3084.4         3346.3      4.1     13.6     21.0     92.3 transfer
+   16.0s        0         3650.1         3365.3      3.4     11.5     17.8     44.0 transfer
+   17.0s        0         3662.7         3382.8      3.5     11.5     17.8     37.7 transfer
+   18.0s        0         3461.8         3387.2      3.7     11.0     19.9    159.4 transfer
+   19.0s        0         3426.3         3389.3      3.7     12.1     19.9     41.9 transfer
+   20.0s        0         3196.0         3379.6      3.9     13.1     19.9     35.7 transfer
+&lt;omitted..&gt;
+
+_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
+   60.0s        0         206551         3442.5      4.6      3.7     12.1     19.9    469.8  transfer
+
+_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__result
+   60.0s        0         206551         3442.5      4.6      3.7     12.1     19.9    469.8
+</code></pre>
+<h3 id="TPC-C-workload"><a href="#TPC-C-workload" class="headerlink" title="TPC-C workload"></a>TPC-C workload</h3><blockquote>
+<p>–warehouses</p>
+<blockquote>
+<p>The number of warehouses for loading initial data, at approximately 200 MB per warehouse.</p>
+<p>Applicable commands: init or run</p>
+<p>Default: 1</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>–workers</p>
+<blockquote>
+<p>The number of concurrent workers.</p>
+<p>Applicable commands: init or run</p>
+<p>Default: –warehouses * 10</p>
+</blockquote>
+</blockquote>
+<p>The number os wareshouses can be specified by “–warehouses” option. By default, only one warehouse is created.</p>
+<pre><code>$ cockroach workload init tpcc &#39;postgresql://root@host1:26257?sslmode=disable&#39;
+Error: failed insert into warehouse: pq: duplicate key value violates unique constraint &quot;warehouse_pkey&quot;
+
+$ cockroach workload init tpcc &#39;postgresql://root@host1:26257?sslmode=disable&#39; --drop
+I220901 00:32:56.365593 1 workload/workloadsql/dataload.go:146  [-] 1  imported warehouse (0s, 1 rows)
+I220901 00:32:56.372727 1 workload/workloadsql/dataload.go:146  [-] 2  imported district (0s, 10 rows)
+I220901 00:32:57.034349 1 workload/workloadsql/dataload.go:146  [-] 3  imported customer (1s, 30000 rows)
+I220901 00:32:57.248382 1 workload/workloadsql/dataload.go:146  [-] 4  imported history (0s, 30000 rows)
+I220901 00:32:57.462320 1 workload/workloadsql/dataload.go:146  [-] 5  imported order (0s, 30000 rows)
+I220901 00:32:57.490476 1 workload/workloadsql/dataload.go:146  [-] 6  imported new_order (0s, 9000 rows)
+I220901 00:32:57.921658 1 workload/workloadsql/dataload.go:146  [-] 7  imported item (0s, 100000 rows)
+I220901 00:32:59.267268 1 workload/workloadsql/dataload.go:146  [-] 8  imported stock (1s, 100000 rows)
+I220901 00:33:00.916392 1 workload/workloadsql/dataload.go:146  [-] 9  imported order_line (2s, 300343 rows)
+
+
+$ cockroach workload run tpcc --duration=10m &#39;postgresql://root@host1:26257?sslmode=disable&#39;
+I220901 00:34:17.147411 1 workload/cli/run.go:414  [-] 1  creating load generator...
+Initializing 2 connections...
+Initializing 0 idle connections...
+Initializing 10 workers and preparing statements...
+I220901 00:34:17.151817 1 workload/cli/run.go:445  [-] 2  creating load generator... done (took 4.411152ms)
+&lt;omitted..&gt;
+
+_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
+  600.0s        0             12            0.0     32.6     31.5     44.0     44.0     44.0  delivery
+
+_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
+  600.0s        0            120            0.2     17.9     17.8     26.2     41.9     54.5  newOrder
+
+_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
+  600.0s        0             13            0.0      6.7      5.8     14.2     15.2     15.2  orderStatus
+
+_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
+  600.0s        0            131            0.2     10.8     11.0     14.7     24.1     29.4  payment
+
+_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
+  600.0s        0             13            0.0     10.8     10.5     15.7     15.7     15.7  stockLevel
+
+_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__result
+  600.0s        0            289            0.5     14.4     13.1     28.3     41.9     54.5
+Audit check 9.2.1.7: SKIP: not enough delivery transactions to be statistically significant
+Audit check 9.2.2.5.1: SKIP: not enough orders to be statistically significant
+Audit check 9.2.2.5.2: SKIP: not enough orders to be statistically significant
+Audit check 9.2.2.5.5: SKIP: not enough payments to be statistically significant
+Audit check 9.2.2.5.6: SKIP: not enough order status transactions to be statistically significant
+Audit check 9.2.2.5.3: PASS
+Audit check 9.2.2.5.4: PASS
+
+_elapsed_______tpmC____efc__avg(ms)__p50(ms)__p90(ms)__p95(ms)__p99(ms)_pMax(ms)
+  600.0s       12.0  93.3%     17.9     17.8     23.1     26.2     41.9     54.5
+</code></pre>
+<h3 id="YCSB-workload"><a href="#YCSB-workload" class="headerlink" title="YCSB workload"></a>YCSB workload</h3><pre><code>$ cockroach workload init ycsb &#39;postgresql://root@host1:26257?sslmode=disable&#39;
+I220831 23:57:53.909658 1 workload/workloadsql/dataload.go:146  [-] 1  imported usertable (2s, 10000 rows)
+
+
+$ cockroach workload run ycsb --duration=10m &#39;postgresql://root@host1:26257?sslmode=disable&#39;
+I220831 23:58:24.410319 1 workload/cli/run.go:414  [-] 1  creating load generator...
+I220831 23:58:24.427528 1 workload/cli/run.go:445  [-] 2  creating load generator... done (took 17.212701ms)
+_elapsed___errors__ops/sec(inst)___ops/sec(cum)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)
+    1.0s        0        11011.5        11243.7      1.1      2.4      3.8     11.0 read
+    1.0s        0          581.7          593.9      3.0      5.5      7.3     12.6 update
+    2.0s        0        12105.1        11674.4      1.1      1.8      3.4     10.0 read
+    2.0s        0          636.9          615.4      2.8      3.9      6.6     11.0 update
+    3.0s        0        11590.6        11646.5      1.1      2.0      4.5     14.2 read
+    3.0s        0          607.1          612.7      2.8      6.0      9.4     12.1 update
+    4.0s        0        11813.5        11688.2      1.1      1.9      3.5     13.1 read
+    4.0s        0          622.0          615.0      2.8      4.5      7.6     13.6 update
+    5.0s        0        11959.5        11742.5      1.1      2.0      3.3      8.1 read
+    5.0s        0          607.0          613.4      2.6      4.7      7.1     12.1 update
+    6.0s        0        12186.2        11816.5      1.0      1.8      3.5     12.6 read
+    6.0s        0          638.0          617.5      2.6      4.1     10.0     16.8 update
+    7.0s        0        11815.8        11816.3      1.1      2.0      3.7      8.4 read
+    7.0s        0          646.0          621.6      2.8      4.7      6.8      9.4 update
+    8.0s        0        11850.8        11820.6      1.1      2.0      3.3      7.6 read
+    8.0s        0          617.9          621.1      2.8      4.5      6.6      9.4 update
+    9.0s        0        11713.5        11808.7      1.1      2.0      3.9     11.0 read
+    9.0s        0          609.1          619.8      2.8      4.5      7.6     11.5 update
+   10.0s        0        11949.6        11822.8      1.1      2.0      3.3     13.1 read
+   10.0s        0          622.0          620.0      2.8      4.2      6.0      8.4 update
+
+&lt;omitted..&gt;
+
+_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
+  600.0s        0        8576709        14294.5      1.0      1.0      1.6      2.9     62.9  read
+
+_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
+  600.0s        0         451026          751.7      2.5      2.5      3.8      6.6     27.3  update
+
+_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__result
+  600.0s        0        9027735        15046.2      1.1      1.0      2.2      3.5     62.9
+</code></pre>
+<h2 id="Restart-CockroachDB-cluster"><a href="#Restart-CockroachDB-cluster" class="headerlink" title="Restart CockroachDB cluster"></a>Restart CockroachDB cluster</h2><ol>
+<li><p>Stop the process on each node</p>
+<p> $ ps -ef | grep cock | grep -v grep<br> root     12217     1 99 Sep06 ?        2-20:28:09 cockroach start –log-dir&#x3D;&#x2F;var&#x2F;log&#x2F;cockroachdb_logs –store&#x3D;&#x2F;mnt&#x2F;cockroachdb_mnt1 –insecure –advertise-addr&#x3D;host1 –join&#x3D;host1,host2,host3 –cache&#x3D;.25 –max-sql-memory&#x3D;.25</p>
+<p> $ kill -9 12217<br> $ ps -ef | grep cock | grep -v grep</p>
+</li>
+<li><p>Start the process on each node</p>
+<p> $ cockroach start –store&#x3D;&#x2F;mnt&#x2F;cockroanchdb_mnt1 –insecure –advertise-addr&#x3D;host1 –join&#x3D;host1,host2,host3 –cache&#x3D;.25 -max-sql-memory&#x3D;.25 –background</p>
+</li>
+</ol>
+<h2 id="CockroachDB-commands"><a href="#CockroachDB-commands" class="headerlink" title="CockroachDB commands"></a>CockroachDB commands</h2><p>List node IDs:</p>
+<pre><code>$ cockroach node ls --insecure
+  id
+------
+   1
+   2
+   3
+(3 rows)
+</code></pre>
+<p>Show node status:</p>
+<pre><code>$ cockroach node status --insecure
+  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live
+-----+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+----------
+   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-03 16:24:12.001861 | 2022-09-03 22:23:09.022236 |          | true         | true
+   2 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-03 16:24:12.04249  | 2022-09-03 22:23:09.048582 |          | true         | true
+   3 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-03 16:24:12.390521 | 2022-09-03 22:23:09.402081 |          | true         | true
+(3 rows)
+</code></pre>
+<p>Show status and range&#x2F;replica details:</p>
+<pre><code>$ cockroach node status --ranges --insecure
+  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live | replicas_leaders | replicas_leaseholders | ranges | ranges_unavailable | ranges_underreplicated
+-----+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+---------
+   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-03 16:24:12.001861 | 2022-09-03 22:23:36.022463 |          | true         | true    |         306 |                   306 |    941 |                  0 |                      0
+   2 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-03 16:24:12.04249  | 2022-09-03 22:23:36.048508 |          | true         | true    |              310 |                   310 |    941 |                  0 |                      0
+   3 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-03 16:24:12.390521 | 2022-09-03 22:23:36.40421  |          | true         | true    |              325 |                   325 |    941 |                  0 |                      0
+(3 rows)
+</code></pre>
+<p>Show status and disk usage details:</p>
+<pre><code>$ cockroach node status --stats --insecure
+  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live |  live_bytes  |  key_bytes  | value_bytes  | intent_bytes | system_bytes
+-----+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+---------+--------------+-------------+--------------+--------------+---------------
+   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-03 16:24:12.001861 | 2022-09-03 22:23:45.022008 |          | true         | true    | 246665681135 | 47930398573 | 220956161393 |        40331 |       812555
+   2 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-03 16:24:12.04249  | 2022-09-03 22:23:45.048777 |          | true         | true    | 246665683880 | 47930401894 | 220956192532 |        28025 |       817028
+   3 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-03 16:24:12.390521 | 2022-09-03 22:23:45.40156  |          | true         | true    | 246666008478 | 47930560065 | 220957658233 |        74382 |       741028
+(3 rows)
+</code></pre>
+<p>Show status and decommissioning details for active and inactive nodes:</p>
+<pre><code>$ cockroach node status --decommission --insecure
+  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live | gossiped_replicas | is_decommissioning | membership | is_draining
+-----+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+---------
+   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-03 16:24:12.001861 | 2022-09-03 22:24:03.043432 |          | true         | true    |               941 | false              | active     | false
+   2 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-03 16:24:12.04249  | 2022-09-03 22:24:03.048948 |          | true         | true    |               941 | false              | active     | false
+   3 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-03 16:24:12.390521 | 2022-09-03 22:24:03.401953 |          | true         | true    |               941 | false              | active     | false
+(3 rows)
+</code></pre>
+<p>Show complete status details for active and inactive nodes:</p>
+<pre><code>$ cockroach node status --all --insecure
+  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live | replicas_leaders | replicas_leaseholders | ranges | ranges_unavailable | ranges_underreplicated |  live_bytes  |  key_bytes  | value_bytes  | intent_bytes | system_bytes | gossiped_replicas | is_decommissioning | membership | is_draining
+-----+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+---------
+   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-03 16:24:12.001861 | 2022-09-03 22:24:07.539077 |          |         true |    true |              306 |                   306 |    942 |                  0 |                      0 | 246677946612 | 47939212836 | 221027696131 |        81398 |       722359 |        941        |              false |   active   |    false
+   2 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-03 16:24:12.04249  | 2022-09-03 22:24:07.548886 |          |         true |    true |              311 |                   311 |    942 |                  0 |                      0 | 246677952989 | 47939228198 | 221027812276 |        67816 |       731258 |        941        |              false |   active   |    false
+   3 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-03 16:24:12.390521 | 2022-09-03 22:24:07.901765 |          |         true |    true |              325 |                   325 |    942 |                  0 |                      0 | 246678252011 | 47939394591 | 221029217819 |        55249 |       869542 |        941        |              false |   active   |    false
+(3 rows)
+</code></pre>
+<p>Show status details for a specific node:</p>
+<pre><code>$ cockroach node status 1 --insecure
+  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live
+-----+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+----------
+   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-03 16:24:12.001861 | 2022-09-03 22:24:30.044382 |          | true         | true
+(1 row)
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/cockroachdb/cockroach/blob/master/docs/design.md">https://github.com/cockroachdb/cockroach/blob/master/docs/design.md</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2662,554 +3019,6 @@ Running asc_sort_with_after_geonameid                                          [
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://esrally.readthedocs.io/en/stable/configuration.html">https://esrally.readthedocs.io/en/stable/configuration.html</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/elastic/rally-tracks/tree/master/geonames">https://github.com/elastic/rally-tracks/tree/master/geonames</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/key-concepts-in-esrally/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/key-concepts-in-esrally/" class="post-title-link" itemprop="url">Key concepts in Elastic Rally</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-10-23 12:24:00" itemprop="dateCreated datePublished" datetime="2022-10-23T12:24:00-07:00">2022-10-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-11-01 21:22:12" itemprop="dateModified" datetime="2023-11-01T21:22:12-07:00">2023-11-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Pipelines"><a href="#Pipelines" class="headerlink" title="Pipelines"></a>Pipelines</h2><p>A pipeline is a series of steps that are performed to get benchmark results. This is not intended to customize the actual benchmark but rather what happens before and after a benchmark.</p>
-<p>An example will clarify the concept: If you want to benchmark a binary distribution of Elasticsearch, Rally has to download a distribution archive, decompress it, start Elasticsearch and then run the benchmark. However, if you want to benchmark a source build of Elasticsearch, it first has to build a distribution using the Gradle Wrapper. So, in both cases, different steps are involved and that’s what pipelines are for.</p>
-<p>You can get a list of all pipelines with <em>esrally list pipelines</em></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">$ esrally --version</span><br><span class="line">esrally 2.6.0</span><br><span class="line"></span><br><span class="line">$ esrally list pipelines</span><br><span class="line"></span><br><span class="line">    ____        ____</span><br><span class="line">   / __ \____ _/ / /_  __</span><br><span class="line">  / /_/ / __ `/ / / / / /</span><br><span class="line"> / _, _/ /_/ / / / /_/ /</span><br><span class="line">/_/ |_|\__,_/_/_/\__, /</span><br><span class="line">                /____/</span><br><span class="line"></span><br><span class="line">Available pipelines:</span><br><span class="line"></span><br><span class="line">Name               Description</span><br><span class="line">-----------------  ---------------------------------------------------------------------------------------------</span><br><span class="line">from-sources       Builds and provisions Elasticsearch, runs a benchmark and reports results.</span><br><span class="line">from-distribution  Downloads an Elasticsearch distribution, provisions it, runs a benchmark and reports results.</span><br><span class="line">benchmark-only     Assumes an already running Elasticsearch instance, runs a benchmark and reports results</span><br><span class="line"></span><br><span class="line">-------------------------------</span><br><span class="line">[INFO] SUCCESS (took 0 seconds)</span><br><span class="line">-------------------------------</span><br></pre></td></tr></table></figure>
-
-<h3 id="benchmark-only"><a href="#benchmark-only" class="headerlink" title="benchmark-only"></a>benchmark-only</h3><p>This is intended if you want to provision a cluster by yourself. Do not use this pipeline unless you are absolutely sure you need to. As Rally has not provisioned the cluster, results are not easily reproducable and it also cannot gather a lot of metrics (like CPU usage).</p>
-<p>To benchmark a cluster, you also have to specify the hosts to connect to.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ esrally race --pipeline=benchmark-only --target-host=10.10.10.1:39200,10.10.10.2:39200,10.10.10.3:39200 --track=geonames</span><br></pre></td></tr></table></figure>
-
-<h3 id="from-distribution"><a href="#from-distribution" class="headerlink" title="from-distribution"></a>from-distribution</h3><p>This pipeline allows to benchmark an official Elasticsearch distribution which will be automatically downloaded by Rally. An example invocation:</p>
-<pre><code class="bash">$ esrally race --track=geonames --pipeline=from-distribution --distribution-version=7.17.0
-</code></pre>
-<h3 id="from-sources"><a href="#from-sources" class="headerlink" title="from-sources"></a>from-sources</h3><p>You should use this pipeline when you want to build and benchmark Elasticsearch from sources.</p>
-<p>Remember that you also need git installed. You have to specify a revision.</p>
-<pre><code class="bash">$ esrally race --track=geonames --pipeline=from-sources --revision=latest
-</code></pre>
-<h2 id="track"><a href="#track" class="headerlink" title="track"></a>track</h2><p>A track is the description of one or more benchmarking scenarios with a specific document corpus. It defines for example the involved indices, data files and which operations are invoked. List the available tracks with <em>esrally list tracks</em>. Although Rally ships with some tracks out of the box, you should usually create your own track based on your own data.</p>
-<ul>
-<li>Geonames: for evaluating the performance of structured data.</li>
-<li>Geopoint: for evaluating the performance of geopoint queries.</li>
-<li>Geopointshape: for evaluating the performance of geopointshape queries.</li>
-<li>Geoshape: for evaluating the performance of geoshape data.</li>
-<li>Percolator: for evaluating the performance of percolation queries.</li>
-<li>PMC: for evaluating the performance of full text search.</li>
-<li>NYC taxis: for evaluating the performance for highly structured data.</li>
-<li>NYC taxis (ARM): for evaluating the performance for highly structured data and detect ARM-specific regressions.</li>
-<li>Nested: for evaluating the performance for nested documents.</li>
-<li>HTTP Logs: for evaluating the performance of (Web) server logs.</li>
-<li>NOAA: for evaluating the performance of range fields.</li>
-<li>EQL: for evaluating the performance of EQL.</li>
-<li>SQL: for evaluating the performance of SQL.</li>
-<li>SO (Transform): for evaluating the performance of the transform feature.</li>
-<li>SO (Frequent Items): for evaluating the performance of the frequent items aggregation.</li>
-<li>Logging: for evaluating the performance of the Log Monitoring part of Elastic’s Observability solution.</li>
-<li>Logging (Many Shards): for evaluating the performance of the Log Monitoring part of Elastic’s Observability solution with a large amount of shards.</li>
-<li>Logging (Snapshots): for evaluating snapshot performance when taking snapshot with a large of amount of shards.</li>
-<li>Dense Vector: for evaluating the performance of vectors search.</li>
-<li>Security: for evaluating the performance of Elastic’s Security solution.</li>
-<li>TSDB: for evaluating the performance of TSDB (time series database).</li>
-<li>Logging (CCS): for evaluating the performance of CCS (cross cluster search).</li>
-</ul>
-<pre><code class="bash">$ esrally list tracks
-
-    ____        ____
-   / __ \____ _/ / /_  __
-  / /_/ / __ `/ / / / / /
- / _, _/ /_/ / / / /_/ /
-/_/ |_|\__,_/_/_/\__, /
-                /____/
-
-Available tracks:
-
-Name              Description                                                              Documents    Compressed Size   Uncompressed Size    Default Challenge        All Challenges
-----------------  -----------------------------------------------------------------------  -----------  ----------------- -------------------  ----------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-elastic/logs      Track for simulating logging workloads                                   14,009,078   N/A                NA                  logging-indexing         logging-indexing-querying,logging-indexing,logging-querying,logging-snapshot-mountlogging-snapshot-restore,logging-snapshot,cross-clusters-search,logging-disk-usage,many-shards-quantitative,many-shards-snapshots
-elastic/security  Track for simulating Elastic Security workloads                          77,513,777   N/A                NA                  security-querying        security-indexing-querying,security-indexing,security-querying,index-alert-source-events
-elastic/endpoint  Endpoint track                                                           0            0 bytes            0bytes              default                  default
-eql               EQL benchmarks based on endgame index of SIEM demo cluster               60,782,211   4.5 GB             109.2GB             default                  default,index-sorting
-geonames          POIs from Geonames                                                       11,396,503   252.9 MB           3.3GB               append-no-conflicts      append-no-conflicts,append-no-conflicts-index-only,append-fast-with-conflictssignificant-text
-geopoint          Point coordinates from PlanetOSM                                         60,844,404   482.1 MB           2.3GB               append-no-conflicts      append-no-conflicts,append-no-conflicts-index-only,append-fast-with-conflicts
-geopointshape     Point coordinates from PlanetOSM indexed as geoshapes                    60,844,404   470.8 MB           2.6GB               append-no-conflicts      append-no-conflicts,append-no-conflicts-index-only,append-fast-with-conflicts
-geoshape          Shapes from PlanetOSM                                                    84,220,567   17.0 GB            58.7GB              append-no-conflicts      append-no-conflicts,append-no-conflicts-big
-http_logs         HTTP server log data                                                     247,249,096  1.2 GB             31.1GB              append-no-conflicts      append-no-conflicts,runtime-fields,append-no-conflicts-index-onlyappend-sorted-no-conflicts,append-index-only-with-ingest-pipeline,update,append-no-conflicts-index-reindex-only
-metricbeat        Metricbeat data                                                          1,079,600    87.7 MB            1.2GB               append-no-conflicts      append-no-conflicts
-nested            StackOverflow Q&amp;A stored as nested docs                                  11,203,029   663.3 MB           3.4GB               nested-search-challenge  nested-search-challenge,index-only
-noaa              Global daily weather measurements from NOAA                              33,659,481   949.4 MB           9.0GB               append-no-conflicts      append-no-conflicts,append-no-conflicts-index-only,aggs,filter-aggs
-nyc_taxis         Taxi rides in New York in 2015                                           165,346,692  4.5 GB             74.3GB              append-no-conflicts      append-no-conflicts,append-no-conflicts-index-only,append-sorted-no-conflicts-index-onlyupdate,append-ml,aggs
-percolator        Percolator benchmark based on AOL queries                                2,000,000    121.1 kB           104.9MB             append-no-conflicts      append-no-conflicts
-pmc               Full text benchmark with academic papers from PMC                        574,199      5.5 GB             21.7GB              append-no-conflicts      append-no-conflicts,append-no-conflicts-index-only,append-sorted-no-conflictsappend-fast-with-conflicts,indexing-querying
-so                Indexing benchmark using up to questions and answers from StackOverflow  36,062,278   8.9 GB             33.1GB              append-no-conflicts      append-no-conflicts,transform,frequent-items
-sql               SQL query performance based on NOAA Weather data                         33,659,481   949.4 MB           9.0GB               sql                      sql
-dense_vector      Benchmark for dense vector indexing and search                           10,000,000   7.2 GB             19.5GB              index-and-search         index-and-search
-so_vector         Benchmark for vector search with StackOverflow data                      2,000,000    12.3 GB            32.2GB              index-and-search         index-and-search
-tsdb              metricbeat information for elastic-app k8s cluster                       116,633,698  N/A                123.0GB             append-no-conflicts      append-no-conflicts,downsample
-
--------------------------------
-[INFO] SUCCESS (took 2 seconds)
--------------------------------
-
-$ esrally info --track=geonames
-
-    ____        ____
-   / __ \____ _/ / /_  __
-  / /_/ / __ `/ / / / / /
- / _, _/ /_/ / / / /_/ /
-/_/ |_|\__,_/_/_/\__, /
-                /____/
-
-Showing details for track [geonames]:
-
-* Description: POIs from Geonames
-* Documents: 11,396,503
-* Compressed Size: 252.9 MB
-* Uncompressed Size: 3.3 GB
-
-================================================
-Challenge [append-no-conflicts] (run by default)
-================================================
-
-Indexes the whole document corpus using Elasticsearch default settings. We only adjust the number of replicas as we benchmark asingle node cluster and Rally will only start the benchmark if the cluster turns green. Document ids are unique so all indexoperations are append only. After that a couple of queries are run.
-
-Schedule:
-----------
-
-1. delete-index
-2. create-index
-3. check-cluster-health
-4. index-append (8 clients)
-5. refresh-after-index
-6. force-merge
-7. refresh-after-force-merge
-8. wait-until-merges-finish
-9. index-stats
-10. node-stats
-11. default
-12. term
-13. phrase
-14. country_agg_uncached
-15. country_agg_cached
-16. scroll
-17. expression
-18. painless_static
-19. painless_dynamic
-20. decay_geo_gauss_function_score
-21. decay_geo_gauss_script_score
-22. field_value_function_score
-23. field_value_script_score
-24. large_terms
-25. large_filtered_terms
-26. large_prohibited_terms
-27. desc_sort_population
-28. asc_sort_population
-29. asc_sort_with_after_population
-30. desc_sort_geonameid
-31. desc_sort_with_after_geonameid
-32. asc_sort_geonameid
-33. asc_sort_with_after_geonameid
-
-==========================================
-Challenge [append-no-conflicts-index-only]
-==========================================
-
-Indexes the whole document corpus using Elasticsearch default settings. We only adjust the number of replicas as we benchmark asingle node cluster and Rally will only start the benchmark if the cluster turns green. Document ids are unique so all indexoperations are append only.
-
-Schedule:
-----------
-
-1. delete-index
-2. create-index
-3. check-cluster-health
-4. index-append (8 clients)
-5. force-merge
-6. wait-until-merges-finish
-
-======================================
-Challenge [append-fast-with-conflicts]
-======================================
-
-Indexes the whole document corpus using a setup that will lead to a larger indexing throughput than the default settings. Rallywill produce duplicate ids in 25% of all documents (not configurable) so we can simulate a scenario with appends most of the timeand some updates in between.
-
-Schedule:
-----------
-
-1. delete-index
-2. create-index
-3. check-cluster-health
-4. index-update (8 clients)
-5. force-merge
-6. wait-until-merges-finish
-
-============================
-Challenge [significant-text]
-============================
-
-Indexes the whole document corpus using Elasticsearch default settings. We only adjust the number of replicas as we benchmark asingle node cluster and Rally will only start the benchmark if the cluster turns green. Document ids are unique so all indexoperations are append only.
-
-Schedule:
-----------
-
-1. delete-index
-2. create-index
-3. check-cluster-health
-4. index-append (8 clients)
-5. force-merge
-6. wait-until-merges-finish
-7. significant_text_selective
-8. significant_text_sampled_selective
-9. significant_text_unselective
-10. significant_text_sampled_unselective
-
-
--------------------------------
-[INFO] SUCCESS (took 1 seconds)
--------------------------------
-</code></pre>
-<p>A track is specified in a JSON file. A track JSON file can include the following sections:</p>
-<ul>
-<li>indices&#x2F;templates: define the relevant indices and index templates</li>
-<li>data-streams: define the relevant data streams</li>
-<li>composable-templates&#x2F;component-templates: define the relevant composable and component templates</li>
-<li>corpora: define all document corpora (i.e. data files) that Rally should use for this track</li>
-<li>challenge(s): describe more than one set of operations, in the event your track needs to test more than one set of scenarios</li>
-<li>schedule: describe the workload for the benchmark, for example index with two clients at maximum throughput while searching with another two clients with ten operations per second</li>
-<li>operations: describe which operations are available for this track and how they are parametrized</li>
-<li>dependencies</li>
-</ul>
-<pre><code class="bash">$ ls .rally/benchmarks/tracks/default/geonames
-challenges  files.txt  index.json  operations  __pycache__  README.md  terms.txt  track.json  track.py
-
-$ cat .rally/benchmarks/tracks/default/geonames/track.json
-&#123;
-  &quot;version&quot;: 2,
-  &quot;description&quot;: &quot;POIs from Geonames&quot;,
-  &quot;data-url&quot;: &quot;http://benchmarks.elasticsearch.org.s3.amazonaws.com/corpora/geonames&quot;,
-  &quot;indices&quot;: [
-    &#123;
-      &quot;name&quot;: &quot;geonames&quot;,
-      &quot;body&quot;: &quot;index.json&quot;
-    &#125;
-  ],
-  &quot;corpora&quot;: [
-    &#123;
-      &quot;name&quot;: &quot;geonames&quot;,
-      &quot;base-url&quot;: &quot;https://rally-tracks.elastic.co/geonames&quot;,
-      &quot;documents&quot;: [
-        &#123;
-          &quot;source-file&quot;: &quot;documents-2.json.bz2&quot;,
-          &quot;document-count&quot;: 11396503,
-          &quot;compressed-bytes&quot;: 265208777,
-          &quot;uncompressed-bytes&quot;: 3547613828
-        &#125;
-      ]
-    &#125;
-  ],
-  &quot;operations&quot;: [
-    &#123;&#123; rally.collect(parts="operations/*.json") &#125;&#125;
-  ],
-  &quot;challenges&quot;: [
-    &#123;&#123; rally.collect(parts="challenges/*.json") &#125;&#125;
-  ]
-&#125;
-
-$ cat .rally/benchmarks/tracks/default/geonames/index.json
-&#123;
-  &quot;settings&quot;: &#123;
-    &quot;index.number_of_shards&quot;: &#123;&#123;number_of_shards | default(5)&#125;&#125;,
-    &quot;index.number_of_replicas&quot;: &#123;&#123;number_of_replicas | default(0)&#125;&#125;,
-    &quot;index.store.type&quot;: &quot;&#123;&#123;store_type | default('fs')&#125;&#125;&quot;,
-    &quot;index.requests.cache.enable&quot;: false
-  &#125;,
-  &quot;mappings&quot;: &#123;
-    &quot;dynamic&quot;: &quot;strict&quot;,
-    &quot;_source&quot;: &#123;
-      &quot;enabled&quot;: &#123;&#123; source_enabled | default(true) | tojson &#125;&#125;
-    &#125;,
-    &quot;properties&quot;: &#123;
-    [..]
-  &#125;
-&#125;
-</code></pre>
-<h2 id="challenge"><a href="#challenge" class="headerlink" title="challenge"></a>challenge</h2><p>A challenge describes one benchmarking scenario, for example indexing documents at maximum throughput with 4 clients while issuing term and phrase queries from another two clients rate-limited at 10 queries per second each. It is always specified in the context of a track. See the available challenges by listing the corresponding tracks with <em>esrally list tracks</em>.</p>
-<h2 id="car"><a href="#car" class="headerlink" title="car"></a>car</h2><p>A car is a specific configuration of an Elasticsearch cluster that is benchmarked, for example the out-of-the-box configuration, a configuration with a specific heap size or a custom logging configuration. List the available cars with <em>esrally list cars</em>.</p>
-<pre><code class="bash">$ esrally list cars
-
-    ____        ____
-   / __ \____ _/ / /_  __
-  / /_/ / __ `/ / / / / /
- / _, _/ /_/ / / / /_/ /
-/_/ |_|\__,_/_/_/\__, /
-                /____/
-
-Available cars:
-
-Name                     Type    Description
------------------------  ------  --------------------------------------
-16gheap                  car     Sets the Java heap to 16GB
-1gheap                   car     Sets the Java heap to 1GB
-24gheap                  car     Sets the Java heap to 24GB
-2gheap                   car     Sets the Java heap to 2GB
-4gheap                   car     Sets the Java heap to 4GB
-8gheap                   car     Sets the Java heap to 8GB
-defaults                 car     Sets the Java heap to 1GB
-basic-license            mixin   Basic License
-debug-non-safepoints     mixin   More accurate CPU profiles
-ea                       mixin   Enables Java assertions
-fp                       mixin   Preserves frame pointers
-g1gc                     mixin   Enables the G1 garbage collector
-parallelgc               mixin   Enables the Parallel garbage collector
-trial-license            mixin   Trial License
-unpooled                 mixin   Enables Netty&#39;s unpooled allocator
-x-pack-ml                mixin   X-Pack Machine Learning
-x-pack-monitoring-http   mixin   X-Pack Monitoring (HTTP exporter)
-x-pack-monitoring-local  mixin   X-Pack Monitoring (local exporter)
-x-pack-security          mixin   X-Pack Security
-zgc                      mixin   Enables the ZGC garbage collector
-
--------------------------------
-[INFO] SUCCESS (took 1 seconds)
--------------------------------
-</code></pre>
-<h2 id="telemetry"><a href="#telemetry" class="headerlink" title="telemetry"></a>telemetry</h2><p>Telemetry is used in Rally to gather metrics about the car, for example CPU usage or index size.</p>
-<pre><code class="bash">$ esrally list telemetry
-
-    ____        ____
-   / __ \____ _/ / /_  __
-  / /_/ / __ `/ / / / / /
- / _, _/ /_/ / / / /_/ /
-/_/ |_|\__,_/_/_/\__, /
-                /____/
-
-Available telemetry devices:
-
-Command                     Name                        Description
---------------------------  --------------------------  --------------------------------------------------------------------
-jit                         JIT Compiler Profiler       Enables JIT compiler logs.
-gc                          GC log                      Enables GC logs.
-jfr                         Flight Recorder             Enables Java Flight Recorder (requires an Oracle JDK or OpenJDK 11+)
-heapdump                    Heap Dump                   Captures a heap dump.
-node-stats                  Node Stats                  Regularly samples node stats
-recovery-stats              Recovery Stats              Regularly samples shard recovery stats
-ccr-stats                   CCR Stats                   Regularly samples Cross Cluster Replication (CCR) related stats
-segment-stats               Segment Stats               Determines segment stats at the end of the benchmark.
-transform-stats             Transform Stats             Regularly samples transform stats
-searchable-snapshots-stats  Searchable Snapshots Stats  Regularly samples searchable snapshots stats
-shard-stats                 Shard Stats                 Regularly samples nodes stats at shard level
-data-stream-stats           Data Stream Stats           Regularly samples data stream stats
-ingest-pipeline-stats       Ingest Pipeline Stats       Reports Ingest Pipeline stats at the end of the benchmark.
-disk-usage-stats            Disk usage of each field    Runs the indices disk usage API after benchmarking
-
-Keep in mind that each telemetry device may incur a runtime overhead which can skew results.
-
--------------------------------
-[INFO] SUCCESS (took 0 seconds)
--------------------------------
-</code></pre>
-<h2 id="race"><a href="#race" class="headerlink" title="race"></a>race</h2><p>A race is one invocation of the Rally binary. Another name for that is one “benchmarking trial”. During a race, Rally runs one challenge on a track with the given car.</p>
-<pre><code class="bash">$ esrally race --pipeline=benchmark-only --target-host=10.10.10.1:39200,10.10.10.2:39200,10.10.10.3:39200 --track=geonames--track-params=&quot;number_of_shards:3,number_of_replicas:1&quot; --challenge=append-no-conflicts --on-error=abort --race-id=$&#123;RACE_ID&#125;
-
-$ esrally list races
-
-    ____        ____
-   / __ \____ _/ / /_  __
-  / /_/ / __ `/ / / / / /
- / _, _/ /_/ / / / /_/ /
-/_/ |_|\__,_/_/_/\__, /
-                /____/
-
-
-Recent races:
-
-Race ID                               Race Timestamp    Track     Track Parameters                          Challenge           Car       User Tags                  Track Revision    Team Revision
-------------------------------------  ----------------  --------  ----------------------------------------  ------------------- --------  -------------------------  ----------------  ---------------
-066e02fa-a71a-4239-b515-984f705d5f02  20221031T230044Z  geonames  number_of_replicas=1, number_of_shards=3  append-no-conflicts external  intention=3shards1replica  a64a92a
-734bb4b3-8b7a-4c0b-9fa6-aaeb4659569f  20221031T214254Z  geonames  number_of_replicas=0, number_of_shards=3  append-no-conflicts external  intention=3shards0replica  a64a92a
-</code></pre>
-<h2 id="tournament"><a href="#tournament" class="headerlink" title="tournament"></a>tournament</h2><p>A tournament is a comparison of two races. Looks like <a target="_blank" rel="noopener" href="https://github.com/elastic/rally/issues/57">Rally</a> doesn’t have the tournament mode support yet. Instead, the comparison can be made as the following command between two races. Note that, we should NOT run the same benchmark multiple times without data cleanup between the benchmarks. It will give us unreproducible results.</p>
-<pre><code class="bash">$ esrally compare --baseline=066e02fa-a71a-4239-b515-984f705d5f02 --contender=734bb4b3-8b7a-4c0b-9fa6-aaeb4659569f
-
-    ____        ____
-   / __ \____ _/ / /_  __
-  / /_/ / __ `/ / / / / /
- / _, _/ /_/ / / / /_/ /
-/_/ |_|\__,_/_/_/\__, /
-                /____/
-
-
-Comparing baseline
-  Race ID: 066e02fa-a71a-4239-b515-984f705d5f02
-  Race timestamp: 2022-10-31 23:00:44
-  Challenge: append-no-conflicts
-  Car: external
-  User tags: intention=3shards1replica
-
-with contender
-  Race ID: 734bb4b3-8b7a-4c0b-9fa6-aaeb4659569f
-  Race timestamp: 2022-10-31 21:42:54
-  Challenge: append-no-conflicts
-  Car: external
-  User tags: intention=3shards0replica
-
-------------------------------------------------------
-    _______             __   _____
-   / ____(_)___  ____ _/ /  / ___/_________  ________
-  / /_  / / __ \/ __ `/ /   \__ \/ ___/ __ \/ ___/ _ \
- / __/ / / / / / /_/ / /   ___/ / /__/ /_/ / /  /  __/
-/_/   /_/_/ /_/\__,_/_/   /____/\___/\____/_/   \___/
-------------------------------------------------------
-
-|                                                        Metric |                           Task |        Baseline |      Contender |         Diff |    Unit |   Diff % |
-|--------------------------------------------------------------:|-------------------------------:|----------------:----------------:|-------------:|--------:|---------:|
-|                    Cumulative indexing time of primary shards |                                |    14.3493      |    140125      |     -0.33683 |     min |   -2.35% |
-|             Min cumulative indexing time across primary shard |                                |     0           |    0           |      0       |     min |    0.00% |
-|          Median cumulative indexing time across primary shard |                                |     0.00696667  |     000696667  |      0       |     min |    0.00% |
-|             Max cumulative indexing time across primary shard |                                |     4.954       |     473868     |     -0.21532 |     min |   -4.35% |
-|           Cumulative indexing throttle time of primary shards |                                |     0           |    0           |      0       |     min |    0.00% |
-|    Min cumulative indexing throttle time across primary shard |                                |     0           |    0           |      0       |     min |    0.00% |
-| Median cumulative indexing throttle time across primary shard |                                |     0           |    0           |      0       |     min |    0.00% |
-|    Max cumulative indexing throttle time across primary shard |                                |     0           |    0           |      0       |     min |    0.00% |
-|                       Cumulative merge time of primary shards |                                |     9.5478      |     486773     |     -4.68007 |     min |  -49.02% |
-|                      Cumulative merge count of primary shards |                                |    93           |   70           |    -23       |         |  -24.73% |
-|                Min cumulative merge time across primary shard |                                |     0           |    0           |      0       |     min |    0.00% |
-|             Median cumulative merge time across primary shard |                                |     0.00276667  |     000276667  |      0       |     min |    0.00% |
-|                Max cumulative merge time across primary shard |                                |     3.61232     |     171572     |     -1.8966  |     min |  -52.50% |
-|              Cumulative merge throttle time of primary shards |                                |     2.62635     |     0569683    |     -2.05667 |     min |  -78.31% |
-|       Min cumulative merge throttle time across primary shard |                                |     0           |    0           |      0       |     min |    0.00% |
-|    Median cumulative merge throttle time across primary shard |                                |     0           |    0           |      0       |     min |    0.00% |
-|       Max cumulative merge throttle time across primary shard |                                |     1.06415     |     021315     |     -0.851   |     min |  -79.97% |
-|                     Cumulative refresh time of primary shards |                                |     1.37218     |     045075     |     -0.92143 |     min |  -67.15% |
-|                    Cumulative refresh count of primary shards |                                |   421           |  327           |    -94       |         |  -22.33% |
-|              Min cumulative refresh time across primary shard |                                |     0           |    0           |      0       |     min |    0.00% |
-|           Median cumulative refresh time across primary shard |                                |     0.0191417   |     00191417   |      0       |     min |    0.00% |
-|              Max cumulative refresh time across primary shard |                                |     0.4631      |     0152433    |     -0.31067 |     min |  -67.08% |
-|                       Cumulative flush time of primary shards |                                |     0.144633    |     0185383    |      0.04075 |     min |  +28.17% |
-|                      Cumulative flush count of primary shards |                                |    14           |   14           |      0       |         |    0.00% |
-|                Min cumulative flush time across primary shard |                                |     0           |    0           |      0       |     min |    0.00% |
-|             Median cumulative flush time across primary shard |                                |     0.000191667 |     0000191667 |      0       |     min |    0.00% |
-|                Max cumulative flush time across primary shard |                                |     0.0575833   |     00674167   |      0.00983 |     min |  +17.08% |
-|                                       Total Young Gen GC time |                                |    30.494       |    14511       |    -15.983   |       s |  -52.41% |
-|                                      Total Young Gen GC count |                                |  3888           | 2381           |  -1507       |         |  -38.76% |
-|                                         Total Old Gen GC time |                                |     7.329       |     3247       |     -4.082   |       s |  -55.70% |
-|                                        Total Old Gen GC count |                                |   109           |   48           |    -61       |         |  -55.96% |
-|                                                    Store size |                                |     5.78897     |     301044     |     -2.77854 |      GB |  -48.00% |
-|                                                 Translog size |                                |     8.19564e-07 |     665896e-07 |     -0       |      GB |  -18.75% |
-|                                        Heap used for segments |                                |     0.513947    |     0385025    |     -0.12892 |      MB |  -25.08% |
-|                                      Heap used for doc values |                                |     0.037796    |     00160522   |     -0.02174 |      MB |  -57.53% |
-|                                           Heap used for terms |                                |     0.383759    |     0296478    |     -0.08728 |      MB |  -22.74% |
-|                                           Heap used for norms |                                |     0.0499268   |     00380859   |     -0.01184 |      MB |  -23.72% |
-|                                          Heap used for points |                                |     0           |    0           |      0       |      MB |    0.00% |
-|                                   Heap used for stored fields |                                |     0.0424652   |     00344086   |     -0.00806 |      MB |  -18.97% |
-|                                                 Segment count |                                |    82           |   66           |    -16       |         |  -19.51% |
-|                                   Total Ingest Pipeline count |                                |     0           |    0           |      0       |         |    0.00% |
-|                                    Total Ingest Pipeline time |                                |     0           |    0           |      0       |      ms |    0.00% |
-|                                  Total Ingest Pipeline failed |                                |     0           |    0           |      0       |         |    0.00% |
-|                                                    error rate |                   index-append |     0           |    0           |      0       |       % |    0.00% |
-|                                                Min Throughput |                    index-stats |    90.001       |    900126      |      0.01165 |   ops/s |   +0.01% |
-|                                               Mean Throughput |                    index-stats |    90.0055      |    900241      |      0.01854 |   ops/s |   +0.02% |
-|                                             Median Throughput |                    index-stats |    90.0048      |    900219      |      0.01715 |   ops/s |   +0.02% |
-|                                                Max Throughput |                    index-stats |    90.0142      |    900422      |      0.02796 |   ops/s |   +0.03% |
-|                                       50th percentile latency |                    index-stats |     5.80729     |     540389     |     -0.40339 |      ms |   -6.95% |
-|                                       90th percentile latency |                    index-stats |     6.71673     |     622462     |     -0.49211 |      ms |   -7.33% |
-|                                       99th percentile latency |                    index-stats |     7.26607     |     68574      |     -0.40867 |      ms |   -5.62% |
-|                                     99.9th percentile latency |                    index-stats |    11.3788      |    111477      |     -0.23112 |      ms |   -2.03% |
-|                                      100th percentile latency |                    index-stats |    13.6309      |    140192      |      0.38829 |      ms |   +2.85% |
-|                                  50th percentile service time |                    index-stats |     4.61601     |     424021     |     -0.37579 |      ms |   -8.14% |
-|                                  90th percentile service time |                    index-stats |     5.40477     |     493823     |     -0.46654 |      ms |   -8.63% |
-|                                  99th percentile service time |                    index-stats |     5.85565     |     534821     |     -0.50744 |      ms |   -8.67% |
-|                                99.9th percentile service time |                    index-stats |     9.8608      |     774023     |     -2.12057 |      ms |  -21.51% |
-|                                 100th percentile service time |                    index-stats |    12.6355      |     944686     |     -3.18866 |      ms |  -25.24% |
-|                                                    error rate |                    index-stats |     0           |    0           |      0       |
-[..]
-
--------------------------------
-[INFO] SUCCESS (took 0 seconds)
--------------------------------
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://esrally.readthedocs.io/en/stable/track.html">https://esrally.readthedocs.io/en/stable/track.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://esrally.readthedocs.io/en/stable/tournament.html">https://esrally.readthedocs.io/en/stable/tournament.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/elastic/rally/issues/57">https://github.com/elastic/rally/issues/57</a></li>
 </ul>
 
       

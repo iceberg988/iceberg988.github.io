@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">267</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">268</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">267</span>
+          <span class="site-state-item-count">268</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,273 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/understanding-thin-provisioning-volume-and-snapshot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/understanding-thin-provisioning-volume-and-snapshot/" class="post-title-link" itemprop="url">Understanding thin provisioning volume and snapshot</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-01-06 08:00:00" itemprop="dateCreated datePublished" datetime="2022-01-06T08:00:00-08:00">2022-01-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Thin-provisioning-volume"><a href="#Thin-provisioning-volume" class="headerlink" title="Thin provisioning volume"></a>Thin provisioning volume</h2><p>Logical volume can be thinly provisioned. It allows storage administrator to overcommit the physical storage. In other words, it’s possible to create a logical volume which is larger than the available extents.</p>
+<h2 id="Create-thin-provisioning-volume"><a href="#Create-thin-provisioning-volume" class="headerlink" title="Create thin provisioning volume"></a>Create thin provisioning volume</h2><p>In the following example, we create a 500GiB thin pool and 100GiB volume.</p>
+<pre><code>$ vgcreate vg1 /dev/nvme0n1
+  Physical volume &quot;/dev/nvme0n1&quot; successfully created.
+  Volume group &quot;vg1&quot; successfully created
+
+$ vgs
+  VG     #PV #LV #SN Attr   VSize   VFree
+  centos   1   3   0 wz--n- 893.05g      0
+  vg1      1   0   0 wz--n- 931.51g 931.51g
+
+$ lvcreate -L 500G --thinpool thinpool1 vg1
+  Thin pool volume with chunk size 256.00 KiB can address at most 63.25 TiB of data.
+  Logical volume &quot;thinpool1&quot; created.
+
+$ lvs
+  LV        VG     Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  home      centos -wi-ao---- 839.05g
+  root      centos -wi-ao----  50.00g
+  swap      centos -wi-ao----   4.00g
+  thinpool1 vg1    twi-a-tz-- 500.00g             0.00   10.41
+
+$ lvs -ao name,size,stripesize,chunksize,metadata_percent
+  LV                LSize   Stripe Chunk   Meta%
+  home              839.05g     0       0
+  root               50.00g     0       0
+  swap                4.00g     0       0
+  [lvol0_pmspare]   128.00m     0       0
+  thinpool1         500.00g     0  256.00k 10.41
+  [thinpool1_tdata] 500.00g     0       0
+  [thinpool1_tmeta] 128.00m     0       
+  
+$ lvcreate -V 100G --thin -n thinvol1 vg1/thinpool1
+  Logical volume &quot;thinvol1&quot; created.
+
+$ lvs
+  LV        VG     Attr       LSize   Pool      Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  home      centos -wi-ao---- 839.05g
+  root      centos -wi-ao----  50.00g
+  swap      centos -wi-ao----   4.00g
+  thinpool1 vg1    twi-aotz-- 500.00g                  0.00   10.42
+  thinvol1  vg1    Vwi-a-tz-- 100.00g thinpool1        0.00
+</code></pre>
+<h2 id="Thin-pool-volume-chunk-size"><a href="#Thin-pool-volume-chunk-size" class="headerlink" title="Thin pool volume chunk size"></a>Thin pool volume chunk size</h2><p>By default, lvm2 starts with 64KiB chunk size and increase its value when the resulting size of the thin pool metadata device grows above 128MiB.</p>
+<p>In the previous example, the 500GiB thin pool results in 256KiB chunk size. In the following example, the 100MiB thin pool results in 64KiB chunk size.</p>
+<pre><code>$ lvcreate  -L 100M --thinpool thinpool2 vg1
+  Thin pool volume with chunk size 64.00 KiB can address at most 15.81 TiB of data.
+  Logical volume &quot;thinpool2&quot; created.
+
+$ lvs -ao name,size,stripesize,chunksize,metadata_percent
+  LV                LSize   Stripe Chunk   Meta%
+  home              839.05g     0       0
+  root               50.00g     0       0
+  swap                4.00g     0       0
+  [lvol0_pmspare]   128.00m     0       0
+  thinpool1         500.00g     0  256.00k 10.42
+  [thinpool1_tdata] 500.00g     0       0
+  [thinpool1_tmeta] 128.00m     0       0
+  thinpool2         100.00m     0   64.00k 10.84
+  [thinpool2_tdata] 100.00m     0       0
+  [thinpool2_tmeta]   4.00m     0       0
+  thinvol1          100.00g     0       0  
+</code></pre>
+<p>The “-c” option can be used to specify the desired chunk size if needed.</p>
+<pre><code>$ lvcreate -c 128k -L 100M --thinpool thinpool3 vg1
+  Thin pool volume with chunk size 128.00 KiB can address at most 31.62 TiB of data.
+  Logical volume &quot;thinpool3&quot; created.
+
+$ lvs -ao name,size,stripesize,chunksize,metadata_percent
+  LV                LSize   Stripe Chunk   Meta%
+  home              839.05g     0       0
+  root               50.00g     0       0
+  swap                4.00g     0       0
+  [lvol0_pmspare]   128.00m     0       0
+  thinpool1         500.00g     0  256.00k 10.42
+  [thinpool1_tdata] 500.00g     0       0
+  [thinpool1_tmeta] 128.00m     0       0
+  thinpool2         100.00m     0   64.00k 10.84
+  [thinpool2_tdata] 100.00m     0       0
+  [thinpool2_tmeta]   4.00m     0       0
+  thinpool3         100.00m     0  128.00k 10.84
+  [thinpool3_tdata] 100.00m     0       0
+  [thinpool3_tmeta]   4.00m     0       0
+  thinvol1          100.00g     0       0
+</code></pre>
+<p>Use the following criteria for using the chunk size:</p>
+<ul>
+<li>A smaller chunk size requires more metadata and hinders performance, but provides better space utilization with snapshots.</li>
+<li>A bigger chunk size requires less metadata manipulation, but makes the snapshot less space efficient.</li>
+</ul>
+<h2 id="Normal-snapshot-volume"><a href="#Normal-snapshot-volume" class="headerlink" title="Normal snapshot volume"></a>Normal snapshot volume</h2><p>The LVM snapshot provides the ability to create a virtual image of device at a point in time without a service interruption.</p>
+<p>When the original data block is overwritten after snapshot is taken, the original data needs to be copied to the snapshot volume. This will introduce copy-on-write overhead whenever the original block is overwritten. The state of original data can be reconstructed with the snapshot.</p>
+<h2 id="Thinly-provisioned-snapshot-volume"><a href="#Thinly-provisioned-snapshot-volume" class="headerlink" title="Thinly-provisioned snapshot volume"></a>Thinly-provisioned snapshot volume</h2><p>Unlike normal snapshot volume, the thin snapshot and volume are all about metadata. When the volume is snapshot, its metadata are copied for the thin snapshot volume use. As the metadata of the volume is changed, the snapshot volume still addresses the original data blocks. The new data will be written to new blocks. In other words, overwrites actually write the data to new blocks. Thus, the original data blocks can be still addressed by snapshot volume metadata after the data change.</p>
+<h2 id="Create-the-snapshot-volume"><a href="#Create-the-snapshot-volume" class="headerlink" title="Create the snapshot volume"></a>Create the snapshot volume</h2><pre><code>$ lvcreate -s -L 100G -n thinvol1-snap /dev/vg1/thinvol1
+  Logical volume &quot;thinvol1-snap&quot; created.
+
+$ ls /dev/vg1
+thinpool2  thinpool3   thinvol1  thinvol1-snap
+
+$ lvs
+  LV            VG     Attr       LSize   Pool      Origin   Data%  Meta%  Move Log Cpy%Sync Convert
+  home          centos -wi-ao---- 839.05g
+  root          centos -wi-ao----  50.00g
+  swap          centos -wi-ao----   4.00g
+  thinpool1     vg1    twi-aotz-- 500.00g                    0.00   10.42
+  thinpool2     vg1    twi-a-tz-- 100.00m                    0.00   10.84
+  thinpool3     vg1    twi-a-tz-- 100.00g                    0.00   10.43
+  thinvol1      vg1    owi-a-tz-- 100.00g thinpool1          0.00
+  thinvol1-snap vg1    swi-a-s--- 100.00g           thinvol1 0.00
+
+$ lvs -ao name,size,stripesize,chunksize,metadata_percent
+  LV                LSize   Stripe Chunk   Meta%
+  home              839.05g     0       0
+  root               50.00g     0       0
+  swap                4.00g     0       0
+  [lvol0_pmspare]   128.00m     0       0
+  thinpool1         500.00g     0  256.00k 10.42
+  [thinpool1_tdata] 500.00g     0       0
+  [thinpool1_tmeta] 128.00m     0       0
+  thinpool2         100.00m     0   64.00k 10.84
+  [thinpool2_tdata] 100.00m     0       0
+  [thinpool2_tmeta]   4.00m     0       0
+  thinpool3         100.00m     0  128.00k 10.84
+  [thinpool3_tdata] 100.00m     0       0
+  [thinpool3_tmeta]   4.00m     0       0
+  thinvol1          100.00g     0       0
+  thinvol1-snap     100.00g     0    4.00k
+</code></pre>
+<p>The chunk size of snapshot volume can be specified with “-c” option.</p>
+<pre><code>$ lvcreate -s -c 128k -L 100G -n thinvol1-snap2 /dev/vg1/thinvol1
+  Logical volume &quot;thinvol1-snap2&quot; created.
+
+$ lvs -ao name,size,stripesize,chunksize,metadata_percent
+  LV                LSize   Stripe Chunk   Meta%
+  home              839.05g     0       0
+  root               50.00g     0       0
+  swap                4.00g     0       0
+  [lvol0_pmspare]   128.00m     0       0
+  thinpool1         500.00g     0  256.00k 10.42
+  [thinpool1_tdata] 500.00g     0       0
+  [thinpool1_tmeta] 128.00m     0       0
+  thinpool2         100.00m     0   64.00k 10.84
+  [thinpool2_tdata] 100.00m     0       0
+  [thinpool2_tmeta]   4.00m     0       0
+  thinpool3         100.00m     0  128.00k 10.84
+  [thinpool3_tdata] 100.00m     0       0
+  [thinpool3_tmeta]   4.00m     0       0
+  thinvol1          100.00g     0       0
+  thinvol1-snap     100.00g     0    4.00k
+  thinvol1-snap2    100.00g     0  128.00k
+</code></pre>
+<h2 id="Remove-the-snaphost-volume"><a href="#Remove-the-snaphost-volume" class="headerlink" title="Remove the snaphost volume"></a>Remove the snaphost volume</h2><pre><code>$ lvremove /dev/vg1/thinvol1-snap
+Do you really want to remove active logical volume vg1/thinvol1-snap? [y/n]: y
+  Logical volume &quot;thinvol1-snap&quot; successfully removed
+$ lvremove /dev/vg1/thinvol1-snap2
+Do you really want to remove active logical volume vg1/thinvol1-snap2? [y/n]: y
+  Logical volume &quot;thinvol1-snap2&quot; successfully removed
+
+$ lvs
+  LV        VG     Attr       LSize   Pool      Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  home      centos -wi-ao---- 839.05g
+  root      centos -wi-ao----  50.00g
+  swap      centos -wi-ao----   4.00g
+  thinpool1 vg1    twi-aotz-- 500.00g                  0.00   10.42
+  thinpool2 vg1    twi-a-tz-- 100.00m                  0.00   10.84
+  thinpool3 vg1    twi-a-tz-- 100.00g                  0.00   10.43
+  thinvol1  vg1    Vwi-a-tz-- 100.00g thinpool1        0.00
+</code></pre>
+<h2 id="Remove-the-volume-and-pool"><a href="#Remove-the-volume-and-pool" class="headerlink" title="Remove the volume and pool"></a>Remove the volume and pool</h2><pre><code>$ lvremove /dev/vg1/thinvol1 -f
+  Logical volume &quot;thinvol1&quot; successfully removed
+
+$ lvremove /dev/vg1/thinpool1
+Do you really want to remove active logical volume vg1/thinpool1? [y/n]: y
+  Logical volume &quot;thinpool1&quot; successfully removed  
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_logical_volumes/assembly_thinly-provisioned-logical-volumes_configuring-and-managing-logical-volumes">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux&#x2F;8&#x2F;html&#x2F;configuring_and_managing_logical_volumes&#x2F;assembly_thinly-provisioned-logical-volumes_configuring-and-managing-logical-volumes</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ilsistemista.net/index.php/linux-a-unix/46-lvm-thin-volume-explained.html?start=3">https://www.ilsistemista.net/index.php/linux-a-unix/46-lvm-thin-volume-explained.html?start=3</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1945,117 +2212,6 @@ fio       33925                 root    5r      BLK             259,11       0t0
 fio       33926                 root    3r      BLK              259,0       0t0      33809 /dev/nvme2n1
 fio       33926                 root    4r      BLK              259,0       0t0      33809 /dev/nvme2n1
 fio       33926                 root    5r      BLK             259,11       0t0      33820 /dev/nvme3n1
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/backup-and-restore-mysql-database/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/backup-and-restore-mysql-database/" class="post-title-link" itemprop="url">Backup and restore MySQL database</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-09-28 07:00:00" itemprop="dateCreated datePublished" datetime="2021-09-28T07:00:00-07:00">2021-09-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Backup-a-database"><a href="#Backup-a-database" class="headerlink" title="Backup a database"></a>Backup a database</h2><p>mysqldump is a command-line utility which can be used to generate backups of MySQL database.</p>
-<pre><code>$ mysqldump -u root --password=&lt;db_password&gt; mydb &gt; mydb_dump_`date +&quot;%Y%m%d_%H%M%S&quot;`.sql
-$  ls -ltr | grep mydb
--rw-r--r--.   1 root root 4834575 Sep 28 21:11 mydb_dump_20210928_144610.sql
-</code></pre>
-<h2 id="Restore-a-database"><a href="#Restore-a-database" class="headerlink" title="Restore a database"></a>Restore a database</h2><p>Create an empty database before restore as below:</p>
-<pre><code>$ mysql -u root -p
-
-mysql&gt; create database mydb;
-mysql&gt; show databases;
-mysql&gt; exit
-</code></pre>
-<p>Restore the database:</p>
-<pre><code>$ mysql -u root -p mydb &lt; mydb_dump_20210928_144610.sql
-</code></pre>
-<p>Check the database size as below:</p>
-<pre><code>mysql&gt; SELECT table_schema &quot;DB Name&quot;, ROUND(SUM(data_length + index_length) / 1024 / 1024, 1) &quot;DB Size in MB&quot;  FROM information_schema.tables  GROUP BY table_schema;
-+--------------------+---------------+
-| DB Name            | DB Size in MB |
-+--------------------+---------------+
-| mydb               |           8.1 |
-+--------------------+---------------+
 </code></pre>
 
       
