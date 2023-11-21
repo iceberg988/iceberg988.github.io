@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">268</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">269</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">268</span>
+          <span class="site-state-item-count">269</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,103 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/enable-ssh-passwordless-login/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/enable-ssh-passwordless-login/" class="post-title-link" itemprop="url">Enable ssh passwordless login for large amount of servers</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-18 07:00:00" itemprop="dateCreated datePublished" datetime="2021-04-18T07:00:00-07:00">2021-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Install-sshpass-package"><a href="#Install-sshpass-package" class="headerlink" title="Install sshpass package"></a>Install sshpass package</h2><p>To install sshpass package on the source server from which to enable ssh passwordless login to remote servers:</p>
+<pre><code>-bash-4.2# rpm -ivh sshpass-1.06-1.el7.x86_64.rpm
+</code></pre>
+<h2 id="Enable-ssh-passwordless-login-to-remote-servers"><a href="#Enable-ssh-passwordless-login-to-remote-servers" class="headerlink" title="Enable ssh passwordless login to remote servers"></a>Enable ssh passwordless login to remote servers</h2><p>To enable ssh passwordless login to a large amount of remote servers, we can use the following command to automate without needs of providing password for each server.</p>
+<pre><code>-bash-4.2# for n in `seq 0 239`
+do
+    sshpass -p &quot;password&quot; ssh-copy-id -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no Client-hostname$n
+done
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1458,138 +1555,6 @@ struct eth_rx_bd &#123;
 <li><a target="_blank" rel="noopener" href="https://access.redhat.com/sites/default/files/attachments/20150325_network_performance_tuning.pdf">Red Hat Enterprise Linux Network Performance Tuning Guide</a></li>
 <li><a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/monitoring-and-tuning-the-rx-ring-buffer_configuring-and-managing-networking">MONITORING AND TUNING THE RX RING BUFFER</a></li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/semaphore/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/semaphore/" class="post-title-link" itemprop="url">Semaphore</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-03-03 08:00:00" itemprop="dateCreated datePublished" datetime="2021-03-03T08:00:00-08:00">2021-03-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="What-is-semaphore"><a href="#What-is-semaphore" class="headerlink" title="What is semaphore"></a>What is semaphore</h2><p>A semaphore is a very relaxed type of lockable object. A given semaphore has a predefined maximum count, and a current count. You take ownership of a semaphore with a wait operation, also referred to as decrementing the semaphore, or even just abstractly called P. You release ownership with a signal operation, also referred to as incrementing the semaphore, a post operation, or abstractly called V. The single-letter operation names are from Dijkstra’s original paper on semaphores.</p>
-<p>Every time you wait on a semaphore, you decrease the current count. If the count was greater than zero then the decrement just happens, and the wait call returns. If the count was already zero then it cannot be decremented, so the wait call will block until another thread increases the count by signaling the semaphore.</p>
-<h2 id="Semaphore-tuning"><a href="#Semaphore-tuning" class="headerlink" title="Semaphore tuning"></a>Semaphore tuning</h2><p>To display the semaphore limits:</p>
-<pre><code>$ cat /proc/sys/kernel/sem
-300	307200	32	1024
-
-$ sysctl -a | grep sem
-kernel.sem = 300	307200	32	1024
-
-$ ipcs -l | grep -i &quot;sem&quot;
------- Semaphore Limits --------
-max semaphores per array = 300
-max semaphores system wide = 307200
-max ops per semop call = 32
-semaphore max value = 32767
-</code></pre>
-<p>The values of the semaphore parameters are displayed in the following order.</p>
-<ul>
-<li>SEMMSL - The maximum number of semaphores in a sempahore set.</li>
-<li>SEMMNS - A system-wide limit on the number of semaphores in all semaphore sets. The maximum number of sempahores in the system.</li>
-<li>SEMOPM - The maximum number of operations in a single semop call</li>
-<li>SEMMNI - A system-wide limit on the maximum number of semaphore identifiers (sempahore sets)</li>
-</ul>
-<p>To display the current semaphore status:</p>
-<pre><code>$ ipcs -u | egrep -i &quot;used arrays|sem&quot;
------- Semaphore Status --------
-used arrays = 3
-allocated semaphores = 3
-</code></pre>
-<p>To display the active semaphore sets info:</p>
-<pre><code>$ ipcs -s
------- Semaphore Arrays --------
-key        semid      owner      perms      nsems
-0x00000000 0          root       600        1
-0x00000000 32769      root       600        1
-0x00005653 229380     root       666        1
-</code></pre>
-<p>To adjust the semaphore values on the fly:</p>
-<pre><code>$ echo 300   307200   32   1024 &gt; /proc/sys/kernel/sem
-</code></pre>
-<p>To modify system semaphore values permanently:</p>
-<pre><code>$ echo &quot;kernel.sem = 300  307200  32  1024&quot; &gt;&gt; /etc/sysctl.conf
-$ sysctl -p 
-</code></pre>
 
       
     </div>

@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">268</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">269</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">268</span>
+          <span class="site-state-item-count">269</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,230 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/deploy-application-with-kubernetes-statefulset/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/deploy-application-with-kubernetes-statefulset/" class="post-title-link" itemprop="url">Deploy application with kubernetes statefulset</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-29 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-29T08:00:00-08:00">2022-12-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>StatefulSet is the workload API object used to manage stateful applications.</p>
+<p>Like a Deployment, a StatefulSet manages Pods that are based on an identical container spec. Unlike a Deployment, a StatefulSet maintains a sticky identity for each of their Pods. These pods are created from the same spec, but are not interchangeable: each has a persistent identifier that it maintains across any rescheduling.</p>
+<p>If you want to use storage volumes to provide persistence for your workload, you can use a StatefulSet as part of the solution. Although individual Pods in a StatefulSet are susceptible to failure, the persistent Pod identifiers make it easier to match existing volumes to the new Pods that replace any that have failed.</p>
+<p><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/">Source</a></p>
+<p>The example below demonstrates the components of a StatefulSet.</p>
+<pre><code>$ cat perfbench-statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: perfbench
+spec:
+  serviceName: perfbench
+  replicas: 1
+  selector:
+    matchLabels:
+      app: perfbench
+  template:
+    metadata:
+      labels:
+        app: perfbench
+    spec:
+      containers:
+      - name: perfbench
+        image: noname/perfbench:latest
+        volumeMounts:
+        - name: perfbench-data
+          mountPath: /perfdata
+        - name: perfbench-log
+          mountPath: /perflog
+        securityContext:
+          privileged: true
+  volumeClaimTemplates:
+  - metadata:
+      name: perfbench-data
+    spec:
+      storageClassName: &lt;storage-class&gt;
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 20Gi
+  - metadata:
+      name: perfbench-log
+    spec:
+      storageClassName: &lt;storage-class&gt;
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+</code></pre>
+<p>The statefulset can be created as below.</p>
+<pre><code>$ kubectl apply -f perfbench-statefulset.yaml
+</code></pre>
+<p>In case of any failure to create the statefulset, you can check the events with the following commands.</p>
+<pre><code>$ kubectl describe pod perfbench-0
+Name:         perfbench-0
+Namespace:    default
+Priority:     0
+Node:         &lt;hostname&gt;/&lt;ip-address&gt;
+Start Time:   Sat, 26 Feb 2022 06:22:27 +0000
+Labels:       app=perfbench
+              controller-revision-hash=perfbench-7657fb8779
+              statefulset.kubernetes.io/pod-name=perfbench-0
+Annotations:  cni.projectcalico.org/containerID: c8569d9a3f01f546ca92fb2d0cba98d4d971933e53ab83373ed34c91040d92bc
+              cni.projectcalico.org/podIP: 192.168.201.145/32
+              cni.projectcalico.org/podIPs: 192.168.201.145/32
+Status:       Running
+IP:           192.168.201.145
+IPs:
+  IP:           192.168.201.145
+Controlled By:  StatefulSet/perfbench
+Containers:
+  perfbench:
+    Container ID:   docker://b6a2c838837395c1c85913d4735e3167d3cea6b5ed3ade276584461d643eaee5
+    Image:          noname/perfbench:latest
+    Image ID:       docker-pullable://&lt;noname/perfbench@sha256:5460e3c04ea972afcde3db092b514919867f87974d012f046c538ac816c7aaae
+    Port:           &lt;none&gt;
+    Host Port:      &lt;none&gt;
+    State:          Running
+      Started:      Sat, 26 Feb 2022 06:22:35 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    &lt;none&gt;
+    Mounts:
+      /perfdata from perfbench-data (rw)
+      /perflog from perfbench-log (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-x8qhw (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  perfbench-data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  perfbench-data-perfbench-0
+    ReadOnly:   false
+  perfbench-log:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  perfbench-log-perfbench-0
+    ReadOnly:   false
+  kube-api-access-x8qhw:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       &lt;nil&gt;
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              &lt;none&gt;
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason            Age                From               Message
+  ----     ------            ----               ----               -------
+  Warning  FailedScheduling  20s (x2 over 21s)  default-scheduler  0/3 nodes are available: 3 pod has unbound immediate PersistentVolumeClaims.
+  Normal   Scheduled         18s                default-scheduler  Successfully assigned default/perfbench-0 to &lt;hostname&gt;
+  Normal   Pulling           16s                kubelet            Pulling image &quot;&lt;noname/perfbench:latest&quot;
+  Normal   Pulled            11s                kubelet            Successfully pulled image &quot;&lt;noname/perfbench:latest&quot; in 4.368378217s
+  Normal   Created           10s                kubelet            Created container perfbench
+  Normal   Started           10s                kubelet            Started container perfbench
+</code></pre>
+<p>You can check the pod status and login to the pod container as below.</p>
+<pre><code>$ kubectl get pod
+NAME         READY   STATUS    RESTARTS   AGE
+perfbench-0   1/1     Running   0          3m44s
+
+$ kubectl exec -it perfbench-0 -- bash
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">https://kubernetes.io/docs/concepts/workloads/controllers/deployment/</a></li>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/">https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/</a></li>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/storage/storage-classes/">https://kubernetes.io/docs/concepts/storage/storage-classes/</a></li>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/containers/images/">https://kubernetes.io/docs/concepts/containers/images/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1980,258 +2204,6 @@ nvme3n1           0.00     0.20    0.00 8190.40     0.00 32762.40     8.00     0
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://docs.kernel.org/admin-guide/cgroup-v1/blkio-controller.html">https://docs.kernel.org/admin-guide/cgroup-v1/blkio-controller.html</a></li>
 <li><a target="_blank" rel="noopener" href="https://andrestc.com/post/cgroups-io/">https://andrestc.com/post/cgroups-io/</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/cgroups-limit-memory/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/cgroups-limit-memory/" class="post-title-link" itemprop="url">Using cgroups to limit Memory usage</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-12-04 13:08:00" itemprop="dateCreated datePublished" datetime="2022-12-04T13:08:00-08:00">2022-12-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>The memory controller isolates the memory behaviour of a group of tasks from the rest of the system.</p>
-<pre><code>$ mount | egrep &quot;/cgroup |/memory&quot;
-tmpfs on /sys/fs/cgroup type tmpfs (ro,nosuid,nodev,noexec,mode=755)
-cgroup on /sys/fs/cgroup/memory type cgroup (rw,nosuid,nodev,noexec,relatime,memory)
-
-$ lssubsys -am | grep memory
-memory /sys/fs/cgroup/memory
-</code></pre>
-<p>In this post, we will learn how to use the following control files to limit and monitor memory usage for the user tasks.</p>
-<ul>
-<li>memory.usage_in_bytes - show current usage for memory</li>
-<li>memory.limit_in_bytes - set&#x2F;show limit of memory usage</li>
-</ul>
-<h2 id="Create-memory-control-group"><a href="#Create-memory-control-group" class="headerlink" title="Create memory control group"></a>Create memory control group</h2><p>Install libcgroup package to manage cgroups:</p>
-<pre><code>$ yum install libcgroup libcgroup-tools
-</code></pre>
-<p>Create memory control group:</p>
-<pre><code>$ cgcreate -g memory:/memlimited
-$ lscgroup | grep memory
-memory:/
-memory:/memlimited
-
-$ ls /sys/fs/cgroup/memory/memlimited/
-cgroup.clone_children           memory.kmem.slabinfo                memory.memsw.failcnt             memory.soft_limit_in_bytes
-cgroup.event_control            memory.kmem.tcp.failcnt             memory.memsw.limit_in_bytes      memory.stat
-cgroup.procs                    memory.kmem.tcp.limit_in_bytes      memory.memsw.max_usage_in_bytes  memory.swappiness
-memory.failcnt                  memory.kmem.tcp.max_usage_in_bytes  memory.memsw.usage_in_bytes      memory.usage_in_bytes
-memory.force_empty              memory.kmem.tcp.usage_in_bytes      memory.move_charge_at_immigrate  memory.use_hierarchy
-memory.kmem.failcnt             memory.kmem.usage_in_bytes          memory.numa_stat                 notify_on_release
-memory.kmem.limit_in_bytes      memory.limit_in_bytes               memory.oom_control               tasks
-memory.kmem.max_usage_in_bytes  memory.max_usage_in_bytes           memory.pressure_level
-</code></pre>
-<h2 id="Limit-the-memory-usage"><a href="#Limit-the-memory-usage" class="headerlink" title="Limit the memory usage"></a>Limit the memory usage</h2><h3 id="Using-control-files-directly"><a href="#Using-control-files-directly" class="headerlink" title="Using control files directly"></a>Using control files directly</h3><pre><code>$ echo 32G &gt; /sys/fs/cgroup/memory/memlimited/memory.limit_in_bytes
-$ cat /sys/fs/cgroup/memory/memlimited/memory.limit_in_bytes
-34359738368
-</code></pre>
-<h3 id="Using-libcgroup-tools"><a href="#Using-libcgroup-tools" class="headerlink" title="Using libcgroup tools"></a>Using libcgroup tools</h3><p>Limit the memory usage:</p>
-<pre><code>$ cgset -r memory.limit_in_bytes=32G memlimited
-$ cgget -r memory.limit_in_bytes memlimited
-memlimited:
-memory.limit_in_bytes: 34359738368
-</code></pre>
-<h2 id="Verify-the-memory-usage"><a href="#Verify-the-memory-usage" class="headerlink" title="Verify the memory usage"></a>Verify the memory usage</h2><h3 id="Unlimit-the-memory-usage"><a href="#Unlimit-the-memory-usage" class="headerlink" title="Unlimit the memory usage"></a>Unlimit the memory usage</h3><pre><code>$ cgset -r memory.limit_in_bytes=-1 memlimited
-$ cgget -r memory.limit_in_bytes memlimited
-memlimited:
-memory.limit_in_bytes: 9223372036854771712
-</code></pre>
-<p>Use fio to write 50G data:</p>
-<pre><code>$ echo 3 &gt; /proc/sys/vm/drop_caches
-$ cgexec -g memory:memlimited fio --blocksize=64k --ioengine=libaio --readwrite=write --filesize=50G --group_reporting --direct=0 --iodepth=128 --end_fsync=1 --name=job1 --filename=/mnt/fio.dat
-</code></pre>
-<p>Verify the memory usage is unlimited:</p>
-<pre><code>$ while true; do cat /sys/fs/cgroup/memory/memlimited/memory.usage_in_bytes; sleep 5; done
-14143488
-14143488
-819499008
-13288558592
-25772953600
-38258790400
-50776608768
-55638511616
-55638429696
-55638478848
-55638528000
-55638577152
-55210229760
-55210229760
-^C
-</code></pre>
-<h3 id="Limit-the-memory-usage-to-32GB"><a href="#Limit-the-memory-usage-to-32GB" class="headerlink" title="Limit the memory usage to 32GB"></a>Limit the memory usage to 32GB</h3><pre><code>$ cgset -r memory.limit_in_bytes=32G memlimited
-$ cgget -r memory.limit_in_bytes memlimited
-memlimited:
-memory.limit_in_bytes: 34359738368
-</code></pre>
-<p>Use fio to write 50G data:</p>
-<pre><code>$ echo 3 &gt; /proc/sys/vm/drop_caches
-$ cgexec -g memory:memlimited fio --blocksize=64k --ioengine=libaio --readwrite=write --filesize=50G --group_reporting --direct=0 --iodepth=128 --end_fsync=1 --name=job1 --filename=/mnt/fio.dat
-</code></pre>
-<p>Verify the memory usage is limited to 32GB:</p>
-<pre><code>$ while true; do cat /sys/fs/cgroup/memory/memlimited/memory.usage_in_bytes; sleep 5; done
-9134080
-6819614720
-18048208896
-29089763328
-34359726080
-34359672832
-34359607296
-34359717888
-34359635968
-34359619584
-34280120320
-34280120320
-^C
-</code></pre>
-<p>From vmstat output, the cache usage is limited to 32GB. There is also swapping out activity due the memory pressure.</p>
-<pre><code>$ vmstat 5 -t
-procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu----- -----timestamp-----
- r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st                 UTC
- 0  0      0 1053891776    968 142992    0    0     0    30    0    0  0  0 100  0  0 2022-12-23 22:04:30
- 2  0      0 1045755200    968 8266836    0    0  1697     0 3789  727  2  1 98  0  0 2022-12-23 22:04:35
- 1  0      0 1034800320    976 19222628    0    0     0     2 1770  575  0  1 99  0  0 2022-12-23 22:04:40
- 1  0      0 1024034304    984 29988256    0    0     0 163843 2999  780  0  1 99  0  0 2022-12-23 22:04:45
- 1  1      0 1020353664    992 33665560    0    0     0 985500 8317 2414  0  1 98  0  0 2022-12-23 22:04:50
- 1  1 317440 1020354112   1000 33666764    0 63474     3 1518376 18524 2604  0  1 98  1  0 2022-12-23 22:04:55
- 1  1 340480 1020353472   1008 33666660    0 4571     0 1602014 15377 2381  0  1 98  1  0 2022-12-23 22:05:00
- 2  0 340480 1020355904   1016 33667212   39    0    39 1632866 22166 70618  0  1 98  0  0 2022-12-23 22:05:05
- 1  0 340480 1020356032   1020 33667228    0    0     0 1861355 27437 108029  0  1 99  0  0 2022-12-23 22:05:10
- 2  0 340480 1020356224   1024 33667236    0    0     0 1874438 28732 111364  0  1 98  0  0 2022-12-23 22:05:15
- 0  0    512 1020432704   1024 33599516  212    0   550 915429 13644 56805  0  1 99  0  0 2022-12-23 22:05:20
- 0  0    512 1020432960   1028 33599516    0    0     3     4  165  149  0  0 100  0  0 2022-12-23 22:05:25
-^C
-</code></pre>
-<h3 id="Limit-the-memory-usage-for-the-tasks-in-the-current-bash"><a href="#Limit-the-memory-usage-for-the-tasks-in-the-current-bash" class="headerlink" title="Limit the memory usage for the tasks in the current bash"></a>Limit the memory usage for the tasks in the current bash</h3><pre><code>$ cat /sys/fs/cgroup/memory/memlimited/tasks
-$ echo $$ &gt; /sys/fs/cgroup/memory/memlimited/tasks
-$ cat /sys/fs/cgroup/memory/memlimited/tasks
-27875
-28889
-
-$ ps -ef | egrep &quot;27875|29023&quot; | grep -v grep
-root     27875 27873  0 21:11 pts/0    00:00:17 -bash
-root     29026 27875  0 22:11 pts/0    00:00:00 ps -ef
-</code></pre>
-<p>Use fio to write 50G data:</p>
-<pre><code>$ fio --blocksize=64k --ioengine=libaio --readwrite=write --filesize=50G --group_reporting --direct=0 --iodepth=128 --end_fsync=1 --name=job1 --filename=/mnt/fio.dat
-</code></pre>
-<p>Verify the memory usage is limited to 32GB:</p>
-<pre><code>$ while true; do cat /sys/fs/cgroup/memory/memlimited/memory.usage_in_bytes; sleep 5; done
-22835200
-22835200
-22835200
-10150678528
-21453983744
-32693850112
-34359607296
-34359607296
-34359738368
-34359730176
-34359730176
-34359660544
-34280062976
-^C
-
-
-$ vmstat 5 -t
-procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu----- -----timestamp-----
- r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st                 UTC
- 0  0    512 1053886784   1004 144860    0    0     0    31    0    0  0  0 100  0  0 2022-12-23 22:09:17
- 0  0    512 1053886528   1004 144824    0    0     0     0  143  148  0  0 100  0  0 2022-12-23 22:09:22
- 1  0    512 1050907776   1004 3109688    0    0  1660     3 2690  566  1  0 98  0  0 2022-12-23 22:09:27
- 1  0    512 1039836288   1012 14180528    0    0     0     2 1699  508  0  1 99  0  0 2022-12-23 22:09:32
- 1  0    512 1028822720   1020 25194536    0    0     0     2 1625  494  0  1 99  0  0 2022-12-23 22:09:37
- 1  1    512 1020348800   1028 33665604    0    0     0 385026 4478 1313  0  1 99  0  0 2022-12-23 22:09:42
- 1  1  46080 1020340224   1036 33676796    0 9090     0 1563114 13781 2301  0  1 98  1  0 2022-12-23 22:09:47
- 1  1 340480 1020338688   1044 33676544    0 58904     0 1557223 19212 2580  0  1 98  1  0 2022-12-23 22:09:52
- 1  1 340480 1020337792   1052 33676376   33    0    33 1481028 14133 5776  0  1 98  1  0 2022-12-23 22:09:57
- 1  0 340480 1020342208   1056 33676396    0    0   184 1877767 27447 114955  0  1 98  0  0 2022-12-23 22:10:02
- 1  1 340480 1020341056   1056 33677100    0    0     0 1817494 27635 101675  0  1 98  0  0 2022-12-23 22:10:07
- 1  0 195144 1020350208   1060 33676988   83    0    83 1872111 27068 113280  0  1 98  0  0 2022-12-23 22:10:12
-^C
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://docs.kernel.org/admin-guide/cgroup-v1/memory.html">https://docs.kernel.org/admin-guide/cgroup-v1/memory.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://engineering.linkedin.com/blog/2016/08/don_t-let-linux-control-groups-uncontrolled">https://engineering.linkedin.com/blog/2016/08/don_t-let-linux-control-groups-uncontrolled</a></li>
 </ul>
 
       

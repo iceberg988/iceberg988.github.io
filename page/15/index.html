@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">268</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">269</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">268</span>
+          <span class="site-state-item-count">269</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,191 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/dynamically-tracing-with-user-defined-tracepoint-in-perf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/dynamically-tracing-with-user-defined-tracepoint-in-perf/" class="post-title-link" itemprop="url">Dynamically tracing with user-defined tracepoint in perf</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-07-13 07:00:00" itemprop="dateCreated datePublished" datetime="2022-07-13T07:00:00-07:00">2022-07-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>In this post, we are going to explore how to use <a href="/blog/perf-the-official-linux-profiler/" title="Perf - The official Linux profiler">Perf - The official Linux profiler</a> for dynamic tracing with user-defined tracepoint. When we say dynamic tracing, the kernel event(function) to be traced is not predefined in perf. Instead, we add the tracepoint event manually.</p>
+<p>We will study it based on a real world nfs write performance issue.  With the 4k sequential write from fio, the throughput is much lower with newer kernel(5.x) compared to older kernel(3.x). By profiling the system, it’s clear to see the call stack and samples of nfsd are very different for the two kernel versions.</p>
+<p><img src="/images/nfsd_perf_issue.png" alt="Image"></p>
+<h2 id="Add-tracepoint-in-perf"><a href="#Add-tracepoint-in-perf" class="headerlink" title="Add tracepoint in perf"></a>Add tracepoint in perf</h2><p>At first look, I want to add a tracepoint for the kernel function “nfsd_vfs_write” since it appears in the main code path of nfsd for both kernel versions. But perf complains the error of “out of .text” as below.</p>
+<pre><code>[root@host1 ~]# perf probe --add nfsd_vfs_write 
+nfsd_vfs_write is out of .text, skip it.
+  Error: Failed to add events. Reason: No such file or directory (Code: -2)
+</code></pre>
+<p>By checking the exported kernel symbols from &#x2F;proc&#x2F;kallsyms, the symbol type is lowercase “t” for the function “nfsd_vfs_write”.</p>
+<pre><code>[root@host1 ~]# cat /proc/kallsyms |  egrep -i -w &quot;nfsd_vfs_write&quot;
+ffffffffc094fdd0 t nfsd_vfs_write	[nfsd] 
+
+[root@host1 ~]# perf probe -F | egrep -i &quot;nfsd_vfs_write$&quot;
+nfsd_vfs_write
+</code></pre>
+<p>Based on the manual page of nm, lowercase means it is local symbol. It’s likely that the local symbol can’t be added as probe event.</p>
+<blockquote>
+<p>The symbol type.</p>
+<blockquote>
+<p>If lowercase, the symbol is usually local; if uppercase, the symbol is global (external).</p>
+<p>“T” “t” The symbol is in the text (code) section.</p>
+</blockquote>
+</blockquote>
+<p>If we still want to trace and understand the overhead for the function “nfsd_vfs_write”, ftrace is a way to go.</p>
+<p>In this post, we want to discuss how to add a probe event in perf. So we try a different function “vfs_fsync_range” whose type is global symbol.</p>
+<p>With the following commands, the probe for “vfs_fsync_range” is added to perf.</p>
+<pre><code>[root@host1 ~]# uname -r
+3.10.0-1160.el7.x86_64
+[root@host1 ~]# cat /proc/kallsyms | awk &#39;&#123;if($2==&quot;T&quot;)print&#125;&#39; | grep -i vfs_fsync_range
+ffffffff960837a0 T vfs_fsync_range
+
+[root@host1 ~]# perf list | grep probe
+
+[root@host1 ~]# perf probe vfs_fsync_range
+Added new event:
+  probe:vfs_fsync_range (on vfs_fsync_range)
+
+You can now use it in all perf tools, such as:
+
+    perf record -e probe:vfs_fsync_range -aR sleep 1
+
+[root@host1 ~]# perf list | grep probe
+  probe:vfs_fsync_range                              [Tracepoint event]
+</code></pre>
+<h2 id="Trace-the-user-defined-probe-event"><a href="#Trace-the-user-defined-probe-event" class="headerlink" title="Trace the user-defined probe event"></a>Trace the user-defined probe event</h2><p>At this point, we had the tracepoint for the function “vfs_fsync_range” added in perf. We are able to sample the stack trace and check the function runtime from <strong>perf script</strong> output. This can be useful because without the dynamic tracing like this, we can’t identify the overhead(runtime) for the target function. The similar tracing can be done with ftrace. Here we just study how to use perf to dynamically add a tracepoint for sampling in perf. However, based on the experiments, ftrace seems more powerful when to identify the kernel function overhead compared to perf.</p>
+<p>The following commands show how to record the stack traces for the target tracepoint and how to extract the call time from it. By comparing the function call time for the differnt kernels, we could identify the possible issue in nfsd call stack.</p>
+<pre><code>[root@host1 ~]#  perf record -e probe:vfs_fsync_range -aR sleep 10
+[ perf record: Woken up 57 times to write data ]
+[ perf record: Captured and wrote 16.284 MB perf.data (233480 samples) ]
+
+[root@host1 ~]# ls -la perf.data
+-rw------- 1 root root 17120542 Jul 13 23:50 perf.data
+
+[root@host1 ~]#  perf record -e probe:vfs_fsync_range -g -aR sleep 10
+[ perf record: Woken up 146 times to write data ]
+[ perf record: Captured and wrote 38.179 MB perf.data (248546 samples) ]
+
+[root@host1 ~]# ls -la perf.data
+-rw------- 1 root root 40079506 Jul 13 23:52 perf.data
+
+[root@host1 ~]# perf report --stdio
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 248K of event &#39;probe:vfs_fsync_range&#39;
+# Event count (approx.): 248546
+#
+# Children      Self  Trace output
+# ........  ........  ..................
+#
+   100.00%   100.00%  (ffffffff960837a0)
+            |
+            ---ret_from_fork_nospec_end
+               kthread
+               nfsd
+               svc_process
+               svc_process_common
+               nfsd_dispatch
+               nfsd4_proc_compound
+               nfsd4_write
+               vfs_fsync_range
+
+[root@host1 ~]# perf script
+nfsd  3592 [025]   677.464643: probe:vfs_fsync_range: (ffffffff960837a0)
+        ffffffff960837a1 vfs_fsync_range+0x1 ([kernel.kallsyms])
+        ffffffffc07a0b0f nfsd4_write+0x1cf ([kernel.kallsyms])
+        ffffffffc07a267d nfsd4_proc_compound+0x3dd ([kernel.kallsyms])
+        ffffffffc078d810 nfsd_dispatch+0xe0 ([kernel.kallsyms])
+        ffffffffc0f61850 svc_process_common+0x400 ([kernel.kallsyms])
+        ffffffffc0f61d13 svc_process+0xf3 ([kernel.kallsyms])
+        ffffffffc078d16f nfsd+0xdf ([kernel.kallsyms])
+        ffffffff95ec5c21 kthread+0xd1 ([kernel.kallsyms])
+        ffffffff96593df7 ret_from_fork_nospec_end+0x0 ([kernel.kallsyms])
+&lt;...&gt;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1360,389 +1545,6 @@ $ perf script | ./stackcollapse-perf.pl | ./flamegraph.pl &gt; perf16.svg
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/a-six-step-framework-to-tackle-any-system-design-questio/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/a-six-step-framework-to-tackle-any-system-design-questio/" class="post-title-link" itemprop="url">A six-step framework to tackle any system design question</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-05-08 07:00:00" itemprop="dateCreated datePublished" datetime="2022-05-08T07:00:00-07:00">2022-05-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>In the book of <strong>System Design Interview</strong> by Lewis C. Lin, a six-step framework called <strong>PEDALS</strong> is introduced to help answer any system design question.</p>
-<p>PEDALS stand for:</p>
-<ul>
-<li>Process requirements</li>
-<li>Estimate</li>
-<li>Design the service</li>
-<li>Articulate the data model</li>
-<li>List the architectural components</li>
-<li>Scale</li>
-</ul>
-<p>The systematic method will power you through the whole system design interview.</p>
-<h2 id="Process-requirements"><a href="#Process-requirements" class="headerlink" title="Process requirements"></a>Process requirements</h2><p>It means to <strong>clarify the question</strong> before you answer it.</p>
-<ul>
-<li>What is it? What does the system do? What are the goals or outcomes?</li>
-<li>What features does it provide? What features should be left out?</li>
-</ul>
-<p>Why is clarification important? If the requirements are not clarified,</p>
-<ul>
-<li>the desired features would not be included or correctly designed</li>
-<li>the interviewers’ expectation would not be met</li>
-<li>the precious time would be wasted in unexpected area</li>
-</ul>
-<p>By clarifying the question, you prove that you can take proper actions for any ambiguous question in real world.</p>
-<h2 id="Estimate"><a href="#Estimate" class="headerlink" title="Estimate"></a>Estimate</h2><p>It is always a good idea to estimate the scale of the system as it helps reflect if the designed system could fulfill the functional requirements. The requirements might include:</p>
-<ul>
-<li>Number of users</li>
-<li>Number of active users(NAU)</li>
-<li>Requrests per second(RPS)</li>
-<li>Logins per seconds</li>
-<li>Transactions per second(TPS) for E-commerce</li>
-<li>Likes&#x2F;dislikes per second, shares per second, comments per second for social media sites</li>
-<li>Searches per second for sites with a search feature</li>
-<li>Storage needed</li>
-<li>Servers needed</li>
-<li>Network bandwidth needed</li>
-</ul>
-<p>Based on the functional requirements above, it’s possible to estimate the system requirements including servers, storage and netowrk bandwidth needed.</p>
-<p>To estimate hardware resource needed, we need to understand that there are four major resources in a computer system.</p>
-<ul>
-<li>CPU</li>
-<li>Memory</li>
-<li>Storage</li>
-<li>Network</li>
-</ul>
-<h3 id="Estimate-servers-needed"><a href="#Estimate-servers-needed" class="headerlink" title="Estimate servers needed"></a>Estimate servers needed</h3><p>The modern computer system is a multi-processor system. It varies from single CPU core to multiple CPU cores. The following is a 32 CPU threads system.</p>
-<pre><code>$ lscpu
-Architecture:          x86_64
-CPU op-mode(s):        32-bit, 64-bit
-Byte Order:            Little Endian
-CPU(s):                32
-On-line CPU(s) list:   0-31
-Thread(s) per core:    2
-Core(s) per socket:    8
-Socket(s):             2
-NUMA node(s):          2
-Vendor ID:             GenuineIntel
-CPU family:            6
-Model:                 63
-Model name:            Intel(R) Xeon(R) CPU E5-2630 v3 @ 2.40GHz
-</code></pre>
-<p>In order to estimate how many servers are needed, we can approach in the following manner.</p>
-<ol>
-<li>How much work can single CPU do?</li>
-<li>How much work can single server do?</li>
-<li>How many servers are needed?</li>
-</ol>
-<p>Let’s have an example to go through this approach.</p>
-<p>Let’s say it takes 100ms for a sinlge-core CPU system to handle single client request. It means the system can handle 10 requests per second. So, we can extrapolate a 32-core system can handle 320 requests per second. Let’s say we have to handle 320,000 requests per second(RPS). It means 1000 servers are needed.</p>
-<p>Notice that this is a rough calculation only considering CPU needs. In real case, there might be other performance bottleneck to handle 320 requests per second in a system. For example, the system might be already I&#x2F;O bound before running out of CPU bandwidth. But this method still gives us an estimation when to consider the CPU computation resource only.</p>
-<h3 id="Estimate-storage-needed"><a href="#Estimate-storage-needed" class="headerlink" title="Estimate storage needed"></a>Estimate storage needed</h3><p>To estimate storage needed, we can approach as below.</p>
-<ol>
-<li>Identify the different data types</li>
-<li>Estimate the space needed for each data type</li>
-<li>Get the total space needed</li>
-</ol>
-<p>Let’s take YouTube as an example to understand this approach.</p>
-<ul>
-<li>Data types: videos, thumbnail images and comments.</li>
-<li>Let’s assume there are roughly 2B users and 5% users(100M users) upload videos consistently. On average, each user has a weekly upload(~50 videos per year). Roughly, 13M videos(100M*50&#x2F;365) are uploaded daily. Let’s assume the video is 10 minutes long on average and it takes 50MB storage space after compression. Let’s say each video has a thumbnail image of 20KB. Each video has about 5 comments and the size of each comment is 200 bytes. In total, the space need for each video is 50MB + 20KB + 1KB, roughly 50MB. By multiplying 13M videos, it needs 619TB storage in a day.</li>
-</ul>
-<h3 id="Estimate-network-bandwidth-needed"><a href="#Estimate-network-bandwidth-needed" class="headerlink" title="Estimate network bandwidth needed"></a>Estimate network bandwidth needed</h3><p>Determine the incoming and outgoing data for network bandwidth estimation</p>
-<ul>
-<li>We already know there would be ~619TB data uploaded to YouTube in a day. Dividing this by the number of seconds in a day(619TB&#x2F;86400 seconds), the incoming data to YouTube would be 7.3GB&#x2F;s.</li>
-<li>Let’s say 10% of YouTube users are daily active users. With approximately 200M daily users, let’s assume a user watches 10 videos a day. Then YouTube would have 2B views in a day. This would result in ~93PB outgoing data in a day. Dividing this by the number of seconds in a day(93PB&#x2F;86400 seconds), the outgoing speed would be 1128GB&#x2F;s.</li>
-</ul>
-<h2 id="Design-the-service"><a href="#Design-the-service" class="headerlink" title="Design the service"></a>Design the service</h2><p>When we process the requirements, we should already collect the clear enough requiremnts before the system design. And now, we need to define <strong>what to build</strong> and figure out <strong>how to build</strong> the system service.</p>
-<h3 id="CRUD-framework"><a href="#CRUD-framework" class="headerlink" title="CRUD framework"></a>CRUD framework</h3><ul>
-<li>Create</li>
-<li>Read</li>
-<li>Update</li>
-<li>Delete</li>
-</ul>
-<p>For example, to build a YouTube-like video service. We can use CRUD to brainstorm the possible the system actions.</p>
-<ul>
-<li><p>Create</p>
-</li>
-<li><p>New users</p>
-</li>
-<li><p>New channels</p>
-</li>
-<li><p>Upload videos</p>
-</li>
-<li><p>Add comments</p>
-</li>
-<li><p>Read</p>
-</li>
-<li><p>View videos</p>
-</li>
-<li><p>Read comments</p>
-</li>
-<li><p>Search videos</p>
-</li>
-<li><p>Read video recommendations</p>
-</li>
-<li><p>Update</p>
-</li>
-<li><p>Edit video metadata</p>
-</li>
-<li><p>Edit comments</p>
-</li>
-<li><p>Delete</p>
-</li>
-<li><p>Delete users</p>
-</li>
-<li><p>Delete channels</p>
-</li>
-<li><p>Delete videos</p>
-</li>
-<li><p>Delete comments</p>
-</li>
-</ul>
-<p>Now we can further define services(API endpoints) as below.</p>
-<ul>
-<li>&#x2F;users</li>
-<li>&#x2F;channels</li>
-<li>&#x2F;videos</li>
-<li>&#x2F;comments</li>
-<li>&#x2F;recommendations</li>
-</ul>
-<h3 id="Be-RESTFUL-API-Best-Practices"><a href="#Be-RESTFUL-API-Best-Practices" class="headerlink" title="Be RESTFUL: API Best Practices"></a>Be RESTFUL: API Best Practices</h3><ul>
-<li>Use Nouns. REST is known for using the HTTP commands(GET&#x2F;POST&#x2F;DELETE&#x2F;PUT) to read or write data. When the API is invoded via HTTP requests, the HTTP request comes with the corresponding verbs(GET&#x2F;POST&#x2F;DELETE&#x2F;PUT).</li>
-<li>Use nesting to show the hierarchy. For example, &#x2F;users&#x2F;1 returns a specific user with id&#x3D;1.</li>
-<li>Return json. It is the industry standard today.</li>
-<li>Support filtering and pagination. It helps minimize the latency and waste.</li>
-<li>Use plural</li>
-</ul>
-<h3 id="Design-strategies"><a href="#Design-strategies" class="headerlink" title="Design strategies"></a>Design strategies</h3><ul>
-<li><p>Information processing strategies</p>
-</li>
-<li><p>Batch strategy(Scheduled processing)</p>
-</li>
-<li><p>Chain-of-Command strategy</p>
-</li>
-<li><p>Checklist strategy</p>
-</li>
-<li><p>Rate limiting strategies</p>
-</li>
-<li><p>Fixed window strategy</p>
-</li>
-<li><p>Sliding window strategy</p>
-</li>
-<li><p>Token bucket strategy</p>
-</li>
-<li><p>Leaky bucket strategy</p>
-</li>
-<li><p>Limiting concurrent requests strategy</p>
-</li>
-<li><p>Critical requests strategy</p>
-</li>
-<li><p>Communication strategies</p>
-</li>
-<li><p>Middleman strategy</p>
-</li>
-<li><p>Town crier strategy</p>
-</li>
-<li><p>Asynchronous strategy</p>
-</li>
-<li><p>Latency strategies</p>
-</li>
-<li><p>Main-replica strategy</p>
-</li>
-<li><p>Push vs. Pull strategy</p>
-</li>
-<li><p>Precompute strategy</p>
-</li>
-<li><p>Lazy loading strategy</p>
-</li>
-<li><p>Peer-to-peer strategy</p>
-</li>
-<li><p>Efficiency strategies</p>
-</li>
-<li><p>Divide and conquer strategy</p>
-</li>
-<li><p>Listener strategy</p>
-</li>
-<li><p>Space reduction strategies</p>
-</li>
-<li><p>Mario and Luigi strategy</p>
-</li>
-<li><p>Synchronization strategies</p>
-</li>
-<li><p>Locks strategy</p>
-</li>
-<li><p>Error handling strategies</p>
-</li>
-<li><p>Code readability, maintainability, and elegance strategies</p>
-</li>
-<li><p>Security strategies</p>
-</li>
-</ul>
-<h2 id="Articulate-the-data-model"><a href="#Articulate-the-data-model" class="headerlink" title="Articulate the data model"></a>Articulate the data model</h2><ul>
-<li><p>Schema(Tables, Fields)</p>
-</li>
-<li><p>SQL vs. NoSQL database</p>
-</li>
-<li><p>SQL database: MySQL, PostgreSQL, etc</p>
-</li>
-<li><p>NoSQL database: MongoDB, Redis, etc</p>
-</li>
-<li><p>NoSQL databases have a flexible or unstructured database schema.</p>
-</li>
-<li><p>Non-database storage</p>
-</li>
-<li><p>Distributed file systems(e.g. Store files in HDFS and file path in database)</p>
-</li>
-<li><p>Object storage(e.g. S3)</p>
-</li>
-</ul>
-<h2 id="List-the-architectural-components"><a href="#List-the-architectural-components" class="headerlink" title="List the architectural components"></a>List the architectural components</h2><ul>
-<li>Logical architecture, physical architecture, cloud architecture</li>
-<li>Service-oriented architecture</li>
-<li>Draw architecture diagrams</li>
-</ul>
-<h2 id="Scale"><a href="#Scale" class="headerlink" title="Scale"></a>Scale</h2><h3 id="How-to-tackle-common-scale-issues"><a href="#How-to-tackle-common-scale-issues" class="headerlink" title="How to tackle common scale issues"></a>How to tackle common scale issues</h3><p>What were the estimated scale requirements in step 2?</p>
-<ul>
-<li>Number of total users</li>
-<li>Number of active users</li>
-<li>Requests per second(RPS)</li>
-<li>Logins per second</li>
-<li>Storage needed</li>
-</ul>
-<p>Resolve the following system bottleneck:</p>
-<ul>
-<li>CPU</li>
-<li>Memory</li>
-<li>Storage</li>
-<li>Latency</li>
-</ul>
-<p>We can use the following strtegies to scale a small functional system.</p>
-<ul>
-<li>Load balancing</li>
-<li>Read replica databases</li>
-<li>Distributed file systems</li>
-<li>Content delivery networks</li>
-<li>Daemon process pre-computation</li>
-</ul>
-<h3 id="Problem-Handling-more-users-and-requests"><a href="#Problem-Handling-more-users-and-requests" class="headerlink" title="Problem: Handling more users and requests"></a>Problem: Handling more users and requests</h3><ul>
-<li>Horizontal scaling and load balancer</li>
-<li>Vertical scaling</li>
-</ul>
-<h3 id="Problem-Handling-more-reads"><a href="#Problem-Handling-more-reads" class="headerlink" title="Problem: Handling more reads"></a>Problem: Handling more reads</h3><ul>
-<li><p>Read replicas</p>
-</li>
-<li><p>drawback: lack of data consistency</p>
-</li>
-<li><p>Sharding</p>
-</li>
-<li><p>Shard by customer or range</p>
-</li>
-<li><p>Shard by geography</p>
-</li>
-<li><p>Shard by hash function</p>
-</li>
-<li><p>Disadvantages: slower join performance, additional application code, recurring maintenance</p>
-</li>
-</ul>
-<h3 id="Problem-Avoiding-crashes"><a href="#Problem-Avoiding-crashes" class="headerlink" title="Problem: Avoiding crashes"></a>Problem: Avoiding crashes</h3><p>Chaos Engineering is a discipline where engineering teams purposefully create controlled failure within a large scale system. It can emulate:</p>
-<ul>
-<li>Failure of a data center</li>
-<li>Failure of a database shard</li>
-<li>Randomly thrown exceptions</li>
-<li>Skew in distributed system clocks</li>
-<li>Failure of a key internal microservice</li>
-<li>“Storm” tests that emulate power outages</li>
-</ul>
-<h3 id="Problem-Providing-data-consistency"><a href="#Problem-Providing-data-consistency" class="headerlink" title="Problem: Providing data consistency"></a>Problem: Providing data consistency</h3><p>No system can simultaneously provide two of the following guarantees(CAP):</p>
-<ul>
-<li>Consistency - wirtes are immediately in effect</li>
-<li>Availability - requests receive a valid response</li>
-<li>Partition Tolerance - functionality despite network errors</li>
-</ul>
-<p>When scaling a system, there is a direct relationship between consistency and availability. When horizontally scaling, you’ll see availability dramatically increase; however, consistency will suffer because the system becomes distributed.</p>
-<p>To create stronger read consistency, you’ll have to decrease the effect of data replication your system creates, which will decrease availability.</p>
-<h3 id="Problem-Need-to-improve-latency"><a href="#Problem-Need-to-improve-latency" class="headerlink" title="Problem: Need to improve latency"></a>Problem: Need to improve latency</h3><p>As a system grows and creates an increasingly complex workflow, latency becomes a critical factor.</p>
-<p>The bottleneck can be caused by system resource starvation, which could be alleviated through horizontal and vertical scaling. It also can be caused by application limitation. Another strategy to consider is caching which helps reduce unnecessary disk I&#x2F;O operations.</p>
-<h3 id="Identify-and-alleviate-scalability-bottlenecks"><a href="#Identify-and-alleviate-scalability-bottlenecks" class="headerlink" title="Identify and alleviate scalability bottlenecks"></a>Identify and alleviate scalability bottlenecks</h3>
       
     </div>
 
