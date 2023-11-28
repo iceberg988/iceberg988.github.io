@@ -1,3 +1,5 @@
+https://www.flamingbytes.com/blog/binary-tree-in-python/
+https://www.flamingbytes.com/blog/common-used-functions-in-python/
 https://www.flamingbytes.com/blog/linked-list-in-python/
 https://www.flamingbytes.com/blog/top-classic-coding-questions/
 https://www.flamingbytes.com/blog/hashmap-and-set/
@@ -10,9 +12,7 @@ https://www.flamingbytes.com/blog/postmark/
 https://www.flamingbytes.com/blog/phoronix-test-suite/
 https://www.flamingbytes.com/blog/sysbench/
 https://www.flamingbytes.com/blog/two-pointers/
-https://www.flamingbytes.com/blog/common-used-functions-in-python/
 https://www.flamingbytes.com/blog/bit-manipulation/
-https://www.flamingbytes.com/blog/binary-tree-in-python/
 https://www.flamingbytes.com/blog/algorithm-questions/
 https://www.flamingbytes.com/blog/cacheline/
 https://www.flamingbytes.com/blog/binary-tree-traversal-inorder-preorder-and-postorder/

@@ -28,7 +28,7 @@
 <meta property="og:description" content="A binary tree is a tree data structure in which each node has at most two children, referred to as the left child and the right child.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-11-02T05:33:06.000Z">
-<meta property="article:modified_time" content="2023-11-11T16:55:18.000Z">
+<meta property="article:modified_time" content="2023-11-28T02:23:32.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="Leetcode">
 <meta property="article:tag" content="Binary Search">
@@ -154,7 +154,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-226-Invert-Binary-Tree"><span class="nav-number">1.</span> <span class="nav-text">[Leetcode 226] Invert Binary Tree</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-105-Construct-Binary-Tree-from-Preorder-and-Inorder-Traversal"><span class="nav-number">1.</span> <span class="nav-text">[Leetcode 105] Construct Binary Tree from Preorder and Inorder Traversal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-106-Construct-Binary-Tree-from-Inorder-and-Postorder-Traversal"><span class="nav-number">2.</span> <span class="nav-text">[Leetcode 106] Construct Binary Tree from Inorder and Postorder Traversal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode-226-Invert-Binary-Tree"><span class="nav-number">3.</span> <span class="nav-text">[Leetcode 226] Invert Binary Tree</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -206,24 +206,24 @@
   </div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/binary-tree-traversal-inorder-preorder-and-postorder/" rel="bookmark">
+        <time class="popular-posts-time">2023-04-19</time>
+        <br>
+      Binary tree traversal - inorder, preorder and postorder
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/tree-traversal-algorithm-in-python/" rel="bookmark">
+        <time class="popular-posts-time">2023-04-26</time>
+        <br>
+      Tree traversal algorithm in Python
+      </a>
+    </li>
+    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/blog/binary-search-tree-in-python/" rel="bookmark">
         <time class="popular-posts-time">2023-10-06</time>
         <br>
       Binary search tree in Python
-      </a>
-    </li>
-    <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/min-heap-and-max-heap-implementation-in-python/" rel="bookmark">
-        <time class="popular-posts-time">2023-04-07</time>
-        <br>
-      Min heap and max heap implementation in Python
-      </a>
-    </li>
-    <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/priority-queue-implementation-in-python/" rel="bookmark">
-        <time class="popular-posts-time">2023-04-08</time>
-        <br>
-      Priority Queue implementation in Python
       </a>
     </li>
     <li class="popular-posts-item">
@@ -296,7 +296,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-11-11 08:55:18" itemprop="dateModified" datetime="2023-11-11T08:55:18-08:00">2023-11-11</time>
+      <time title="Modified: 2023-11-27 18:23:32" itemprop="dateModified" datetime="2023-11-27T18:23:32-08:00">2023-11-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -330,6 +330,46 @@
     
     <div class="post-body" itemprop="articleBody"><p>A binary tree is a tree data structure in which each node has at most two children, referred to as the left child and the right child.</p>
 <span id="more"></span>
+
+<h2 id="Leetcode-105-Construct-Binary-Tree-from-Preorder-and-Inorder-Traversal"><a href="#Leetcode-105-Construct-Binary-Tree-from-Preorder-and-Inorder-Traversal" class="headerlink" title="[Leetcode 105] Construct Binary Tree from Preorder and Inorder Traversal"></a>[Leetcode 105] Construct Binary Tree from Preorder and Inorder Traversal</h2><p>Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]</span><br><span class="line">Output: [3,9,20,null,null,15,7]</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: preorder = [-1], inorder = [-1]</span><br><span class="line">Output: [-1]</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>1 &lt;&#x3D; preorder.length &lt;&#x3D; 3000</li>
+<li>inorder.length &#x3D;&#x3D; preorder.length</li>
+<li>-3000 &lt;&#x3D; preorder[i], inorder[i] &lt;&#x3D; 3000</li>
+<li>preorder and inorder consist of unique values.</li>
+<li>Each value of inorder also appears in preorder.</li>
+<li>preorder is guaranteed to be the preorder traversal of the tree.</li>
+<li>inorder is guaranteed to be the inorder traversal of the tree.</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"># class TreeNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, val=0, left=None, right=None):</span></span><br><span class="line"><span class="comment">#         self.val = val</span></span><br><span class="line"><span class="comment">#         self.left = left</span></span><br><span class="line"><span class="comment">#         self.right = right</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">buildTree</span>(<span class="params">self, preorder: <span class="type">List</span>[<span class="built_in">int</span>], inorder: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">Optional</span>[TreeNode]:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(preorder) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># get root node from preorder list</span></span><br><span class="line">        rootVal = preorder[<span class="number">0</span>]</span><br><span class="line">        root = TreeNode(rootVal)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># divide inorder list to left and right subtree</span></span><br><span class="line">        rootIdx = inorder.index(rootVal)</span><br><span class="line">        leftInorder = inorder[:rootIdx]</span><br><span class="line">        rightInorder = inorder[rootIdx + <span class="number">1</span> :]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># find corresponding preorder left and right subtree</span></span><br><span class="line">        leftPreorder = preorder[<span class="number">1</span> : <span class="built_in">len</span>(leftInorder) + <span class="number">1</span>]</span><br><span class="line">        rightPreorder = preorder[<span class="built_in">len</span>(leftInorder) + <span class="number">1</span> :]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># recursively construct left and right subtree</span></span><br><span class="line">        root.left = self.buildTree(leftPreorder, leftInorder)</span><br><span class="line">        root.right = self.buildTree(rightPreorder, rightInorder)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># return the root of tree</span></span><br><span class="line">        <span class="keyword">return</span> root</span><br></pre></td></tr></table></figure>
+
+<h2 id="Leetcode-106-Construct-Binary-Tree-from-Inorder-and-Postorder-Traversal"><a href="#Leetcode-106-Construct-Binary-Tree-from-Inorder-and-Postorder-Traversal" class="headerlink" title="[Leetcode 106] Construct Binary Tree from Inorder and Postorder Traversal"></a>[Leetcode 106] Construct Binary Tree from Inorder and Postorder Traversal</h2><p>Given two integer arrays inorder and postorder where inorder is the inorder traversal of a binary tree and postorder is the postorder traversal of the same tree, construct and return the binary tree.</p>
+<p>Example 1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: inorder = [9,3,15,20,7], postorder = [9,15,7,20,3]</span><br><span class="line">Output: [3,9,20,null,null,15,7]</span><br></pre></td></tr></table></figure>
+
+<p>Example 2:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: inorder = [-1], postorder = [-1]</span><br><span class="line">Output: [-1]</span><br></pre></td></tr></table></figure>
+
+<p>Constraints:</p>
+<ul>
+<li>1 &lt;&#x3D; inorder.length &lt;&#x3D; 3000</li>
+<li>postorder.length &#x3D;&#x3D; inorder.length</li>
+<li>-3000 &lt;&#x3D; inorder[i], postorder[i] &lt;&#x3D; 3000</li>
+<li>inorder and postorder consist of unique values.</li>
+<li>Each value of postorder also appears in inorder.</li>
+<li>inorder is guaranteed to be the inorder traversal of the tree.</li>
+<li>postorder is guaranteed to be the postorder traversal of the tree.</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"># class TreeNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, val=0, left=None, right=None):</span></span><br><span class="line"><span class="comment">#         self.val = val</span></span><br><span class="line"><span class="comment">#         self.left = left</span></span><br><span class="line"><span class="comment">#         self.right = right</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">buildTree</span>(<span class="params">self, inorder: <span class="type">List</span>[<span class="built_in">int</span>], postorder: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">Optional</span>[TreeNode]:</span><br><span class="line">        <span class="comment"># check if empty tree list</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(inorder) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># find the root in postorder list and construct the root node</span></span><br><span class="line">        rootVal = postorder[-<span class="number">1</span>]</span><br><span class="line">        root = TreeNode(rootVal)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># divide the inorder list to left and right subtree</span></span><br><span class="line">        rootIdx = inorder.index(rootVal)</span><br><span class="line">        leftInorder = inorder[:rootIdx]</span><br><span class="line">        rightInorder = inorder[rootIdx + <span class="number">1</span> :]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># find corresponding postorder list</span></span><br><span class="line">        leftPostorder = postorder[: <span class="built_in">len</span>(leftInorder)]</span><br><span class="line">        rightPostorder = postorder[</span><br><span class="line">            <span class="built_in">len</span>(leftInorder) : <span class="built_in">len</span>(leftInorder) + <span class="built_in">len</span>(rightInorder)</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># recursively construct left and right subtree</span></span><br><span class="line">        root.left = self.buildTree(leftInorder, leftPostorder)</span><br><span class="line">        root.right = self.buildTree(rightInorder, rightPostorder)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># return the root of tree</span></span><br><span class="line">        <span class="keyword">return</span> root</span><br></pre></td></tr></table></figure>
 
 <h2 id="Leetcode-226-Invert-Binary-Tree"><a href="#Leetcode-226-Invert-Binary-Tree" class="headerlink" title="[Leetcode 226] Invert Binary Tree"></a>[Leetcode 226] Invert Binary Tree</h2><p>Given the root of a binary tree, invert the tree, and return its root.</p>
 <p>Example 1:</p>
