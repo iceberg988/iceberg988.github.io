@@ -24878,7 +24878,7 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
   <entry>
     <title>How to connect to AKS cluster nodes</title>
     <url>/blog/how-to-connect-to-aks-cluster-nodes/</url>
-    <content><![CDATA[<p>One method to connect to the AKS cluster nodes is to create an interactive shell, aka debug pod.</p>
+    <content><![CDATA[<p>One method to connect to the AKS cluster nodes is to create an interactive shell, aka debug pod.<span id="more"></span></p>
 <p>To list your nodes, use the kubectl get nodes command:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl get nodes</span><br><span class="line">NAME                                STATUS   ROLES   AGE    VERSION</span><br><span class="line">aks-nodepool1-36793237-vmss000000   Ready    agent   171m   v1.27.7</span><br><span class="line">aks-nodepool1-36793237-vmss000001   Ready    agent   170m   v1.27.7</span><br><span class="line">aks-nodepool1-36793237-vmss000002   Ready    agent   156m   v1.27.7</span><br><span class="line">aks-torpedo-83020050-vmss000000     Ready    agent   151m   v1.27.7</span><br></pre></td></tr></table></figure>
 

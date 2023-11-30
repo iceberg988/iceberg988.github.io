@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="One method to connect to the AKS cluster nodes is to create an interactive shell, aka debug pod. To list your nodes, use the kubectl get nodes command: 123456$ kubectl get nodesNAME">
+    <meta name="description" content="One method to connect to the AKS cluster nodes is to create an interactive shell, aka debug pod.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="How to connect to AKS cluster nodes">
 <meta property="og:url" content="https://www.flamingbytes.com/blog/how-to-connect-to-aks-cluster-nodes/index.html">
 <meta property="og:site_name" content="FlamingBytes">
-<meta property="og:description" content="One method to connect to the AKS cluster nodes is to create an interactive shell, aka debug pod. To list your nodes, use the kubectl get nodes command: 123456$ kubectl get nodesNAME">
+<meta property="og:description" content="One method to connect to the AKS cluster nodes is to create an interactive shell, aka debug pod.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-11-30T21:27:46.000Z">
-<meta property="article:modified_time" content="2023-11-30T21:39:22.000Z">
+<meta property="article:modified_time" content="2023-11-30T21:53:38.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="AKS">
 <meta name="twitter:card" content="summary">
@@ -289,7 +289,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2023-11-30 13:27:46 / Modified: 13:39:22" itemprop="dateCreated datePublished" datetime="2023-11-30T13:27:46-08:00">2023-11-30</time>
+      <time title="Created: 2023-11-30 13:27:46 / Modified: 13:53:38" itemprop="dateCreated datePublished" datetime="2023-11-30T13:27:46-08:00">2023-11-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -321,7 +321,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>One method to connect to the AKS cluster nodes is to create an interactive shell, aka debug pod.</p>
+    <div class="post-body" itemprop="articleBody"><p>One method to connect to the AKS cluster nodes is to create an interactive shell, aka debug pod.<span id="more"></span></p>
 <p>To list your nodes, use the kubectl get nodes command:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get nodes</span><br><span class="line">NAME                                STATUS   ROLES   AGE    VERSION</span><br><span class="line">aks-nodepool1-36793237-vmss000000   Ready    agent   171m   v1.27.7</span><br><span class="line">aks-nodepool1-36793237-vmss000001   Ready    agent   170m   v1.27.7</span><br><span class="line">aks-nodepool1-36793237-vmss000002   Ready    agent   156m   v1.27.7</span><br><span class="line">aks-torpedo-83020050-vmss000000     Ready    agent   151m   v1.27.7</span><br></pre></td></tr></table></figure>
 

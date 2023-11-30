@@ -239,7 +239,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2023-11-30 13:27:46 / Modified: 13:39:22" itemprop="dateCreated datePublished" datetime="2023-11-30T13:27:46-08:00">2023-11-30</time>
+      <time title="Created: 2023-11-30 13:27:46 / Modified: 13:53:38" itemprop="dateCreated datePublished" datetime="2023-11-30T13:27:46-08:00">2023-11-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -265,22 +265,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>One method to connect to the AKS cluster nodes is to create an interactive shell, aka debug pod.</p>
-<p>To list your nodes, use the kubectl get nodes command:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get nodes</span><br><span class="line">NAME                                STATUS   ROLES   AGE    VERSION</span><br><span class="line">aks-nodepool1-36793237-vmss000000   Ready    agent   171m   v1.27.7</span><br><span class="line">aks-nodepool1-36793237-vmss000001   Ready    agent   170m   v1.27.7</span><br><span class="line">aks-nodepool1-36793237-vmss000002   Ready    agent   156m   v1.27.7</span><br><span class="line">aks-torpedo-83020050-vmss000000     Ready    agent   151m   v1.27.7</span><br></pre></td></tr></table></figure>
-
-<p>Use the kubectl debug command to run a container image on the node to connect to it. The following command starts a privileged container on your node and connects to it.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl debug node/aks-nodepool1-36793237-vmss000000 -it --image=mcr.microsoft.com/dotnet/runtime-deps:6.0</span><br><span class="line">Creating debugging pod node-debugger-aks-nodepool1-36793237-vmss000000-nj9kd with container debugger on node aks-nodepool1-36793237-vmss000000.</span><br><span class="line">If you don<span class="string">&#x27;t see a command prompt, try pressing enter.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">root@aks-nodepool1-36793237-vmss000000:/# chroot /host</span></span><br><span class="line"><span class="string"># hostname</span></span><br><span class="line"><span class="string">aks-nodepool1-36793237-vmss000000</span></span><br></pre></td></tr></table></figure>
-
-<p>When you are done with a debugging pod, enter the exit command to end the interactive shell session. After the interactive container session closes, delete the pod used for access with kubectl delete pod.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># exit</span></span><br><span class="line">root@aks-nodepool1-36793237-vmss000000:/<span class="comment"># exit</span></span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line">$ kubectl get pods</span><br><span class="line">NAME                                                    READY   STATUS      RESTARTS   AGE</span><br><span class="line">node-debugger-aks-nodepool1-36793237-vmss000000-nj9kd   0/1     Completed   0          62s</span><br><span class="line"></span><br><span class="line">$ kubectl delete pod node-debugger-aks-nodepool1-36793237-vmss000000-nj9kd</span><br><span class="line">pod <span class="string">&quot;node-debugger-aks-nodepool1-36793237-vmss000000-nj9kd&quot;</span> deleted</span><br></pre></td></tr></table></figure>
-
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/aks/node-access">https://learn.microsoft.com/en-us/azure/aks/node-access</a></li>
-<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/virtual-machines/ssh-keys-azure-cli">https://learn.microsoft.com/en-us/azure/virtual-machines/ssh-keys-azure-cli</a></li>
-<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/azure/virtual-machines/ssh-keys-portal">https://learn.microsoft.com/en-us/azure/virtual-machines/ssh-keys-portal</a></li>
-</ul>
-
+          <p>One method to connect to the AKS cluster nodes is to create an interactive shell, aka debug pod.
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/how-to-connect-to-aks-cluster-nodes/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
