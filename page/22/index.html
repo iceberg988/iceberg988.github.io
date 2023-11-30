@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">269</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">271</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">269</span>
+          <span class="site-state-item-count">271</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">103</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,324 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/capture-and-analyze-network-packets-with-tcpdump/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/capture-and-analyze-network-packets-with-tcpdump/" class="post-title-link" itemprop="url">Capture and analyze network packets with tcpdump</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-20 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-20T07:00:00-07:00">2021-08-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Capture-packets-with-tcpdump"><a href="#Capture-packets-with-tcpdump" class="headerlink" title="Capture packets with tcpdump"></a>Capture packets with tcpdump</h2><p>In this example, we only capture 1000 packets(-c1000) and use IP addresses and ports(-nn) for easier analysis. The raw packets are written to file “tcpdump.1000” for further analsis.</p>
+<pre><code>$ tcpdump -i eth5 -c1000 -nn -w tcpdump.1000
+</code></pre>
+<h2 id="View-the-packets-data"><a href="#View-the-packets-data" class="headerlink" title="View the packets data"></a>View the packets data</h2><p>We can use tcpdump to view the packets directly.</p>
+<pre><code>$ tcpdump -nn -r tcpdump.1000 | more
+
+reading from file tcpdump.1000, link-type EN10MB (Ethernet)
+
+22:42:10.018758 IP 192.168.1.18.980 &gt; 192.168.1.16.2049: Flags [P.], seq 1:16545, ack 72, win 501, options [nop,nop,TS val 4292822374 ecr 2230894482], length 16544: NFS request xid 2912663971 16540 getattr fh 0,0/22
+22:42:10.018895 IP 192.168.1.16.2049 &gt; 192.168.1.18.980: Flags [.], ack 16545, win 9508, options [nop,nop,TS val 2230894483 ecr 4292822374], length 0
+22:42:10.021125 IP 192.168.1.16.2049 &gt; 192.168.1.18.980: Flags [P.], seq 72:144, ack 16545, win 9596, options [nop,nop,TS val 2230894485 ecr 4292822374], length 72: NFS reply xid 781957539 reply ok 68
+
+
+22:42:10.021400 IP 192.168.1.18.980 &gt; 192.168.1.16.2049: Flags [P.], seq 16545:33089, ack 144, win 501, options [nop,nop,TS val 4292822377 ecr 2230894485], length 16544: NFS request xid 2929441187 16540 getattr fh 0,0/22
+22:42:10.021536 IP 192.168.1.16.2049 &gt; 192.168.1.18.980: Flags [.], ack 33089, win 9508, options [nop,nop,TS val 2230894485 ecr 4292822377], length 0
+22:42:10.023219 ARP, Request who-has 70.0.69.235 tell 70.0.193.122, length 46
+22:42:10.023558 IP 192.168.1.16.2049 &gt; 192.168.1.18.980: Flags [P.], seq 144:216, ack 33089, win 9596, options [nop,nop,TS val 2230894487 ecr 4292822377], length 72: NFS reply xid 798734755 reply ok 68
+
+
+22:42:10.023844 IP 192.168.1.18.980 &gt; 192.168.1.16.2049: Flags [P.], seq 33089:49633, ack 216, win 501, options [nop,nop,TS val 4292822379 ecr 2230894487], length 16544: NFS request xid 2946218403 16540 getattr fh 0,0/22
+22:42:10.023962 IP 192.168.1.16.2049 &gt; 192.168.1.18.980: Flags [.], ack 49633, win 9508, options [nop,nop,TS val 2230894488 ecr 4292822379], length 0
+22:42:10.025962 IP 192.168.1.16.2049 &gt; 192.168.1.18.980: Flags [P.], seq 216:288, ack 49633, win 9596, options [nop,nop,TS val 2230894490 ecr 4292822379], length 72: NFS reply xid 815511971 reply ok 68
+
+&lt;omitted...&gt;
+</code></pre>
+<p>We also can view the data with wireshark GUI. We can use the filter to only display the data we are interested in. In this case, we only display the data related the ip address “192.168.1.18”. The wireshare can be installed on the desktop and open the captured packets data file.</p>
+<p><img src="/images/tcpdump-wireshark.png" alt="Image"></p>
+<h2 id="Understand-the-tcpdump-output"><a href="#Understand-the-tcpdump-output" class="headerlink" title="Understand the tcpdump output"></a>Understand the tcpdump output</h2><ul>
+<li><p>The first field, <strong>22:42:10.021125</strong>, represents the timestamp of the captured packet.</p>
+</li>
+<li><p>The next field, <strong>IP</strong>, represents the network layer protocol, in this case, IPv4.</p>
+</li>
+<li><p>The next field, <strong>192.168.1.16.2049 &gt; 192.168.1.18.980</strong>, is the source and destination IP address and port.</p>
+</li>
+<li><p>The next field, <strong>Flags [P.]</strong>, represents the TCP flags. The typical values for this field include the following.</p>
+</li>
+</ul>
+<p><img src="/images/tcpdump-tcp-flags.png" alt="Image"></p>
+<ul>
+<li><p>The next field, <strong>seq 72:144</strong>, is the sequence number of the data contained in the packet.  It means the packet contains bytes 72 to 144.</p>
+</li>
+<li><p>The next field, <strong>ack 16545</strong>, is the Ack number. For the side of receiving data, this field represents the next expected byte of data. In this case, the Ack number for the next expected packet would be 16545.</p>
+</li>
+<li><p>The next field, <strong>win 9596</strong>, is the window size. It represents the number of bytes available in the receiving buffer.</p>
+</li>
+<li><p>Followed by a field, <strong>length 72</strong>, which represents the length in bytes of the data.</p>
+</li>
+</ul>
+<p>In the above example, the data are sending from 192.168.1.18 to 192.168.1.16. The average packet size is 16k which is sent over NFSv4.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/useful-tools-to-analyze-network-latency/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/useful-tools-to-analyze-network-latency/" class="post-title-link" itemprop="url">Useful tools to analyze network latency</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-13 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-13T07:00:00-07:00">2021-08-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h2><p>Ping is one of the most basic commands in network management, verifying network connectivity through the roundtrip times taken by the ICMP protocol packets sent to a target host.</p>
+<p>ping - send ICMP ECHO_REQUEST to network hosts</p>
+<ul>
+<li>-c count</li>
+</ul>
+<p>Stop after sending <em>count</em> ECHO_REQUEST packets. With deadline option, ping waits for count ECHO_REPLY packets, until the timeout expires.</p>
+<ul>
+<li>-i interval</li>
+</ul>
+<p>Wait interval seconds between sending each packet. The default is to wait for one  second  between each packet normally, or not to wait in flood mode. Only super-user may set interval to values less 0.2 seconds.</p>
+<pre><code>$ ping 10.10.1.17 -c 1000 -i 0.010
+PING 10.10.1.17 (10.10.1.17) 56(84) bytes of data.
+64 bytes from 10.10.1.17: icmp_seq=1 ttl=64 time=0.176 ms
+64 bytes from 10.10.1.17: icmp_seq=2 ttl=64 time=0.173 ms
+&lt;omitted...&gt;
+64 bytes from 10.10.1.17: icmp_seq=999 ttl=64 time=0.197 ms
+64 bytes from 10.10.1.17: icmp_seq=1000 ttl=64 time=0.195 ms
+
+--- 10.10.1.17 ping statistics ---
+1000 packets transmitted, 1000 received, 0% packet loss, time 10992ms
+rtt min/avg/max/mdev = 0.096/0.173/0.210/0.025 ms
+</code></pre>
+<p>Round-trip time (RTT) is the duration, measured in milliseconds, from when the source server sends a request to when it receives a response from a target server. It’s a key performance metric to measure network latency.</p>
+<p>Actual round trip time can be influenced by:</p>
+<ul>
+<li>Distance – The length a signal has to travel correlates with the time taken for a request to reach a server.</li>
+<li>Transmission medium – The medium used to route a signal (e.g., copper wire, fiber optic cables) can impact how quickly a request is received by a server and routed back to a user.</li>
+<li>Number of network hops – Intermediate routers or servers take time to process a signal, increasing RTT. The more hops a signal has to travel through, the higher the RTT.</li>
+<li>Traffic levels – RTT typically increases when a network is congested with high levels of traffic. Conversely, low traffic times can result in decreased RTT.</li>
+<li>Server response time – The time taken for a target server to respond to a request depends on its processing capacity, the number of requests being handled and the nature of the request (i.e., how much server-side work is required). A longer server response time increases RTT.</li>
+</ul>
+<h2 id="traceroute"><a href="#traceroute" class="headerlink" title="traceroute"></a>traceroute</h2><p>A traceroute displays the path that the signal took as it traveled around the Internet to the website. It also displays times which are the response times that occurred at each stop along the route. If there is a connection problem or latency connecting to a site, it will show up in these times. You will be able to identify which of the stops (also called ‘hops’) along the route is the culprit.</p>
+<pre><code>$ for i in `seq 1 5`; do traceroute 10.10.1.17;sleep 3; done
+traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
+ 1  10.10.1.17 (10.10.1.17)  0.181 ms  0.086 ms  0.084 ms
+traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
+ 1  10.10.1.17 (10.10.1.17)  0.179 ms  0.087 ms  0.081 ms
+traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
+ 1  10.10.1.17 (10.10.1.17)  0.175 ms  0.087 ms  0.081 ms
+traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
+ 1  10.10.1.17 (10.10.1.17)  0.183 ms  0.073 ms  0.081 ms
+traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
+ 1  10.10.1.17 (10.10.1.17)  0.177 ms  0.080 ms  0.081 ms
+</code></pre>
+<p>-<br>Hop Number – the first column is simply the number of the hop along the route.</p>
+<p>-<br>RTT Columns – The last three columns display the round trip time (RTT) for the packet to reach that point and return. It is listed in milliseconds. There are three columns because the traceroute sends three separate signal packets. This is to display consistency in the route.</p>
+<h2 id="netperf"><a href="#netperf" class="headerlink" title="netperf"></a>netperf</h2><p>Netperf is a benchmark that can be used to measure the performance of many different types of networking. It provides tests for both unidirectional throughput, and end-to-end latency. The environments currently measureable by netperf include:</p>
+<ul>
+<li><p>TCP and UDP via BSD Sockets for both IPv4 and IPv6</p>
+</li>
+<li><p>DLPI</p>
+</li>
+<li><p>Unix Domain Sockets</p>
+</li>
+<li><p>SCTP for both IPv4 and IPv6</p>
+<p>  netperf -h</p>
+<p>  Usage: netperf [global options] – [test options]</p>
+<p>  Global options:<br>  -a send,recv      Set the local send,recv buffer alignment<br>  -A send,recv      Set the remote send,recv buffer alignment<br>  -B brandstr       Specify a string to be emitted with brief output<br>  -c [cpu_rate]     Report local CPU usage<br>  -C [cpu_rate]     Report remote CPU usage<br>  -d                Increase debugging output<br>  -D [secs,units] * Display interim results at least every secs seconds<br>                    using units as the initial guess for units per second<br>  -f G|M|K|g|m|k    Set the output units<br>  -F fill_file      Pre-fill buffers with data from fill_file<br>  -h                Display this text<br>  -H name|ip,fam *  Specify the target machine and&#x2F;or local ip and family<br>  -i max,min        Specify the max and min number of iterations (15,1)<br>  -I lvl[,intvl]    Specify confidence level (95 or 99) (99)<br>                    and confidence interval in percentage (10)<br>  -j                Keep additional timing statistics<br>  -l testlen        Specify test duration (&gt;0 secs) (&lt;0 bytes|trans)<br>  -L name|ip,fam *  Specify the local ip|name and address family<br>  -o send,recv      Set the local send,recv buffer offsets<br>  -O send,recv      Set the remote send,recv buffer offset<br>  -n numcpu         Set the number of processors for CPU util<br>  -N                Establish no control connection, do ‘send’ side only<br>  -p port,lport*    Specify netserver port number and&#x2F;or local port<br>  -P 0|1            Donot&#x2F;Do display test headers<br>  -r                Allow confidence to be hit on result only<br>  -s seconds        Wait seconds between test setup and test start<br>  -S                Set SO_KEEPALIVE on the data connection<br>  -t testname       Specify test to perform<br>  -T lcpu,rcpu      Request netperf&#x2F;netserver be bound to local&#x2F;remote cpu<br>  -v verbosity      Specify the verbosity level<br>  -W send,recv      Set the number of send,recv buffers<br>  -v level          Set the verbosity level (default 1, min 0)<br>  -V                Display the netperf version and exit<br>  For those options taking two parms, at least one must be specified;<br>  specifying one value without a comma will set both parms to that<br>  value, specifying a value with a leading comma will set just the second<br>  parm, a value with a trailing comma will set just the first. To set<br>  each parm to unique values, specify both and separate them with a<br>  comma.</p>
+<ul>
+<li>For these options taking two parms, specifying one value with no comma<br>  will only set the first parms and will leave the second at the default<br>  value. To set the second value it must be preceded with a comma or be a<br>  comma-separated pair. This is to retain previous netperf behaviour.</li>
+</ul>
+<p>  $ wget -O netperf-2.5.0.tar.gz -c <a target="_blank" rel="noopener" href="https://codeload.github.com/HewlettPackard/netperf/tar.gz/netperf-2.5.0">https://codeload.github.com/HewlettPackard/netperf/tar.gz/netperf-2.5.0</a><br>  $ tar xf netperf-2.5.0.tar.gz &amp;&amp; cd netperf-netperf-2.5.0<br>  $ .&#x2F;configure &amp;&amp; make &amp;&amp; make install</p>
+<p>  [<a href="mailto:&#x72;&#111;&#x6f;&#116;&#x40;&#49;&#x30;&#x2e;&#x30;&#46;&#48;&#46;&#49;&#x37;">&#x72;&#111;&#x6f;&#116;&#x40;&#49;&#x30;&#x2e;&#x30;&#46;&#48;&#46;&#49;&#x37;</a>]$ netserver -D<br>  [<a href="mailto:&#x72;&#x6f;&#x6f;&#x74;&#64;&#x31;&#x30;&#46;&#x30;&#46;&#x30;&#46;&#x31;&#54;">&#x72;&#x6f;&#x6f;&#x74;&#64;&#x31;&#x30;&#46;&#x30;&#46;&#x30;&#46;&#x31;&#54;</a>]$ netperf -H 10.10.1.17 -l -1000000 -t TCP_RR -w 10ms -b 1 -v 2 – -O min_latency,mean_latency,max_latency,stddev_latency,transaction_rate<br>  Packet rate control is not compiled in.<br>  Packet burst size is not compiled in.<br>  MIGRATED TCP REQUEST&#x2F;RESPONSE TEST from 0.0.0.0 (0.0.0.0) port 0 AF_INET to 10.10.1.17 (10.10.1.17) port 0 AF_INET : first burst 0<br>  Minimum      Mean         Maximum      Stddev       Transaction<br>  Latency      Latency      Latency      Latency      Rate<br>  Microseconds Microseconds Microseconds Microseconds Tran&#x2F;s</p>
+<p>  63           84.92        2980         7.86         11740.092</p>
+</li>
+</ul>
+<h2 id="iperf"><a href="#iperf" class="headerlink" title="iperf"></a>iperf</h2><p>iPerf3 is a tool for active measurements of the maximum achievable bandwidth on IP networks. It supports tuning of various parameters related to timing, buffers and protocols (TCP, UDP, SCTP with IPv4 and IPv6). For each test it reports the bandwidth, loss, and other parameters.</p>
+<h2 id="lldp"><a href="#lldp" class="headerlink" title="lldp"></a>lldp</h2><p>LLDP (Link Layer Discovery Protocol) can be essential in the situations of complex network-server infrastructure configurations and it’s extremely helpful in case there is no direct access to our setup but we need to determine what network ports on the switches are our servers NIC cards connected to.</p>
+<p>Below example shows how to install and enable LLDP Daemon on CentOS and check what are the corresponding neighbor ports connected to the server network cards.</p>
+<pre><code>$ yum install lldpd
+$ systemctl --now enable lldpd
+  
+$ lldpcli show neighbors
+-------------------------------------------------------------------------------
+LLDP neighbors:
+-------------------------------------------------------------------------------
+Interface:    enp6s0f1, via: LLDP, RID: 1, Time: 0 day, 00:01:29
+  Chassis:
+    ChassisID:    mac 00:1c:73:82:07:ee
+    SysName:      xx-ay-01.06.09
+    SysDescr:     Arista Networks EOS version 4.16.6M running on an Arista Networks Lab-71x-28
+    MgmtIP:       10.0.254.9
+    Capability:   Bridge, on
+    Capability:   Router, on
+  Port:
+    PortID:       ifname Ethernet17
+    TTL:          120
+-------------------------------------------------------------------------------
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://hewlettpackard.github.io/netperf/">https://hewlettpackard.github.io/netperf/</a></li>
+<li><a target="_blank" rel="noopener" href="https://iperf.fr/">https://iperf.fr/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1375,221 +1693,8 @@ $ docker inspect 1cd20ecd897d | grep RootDir
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-gstack-for-docker-container-process/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/using-gstack-for-docker-container-process/" class="post-title-link" itemprop="url">Using gstack for docker container process</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-27 07:00:00" itemprop="dateCreated datePublished" datetime="2021-04-27T07:00:00-07:00">2021-04-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>In a Docker container environment, we won’t get a valid stack trace directly on the container host as below.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$  ps -ef |grep smbd</span><br><span class="line">root     171118 167977  0 Apr22 ?        00:00:02 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root     171166 171118  0 Apr22 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root     171168 171118  0 Apr22 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root     171208 171118  0 Apr22 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root     190574 186140  0 15:01 pts/3    00:00:00 grep --color=auto smbd</span><br><span class="line">    </span><br><span class="line">$  gstack 171118</span><br><span class="line">#0  0x00007fb66768afb3 in ?? () from /lib64/libc.so.6</span><br><span class="line">#1  0x00007fb667b70f1b in ?? ()</span><br><span class="line">#2  0x0000000000000060 in ?? ()</span><br><span class="line">#3  0x00007fb668a92f5c in ?? ()</span><br><span class="line">#4  0x0000000000000000 in ?? () </span><br></pre></td></tr></table></figure>
-
-
-<p>To print the stack trace for a process running inside container, we can do the following.</p>
-<ol>
-<li><p>Get the process id inside container</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec -it iNfcP_9-0-1 bash</span><br><span class="line">bash-4.2# ps -ef | grep smbd</span><br><span class="line">root       1864      1  0 Apr22 ?        00:00:02 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root       1908   1864  0 Apr22 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root       1910   1864  0 Apr22 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root       1950   1864  0 Apr22 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root     177346 177338  0 15:02 ?        00:00:00 grep smbd </span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>Get the container instance pid</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ /bin/docker inspect --format &#x27;\&#123;\&#123; .State.Pid &#125;&#125;&#x27; e2590333640e</span><br><span class="line">167977</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Print stack trace with gstack as below</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$  /bin/nsenter -Z -m -n -p -t 167977 /bin/gstack 1864</span><br><span class="line">#0  0x00007fb66768afb3 in __epoll_wait_nocancel () from /lib64/libc.so.6</span><br><span class="line">#1  0x00007fb667b70f1b in epoll_event_loop_once () from /lib64/libtevent.so.0</span><br><span class="line">#2  0x00007fb667b6f057 in std_event_loop_once () from /lib64/libtevent.so.0</span><br><span class="line">#3  0x00007fb667b6a25d in _tevent_loop_once () from /lib64/libtevent.so.0</span><br><span class="line">#4  0x00007fb667b6a4bb in tevent_common_loop_wait () from /lib64/libtevent.so.0</span><br><span class="line">#5  0x00007fb667b6eff7 in std_event_loop_wait () from /lib64/libtevent.so.0</span><br><span class="line">#6  0x00005588a9175a98 in main ()</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>We use nsenter to get the stack trace of the target process in contaienr namespace.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">$ man nsenter</span><br><span class="line">   </span><br><span class="line">NAME</span><br><span class="line">       nsenter - run program with namespaces of other processes</span><br><span class="line">    </span><br><span class="line">SYNOPSIS</span><br><span class="line">       nsenter [options] [program [arguments]]</span><br><span class="line">    </span><br><span class="line">DESCRIPTION</span><br><span class="line">       Enters the namespaces of one or more other processes and then executes the specified program.  Enterable namespaces are:</span><br><span class="line">    </span><br><span class="line">       mount namespace</span><br><span class="line">              Mounting  and  unmounting  filesystems  will  not affect the rest of the system (CLONE_NEWNS flag), except for filesystems which are explicitly marked as</span><br><span class="line">              shared (with mount --make-shared; see /proc/self/mountinfo for the shared flag).</span><br><span class="line">    </span><br><span class="line">       UTS namespace</span><br><span class="line">              Setting hostname or domainname will not affect the rest of the system.  (CLONE_NEWUTS flag)</span><br><span class="line">    </span><br><span class="line">       IPC namespace</span><br><span class="line">              The process will have an independent namespace for System V message queues, semaphore sets and shared memory segments.  (CLONE_NEWIPC flag)</span><br><span class="line">    </span><br><span class="line">       network namespace</span><br><span class="line">              The process will have independent IPv4 and IPv6 stacks, IP routing tables, firewall rules, the /proc/net and  /sys/class/net  directory  trees,  sockets,</span><br><span class="line">              etc.  (CLONE_NEWNET flag)</span><br><span class="line">    </span><br><span class="line">       PID namespace</span><br><span class="line">              Children  will have a set of PID to process mappings separate from the nsenter process (CLONE_NEWPID flag).  nsenter will fork by default if changing the</span><br><span class="line">              PID namespace, so that the new program and its children share the same PID namespace and are visible to each other.  If --no-fork is used, the  new  pro‐</span><br><span class="line">              gram will be exec&#x27;ed without forking.</span><br><span class="line">    </span><br><span class="line">       user namespace</span><br><span class="line">              The process will have a distinct set of UIDs, GIDs and capabilities.  (CLONE_NEWUSER flag)</span><br><span class="line">    </span><br><span class="line">       See clone(2) for the exact semantics of the flags.</span><br><span class="line">    </span><br><span class="line">       If program is not given, then ``$&#123;SHELL&#125;&#x27;&#x27; is run (default: /bin/sh).</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/network-bonding/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/network-bonding/" class="post-title-link" itemprop="url">Network bonding</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-19 07:00:00" itemprop="dateCreated datePublished" datetime="2021-04-19T07:00:00-07:00">2021-04-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Network bonding enables the combination of two or more network interfaces into a single-bonded (logical) interface, which increases the bandwidth and provides redundancy. If a specific network interface card (NIC) experiences a problem, communications are not affected significantly as long as the other slave NICs remain active.</p>
-<h2 id="Bonding-modes-supported-by-RHEL-and-CentOS-operating-systems"><a href="#Bonding-modes-supported-by-RHEL-and-CentOS-operating-systems" class="headerlink" title="Bonding modes supported by RHEL and CentOS operating systems"></a>Bonding modes supported by RHEL and CentOS operating systems</h2><p>The behavior of the bonded interfaces depends on the mode that is selected. RHEL supports the following common bonding modes:</p>
-<ul>
-<li>Mode 0 (balance-rr): This mode is also known as round-robin mode. Packets are sequentially transmitted and received through each interface one by one. This mode provides load balancing functionality.</li>
-<li>Mode 1 (active-backup): This mode has only one interface set to active, while all other interfaces are in the backup state. If the active interface fails, a backup interface replaces it as the only active interface in the bond. The media access control (MAC) address of the bond interface in mode 1 is visible on only one port (the network adapter), which prevents confusion for the switch. Mode 1 provides fault tolerance.</li>
-<li>Mode 2 (balance-xor): The source MAC address uses exclusive or (XOR) logic with the destination MAC address. This calculation ensures that the same slave interface is selected for each destination MAC address. Mode 2 provides fault tolerance and load balancing.</li>
-<li>Mode 3 (broadcast): All transmissions are sent to all the slaves. This mode provides fault tolerance.</li>
-<li>Mode 4 (802.3ad): This mode creates aggregation groups that share the same speed and duplex settings, and it requires a switch that supports an IEEE 802.3ad dynamic link. Mode 4 uses all interfaces in the active aggregation group. For example, you can aggregate three 1 GB per second (GBPS) ports into a 3 GBPS trunk port. This is equivalent to having one interface with 3 GBPS speed. It provides fault tolerance and load balancing.</li>
-<li>Mode 5 (balance-tlb): This mode ensures that the outgoing traffic distribution is set according to the load on each interface and that the current interface receives all the incoming traffic. If the assigned interface fails to receive traffic, another interface is assigned to the receiving role. It provides fault tolerance and load balancing.</li>
-<li>Mode 6 (balance-alb): This mode is supported only in x86 environments. The receiving packets are load balanced through Address Resolution Protocol (ARP) negotiation. This mode provides fault tolerance and load balancing.</li>
-</ul>
-<h2 id="IEEE-802-3ad-Link-Aggregation-Policy-and-LACP"><a href="#IEEE-802-3ad-Link-Aggregation-Policy-and-LACP" class="headerlink" title="IEEE 802.3ad Link Aggregation Policy and LACP"></a>IEEE 802.3ad Link Aggregation Policy and LACP</h2><p>Before we explore LACP configuration, we should understand the IEEE 802.3ad link aggregation policy and LACP bonding, which allows us to aggregate multiple ports into a single group. This process combines the bandwidth into a single connection.</p>
-<p>IEEE 802.3ad link aggregation enables us to group Ethernet interfaces at the physical layer to form a single link layer interface, also known as a link aggregation group (LAG) or bundle.</p>
-<p>Some users require more bandwidth in their network than a single fast Ethernet link can provide. Using IEEE 802.3ad link aggregation in this situation provides increased port density and bandwidth at a lower cost.</p>
-<p>For example, if you need 2 GBPS bandwidth to transmit data and have only 1 GBPS Fast Ethernet links installed on your system, creating a LAG bundle containing two 1 GBPS Fast Ethernet links is more cost-effective than purchasing a single 2 GBPS Ethernet link.</p>
-<p>The following diagram illustrates the IEEE 802.3ad link aggregation policy:</p>
-<p><img src="/images/lacp.png" alt="Image"></p>
-<p>LACP is a mechanism for exchanging port and system information to create and maintain LAG bundles. The LAG bundle distributes MAC clients across the link layer interface and collects traffic from the links to present to the MAC clients of the LAG bundle.</p>
-<p>LACP identifies the MAC address of the Ethernet link that has the highest port priority and is of the lowest value, and it assigns that MAC address to the LAG bundle.</p>
-<p>This bonding mode requires a switch that supports IEEE 802.3ad dynamic links.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/21/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><span class="page-number current">22</span><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/23/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/21/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><span class="page-number current">22</span><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/23/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

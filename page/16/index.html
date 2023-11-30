@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">269</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">271</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">269</span>
+          <span class="site-state-item-count">271</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">103</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,201 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/flame-graph-a-visualization-for-profiling-and-debugging/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/flame-graph-a-visualization-for-profiling-and-debugging/" class="post-title-link" itemprop="url">Flame graph - A visualization for profiling and debugging</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-05-19 07:00:00" itemprop="dateCreated datePublished" datetime="2022-05-19T07:00:00-07:00">2022-05-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Flame graphs can be generated from the output of many different software profilers, including profiles for different resources and event types. The <a target="_blank" rel="noopener" href="https://queue.acm.org/detail.cfm?id=2927301">article</a> written by Brendan Gregg describes how the flame graph works.</p>
+<p>We can start to work with the flame graph by following commands.</p>
+<pre><code>$ yum install git
+$ git clone --depth 1 https://github.com/brendangregg/FlameGraph
+$ cp result-15082021-201302/perf.data FlameGraph/
+$ cd FlameGraph/
+ 
+$ perf record -p $pids -a -g -- sleep 30
+$ perf script | ./stackcollapse-perf.pl | ./flamegraph.pl &gt; perf16.svg
+</code></pre>
+<p><img src="/images/Gregg4.svg" alt="Image"></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.brendangregg.com/flamegraphs.html">https://www.brendangregg.com/flamegraphs.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://queue.acm.org/detail.cfm?id=2927301">https://queue.acm.org/detail.cfm?id=2927301</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/justice-over-loyalty/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/justice-over-loyalty/" class="post-title-link" itemprop="url">Justice over Loyalty</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-05-16 06:55:00" itemprop="dateCreated datePublished" datetime="2022-05-16T06:55:00-07:00">2022-05-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Regulus Aurelius woke up to the clanging of weapons and fierce battle cries of Roman elite soldiers during their practice session for the oncoming battles. Things weren’t going well for Rome when General Hannibal Barca of Carthage stormed into the Italian Peninsula with a raging army of 26000 troops, 6000 horses, and war elephants. Regulus, unlike the fearful Roman citizens, faced a continuous dilemma. Part of him was a loyal Roman general who wanted to defeat Carthage. The other part of him was loyal to Carthage, his homeland. Sometimes, a faint smile tugged at his mouth when frantic Roman scouts reported the losses they suffered.
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/justice-over-loyalty/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1665,304 +1860,8 @@ angular.module(&quot;myapp&quot;, []).controller(&quot;myctrl&quot;, [&#39;$scop
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/access-a-sharedv4-volume-outside-of-a-portwrox-cluster/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/access-a-sharedv4-volume-outside-of-a-portwrox-cluster/" class="post-title-link" itemprop="url">Access a sharedv4 volume outside of a Portwrox cluster</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-04-20 07:00:00" itemprop="dateCreated datePublished" datetime="2022-04-20T07:00:00-07:00">2022-04-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>To access a sharedv4 volume outside of the Portworx cluster, add the allow_ips label to the volume you wish to export, specifying a semi-colon separated list of IP addresses of non-Portworx nodes you wish to mount your sharedv4 volume to:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ /opt/pwx/bin/pxctl -j volume create datavol --sharedv4 --label name=data --size 500 --fs ext4 --repl 2 --nodes node1,node2</span><br><span class="line">$ /opt/pwx/bin/pxctl -j volume update datavol --sharedv4_mount_options=&quot;vers=4.0&quot;</span><br><span class="line">$ /opt/pwx/bin/pxctl volume update datavol --label &quot;allow_ips=&lt;node3_ip&gt;&quot;</span><br><span class="line">$ /opt/pwx/bin/pxctl host attach datavol</span><br><span class="line">$ mkdir /mnt/datavol</span><br><span class="line">$ /opt/pwx/bin/pxctl host mount --path /mnt/datavol datavol</span><br><span class="line"></span><br><span class="line">$ mount | grep datavol</span><br><span class="line">/dev/pxd/pxd229379759785727331 on /mnt/datavol type ext4 (rw,relatime,discard,data=ordered)</span><br><span class="line"></span><br><span class="line">$ cat /etc/exports</span><br><span class="line">/var/lib/osd/pxns/229379759785727331 node1(fsid=123e4567-e89b-12d3-002e-ebad1cb15563,rw,no_root_squash,no_subtree_check) node3(fsid=123e4567-e89b-12d3-002e-ebad1cb15563,rw,no_root_squash,no_subtree_check)</span><br></pre></td></tr></table></figure>
-
-<p>To mount the NFS shared volume on non-Portworx node(node3):</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ showmount -e node1</span><br><span class="line">Export list for node1:</span><br><span class="line">/var/lib/osd/pxns/229379759785727331 node1,node3</span><br><span class="line"></span><br><span class="line">$ mkdir /mnt/data</span><br><span class="line">$ mount -t nfs node1:/var/lib/osd/pxns/229379759785727331 /mnt/data</span><br><span class="line">$ mount | grep data</span><br><span class="line">node1:/var/lib/osd/pxns/229379759785727331 on /mnt/data type nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=node3,local_lock=none,addr=node1)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://docs.portworx.com/reference/cli/updating-volumes/">https://docs.portworx.com/reference/cli/updating-volumes/</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-iperf-to-measure-the-network-bandwidth/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/using-iperf-to-measure-the-network-bandwidth/" class="post-title-link" itemprop="url">Using iperf to measure the network bandwidth</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-04-19 07:00:00" itemprop="dateCreated datePublished" datetime="2022-04-19T07:00:00-07:00">2022-04-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>iPerf is a tool for measurements of the maximum achievable bandwidth on IP network. The following iperf option can be used on the client side to saturate the network bandwidth if single client thread is not sufficient.</p>
-<ul>
-<li>-P, –parallel  # number of parallel client threads to run</li>
-</ul>
-<h2 id="Benchmark-a-100GbE-network"><a href="#Benchmark-a-100GbE-network" class="headerlink" title="Benchmark a 100GbE network"></a>Benchmark a 100GbE network</h2><ol>
-<li>Single thread test</li>
-</ol>
-<p>Start iperf on the server side:</p>
-<pre><code>$ iperf -v
-iperf version 2.0.13 (21 Jan 2019) pthreads
-
-$ iperf -s
-------------------------------------------------------------
-Server listening on TCP port 5001
-TCP window size:  128 KByte (default)
-------------------------------------------------------------
-[  4] local 192.168.1.240 port 5001 connected with 192.168.1.245 port 44292
-[ ID] Interval       Transfer     Bandwidth
-[  4]  0.0-10.0 sec  37.7 GBytes  32.4 Gbits/sec
-</code></pre>
-<p>Run iperf benchmark on the client side:</p>
-<pre><code>$ iperf -c 192.168.1.240
-------------------------------------------------------------
-Client connecting to 192.168.1.240, TCP port 5001
-TCP window size: 2.44 MByte (default)
-------------------------------------------------------------
-[  3] local 192.168.1.245 port 44292 connected with 192.168.1.240 port 5001
-[ ID] Interval       Transfer     Bandwidth
-[  3]  0.0-10.0 sec  37.7 GBytes  32.4 Gbits/sec
-</code></pre>
-<p>With the default single thread, the achievable bandwidth is 32.4Gb&#x2F;s which is far less than the available 100Gb&#x2F;s bandwidth.</p>
-<ol start="2">
-<li>Multi-threads test</li>
-</ol>
-<p>We can increase the number of iperf client threads until the maximum bandwidth is hit.</p>
-<pre><code>$ iperf -c 192.168.1.240 -P 1
-------------------------------------------------------------
-Client connecting to 192.168.1.240, TCP port 5001
-TCP window size: 4.00 MByte (default)
-------------------------------------------------------------
-[  3] local 192.168.1.245 port 44436 connected with 192.168.1.240 port 5001
-[ ID] Interval       Transfer     Bandwidth
-[  3]  0.0-10.0 sec  38.8 GBytes  33.4 Gbits/sec
-
-$ iperf -c 192.168.1.240 -P 2
-------------------------------------------------------------
-Client connecting to 192.168.1.240, TCP port 5001
-TCP window size: 1.13 MByte (default)
-------------------------------------------------------------
-[  4] local 192.168.1.245 port 44440 connected with 192.168.1.240 port 5001
-[  3] local 192.168.1.245 port 44438 connected with 192.168.1.240 port 5001
-[ ID] Interval       Transfer     Bandwidth
-[  4]  0.0-10.0 sec  35.3 GBytes  30.4 Gbits/sec
-[  3]  0.0-10.0 sec  37.6 GBytes  32.3 Gbits/sec
-[SUM]  0.0-10.0 sec  72.9 GBytes  62.6 Gbits/sec
-
-$ iperf -c 192.168.1.240 -P 4
-------------------------------------------------------------
-Client connecting to 192.168.1.240, TCP port 5001
-TCP window size:  366 KByte (default)
-------------------------------------------------------------
-[  6] local 192.168.1.245 port 44448 connected with 192.168.1.240 port 5001
-[  5] local 192.168.1.245 port 44446 connected with 192.168.1.240 port 5001
-[  4] local 192.168.1.245 port 44444 connected with 192.168.1.240 port 5001
-[  3] local 192.168.1.245 port 44442 connected with 192.168.1.240 port 5001
-[ ID] Interval       Transfer     Bandwidth
-[  6]  0.0-10.0 sec  26.0 GBytes  22.3 Gbits/sec
-[  5]  0.0-10.0 sec  26.3 GBytes  22.6 Gbits/sec
-[  4]  0.0-10.0 sec  26.3 GBytes  22.6 Gbits/sec
-[  3]  0.0-10.0 sec  26.4 GBytes  22.6 Gbits/sec
-[SUM]  0.0-10.0 sec   105 GBytes  90.1 Gbits/sec
-
-$ iperf -c 192.168.1.240 -P 8
-------------------------------------------------------------
-Client connecting to 192.168.1.240, TCP port 5001
-TCP window size:  518 KByte (default)
-------------------------------------------------------------
-[ 16] local 192.168.1.245 port 44464 connected with 192.168.1.240 port 5001
-[  3] local 192.168.1.245 port 44452 connected with 192.168.1.240 port 5001
-[  7] local 192.168.1.245 port 44456 connected with 192.168.1.240 port 5001
-[  4] local 192.168.1.245 port 44450 connected with 192.168.1.240 port 5001
-[  6] local 192.168.1.245 port 44454 connected with 192.168.1.240 port 5001
-[  9] local 192.168.1.245 port 44462 connected with 192.168.1.240 port 5001
-[  8] local 192.168.1.245 port 44460 connected with 192.168.1.240 port 5001
-[  5] local 192.168.1.245 port 44458 connected with 192.168.1.240 port 5001
-[ ID] Interval       Transfer     Bandwidth
-[ 16]  0.0-10.0 sec  15.0 GBytes  12.9 Gbits/sec
-[  3]  0.0-10.0 sec  9.06 GBytes  7.78 Gbits/sec
-[  7]  0.0-10.0 sec  15.1 GBytes  12.9 Gbits/sec
-[  4]  0.0-10.0 sec  15.1 GBytes  13.0 Gbits/sec
-[  6]  0.0-10.0 sec  15.1 GBytes  12.9 Gbits/sec
-[  9]  0.0-10.0 sec  15.1 GBytes  12.9 Gbits/sec
-[  8]  0.0-10.0 sec  8.97 GBytes  7.70 Gbits/sec
-[  5]  0.0-10.0 sec  15.1 GBytes  12.9 Gbits/sec
-[SUM]  0.0-10.0 sec   108 GBytes  93.1 Gbits/sec
-</code></pre>
-<p>We can verify the network throughput with the command <em>sar -n DEV 2</em>.</p>
-<pre><code>03:26:05 PM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s
-03:26:07 PM        lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00
-03:26:07 PM      eth0     15.00      0.50      0.91      0.33      0.00      0.00      0.00
-03:26:07 PM      eth3      0.00      0.00      0.00      0.00      0.00      0.00      0.00
-03:26:07 PM      eth1 8045242.00 252491.50 11895015.32  16273.87      0.00      0.00      0.00
-03:26:07 PM      eth2      0.00      0.00      0.00      0.00      0.00      0.00      0.00
-
-03:26:07 PM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s
-03:26:10 PM        lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00
-03:26:10 PM      eth0     10.50      1.00      0.65      0.41      0.00      0.00      0.00
-03:26:10 PM      eth3      0.00      0.00      0.00      0.00      0.00      0.00      0.00
-03:26:10 PM      eth1 8046641.50 251968.50 11897084.51  16240.16      0.00      0.00      0.00
-03:26:10 PM      eth2      0.00      0.00      0.00      0.00      0.00      0.00      0.00
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/15/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/17/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/15/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/17/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

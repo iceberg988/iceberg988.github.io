@@ -1,3 +1,6 @@
+https://www.flamingbytes.com/blog/binary-search-tree-in-python/
+https://www.flamingbytes.com/blog/how-to-connect-to-aks-cluster-nodes/
+https://www.flamingbytes.com/blog/off-cpu-flame-graph/
 https://www.flamingbytes.com/blog/binary-tree-in-python/
 https://www.flamingbytes.com/blog/common-used-functions-in-python/
 https://www.flamingbytes.com/blog/linked-list-in-python/
@@ -7,7 +10,6 @@ https://www.flamingbytes.com/blog/saving-the-multiverse/
 https://www.flamingbytes.com/blog/sliding-window/
 https://www.flamingbytes.com/blog/stack-and-queue-in-python/
 https://www.flamingbytes.com/blog/an-unexpected-journey/
-https://www.flamingbytes.com/blog/binary-search-tree-in-python/
 https://www.flamingbytes.com/blog/postmark/
 https://www.flamingbytes.com/blog/phoronix-test-suite/
 https://www.flamingbytes.com/blog/sysbench/
@@ -374,6 +376,7 @@ https://www.flamingbytes.com/tags/Cache/
 https://www.flamingbytes.com/tags/Two-pointers/
 https://www.flamingbytes.com/tags/PostMark/
 https://www.flamingbytes.com/tags/Phoronix-test-suite/
+https://www.flamingbytes.com/tags/AKS/
 https://www.flamingbytes.com/categories/Young-Author/
 https://www.flamingbytes.com/categories/Tech/
 https://www.flamingbytes.com/categories/Tech/Benchmarking/

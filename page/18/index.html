@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">103</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">269</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">271</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">269</span>
+          <span class="site-state-item-count">271</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">103</span>
+        <span class="site-state-item-count">104</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,548 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/fio-fsync-end_fsync-fdatasync-and-sync/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/fio-fsync-end_fsync-fdatasync-and-sync/" class="post-title-link" itemprop="url">Fio fsync, end_fsync, fdatasync and sync</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-14 07:00:00" itemprop="dateCreated datePublished" datetime="2022-03-14T07:00:00-07:00">2022-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Intro-to-fsync-end-fsync-fdatasync-and-sync"><a href="#Intro-to-fsync-end-fsync-fdatasync-and-sync" class="headerlink" title="Intro to fsync, end_fsync, fdatasync and sync"></a>Intro to fsync, end_fsync, fdatasync and sync</h2><ul>
+<li>fsync&#x3D;int</li>
+</ul>
+<p>If writing to a file, issue an fsync(2) (or its equivalent) of the dirty data for every number of blocks given. For example, if you give 32 as a parameter, fio will sync the file after every 32 writes issued. If fio is using non-buffered I&#x2F;O, we may not sync the file. The exception is the sg I&#x2F;O engine, which synchronizes the disk cache anyway. Defaults to 0, which means fio does not periodically issue and wait for a sync to complete. Also see end_fsync and fsync_on_close.</p>
+<ul>
+<li>end_fsync&#x3D;bool</li>
+</ul>
+<p>If true, fsync(2) file contents when a write stage has completed. Default: false.</p>
+<ul>
+<li>fsync_on_close&#x3D;bool</li>
+</ul>
+<p>If true, fio will fsync(2) a dirty file on close. This differs from end_fsync in that it will happen on every file close, not just at the end of the job. Default: false.</p>
+<ul>
+<li>fdatasync&#x3D;int</li>
+</ul>
+<p>Like fsync but uses fdatasync(2) to only sync data and not metadata blocks. In Windows, DragonFlyBSD or OSX there is no fdatasync(2) so this falls back to using fsync(2). Defaults to 0, which means fio does not periodically issue and wait for a data-only sync to complete.</p>
+<ul>
+<li>sync&#x3D;str</li>
+</ul>
+<p>Whether, and what type, of synchronous I&#x2F;O to use for writes. The allowed values are:</p>
+<ul>
+<li>none - Do not use synchronous IO, the default.</li>
+<li>0 - Same as none.</li>
+<li>sync - Use synchronous file IO. For the majority of I&#x2F;O engines, this means using O_SYNC.</li>
+<li>1 - Same as sync.</li>
+<li>dsync - Use synchronous data IO. For the majority of I&#x2F;O engines, this means using O_DSYNC.</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://fio.readthedocs.io/en/latest/fio_doc.html">Source</a></p>
+<h2 id="Create-a-100MB-file-only"><a href="#Create-a-100MB-file-only" class="headerlink" title="Create a 100MB file only"></a>Create a 100MB file only</h2><p>Here we only create a 100MB file which means “lay out IO file” in the fio context. There is no actual I&#x2F;O happening after the file creation even though we specify the I&#x2F;O related options, such as blocksize&#x3D;8k.</p>
+<pre><code>$ strace -f -o strace.out fio --name=test --ioengine=libaio --blocksize=8k --readwrite=write --directory=/mnt/bench1 --nrfiles=1 --filesize=100m --fsync=1 --numjobs=1 --direct=1 --group_reporting --create_only=1
+test: (g=0): rw=write, bs=(R) 8192B-8192B, (W) 8192B-8192B, (T) 8192B-8192B, ioengine=libaio, iodepth=1
+fio-3.7
+Starting 1 process
+test: Laying out IO file (1 file / 100MiB)
+
+Run status group 0 (all jobs):
+
+Disk stats (read/write):
+  nvme0n1: ios=0/0, merge=0/0, ticks=0/0, in_queue=0, util=0.00%
+</code></pre>
+<p>From the strace output, the disk space is allocated for the file.</p>
+<pre><code>$ cat strace.out
+[..]
+15801 write(1, &quot;Starting 1 process\n&quot;, 19) = 19
+15801 stat(&quot;/mnt/bench1/test.0.0&quot;, 0x7ffc477fcc20) = -1 ENOENT (No such file or directory)
+15801 write(1, &quot;test: Laying out IO file (1 file&quot;..., 43)) = 43
+15801 unlink(&quot;/mnt/bench1/test.0.0&quot;)    = -1 ENOENT (No such file or directory)
+15801 open(&quot;/mnt/bench1/test.0.0&quot;, O_WRONLY|O_CREAT, 0644) = 3
+15801 fallocate(3, 0, 0, 104857600)     = 0
+15801 fadvise64(3, 0, 104857600, POSIX_FADV_DONTNEED) = 0
+15801 close(3)
+[..]
+</code></pre>
+<h2 id="Create-and-write-100MB-file-with-fsync-1"><a href="#Create-and-write-100MB-file-with-fsync-1" class="headerlink" title="Create and write 100MB file with fsync&#x3D;1"></a>Create and write 100MB file with fsync&#x3D;1</h2><p>Here we write 100MB data to a file with 8k blocksize.</p>
+<pre><code>$ strace -f -o strace.out fio --name=test --ioengine=libaio --blocksize=8k --readwrite=write --directory=/mnt/bench1 --nrfiles=1 --filesize=100m --fsync=1 --numjobs=1 --direct=1 --group_reporting
+test: (g=0): rw=write, bs=(R) 8192B-8192B, (W) 8192B-8192B, (T) 8192B-8192B, ioengine=libaio, iodepth=1
+fio-3.7
+Starting 1 process
+test: Laying out IO file (1 file / 100MiB)
+Jobs: 1 (f=1)
+test: (groupid=0, jobs=1): err= 0: pid=15988: Mon Mar 14 22:28:51 2022
+  write: IOPS=6174, BW=48.2MiB/s (50.6MB/s)(100MiB/2073msec)
+    slat (usec): min=29, max=163, avg=56.07, stdev=12.67
+    clat (usec): min=19, max=118, avg=30.21, stdev= 7.39
+     lat (usec): min=52, max=197, avg=86.72, stdev=18.43
+    clat percentiles (usec):
+     |  1.00th=[   21],  5.00th=[   24], 10.00th=[   25], 20.00th=[   26],
+     | 30.00th=[   27], 40.00th=[   29], 50.00th=[   29], 60.00th=[   30],
+     | 70.00th=[   31], 80.00th=[   32], 90.00th=[   38], 95.00th=[   47],
+     | 99.00th=[   61], 99.50th=[   67], 99.90th=[   80], 99.95th=[   84],
+     | 99.99th=[  102]
+   bw (  KiB/s): min=45700, max=53392, per=99.44%, avg=49121.00, stdev=3324.04, samples=4
+   iops        : min= 5712, max= 6674, avg=6140.00, stdev=415.68, samples=4
+  lat (usec)   : 20=0.66%, 50=95.25%, 100=4.07%, 250=0.02%
+  fsync/fdatasync/sync_file_range:
+    sync (nsec): min=95, max=7603, avg=235.07, stdev=105.18
+    sync percentiles (nsec):
+     |  1.00th=[  107],  5.00th=[  165], 10.00th=[  193], 20.00th=[  211],
+     | 30.00th=[  211], 40.00th=[  213], 50.00th=[  217], 60.00th=[  221],
+     | 70.00th=[  225], 80.00th=[  274], 90.00th=[  338], 95.00th=[  342],
+     | 99.00th=[  398], 99.50th=[  426], 99.90th=[  486], 99.95th=[  540],
+     | 99.99th=[ 6880]
+  cpu          : usr=7.63%, sys=29.92%, ctx=89626, majf=0, minf=13
+  IO depths    : 1=200.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, &gt;=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.0%
+     issued rwts: total=0,12800,0,12799 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+  WRITE: bw=48.2MiB/s (50.6MB/s), 48.2MiB/s-48.2MiB/s (50.6MB/s-50.6MB/s), io=100MiB (105MB), run=2073-2073msec
+
+Disk stats (read/write):
+  nvme0n1: ios=0/34843, merge=0/11135, ticks=0/400, in_queue=399, util=95.01%
+</code></pre>
+<p>From the strace output, fsync is issued after each 8k block write.</p>
+<pre><code>$ cat strace.out
+[..]
+15988 open(&quot;/mnt/bench1/test.0.0&quot;, O_RDWR|O_CREAT|O_DIRECT, 0600) = 3
+15988 fadvise64(3, 0, 104857600, POSIX_FADV_DONTNEED) = 0
+15988 fadvise64(3, 0, 104857600, POSIX_FADV_SEQUENTIAL) = 0
+15988 io_submit(0x7f819d8b1000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;5\340(\3148\240\231\26\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=8192, aio_offset=0&#125;]) = 1
+15988 io_getevents(0x7f819d8b1000, 1, 1, [&#123;data=0, obj=0xc88de0, res=8192, res2=0&#125;], NULL) = 1
+15988 fsync(3)                          = 0
+15988 io_submit(0x7f819d8b1000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;5\340(\3148\240\231\26\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=8192, aio_offset=8192&#125;]) = 1
+15988 io_getevents(0x7f819d8b1000, 1, 1, [&#123;data=0, obj=0xc88de0, res=8192, res2=0&#125;], NULL) = 1
+15988 fsync(3)                          = 0
+[..]
+15988 io_submit(0x7f819d8b1000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;\0\340?\6\0\0\0\0\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=8192, aio_offset=104849408&#125;]) = 1
+15988 io_getevents(0x7f819d8b1000, 1, 1, [&#123;data=0, obj=0xc88de0, res=8192, res2=0&#125;], NULL) = 1
+15988 getrusage(RUSAGE_THREAD, &#123;ru_utime=&#123;tv_sec=0, tv_usec=158715&#125;, ru_stime=&#123;tv_sec=0, tv_usec=620431&#125;, ...&#125;) = 0
+15988 close(3)
+[..]
+</code></pre>
+<h2 id="Create-and-write-100MB-file-with-end-fsync-1"><a href="#Create-and-write-100MB-file-with-end-fsync-1" class="headerlink" title="Create and write 100MB file with end_fsync&#x3D;1"></a>Create and write 100MB file with end_fsync&#x3D;1</h2><p>Here we write 100MB data to a file and fsync is issued after the job completes.</p>
+<pre><code>$ strace -f -o strace.out fio --name=test --ioengine=libaio --blocksize=8k --readwrite=write --directory=/mnt/bench1 --nrfiles=1 --filesize=100m --end_fsync=1 --numjobs=1 --direct=1 --group_reporting
+test: (g=0): rw=write, bs=(R) 8192B-8192B, (W) 8192B-8192B, (T) 8192B-8192B, ioengine=libaio, iodepth=1
+fio-3.7
+Starting 1 process
+test: Laying out IO file (1 file / 100MiB)
+Jobs: 1 (f=1)
+test: (groupid=0, jobs=1): err= 0: pid=16648: Mon Mar 14 22:50:22 2022
+  write: IOPS=9631, BW=75.2MiB/s (78.9MB/s)(100MiB/1329msec)
+    slat (usec): min=42, max=131, avg=61.18, stdev=11.19
+    clat (usec): min=29, max=100, avg=39.34, stdev= 6.50
+     lat (usec): min=77, max=193, avg=101.11, stdev=10.93
+    clat percentiles (nsec):
+     |  1.00th=[32128],  5.00th=[32640], 10.00th=[33024], 20.00th=[34048],
+     | 30.00th=[35072], 40.00th=[35584], 50.00th=[36608], 60.00th=[38656],
+     | 70.00th=[43776], 80.00th=[44800], 90.00th=[46848], 95.00th=[50944],
+     | 99.00th=[60672], 99.50th=[62720], 99.90th=[70144], 99.95th=[72192],
+     | 99.99th=[80384]
+   bw (  KiB/s): min=77168, max=77408, per=100.00%, avg=77288.00, stdev=169.71, samples=2
+   iops        : min= 9646, max= 9676, avg=9661.00, stdev=21.21, samples=2
+  lat (usec)   : 50=94.53%, 100=5.46%, 250=0.01%
+  cpu          : usr=7.91%, sys=42.70%, ctx=51220, majf=0, minf=11
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, &gt;=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.0%
+     issued rwts: total=0,12800,0,1 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+  WRITE: bw=75.2MiB/s (78.9MB/s), 75.2MiB/s-75.2MiB/s (78.9MB/s-78.9MB/s), io=100MiB (105MB), run=1329-1329msec
+
+Disk stats (read/write):
+  nvme0n1: ios=0/12803, merge=0/5, ticks=0/203, in_queue=203, util=91.40%
+</code></pre>
+<p>From the strace output, the fsync is issued at the end of fio job.</p>
+<pre><code>$ cat strace.out
+[..]
+16648 open(&quot;/mnt/bench1/test.0.0&quot;, O_RDWR|O_CREAT|O_DIRECT, 0600) = 3
+16648 fadvise64(3, 0, 104857600, POSIX_FADV_DONTNEED) = 0
+16648 fadvise64(3, 0, 104857600, POSIX_FADV_SEQUENTIAL) = 0
+16648 io_submit(0x7fac95355000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;5\340(\3148\240\231\26\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=8192, aio_offset=0&#125;]) = 1
+16648 io_getevents(0x7fac95355000, 1, 1, [&#123;data=0, obj=0xa37de0, res=8192, res2=0&#125;], NULL) = 1
+16648 io_submit(0x7fac95355000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;5\340(\3148\240\231\26\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=8192, aio_offset=8192&#125;]) = 1
+16648 io_getevents(0x7fac95355000, 1, 1, [&#123;data=0, obj=0xa37de0, res=8192, res2=0&#125;], NULL) = 1
+[..]
+16648 io_submit(0x7fac95355000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;\0\340?\6\0\0\0\0\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=8192, aio_offset=104849408&#125;]) = 1
+16648 io_getevents(0x7fac95355000, 1, 1, [&#123;data=0, obj=0xa37de0, res=8192, res2=0&#125;], NULL) = 1
+16648 fsync(3)                          = 0
+16648 close(3)                          = 0
+[..]
+</code></pre>
+<h2 id="Create-and-write-100MB-file-with-fdatasync-1"><a href="#Create-and-write-100MB-file-with-fdatasync-1" class="headerlink" title="Create and write 100MB file with fdatasync&#x3D;1"></a>Create and write 100MB file with fdatasync&#x3D;1</h2><p>Here we write 100MB data to a file with 8k blocksize. fdatasync is issued after each block write.</p>
+<pre><code>$ strace -f -o strace.out fio --name=test --ioengine=libaio --blocksize=8k --readwrite=write --directory=/mnt/bench1 --nrfiles=1 --filesize=100m --fdatasync=1 --numjobs=1 --direct=1 --group_reporting
+test: (g=0): rw=write, bs=(R) 8192B-8192B, (W) 8192B-8192B, (T) 8192B-8192B, ioengine=libaio, iodepth=1
+fio-3.7
+Starting 1 process
+test: Laying out IO file (1 file / 100MiB)
+Jobs: 1 (f=1)
+test: (groupid=0, jobs=1): err= 0: pid=23011: Tue Mar 15 02:45:48 2022
+  write: IOPS=4857, BW=37.0MiB/s (39.8MB/s)(100MiB/2635msec)
+    slat (usec): min=30, max=183, avg=70.02, stdev=12.85
+    clat (usec): min=20, max=280, avg=45.46, stdev= 9.98
+     lat (usec): min=54, max=348, avg=116.11, stdev=20.49
+    clat percentiles (usec):
+     |  1.00th=[   25],  5.00th=[   26], 10.00th=[   31], 20.00th=[   41],
+     | 30.00th=[   45], 40.00th=[   46], 50.00th=[   48], 60.00th=[   49],
+     | 70.00th=[   49], 80.00th=[   50], 90.00th=[   52], 95.00th=[   58],
+     | 99.00th=[   75], 99.50th=[   84], 99.90th=[  137], 99.95th=[  143],
+     | 99.99th=[  172]
+   bw (  KiB/s): min=37168, max=43632, per=100.00%, avg=38934.40, stdev=2648.49, samples=5
+   iops        : min= 4646, max= 5454, avg=4866.80, stdev=331.06, samples=5
+  lat (usec)   : 50=86.37%, 100=13.41%, 250=0.21%, 500=0.01%
+  fsync/fdatasync/sync_file_range:
+    sync (nsec): min=107, max=11447, avg=232.89, stdev=147.40
+    sync percentiles (nsec):
+     |  1.00th=[  127],  5.00th=[  161], 10.00th=[  185], 20.00th=[  211],
+     | 30.00th=[  221], 40.00th=[  227], 50.00th=[  231], 60.00th=[  241],
+     | 70.00th=[  247], 80.00th=[  258], 90.00th=[  266], 95.00th=[  282],
+     | 99.00th=[  334], 99.50th=[  350], 99.90th=[  516], 99.95th=[  620],
+     | 99.99th=[ 9408]
+  cpu          : usr=6.19%, sys=31.13%, ctx=89613, majf=0, minf=13
+  IO depths    : 1=200.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, &gt;=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.0%
+     issued rwts: total=0,12800,0,0 short=12799,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+  WRITE: bw=37.0MiB/s (39.8MB/s), 37.0MiB/s-37.0MiB/s (39.8MB/s-39.8MB/s), io=100MiB (105MB), run=2635-2635msec
+
+Disk stats (read/write):
+  nvme0n1: ios=0/35262, merge=0/11272, ticks=0/416, in_queue=416, util=96.06%
+</code></pre>
+<p>From the strace output, fdatasync is issued after each 8k block write.</p>
+<pre><code>$ cat strace.out
+[..]
+23011 open(&quot;/mnt/bench1/test.0.0&quot;, O_RDWR|O_CREAT|O_DIRECT, 0600) = 3
+23011 fadvise64(3, 0, 104857600, POSIX_FADV_DONTNEED) = 0
+23011 fadvise64(3, 0, 104857600, POSIX_FADV_SEQUENTIAL) = 0
+23011 io_submit(0x7f1a71a81000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;5\340(\3148\240\231\26\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=8192, aio_offset=0&#125;]) = 1
+23011 io_getevents(0x7f1a71a81000, 1, 1, [&#123;data=0, obj=0x1207de0, res=8192, res2=0&#125;], NULL) = 1
+23011 fdatasync(3)
+[..]
+23011 io_submit(0x7f1a71a81000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;\0 ?\6\0\0\0\0\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=8192, aio_offset=104841216&#125;]) = 1
+23011 io_getevents(0x7f1a71a81000, 1, 1, [&#123;data=0, obj=0x1207de0, res=8192, res2=0&#125;], NULL) = 1
+23011 fdatasync(3)                      = 0
+23011 io_submit(0x7f1a71a81000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;\0 ?\6\0\0\0\0\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=8192, aio_offset=104849408&#125;]) = 1
+23011 io_getevents(0x7f1a71a81000, 1, 1, [&#123;data=0, obj=0x1207de0, res=8192, res2=0&#125;], NULL) = 1
+23011 getrusage(RUSAGE_THREAD, &#123;ru_utime=&#123;tv_sec=0, tv_usec=164077&#125;, ru_stime=&#123;tv_sec=0, tv_usec=820386&#125;, ...&#125;) = 0
+23011 close(3)
+[..]
+</code></pre>
+<h2 id="Create-and-write-100MB-file-with-sync-1"><a href="#Create-and-write-100MB-file-with-sync-1" class="headerlink" title="Create and write 100MB file with sync&#x3D;1"></a>Create and write 100MB file with sync&#x3D;1</h2><p>Here we write 100MB data, by doing 8k sequential write with 1 job. The I&#x2F;O is synchronous.</p>
+<pre><code>$ strace -f -o strace.out fio --name=test --ioengine=libaio --blocksize=8k --readwrite=write --directory=/mnt/bench1 --nrfiles=1 --filesize=100m --sync=1 --numjobs=1 --direct=1 --group_reporting
+test: (g=0): rw=write, bs=(R) 8192B-8192B, (W) 8192B-8192B, (T) 8192B-8192B, ioengine=libaio, iodepth=1
+fio-3.7
+Starting 1 process
+test: Laying out IO file (1 file / 100MiB)
+Jobs: 1 (f=1)
+test: (groupid=0, jobs=1): err= 0: pid=16435: Mon Mar 14 22:43:59 2022
+  write: IOPS=9377, BW=73.3MiB/s (76.8MB/s)(100MiB/1365msec)
+    slat (usec): min=28, max=146, avg=47.45, stdev= 7.00
+    clat (usec): min=33, max=581, avg=57.00, stdev=11.75
+     lat (usec): min=79, max=619, avg=104.88, stdev=14.94
+    clat percentiles (usec):
+     |  1.00th=[   43],  5.00th=[   45], 10.00th=[   48], 20.00th=[   51],
+     | 30.00th=[   52], 40.00th=[   53], 50.00th=[   57], 60.00th=[   59],
+     | 70.00th=[   60], 80.00th=[   62], 90.00th=[   67], 95.00th=[   76],
+     | 99.00th=[   95], 99.50th=[   99], 99.90th=[  113], 99.95th=[  131],
+     | 99.99th=[  578]
+   bw (  KiB/s): min=70896, max=77461, per=98.88%, avg=74178.50, stdev=4642.16, samples=2
+   iops        : min= 8862, max= 9682, avg=9272.00, stdev=579.83, samples=2
+  lat (usec)   : 50=18.82%, 100=80.74%, 250=0.42%, 750=0.02%
+  cpu          : usr=4.62%, sys=28.52%, ctx=63963, majf=0, minf=11
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, &gt;=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.0%
+     issued rwts: total=0,12800,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+
+Run status group 0 (all jobs):
+  WRITE: bw=73.3MiB/s (76.8MB/s), 73.3MiB/s-73.3MiB/s (76.8MB/s-76.8MB/s), io=100MiB (105MB), run=1365-1365msec
+
+Disk stats (read/write):
+  nvme0n1: ios=0/32201, merge=0/10294, ticks=0/356, in_queue=356, util=91.92%
+</code></pre>
+<p>From the strace output, the file is opened with “O_SYNC” flag since we specified “–sync&#x3D;1” in the fio command. This means all the incoming writes are synchronous.</p>
+<pre><code>$ cat strace.out
+[..]
+16435 open(&quot;/mnt/bench1/test.0.0&quot;, O_RDWR|O_CREAT|O_SYNC|O_DIRECT, 0600) = 3
+16435 fadvise64(3, 0, 104857600, POSIX_FADV_DONTNEED) = 0
+16435 fadvise64(3, 0, 104857600, POSIX_FADV_SEQUENTIAL) = 0
+16435 io_submit(0x7fe4c1fe3000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;5\340(\3148\240\231\26\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=8192, aio_offset=0&#125;]) = 1
+16435 io_getevents(0x7fe4c1fe3000, 1, 1, [&#123;data=0, obj=0x1980de0, res=8192, res2=0&#125;], NULL) = 1
+16435 io_submit(0x7fe4c1fe3000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;\0 \0\0\0\0\0\0\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=8192, aio_offset=8192&#125;]) = 1
+16435 io_getevents(0x7fe4c1fe3000, 1, 1, [&#123;data=0, obj=0x1980de0, res=8192, res2=0&#125;], NULL) = 1
+[..]
+16435 io_submit(0x7fe4c1fe3000, 1, [&#123;aio_lio_opcode=IOCB_CMD_PWRITE, aio_fildes=3, aio_buf=&quot;\0\200?\6\0\0\0\0\6\234j\251\362\315\351\n\200S*\7\t\345\r\25pJ%\367\v9\235\30&quot;..., aio_nbytes=8192, aio_offset=104849408&#125;]) = 1
+16435 io_getevents(0x7fe4c1fe3000, 1, 1, [&#123;data=0, obj=0x1980de0, res=8192, res2=0&#125;], NULL) = 1
+16435 getrusage(RUSAGE_THREAD, &#123;ru_utime=&#123;tv_sec=0, tv_usec=64153&#125;, ru_stime=&#123;tv_sec=0, tv_usec=389856&#125;, ...&#125;) = 0
+16435 close(3)
+[..]
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/scale-a-system-to-support-millions-of-users/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/scale-a-system-to-support-millions-of-users/" class="post-title-link" itemprop="url">Scale a system to support millions of users</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-13 09:00:00" itemprop="dateCreated datePublished" datetime="2022-03-13T09:00:00-07:00">2022-03-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Start-from-single-server"><a href="#Start-from-single-server" class="headerlink" title="Start from single server"></a>Start from single server</h2><p>Building a large scale system is not one time effort, it should be an iterative process as the user workload increases. The journey could just start with single server and single user request.</p>
+<p><img src="/images/scale-million-users-1.png" alt="Image"></p>
+<ol>
+<li>User access a website through domain name, such as example.com</li>
+<li>IP address is returned to the browser or the mobile app.</li>
+<li>HTTP requests are sent to the web server.</li>
+<li>The web server returns the requested resources, such as a HTML page or JSON response.</li>
+</ol>
+<h2 id="Database"><a href="#Database" class="headerlink" title="Database"></a>Database</h2><p>With the growth of the user base, we can separate the web server and database server to allow them scale independently.</p>
+<p><img src="/images/scale-million-users-2.png" alt="Image"></p>
+<h3 id="SQL-vs-NoSQL"><a href="#SQL-vs-NoSQL" class="headerlink" title="SQL vs. NoSQL"></a>SQL vs. NoSQL</h3><p>We can choose between relational database and non-relational database.</p>
+<p>Relational database is also called relational database management system(RDBMS) or SQL database. The popular relational databases are MySQL, Oracle database, MS-SQL database, PostgreSQL and so on. Relational database stores data in tables and rows. Join operations can be performed across different database tables.</p>
+<p>Non-relational database is also called NoSQL database. The popular ones are MongoDB, CouchDB, Cassandra, HBase, Neo4j, Amazon DynamoDB and so on. They can be grouped into four categories: key-value stores, graph stores, column stores, and document stores. Generally, join operations are not supported in non-relational database.</p>
+<p>Non-relational database might be the choice if:</p>
+<ul>
+<li>very low latency is required</li>
+<li>data is unstructured or not relational</li>
+<li>the data needs to be serialized and deserialied(JSON, XML, YAML, etc)</li>
+<li>massive amount of data needs to be stored</li>
+</ul>
+<h2 id="Vertical-scaling-vs-horizontal-scaling"><a href="#Vertical-scaling-vs-horizontal-scaling" class="headerlink" title="Vertical scaling vs. horizontal scaling"></a>Vertical scaling vs. horizontal scaling</h2><p>Vertical scaling, also called “scale up”, means adding more compute power(CPU&#x2F;Memory), disk bandwidth, and network bandwidth to the servers. Vertical scaling is simple but it’s impossible to add unlimited resource to a single server. It doesn’t provide failover and redundancy and it may cause single point of failure.</p>
+<p>Horizontal scaling, also called “scale out”, means adding more servers to the resouce pool. It’s suitable for large scale applications.</p>
+<h2 id="Load-balancer"><a href="#Load-balancer" class="headerlink" title="Load balancer"></a>Load balancer</h2><p>With the single server setup, users won’t be able to access the website if the web server goes offline. Users may experience slow response(high latency) or failed connection if there are too many user requests to the server simultaneously.</p>
+<p>A load balancer can help evenly distribute incoming traffic among web servers.</p>
+<p><img src="/images/scale-million-users-3.png" alt="Image"></p>
+<p>Users connect to the public IP of the load balancer. The web servers sitting behind the load balancer are unreachable directly by the users anymore. The private IPs can be used for communications between load balancer and web servers.</p>
+<p>After the load balancer and more web servers are added, we improved the high availability of the web servers. For example, if web server 1 goes offline, the traffic can be routed to other web servers which are still healthy. As the website traffic grows rapidly, we can always add more web servers to scale and handle the incoming traffic.</p>
+<h2 id="Database-replication"><a href="#Database-replication" class="headerlink" title="Database replication"></a>Database replication</h2><p>Now that we can scale the web tier as needed, how about the data tier? Database replication is a common technique to address the problems like failover and redundancy.</p>
+<p>“Database replication can be used on many database management systems (DBMS), usually with a primary&#x2F;replica relationship between the original and the copies.” <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Replication_(computing)">Source</a></p>
+<p>A master database generally supports write operations only. A slave database replicates data from master and only supports read operations.</p>
+<p><img src="/images/scale-million-users-4.png" alt="Image"></p>
+<p>The master-slave model may not be the only method. We just use this model to learn about how to scale the database tier. We can achieve much better performance by spearating the write and read operations to master and slave databases. It also provides the data reliability in the case of natural disaster like earthquake.  The data is highly available even if a database is offline.</p>
+<ul>
+<li>If the master database goes offline, a slave database will be promoted as the new master. A new slave database will replace the old one for data replication. Promoting a master is not that simple process because the data in slave database may not be up to date. The missing data have to be recovered by some recovery mechanism.</li>
+<li>If the slave databases are go offline, read operations can be directed to master database temporarily until a new slave database is in place.</li>
+</ul>
+<h2 id="Cache"><a href="#Cache" class="headerlink" title="Cache"></a>Cache</h2><p>After we have the design of scalable web and data tier, it’s time to improve the system performance like response time. Adding a cache layer can help serve the user requests more quickly.</p>
+<ol>
+<li>If data exists in cache, read data from cache</li>
+<li>If data doesn’t exist in cache, fetch data from database and save data to cache. Then the cached data are returned to web servers. This is so called read-through cache.</li>
+</ol>
+<p><img src="/images/scale-million-users-5.png" alt="Image"></p>
+<p>Here are some considerations for using a cache system:</p>
+<ul>
+<li>Consider using cache when the data is read frequently but write(modification) infrequently</li>
+<li>Use an expiration policy to reload the data from data store</li>
+<li>Use an eviction policy to add data to the already full cache. Least-recently-used(LRU) or First in First Out(FIFO)?</li>
+<li>Maintain the consistency between data store and cache. MemCache solution?</li>
+<li>Avoid single point of failure of a cache system</li>
+</ul>
+<h2 id="Content-Delivery-Network-CDN"><a href="#Content-Delivery-Network-CDN" class="headerlink" title="Content Delivery Network(CDN)"></a>Content Delivery Network(CDN)</h2><p>A CDN is a network of geographially dispersed servers used to deliver static content. CDN servers cache static content like images, videos, CSS, Javascript files, etc.</p>
+<p>When a user visits a website, a CDN server closest to the user will deliver the static content. The website loads faster from a closer CDN server.</p>
+<p><img src="/images/scale-million-users-6.png" alt="Image"></p>
+<ol>
+<li>If the content to be loaded is not in CDN, get it from the origin server and store it in CDN server.</li>
+<li>If the content is in CDN, return it from CDN.</li>
+</ol>
+<p><img src="/images/scale-million-users-7.png" alt="Image"></p>
+<h2 id="Stateless-web-tier"><a href="#Stateless-web-tier" class="headerlink" title="Stateless web tier"></a>Stateless web tier</h2><p>In order to scale the web tier horizontally, we need to move the state(e.g. user session data) out of the web tier. A practice is to store the session data in the persistent storage such as SQL or NoSQL database. The web servers in the cluster can access the state data from the database. This is called stateless web tier.</p>
+<p>In the stateless architecture, the HTTP requests from many users can be sent to any web servers. The session data will be fetched from a shared data store which is separated from web servers.</p>
+<p><img src="/images/scale-million-users-8.png" alt="Image"></p>
+<p>After the session data is stored out of web servers, auto-scaling of the web tier becomes a lot more easier.</p>
+<p><img src="/images/scale-million-users-9.png" alt="Image"></p>
+<h2 id="Data-centers"><a href="#Data-centers" class="headerlink" title="Data centers"></a>Data centers</h2><p>As the website access grows internationally, supporting multiple data centers globally is crucial. In the event of any data center outage, the traffic can be directed to a healthy data center as well.</p>
+<p><img src="/images/scale-million-users-10.png" alt="Image"></p>
+<h2 id="Message-queue"><a href="#Message-queue" class="headerlink" title="Message queue"></a>Message queue</h2><p>To further scale the system, we can decouple the system components so that they can be scaled independently.</p>
+<p>A message queue is a durable component, stored in memory, that supports asynchronous communication. It serves as a buffer and distributes asynchronous requests. Typically, a message queue has an input service, also called producers&#x2F;publishers, to create message, and publish them to the message queue. The consumer services connect to the queue and process the messages asynchronously.</p>
+<p><img src="/images/scale-million-users-11.png" alt="Image"></p>
+<h2 id="Logging-monitoring-automation"><a href="#Logging-monitoring-automation" class="headerlink" title="Logging, monitoring, automation"></a>Logging, monitoring, automation</h2><p>As the system scale for a very large business, it’s necessary to invest in the logging, monitoring and automation. These tools can help troubleshoot issues, understand system insight and system health, and improve productivity.</p>
+<h2 id="Database-scaling"><a href="#Database-scaling" class="headerlink" title="Database scaling"></a>Database scaling</h2><p>Vertical scaling and horizontal scaling are the two approaches for database scaling.</p>
+<p>Vertical scaling, also known as scaling up, is to scale by adding more hardware components(CPU, Memory, Disk, Network) to the existing server. But it has a hardware limit and the cost can be high. Also there is risk of single point of failures.</p>
+<p>Horizontal scaling, also known as sharding, is a practice of adding more database servers. Sharding separates large databases to smaller ones which are called shards. A hash function(e.g. user_id % n) can be used to determine which shard should be accessed. In this example of hash function, the user_id is the sharding key which is an important factor to consider when to implement a sharding strategy. The goal is to choose a key which can evenly distribute the data across shards.</p>
+<p>With database sharding, it may introduce complexities and new challenges to the system.</p>
+<ul>
+<li>resharding data</li>
+<li>hotspot key</li>
+<li>join operations across database shards</li>
+</ul>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Scaling a system is an iterative process. As the user requests increase and system scales, more fine-tuning and new strategies are needed. In summary, we can scale the system to support millions of users by addressing the following areas.</p>
+<ul>
+<li>Keep web tier stateless by storing session data out of web servers</li>
+<li>Have redundancy for each tier</li>
+<li>Cache data as much as possible to improve response time</li>
+<li>Build multiple data centers</li>
+<li>Use CDN to serve static content</li>
+<li>Sharding the data tier if needed</li>
+<li>Decouple the components to increase throughput(e.g. message queue)</li>
+<li>Add tools to improve ease of use</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1518,188 +2060,8 @@ python                               3-alpine            c7100ae3ac4d        2 w
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/protests-against-childrens-right-to-have-cell-phones/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/protests-against-childrens-right-to-have-cell-phones/" class="post-title-link" itemprop="url">Protests against Children’s Right to have Cell Phones</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-02-17 08:00:00" itemprop="dateCreated datePublished" datetime="2022-02-17T08:00:00-08:00">2022-02-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Modern technology has changed how people communicate with each other, and helped them connect with their friends and family. Children of age group 9-15 should not be allowed to have cell phones because they aren’t responsible enough. If they call an unknown number, they could talk with scammers and hackers, which could be dangerous. Also, it could easily distract them and give them the urge to waste time by playing video games. This makes the use of cell phones quite unnecessary.</p>
-<p>Cell phones are commonly used for communication, but sometimes this could lead to danger for the children. They could misuse it and lose integrity. Children might call unknown strangers, who might ask them for personal information. Also, they might pick up scamming phone calls. They could easily get disturbed and get distracted to relax by playing games. Children aren’t responsible enough to handle a phone, and they start the trust of their parents by lying to them about what they’re doing with the phone.</p>
-<p>In other people’s opinion, children should be given a phone. They think children are responsible enough and can control their time. They need it to contact parents if there’s an emergency, or to keep in touch with their friends. They can also use it for research on projects. The parents think they can teach kids to have self-control and self-maintenance. Some children, who are responsible, might be able to use their time wisely and use the cell phones to enhance their life.</p>
-<p>Children are not old enough to be able to manage their time. They shouldn’t be trusted with a phone because they might lose their integrity. Cell phones are expensive items, so it would not be good if children accidentally lost them. If they really need to call a friend, they could borrow their parent’s phone. In times of emergency, they could borrow someone else’s phone to contact their parents. If they needed to do research, they could use the computer instead of a phone. Looking at a cell phone’s small screen could damage their vision, so they should use computers, which have a large screen. Overall, it is not a rational decision to let children have their own phones.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/first-amendment/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/first-amendment/" class="post-title-link" itemprop="url">First Amendment</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-02-16 07:51:00" itemprop="dateCreated datePublished" datetime="2022-02-16T07:51:00-08:00">2022-02-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>The First Amendment is one of the most important amendments to the Constitution. It allows U.S. citizens to express their ideas through words and deeds. It guarantees freedom of speech, the press, assembly, petitioning, and religion.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/first-amendment/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/17/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/19/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/17/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/19/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
