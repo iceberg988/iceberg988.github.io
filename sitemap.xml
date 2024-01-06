@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.flamingbytes.com/blog/binary-tree-in-python/</loc>
+    
+    <lastmod>2024-01-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.flamingbytes.com/blog/tree-traversal-algorithm-in-python/</loc>
     
     <lastmod>2024-01-06</lastmod>
@@ -32,15 +41,6 @@
     <loc>https://www.flamingbytes.com/blog/off-cpu-flame-graph/</loc>
     
     <lastmod>2023-11-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flamingbytes.com/blog/binary-tree-in-python/</loc>
-    
-    <lastmod>2023-11-28</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
