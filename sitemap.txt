@@ -1,3 +1,4 @@
+https://www.flamingbytes.com/blog/binary-tree-traversal-inorder-preorder-and-postorder/
 https://www.flamingbytes.com/blog/binary-tree-in-python/
 https://www.flamingbytes.com/blog/tree-traversal-algorithm-in-python/
 https://www.flamingbytes.com/blog/binary-search-tree-in-python/
@@ -18,7 +19,6 @@ https://www.flamingbytes.com/blog/two-pointers/
 https://www.flamingbytes.com/blog/bit-manipulation/
 https://www.flamingbytes.com/blog/algorithm-questions/
 https://www.flamingbytes.com/blog/cacheline/
-https://www.flamingbytes.com/blog/binary-tree-traversal-inorder-preorder-and-postorder/
 https://www.flamingbytes.com/blog/greedy-algorithm/
 https://www.flamingbytes.com/blog/iozone-a-filesystem-benchmark-tool/
 https://www.flamingbytes.com/blog/key-concepts-in-esrally/
