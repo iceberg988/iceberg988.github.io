@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">271</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">272</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">271</span>
+          <span class="site-state-item-count">272</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,113 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/journalctl-query-the-systemd-journal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/journalctl-query-the-systemd-journal/" class="post-title-link" itemprop="url">journalctl - Query the systemd journal</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-05-20 07:00:00" itemprop="dateCreated datePublished" datetime="2022-05-20T07:00:00-07:00">2022-05-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>journalctl may be used to query the contents of the systemd journal as written by systemd-journald.service.</p>
+<p>If called without parameters, it will show the full contents of the journal, starting with the oldest entry collected.</p>
+<p>The following are some of the common used options:</p>
+<ul>
+<li>–no-full, –full, -l Ellipsize fields when they do not fit in available columns. The default is to show full fields, allowing them to wrap or be truncated by the pager, if one is used.</li>
+<li>-f, –follow Show only the most recent journal entries, and continuously print new entries as they are appended to the journal.</li>
+<li>-u, –unit&#x3D;UNIT or PATTERN Show messages for the specified systemd unit UNIT (such as a service unit), or for any of the units matched by PATTERN. This parameter can be specified multiple times.</li>
+<li>-S, –since&#x3D;, -U, –until&#x3D; Start showing entries on or newer than the specified date, or on or older than the specified date, respectively.</li>
+</ul>
+<p>The following commands are to save the journal to a file or query it on the fly with the <em>-f</em> option.</p>
+<pre><code>$ systemctl -a | grep ntpd.service
+  ntpd.service  loaded    active   running   Network Time Service
+$ journalctl -u ntpd &gt; ntpd.journal.out
+$ tail ntpd.journal.out
+
+$ journalctl -u ntpd* --since &quot;10 minutes ago&quot;
+
+$ journalctl -lfu ntpd*
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1722,125 +1829,6 @@ function MyCtrl($scope) &#123;
 </code></pre>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a target="_blank" rel="noopener" href="http://jsfiddle.net/v6ruo7mj/1/">http://jsfiddle.net/v6ruo7mj/1/</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/how-to-hide-and-display-html-elements/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/how-to-hide-and-display-html-elements/" class="post-title-link" itemprop="url">Hide and display html elements</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-04-21 07:00:00" itemprop="dateCreated datePublished" datetime="2022-04-21T07:00:00-07:00">2022-04-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <pre><code>&lt;body ng-app=&quot;myapp&quot;&gt;
-    &lt;div class=&quot;container-fluid&quot; ng-controller=&quot;myctrl&quot;&gt;
-        &lt;ul class=&quot;nav nav-tabs&quot; id=&quot;myTab&quot; role=&quot;tablist&quot; style=&quot;display:flex&quot;&gt;
-            &lt;li class=&quot;nav-item&quot; role=&quot;presentation&quot; id=&quot;l1&quot;&gt;&lt;/li&gt;
-            &lt;li class=&quot;nav-item&quot; role=&quot;presentation&quot; id=&quot;l2&quot;&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-
-        &lt;div class=&quot;tab-content&quot; id=&quot;myTabContent&quot; style=&quot;display:flex&quot;&gt;
-            &lt;div class=&quot;tab-pane fade show active&quot; id=&quot;pane1&quot; role=&quot;tabpanel&quot; aria-labelledby=&quot;tab1&quot;&gt;&lt;/div&gt;
-            &lt;div class=&quot;tab-pane fade&quot; id=&quot;pane2&quot; role=&quot;tabpanel&quot; aria-labelledby=&quot;tab2&quot;&gt;&lt;/div&gt;
-        &lt;/div&gt;
-
-        &lt;div class=&quot;table-responsive&quot; id=&quot;table1&quot;&gt;&lt;/div&gt;
-    &lt;/div&gt;
-&lt;/body&gt;
-
-
-angular.module(&quot;myapp&quot;, []).controller(&quot;myctrl&quot;, [&#39;$scope&#39;, &#39;$http&#39;, function (scope, http) &#123;
-    scope.HideDisplayElements = function () &#123;
-        // hide the tabs
-        document.getElementById(&quot;myTabContent&quot;).style.display = &quot;none&quot;;   
-        document.getElementById(&quot;myTab&quot;).style.display = &quot;none&quot;;
-
-        // hide table
-        document.getElementById(&quot;table1&quot;).style.display = &quot;flex&quot;;
-    &#125;
-&#125;
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.w3schools.com/jsref/prop_style_display.asp">https://www.w3schools.com/jsref/prop_style_display.asp</a></li>
 </ul>
 
       

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="IntroWhen you launch an instance, the instance type you specify determines the hardware of the host computer used for your instance, such as CPU, memory, storage and network. Amazon EC2 dedicates some">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Understanding EC2 instance types">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/understanding-ec2-instance-types/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="IntroWhen you launch an instance, the instance type you specify determines the hardware of the host computer used for your instance, such as CPU, memory, storage and network. Amazon EC2 dedicates some">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.flamingbytes.com/images/instance-type-name.png">
+<meta property="article:published_time" content="2024-01-26T23:12:35.000Z">
+<meta property="article:modified_time" content="2024-01-27T03:03:24.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="AWS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.flamingbytes.com/images/instance-type-name.png">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/understanding-ec2-instance-types/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/understanding-ec2-instance-types/","path":"blog/understanding-ec2-instance-types/","title":"Understanding EC2 instance types"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Understanding EC2 instance types | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">272</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Instance-type-naming-convention"><span class="nav-number">2.</span> <span class="nav-text">Instance type naming convention</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Available-Instance-Types"><span class="nav-number">3.</span> <span class="nav-text">Available Instance Types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Instances-built-on-the-Nitro-System"><span class="nav-number">4.</span> <span class="nav-text">Instances built on the Nitro System</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Storage-features"><span class="nav-number">5.</span> <span class="nav-text">Storage features</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">6.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">272</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-aws-cli-to-manage-ebs-volumes/" rel="bookmark">
+        <time class="popular-posts-time">2023-03-04</time>
+        <br>
+      Using AWS CLI to manage EBS volumes
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-virtctl-to-access-virtual-machine-in-kubernetes/" rel="bookmark">
+        <time class="popular-posts-time">2023-01-02</time>
+        <br>
+      Using virtctl to access virtual machine in Kubernetes
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-gstack-for-docker-container-process/" rel="bookmark">
+        <time class="popular-posts-time">2021-04-27</time>
+        <br>
+      Using gstack for docker container process
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/access-a-sharedv4-volume-outside-of-a-portwrox-cluster/" rel="bookmark">
+        <time class="popular-posts-time">2022-04-20</time>
+        <br>
+      Access a sharedv4 volume outside of a Portwrox cluster
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/kubernetes-and-gluster-performance/" rel="bookmark">
+        <time class="popular-posts-time">2021-02-28</time>
+        <br>
+      Kubernetes and Gluster performance
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/understanding-ec2-instance-types/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Understanding EC2 instance types | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Understanding EC2 instance types
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-01-26 15:12:35 / Modified: 19:03:24" itemprop="dateCreated datePublished" datetime="2024-01-26T15:12:35-08:00">2024-01-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>When you launch an instance, the instance type you specify determines the hardware of the host computer used for your instance, such as CPU, memory, storage and network.</p>
+<p>Amazon EC2 dedicates some resources, such as CPU, memory, and instance storage, to a particular instance. And it shares other resources, such as the network and the disk subsystem, among instances.</p>
+<h2 id="Instance-type-naming-convention"><a href="#Instance-type-naming-convention" class="headerlink" title="Instance type naming convention"></a>Instance type naming convention</h2><p>Amazon EC2 instance types are named based on their family, generation, processor family, additional capabilities, and size.</p>
+<p><img src="/images/instance-type-name.png" alt="Image"></p>
+<p>Instance families:</p>
+<ul>
+<li>C – Compute optimized</li>
+<li>D – Dense storage</li>
+<li>F – FPGA</li>
+<li>G – Graphics intensive</li>
+<li>Hpc – High performance computing</li>
+<li>I – Storage optimized</li>
+<li>Im – Storage optimized with a one to four ratio of vCPU to memory</li>
+<li>Is – Storage optimized with a one to six ratio of vCPU to memory</li>
+<li>Inf – AWS Inferentia</li>
+<li>M – General purpose</li>
+<li>Mac – macOS</li>
+<li>P – GPU accelerated</li>
+<li>R – Memory optimized</li>
+<li>T – Burstable performance</li>
+<li>Trn – AWS Trainium</li>
+<li>U – High memory</li>
+<li>VT – Video transcoding</li>
+<li>X – Memory intensive</li>
+</ul>
+<p>Processor families:</p>
+<ul>
+<li>a – AMD processors</li>
+<li>g – AWS Graviton processors</li>
+<li>i – Intel processors</li>
+</ul>
+<p>Additional capabilities:</p>
+<ul>
+<li>b – EBS optimized</li>
+<li>d – Instance store volumes</li>
+<li>n – Network and EBS optimized</li>
+<li>e – Extra storage or memory</li>
+<li>z – High performance</li>
+<li>q – Qualcomm inference accelerators</li>
+<li>flex – Flex instance</li>
+</ul>
+<h2 id="Available-Instance-Types"><a href="#Available-Instance-Types" class="headerlink" title="Available Instance Types"></a>Available Instance Types</h2><p>Amazon EC2 provides a wide selection of instance types optimized to fit different use cases.</p>
+<ul>
+<li>General purpose</li>
+<li>Compute optimized</li>
+<li>Memory optimized</li>
+<li>Storage optimized</li>
+<li>Accelerated computing</li>
+<li>High-performance computing</li>
+</ul>
+<h2 id="Instances-built-on-the-Nitro-System"><a href="#Instances-built-on-the-Nitro-System" class="headerlink" title="Instances built on the Nitro System"></a>Instances built on the Nitro System</h2><p>The Nitro System provides bare metal capabilities that eliminate virtualization overhead and support workloads that require full access to host hardware. Bare metal instances are well suited for the following:</p>
+<ul>
+<li>Workloads that require access to low-level hardware features (for example, Intel VT) that are not available or fully supported in virtualized environments</li>
+<li>Applications that require a non-virtualized environment for licensing or support</li>
+</ul>
+<p>There are both virtualized instances and baremetal instances(name as *.metal) built on Nitro system.</p>
+<p>In general, you can just use the virtualized instances unless you know what you need with the baremetal instances.</p>
+<h2 id="Storage-features"><a href="#Storage-features" class="headerlink" title="Storage features"></a>Storage features</h2><p>Some instance types support EBS volumes and instance store volumes, while other instance types support only EBS volumes. </p>
+<p>The following is an exmaple of instance type m6idn.12xlarge. When you launch it, the NVMe instance store volumes(2x 1425GB NVMe SSD) are automatically attached to the instance. </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-172-18-160-187 /]<span class="comment"># lsblk</span></span><br><span class="line">NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</span><br><span class="line">nvme0n1       259:0    0  100G  0 disk</span><br><span class="line">├─nvme0n1p1   259:2    0  100G  0 part /</span><br><span class="line">└─nvme0n1p128 259:3    0    1M  0 part</span><br><span class="line">nvme1n1       259:1    0  1.3T  0 disk</span><br><span class="line">nvme2n1       259:4    0  1.3T  0 disk</span><br></pre></td></tr></table></figure>
+
+<p>In this instance type, the attached NVME volume can achieve the 230k IOPS as below.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-172-18-160-187 /]<span class="comment"># fio --blocksize=4k --ioengine=libaio --readwrite=randwrite --filesize=10G --group_reporting --direct=1 --iodepth=128 --randrepeat=1 --name=job1 --filename=/dev/nvme1n1</span></span><br><span class="line">job1: (g=0): rw=randwrite, bs=4K-4K/4K-4K/4K-4K, ioengine=libaio, iodepth=128</span><br><span class="line">fio-2.14</span><br><span class="line">Starting 1 process</span><br><span class="line">Jobs: 1 (f=1): [w(1)] [100.0% <span class="keyword">done</span>] [0KB/787.6MB/0KB /s] [0/202K/0 iops] [eta 00m:00s]</span><br><span class="line">job1: (groupid=0, <span class="built_in">jobs</span>=1): err= 0: pid=266: Fri Jan 26 23:18:07 2024</span><br><span class="line">  write: io=10240MB, bw=917710KB/s, iops=229427, runt= 11426msec</span><br><span class="line">    slat (usec): min=0, max=195, avg= 3.73, stdev=10.48</span><br><span class="line">    clat (usec): min=203, max=1199, avg=553.89, stdev=149.49</span><br><span class="line">     lat (usec): min=204, max=1200, avg=557.62, stdev=150.69</span><br><span class="line">    clat percentiles (usec):</span><br><span class="line">     |  1.00th=[  258],  5.00th=[  262], 10.00th=[  266], 20.00th=[  286],</span><br><span class="line">     | 30.00th=[  604], 40.00th=[  620], 50.00th=[  628], 60.00th=[  628],</span><br><span class="line">     | 70.00th=[  636], 80.00th=[  644], 90.00th=[  652], 95.00th=[  660],</span><br><span class="line">     | 99.00th=[  676], 99.50th=[  676], 99.90th=[  684], 99.95th=[  684],</span><br><span class="line">     | 99.99th=[  748]</span><br><span class="line">    lat (usec) : 250=0.04%, 500=21.03%, 750=78.92%, 1000=0.01%</span><br><span class="line">    lat (msec) : 2=0.01%</span><br><span class="line">  cpu          : usr=13.83%, sys=35.84%, ctx=128620, majf=8, minf=11</span><br><span class="line">  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.1%, 32=0.1%, &gt;=64=100.0%</span><br><span class="line">     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.0%</span><br><span class="line">     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.1%</span><br><span class="line">     issued    : total=r=0/w=2621440/d=0, short=r=0/w=0/d=0, drop=r=0/w=0/d=0</span><br><span class="line">     latency   : target=0, window=0, percentile=100.00%, depth=128</span><br><span class="line"></span><br><span class="line">Run status group 0 (all <span class="built_in">jobs</span>):</span><br><span class="line">  WRITE: io=10240MB, aggrb=917710KB/s, minb=917710KB/s, maxb=917710KB/s, mint=11426msec, maxt=11426msec</span><br><span class="line"></span><br><span class="line">Disk stats (<span class="built_in">read</span>/write):</span><br><span class="line">  nvme1n1: ios=41/2616064, merge=0/0, ticks=3/1305473, in_queue=1305476, util=99.30%</span><br></pre></td></tr></table></figure>
+
+<p>You can also attach EBS volumes(e.g. nvme3n1) as needed.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-172-18-160-187 /]<span class="comment"># lsblk</span></span><br><span class="line">NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</span><br><span class="line">nvme0n1       259:0    0  100G  0 disk</span><br><span class="line">├─nvme0n1p1   259:2    0  100G  0 part /</span><br><span class="line">└─nvme0n1p128 259:3    0    1M  0 part</span><br><span class="line">nvme1n1       259:1    0  1.3T  0 disk</span><br><span class="line">nvme2n1       259:4    0  1.3T  0 disk</span><br><span class="line">nvme3n1       259:5    0  500G  0 disk</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AWS/" rel="tag"><i class="fa fa-tag"></i> AWS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/how-to-connect-to-aks-cluster-nodes/" rel="prev" title="How to connect to AKS cluster nodes">
+                  <i class="fa fa-angle-left"></i> How to connect to AKS cluster nodes
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

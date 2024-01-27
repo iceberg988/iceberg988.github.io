@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.flamingbytes.com/blog/understanding-ec2-instance-types/</loc>
+    
+    <lastmod>2024-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.flamingbytes.com/blog/binary-tree-traversal-inorder-preorder-and-postorder/</loc>
     
     <lastmod>2024-01-09</lastmod>
@@ -2470,7 +2479,7 @@
 
   <url>
     <loc>https://www.flamingbytes.com/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -2478,728 +2487,728 @@
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Writing/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Fio/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/System-Design/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Portworx/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Sharedv4/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/NFS/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Kubernetes/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/CockroachDB/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/R/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Perf/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Ltrace/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Strace/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/AngularJS/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Python/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Leetcode/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Drawing/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Esrally/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Elastic-Search/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Algorithm/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Data-Structure/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Graph/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/DFS/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/BFS/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Binary-Search/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Blktrace/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Database/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/MySQL/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Btrfs/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Network/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Tcpdump/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Backup-Recovery/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Cgroups/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Kernel/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Sysbench/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Jekyll/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/SystemTap/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Docker/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Observability/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Dm-delay/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Administration/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Flame-Graph/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/RCA/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/BCC/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Bpftrace/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/PostgreSQL/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Ghost/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/GlusterFS/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/YCSB/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Hexo/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Data-structure/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Hashmap/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Hashset/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Sar/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Html/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Gnome/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Etcd/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Grafana/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Prometheus/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Ceph/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Gcc/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Git/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Golang/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/BPF/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/IPC/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Iouring/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Iozone/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Lambda/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Grub/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Linked-List/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/RAID/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Tuning/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/OpenZFS/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Profiling-Tracing/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Proc/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Queue/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Pgbench/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Semaphore/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Mdraid/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/LVM/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Shell/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Sliding-Window/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Stack/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/TCP-IP/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Trie/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Azure/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/MapReduce/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/HBA/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/AWS/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Ftrace/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Iperf/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Openshift/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/OLTP/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Vdbench/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/High-Availability/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Heap/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Priority-Queue/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Bit-manipulation/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Dynamic-programming/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Recursive/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Cache/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Two-pointers/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/PostMark/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/Phoronix-test-suite/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/tags/AKS/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -3208,70 +3217,70 @@
   
   <url>
     <loc>https://www.flamingbytes.com/categories/Young-Author/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/categories/Tech/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/categories/Tech/Benchmarking/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/categories/Tech/Programming/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/categories/Tech/Cloud-Storage/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/categories/Tech/Big-Data/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/categories/Tech/Performance/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/categories/Tech/Linux/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/categories/Tech/Blog/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.flamingbytes.com/categories/Investment/</loc>
-    <lastmod>2024-01-09</lastmod>
+    <lastmod>2024-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

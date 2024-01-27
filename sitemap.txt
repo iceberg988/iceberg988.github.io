@@ -1,3 +1,4 @@
+https://www.flamingbytes.com/blog/understanding-ec2-instance-types/
 https://www.flamingbytes.com/blog/binary-tree-traversal-inorder-preorder-and-postorder/
 https://www.flamingbytes.com/blog/binary-tree-in-python/
 https://www.flamingbytes.com/blog/tree-traversal-algorithm-in-python/
