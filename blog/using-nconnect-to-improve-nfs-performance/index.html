@@ -22,14 +22,14 @@
 
     <meta name="description" content="The nfs mount option “nconnect&#x3D;n” exists in all Linux distributions with kernel 5.3 or higher. nconnect enables multiple TCP connections for a single NFS mount. From the nfs manual page:  nconnec">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Using nconnect to improve NFS performance">
+<meta property="og:title" content="How to tune nconnect to improve NFS performance">
 <meta property="og:url" content="https://www.flamingbytes.com/blog/using-nconnect-to-improve-nfs-performance/index.html">
 <meta property="og:site_name" content="FlamingBytes">
 <meta property="og:description" content="The nfs mount option “nconnect&#x3D;n” exists in all Linux distributions with kernel 5.3 or higher. nconnect enables multiple TCP connections for a single NFS mount. From the nfs manual page:  nconnec">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://www.flamingbytes.com/images/nconnect.png">
 <meta property="article:published_time" content="2022-06-30T14:00:00.000Z">
-<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:modified_time" content="2024-01-27T20:45:48.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="NFS">
 <meta name="twitter:card" content="summary">
@@ -40,10 +40,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/using-nconnect-to-improve-nfs-performance/","path":"blog/using-nconnect-to-improve-nfs-performance/","title":"Using nconnect to improve NFS performance"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/using-nconnect-to-improve-nfs-performance/","path":"blog/using-nconnect-to-improve-nfs-performance/","title":"How to tune nconnect to improve NFS performance"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Using nconnect to improve NFS performance | FlamingBytes</title>
+<title>How to tune nconnect to improve NFS performance | FlamingBytes</title>
   
 
 
@@ -207,13 +207,6 @@
   </div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/how-to-setup-nfs-network-file-system-on-rhel-centos/" rel="bookmark">
-        <time class="popular-posts-time">2022-06-29</time>
-        <br>
-      How to setup NFS (Network File System) on RHEL/CentOS
-      </a>
-    </li>
-    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/blog/How-to-run-fio-across-multiple-servers/" rel="bookmark">
         <time class="popular-posts-time">2023-09-22</time>
         <br>
@@ -231,14 +224,21 @@
       <a class="popular-posts-link" href="/blog/using-iperf-to-measure-the-network-bandwidth/" rel="bookmark">
         <time class="popular-posts-time">2022-04-19</time>
         <br>
-      Using iperf to measure the network bandwidth
+      How to use iperf to measure the network bandwidth
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/enable-ssh-passwordless-login/" rel="bookmark">
-        <time class="popular-posts-time">2021-04-18</time>
+      <a class="popular-posts-link" href="/blog/how-to-setup-nfs-network-file-system-on-rhel-centos/" rel="bookmark">
+        <time class="popular-posts-time">2022-06-29</time>
         <br>
-      Enable ssh passwordless login for large amount of servers
+      How to setup NFS (Network File System) on RHEL/CentOS
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/how-to-enable-tcp-connections-to-postgresql/" rel="bookmark">
+        <time class="popular-posts-time">2023-05-22</time>
+        <br>
+      How to enable TCP connections to PostgreSQL
       </a>
     </li>
   </ul>
@@ -274,12 +274,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Using nconnect to improve NFS performance | FlamingBytes">
+      <meta itemprop="name" content="How to tune nconnect to improve NFS performance | FlamingBytes">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Using nconnect to improve NFS performance
+          How to tune nconnect to improve NFS performance
         </h1>
 
         <div class="post-meta-container">
@@ -297,7 +297,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+      <time title="Modified: 2024-01-27 12:45:48" itemprop="dateModified" datetime="2024-01-27T12:45:48-08:00">2024-01-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -338,8 +338,8 @@
 </blockquote>
 </blockquote>
 <p>The nconnect option can be easily added during nfs mount as the following command.</p>
-<pre><code>$ mount -t nfs -o nconnect=16 nfs-server-hostname:/mnt/nfsshare /mnt/nfsmnt1 		
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mount -t nfs -o nconnect=16 nfs-server-hostname:/mnt/nfsshare /mnt/nfsmnt1 		</span><br></pre></td></tr></table></figure>
+
 <p>The following is the 4k sequential write performance comparison by increasing nconnect to 16 over a single 10GbE link.</p>
 <p><img src="/images/nconnect.png" alt="Image"></p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
@@ -367,8 +367,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/blog/using-sar-to-understand-system-activity/" rel="next" title="Using sar to understand system activity">
-                  Using sar to understand system activity <i class="fa fa-angle-right"></i>
+                <a href="/blog/using-sar-to-understand-system-activity/" rel="next" title="How to use sar to understand Linux system activity">
+                  How to use sar to understand Linux system activity <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

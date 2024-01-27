@@ -1094,7 +1094,7 @@ READ   - Takes(s): 2517.3, Count: 94554325, OPS: 37561.2, Avg(us): 2131, Min(us)
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/using-netstat-to-check-network-package-retransmission/" class="post-title-link" itemprop="url">Using netstat to check network package retransmission</a>
+          <a href="/blog/using-netstat-to-check-network-package-retransmission/" class="post-title-link" itemprop="url">How to use netstat to check network package retransmission</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1112,7 +1112,7 @@ READ   - Takes(s): 2517.3, Count: 94554325, OPS: 37561.2, Avg(us): 2131, Min(us)
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+      <time title="Modified: 2024-01-27 12:46:16" itemprop="dateModified" datetime="2024-01-27T12:46:16-08:00">2024-01-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1138,14 +1138,7 @@ READ   - Takes(s): 2517.3, Count: 94554325, OPS: 37561.2, Avg(us): 2131, Min(us)
     
     
     <div class="post-body" itemprop="articleBody">
-          <pre><code>$ while [ 1 ]; do netstat -s | grep &#39;segments retransmited&#39; ; sleep 1; done
-    2500906 segments retransmited
-    2500912 segments retransmited
-    2501072 segments retransmited
-    2501102 segments retransmited
-    2501191 segments retransmited
-</code></pre>
-
+          <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">while</span> [ 1 ]; <span class="keyword">do</span> netstat -s | grep <span class="string">&#x27;segments retransmited&#x27;</span> ; <span class="built_in">sleep</span> 1; <span class="keyword">done</span></span><br><span class="line">    2500906 segments retransmited</span><br><span class="line">    2500912 segments retransmited</span><br><span class="line">    2501072 segments retransmited</span><br><span class="line">    2501102 segments retransmited</span><br><span class="line">    2501191 segments retransmited</span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
     </div>
 

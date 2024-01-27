@@ -22,13 +22,13 @@
 
     <meta name="description" content="About sadc and sarsadc is known as system activity data collector. It samples system data a specified number of times (count) at a specified interval measured in seconds (interval). It writes in binar">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Using sar to understand system activity">
+<meta property="og:title" content="How to use sar to understand Linux system activity">
 <meta property="og:url" content="https://www.flamingbytes.com/blog/using-sar-to-understand-system-activity/index.html">
 <meta property="og:site_name" content="FlamingBytes">
 <meta property="og:description" content="About sadc and sarsadc is known as system activity data collector. It samples system data a specified number of times (count) at a specified interval measured in seconds (interval). It writes in binar">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-07-06T14:00:00.000Z">
-<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:modified_time" content="2024-01-27T20:53:52.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="Observability">
 <meta property="article:tag" content="Sar">
@@ -39,10 +39,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/using-sar-to-understand-system-activity/","path":"blog/using-sar-to-understand-system-activity/","title":"Using sar to understand system activity"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/using-sar-to-understand-system-activity/","path":"blog/using-sar-to-understand-system-activity/","title":"How to use sar to understand Linux system activity"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Using sar to understand system activity | FlamingBytes</title>
+<title>How to use sar to understand Linux system activity | FlamingBytes</title>
   
 
 
@@ -273,12 +273,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Using sar to understand system activity | FlamingBytes">
+      <meta itemprop="name" content="How to use sar to understand Linux system activity | FlamingBytes">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Using sar to understand system activity
+          How to use sar to understand Linux system activity
         </h1>
 
         <div class="post-meta-container">
@@ -296,7 +296,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+      <time title="Modified: 2024-01-27 12:53:52" itemprop="dateModified" datetime="2024-01-27T12:53:52-08:00">2024-01-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -331,22 +331,8 @@
     <div class="post-body" itemprop="articleBody"><h2 id="About-sadc-and-sar"><a href="#About-sadc-and-sar" class="headerlink" title="About sadc and sar"></a>About sadc and sar</h2><p>sadc is known as system activity data collector. It samples system data a specified number of times (count) at a specified interval measured in seconds (interval). It writes in binary format to the specified outfile or to standard output. The sadc command is intended to be used as a backend to the sar command. The sar command can be used to collect, report or save system activity information.</p>
 <p>The following are examples for some of the often used options to understand system activity including CPU, Memory, Disk IO and network.</p>
 <h2 id="Report-CPU-utilization"><a href="#Report-CPU-utilization" class="headerlink" title="Report CPU utilization"></a>Report CPU utilization</h2><p>The ALL keyword with “-u” indicates that all the CPU fields should be displayed.</p>
-<pre><code>[root@host1 ~]# sar -u 1 2
-Linux 5.7.12-1.el7.elrepo.x86_64 (host1) 	07/06/2022 	_x86_64_	(96 CPU)
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@host1 ~]<span class="comment"># sar -u 1 2</span></span><br><span class="line">Linux 5.7.12-1.el7.elrepo.x86_64 (host1) 	07/06/2022 	_x86_64_	(96 CPU)</span><br><span class="line"></span><br><span class="line">06:47:11 PM     CPU     %user     %<span class="built_in">nice</span>   %system   %iowait    %steal     %idle</span><br><span class="line">06:47:12 PM     all      0.00      0.00      0.01      0.00      0.00     99.99</span><br><span class="line">06:47:13 PM     all      0.01      0.00      0.00      0.00      0.00     99.99</span><br><span class="line">Average:        all      0.01      0.00      0.01      0.00      0.00     99.99</span><br><span class="line"></span><br><span class="line">[root@host1 ~]<span class="comment"># sar -u ALL 1 2</span></span><br><span class="line">Linux 5.7.12-1.el7.elrepo.x86_64 (host1) 	07/06/2022 	_x86_64_	(96 CPU)</span><br><span class="line"></span><br><span class="line">06:47:16 PM     CPU      %usr     %<span class="built_in">nice</span>      %sys   %iowait    %steal      %irq     %soft    %guest    %gnice     %idle</span><br><span class="line">06:47:17 PM     all      0.02      0.00      0.02      0.00      0.00      0.00      0.00      0.00      0.00     99.96</span><br><span class="line">06:47:18 PM     all      0.00      0.00      0.01      0.00      0.00      0.00      0.00      0.00      0.00     99.99</span><br><span class="line">Average:        all      0.01      0.00      0.02      0.00      0.00      0.00      0.00      0.00      0.00     99.97</span><br></pre></td></tr></table></figure>
 
-06:47:11 PM     CPU     %user     %nice   %system   %iowait    %steal     %idle
-06:47:12 PM     all      0.00      0.00      0.01      0.00      0.00     99.99
-06:47:13 PM     all      0.01      0.00      0.00      0.00      0.00     99.99
-Average:        all      0.01      0.00      0.01      0.00      0.00     99.99
-
-[root@host1 ~]# sar -u ALL 1 2
-Linux 5.7.12-1.el7.elrepo.x86_64 (host1) 	07/06/2022 	_x86_64_	(96 CPU)
-
-06:47:16 PM     CPU      %usr     %nice      %sys   %iowait    %steal      %irq     %soft    %guest    %gnice     %idle
-06:47:17 PM     all      0.02      0.00      0.02      0.00      0.00      0.00      0.00      0.00      0.00     99.96
-06:47:18 PM     all      0.00      0.00      0.01      0.00      0.00      0.00      0.00      0.00      0.00     99.99
-Average:        all      0.01      0.00      0.02      0.00      0.00      0.00      0.00      0.00      0.00     99.97
-</code></pre>
 <h2 id="Report-memory-statistics"><a href="#Report-memory-statistics" class="headerlink" title="Report memory statistics"></a>Report memory statistics</h2><pre><code>[root@host1 ~]# sar -R 1 2
 Linux 5.7.12-1.el7.elrepo.x86_64 (host1) 	07/06/2022 	_x86_64_	(96 CPU)
 
@@ -511,8 +497,8 @@ Average:        all      0.04      0.00      0.08      0.00      0.00     99.87
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/blog/using-nconnect-to-improve-nfs-performance/" rel="prev" title="Using nconnect to improve NFS performance">
-                  <i class="fa fa-angle-left"></i> Using nconnect to improve NFS performance
+                <a href="/blog/using-nconnect-to-improve-nfs-performance/" rel="prev" title="How to tune nconnect to improve NFS performance">
+                  <i class="fa fa-angle-left"></i> How to tune nconnect to improve NFS performance
                 </a>
             </div>
             <div class="post-nav-item">

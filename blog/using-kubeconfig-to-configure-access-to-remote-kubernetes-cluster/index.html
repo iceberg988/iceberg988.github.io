@@ -22,13 +22,13 @@
 
     <meta name="description" content="Install kubectl binaryThe Kubernetes command-line tool, kubectl, allows you to run commands against Kubernetes clusters. You can use kubectl to deploy applications, inspect and manage cluster resource">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Using kubeconfig to configure access to remote Kubernetes cluster">
+<meta property="og:title" content="How to use kubeconfig to access to remote Kubernetes cluster">
 <meta property="og:url" content="https://www.flamingbytes.com/blog/using-kubeconfig-to-configure-access-to-remote-kubernetes-cluster/index.html">
 <meta property="og:site_name" content="FlamingBytes">
 <meta property="og:description" content="Install kubectl binaryThe Kubernetes command-line tool, kubectl, allows you to run commands against Kubernetes clusters. You can use kubectl to deploy applications, inspect and manage cluster resource">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-12-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:modified_time" content="2024-01-27T20:45:12.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
@@ -38,10 +38,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/using-kubeconfig-to-configure-access-to-remote-kubernetes-cluster/","path":"blog/using-kubeconfig-to-configure-access-to-remote-kubernetes-cluster/","title":"Using kubeconfig to configure access to remote Kubernetes cluster"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/using-kubeconfig-to-configure-access-to-remote-kubernetes-cluster/","path":"blog/using-kubeconfig-to-configure-access-to-remote-kubernetes-cluster/","title":"How to use kubeconfig to access to remote Kubernetes cluster"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Using kubeconfig to configure access to remote Kubernetes cluster | FlamingBytes</title>
+<title>How to use kubeconfig to access to remote Kubernetes cluster | FlamingBytes</title>
   
 
 
@@ -205,17 +205,17 @@
   </div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/getting-started-with-vcluster/" rel="bookmark">
+        <time class="popular-posts-time">2023-10-21</time>
+        <br>
+      Getting started with vcluster
+      </a>
+    </li>
+    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/blog/pull-an-image-from-a-private-docker-registry-in-kubernetes-pod/" rel="bookmark">
         <time class="popular-posts-time">2022-12-27</time>
         <br>
       Pull an image from a private docker registry in Kubernetes Pod
-      </a>
-    </li>
-    <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/an-easy-guide-to-install-kubernetes-cluster-with-kubeadm/" rel="bookmark">
-        <time class="popular-posts-time">2021-08-29</time>
-        <br>
-      An easy guide to install kubernetes cluster with kubeadm
       </a>
     </li>
     <li class="popular-posts-item">
@@ -226,17 +226,17 @@
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/setup-cockroachdb-cluster-with-haproxy-load-balancing/" rel="bookmark">
-        <time class="popular-posts-time">2022-12-01</time>
+      <a class="popular-posts-link" href="/blog/an-easy-guide-to-install-kubernetes-cluster-with-kubeadm/" rel="bookmark">
+        <time class="popular-posts-time">2021-08-29</time>
         <br>
-      Setup CockroachDB cluster with HAProxy load balancing
+      An easy guide to install kubernetes cluster with kubeadm
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/deploy-cockroachdb-in-kubernetes-cluster/" rel="bookmark">
-        <time class="popular-posts-time">2022-12-03</time>
+      <a class="popular-posts-link" href="/blog/how-to-connect-to-aks-cluster-nodes/" rel="bookmark">
+        <time class="popular-posts-time">2023-11-30</time>
         <br>
-      Deploy CockroachDB in kubernetes cluster
+      How to connect to AKS cluster nodes
       </a>
     </li>
   </ul>
@@ -272,12 +272,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Using kubeconfig to configure access to remote Kubernetes cluster | FlamingBytes">
+      <meta itemprop="name" content="How to use kubeconfig to access to remote Kubernetes cluster | FlamingBytes">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Using kubeconfig to configure access to remote Kubernetes cluster
+          How to use kubeconfig to access to remote Kubernetes cluster
         </h1>
 
         <div class="post-meta-container">
@@ -295,7 +295,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+      <time title="Modified: 2024-01-27 12:45:12" itemprop="dateModified" datetime="2024-01-27T12:45:12-08:00">2024-01-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -328,39 +328,13 @@
     
     
     <div class="post-body" itemprop="articleBody"><h2 id="Install-kubectl-binary"><a href="#Install-kubectl-binary" class="headerlink" title="Install kubectl binary"></a>Install kubectl binary</h2><p>The Kubernetes command-line tool, <a target="_blank" rel="noopener" href="https://kubernetes.io/docs/tasks/tools/">kubectl</a>, allows you to run commands against Kubernetes clusters. You can use kubectl to deploy applications, inspect and manage cluster resources, and view logs.</p>
-<pre><code>[root@localhost ~]# curl -LO &quot;https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl&quot;
-[root@localhost ~]# sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-[root@localhost ~]# ls -la /usr/local/bin/kubectl
-[root@localhost ~]# kubectl version --output=yaml
-clientVersion:
-  buildDate: &quot;2022-09-21T14:33:49Z&quot;
-  compiler: gc
-  gitCommit: 5835544ca568b757a8ecae5c153f317e5736700e
-  gitTreeState: clean
-  gitVersion: v1.25.2
-  goVersion: go1.19.1
-  major: &quot;1&quot;
-  minor: &quot;25&quot;
-  platform: linux/amd64
-kustomizeVersion: v4.5.7
-
-The connection to the server localhost:8080 was refused - did you specify the right host or port?
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># curl -LO &quot;https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl&quot;</span></span><br><span class="line">[root@localhost ~]<span class="comment"># sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ls -la /usr/local/bin/kubectl</span></span><br><span class="line">[root@localhost ~]<span class="comment"># kubectl version --output=yaml</span></span><br><span class="line">clientVersion:</span><br><span class="line">  buildDate: <span class="string">&quot;2022-09-21T14:33:49Z&quot;</span></span><br><span class="line">  compiler: gc</span><br><span class="line">  gitCommit: 5835544ca568b757a8ecae5c153f317e5736700e</span><br><span class="line">  gitTreeState: clean</span><br><span class="line">  gitVersion: v1.25.2</span><br><span class="line">  goVersion: go1.19.1</span><br><span class="line">  major: <span class="string">&quot;1&quot;</span></span><br><span class="line">  minor: <span class="string">&quot;25&quot;</span></span><br><span class="line">  platform: linux/amd64</span><br><span class="line">kustomizeVersion: v4.5.7</span><br></pre></td></tr></table></figure>
 <h2 id="Use-kubeconfig-file-to-access-remote-Kubernetes-cluster"><a href="#Use-kubeconfig-file-to-access-remote-Kubernetes-cluster" class="headerlink" title="Use kubeconfig file to access remote Kubernetes cluster"></a>Use kubeconfig file to access remote Kubernetes cluster</h2><p>A <em>kubeconfig</em> is a YAML file with all the Kubernetes cluster details, certificate, and secret token to authenticate the cluster. You might get this config file directly from the cluster administrator or from a cloud platform if you are using managed Kubernetes cluster. A <em>kubeconfig</em> file is a file to configure access to Kubernetes when to use with <em>kubectl</em> cli tool.</p>
 <p>When to deploy Kubernetes cluster, a <em>kubeconfig</em> is automatically generated. It’s saved in ~&#x2F;.kube&#x2F;config drectory.</p>
-<pre><code>[root@host1 ~]#  ls -la ~/.kube/config
--rw------- 1 root root 5577 May  9 02:25 /root/.kube/config
-</code></pre>
-<p>You can access the Kubernetes cluster by providing the kubeconfig file remotely.</p>
-<pre><code>[root@localhost ~]# scp host1:/root/.kube/config ./kubeconfig-remote
-[root@localhost ~]# kubectl --kubeconfig=./kubeconfig-remote get nodes
-NAME            STATUS   ROLES    AGE    VERSION
-host0   Ready    &lt;none&gt;   135d   v1.19.2
-host1   Ready    &lt;none&gt;   135d   v1.19.2
-host2   Ready    &lt;none&gt;   135d   v1.19.2
-host3   Ready    master   135d   v1.19.2
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@host1 ~]<span class="comment">#  ls -la ~/.kube/config</span></span><br><span class="line">-rw------- 1 root root 5577 May  9 02:25 /root/.kube/config</span><br></pre></td></tr></table></figure>
 
+<p>You can access the Kubernetes cluster by providing the kubeconfig file remotely.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># scp host1:/root/.kube/config ./kubeconfig-remote</span></span><br><span class="line">[root@localhost ~]<span class="comment"># kubectl --kubeconfig=./kubeconfig-remote get nodes</span></span><br><span class="line">NAME            STATUS   ROLES    AGE    VERSION</span><br><span class="line">host0   Ready    &lt;none&gt;   135d   v1.19.2</span><br><span class="line">host1   Ready    &lt;none&gt;   135d   v1.19.2</span><br><span class="line">host2   Ready    &lt;none&gt;   135d   v1.19.2</span><br><span class="line">host3   Ready    master   135d   v1.19.2</span><br></pre></td></tr></table></figure>
     </div>
 
     

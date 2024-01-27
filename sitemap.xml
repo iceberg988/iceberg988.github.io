@@ -2,6 +2,159 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.flamingbytes.com/blog/using-sar-to-understand-system-activity/</loc>
+    
+    <lastmod>2024-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flamingbytes.com/blog/using-r-to-analyze-us-covid-waves-and-peaks/</loc>
+    
+    <lastmod>2024-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flamingbytes.com/blog/using-priority-queue-in-python/</loc>
+    
+    <lastmod>2024-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flamingbytes.com/blog/using-node-selector-to-assign-virtual-mahcines-to-a-node/</loc>
+    
+    <lastmod>2024-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flamingbytes.com/blog/using-netstat-to-check-network-package-retransmission/</loc>
+    
+    <lastmod>2024-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flamingbytes.com/blog/using-nconnect-to-improve-nfs-performance/</loc>
+    
+    <lastmod>2024-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flamingbytes.com/blog/using-kubeconfig-to-configure-access-to-remote-kubernetes-cluster/</loc>
+    
+    <lastmod>2024-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flamingbytes.com/blog/using-iperf-to-measure-the-network-bandwidth/</loc>
+    
+    <lastmod>2024-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flamingbytes.com/blog/using-gstack-for-docker-container-process/</loc>
+    
+    <lastmod>2024-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flamingbytes.com/blog/using-ftrace-to-analyze-latency-of-the-kernel-module-function/</loc>
+    
+    <lastmod>2024-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flamingbytes.com/blog/using-fio-to-generate-millions-of-files/</loc>
+    
+    <lastmod>2024-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flamingbytes.com/blog/using-dm-delay-to-emulate-slower-ssd-on-nvme-device/</loc>
+    
+    <lastmod>2024-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flamingbytes.com/blog/using-cgroup-to-limit-resource-for-ssh-session/</loc>
+    
+    <lastmod>2024-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flamingbytes.com/blog/using-bcc-tools-for-dynamic-kernel-tracing/</loc>
+    
+    <lastmod>2024-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flamingbytes.com/blog/using-aws-cli-to-manage-ebs-volumes/</loc>
+    
+    <lastmod>2024-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flamingbytes.com/blog/useful-tools-to-analyze-network-latency/</loc>
+    
+    <lastmod>2024-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flamingbytes.com/blog/upgrade-linux-kernel-on-centos-7/</loc>
+    
+    <lastmod>2024-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.flamingbytes.com/blog/understanding-ec2-instance-types/</loc>
     
     <lastmod>2024-01-27</lastmod>
@@ -2135,15 +2288,6 @@
   </url>
   
   <url>
-    <loc>https://www.flamingbytes.com/blog/upgrade-linux-kernel-on-centos-7/</loc>
-    
-    <lastmod>2023-10-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.flamingbytes.com/blog/useful-es-apis/</loc>
     
     <lastmod>2023-10-22</lastmod>
@@ -2171,151 +2315,7 @@
   </url>
   
   <url>
-    <loc>https://www.flamingbytes.com/blog/useful-tools-to-analyze-network-latency/</loc>
-    
-    <lastmod>2023-10-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.flamingbytes.com/blog/using-anova-in-r-to-analyze-us-covid-data/</loc>
-    
-    <lastmod>2023-10-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flamingbytes.com/blog/using-aws-cli-to-manage-ebs-volumes/</loc>
-    
-    <lastmod>2023-10-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flamingbytes.com/blog/using-bcc-tools-for-dynamic-kernel-tracing/</loc>
-    
-    <lastmod>2023-10-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flamingbytes.com/blog/using-cgroup-to-limit-resource-for-ssh-session/</loc>
-    
-    <lastmod>2023-10-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flamingbytes.com/blog/using-dm-delay-to-emulate-slower-ssd-on-nvme-device/</loc>
-    
-    <lastmod>2023-10-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flamingbytes.com/blog/using-fio-to-generate-millions-of-files/</loc>
-    
-    <lastmod>2023-10-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flamingbytes.com/blog/using-ftrace-to-analyze-latency-of-the-kernel-module-function/</loc>
-    
-    <lastmod>2023-10-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flamingbytes.com/blog/using-gstack-for-docker-container-process/</loc>
-    
-    <lastmod>2023-10-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flamingbytes.com/blog/using-iperf-to-measure-the-network-bandwidth/</loc>
-    
-    <lastmod>2023-10-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flamingbytes.com/blog/using-kubeconfig-to-configure-access-to-remote-kubernetes-cluster/</loc>
-    
-    <lastmod>2023-10-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flamingbytes.com/blog/using-nconnect-to-improve-nfs-performance/</loc>
-    
-    <lastmod>2023-10-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flamingbytes.com/blog/using-netstat-to-check-network-package-retransmission/</loc>
-    
-    <lastmod>2023-10-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flamingbytes.com/blog/using-node-selector-to-assign-virtual-mahcines-to-a-node/</loc>
-    
-    <lastmod>2023-10-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flamingbytes.com/blog/using-priority-queue-in-python/</loc>
-    
-    <lastmod>2023-10-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flamingbytes.com/blog/using-r-to-analyze-us-covid-waves-and-peaks/</loc>
-    
-    <lastmod>2023-10-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flamingbytes.com/blog/using-sar-to-understand-system-activity/</loc>
     
     <lastmod>2023-10-22</lastmod>
     
