@@ -239,7 +239,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2024-01-26 15:12:35 / Modified: 19:03:24" itemprop="dateCreated datePublished" datetime="2024-01-26T15:12:35-08:00">2024-01-26</time>
+      <time title="Created: 2024-01-26 15:12:35 / Modified: 19:13:18" itemprop="dateCreated datePublished" datetime="2024-01-26T15:12:35-08:00">2024-01-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -265,77 +265,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>When you launch an instance, the instance type you specify determines the hardware of the host computer used for your instance, such as CPU, memory, storage and network.</p>
-<p>Amazon EC2 dedicates some resources, such as CPU, memory, and instance storage, to a particular instance. And it shares other resources, such as the network and the disk subsystem, among instances.</p>
-<h2 id="Instance-type-naming-convention"><a href="#Instance-type-naming-convention" class="headerlink" title="Instance type naming convention"></a>Instance type naming convention</h2><p>Amazon EC2 instance types are named based on their family, generation, processor family, additional capabilities, and size.</p>
-<p><img src="/images/instance-type-name.png" alt="Image"></p>
-<p>Instance families:</p>
-<ul>
-<li>C – Compute optimized</li>
-<li>D – Dense storage</li>
-<li>F – FPGA</li>
-<li>G – Graphics intensive</li>
-<li>Hpc – High performance computing</li>
-<li>I – Storage optimized</li>
-<li>Im – Storage optimized with a one to four ratio of vCPU to memory</li>
-<li>Is – Storage optimized with a one to six ratio of vCPU to memory</li>
-<li>Inf – AWS Inferentia</li>
-<li>M – General purpose</li>
-<li>Mac – macOS</li>
-<li>P – GPU accelerated</li>
-<li>R – Memory optimized</li>
-<li>T – Burstable performance</li>
-<li>Trn – AWS Trainium</li>
-<li>U – High memory</li>
-<li>VT – Video transcoding</li>
-<li>X – Memory intensive</li>
-</ul>
-<p>Processor families:</p>
-<ul>
-<li>a – AMD processors</li>
-<li>g – AWS Graviton processors</li>
-<li>i – Intel processors</li>
-</ul>
-<p>Additional capabilities:</p>
-<ul>
-<li>b – EBS optimized</li>
-<li>d – Instance store volumes</li>
-<li>n – Network and EBS optimized</li>
-<li>e – Extra storage or memory</li>
-<li>z – High performance</li>
-<li>q – Qualcomm inference accelerators</li>
-<li>flex – Flex instance</li>
-</ul>
-<h2 id="Available-Instance-Types"><a href="#Available-Instance-Types" class="headerlink" title="Available Instance Types"></a>Available Instance Types</h2><p>Amazon EC2 provides a wide selection of instance types optimized to fit different use cases.</p>
-<ul>
-<li>General purpose</li>
-<li>Compute optimized</li>
-<li>Memory optimized</li>
-<li>Storage optimized</li>
-<li>Accelerated computing</li>
-<li>High-performance computing</li>
-</ul>
-<h2 id="Instances-built-on-the-Nitro-System"><a href="#Instances-built-on-the-Nitro-System" class="headerlink" title="Instances built on the Nitro System"></a>Instances built on the Nitro System</h2><p>The Nitro System provides bare metal capabilities that eliminate virtualization overhead and support workloads that require full access to host hardware. Bare metal instances are well suited for the following:</p>
-<ul>
-<li>Workloads that require access to low-level hardware features (for example, Intel VT) that are not available or fully supported in virtualized environments</li>
-<li>Applications that require a non-virtualized environment for licensing or support</li>
-</ul>
-<p>There are both virtualized instances and baremetal instances(name as *.metal) built on Nitro system.</p>
-<p>In general, you can just use the virtualized instances unless you know what you need with the baremetal instances.</p>
-<h2 id="Storage-features"><a href="#Storage-features" class="headerlink" title="Storage features"></a>Storage features</h2><p>Some instance types support EBS volumes and instance store volumes, while other instance types support only EBS volumes. </p>
-<p>The following is an exmaple of instance type m6idn.12xlarge. When you launch it, the NVMe instance store volumes(2x 1425GB NVMe SSD) are automatically attached to the instance. </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-172-18-160-187 /]<span class="comment"># lsblk</span></span><br><span class="line">NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</span><br><span class="line">nvme0n1       259:0    0  100G  0 disk</span><br><span class="line">├─nvme0n1p1   259:2    0  100G  0 part /</span><br><span class="line">└─nvme0n1p128 259:3    0    1M  0 part</span><br><span class="line">nvme1n1       259:1    0  1.3T  0 disk</span><br><span class="line">nvme2n1       259:4    0  1.3T  0 disk</span><br></pre></td></tr></table></figure>
-
-<p>In this instance type, the attached NVME volume can achieve the 230k IOPS as below.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-172-18-160-187 /]<span class="comment"># fio --blocksize=4k --ioengine=libaio --readwrite=randwrite --filesize=10G --group_reporting --direct=1 --iodepth=128 --randrepeat=1 --name=job1 --filename=/dev/nvme1n1</span></span><br><span class="line">job1: (g=0): rw=randwrite, bs=4K-4K/4K-4K/4K-4K, ioengine=libaio, iodepth=128</span><br><span class="line">fio-2.14</span><br><span class="line">Starting 1 process</span><br><span class="line">Jobs: 1 (f=1): [w(1)] [100.0% <span class="keyword">done</span>] [0KB/787.6MB/0KB /s] [0/202K/0 iops] [eta 00m:00s]</span><br><span class="line">job1: (groupid=0, <span class="built_in">jobs</span>=1): err= 0: pid=266: Fri Jan 26 23:18:07 2024</span><br><span class="line">  write: io=10240MB, bw=917710KB/s, iops=229427, runt= 11426msec</span><br><span class="line">    slat (usec): min=0, max=195, avg= 3.73, stdev=10.48</span><br><span class="line">    clat (usec): min=203, max=1199, avg=553.89, stdev=149.49</span><br><span class="line">     lat (usec): min=204, max=1200, avg=557.62, stdev=150.69</span><br><span class="line">    clat percentiles (usec):</span><br><span class="line">     |  1.00th=[  258],  5.00th=[  262], 10.00th=[  266], 20.00th=[  286],</span><br><span class="line">     | 30.00th=[  604], 40.00th=[  620], 50.00th=[  628], 60.00th=[  628],</span><br><span class="line">     | 70.00th=[  636], 80.00th=[  644], 90.00th=[  652], 95.00th=[  660],</span><br><span class="line">     | 99.00th=[  676], 99.50th=[  676], 99.90th=[  684], 99.95th=[  684],</span><br><span class="line">     | 99.99th=[  748]</span><br><span class="line">    lat (usec) : 250=0.04%, 500=21.03%, 750=78.92%, 1000=0.01%</span><br><span class="line">    lat (msec) : 2=0.01%</span><br><span class="line">  cpu          : usr=13.83%, sys=35.84%, ctx=128620, majf=8, minf=11</span><br><span class="line">  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.1%, 32=0.1%, &gt;=64=100.0%</span><br><span class="line">     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.0%</span><br><span class="line">     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.1%</span><br><span class="line">     issued    : total=r=0/w=2621440/d=0, short=r=0/w=0/d=0, drop=r=0/w=0/d=0</span><br><span class="line">     latency   : target=0, window=0, percentile=100.00%, depth=128</span><br><span class="line"></span><br><span class="line">Run status group 0 (all <span class="built_in">jobs</span>):</span><br><span class="line">  WRITE: io=10240MB, aggrb=917710KB/s, minb=917710KB/s, maxb=917710KB/s, mint=11426msec, maxt=11426msec</span><br><span class="line"></span><br><span class="line">Disk stats (<span class="built_in">read</span>/write):</span><br><span class="line">  nvme1n1: ios=41/2616064, merge=0/0, ticks=3/1305473, in_queue=1305476, util=99.30%</span><br></pre></td></tr></table></figure>
-
-<p>You can also attach EBS volumes(e.g. nvme3n1) as needed.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-172-18-160-187 /]<span class="comment"># lsblk</span></span><br><span class="line">NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</span><br><span class="line">nvme0n1       259:0    0  100G  0 disk</span><br><span class="line">├─nvme0n1p1   259:2    0  100G  0 part /</span><br><span class="line">└─nvme0n1p128 259:3    0    1M  0 part</span><br><span class="line">nvme1n1       259:1    0  1.3T  0 disk</span><br><span class="line">nvme2n1       259:4    0  1.3T  0 disk</span><br><span class="line">nvme3n1       259:5    0  500G  0 disk</span><br></pre></td></tr></table></figure>
-
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html</a></li>
-</ul>
-
+          <h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>When you launch an instance, the instance type you specify determines the hardware of the host computer used for your instance, such as CPU, memory, storage and network.
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/understanding-ec2-instance-types/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

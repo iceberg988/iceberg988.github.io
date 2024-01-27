@@ -24955,7 +24955,7 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
   <entry>
     <title>Understanding EC2 instance types</title>
     <url>/blog/understanding-ec2-instance-types/</url>
-    <content><![CDATA[<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>When you launch an instance, the instance type you specify determines the hardware of the host computer used for your instance, such as CPU, memory, storage and network.</p>
+    <content><![CDATA[<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>When you launch an instance, the instance type you specify determines the hardware of the host computer used for your instance, such as CPU, memory, storage and network. <span id="more"></span></p>
 <p>Amazon EC2 dedicates some resources, such as CPU, memory, and instance storage, to a particular instance. And it shares other resources, such as the network and the disk subsystem, among instances.</p>
 <h2 id="Instance-type-naming-convention"><a href="#Instance-type-naming-convention" class="headerlink" title="Instance type naming convention"></a>Instance type naming convention</h2><p>Amazon EC2 instance types are named based on their family, generation, processor family, additional capabilities, and size.</p>
 <p><img src="/images/instance-type-name.png" alt="Image"></p>
