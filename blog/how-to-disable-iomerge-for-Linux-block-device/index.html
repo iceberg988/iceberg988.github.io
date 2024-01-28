@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="iomerges parameterIn Linux, the file nomerges under &#x2F;sys&#x2F;block&#x2F;xxx&#x2F;queue&#x2F; enables the user to disable the lookup logic involved with IOmerging requests in the block layer. By">
+    <meta name="description" content="iomerges parameterIn Linux, the file nomerges under &#x2F;sys&#x2F;block&#x2F;xxx&#x2F;queue&#x2F; enables the user to disable the lookup logic involved with IOmerging requests in the block layer.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="How to disable I&#x2F;O merge for Linux block device">
 <meta property="og:url" content="https://www.flamingbytes.com/blog/how-to-disable-iomerge-for-Linux-block-device/index.html">
 <meta property="og:site_name" content="FlamingBytes">
-<meta property="og:description" content="iomerges parameterIn Linux, the file nomerges under &#x2F;sys&#x2F;block&#x2F;xxx&#x2F;queue&#x2F; enables the user to disable the lookup logic involved with IOmerging requests in the block layer. By">
+<meta property="og:description" content="iomerges parameterIn Linux, the file nomerges under &#x2F;sys&#x2F;block&#x2F;xxx&#x2F;queue&#x2F; enables the user to disable the lookup logic involved with IOmerging requests in the block layer.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-01-21T00:55:19.000Z">
-<meta property="article:modified_time" content="2024-01-28T03:31:42.000Z">
+<meta property="article:modified_time" content="2024-01-28T03:32:32.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="Tuning">
 <meta name="twitter:card" content="summary">
@@ -295,7 +295,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-27 19:31:42" itemprop="dateModified" datetime="2024-01-27T19:31:42-08:00">2024-01-27</time>
+      <time title="Modified: 2024-01-27 19:32:32" itemprop="dateModified" datetime="2024-01-27T19:32:32-08:00">2024-01-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -327,7 +327,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h2 id="iomerges-parameter"><a href="#iomerges-parameter" class="headerlink" title="iomerges parameter"></a>iomerges parameter</h2><p>In Linux, the file <strong>nomerges</strong> under &#x2F;sys&#x2F;block&#x2F;xxx&#x2F;queue&#x2F; enables the user to disable the lookup logic involved with IO<br>merging requests in the block layer.</p>
+    <div class="post-body" itemprop="articleBody"><h2 id="iomerges-parameter"><a href="#iomerges-parameter" class="headerlink" title="iomerges parameter"></a>iomerges parameter</h2><p>In Linux, the file <strong>nomerges</strong> under &#x2F;sys&#x2F;block&#x2F;xxx&#x2F;queue&#x2F; enables the user to disable the lookup logic involved with IO<br>merging requests in the block layer. <span id="more"></span></p>
 <p>By default, all merges are enabled.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> /sys/block/sdb/queue/nomerges</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
 
