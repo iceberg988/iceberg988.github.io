@@ -24834,7 +24834,7 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
   <entry>
     <title>How to disable I/O merge for Linux block device</title>
     <url>/blog/how-to-disable-iomerge-for-Linux-block-device/</url>
-    <content><![CDATA[<h2 id="iomerges-parameter"><a href="#iomerges-parameter" class="headerlink" title="iomerges parameter"></a>iomerges parameter</h2><p>In Linux, the file <strong>nomerges</strong> under &#x2F;sys&#x2F;block&#x2F;xxx&#x2F;queue&#x2F; enables the user to disable the lookup logic involved with IO<br>merging requests in the block layer. <span id="more"></span></p>
+    <content><![CDATA[<h2 id="iomerges-parameter"><a href="#iomerges-parameter" class="headerlink" title="iomerges parameter"></a>iomerges parameter</h2><p>In Linux, the file <strong>nomerges</strong> under &#x2F;sys&#x2F;block&#x2F;xxx&#x2F;queue&#x2F; enables the user to disable the lookup logic involved with I&#x2F;O merging requests in the block layer. <span id="more"></span></p>
 <p>By default, all merges are enabled.</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> /sys/block/sdb/queue/nomerges</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
 
