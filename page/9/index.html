@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">273</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">274</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">273</span>
+          <span class="site-state-item-count">274</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,181 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-aws-cli-to-manage-ebs-volumes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/using-aws-cli-to-manage-ebs-volumes/" class="post-title-link" itemprop="url">How to use AWS CLI to manage EBS volumes</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-03-04 14:30:26" itemprop="dateCreated datePublished" datetime="2023-03-04T14:30:26-08:00">2023-03-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-27 12:39:24" itemprop="dateModified" datetime="2024-01-27T12:39:24-08:00">2024-01-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Intro-to-AWS-CLI"><a href="#Intro-to-AWS-CLI" class="headerlink" title="Intro to AWS CLI"></a>Intro to AWS CLI</h2><p>The AWS Command Line Interface (AWS CLI) is a unified tool to manage your AWS services. With just one tool to download and configure, you can control multiple AWS services from the command line and automate them through scripts.</p>
+<h2 id="AWS-CLI-install"><a href="#AWS-CLI-install" class="headerlink" title="AWS CLI install"></a>AWS CLI install</h2><p>To install AWS CLI on MacOS:</p>
+<pre><code>$ curl &quot;https://awscli.amazonaws.com/AWSCLIV2.pkg&quot; -o &quot;AWSCLIV2.pkg&quot;
+$ sudo installer -pkg AWSCLIV2.pkg -target /
+$ which aws
+/usr/local/bin/aws
+$ aws --version
+aws-cli/2.10.3 Python/3.9.11 Darwin/20.4.0 exe/x86_64 prompt/off
+</code></pre>
+<h2 id="Configure-AWS-credentials"><a href="#Configure-AWS-credentials" class="headerlink" title="Configure AWS credentials"></a>Configure AWS credentials</h2><p>The AWS CLI stores sensitive credential information that you specify with <em>aws configure</em> in a local file ~&#x2F;.aws&#x2F;credentials.</p>
+<p>$ aws configure</p>
+<p>AWS Access Key ID [****************6N7Q]: [Your AWS access Key ID]</p>
+<p>AWS Secret Access Key [****************+Ic+]: [Your AWS Secret Access Key]</p>
+<p>Default region name [None]: [Your Region Name]</p>
+<p>Default output format [None]:</p>
+<p>$ cat ~&#x2F;.aws&#x2F;credentials</p>
+<p>[default]</p>
+<p>aws_access_key_id &#x3D;  [Your AWS access Key ID]</p>
+<p>aws_secret_access_key &#x3D; [Your AWS Secret Access Key]</p>
+<p>aws_region &#x3D; [Your Region Name]</p>
+<h2 id="AWS-CLI-Commands"><a href="#AWS-CLI-Commands" class="headerlink" title="AWS CLI Commands"></a>AWS CLI Commands</h2><p>To get commands help:</p>
+<pre><code>$ aws eks help
+$ aws ec2 help
+</code></pre>
+<p>To list and describe clusters:</p>
+<pre><code>$ aws eks list-clusters
+$ aws eks describe-cluster --name [your-cluster-name]
+</code></pre>
+<p>To list and describe nodegroups:</p>
+<pre><code>$ aws eks list-nodegroups --cluster-name [your-cluster-name]
+$ aws eks describe-nodegroup --cluster-name [your-cluster-name] --nodegroup-name [you-nodegroup-name]
+</code></pre>
+<p>To delete multiple EBS volumes(example):</p>
+<pre><code>$ aws ec2 describe-volumes --filters &quot;Name=tag:Name,Values=gp3-volume-*&quot;  | egrep &quot;VolumeId&quot; | awk &#39;&#123;print $NF&#125;&#39; | sed &#39;s/\&quot;//g;s/\,//&#39; &gt; vol_ids
+
+$ for id in `cat vol_ids`
+do
+    aws ec2 delete-volume --volume-id $id
+done
+
+$ aws ec2 describe-volumes --filters &quot;Name=tag:Name,Values=gp3-volume-*&quot;  | egrep &quot;VolumeId&quot; | awk &#39;&#123;print $NF&#125;&#39;  | wc -l
+0
+</code></pre>
+<p>To create multiple EBS volumes(example):</p>
+<pre><code>$ for i in `seq 1 8`
+do
+aws ec2 create-volume --volume-type gp3 --size 256 --iops 16000 --throughput 1000 --availability-zone us-east-1a --tag-specifications &quot;ResourceType=volume,Tags=[&#123;Key=Name,Value=gp3-volume-$i&#125;]&quot;
+done
+</code></pre>
+<p>To attach EBS volume to EC2 instance:</p>
+<pre><code>$ aws ec2 describe-volumes --filters &quot;Name=tag:Name,Values=gp3-volume-1&quot; --query &quot;Volumes[*].&#123;ID:VolumeId&#125;&quot;
+[
+    &#123;
+        &quot;ID&quot;: &quot;vol-0101002b66d4fc211&quot;
+    &#125;
+]
+
+$ aws ec2 attach-volume --volume-id vol-0101002b66d4fc211 --instance-id i-0c2b7553a99a7277b --device /dev/sdf
+&#123;
+    &quot;AttachTime&quot;: &quot;2023-03-04T01:58:37.155000+00:00&quot;,
+    &quot;Device&quot;: &quot;/dev/sdf&quot;,
+    &quot;InstanceId&quot;: &quot;i-0c2b7553a99a7277b&quot;,
+    &quot;State&quot;: &quot;attaching&quot;,
+    &quot;VolumeId&quot;: &quot;vol-0101002b66d4fc211&quot;
+&#125;
+</code></pre>
+<p>To describe instance:</p>
+<pre><code>$ aws ec2 describe-instances --instance-ids i-0c2b7553a99a7277b | egrep &quot;DeviceName|Status|VolumeId&quot;
+&quot;DeviceName&quot;: &quot;/dev/sdf&quot;,
+&quot;Status&quot;: &quot;attached&quot;,
+&quot;VolumeId&quot;: &quot;vol-0101002b66d4fc211&quot;
+&quot;Status&quot;: &quot;attached&quot;
+</code></pre>
+<p>To verify the attached volumes in EC2 instance:</p>
+<pre><code>[ec2-user@ip-192-168-25-183 ~]$ ls -la /dev/sdf
+lrwxrwxrwx 1 root root 7 Mar  4 01:58 /dev/sdf -&gt; nvme1n1
+
+[ec2-user@ip-192-168-25-183 ~]$ lsblk
+NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+nvme0n1       259:0    0  256G  0 disk
+├─nvme0n1p1   259:1    0  256G  0 part /
+└─nvme0n1p128 259:2    0    1M  0 part
+nvme1n1       259:3    0  256G  0 disk
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1374,102 +1549,6 @@ Tracing block device I/O... Hit Ctrl-C to end.
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/getting-started-with-postgresql/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/getting-started-with-bcc/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/getting-started-with-bcc/" class="post-title-link" itemprop="url">Getting started with BCC (BPF Compiler Collection)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-02-12 11:40:00" itemprop="dateCreated datePublished" datetime="2023-02-12T11:40:00-08:00">2023-02-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          BCC is a toolkit for creating efficient kernel tracing and manipulation programs, and includes several useful tools and examples.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/getting-started-with-bcc/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>

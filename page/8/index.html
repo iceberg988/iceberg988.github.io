@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">273</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">274</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">273</span>
+          <span class="site-state-item-count">274</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,276 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/linked-list-implementation-in-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/linked-list-implementation-in-python/" class="post-title-link" itemprop="url">Linked List implementation in Python</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-11 08:37:00" itemprop="dateCreated datePublished" datetime="2023-04-11T08:37:00-07:00">2023-04-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>A linked list is a data structure which represents a sequence of nodes. In a singly linked list, each node points to the next node. In a doubly linked list, each node points to both the next and previous node.</p>
+<p>To find nth element in the linked list, you have to iterate through n nodes which results in linear time complexity O(n). This is less efficient than array which has constant time complexity O(1) to access an element.</p>
+<p>However, the advantage to use linked list is for insert and delete operation since it can be achieved in the constant time without shifting nodes around.</p>
+<p>The following are the key methods to be implemented:</p>
+<ul>
+<li>insert(): add an item to the linked list</li>
+<li>remove(): remove a specified item from the linked list</li>
+<li>insertAt(index): insert an item at a given index</li>
+<li>deleteAt(index): delete an item at a given index</li>
+<li>find(): search an item in the linked list</li>
+<li>is_empty(): return if the linked list is empty or not</li>
+<li>count(): return the number of items in the linked list</li>
+</ul>
+<h2 id="Construct-a-node-class"><a href="#Construct-a-node-class" class="headerlink" title="Construct a node class"></a>Construct a node class</h2><p>Before we implement a singly linked list, we need to construct a node class. The linked list would contain one or more nodes. Each node has a value and a pointer linked to the next node.</p>
+<pre><code>class Node:
+    def __init__(self):
+        self.val = None
+        self.next = None
+
+    def set_val(self, val):
+        self.val = val
+
+    def get_val(self):
+        return self.val
+
+    def set_next(self, next):
+        self.next = next
+
+    def get_next(self):
+        return self.next
+</code></pre>
+<h2 id="Build-a-singly-Linked-List"><a href="#Build-a-singly-Linked-List" class="headerlink" title="Build a singly Linked List"></a>Build a singly Linked List</h2><p>The first function in the linked list class is the constructor, which will be called whenever a linked list is initialized.</p>
+<p>It can include three attributes:</p>
+<ul>
+<li>head: the first node in the linked list</li>
+<li>tail: the last node in the linked list</li>
+<li>count: the number of nodes in the linked list</li>
+</ul>
+<p>Then we can build the other required functions according to the node pointer manipulations.</p>
+<pre><code>class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        self.count = 0
+
+    def count_nodes(self):
+        return self.count
+
+    # insert at the tail of list
+    def insert(self, val):
+        new_node = Node()
+        new_node.set_val(val)
+
+        if self.head == None:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            self.tail.next = new_node
+            self.tail = new_node
+
+        self.count += 1
+
+    # insert at the given index
+    def insertAt(self, val, index):
+        new_node = Node()
+        new_node.set_val(val)
+
+        current_idx = 0
+        current_node = self.head
+        previous_node = current_node
+
+        while current_idx &lt; index and current_node.next != None:
+            previous_node = current_node
+            current_node = current_node.next
+            current_idx += 1
+
+        if current_idx == index:
+            # found the index
+            new_node.next = current_node
+            previous_node.next = new_node
+
+            # increase counter
+            self.count += 1
+        else:
+            print(&quot;the specified index &#123;&#125; is invalid&quot;.format(index))
+
+    # delete the specified node
+    def deleteAt(self, index):
+        current_idx = 0
+        current_node = self.head
+        previous_node = current_node
+
+        while True:
+            if current_idx &lt; index:
+                if current_node.next != None:
+                    # move on to the next node
+                    previous_node = current_node
+                    current_node = current_node.next
+                    current_idx += 1
+                else:
+                    print(&quot;invalid index &#123;&#125;&quot;.format(index))
+                    break
+            else:
+                # found the index, delete it
+                if current_node.next == None:
+                    # this is tail
+                    previous_node.next = None
+                    self.tail = previous_node
+                else:
+                    # this is not tail
+                    previous_node.next = current_node.next
+
+                # decrease the counter
+                self.count -= 1
+
+                break
+
+    def find(self, index):
+        current_node = self.head
+        current_idx = 0
+
+        while current_node.next != None:
+            if current_idx == index:
+                return current_node.get_val()
+            else:
+                current_node = current_node.next
+
+        print(&quot;invalid index &#123;&#125;&quot;.format(index))
+
+    def print_list(self):
+        current_node = self.head
+        current_idx = 0
+
+        while current_node.next != None:
+            print(current_node.get_val())
+            current_node = current_node.next
+
+        # print the last node
+        print(current_node.get_val())
+        print(&quot;count: &#123;&#125;&quot;.format(self.count_nodes()))
+        print()
+</code></pre>
+<h2 id="Test-the-Linked-List-class"><a href="#Test-the-Linked-List-class" class="headerlink" title="Test the Linked List class"></a>Test the Linked List class</h2><pre><code>ll = LinkedList()
+ll.insert(1)
+ll.insert(2)
+ll.insert(5)
+ll.print_list()
+
+ll.insertAt(4, 2)
+ll.print_list()
+
+ll.insertAt(3, 3)
+ll.print_list()
+
+ll.deleteAt(3)
+ll.print_list()
+</code></pre>
+<p>Output:</p>
+<pre><code>1
+2
+5
+count: 3
+
+1
+2
+4
+5
+count: 4
+
+1
+2
+4
+3
+5
+count: 5
+
+1
+2
+4
+5
+count: 4
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1811,181 +2081,6 @@ nvme1n1                                                                         
 </ul>
 <p>Please refer to this <a href="https://www.flamingbytes.com/blog/performance-analysis-in-60-seconds">post</a> for more detail on how to use Linux traditional tools to analyze performance.</p>
 <h2 id="BCC-BPF-performance-tools"><a href="#BCC-BPF-performance-tools" class="headerlink" title="BCC&#x2F;BPF performance tools"></a>BCC&#x2F;BPF performance tools</h2><p>While the traditional tools always gives us a first look at the system performance especially on the resource usage, we can use(or create) BCC&#x2F;BPF tools for further performance analysis. Please refer to this <a href="https://www.flamingbytes.com/blog/bcc-performance-tools-checklist">post</a> for more detail.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-aws-cli-to-manage-ebs-volumes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/using-aws-cli-to-manage-ebs-volumes/" class="post-title-link" itemprop="url">How to use AWS CLI to manage EBS volumes</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-03-04 14:30:26" itemprop="dateCreated datePublished" datetime="2023-03-04T14:30:26-08:00">2023-03-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-27 12:39:24" itemprop="dateModified" datetime="2024-01-27T12:39:24-08:00">2024-01-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Intro-to-AWS-CLI"><a href="#Intro-to-AWS-CLI" class="headerlink" title="Intro to AWS CLI"></a>Intro to AWS CLI</h2><p>The AWS Command Line Interface (AWS CLI) is a unified tool to manage your AWS services. With just one tool to download and configure, you can control multiple AWS services from the command line and automate them through scripts.</p>
-<h2 id="AWS-CLI-install"><a href="#AWS-CLI-install" class="headerlink" title="AWS CLI install"></a>AWS CLI install</h2><p>To install AWS CLI on MacOS:</p>
-<pre><code>$ curl &quot;https://awscli.amazonaws.com/AWSCLIV2.pkg&quot; -o &quot;AWSCLIV2.pkg&quot;
-$ sudo installer -pkg AWSCLIV2.pkg -target /
-$ which aws
-/usr/local/bin/aws
-$ aws --version
-aws-cli/2.10.3 Python/3.9.11 Darwin/20.4.0 exe/x86_64 prompt/off
-</code></pre>
-<h2 id="Configure-AWS-credentials"><a href="#Configure-AWS-credentials" class="headerlink" title="Configure AWS credentials"></a>Configure AWS credentials</h2><p>The AWS CLI stores sensitive credential information that you specify with <em>aws configure</em> in a local file ~&#x2F;.aws&#x2F;credentials.</p>
-<p>$ aws configure</p>
-<p>AWS Access Key ID [****************6N7Q]: [Your AWS access Key ID]</p>
-<p>AWS Secret Access Key [****************+Ic+]: [Your AWS Secret Access Key]</p>
-<p>Default region name [None]: [Your Region Name]</p>
-<p>Default output format [None]:</p>
-<p>$ cat ~&#x2F;.aws&#x2F;credentials</p>
-<p>[default]</p>
-<p>aws_access_key_id &#x3D;  [Your AWS access Key ID]</p>
-<p>aws_secret_access_key &#x3D; [Your AWS Secret Access Key]</p>
-<p>aws_region &#x3D; [Your Region Name]</p>
-<h2 id="AWS-CLI-Commands"><a href="#AWS-CLI-Commands" class="headerlink" title="AWS CLI Commands"></a>AWS CLI Commands</h2><p>To get commands help:</p>
-<pre><code>$ aws eks help
-$ aws ec2 help
-</code></pre>
-<p>To list and describe clusters:</p>
-<pre><code>$ aws eks list-clusters
-$ aws eks describe-cluster --name [your-cluster-name]
-</code></pre>
-<p>To list and describe nodegroups:</p>
-<pre><code>$ aws eks list-nodegroups --cluster-name [your-cluster-name]
-$ aws eks describe-nodegroup --cluster-name [your-cluster-name] --nodegroup-name [you-nodegroup-name]
-</code></pre>
-<p>To delete multiple EBS volumes(example):</p>
-<pre><code>$ aws ec2 describe-volumes --filters &quot;Name=tag:Name,Values=gp3-volume-*&quot;  | egrep &quot;VolumeId&quot; | awk &#39;&#123;print $NF&#125;&#39; | sed &#39;s/\&quot;//g;s/\,//&#39; &gt; vol_ids
-
-$ for id in `cat vol_ids`
-do
-    aws ec2 delete-volume --volume-id $id
-done
-
-$ aws ec2 describe-volumes --filters &quot;Name=tag:Name,Values=gp3-volume-*&quot;  | egrep &quot;VolumeId&quot; | awk &#39;&#123;print $NF&#125;&#39;  | wc -l
-0
-</code></pre>
-<p>To create multiple EBS volumes(example):</p>
-<pre><code>$ for i in `seq 1 8`
-do
-aws ec2 create-volume --volume-type gp3 --size 256 --iops 16000 --throughput 1000 --availability-zone us-east-1a --tag-specifications &quot;ResourceType=volume,Tags=[&#123;Key=Name,Value=gp3-volume-$i&#125;]&quot;
-done
-</code></pre>
-<p>To attach EBS volume to EC2 instance:</p>
-<pre><code>$ aws ec2 describe-volumes --filters &quot;Name=tag:Name,Values=gp3-volume-1&quot; --query &quot;Volumes[*].&#123;ID:VolumeId&#125;&quot;
-[
-    &#123;
-        &quot;ID&quot;: &quot;vol-0101002b66d4fc211&quot;
-    &#125;
-]
-
-$ aws ec2 attach-volume --volume-id vol-0101002b66d4fc211 --instance-id i-0c2b7553a99a7277b --device /dev/sdf
-&#123;
-    &quot;AttachTime&quot;: &quot;2023-03-04T01:58:37.155000+00:00&quot;,
-    &quot;Device&quot;: &quot;/dev/sdf&quot;,
-    &quot;InstanceId&quot;: &quot;i-0c2b7553a99a7277b&quot;,
-    &quot;State&quot;: &quot;attaching&quot;,
-    &quot;VolumeId&quot;: &quot;vol-0101002b66d4fc211&quot;
-&#125;
-</code></pre>
-<p>To describe instance:</p>
-<pre><code>$ aws ec2 describe-instances --instance-ids i-0c2b7553a99a7277b | egrep &quot;DeviceName|Status|VolumeId&quot;
-&quot;DeviceName&quot;: &quot;/dev/sdf&quot;,
-&quot;Status&quot;: &quot;attached&quot;,
-&quot;VolumeId&quot;: &quot;vol-0101002b66d4fc211&quot;
-&quot;Status&quot;: &quot;attached&quot;
-</code></pre>
-<p>To verify the attached volumes in EC2 instance:</p>
-<pre><code>[ec2-user@ip-192-168-25-183 ~]$ ls -la /dev/sdf
-lrwxrwxrwx 1 root root 7 Mar  4 01:58 /dev/sdf -&gt; nvme1n1
-
-[ec2-user@ip-192-168-25-183 ~]$ lsblk
-NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-nvme0n1       259:0    0  256G  0 disk
-├─nvme0n1p1   259:1    0  256G  0 part /
-└─nvme0n1p128 259:2    0    1M  0 part
-nvme1n1       259:3    0  256G  0 disk
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html</a></li>
-</ul>
 
       
     </div>

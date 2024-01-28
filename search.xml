@@ -24858,4 +24858,46 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
         <tag>Tuning</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Does 100% utilization really mean the disk bottleneck?</title>
+    <url>/blog/a-trap-in-iostat-util/</url>
+    <content><![CDATA[<p>From man page of iostat in Linux, <strong>%util</strong> is explained as below.</p>
+<blockquote>
+<p>%util:</p>
+<p>Percentage of elapsed time during which I&#x2F;O requests were issued to the device (bandwidth utilization for the device). Device saturation occurs when this value is close to 100%.</p>
+</blockquote>
+<p>I have seen many cases people misuse this metric when to tell if the system runs into disk I&#x2F;O bottleneck. <span id="more"></span></p>
+<p>To explain what could be wrong with %util, let’s start from a fio benchmark run.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ fio --ioengine=libaio --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --iodepth=128 --direct=1 --group_reporting -time_based --runtime=60 --numjobs=1 --name=fiojob1 --filename=/dev/nvme1n1</span><br><span class="line">write: io=2555.8MB, bw=43615KB/s, iops=10903, runt= 60004msec</span><br></pre></td></tr></table></figure>
+
+<p>During the fio run, we can examine the iostat output to understand the disk utilization.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Device: rrqm/s wrqm/s r/s w/s   rkB/s wkB/s avgrq-sz avgqu-sz await r_await w_await svctm %util</span><br><span class="line">nvme1n1 0      0      0   10993 0     43972 8        30.13    2.74  0       2.74    0.09  100.08</span><br></pre></td></tr></table></figure>
+
+<p>From the iostat output, the disk utilization is 100%. Can we conclude the system is running into disk I&#x2F;O bottleneck. <strong>Not yet!!</strong></p>
+<p>The fio benchmark runs on a AWS EC2 instance which has one EBS volume attached. The IOPS limit is set to <strong>16000</strong> when to create the EBS volume. Obviously, the ceiling is not reached yet since the w&#x2F;s achieved is only <strong>10993</strong>. But, why the disk utilization is already <strong>100%</strong>.</p>
+<p>The problem is due to <strong>parallelism</strong>.</p>
+<p>In the man page of iostat, when it says <strong>%util</strong>, it means “Percentage of elapsed time during which I&#x2F;O requests were issued to the device”. It also means “Device saturation occurs when this value is close to 100%”. This is NOT correct for the modern SSD disk any more.</p>
+<p>For the tranditional magnetic hard disk, due to the nature of spining disk head, it can only handle one I&#x2F;O at a time. The above statement makes sense. However, for the modern SSD disk, it can handle multiple I&#x2F;Os at a time. When the disk is 100% busy, it might be continuously handling one or more write requests during that sampling period. In other words, it doesn’t mean the SSD disk can’t handle extra I&#x2F;Os even if it’s already 100% busy servicing I&#x2F;O requests. </p>
+<p>For the previous fio run, in order to push the disk limit, we need a way to increase I&#x2F;O parallelism. To achieve this, we can keep increasing numjobs from 1 to 2, or more.</p>
+<p><strong>numjobs&#x3D;2:</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ fio --ioengine=libaio --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --iodepth=128 --direct=1 --group_reporting -time_based --runtime=60 --numjobs=2 --name=fiojob1 --filename=/dev/nvme1n1</span><br><span class="line">write: io=3122.2MB, bw=53283KB/s, iops=13320, runt= 60003msec</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Device: rrqm/s wrqm/s r/s w/s     rkB/s wkB/s   avgrq-sz avgqu-sz await r_await w_await svctm %util</span><br><span class="line">nvme1n1 0      0      0   13412.2 0     53648.8 8        44.84    3.34  0       3.34    0.07  100</span><br></pre></td></tr></table></figure>
+
+<p>Now, this w&#x2F;s is increased from 10993 to 13412. We can push more until the limit 16000.</p>
+<p><strong>numjobs&#x3D;4:</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ fio --ioengine=libaio --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --iodepth=128 --direct=1 --group_reporting -time_based --runtime=60 --numjobs=4 --name=fiojob1 --filename=/dev/nvme1n1</span><br><span class="line">write: io=3798.2MB, bw=64817KB/s, iops=16204, runt= 60004msec</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Device: rrqm/s wrqm/s r/s w/s     rkB/s wkB/s   avgrq-sz avgqu-sz await r_await w_await svctm %util</span><br><span class="line">nvme1n1 0      0      0   16001.6 0     64006.4 8        50.15    3.13  0       3.13    0.06  100</span><br></pre></td></tr></table></figure>
+
+<p>To this point, the disk reaches its IOPS limit 16000 and it is finally saturated.</p>
+]]></content>
+      <categories>
+        <category>Tech</category>
+        <category>Performance</category>
+      </categories>
+      <tags>
+        <tag>Observability</tag>
+      </tags>
+  </entry>
 </search>

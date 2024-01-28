@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">273</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">274</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">273</span>
+          <span class="site-state-item-count">274</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,106 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/cbt-changed-block-tracking/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/cbt-changed-block-tracking/" class="post-title-link" itemprop="url">CBT - Changed Block Tracking</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-02-26 08:00:00" itemprop="dateCreated datePublished" datetime="2021-02-26T08:00:00-08:00">2021-02-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Changed Block Tracking is an incremental backup technology for virtual machines. It helps create faster and smaller backups. It has the following advantages.</p>
+<ul>
+<li>Reduce backup time</li>
+<li>Save disk space by only storing changed data to the previous backup</li>
+</ul>
+<p>Block changes are tracked in the virtualization layer, outside the virtual machines. During a backup, only the changed block since the last backup are transmitted. For VMware, the vSphere APIs can be used to request the VMkernel to return the changed blocks from the last snapshot backup. Microsoft provides Resilient Change Tracking(RCT) to provide the native CBT feature for Hyper-V.</p>
+<p>Veritas NetBackup Accelerator reduces the backup time for VMware backups. NetBackup uses VMware Changed Block Tracking (CBT) to identify the changes that were made within a virtual machine. Only the changed data blocks are sent to the NetBackup media server, to significantly reduce the I&#x2F;O and backup time. The media server combines the new data with previous backup data and produces a traditional full NetBackup image that includes the complete virtual machine files.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://kb.vmware.com/s/article/1020128">https://kb.vmware.com/s/article/1020128</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ibm.com/support/knowledgecenter/SSERB6_8.1.2/ve.hv/c_ve_hv_ovw_rct.html">https://www.ibm.com/support/knowledgecenter/SSERB6_8.1.2&#x2F;ve.hv&#x2F;c_ve_hv_ovw_rct.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.veritas.com/support/en_US/doc/21902280-127283730-0/v77418244-127283730">https://www.veritas.com/support/en_US&#x2F;doc&#x2F;21902280-127283730-0&#x2F;v77418244-127283730</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1920,152 +2020,6 @@ void *vmalloc(unsigned long size)
 <p>Then we presented our finished results to the judge. He first took a bite out of the chocolate cake. He said that the sweetness of the chocolate cake mixed with the sourness of the strawberry on top was perfect. Then he ate my burger. He did not say anything. Cold sweat fell on my face. The whole room was so quiet that you could hear a pin drop on the ground.</p>
 <p>I gulped. Did the judge dislike my burger? That was when I saw him take another bite out of the burger. After that, he looked at Alex and me. “Well?” said Alex impatiently. “Who won?” The judge stood up. He said it was very hard to decide which recipe was tastier than the other. Though he equally liked the two foods, he said that my burger had the perfect attributes a burger should have. I grinned because I knew I won the contest.</p>
 <p>If I had made a fancy unfamiliar recipe, I may have never won this contest. I learnt that we should always play to our strengths and do what we are good at.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/art-sketch-2021/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/art-sketch-2021/" class="post-title-link" itemprop="url">Art - Sketch 2021</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-01-02 08:00:00" itemprop="dateCreated datePublished" datetime="2021-01-02T08:00:00-08:00">2021-01-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><img src="/images/drawing/IMG_0341.jpeg"></p>
-<p><img src="/images/drawing/IMG_0380.jpeg"></p>
-<p><img src="/images/drawing/IMG_0381-1.jpeg"></p>
-<p><img src="/images/drawing/IMG_20210919_134430.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_134437.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_134444.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_134454.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_134503.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_134509.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_134516.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_134520.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_134525.jpg"></p>
-<hr>
-<p><img src="/images/drawing/IMG_20210919_134531.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_134536.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_134541.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_134548.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_134556.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_134600.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_134612.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_134617.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135038.jpg"></p>
-<hr>
-<p><img src="/images/drawing/IMG_20210919_135114.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135134.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135140.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135148.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135209.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135216.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135248.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135259.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135305.jpg"></p>
-<hr>
-<p><img src="/images/drawing/IMG_20210919_135323.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135334.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135420.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135442.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135453.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135502.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135534.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135543.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135603.jpg"></p>
-<hr>
-<p><img src="/images/drawing/IMG_20210919_135607.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135630.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135707.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135718.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135726.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135734.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135753.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135802.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135825.jpg"></p>
-<hr>
-<p><img src="/images/drawing/IMG_20210919_135837.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135856.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135903.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135914.jpg"></p>
-<p><img src="/images/drawing/IMG_20210919_135920.jpg"></p>
-<p><img src="/images/drawing/IMG_20211125_171239__01.jpg"></p>
-<p><img src="/images/drawing/IMG_20211231_201653__01.jpg"></p>
-<p><img src="/images/drawing/mmexport1632282808724.jpg"></p>
-<p><img src="/images/drawing/mmexport1632282830539.jpg"></p>
 
       
     </div>

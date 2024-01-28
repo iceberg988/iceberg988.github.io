@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">273</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">274</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">273</span>
+          <span class="site-state-item-count">274</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,161 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-bcc-tools-for-dynamic-kernel-tracing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/using-bcc-tools-for-dynamic-kernel-tracing/" class="post-title-link" itemprop="url">How to use bcc-tools for dynamic kernel tracing</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-03-25 07:00:00" itemprop="dateCreated datePublished" datetime="2021-03-25T07:00:00-07:00">2021-03-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-27 12:39:34" itemprop="dateModified" datetime="2024-01-27T12:39:34-08:00">2024-01-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>In Red Hat Enterprise Linux 8.1, Red Hat ships a set of fully supported on x86_64 dynamic kernel tracing tools, called bcc-tools, that make use of a kernel technology called extended Berkeley Packet Filter (eBPF). With these tools, you can quickly gain insight into certain aspects of system performance that would have previously required more time and effort from the system and operator.</p>
+<p>The eBPF technology allows dynamic kernel tracing without requiring kernel modules (like systemtap) or rebooting of the kernel (as with debug kernels). eBPF accomplishes this while maintaining minimal overhead for each trace point, making these tools an ideal way to instrument running kernels in production.</p>
+<p>To ensure that an eBPF program will not harm the running kernel, tools built on eBPF go through the following process when instantiated by root on the command line:</p>
+<ul>
+<li>The program is compiled into eBPF bytecode.</li>
+<li>Loaded into the kernel.</li>
+<li>Run through a technology called the eBPF verifier to ensure that the program will not harm the running kernel.</li>
+<li>Upon passing the verifier, it begins execution. If it does not pass the verifier, the code is unloaded and does not execute.</li>
+</ul>
+<p>That said, bear in mind that you are still inserting tracing and some system calls are called significantly more than others, so depending on what you are tracing, there may be increased overhead.</p>
+<p>If you are interested in more information on eBPF in general, please see Stanislav Kozina’s blog: <a target="_blank" rel="noopener" href="https://www.redhat.com/en/blog/introduction-ebpf-red-hat-enterprise-linux-7">Introduction to eBPF in Red Hat Enterprise Linux 7</a>.</p>
+<h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><p>With RHEL 8.1, bcc-tools has gone fully supported on x86. To install bcc-tools on RHEL 7 (7.6+) and RHEL 8, run yum install as root:</p>
+<pre><code>$ uname -r
+3.10.0-1062.40.1.el7.x86_64
+$  cat /etc/redhat-release
+Red Hat Enterprise Linux Server release 7.7 (Maipo)
+$ yum install bcc-tools
+Installed:
+  bcc-tools.x86_64 0:0.10.0-1.el7
+Dependency Installed:
+  bcc.x86_64 0:0.10.0-1.el7                kernel-devel.x86_64 0:3.10.0-1160.21.1.el7
+  llvm-private.x86_64 0:7.0.1-1.el7        python-bcc.x86_64 0:0.10.0-1.el7
+
+$ pwd
+/usr/share/bcc/tools
+$  ls
+argdist       drsnoop         memleak         pythonstat   tclobjnew
+bashreadline  execsnoop       mountsnoop      reset-trace  tclstat
+biolatency    ext4dist        mysqld_qslower  rubycalls    tcpaccept
+biosnoop      ext4slower      nfsdist         rubyflow     tcpconnect
+biotop        filelife        nfsslower       rubygc       tcpconnlat
+bitesize      fileslower      nodegc          rubyobjnew   tcpdrop
+bpflist       filetop         nodestat        rubystat     tcplife
+btrfsdist     funccount       offcputime      runqlat      tcpretrans
+btrfsslower   funclatency     offwaketime     runqlen      tcpsubnet
+cachestat     funcslower      oomkill         runqslower   tcptop
+cachetop      gethostlatency  opensnoop       shmsnoop     tcptracer
+capable       hardirqs        perlcalls       slabratetop  tplist
+cobjnew       javacalls       perlflow        sofdsnoop    trace
+cpudist       javaflow        perlstat        softirqs     ttysnoop
+cpuunclaimed  javagc          phpcalls        solisten     vfscount
+dbslower      javaobjnew      phpflow         sslsniff     vfsstat
+dbstat        javastat        phpstat         stackcount   wakeuptime
+dcsnoop       javathreads     pidpersec       statsnoop    xfsdist
+dcstat        killsnoop       profile         syncsnoop    xfsslower
+deadlock      lib             pythoncalls     syscount
+deadlock.c    llcstat         pythonflow      tclcalls
+doc           mdflush         pythongc        tclflow  
+</code></pre>
+<h2 id="bcc-tools-Framework"><a href="#bcc-tools-Framework" class="headerlink" title="bcc-tools Framework"></a>bcc-tools Framework</h2><p>Before we dive into the different types of tools that are included in bcc-tools, it’s important to note a few things:</p>
+<ul>
+<li>All of these tools live in &#x2F;usr&#x2F;share&#x2F;bcc&#x2F;tools.</li>
+<li>These tools must run as the root user as any eBPF program can read kernel data. As such, injecting eBPF bytecode as a regular user is not allowed in RHEL 8.1.</li>
+<li>Each tool has a man page. To view the man page, run man . These man pages include descriptions of the tools, provide the options that can be called, and have information on the expected overhead of the specific tool.</li>
+</ul>
+<p>Since there are a lot of tools in bcc-tools, I’m going to divide the tools into the following classes and then we’ll dive into each class:</p>
+<ul>
+<li>The Snoops</li>
+<li>Latency Detectors</li>
+<li>Slower</li>
+<li>Top Up with bcc-tools</li>
+<li>Java&#x2F;Perl&#x2F;Python&#x2F;Ruby</li>
+</ul>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.redhat.com/en/blog/introduction-ebpf-red-hat-enterprise-linux-7">https://www.redhat.com/en/blog/introduction-ebpf-red-hat-enterprise-linux-7</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.redhat.com/en/blog/bcc-tools-brings-dynamic-kernel-tracing-red-hat-enterprise-linux-81">https://www.redhat.com/en/blog/bcc-tools-brings-dynamic-kernel-tracing-red-hat-enterprise-linux-81</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1569,106 +1724,6 @@ f2696790-b305-4099-8dba-b31d23b0beac    localhost Connected
 <p>As shown above, the usable storage size is the sum of the brick size from two nodes.</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://docs.gluster.org/en/latest/Administrator-Guide/GlusterFS-Introduction/">https://docs.gluster.org/en/latest/Administrator-Guide/GlusterFS-Introduction/</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/cbt-changed-block-tracking/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/cbt-changed-block-tracking/" class="post-title-link" itemprop="url">CBT - Changed Block Tracking</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-02-26 08:00:00" itemprop="dateCreated datePublished" datetime="2021-02-26T08:00:00-08:00">2021-02-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Changed Block Tracking is an incremental backup technology for virtual machines. It helps create faster and smaller backups. It has the following advantages.</p>
-<ul>
-<li>Reduce backup time</li>
-<li>Save disk space by only storing changed data to the previous backup</li>
-</ul>
-<p>Block changes are tracked in the virtualization layer, outside the virtual machines. During a backup, only the changed block since the last backup are transmitted. For VMware, the vSphere APIs can be used to request the VMkernel to return the changed blocks from the last snapshot backup. Microsoft provides Resilient Change Tracking(RCT) to provide the native CBT feature for Hyper-V.</p>
-<p>Veritas NetBackup Accelerator reduces the backup time for VMware backups. NetBackup uses VMware Changed Block Tracking (CBT) to identify the changes that were made within a virtual machine. Only the changed data blocks are sent to the NetBackup media server, to significantly reduce the I&#x2F;O and backup time. The media server combines the new data with previous backup data and produces a traditional full NetBackup image that includes the complete virtual machine files.</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://kb.vmware.com/s/article/1020128">https://kb.vmware.com/s/article/1020128</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.ibm.com/support/knowledgecenter/SSERB6_8.1.2/ve.hv/c_ve_hv_ovw_rct.html">https://www.ibm.com/support/knowledgecenter/SSERB6_8.1.2&#x2F;ve.hv&#x2F;c_ve_hv_ovw_rct.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.veritas.com/support/en_US/doc/21902280-127283730-0/v77418244-127283730">https://www.veritas.com/support/en_US&#x2F;doc&#x2F;21902280-127283730-0&#x2F;v77418244-127283730</a></li>
 </ul>
 
       

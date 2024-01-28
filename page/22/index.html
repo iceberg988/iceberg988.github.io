@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">273</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">274</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">273</span>
+          <span class="site-state-item-count">274</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,139 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/vdbench-performance-test-on-filesystem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/vdbench-performance-test-on-filesystem/" class="post-title-link" itemprop="url">Vdbench performance test on filesystem</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-24 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-24T07:00:00-07:00">2021-08-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="File-system-testing-Method-1"><a href="#File-system-testing-Method-1" class="headerlink" title="File system testing - Method 1"></a>File system testing - Method 1</h2><p><strong>Vdbench filesystem testing terminologies:</strong></p>
+<ul>
+<li>Anchor - A directory or a filesystme mount point. A file system structure will be created by specifying the structure information including directory depth, width, number of files and file size. Multiple anchor can be defined and used by filesystem workloads.</li>
+<li>Operation - File system operations. For example, directory create&#x2F;delete, file create&#x2F;delete, file read&#x2F;write, file open&#x2F;close, setattr and getattr.</li>
+</ul>
+<p><strong>Vdbench parameters for filesystem benchmark:</strong></p>
+<ul>
+<li>File system definition(FSD) - Describe the directory structure.</li>
+<li>File system workload definition(FWD) - Describe the workload parameters.</li>
+<li>Run definition(RD) - Describe how the workload will be run.</li>
+</ul>
+<p><strong>The following is an example of the vdbench job file.</strong></p>
+<pre><code>hd=default,vdbench=/home/tester/vdbench_test,shell=ssh,user=root
+hd=host1,jvms=1,system=192.168.1.50
+fsd=fsd1,anchor=/mnt/testdir1,depth=1,width=1,files=4,size=50g,openflag=o_direct
+fsd=fsd2,anchor=/mnt/testdir2,depth=1,width=1,files=4,size=50g,openflag=o_direct
+fwd=fwd1,fsd=fsd1,host=host1,fileio=random,operation=write,xfersize=4k,fileselect=random,threads=$th
+fwd=fwd2,fsd=fsd2,host=host1,fileio=random,operation=write,xfersize=4k,fileselect=random,threads=$th
+rd=rd1,fwd=fwd*,fwdrate=max,format=yes,elapsed=180,interval=30
+</code></pre>
+<p>Explanation:</p>
+<ol>
+<li><p>hd - it specifies which host to run the filesystem workload. The number of jvms is default to 1. It can be increased if the number of jvms can not handle very high iops with a fast system.</p>
+</li>
+<li><p>fsd - it specifies under which directory to create the filesystem structures. “depth” defines how many level of directories will be created. “width” defines how many sub-directories will be created under each parent directory. “files” defines how many files will be created under each directory. “size” defines the file size. “openflag” controls how the file will be opened.</p>
+</li>
+<li><p>fwd - it specifies what workload will be run on the target filesystems. In this example, it will run random write with 4k blocksize. The specified number of threads will be used to write corresponding number of files. The files will be randomly selected for the workload to run. Note that, the number of threads should less than or equal to the number of files. Note that, the writes to the file is single threaded unless “filiio&#x3D;(random,shared) is specified.</p>
+</li>
+<li><p>rd - it controls how the workload will be run. In this example, the workload will be run for 3 minutes. The “format” option is very useful. It will recreate the filesystem structure before the workload run. It will give us more repeatable results. “fwdrate” indicates the iorate will be unlimited in order to stress the system as much as possible.</p>
+</li>
+<li><p>In this example, we run the 4k random write workload concurrently on two filesystems. The number of threads to write each filesystem can be controlled by passing from shell variable during run time as below.</p>
+<p> .&#x2F;vdbench jobfile&#x2F;vdb.job th&#x3D;2</p>
+</li>
+</ol>
+<h2 id="File-system-testing-Method-2"><a href="#File-system-testing-Method-2" class="headerlink" title="File system testing - Method 2"></a>File system testing - Method 2</h2><p>The similar workload in the method one can also be run as below.</p>
+<pre><code>hd=default,vdbench=/home/tester/vdbench_test,shell=ssh,user=root
+hd=host1,system=192.168.1.50
+sd=sd1,host=host1,lun=/mnt/testdir1/testfile,hitarea=1m,openflag=o_direct,size=50g
+sd=sd2,host=host1,lun=/mnt/testdir2/testfile,hitarea=1m,openflag=o_direct,size=50g
+wd=wd1,sd=sd*,seekpct=100
+rd=rd1,wd=wd1,iorate=max,rdpct=0,xfersize=4K,elapsed=180,interval=30,th=$th
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.oracle.com/technetwork/server-storage/vdbench-1901683.pdf">https://www.oracle.com/technetwork/server-storage/vdbench-1901683.pdf</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2040,153 +2173,6 @@ mdadm: stopped /dev/md0
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://www.prepressure.com/library/technology/raid">https://www.prepressure.com/library/technology/raid</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.thegeekstuff.com/2010/08/raid-levels-tutorial/">https://www.thegeekstuff.com/2010/08/raid-levels-tutorial/</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/upgrade-kernel-version-in-centos-7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/upgrade-kernel-version-in-centos-7/" class="post-title-link" itemprop="url">How to upgrade kernel version in centos 7</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-07-18 07:00:00" itemprop="dateCreated datePublished" datetime="2021-07-18T07:00:00-07:00">2021-07-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-27 19:16:22" itemprop="dateModified" datetime="2024-01-27T19:16:22-08:00">2024-01-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Before-upgrade"><a href="#Before-upgrade" class="headerlink" title="Before upgrade"></a>Before upgrade</h2><pre><code>$ cat /etc/centos-release
-CentOS Linux release 7.4.1708 (Core)
-
-$ uname -r
-3.10.0-693.el7.x86_64
-
-$ cat /boot/grub2/grubenv
-saved_entry=CentOS Linux (3.10.0-693.el7.x86_64) 7 (Core)
-</code></pre>
-<h2 id="Install-the-newer-kernel-package"><a href="#Install-the-newer-kernel-package" class="headerlink" title="Install the newer kernel package"></a>Install the newer kernel package</h2><pre><code>$ rpm -ivh kernel-ml-5.7.12-1.el7.elrepo.x86_64.rpm
-warning: kernel-ml-5.7.12-1.el7.elrepo.x86_64.rpm: Header V4 DSA/SHA1 Signature, key ID baadae52: NOKEY
-Preparing...                          ################################# [100%]
-Updating / installing...
-   1:kernel-ml-5.7.12-1.el7.elrepo    ################################# [100%]
-
-$ rpm -ivh kernel-ml-devel-5.7.12-1.el7.elrepo.x86_64.rpm
-warning: kernel-ml-devel-5.7.12-1.el7.elrepo.x86_64.rpm: Header V4 DSA/SHA1 Signature, key ID baadae52: NOKEY
-Preparing...                          ################################# [100%]
-Updating / installing...
-   1:kernel-ml-devel-5.7.12-1.el7.elre################################# [100%]
-
-$  rpm -qa | grep kernel
-kernel-ml-devel-5.7.12-1.el7.elrepo.x86_64
-kernel-3.10.0-693.el7.x86_64
-kernel-tools-3.10.0-693.el7.x86_64
-kernel-ml-5.7.12-1.el7.elrepo.x86_64
-kernel-tools-libs-3.10.0-693.el7.x86_64
-</code></pre>
-<h2 id="Set-the-default-boot-kernel-entry"><a href="#Set-the-default-boot-kernel-entry" class="headerlink" title="Set the default boot kernel entry"></a>Set the default boot kernel entry</h2><p><strong>Notes:</strong> if &#x2F;etc&#x2F;grub2.cfg does not exist, do next step to rebuild the GRUB2 and come back later after that.</p>
-<pre><code>$ awk -F\&#39; &#39;$1==&quot;menuentry &quot; &#123;print $2&#125;&#39; /etc/grub2.cfg
-CentOS Linux (5.7.12-1.el7.elrepo.x86_64) 7 (Core)
-CentOS Linux (3.10.0-693.el7.x86_64) 7 (Core)
-CentOS Linux (0-rescue-8ef36acf9f544b90bf0621450fe05f75) 7 (Core)
-
-$ grub2-set-default 0 
-$ grep saved /boot/grub2/grubenv
-saved_entry=0
-</code></pre>
-<h2 id="Rebuild-the-GRUB2-configuration"><a href="#Rebuild-the-GRUB2-configuration" class="headerlink" title="Rebuild the GRUB2 configuration"></a>Rebuild the GRUB2 configuration</h2><pre><code>$ grub2-mkconfig -o /boot/grub2/grub.cfg
-Generating grub configuration file ...
-Found linux image: /boot/vmlinuz-5.7.12-1.el7.elrepo.x86_64
-Found initrd image: /boot/initramfs-5.7.12-1.el7.elrepo.x86_64.img
-Found linux image: /boot/vmlinuz-3.10.0-693.el7.x86_64
-Found initrd image: /boot/initramfs-3.10.0-693.el7.x86_64.img
-Found linux image: /boot/vmlinuz-0-rescue-8ef36acf9f544b90bf0621450fe05f75
-Found initrd image: /boot/initramfs-0-rescue-8ef36acf9f544b90bf0621450fe05f75.img
-done
-</code></pre>
-<h2 id="Reboot-the-system"><a href="#Reboot-the-system" class="headerlink" title="Reboot the system"></a>Reboot the system</h2><pre><code>$ reboot
-</code></pre>
-<h2 id="Verify-the-new-kernel-version"><a href="#Verify-the-new-kernel-version" class="headerlink" title="Verify the new kernel version"></a>Verify the new kernel version</h2><pre><code>$ uname -r
-5.7.12-1.el7.elrepo.x86_64
-$ cat /etc/centos-release
-CentOS Linux release 7.4.1708 (Core)
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.golinuxcloud.com/set-default-boot-kernel-version-old-previous-rhel-linux/">https://www.golinuxcloud.com/set-default-boot-kernel-version-old-previous-rhel-linux/</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.tecmint.com/install-upgrade-kernel-version-in-centos-7/">https://www.tecmint.com/install-upgrade-kernel-version-in-centos-7/</a></li>
 </ul>
 
       
