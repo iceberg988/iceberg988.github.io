@@ -1,3 +1,7 @@
+https://www.flamingbytes.com/blog/upgrade-kernel-version-in-centos-7/
+https://www.flamingbytes.com/blog/understanding-await-in-iostat/
+https://www.flamingbytes.com/blog/understanding-ec2-instance-types/
+https://www.flamingbytes.com/blog/how-to-disable-iomerge-for-Linux-block-device/
 https://www.flamingbytes.com/blog/using-sar-to-understand-system-activity/
 https://www.flamingbytes.com/blog/using-r-to-analyze-us-covid-waves-and-peaks/
 https://www.flamingbytes.com/blog/using-priority-queue-in-python/
@@ -15,7 +19,6 @@ https://www.flamingbytes.com/blog/using-bcc-tools-for-dynamic-kernel-tracing/
 https://www.flamingbytes.com/blog/using-aws-cli-to-manage-ebs-volumes/
 https://www.flamingbytes.com/blog/useful-tools-to-analyze-network-latency/
 https://www.flamingbytes.com/blog/upgrade-linux-kernel-on-centos-7/
-https://www.flamingbytes.com/blog/understanding-ec2-instance-types/
 https://www.flamingbytes.com/blog/binary-tree-traversal-inorder-preorder-and-postorder/
 https://www.flamingbytes.com/blog/binary-tree-in-python/
 https://www.flamingbytes.com/blog/tree-traversal-algorithm-in-python/
@@ -242,7 +245,6 @@ https://www.flamingbytes.com/blog/tracking-stock-financial-metrics-in-tradingvie
 https://www.flamingbytes.com/blog/transform-plain-text-into-static-websites-and-blogs/
 https://www.flamingbytes.com/blog/tuned-dynamic-adaptive-system-tuning-daemon/
 https://www.flamingbytes.com/blog/tuning-kernel-parameters-in-docker/
-https://www.flamingbytes.com/blog/understanding-await-in-iostat/
 https://www.flamingbytes.com/blog/the-winning-shot/
 https://www.flamingbytes.com/blog/thread-synchronization/
 https://www.flamingbytes.com/blog/understanding-azure-disk-bursting/
@@ -251,7 +253,6 @@ https://www.flamingbytes.com/blog/understanding-rpo-and-rto/
 https://www.flamingbytes.com/blog/understanding-the-linux-inodes/
 https://www.flamingbytes.com/blog/understanding-thin-provisioning-volume-and-snapshot/
 https://www.flamingbytes.com/blog/uninstall-ceph-storage-cluster/
-https://www.flamingbytes.com/blog/upgrade-kernel-version-in-centos-7/
 https://www.flamingbytes.com/blog/useful-es-apis/
 https://www.flamingbytes.com/blog/useful-hba-commands/
 https://www.flamingbytes.com/blog/useful-tools-in-linux-operating-system/

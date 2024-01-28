@@ -22,14 +22,14 @@
 
     <meta name="description" content="IntroWhen you launch an instance, the instance type you specify determines the hardware of the host computer used for your instance, such as CPU, memory, storage and network.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Understanding EC2 instance types">
+<meta property="og:title" content="The Definitive Guide for EC2 Instance and Storage Volume Types">
 <meta property="og:url" content="https://www.flamingbytes.com/blog/understanding-ec2-instance-types/index.html">
 <meta property="og:site_name" content="FlamingBytes">
 <meta property="og:description" content="IntroWhen you launch an instance, the instance type you specify determines the hardware of the host computer used for your instance, such as CPU, memory, storage and network.">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://www.flamingbytes.com/images/instance-type-name.png">
 <meta property="article:published_time" content="2024-01-26T23:12:35.000Z">
-<meta property="article:modified_time" content="2024-01-27T03:13:18.000Z">
+<meta property="article:modified_time" content="2024-01-28T03:15:52.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="AWS">
 <meta name="twitter:card" content="summary">
@@ -40,10 +40,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/understanding-ec2-instance-types/","path":"blog/understanding-ec2-instance-types/","title":"Understanding EC2 instance types"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/understanding-ec2-instance-types/","path":"blog/understanding-ec2-instance-types/","title":"The Definitive Guide for EC2 Instance and Storage Volume Types"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Understanding EC2 instance types | FlamingBytes</title>
+<title>The Definitive Guide for EC2 Instance and Storage Volume Types | FlamingBytes</title>
   
 
 
@@ -104,7 +104,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">272</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">273</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -170,7 +170,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">272</span>
+          <span class="site-state-item-count">273</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -274,12 +274,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Understanding EC2 instance types | FlamingBytes">
+      <meta itemprop="name" content="The Definitive Guide for EC2 Instance and Storage Volume Types | FlamingBytes">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Understanding EC2 instance types
+          The Definitive Guide for EC2 Instance and Storage Volume Types
         </h1>
 
         <div class="post-meta-container">
@@ -289,9 +289,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2024-01-26 15:12:35 / Modified: 19:13:18" itemprop="dateCreated datePublished" datetime="2024-01-26T15:12:35-08:00">2024-01-26</time>
+      <time title="Created: 2024-01-26 15:12:35" itemprop="dateCreated datePublished" datetime="2024-01-26T15:12:35-08:00">2024-01-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-27 19:15:52" itemprop="dateModified" datetime="2024-01-27T19:15:52-08:00">2024-01-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -409,8 +415,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/blog/how-to-connect-to-aks-cluster-nodes/" rel="prev" title="How to connect to AKS cluster nodes">
-                  <i class="fa fa-angle-left"></i> How to connect to AKS cluster nodes
+                <a href="/blog/how-to-disable-iomerge-for-Linux-block-device/" rel="prev" title="how to disable I/O merge for Linux block device">
+                  <i class="fa fa-angle-left"></i> how to disable I/O merge for Linux block device
                 </a>
             </div>
             <div class="post-nav-item">

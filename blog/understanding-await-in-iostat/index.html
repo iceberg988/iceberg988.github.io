@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="What’s meaning of await in iostat?The following is the description provided for await field in iostat man page. $ man iostat await     The average time (in milliseconds) for I&#x2F;O requests issued to the">
+    <meta name="description" content="What’s meaning of await in iostat?The following is the description provided for await field in iostat man page. 123$ man iostatawait    The average time (in milliseconds) for I&#x2F;O requests issued to th">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Understanding await in iostat">
 <meta property="og:url" content="https://www.flamingbytes.com/blog/understanding-await-in-iostat/index.html">
 <meta property="og:site_name" content="FlamingBytes">
-<meta property="og:description" content="What’s meaning of await in iostat?The following is the description provided for await field in iostat man page. $ man iostat await     The average time (in milliseconds) for I&#x2F;O requests issued to the">
+<meta property="og:description" content="What’s meaning of await in iostat?The following is the description provided for await field in iostat man page. 123$ man iostatawait    The average time (in milliseconds) for I&#x2F;O requests issued to th">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-03-10T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-10-22T18:28:20.000Z">
+<meta property="article:modified_time" content="2024-01-28T03:15:52.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="Observability">
 <meta name="twitter:card" content="summary">
@@ -102,7 +102,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">272</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">273</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -153,7 +153,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What%E2%80%99s-meaning-of-await-in-iostat"><span class="nav-number">1.</span> <span class="nav-text">What’s meaning of await in iostat?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O-path"><span class="nav-number">2.</span> <span class="nav-text">I&#x2F;O path</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-the-await-time-is-calculated"><span class="nav-number">3.</span> <span class="nav-text">How the await time is calculated?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-the-svctm-time-is-measured"><span class="nav-number">4.</span> <span class="nav-text">How the svctm time is measured?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">5.</span> <span class="nav-text">Conclusion</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What%E2%80%99s-meaning-of-await-in-iostat"><span class="nav-number">1.</span> <span class="nav-text">What’s meaning of await in iostat?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O-path"><span class="nav-number">2.</span> <span class="nav-text">I&#x2F;O path</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-the-await-time-is-calculated"><span class="nav-number">3.</span> <span class="nav-text">How the await time is calculated?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-the-svctm-time-is-measured"><span class="nav-number">4.</span> <span class="nav-text">How the svctm time is measured?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Follow-up"><span class="nav-number">5.</span> <span class="nav-text">Follow up</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -168,7 +168,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">272</span>
+          <span class="site-state-item-count">273</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -226,17 +226,17 @@
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/blog/emulate-a-slow-block-device-with-dm-delay/" rel="bookmark">
-        <time class="popular-posts-time">2023-05-20</time>
-        <br>
-      Emulate a slow block device with dm-delay
-      </a>
-    </li>
-    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/blog/using-priority-queue-in-python/" rel="bookmark">
         <time class="popular-posts-time">2023-04-08</time>
         <br>
       How to use Priority Queue in Python
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/emulate-a-slow-block-device-with-dm-delay/" rel="bookmark">
+        <time class="popular-posts-time">2023-05-20</time>
+        <br>
+      Emulate a slow block device with dm-delay
       </a>
     </li>
   </ul>
@@ -295,7 +295,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+      <time title="Modified: 2024-01-27 19:15:52" itemprop="dateModified" datetime="2024-01-27T19:15:52-08:00">2024-01-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -328,35 +328,22 @@
     
     
     <div class="post-body" itemprop="articleBody"><h2 id="What’s-meaning-of-await-in-iostat"><a href="#What’s-meaning-of-await-in-iostat" class="headerlink" title="What’s meaning of await in iostat?"></a>What’s meaning of await in iostat?</h2><p>The following is the description provided for await field in iostat man page.</p>
-<pre><code>$ man iostat
-await
-    The average time (in milliseconds) for I/O requests issued to the device to be served. This includes the time spent by the requests in queue and the time spent servicing them.
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ man iostat</span><br><span class="line">await</span><br><span class="line">    The average time (<span class="keyword">in</span> milliseconds) <span class="keyword">for</span> I/O requests issued to the device to be served. This includes the time spent by the requests <span class="keyword">in</span> queue and the time spent servicing them.</span><br></pre></td></tr></table></figure>
+
 <p>It is a measure of disk I&#x2F;O latency in milliseconds. The latency is from the front of the I&#x2F;O scheduler to the I&#x2F;O completion time.</p>
 <h2 id="I-O-path"><a href="#I-O-path" class="headerlink" title="I&#x2F;O path"></a>I&#x2F;O path</h2><p>The I&#x2F;O path mainly includes the following footprints from block layer to underneath storage device.</p>
 <ul>
-<li><p>Get the I&#x2F;O requests from application(filesystem)</p>
-</li>
-<li><p>Merge the I&#x2F;O requests to existing device queue</p>
-</li>
-<li><p>Dispatch the I&#x2F;O requests(by the I&#x2F;O scheduler) to the device driver</p>
-</li>
-<li><p>Hypervisor scheduler in virtualization if any</p>
-</li>
-<li><p>Multipathing if any</p>
-</li>
-<li><p>Hardware handling</p>
-</li>
-<li><p>HBA driver</p>
-</li>
-<li><p>Transportation(bus)</p>
-</li>
-<li><p>FC switch routing if any</p>
-</li>
-<li><p>Storage controller queuing, caching and processing</p>
-</li>
-<li><p>Actual disk latency</p>
-</li>
+<li>Get the I&#x2F;O requests from application(filesystem)</li>
+<li>Merge the I&#x2F;O requests to existing device queue</li>
+<li>Dispatch the I&#x2F;O requests(by the I&#x2F;O scheduler) to the device driver</li>
+<li>Hypervisor scheduler in virtualization if any</li>
+<li>Multipathing if any</li>
+<li>Hardware handling</li>
+<li>HBA driver</li>
+<li>Transportation(bus)</li>
+<li>FC switch routing if any</li>
+<li>Storage controller queuing, caching and processing</li>
+<li>Actual disk latency</li>
 </ul>
 <h2 id="How-the-await-time-is-calculated"><a href="#How-the-await-time-is-calculated" class="headerlink" title="How the await time is calculated?"></a>How the await time is calculated?</h2><p>The await is the average time on a per I&#x2F;O basis, measured in milliseconds. It mainly includes the time spent in I&#x2F;O scheduler queue and time spent on storage servicing it if the HBA&#x2F;SAN latency is relatively marginal.</p>
 <p>There are two queues involved in the I&#x2F;O processing path.</p>
@@ -367,7 +354,7 @@ await
 <p><em>nr_requests</em> limits the maximum number of I&#x2F;Os in the sorted request queue. The front thread will be blocked if the I&#x2F;O can’t be merged&#x2F;inserted into the scheduler queue due to the full occupancy of the queue . Note that the <em>nr_requests</em> is applied to read and write separately.</p>
 <p>After the I&#x2F;O is passed to the driver, it is no longer in the scheduler queue and doesn’t cout to <em>nr_requests</em> limit. However, it will count to <em>avgqu-sz</em>. So, the <em>avgqu-sz</em> could reach the sum of <em>nr_requests</em> and LUN <em>queue_depth</em>.</p>
 <h2 id="How-the-svctm-time-is-measured"><a href="#How-the-svctm-time-is-measured" class="headerlink" title="How the svctm time is measured?"></a>How the svctm time is measured?</h2><p>await measures the I&#x2F;O latency on a per I&#x2F;O basis while svctm take into account parallel I&#x2F;O. For example, if 100 I&#x2F;Os are submitted to the I&#x2F;O scheduler in parallel and queued onto storage(say queue_depth&#x3D;50), and the 100 I&#x2F;Os completes in 10ms, the await time would be 10ms, but the svctm time could be 2ms.</p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Since await includes the time spent in I&#x2F;O scheduler and storage queue servicing. We may want to see a breakdown for the two parts by using blktrace. It would tell us the overheads on disk queue(I2D) and actual I&#x2F;O service latency(D2C). For furhter study of blktrace, you can read this <a href="!--swig%EF%BF%BC0--">article</a>.</p>
+<h2 id="Follow-up"><a href="#Follow-up" class="headerlink" title="Follow up"></a>Follow up</h2><p>Since await includes the time spent in I&#x2F;O scheduler and storage queue servicing. We may want to see a breakdown for the two phases by using blktrace. It would tell us the overheads on disk queue(I2D) and actual I&#x2F;O service latency(D2C). For furhter study of blktrace, you can read this <a href="https://www.flamingbytes.com/blog/blktrace-a-block-layer-io-tracing-utility">article</a>.</p>
 
     </div>
 

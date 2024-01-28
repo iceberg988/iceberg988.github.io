@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">272</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">273</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">272</span>
+          <span class="site-state-item-count">273</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,155 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/docker-based-fio-benchmarking-part-two/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/docker-based-fio-benchmarking-part-two/" class="post-title-link" itemprop="url">Docker-based fio benchmarking - Part Two</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-02-23 08:00:00" itemprop="dateCreated datePublished" datetime="2022-02-23T08:00:00-08:00">2022-02-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>In this article, we will build a docker image which is based on python versioned alpine Linux. Alpine Linux is much smaller than most distribution base images (~5MB), and thus leads to much slimmer images in general.</p>
+<p>In the python versioned alpine Linux image, we can add additional packages to support our python script “perfbench.py”. The following is the Dockerfile we will use to build the docker image.</p>
+<pre><code>cat Dockerfile
+FROM python:3-alpine
+
+RUN apk add --no-cache \
+    bash \
+    sudo \
+    lsblk \
+    util-linux \
+    procps \
+    fio==3.28-r1
+
+COPY perfbench/perfbench.py /
+</code></pre>
+<p>Now that we have Dockerfile defined, we can build the docker image as below.</p>
+<pre><code>$ docker build -t perfbench .
+
+$ docker images
+REPOSITORY                           TAG                 IMAGE ID            CREATED             SIZE
+perfbench                            latest              fb9441429ea1        21 minutes ago      61.2MB
+python                               3-alpine            08d07b62c1c9        2 days ago          48.6MB
+</code></pre>
+<h2 id="Detached-mode"><a href="#Detached-mode" class="headerlink" title="Detached mode"></a>Detached mode</h2><p>To start a container in detached mode, we can use the -d option.</p>
+<pre><code>$ docker run -t -d --privileged --name myperfbench -v /data:/data perfbench
+
+$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                         NAMES
+3473aa8332cb        perfbench            &quot;python3&quot;                4 seconds ago       Up 3 seconds                                      myperfbench
+
+$ docker exec -it myperfbench bash
+bash-5.1# cat /etc/alpine-release
+3.15.0
+bash-5.1# python --version
+Python 3.10.2
+</code></pre>
+<p>Notes:</p>
+<p>1.<br>Adding the “-t” flag prevents the container from exiting when running in the background. It allocates a pseudo-tty. You would see the following issue if it’s not specified.</p>
+<pre><code>$ docker run -d --name myperfbench perfbench
+
+$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                     PORTS                         NAMES
+ed997c56e9e9        perfbench            &quot;python3&quot;                6 seconds ago       Exited (0) 4 seconds ago                                 myperfbench
+</code></pre>
+<p>2.<br>Using “–privileged” flag to give extended privileges to the container. For example, we can drop cache inside the container with this privilege.</p>
+<h2 id="Foreground-mode"><a href="#Foreground-mode" class="headerlink" title="Foreground mode"></a>Foreground mode</h2><p>For interactive processes (like a shell), you must use -i -t together in order to allocate a tty for the container process.</p>
+<pre><code>$ docker run -it --rm --privileged --name myperfbench -v /data:/data perfbench bash
+
+$ docker run --rm --privileged --name myperfbench -v /data:/data perfbench bash -c &quot;python perfbench.py --dir /data --logdir /data/result&quot;
+</code></pre>
+<p>Note:</p>
+<ul>
+<li>By default a container’s file system persists even after the container exits. This makes debugging a lot easier (since you can inspect the final state) and you retain all your data by default. But if you are running short-term foreground processes, these container file systems can really pile up. If instead you’d like Docker to automatically clean up the container and remove the file system when the container exits, you can add the –rm flag.</li>
+</ul>
+<h2 id="Push-docker-image-to-docker-repository"><a href="#Push-docker-image-to-docker-repository" class="headerlink" title="Push docker image to docker repository"></a>Push docker image to docker repository</h2><pre><code>$ docker tag perfbench:latest noname/perfbench:latest
+$ docker push noname/perfbench:latest
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/_/python">https://hub.docker.com/_&#x2F;python</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/run/">https://docs.docker.com/engine/reference/run/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1333,104 +1482,6 @@ Model name:            Intel(R) Xeon(R) CPU E5-2630 v3 @ 2.40GHz
 <ul>
 <li>We already know there would be ~619TB data uploaded to YouTube in a day. Dividing this by the number of seconds in a day(619TB&#x2F;86400 seconds), the incoming data to YouTube would be 7.3GB&#x2F;s.</li>
 <li>Let’s say 10% of YouTube users are daily active users. With approximately 200M daily users, let’s assume a user watches 10 videos a day. Then YouTube would have 2B views in a day. This would result in ~93PB outgoing data in a day. Dividing this by the number of seconds in a day(93PB&#x2F;86400 seconds), the outgoing speed would be 1128GB&#x2F;s.</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/what-is-high-availability/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/what-is-high-availability/" class="post-title-link" itemprop="url">What is high availability</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-02-03 08:00:00" itemprop="dateCreated datePublished" datetime="2022-02-03T08:00:00-08:00">2022-02-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="What-is-high-availability"><a href="#What-is-high-availability" class="headerlink" title="What is high availability?"></a>What is high availability?</h2><p>High availability refers to a system or component that is operational without interruption for long periods of time.</p>
-<p>High availability is measured as a percentage, with a 100% percent system indicating a service that experiences zero downtime. This would be a system that never fails. It’s pretty rare with complex systems. Most services fall somewhere between 99% and 100% uptime. Most cloud vendors offer some type of Service Level Agreement around availability. Amazon, Google, and Microsoft’s set their cloud SLAs at 99.9%. The industry generally recognizes this as very reliable uptime. A step above, 99.99%, or “four nines,” as is considered excellent uptime.</p>
-<p>But four nines uptime is still 52 minutes of downtime per year. Consider how many people rely on web tools to run their lives and businesses. A lot can go wrong in 52 minutes.</p>
-<p>So what is it that makes four nines so hard? What are the best practices for high availability engineering? And why is 100% uptime so difficult?</p>
-<h2 id="Availability-and-downtime"><a href="#Availability-and-downtime" class="headerlink" title="Availability and downtime"></a>Availability and downtime</h2><p>As shown in the table below, the number of nines(availability %) correlates to the system downtime.</p>
-<p><img src="/images/availability-down-time.png" alt="Image"></p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/High_availability">https://en.wikipedia.org/wiki/High_availability</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.atlassian.com/blog/statuspage/high-availability#:~:text=What%20is%20high%20availability%3F,a%20system%20that%20never%20fails.">https://www.atlassian.com/blog/statuspage/high-availability#:~:text&#x3D;What is high availability%3F,a system that never fails.</a></li>
 </ul>
 
       

@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">272</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">273</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">272</span>
+          <span class="site-state-item-count">273</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,104 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/what-is-high-availability/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/what-is-high-availability/" class="post-title-link" itemprop="url">What is high availability</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-02-03 08:00:00" itemprop="dateCreated datePublished" datetime="2022-02-03T08:00:00-08:00">2022-02-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="What-is-high-availability"><a href="#What-is-high-availability" class="headerlink" title="What is high availability?"></a>What is high availability?</h2><p>High availability refers to a system or component that is operational without interruption for long periods of time.</p>
+<p>High availability is measured as a percentage, with a 100% percent system indicating a service that experiences zero downtime. This would be a system that never fails. It’s pretty rare with complex systems. Most services fall somewhere between 99% and 100% uptime. Most cloud vendors offer some type of Service Level Agreement around availability. Amazon, Google, and Microsoft’s set their cloud SLAs at 99.9%. The industry generally recognizes this as very reliable uptime. A step above, 99.99%, or “four nines,” as is considered excellent uptime.</p>
+<p>But four nines uptime is still 52 minutes of downtime per year. Consider how many people rely on web tools to run their lives and businesses. A lot can go wrong in 52 minutes.</p>
+<p>So what is it that makes four nines so hard? What are the best practices for high availability engineering? And why is 100% uptime so difficult?</p>
+<h2 id="Availability-and-downtime"><a href="#Availability-and-downtime" class="headerlink" title="Availability and downtime"></a>Availability and downtime</h2><p>As shown in the table below, the number of nines(availability %) correlates to the system downtime.</p>
+<p><img src="/images/availability-down-time.png" alt="Image"></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/High_availability">https://en.wikipedia.org/wiki/High_availability</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.atlassian.com/blog/statuspage/high-availability#:~:text=What%20is%20high%20availability%3F,a%20system%20that%20never%20fails.">https://www.atlassian.com/blog/statuspage/high-availability#:~:text&#x3D;What is high availability%3F,a system that never fails.</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1368,94 +1466,6 @@ fs.aio-max-nr = 1048576
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://sort.veritas.com/public/documents/HSO/2.0/linux/productguides/html/hfo_admin_ubuntu/ch04s03.htm">https://sort.veritas.com/public/documents/HSO/2.0/linux/productguides/html/hfo_admin_ubuntu&#x2F;ch04s03.htm</a></li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/rationality-island/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/rationality-island/" class="post-title-link" itemprop="url">Rationality Island</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-11-13 08:00:00" itemprop="dateCreated datePublished" datetime="2021-11-13T08:00:00-08:00">2021-11-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Rationality Island is a city where the citizens choose to live a happy and successful life. The city earned its name based on the mission statement, “Using rationality to solve your problems is the best way to enhance your life.” The citizens demonstrate the values of rationality, self-reliance, and determination. The people solve their own problems by analyzing and finding the cause of it. Instead of feeling disheartened when they face challenges, the citizens rationally find ways to overcome the problems. They persevere through the hardships and help each other. The city of Rationality Island is progressing every day and people work hard to live happily.</p>
-<p>Because Rationality Island has a variety of landforms on it, there is a wide range of natural resources available.  The city is surrounded by water and there are exotic fish, which traders from all over the world come to buy. To the North of the main city lies the Crystal Mountains, where miners mine an abundant amount of gold, silver, and other precious metals. These metals are either crafted into jewelry or traded in the market. On the opposite side of the island, woodchoppers get a large amount of lumber, which is used for building ships for trading or used for houses and furniture. Trade is also an important factor in the economy. Goods are imported in the East Harbor and exported in the North Harbor. Hundreds of ships arrive every day and merchants trade spices and extraordinary furniture like Persian rugs for the supreme jewelry that craftsmen produce. The citizens  of Rationality Island are productive entrepreneurs who use their resources to enhance their life.</p>
-<p>To live in Rationality Island, the citizens must follow one guiding principle: Respect everyone’s natural rights. Everyone is equal regardless of race and skin color because they enjoy the same natural rights. Also the citizens must be honest and honor their contract. Those who don’t show integrity and steal other’s property will be sentenced to jail with a fair trial. Even if anyone is caught doing a dishonorable act, the judges must listen to the defendant’s argument before giving the judgement. The citizens of Rationality Island believe that rationality should be used to enhance your life. Therefore, everyone must go to school to gain valuable knowledge. The citizens are free to produce and trade in a  place where violence is unacceptable and contracts are reliable.</p>
-<p>The flag of Rationality Island is a symbol of the values that the citizens exhibit. The gold bar on the island represents the discoveries and opportunities that people make and receive. The purple mountains indicate the precious metals that are mined in the Crystal Mountains. The lush, green tree and bushes symbolize the large amount of lumber that is chopped. The sun symbolizes hope for citizens to improve and enhance their lives. The fish stands for the exotic salmon and tuna available. The blue ocean represents the peace and freedom that people enjoy. Finally, the light blue sky symbolizes the trade and success in the city.  Rationality Island is a prosperous city, for people demonstrate the values of rationality and independence.</p>
 
       
     </div>

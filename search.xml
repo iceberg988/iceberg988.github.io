@@ -19225,35 +19225,22 @@ ulimit -aS
     <title>Understanding await in iostat</title>
     <url>/blog/understanding-await-in-iostat/</url>
     <content><![CDATA[<h2 id="What’s-meaning-of-await-in-iostat"><a href="#What’s-meaning-of-await-in-iostat" class="headerlink" title="What’s meaning of await in iostat?"></a>What’s meaning of await in iostat?</h2><p>The following is the description provided for await field in iostat man page.</p>
-<pre><code>$ man iostat
-await
-    The average time (in milliseconds) for I/O requests issued to the device to be served. This includes the time spent by the requests in queue and the time spent servicing them.
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ man iostat</span><br><span class="line">await</span><br><span class="line">    The average time (<span class="keyword">in</span> milliseconds) <span class="keyword">for</span> I/O requests issued to the device to be served. This includes the time spent by the requests <span class="keyword">in</span> queue and the time spent servicing them.</span><br></pre></td></tr></table></figure>
+
 <p>It is a measure of disk I&#x2F;O latency in milliseconds. The latency is from the front of the I&#x2F;O scheduler to the I&#x2F;O completion time.</p>
 <h2 id="I-O-path"><a href="#I-O-path" class="headerlink" title="I&#x2F;O path"></a>I&#x2F;O path</h2><p>The I&#x2F;O path mainly includes the following footprints from block layer to underneath storage device.</p>
 <ul>
-<li><p>Get the I&#x2F;O requests from application(filesystem)</p>
-</li>
-<li><p>Merge the I&#x2F;O requests to existing device queue</p>
-</li>
-<li><p>Dispatch the I&#x2F;O requests(by the I&#x2F;O scheduler) to the device driver</p>
-</li>
-<li><p>Hypervisor scheduler in virtualization if any</p>
-</li>
-<li><p>Multipathing if any</p>
-</li>
-<li><p>Hardware handling</p>
-</li>
-<li><p>HBA driver</p>
-</li>
-<li><p>Transportation(bus)</p>
-</li>
-<li><p>FC switch routing if any</p>
-</li>
-<li><p>Storage controller queuing, caching and processing</p>
-</li>
-<li><p>Actual disk latency</p>
-</li>
+<li>Get the I&#x2F;O requests from application(filesystem)</li>
+<li>Merge the I&#x2F;O requests to existing device queue</li>
+<li>Dispatch the I&#x2F;O requests(by the I&#x2F;O scheduler) to the device driver</li>
+<li>Hypervisor scheduler in virtualization if any</li>
+<li>Multipathing if any</li>
+<li>Hardware handling</li>
+<li>HBA driver</li>
+<li>Transportation(bus)</li>
+<li>FC switch routing if any</li>
+<li>Storage controller queuing, caching and processing</li>
+<li>Actual disk latency</li>
 </ul>
 <h2 id="How-the-await-time-is-calculated"><a href="#How-the-await-time-is-calculated" class="headerlink" title="How the await time is calculated?"></a>How the await time is calculated?</h2><p>The await is the average time on a per I&#x2F;O basis, measured in milliseconds. It mainly includes the time spent in I&#x2F;O scheduler queue and time spent on storage servicing it if the HBA&#x2F;SAN latency is relatively marginal.</p>
 <p>There are two queues involved in the I&#x2F;O processing path.</p>
@@ -19264,7 +19251,7 @@ await
 <p><em>nr_requests</em> limits the maximum number of I&#x2F;Os in the sorted request queue. The front thread will be blocked if the I&#x2F;O can’t be merged&#x2F;inserted into the scheduler queue due to the full occupancy of the queue . Note that the <em>nr_requests</em> is applied to read and write separately.</p>
 <p>After the I&#x2F;O is passed to the driver, it is no longer in the scheduler queue and doesn’t cout to <em>nr_requests</em> limit. However, it will count to <em>avgqu-sz</em>. So, the <em>avgqu-sz</em> could reach the sum of <em>nr_requests</em> and LUN <em>queue_depth</em>.</p>
 <h2 id="How-the-svctm-time-is-measured"><a href="#How-the-svctm-time-is-measured" class="headerlink" title="How the svctm time is measured?"></a>How the svctm time is measured?</h2><p>await measures the I&#x2F;O latency on a per I&#x2F;O basis while svctm take into account parallel I&#x2F;O. For example, if 100 I&#x2F;Os are submitted to the I&#x2F;O scheduler in parallel and queued onto storage(say queue_depth&#x3D;50), and the 100 I&#x2F;Os completes in 10ms, the await time would be 10ms, but the svctm time could be 2ms.</p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Since await includes the time spent in I&#x2F;O scheduler and storage queue servicing. We may want to see a breakdown for the two parts by using blktrace. It would tell us the overheads on disk queue(I2D) and actual I&#x2F;O service latency(D2C). For furhter study of blktrace, you can read this <a href="!--swig%EF%BF%BC0--">article</a>.</p>
+<h2 id="Follow-up"><a href="#Follow-up" class="headerlink" title="Follow up"></a>Follow up</h2><p>Since await includes the time spent in I&#x2F;O scheduler and storage queue servicing. We may want to see a breakdown for the two phases by using blktrace. It would tell us the overheads on disk queue(I2D) and actual I&#x2F;O service latency(D2C). For furhter study of blktrace, you can read this <a href="https://www.flamingbytes.com/blog/blktrace-a-block-layer-io-tracing-utility">article</a>.</p>
 ]]></content>
       <categories>
         <category>Tech</category>
@@ -20004,7 +19991,7 @@ nvme1n1                                                                         
       </tags>
   </entry>
   <entry>
-    <title>Upgrade kernel version in centos 7</title>
+    <title>How to upgrade kernel version in centos 7</title>
     <url>/blog/upgrade-kernel-version-in-centos-7/</url>
     <content><![CDATA[<h2 id="Before-upgrade"><a href="#Before-upgrade" class="headerlink" title="Before upgrade"></a>Before upgrade</h2><pre><code>$ cat /etc/centos-release
 CentOS Linux release 7.4.1708 (Core)
@@ -24763,7 +24750,7 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
       </tags>
   </entry>
   <entry>
-    <title>Understanding EC2 instance types</title>
+    <title>The Definitive Guide for EC2 Instance and Storage Volume Types</title>
     <url>/blog/understanding-ec2-instance-types/</url>
     <content><![CDATA[<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>When you launch an instance, the instance type you specify determines the hardware of the host computer used for your instance, such as CPU, memory, storage and network. <span id="more"></span></p>
 <p>Amazon EC2 dedicates some resources, such as CPU, memory, and instance storage, to a particular instance. And it shares other resources, such as the network and the disk subsystem, among instances.</p>
@@ -24842,6 +24829,33 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
       </categories>
       <tags>
         <tag>AWS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>how to disable I/O merge for Linux block device</title>
+    <url>/blog/how-to-disable-iomerge-for-Linux-block-device/</url>
+    <content><![CDATA[<h2 id="iomerges-parameter"><a href="#iomerges-parameter" class="headerlink" title="iomerges parameter"></a>iomerges parameter</h2><p>In Linux, the file <strong>nomerges</strong> under &#x2F;sys&#x2F;block&#x2F;xxx&#x2F;queue&#x2F; enables the user to disable the lookup logic involved with IO<br>merging requests in the block layer.</p>
+<p>By default, all merges are enabled.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> /sys/block/sdb/queue/nomerges</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+
+<p>When set to 1, only simple one-hit merges will be tried. When set to 2, no merge algorithms will be tried (including one-hit or more<br>complex tree&#x2F;hash lookups).</p>
+<h2 id="Tuning-exercise"><a href="#Tuning-exercise" class="headerlink" title="Tuning exercise"></a>Tuning exercise</h2><p>Firstly, we run 4k sequential write benchmarking with fio on a SSD disk. The write IOPS achieved is 104k as below. However, it doesn’t really tell us how many 4k sequential writes can be handled by this SSD disk because the 4k writes are merged to larger blocksize, ~20k in this case.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> /sys/block/sdb/queue/nomerges</span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">$ fio --ioengine=libaio --blocksize=4k --readwrite=write --filesize=1G --end_fsync=1 --iodepth=128 --direct=1 --group_reporting --numjobs=1 --name=fiojob1 --filename=/dev/sdb</span><br><span class="line">  write: IOPS=104k, BW=406MiB/s (426MB/s)(1024MiB/2522msec)</span><br><span class="line"></span><br><span class="line">$ iostat -ktdx 1 sdb</span><br><span class="line">01/28/2024 12:57:51 AM</span><br><span class="line">Device:   rrqm/s   wrqm/s     r/s    w/s        rkB/s   wkB/s       avgrq-sz   avgqu-sz   await   r_await   w_await  svctm  %util</span><br><span class="line">sdb       0.00     62222.00   0.00   41947.00   0.00    416708.00   19.87      27.62      0.66    0.00      0.66     0.02   100.00</span><br></pre></td></tr></table></figure>
+
+<p>Now, we disable I&#x2F;O merges and rerun the same fio benchmarking. The write IOPS achieved is 79.2k which reflects the actual capabilty to handle 4k sequential writes for this SSD disk.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> 2 &gt; /sys/block/sdb/queue/nomerges</span><br><span class="line">$ <span class="built_in">cat</span> /sys/block/sdb/queue/nomerges</span><br><span class="line">2</span><br><span class="line"></span><br><span class="line">$ fio --ioengine=libaio --blocksize=4k --readwrite=write --filesize=1G --end_fsync=1 --iodepth=128 --direct=1 --group_reporting --numjobs=1 --name=fiojob1 --filename=/dev/sdb</span><br><span class="line">  write: IOPS=79.2k, BW=309MiB/s (324MB/s)(1024MiB/3311msec)</span><br><span class="line"></span><br><span class="line">$ iostat -ktdx 1 sdb</span><br><span class="line">01/28/2024 01:00:24 AM</span><br><span class="line">Device:   rrqm/s   wrqm/s   r/s    w/s        rkB/s   wkB/s       avgrq-sz   avgqu-sz   await   r_await   w_await  svctm   %util</span><br><span class="line">sdb       0.00     0.00     0.00   78923.00   0.00    315692.00   8.00       41.15      0.52    0.00      0.52     0.01    100.20</span><br></pre></td></tr></table></figure>
+
+<p>Note: The fio and iostat command above should be run from different terminal in order to monitor the disk I&#x2F;O statistics in real time.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://www.kernel.org/doc/Documentation/block/queue-sysfs.txt">https://www.kernel.org/doc/Documentation/block/queue-sysfs.txt</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Tech</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Tuning</tag>
       </tags>
   </entry>
 </search>
