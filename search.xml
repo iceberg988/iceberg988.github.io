@@ -24750,7 +24750,7 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
       </tags>
   </entry>
   <entry>
-    <title>The Definitive Guide for EC2 Instance and Storage Volume Types</title>
+    <title>Understanding EC2 Instance and Storage Volume Types</title>
     <url>/blog/understanding-ec2-instance-types/</url>
     <content><![CDATA[<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>When you launch an instance, the instance type you specify determines the hardware of the host computer used for your instance, such as CPU, memory, storage and network. <span id="more"></span></p>
 <p>Amazon EC2 dedicates some resources, such as CPU, memory, and instance storage, to a particular instance. And it shares other resources, such as the network and the disk subsystem, among instances.</p>
@@ -24809,7 +24809,7 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
 </ul>
 <p>There are both virtualized instances and baremetal instances(name as *.metal) built on Nitro system.</p>
 <p>In general, you can just use the virtualized instances unless you know what you need with the baremetal instances.</p>
-<h2 id="Storage-features"><a href="#Storage-features" class="headerlink" title="Storage features"></a>Storage features</h2><p>Some instance types support EBS volumes and instance store volumes, while other instance types support only EBS volumes. </p>
+<h2 id="Storage-volume-types"><a href="#Storage-volume-types" class="headerlink" title="Storage volume types"></a>Storage volume types</h2><p>Some instance types support EBS volumes and instance store volumes, while other instance types support only EBS volumes. </p>
 <p>The following is an exmaple of instance type m6idn.12xlarge. When you launch it, the NVMe instance store volumes(2x 1425GB NVMe SSD) are automatically attached to the instance. </p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@ip-172-18-160-187 /]<span class="comment"># lsblk</span></span><br><span class="line">NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</span><br><span class="line">nvme0n1       259:0    0  100G  0 disk</span><br><span class="line">├─nvme0n1p1   259:2    0  100G  0 part /</span><br><span class="line">└─nvme0n1p128 259:3    0    1M  0 part</span><br><span class="line">nvme1n1       259:1    0  1.3T  0 disk</span><br><span class="line">nvme2n1       259:4    0  1.3T  0 disk</span><br></pre></td></tr></table></figure>
 
@@ -24832,7 +24832,7 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
       </tags>
   </entry>
   <entry>
-    <title>how to disable I/O merge for Linux block device</title>
+    <title>How to disable I/O merge for Linux block device</title>
     <url>/blog/how-to-disable-iomerge-for-Linux-block-device/</url>
     <content><![CDATA[<h2 id="iomerges-parameter"><a href="#iomerges-parameter" class="headerlink" title="iomerges parameter"></a>iomerges parameter</h2><p>In Linux, the file <strong>nomerges</strong> under &#x2F;sys&#x2F;block&#x2F;xxx&#x2F;queue&#x2F; enables the user to disable the lookup logic involved with IO<br>merging requests in the block layer.</p>
 <p>By default, all merges are enabled.</p>
