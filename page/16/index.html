@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">274</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">275</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">274</span>
+          <span class="site-state-item-count">275</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,111 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-nconnect-to-improve-nfs-performance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/using-nconnect-to-improve-nfs-performance/" class="post-title-link" itemprop="url">How to tune nconnect to improve NFS performance</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-06-30 07:00:00" itemprop="dateCreated datePublished" datetime="2022-06-30T07:00:00-07:00">2022-06-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-27 12:45:48" itemprop="dateModified" datetime="2024-01-27T12:45:48-08:00">2024-01-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>The nfs mount option “nconnect&#x3D;n” exists in all Linux distributions with kernel 5.3 or higher. nconnect enables multiple TCP connections for a single NFS mount.</p>
+<p>From the nfs <a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man5/nfs.5.html">manual page</a>:</p>
+<blockquote>
+<p>nconnect&#x3D;n</p>
+<blockquote>
+<p>When using a connection oriented protocol such as TCP, it may sometimes be advantageous to set up multiple connections between the client and server. For instance, if your clients and&#x2F;or servers are equipped with multiple network interface cards (NICs), using multiple connections to spread the load may improve overall performance.  In such cases, the nconnect option allows the user to specify the number of connections that should be established between the client and server up to a limit of 16.</p>
+</blockquote>
+</blockquote>
+<p>The nconnect option can be easily added during nfs mount as the following command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mount -t nfs -o nconnect=16 nfs-server-hostname:/mnt/nfsshare /mnt/nfsmnt1 		</span><br></pre></td></tr></table></figure>
+
+<p>The following is the 4k sequential write performance comparison by increasing nconnect to 16 over a single 10GbE link.</p>
+<p><img src="/images/nconnect.png" alt="Image"></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.suse.com/support/kb/doc/?id=000019933">https://www.suse.com/support/kb/doc/?id=000019933</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/@emilypotyraj/use-nconnect-to-effortlessly-increase-nfs-performance-4ceb46c64089">https:&#x2F;&#x2F;medium.com&#x2F;@emilypotyraj&#x2F;use-nconnect-to-effortlessly-increase-nfs-performance-4ceb46c64089</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1518,320 +1623,6 @@ Model name:            Intel(R) Xeon(R) CPU E5-2630 v3 @ 2.40GHz
 <p><img src="/images/rpo-rto.png" alt="Image"></p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://www.enterprisestorageforum.com/management/rpo-and-rto-understanding-the-differences/">https://www.enterprisestorageforum.com/management/rpo-and-rto-understanding-the-differences/</a>)</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/understanding-the-linux-inodes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/understanding-the-linux-inodes/" class="post-title-link" itemprop="url">Understanding the Linux inodes</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-04-30 07:00:00" itemprop="dateCreated datePublished" datetime="2022-04-30T07:00:00-07:00">2022-04-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Linux makes a clear distinction between the contents of a file and the information about a file. All information needed by the filesystem to handle a file is included in a data structure called an <strong>inode</strong>. Each file has its own inode, which the filesystem uses to identify the file.</p>
-<h2 id="File-types"><a href="#File-types" class="headerlink" title="File types"></a>File types</h2><p>Linux files may be one of the following types.</p>
-<ul>
-<li>Regular file</li>
-<li>Directory</li>
-<li>Symbolic link</li>
-<li>Block device file</li>
-<li>Character device file</li>
-<li>Pipe(FIFO)</li>
-<li>Socket</li>
-</ul>
-<p>The first three file types are constituents of any Linux filesystem. Device files are related both to I&#x2F;O devices, and to device drivers integrated into the kernel. When a program accesses a device file, it acts directly on the I&#x2F;O device associated with that file. Pipes and sockets are special files used for interprocess communication.</p>
-<h2 id="File-inodes"><a href="#File-inodes" class="headerlink" title="File inodes"></a>File inodes</h2><p>Linux system must provide the following inode attributes, which are specified in the POSIX standard:</p>
-<ul>
-<li>File type</li>
-<li>Link count: Number of hard links associated with the file</li>
-<li>File size in bytes</li>
-<li>Device ID(i.e., the identifier of the device containing the file)</li>
-<li>Inode number that identifies the file in the filesystem</li>
-<li>UID of the file owner</li>
-<li>User group ID of the file</li>
-<li>Timestamps which specify the inode change time, the last access time and the last modify time.</li>
-<li>Access rights&#x2F;permissions(read, write, and execute) and file mode</li>
-</ul>
-<p>The following is inode struct definition in the Linux source code.</p>
-<pre><code>/*
- * Keep mostly read-only and often accessed (especially for
- * the RCU path lookup and &#39;stat&#39; data) fields at the beginning
- * of the &#39;struct inode&#39;
- */
-struct inode &#123;
-    umode_t			i_mode;
-    unsigned short		i_opflags;
-    kuid_t			i_uid;
-    kgid_t			i_gid;
-    unsigned int		i_flags;
-
-#ifdef CONFIG_FS_POSIX_ACL
-    struct posix_acl	*i_acl;
-    struct posix_acl	*i_default_acl;
-#endif
-
-    const struct inode_operations	*i_op;
-    struct super_block	*i_sb;
-    struct address_space	*i_mapping;
-
-#ifdef CONFIG_SECURITY
-    void			*i_security;
-#endif
-
-    /* Stat data, not accessed from path walking */
-    unsigned long		i_ino;
-    /*
-     * Filesystems may only read i_nlink directly.  They shall use the
-     * following functions for modification:
-     *
-     *    (set|clear|inc|drop)_nlink
-     *    inode_(inc|dec)_link_count
-     */
-    union &#123;
-        const unsigned int i_nlink;
-        unsigned int __i_nlink;
-    &#125;;
-    dev_t			i_rdev;
-    loff_t			i_size;
-    struct timespec64	i_atime;
-    struct timespec64	i_mtime;
-    struct timespec64	i_ctime;
-    spinlock_t		i_lock;	/* i_blocks, i_bytes, maybe i_size */
-    unsigned short          i_bytes;
-    u8			i_blkbits;
-    u8			i_write_hint;
-    blkcnt_t		i_blocks;
-
-#ifdef __NEED_I_SIZE_ORDERED
-    seqcount_t		i_size_seqcount;
-#endif
-
-    /* Misc */
-    unsigned long		i_state;
-    struct rw_semaphore	i_rwsem;
-
-    unsigned long		dirtied_when;	/* jiffies of first dirtying */
-    unsigned long		dirtied_time_when;
-
-    struct hlist_node	i_hash;
-    struct list_head	i_io_list;	/* backing dev IO list */
-#ifdef CONFIG_CGROUP_WRITEBACK
-    struct bdi_writeback	*i_wb;		/* the associated cgroup wb */
-
-    /* foreign inode detection, see wbc_detach_inode() */
-    int			i_wb_frn_winner;
-    u16			i_wb_frn_avg_time;
-    u16			i_wb_frn_history;
-#endif
-    struct list_head	i_lru;		/* inode LRU list */
-    struct list_head	i_sb_list;
-    struct list_head	i_wb_list;	/* backing dev writeback list */
-    union &#123;
-        struct hlist_head	i_dentry;
-        struct rcu_head		i_rcu;
-    &#125;;
-    atomic64_t		i_version;
-    atomic64_t		i_sequence; /* see futex */
-    atomic_t		i_count;
-    atomic_t		i_dio_count;
-    atomic_t		i_writecount;
-#if defined(CONFIG_IMA) || defined(CONFIG_FILE_LOCKING)
-    atomic_t		i_readcount; /* struct files open RO */
-#endif
-    union &#123;
-        const struct file_operations	*i_fop;	/* former -&gt;i_op-&gt;default_file_ops */
-        void (*free_inode)(struct inode *);
-    &#125;;
-    struct file_lock_context	*i_flctx;
-    struct address_space	i_data;
-    struct list_head	i_devices;
-    union &#123;
-        struct pipe_inode_info	*i_pipe;
-        struct cdev		*i_cdev;
-        char			*i_link;
-        unsigned		i_dir_seq;
-    &#125;;
-
-    __u32			i_generation;
-
-#ifdef CONFIG_FSNOTIFY
-    __u32			i_fsnotify_mask; /* all events this inode cares about */
-    struct fsnotify_mark_connector __rcu	*i_fsnotify_marks;
-#endif
-
-#ifdef CONFIG_FS_ENCRYPTION
-    struct fscrypt_info	*i_crypt_info;
-#endif
-
-#ifdef CONFIG_FS_VERITY
-    struct fsverity_info	*i_verity_info;
-#endif
-
-    void			*i_private; /* fs or device private pointer */
-&#125; __randomize_layout;
-</code></pre>
-<h2 id="Display-inode-information"><a href="#Display-inode-information" class="headerlink" title="Display inode information"></a>Display inode information</h2><p>The inode data can be displayed with the <strong>stat</strong> command.</p>
-<pre><code>$ echo &quot;hello inode&quot; &gt; testfile
-
-$ debugfs /dev/mapper/vgroot-lvroot
-debugfs 1.42.9 (28-Dec-2013)
-debugfs:  q
-[root@init500-d1 ~]# stat testfile
-  File: ‘testfile’
-  Size: 12        	Blocks: 8          IO Block: 4096   regular file
-Device: fd00h/64768d	Inode: 27787306    Links: 1
-Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
-Access: 2022-04-30 20:40:38.496696650 +0000
-Modify: 2022-04-30 20:40:38.496696650 +0000
-Change: 2022-04-30 20:40:38.496696650 +0000
- Birth: -
-
-$ stat --format=%i testfile
-27787306
-</code></pre>
-<p>The inode number can be also displayed with <strong>ls -i</strong> command. With <strong>ls -l</strong> command, it displays file permissions for the owner, group and others. In the following example, the owner has read and write permission. The group and others only have read permission.</p>
-<pre><code>$ ls -il testfile
-27787306 -rw-r--r-- 1 root root 12 Apr 30 20:40 testfile
-</code></pre>
-<p>The inode space information can be displayed with <strong>df -i</strong> command.</p>
-<pre><code>$ df -i
-Filesystem                   Inodes  IUsed     IFree IUse% Mounted on
-devtmpfs                  132058034    953 132057081    1% /dev
-tmpfs                     132061520      4 132061516    1% /dev/shm
-tmpfs                     132061520   1270 132060250    1% /run
-tmpfs                     132061520     17 132061503    1% /sys/fs/cgroup
-/dev/mapper/vgroot-lvroot  97320960 188567  97132393    1% /
-/dev/nvme0n1p2               128016     31    127985    1% /boot
-/dev/nvme0n1p1                    0      0         0     - /boot/efi
-tmpfs                     132061520      1 132061519    1% /run/user/0
-tmpfs                     132061520      1 132061519    1% /var/lib/osd/lttng
-</code></pre>
-<p>The content of filesystem superblock can be listed with <strong>tune2fs</strong> command. The inode related information can be grepped.</p>
-<pre><code>$ tune2fs -l /dev/mapper/vgroot-lvroot | grep -i inode
-Filesystem features:      has_journal ext_attr resize_inode dir_index filetype needs_recovery extent 64bit flex_bg sparse_super large_file huge_file uninit_bg dir_nlink extra_isize
-Inode count:              97320960
-Free inodes:              97167388
-Inodes per group:         8192
-Inode blocks per group:   512
-First inode:              11
-Inode size:	          256
-Journal inode:            8
-First orphan inode:       22157990
-Journal backup:           inode blocks
-</code></pre>
-<p>The debugfs program is an interactive file system debugger. It can be used to examine and change the state of an ext2, ext3, or ext4 file system.</p>
-<pre><code>$ debugfs /dev/mapper/vgroot-lvroot
-debugfs 1.42.9 (28-Dec-2013)
-
-debugfs:  stat &lt;27787306&gt;
-Inode: 27787306   Type: regular    Mode:  0644   Flags: 0x80000
-Generation: 269876152    Version: 0x00000000:00000001
-User:     0   Group:     0   Size: 12
-File ACL: 0    Directory ACL: 0
-Links: 1   Blockcount: 8
-Fragment:  Address: 0    Number: 0    Size: 0
- ctime: 0x626d9ec6:766bf528 -- Sat Apr 30 20:40:38 2022
- atime: 0x626d9ec6:766bf528 -- Sat Apr 30 20:40:38 2022
- mtime: 0x626d9ec6:766bf528 -- Sat Apr 30 20:40:38 2022
-crtime: 0x626d9ec6:766bf528 -- Sat Apr 30 20:40:38 2022
-Size of extra inode fields: 32
-EXTENTS:
-(0):111182849
-</code></pre>
-<p>Inode structure for the directory can be displayed as below.</p>
-<pre><code>$ stat /
-  File: ‘/’
-  Size: 4096      	Blocks: 8          IO Block: 4096   directory
-Device: fd00h/64768d	Inode: 2           Links: 18
-Access: (0555/dr-xr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
-Access: 2022-04-14 23:50:13.812053511 +0000
-Modify: 2022-04-30 20:42:56.468650708 +0000
-Change: 2022-04-30 20:42:56.468650708 +0000
- Birth: -
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/source/include/linux/fs.h#L614">https://elixir.bootlin.com/linux/latest/source/include/linux/fs.h#L614</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cs.montana.edu/courses/309/topics/4-disks/debugfs_example.html">https://www.cs.montana.edu/courses/309/topics/4-disks/debugfs_example.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://linoxide.com/linux-inode/">https://linoxide.com/linux-inode/</a></li>
 </ul>
 
       

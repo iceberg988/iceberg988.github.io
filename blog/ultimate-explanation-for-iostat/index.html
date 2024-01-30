@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="iostat is a Linux I&#x2F;O performance monitoring utility. It’s very commonly used to analyze device utilization. &#x2F;proc&#x2F;diskstatsThe statistics fields in iostat are calculated based on the I">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The complete explanation for await, svctm and %util in iostat">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/ultimate-explanation-for-iostat/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="iostat is a Linux I&#x2F;O performance monitoring utility. It’s very commonly used to analyze device utilization. &#x2F;proc&#x2F;diskstatsThe statistics fields in iostat are calculated based on the I">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-01-29T23:28:42.000Z">
+<meta property="article:modified_time" content="2024-01-30T05:41:38.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="Observability">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/ultimate-explanation-for-iostat/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/ultimate-explanation-for-iostat/","path":"blog/ultimate-explanation-for-iostat/","title":"The complete explanation for await, svctm and %util in iostat"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>The complete explanation for await, svctm and %util in iostat | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">275</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#proc-diskstats"><span class="nav-number">1.</span> <span class="nav-text">&#x2F;proc&#x2F;diskstats</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iostat"><span class="nav-number">2.</span> <span class="nav-text">iostat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-are-the-iostat-fields-calculated"><span class="nav-number">3.</span> <span class="nav-text">How are the iostat fields calculated?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Two-traps-in-iostat"><span class="nav-number">4.</span> <span class="nav-text">Two traps in iostat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">275</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/a-trap-in-iostat-util/" rel="bookmark">
+        <time class="popular-posts-time">2024-01-25</time>
+        <br>
+      Does 100% utilization really mean the disk bottleneck?
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/getting-started-with-bpftrace/" rel="bookmark">
+        <time class="popular-posts-time">2023-02-22</time>
+        <br>
+      Getting started with bpftrace
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/proc-filesystem-diskstats/" rel="bookmark">
+        <time class="popular-posts-time">2022-03-05</time>
+        <br>
+      Proc filesystem - diskstats
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/understanding-await-in-iostat/" rel="bookmark">
+        <time class="popular-posts-time">2021-03-10</time>
+        <br>
+      Understanding await in iostat
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-sar-to-understand-system-activity/" rel="bookmark">
+        <time class="popular-posts-time">2022-07-06</time>
+        <br>
+      How to use sar to understand Linux system activity
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/ultimate-explanation-for-iostat/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="The complete explanation for await, svctm and %util in iostat | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          The complete explanation for await, svctm and %util in iostat
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-01-29 15:28:42 / Modified: 21:41:38" itemprop="dateCreated datePublished" datetime="2024-01-29T15:28:42-08:00">2024-01-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><strong>iostat</strong> is a Linux I&#x2F;O performance monitoring utility. It’s very commonly used to analyze device utilization.</p>
+<h2 id="proc-diskstats"><a href="#proc-diskstats" class="headerlink" title="&#x2F;proc&#x2F;diskstats"></a>&#x2F;proc&#x2F;diskstats</h2><p>The statistics fields in iostat are calculated based on the I&#x2F;O statistics of block devices in &#x2F;proc&#x2F;diskstats.</p>
+<p>Each line in the &#x2F;proc&#x2F;diskstats file contains the following 14 fields. More fields are added in kernel 4.18 and later.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1  major number</span><br><span class="line">2  minor number</span><br><span class="line">3  device name</span><br><span class="line">4  reads completed successfully</span><br><span class="line">5  reads merged</span><br><span class="line">6  sectors read</span><br><span class="line">7  time spent reading (ms)</span><br><span class="line">8  writes completed</span><br><span class="line">9  writes merged</span><br><span class="line">10  sectors written</span><br><span class="line">11  time spent writing (ms)</span><br><span class="line">12  I/Os currently in progress</span><br><span class="line">13  time spent doing I/Os (ms)</span><br><span class="line">14  weighted time spent doing I/Os (ms)</span><br></pre></td></tr></table></figure>
+
+<p>We will need to know these statistics later when we learn how iostat calculates its fields.</p>
+<h2 id="iostat"><a href="#iostat" class="headerlink" title="iostat"></a>iostat</h2><p>Now, let’s use fio load generator to benchamrk a AWS EBS gp3 volume and examine the iostat report.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ fio --ioengine=libaio --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --iodepth=128 --direct=1 --group_reporting -time_based --runtime=60 --numjobs=1 --name=fiojob1 --filename=/dev/nvme1n1</span><br><span class="line">write: io=2555.8MB, bw=43615KB/s, iops=10903, runt= 60004msec</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Device: rrqm/s wrqm/s r/s w/s   rkB/s wkB/s avgrq-sz avgqu-sz await r_await w_await svctm %util</span><br><span class="line">nvme1n1 0      0      0   10993 0     43972 8        30.13    2.74  0       2.74    0.09  100</span><br></pre></td></tr></table></figure>
+
+<p>As we can see above, it achieves 10903 iops and the disk is 100% utilized.</p>
+<p>You may naturally conclude that the disk runs into bottleneck since it’s 100% busy. Is this really true? Before we answer this question, let’s firstly understand how iostat computes the statistics fields.</p>
+<h2 id="How-are-the-iostat-fields-calculated"><a href="#How-are-the-iostat-fields-calculated" class="headerlink" title="How are the iostat fields calculated?"></a>How are the iostat fields calculated?</h2><p>Since the basic fields, such as r&#x2F;s and w&#x2F;s, are very straightforward, we will mainly focus on the following three extended fields because they are commonly used to identify the disk bottlenck.</p>
+<ul>
+<li>await</li>
+<li>svctm</li>
+<li>%util</li>
+</ul>
+<p>From iostat source code, to calcualte the <strong>total number of read and write IOs</strong>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">n_ios  = blkio.rd_ios + blkio.wr_ios;</span><br></pre></td></tr></table></figure>
+
+<p>To calculate the <strong>total amount of time(ms) waiting in queue</strong>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">n_ticks = blkio.rd_ticks + blkio.wr_ticks;</span><br></pre></td></tr></table></figure>
+
+<p>To calculate the <strong>average I&#x2F;O wait time(ms)</strong>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wait = n_ios ? n_ticks / n_ios : 0.0;</span><br></pre></td></tr></table></figure>
+
+<p>To calcualte the <strong>average I&#x2F;O service time(ms)</strong>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svc_t = n_ios ? blkio.ticks / n_ios : 0.0;</span><br></pre></td></tr></table></figure>
+
+<p>Note: the blkio.ticks is calculated based on the field 13 “time spent doing I&#x2F;Os (ms)” in &#x2F;proc&#x2F;diskstats.</p>
+<p>To calculate the <strong>disk utilization</strong>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">busy = 100.0 * blkio.ticks / deltams; /* percentage! */</span><br></pre></td></tr></table></figure>
+
+<p>With above implementaion, there are actually two traps when to use them to identify disk bottleneck.</p>
+<ul>
+<li><strong>svctm</strong> - average I&#x2F;O service time(ms)</li>
+<li><strong>%util</strong> - disk utilization</li>
+</ul>
+<h2 id="Two-traps-in-iostat"><a href="#Two-traps-in-iostat" class="headerlink" title="Two traps in iostat"></a>Two traps in iostat</h2><p>Let’s try to increase the fio numjobs from 1 to 4.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ fio --ioengine=libaio --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --iodepth=128 --direct=1 --group_reporting -time_based --runtime=60 --numjobs=4 --name=fiojob1 --filename=/dev/nvme1n1</span><br><span class="line">write: io=3798.2MB, bw=64817KB/s, iops=16204, runt= 60004msec</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Device: rrqm/s wrqm/s r/s w/s     rkB/s wkB/s   avgrq-sz avgqu-sz await r_await w_await svctm %util</span><br><span class="line">nvme1n1 0      0      0   16001.6 0     64006.4 8        50.15    3.13  0       3.13    0.06  100</span><br></pre></td></tr></table></figure>
+
+<p>Comparing the 1 fio job and 4 jobs runs:</p>
+<ul>
+<li>The w&#x2F;s increases from 10903 to 16001 even though the disk utilization is 100% for the two runs. It means, with one job run, the disk is not fully saturated yet.</li>
+<li>The average I&#x2F;O service time(svctm) reduces from 0.09 to 0.06.</li>
+</ul>
+<p>Literally, the disk could respond the request in 0.09ms under ligher load, and 0.06ms under heavier load. This seems unlikely and it’s not what iostat supposes to tell us on the average disk service time.</p>
+<p>And from iostat man page, you may see this warning.</p>
+<blockquote>
+<p>svctm<br>    The average service time (in milliseconds) for I&#x2F;O requests that were issued to the device. Warning! Do not trust this field any more.  This field will be removed in a future sysstat version.</p>
+</blockquote>
+<p>For the traditional spining harddisk, the I&#x2F;O has to be serialized due to the nature of disk head movement from one disk platter location to another. That means only one I&#x2F;O can be serviced at once. In such case, the svctm can reflect how fast each I&#x2F;O is responded.</p>
+<p>For the modern SSD disk, it won’t be true any more because the disk can respond to multiple IOs at once. Even if it’s 100% utilized, it just means during that period, the disk is busy responding I&#x2F;O requests. It doesn’t always mean the disk is already saturated.</p>
+<p>In order to idenitfy if the disk is completely saturated(peaked), the only way is to offer more work to do in parallel. In the above example, by increasing fio numjobs from 1 to 4, the w&#x2F;s is peaked at 16001 which is align with the specfied iops for the EBS gp3 volume.</p>
+<p>In a word, both the svctm and %util fields in iostat are misleading for the modern SSD storage system. They should be used with extra care. </p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/Documentation/iostats.txt">I&#x2F;O statistics fields</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/Documentation/ABI/testing/procfs-diskstats">&#x2F;proc&#x2F;diskstats</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/i4oolish/iostat/blob/master/iostat.c#L219">iostat.c</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Observability/" rel="tag"><i class="fa fa-tag"></i> Observability</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/understanding-ec2-instance-types/" rel="prev" title="Understanding EC2 Instance and Storage Volume Types">
+                  <i class="fa fa-angle-left"></i> Understanding EC2 Instance and Storage Volume Types
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

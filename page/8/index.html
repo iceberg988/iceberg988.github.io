@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">274</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">275</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">274</span>
+          <span class="site-state-item-count">275</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,205 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/stringbuilder-implementation-in-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/stringbuilder-implementation-in-python/" class="post-title-link" itemprop="url">StringBuilder implementation in Python</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-12 08:12:00" itemprop="dateCreated datePublished" datetime="2023-04-12T08:12:00-07:00">2023-04-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>A string is a collection of characters. In Java, StringBuilder class is used to create mutable string. But there isn’t a built-in StringBuilder in Python. In Python, string is an immutable object. New memory has to be allocated for every string.</p>
+<p>In Pythin, there are following ways to implement a StringBuilder.</p>
+<ol>
+<li>string concatenation(append)</li>
+<li>join() function</li>
+<li>string IO module</li>
+</ol>
+<h2 id="String-concatenation-append"><a href="#String-concatenation-append" class="headerlink" title="String concatenation(append)"></a>String concatenation(append)</h2><pre><code>def method1():
+    string = &quot;&quot;
+    for i in range(count):
+        string += str(i)
+    return string
+</code></pre>
+<h2 id="join-function"><a href="#join-function" class="headerlink" title="join() function"></a>join() function</h2><pre><code>def method2():
+    strings = []
+    for i in range(count):
+        strings.append(str(i))
+    return &quot;&quot;.join(strings)
+</code></pre>
+<h2 id="StringIO-module"><a href="#StringIO-module" class="headerlink" title="StringIO module"></a>StringIO module</h2><pre><code>def method3():
+    si = StringIO()
+    for i in range(count):
+        si.write(str(i))
+
+    return si.getvalue()
+</code></pre>
+<h2 id="Efficiency-measurement"><a href="#Efficiency-measurement" class="headerlink" title="Efficiency measurement"></a>Efficiency measurement</h2><p>I’m interested to see which method is more efficient. So, we are building a long string with one million numbers in order to measure the run time of each method.</p>
+<pre><code>from io import StringIO
+import time
+from array import array
+
+
+# using string concatenation(append)
+def method1():
+    string = &quot;&quot;
+    for i in range(count):
+        string += str(i)
+    return string
+
+
+# using join()
+def method2():
+    strings = []
+    for i in range(count):
+        strings.append(str(i))
+    return &quot;&quot;.join(strings)
+
+
+# using StringIO module
+def method3():
+    si = StringIO()
+    for i in range(count):
+        si.write(str(i))
+
+    return si.getvalue()
+
+
+# implement a StringBuilder in Python
+class StringBuilder:
+    def __init__(self):
+        self.sb = StringIO()
+
+    def add(self, str):
+        self.sb.write(str)
+
+    def toString(self):
+        return self.sb.getvalue()
+
+
+# using array
+def method4():
+    char_array = array(&quot;L&quot;)
+    for i in range(count):
+        char_array.append(i)
+    return char_array
+
+
+# test function
+def run_test(method):
+    start_time = time.perf_counter()
+    eval(&quot;method&quot; + str(method))()
+    end_time = time.perf_counter()
+    print(&quot;elapsed time &#123;&#125;&quot;.format(round(end_time - start_time, 2)))
+</code></pre>
+<p>We run the tests for the four different methods twice to measure the efficiency.</p>
+<pre><code># tests
+count = 1000000
+run_test(1)
+run_test(2)
+run_test(3)
+run_test(4)
+
+
+run_test(4)
+run_test(3)
+run_test(2)
+run_test(1)
+
+# Output:
+# elapsed time 0.29
+# elapsed time 0.16
+# elapsed time 0.19
+# elapsed time 0.09
+
+# elapsed time 0.08
+# elapsed time 0.19
+# elapsed time 0.15
+# elapsed time 0.31
+</code></pre>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>The string appending method is the slowest. The join() function is relative efficient. Using an array seems efficient as well. However, we don’t count the array to string convention time yet.</p>
+<p>In general, the join() functions seems fast enough for long string construction.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1942,145 +2141,6 @@ nvme1n1                                                                         
 [root@host1 ~]$ for i in `seq 2 9`; do dd if=/dev/zero of=/dev/nvme$&#123;i&#125;n1 bs=1M count=1000; done
 [root@host1 ~]$ reboot
 </code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/general-steps-for-system-performance-analysis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/general-steps-for-system-performance-analysis/" class="post-title-link" itemprop="url">General steps for system performance analysis</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-03-05 09:52:00" itemprop="dateCreated datePublished" datetime="2023-03-05T09:52:00-08:00">2023-03-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>This post tries to provide general steps for system performance analysis. We are going to cover the following objectives.</p>
-<ul>
-<li>The performance goals</li>
-<li>Workload characterization</li>
-<li>Drill-down analysis</li>
-<li>Traditional performance tools</li>
-<li>BCC&#x2F;BPF performance tools</li>
-</ul>
-<h2 id="The-Goals-of-performance-analysis"><a href="#The-Goals-of-performance-analysis" class="headerlink" title="The Goals of performance analysis"></a>The Goals of performance analysis</h2><p>In general, the goals of performance analysis are to improve end-user performance and reduce the operating cost. To achieve this, it’s important to make the performance measurable. We often use the following metrics to measure performance.</p>
-<ul>
-<li>Rates - operation or request rates per second</li>
-<li>Throughput - data transferred per second</li>
-<li>Latency - the time to accomplish a operation or request in milliseconds</li>
-<li>Resource utilization - the resource usage in percentage</li>
-<li>Cost - Price&#x2F;performance ratio</li>
-</ul>
-<p>The rates, throughput and latency are usually the most important metrics to check if the certain performance goal is met. For example, the throughput measured in MiB&#x2F;s for a daily database backup is too slow to complete in a given backup window. We need to investigate the issue from the backup application to system layer in order to find a solution to improve the performance. For a second example, the latency at cloud native storage volume layer is as high as 20ms while the underneath SSD disk latency shows less than 1ms. This requires further analysis at volume layer in order to find out the cause for the 19ms latency.</p>
-<p>Performance optimization is endless effort. It depends on the goal you are targeting. So, setting the goals is the first step before you involve further performance analysis activities.</p>
-<h2 id="Workload-characterization"><a href="#Workload-characterization" class="headerlink" title="Workload characterization"></a>Workload characterization</h2><p>Performance analysis is a process to analyze systematically. Understanding the system&#x2F;application configuration and applied workload are often needed before you do further performance analysis. This is the workload characterization.</p>
-<p>The workload characterization tries to answer the following questions:</p>
-<ul>
-<li>What’s the running application? What’s the major components&#x2F;features used in the application?</li>
-<li>What is the schedule to run the workload? What is the job concurrency?</li>
-<li>What are the read&#x2F;write patterns? Mixed read and write, or read&#x2F;write only workload?</li>
-<li>What are the rates, throughput and latency at application level?</li>
-<li>What is the performance concern?</li>
-</ul>
-<p>Sometimes, you may get a description of the workload from end-users. However, the workload and its configuraiton are usualaly not described clearly enough by the users. It’s worth to characterize the workload with custom profiler. An application level workload profiler can be developed for this purpose. But this often requires application expertise.  At system level, you may leverage the BCC&#x2F;BPF performance tools to profile the workload.</p>
-<h2 id="Drill-down-analysis"><a href="#Drill-down-analysis" class="headerlink" title="Drill-down analysis"></a>Drill-down analysis</h2><p>The drill-down analysis is to find a clue and drill deeper until you find the root cause for the performance issue.</p>
-<p>The general process for drill-down analysis would be like these steps.</p>
-<ol>
-<li>Examine the high level performance metrics and identify the degraded performance point</li>
-<li>For the target workload point with degradation, lazer focus on the four major system resources(CPU, memory, disk I&#x2F;O and network) to see what is the potential bottleneck</li>
-<li>If it’s hardware bottleneck, it might be resolved by scaling up and scaling out the system resources. Otherwise, it could be a software bottleneck either from kernel space or user space.</li>
-<li>Find a clue based on the collected metrics to drill down to the next level. Software bottleneck analysis often requires profiling and tracing effort to pinpoint the culprit.</li>
-</ol>
-<p>To identify a hardware bottleneck, you would check if any of the four major resources are saturated. For example, the system must be CPU bound if the CPU utilization is above 90%. The system must be disk I&#x2F;O bound if the disk is 100% busy and wait queue is unexpected large.</p>
-<p>It’s likely that you could not find the root cause with one round of analysis if you go with the wrong direction. You have to repeat the above steps to identify the right direction for RCA. Keep in mind, finding a needle in haystack is not an easy work. You must be patient.</p>
-<h2 id="Traditional-performance-tools"><a href="#Traditional-performance-tools" class="headerlink" title="Traditional performance tools"></a>Traditional performance tools</h2><p>During the drill-down performance analysis, you can use the following Linux built-in tools. They are simple but very powerful to help determine the next direction on the way of performance analysis.</p>
-<ul>
-<li>uptime - system loads in past 1 minute, 5 minutes and 15 minutes</li>
-<li>dmesg - system error messages</li>
-<li>vmstat - overview of system resource usage(CPU, Memory and disk&#x2F;network I&#x2F;O)</li>
-<li>mpstat - per-CPU usage in different states</li>
-<li>pidstat - CPU usage per process</li>
-<li>iostat - disk I&#x2F;O statistics(throughput, IOPS, latency, etc)</li>
-<li>netstat&#x2F;sar - network throughput, TCP&#x2F;IP connection stats</li>
-<li>top - CPU&#x2F;Memory usage per process and more</li>
-</ul>
-<p>Please refer to this <a href="https://www.flamingbytes.com/blog/performance-analysis-in-60-seconds">post</a> for more detail on how to use Linux traditional tools to analyze performance.</p>
-<h2 id="BCC-BPF-performance-tools"><a href="#BCC-BPF-performance-tools" class="headerlink" title="BCC&#x2F;BPF performance tools"></a>BCC&#x2F;BPF performance tools</h2><p>While the traditional tools always gives us a first look at the system performance especially on the resource usage, we can use(or create) BCC&#x2F;BPF tools for further performance analysis. Please refer to this <a href="https://www.flamingbytes.com/blog/bcc-performance-tools-checklist">post</a> for more detail.</p>
 
       
     </div>

@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">274</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">275</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">274</span>
+          <span class="site-state-item-count">275</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,152 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/pull-an-image-from-a-private-docker-registry-in-kubernetes-pod/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/pull-an-image-from-a-private-docker-registry-in-kubernetes-pod/" class="post-title-link" itemprop="url">Pull an image from a private docker registry in Kubernetes Pod</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-27 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-27T08:00:00-08:00">2022-12-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Log-in-to-Docker-Hub"><a href="#Log-in-to-Docker-Hub" class="headerlink" title="Log in to Docker Hub"></a>Log in to Docker Hub</h2><p>In order to pull a image from Docker Hub, you must authenticate with a registry. Use <strong>docker</strong> tool to log in to the Docker Hub as below. A username and password is needed to log in.</p>
+<pre><code>$ docker login
+</code></pre>
+<p>The login process creates or updates the config.json file which holds an authorization token.</p>
+<pre><code>$ cat /root/.docker/config.json
+&#123;
+    &quot;auths&quot;: &#123;
+        &quot;https://index.docker.io/v1/&quot;: &#123;
+            &quot;auth&quot;: &quot;xxx=&quot;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h2 id="Create-a-Secret-based-on-existing-credentials"><a href="#Create-a-Secret-based-on-existing-credentials" class="headerlink" title="Create a Secret based on existing credentials"></a>Create a Secret based on existing credentials</h2><p>A Kubernetes cluster uses the Secret of kubernetes.io&#x2F;dockerconfigjson type to authenticate with a container registry to pull a private image.</p>
+<p>If you already ran docker login, you can copy that credential into Kubernetes:</p>
+<pre><code>$ kubectl create secret generic regcred --from-file=.dockerconfigjson=/root/.docker/config.json --type=kubernetes.io/dockerconfigjson
+</code></pre>
+<p>You can inspect the Secret as below.</p>
+<pre><code>$ kubectl get secret regcred --output=yaml
+
+apiVersion: v1
+data:
+  .dockerconfigjson: &lt;base64-formatted-docker-credentials&gt;
+kind: Secret
+metadata:
+  creationTimestamp: &quot;2022-02-28T22:25:43Z&quot;
+  name: regcred
+  namespace: default
+  resourceVersion: &quot;1503624&quot;
+  uid: yyy
+type: kubernetes.io/dockerconfigjson
+</code></pre>
+<p>The value of the .dockerconfigjson field is a base64 representation of your Docker credentials. To understand what is in the .dockerconfigjson field, convert the secret data to a readable format:</p>
+<pre><code>$ kubectl get secret regcred --output=&quot;jsonpath=&#123;.data.\.dockerconfigjson&#125;&quot; | base64 --decode
+&#123;
+    &quot;auths&quot;: &#123;
+        &quot;https://index.docker.io/v1/&quot;: &#123;
+            &quot;auth&quot;: &quot;xxx=&quot;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h2 id="Create-a-Pod-that-uses-the-Secret-to-pull-image"><a href="#Create-a-Pod-that-uses-the-Secret-to-pull-image" class="headerlink" title="Create a Pod that uses the Secret to pull image"></a>Create a Pod that uses the Secret to pull image</h2><pre><code>$ vi my-private-reg-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: private-reg
+spec:
+  containers:
+  - name: private-reg-container
+    image: &lt;your-private-image&gt;
+  imagePullSecrets:
+  - name: regcred
+
+$ kubectl apply -f my-private-reg-pod.yaml
+$ kubectl get pod private-reg  
+</code></pre>
+<p>Note that the <strong>imagePullSecrets</strong> field specifies that Kubernetes should get the credentials from a Secret named <em>regcred</em> in order to pull a container image from Docker Hub.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2468,213 +2614,6 @@ _elapsed_______tpmC____efc__avg(ms)__p50(ms)__p90(ms)__p95(ms)__p99(ms)_pMax(ms)
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/docs/v22.1/deploy-cockroachdb-with-kubernetes-insecure">https://www.cockroachlabs.com/docs/v22.1/deploy-cockroachdb-with-kubernetes-insecure</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/docs/stable/kubernetes-performance.html">https://www.cockroachlabs.com/docs/stable/kubernetes-performance.html</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/setup-cockroachdb-in-docker-container/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/setup-cockroachdb-in-docker-container/" class="post-title-link" itemprop="url">Setup CockroachDB in docker container</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-12-02 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-02T08:00:00-08:00">2022-12-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Create-docker-volume"><a href="#Create-docker-volume" class="headerlink" title="Create docker volume"></a>Create docker volume</h2><p>Create docker volume on each host:</p>
-<pre><code>[root@host1 ~]# docker volume create --driver local --opt type=ext4 --opt device=/dev/nvme2n1 vol1
-[root@host1 ~]# mkfs.ext4 /dev/nvme2n1
-[root@host1 ~]# docker inspect vol1
-[
-    &#123;
-        &quot;CreatedAt&quot;: &quot;2022-09-13T01:10:50Z&quot;,
-        &quot;Driver&quot;: &quot;local&quot;,
-        &quot;Labels&quot;: &#123;&#125;,
-        &quot;Mountpoint&quot;: &quot;/var/lib/docker/volumes/vol1/_data&quot;,
-        &quot;Name&quot;: &quot;vol1&quot;,
-        &quot;Options&quot;: &#123;
-            &quot;device&quot;: &quot;/dev/nvme2n1&quot;,
-            &quot;type&quot;: &quot;ext4&quot;
-        &#125;,
-        &quot;Scope&quot;: &quot;local&quot;
-    &#125;
-]
-</code></pre>
-<h2 id="Start-CockroachDB-instance"><a href="#Start-CockroachDB-instance" class="headerlink" title="Start CockroachDB instance"></a>Start CockroachDB instance</h2><p>Start the CockroachDB instance on each host:</p>
-<pre><code>[root@host1 ~]# docker run -d --cpus=&quot;0.25&quot; --memory=&quot;32g&quot; --name=roach1 --hostname=host1 -p 26257:26257 -p 8080:8080 -v &quot;vol1:/cockroach/cockroach-data&quot; cockroachdb/cockroach:v22.1.6 start --insecure --join=host1,host2,host3
-
-[root@host2 ~]# docker run -d --cpus=&quot;0.25&quot; --memory=&quot;32g&quot; --name=roach2 --hostname=host2 -p 26257:26257 -p 8080:8080 -v &quot;vol2:/cockroach/cockroach-data&quot; cockroachdb/cockroach:v22.1.6 start --insecure --join=host1,host2,host3
-
-[root@host3 ~]# docker run -d --cpus=&quot;0.25&quot; --memory=&quot;32g&quot; --name=roach3 --hostname=host3 -p 26257:26257 -p 8080:8080 -v &quot;vol3:/cockroach/cockroach-data&quot; cockroachdb/cockroach:v22.1.6 start --insecure --join=host1,host2,host3
-</code></pre>
-<h2 id="Initialize-the-CockroachDB-cluster"><a href="#Initialize-the-CockroachDB-cluster" class="headerlink" title="Initialize the CockroachDB cluster"></a>Initialize the CockroachDB cluster</h2><p>Initialize the cluster on any of the cluster nodes:</p>
-<pre><code>[root@host1 ~]# docker exec -it roach1 ./cockroach init --insecure
-</code></pre>
-<p>Check the cluster status:</p>
-<pre><code>[root@host1 ~]# docker exec -it roach1 ./cockroach node ls --insecure
-  id
-------
-   1
-   2
-   3
-(3 rows)
-
-[root@host1 ~]# docker exec -it roach1 ./cockroach node status --insecure
-  id |     address      |   sql_address    |  build  |         started_at         |         updated_at         | locality | is_available | is_live
------+------------------+------------------+---------+----------------------------+----------------------------+----------+--------------+----------
-   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-13 01:09:19.857864 | 2022-09-13 01:10:22.870301 |          | true         | true
-   2 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-13 01:09:20.668787 | 2022-09-13 01:10:23.671303 |          | true         | true
-   3 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-13 01:09:20.910602 | 2022-09-13 01:10:19.415254 |          | true         | true
-(3 rows)
-
-[root@host1 ~]# docker exec -it roach1 df -h
-Filesystem               Size  Used Avail Use% Mounted on
-overlay                   50G  7.1G   43G  15% /
-tmpfs                     64M     0   64M   0% /dev
-tmpfs                    504G     0  504G   0% /sys/fs/cgroup
-shm                       64M     0   64M   0% /dev/shm
-/dev/nvme2n1             1.5T  1.6G  1.4T   1% /cockroach/cockroach-data
-/dev/mapper/centos-root   50G  7.1G   43G  15% /etc/hosts
-tmpfs                    504G     0  504G   0% /proc/acpi
-tmpfs                    504G     0  504G   0% /proc/scsi
-tmpfs                    504G     0  504G   0% /sys/firmware
-
-[root@host1 ~]# mount | grep nvme2n1
-/dev/nvme2n1 on /var/lib/docker/volumes/vol1/_data type ext4 (rw,relatime)
-</code></pre>
-<h2 id="Check-the-cluster-startup-logs"><a href="#Check-the-cluster-startup-logs" class="headerlink" title="Check the cluster startup logs"></a>Check the cluster startup logs</h2><pre><code>[root@host1 ~]# docker exec -it roach1 grep &#39;node starting&#39; cockroach-data/logs/cockroach.log -A 11
-I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +CockroachDB node starting at 2022-09-13 00:57:22.532397342 +0000 UTC (took 110.6s)
-I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +build:               CCL v22.1.6 @ 2022/08/23 17:05:04 (go1.17.11)
-I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +webui:               ‹http://host1:8080›
-I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +sql:                 ‹postgresql://root@host1:26257/defaultdb?sslmode=disable›
-I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +sql (JDBC):          ‹jdbc:postgresql://host1:26257/defaultdb?sslmode=disable&amp;user=root›
-I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +RPC client flags:    ‹/cockroach/cockroach &lt;client cmd&gt; --host=host1:26257 --insecure›
-I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +logs:                ‹/cockroach/cockroach-data/logs›
-I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +temp dir:            ‹/cockroach/cockroach-data/cockroach-temp1471904785›
-I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +external I/O path:   ‹/cockroach/cockroach-data/extern›
-I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +store[0]:            ‹path=/cockroach/cockroach-data›
-I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +storage engine:      pebble
-I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +clusterID:           ‹8276f8fb-30f2-4712-ad4e-f008d382372d›
-</code></pre>
-<h2 id="Load-the-tpcc-dataset"><a href="#Load-the-tpcc-dataset" class="headerlink" title="Load the tpcc dataset"></a>Load the tpcc dataset</h2><pre><code>[root@host1 ~]# docker exec -it roach1 ./cockroach workload init tpcc &quot;postgresql://root@host1:26257?sslmode=disable&quot; --warehouses 2500 --drop
-
-[root@host2 ~]# iostat -ktdx 2 nvme2n1
-09/13/2022 01:14:00 AM
-Device:         rrqm/s   wrqm/s     r/s     w/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util
-nvme2n1           0.00   239.50    0.00 2112.00     0.00 167118.00   158.26     0.27    0.13    0.00    0.13   0.25  53.00
-
-09/13/2022 01:14:02 AM
-Device:         rrqm/s   wrqm/s     r/s     w/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util
-nvme2n1           0.00   268.00    0.00 2369.50     0.00 185266.00   156.38     0.30    0.13    0.00    0.13   0.24  56.50
-</code></pre>
-<p>The following are the elapsed time to load dataset for 2500 warehouses.</p>
-<pre><code>I220913 04:28:20.633547 1 workload/workloadsql/dataload.go:146  [-] 1  imported warehouse (0s, 2500 rows)
-I220913 04:28:20.900607 1 workload/workloadsql/dataload.go:146  [-] 2  imported district (0s, 25000 rows)
-I220913 04:46:27.360882 7 1@util/log/log_flush.go:99  [-] 3  hangup received, flushing logs
-I220913 04:59:37.468628 1 workload/workloadsql/dataload.go:146  [-] 4  imported customer (31m17s, 75000000 rows)
-I220913 05:06:54.166160 1 workload/workloadsql/dataload.go:146  [-] 5  imported history (7m17s, 75000000 rows)
-I220913 09:17:27.487420 1 workload/workloadsql/dataload.go:146  [-] 6  imported order (4h10m33s, 75000000 rows)
-I220913 09:18:29.376933 1 workload/workloadsql/dataload.go:146  [-] 7  imported new_order (1m2s, 22500000 rows)
-I220913 09:18:29.975510 1 workload/workloadsql/dataload.go:146  [-] 8  imported item (1s, 100000 rows)
-I220913 10:07:29.447874 1 workload/workloadsql/dataload.go:146  [-] 9  imported stock (48m59s, 250000000 rows)
-I220913 11:18:52.140400 1 workload/workloadsql/dataload.go:146  [-] 10  imported order_line (1h11m23s, 750022630 rows)
-</code></pre>
-<p>The following shows the used file system size for the 2500 warehouses.</p>
-<pre><code>[root@host1 ~]# docker exec -it roach1 df -h
-Filesystem               Size  Used Avail Use% Mounted on
-overlay                   50G  7.1G   43G  15% /
-tmpfs                     64M     0   64M   0% /dev
-tmpfs                    504G     0  504G   0% /sys/fs/cgroup
-shm                       64M     0   64M   0% /dev/shm
-/dev/nvme2n1             1.5T   49G  1.4T   4% /cockroach/cockroach-data
-/dev/mapper/centos-root   50G  7.1G   43G  15% /etc/hosts
-tmpfs                    504G     0  504G   0% /proc/acpi
-tmpfs                    504G     0  504G   0% /proc/scsi
-tmpfs                    504G     0  504G   0% /sys/firmware
-</code></pre>
-<h2 id="Run-the-tpcc-workload"><a href="#Run-the-tpcc-workload" class="headerlink" title="Run the tpcc workload"></a>Run the tpcc workload</h2><p>Run tpcc workload from remote host:</p>
-<pre><code>[root@host4 ~]# cat addr
-postgres://root@host1:26257?sslmode=disable postgres://root@host2:26257?sslmode=disable postgres://root@host3:26257?sslmode=disable
-[root@host4 ~]# cockroach workload run tpcc --warehouses=2500 --ramp=5m --duration=30m $(cat addr)
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/docs/v22.1/start-a-local-cluster-in-docker-linux">https://www.cockroachlabs.com/docs/v22.1/start-a-local-cluster-in-docker-linux</a></li>
 </ul>
 
       

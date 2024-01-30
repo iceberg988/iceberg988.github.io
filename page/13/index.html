@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">274</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">275</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">274</span>
+          <span class="site-state-item-count">275</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,213 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/setup-cockroachdb-in-docker-container/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/setup-cockroachdb-in-docker-container/" class="post-title-link" itemprop="url">Setup CockroachDB in docker container</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-02 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-02T08:00:00-08:00">2022-12-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Create-docker-volume"><a href="#Create-docker-volume" class="headerlink" title="Create docker volume"></a>Create docker volume</h2><p>Create docker volume on each host:</p>
+<pre><code>[root@host1 ~]# docker volume create --driver local --opt type=ext4 --opt device=/dev/nvme2n1 vol1
+[root@host1 ~]# mkfs.ext4 /dev/nvme2n1
+[root@host1 ~]# docker inspect vol1
+[
+    &#123;
+        &quot;CreatedAt&quot;: &quot;2022-09-13T01:10:50Z&quot;,
+        &quot;Driver&quot;: &quot;local&quot;,
+        &quot;Labels&quot;: &#123;&#125;,
+        &quot;Mountpoint&quot;: &quot;/var/lib/docker/volumes/vol1/_data&quot;,
+        &quot;Name&quot;: &quot;vol1&quot;,
+        &quot;Options&quot;: &#123;
+            &quot;device&quot;: &quot;/dev/nvme2n1&quot;,
+            &quot;type&quot;: &quot;ext4&quot;
+        &#125;,
+        &quot;Scope&quot;: &quot;local&quot;
+    &#125;
+]
+</code></pre>
+<h2 id="Start-CockroachDB-instance"><a href="#Start-CockroachDB-instance" class="headerlink" title="Start CockroachDB instance"></a>Start CockroachDB instance</h2><p>Start the CockroachDB instance on each host:</p>
+<pre><code>[root@host1 ~]# docker run -d --cpus=&quot;0.25&quot; --memory=&quot;32g&quot; --name=roach1 --hostname=host1 -p 26257:26257 -p 8080:8080 -v &quot;vol1:/cockroach/cockroach-data&quot; cockroachdb/cockroach:v22.1.6 start --insecure --join=host1,host2,host3
+
+[root@host2 ~]# docker run -d --cpus=&quot;0.25&quot; --memory=&quot;32g&quot; --name=roach2 --hostname=host2 -p 26257:26257 -p 8080:8080 -v &quot;vol2:/cockroach/cockroach-data&quot; cockroachdb/cockroach:v22.1.6 start --insecure --join=host1,host2,host3
+
+[root@host3 ~]# docker run -d --cpus=&quot;0.25&quot; --memory=&quot;32g&quot; --name=roach3 --hostname=host3 -p 26257:26257 -p 8080:8080 -v &quot;vol3:/cockroach/cockroach-data&quot; cockroachdb/cockroach:v22.1.6 start --insecure --join=host1,host2,host3
+</code></pre>
+<h2 id="Initialize-the-CockroachDB-cluster"><a href="#Initialize-the-CockroachDB-cluster" class="headerlink" title="Initialize the CockroachDB cluster"></a>Initialize the CockroachDB cluster</h2><p>Initialize the cluster on any of the cluster nodes:</p>
+<pre><code>[root@host1 ~]# docker exec -it roach1 ./cockroach init --insecure
+</code></pre>
+<p>Check the cluster status:</p>
+<pre><code>[root@host1 ~]# docker exec -it roach1 ./cockroach node ls --insecure
+  id
+------
+   1
+   2
+   3
+(3 rows)
+
+[root@host1 ~]# docker exec -it roach1 ./cockroach node status --insecure
+  id |     address      |   sql_address    |  build  |         started_at         |         updated_at         | locality | is_available | is_live
+-----+------------------+------------------+---------+----------------------------+----------------------------+----------+--------------+----------
+   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-13 01:09:19.857864 | 2022-09-13 01:10:22.870301 |          | true         | true
+   2 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-13 01:09:20.668787 | 2022-09-13 01:10:23.671303 |          | true         | true
+   3 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-13 01:09:20.910602 | 2022-09-13 01:10:19.415254 |          | true         | true
+(3 rows)
+
+[root@host1 ~]# docker exec -it roach1 df -h
+Filesystem               Size  Used Avail Use% Mounted on
+overlay                   50G  7.1G   43G  15% /
+tmpfs                     64M     0   64M   0% /dev
+tmpfs                    504G     0  504G   0% /sys/fs/cgroup
+shm                       64M     0   64M   0% /dev/shm
+/dev/nvme2n1             1.5T  1.6G  1.4T   1% /cockroach/cockroach-data
+/dev/mapper/centos-root   50G  7.1G   43G  15% /etc/hosts
+tmpfs                    504G     0  504G   0% /proc/acpi
+tmpfs                    504G     0  504G   0% /proc/scsi
+tmpfs                    504G     0  504G   0% /sys/firmware
+
+[root@host1 ~]# mount | grep nvme2n1
+/dev/nvme2n1 on /var/lib/docker/volumes/vol1/_data type ext4 (rw,relatime)
+</code></pre>
+<h2 id="Check-the-cluster-startup-logs"><a href="#Check-the-cluster-startup-logs" class="headerlink" title="Check the cluster startup logs"></a>Check the cluster startup logs</h2><pre><code>[root@host1 ~]# docker exec -it roach1 grep &#39;node starting&#39; cockroach-data/logs/cockroach.log -A 11
+I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +CockroachDB node starting at 2022-09-13 00:57:22.532397342 +0000 UTC (took 110.6s)
+I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +build:               CCL v22.1.6 @ 2022/08/23 17:05:04 (go1.17.11)
+I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +webui:               ‹http://host1:8080›
+I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +sql:                 ‹postgresql://root@host1:26257/defaultdb?sslmode=disable›
+I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +sql (JDBC):          ‹jdbc:postgresql://host1:26257/defaultdb?sslmode=disable&amp;user=root›
+I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +RPC client flags:    ‹/cockroach/cockroach &lt;client cmd&gt; --host=host1:26257 --insecure›
+I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +logs:                ‹/cockroach/cockroach-data/logs›
+I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +temp dir:            ‹/cockroach/cockroach-data/cockroach-temp1471904785›
+I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +external I/O path:   ‹/cockroach/cockroach-data/extern›
+I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +store[0]:            ‹path=/cockroach/cockroach-data›
+I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +storage engine:      pebble
+I220913 00:57:22.532570 151 1@cli/start.go:1028 ⋮ [n1] 252 +clusterID:           ‹8276f8fb-30f2-4712-ad4e-f008d382372d›
+</code></pre>
+<h2 id="Load-the-tpcc-dataset"><a href="#Load-the-tpcc-dataset" class="headerlink" title="Load the tpcc dataset"></a>Load the tpcc dataset</h2><pre><code>[root@host1 ~]# docker exec -it roach1 ./cockroach workload init tpcc &quot;postgresql://root@host1:26257?sslmode=disable&quot; --warehouses 2500 --drop
+
+[root@host2 ~]# iostat -ktdx 2 nvme2n1
+09/13/2022 01:14:00 AM
+Device:         rrqm/s   wrqm/s     r/s     w/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util
+nvme2n1           0.00   239.50    0.00 2112.00     0.00 167118.00   158.26     0.27    0.13    0.00    0.13   0.25  53.00
+
+09/13/2022 01:14:02 AM
+Device:         rrqm/s   wrqm/s     r/s     w/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util
+nvme2n1           0.00   268.00    0.00 2369.50     0.00 185266.00   156.38     0.30    0.13    0.00    0.13   0.24  56.50
+</code></pre>
+<p>The following are the elapsed time to load dataset for 2500 warehouses.</p>
+<pre><code>I220913 04:28:20.633547 1 workload/workloadsql/dataload.go:146  [-] 1  imported warehouse (0s, 2500 rows)
+I220913 04:28:20.900607 1 workload/workloadsql/dataload.go:146  [-] 2  imported district (0s, 25000 rows)
+I220913 04:46:27.360882 7 1@util/log/log_flush.go:99  [-] 3  hangup received, flushing logs
+I220913 04:59:37.468628 1 workload/workloadsql/dataload.go:146  [-] 4  imported customer (31m17s, 75000000 rows)
+I220913 05:06:54.166160 1 workload/workloadsql/dataload.go:146  [-] 5  imported history (7m17s, 75000000 rows)
+I220913 09:17:27.487420 1 workload/workloadsql/dataload.go:146  [-] 6  imported order (4h10m33s, 75000000 rows)
+I220913 09:18:29.376933 1 workload/workloadsql/dataload.go:146  [-] 7  imported new_order (1m2s, 22500000 rows)
+I220913 09:18:29.975510 1 workload/workloadsql/dataload.go:146  [-] 8  imported item (1s, 100000 rows)
+I220913 10:07:29.447874 1 workload/workloadsql/dataload.go:146  [-] 9  imported stock (48m59s, 250000000 rows)
+I220913 11:18:52.140400 1 workload/workloadsql/dataload.go:146  [-] 10  imported order_line (1h11m23s, 750022630 rows)
+</code></pre>
+<p>The following shows the used file system size for the 2500 warehouses.</p>
+<pre><code>[root@host1 ~]# docker exec -it roach1 df -h
+Filesystem               Size  Used Avail Use% Mounted on
+overlay                   50G  7.1G   43G  15% /
+tmpfs                     64M     0   64M   0% /dev
+tmpfs                    504G     0  504G   0% /sys/fs/cgroup
+shm                       64M     0   64M   0% /dev/shm
+/dev/nvme2n1             1.5T   49G  1.4T   4% /cockroach/cockroach-data
+/dev/mapper/centos-root   50G  7.1G   43G  15% /etc/hosts
+tmpfs                    504G     0  504G   0% /proc/acpi
+tmpfs                    504G     0  504G   0% /proc/scsi
+tmpfs                    504G     0  504G   0% /sys/firmware
+</code></pre>
+<h2 id="Run-the-tpcc-workload"><a href="#Run-the-tpcc-workload" class="headerlink" title="Run the tpcc workload"></a>Run the tpcc workload</h2><p>Run tpcc workload from remote host:</p>
+<pre><code>[root@host4 ~]# cat addr
+postgres://root@host1:26257?sslmode=disable postgres://root@host2:26257?sslmode=disable postgres://root@host3:26257?sslmode=disable
+[root@host4 ~]# cockroach workload run tpcc --warehouses=2500 --ramp=5m --duration=30m $(cat addr)
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/docs/v22.1/start-a-local-cluster-in-docker-linux">https://www.cockroachlabs.com/docs/v22.1/start-a-local-cluster-in-docker-linux</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2845,100 +3052,6 @@ GET _nodes/stats
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/book-report-on-summer-of-the-monkeys/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/book-report-on-summer-of-the-monkeys/" class="post-title-link" itemprop="url">Book Report on Summer of The Monkeys</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-10-16 07:04:00" itemprop="dateCreated datePublished" datetime="2022-10-16T07:04:00-07:00">2022-10-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Jay Berry, a fourteen years old boy, was living an ideal life when he unexpectedly met some monkeys during a mission to find his old milk cow, Sally Gooden. From his grandpa, he learned that there was a big reward for catching these monkeys alive. After many failures, Jay Berry finally captures the monkeys. When he received the money, he chose to use it to finance Daisy’s surgery instead. Throughout the story, Jay Berry learned to make life-enhancing choices and got happiness in the end.</p>
-<p>The story is set in the late 1800s. The Berry family lived in Missouri as sharecroppers and later moved to a farm called Cherokee Land, which was in the middle of the Cherokee Nation. It was located in a strip from the foothills of the Ozark Mountains to the banks of the Illinois River in northeastern Oklahoma. They lived in a log house which was in the foothills overlooking the river bottoms. IThe setting influenced the plot and the events that took place. In the Cherokee bottoms, Jay Berry was likely to find numerous animals. He followed a game trail and found the sycamore tree full of wild monkeys. This led to the plot, which all started from this event. Also it affected the character background. Jay lived in a place where most people survive by hunting. He liked to shoot little animals in the beginning of the story, but changed as the story progressed. The setting could be the reason that the protagonist was unable to solve his problems and this was shown multiple times throughout the story.</p>
-<p>The main plot of the story was Jay Berry’s struggle to capture the monkeys. He discovered a tree full of monkeys during his trip to find Sally Gooden. He is determined to capture them, for the reward would be enough money to achieve his desires. But this was much harder than he imagined and he greatly underestimates the intelligence of Jimbo, a very trained chimpanzee. His grandpa supported him and came up with ideas that might work. The first trap was a complete failure but it helped Jay Berry understand that the animals he was catching were not like any fox or racoon. They were way smarter and Jimbo was going to make sure that Jay was not going to get the satisfaction of capturing a single monkey. He lost his gunny sack and traps, which infuriated him so much that he shot Jimbo two times in the belly. But he quickly realized his fatal mistake because Jimbo was awfully angry and bared his sharp teeth. He ordered the monkeys to chase Jay and the poor hunter and dog ran straight through a brier patch. This does not dishearten Jay Berry and now he is determined to get back his possessions. On the second attempt, he almost captured two monkeys but Jimbo set them free while Rowdy and Jay fought off the monkeys. They came back with a lot of scratches and bites, but no monkeys. Daisy, his little sister, was scared that they might have gotten hydrophobia, and was bound to put both his brother and the dog in chains if their father hadn’t stepped in. The monkeys were from the circus so they were all vaccinated. All the Berry family had to worry about was that the wounds didn’t get infected.</p>
-<p>After a few days of Daisy practicing her red cross, Jay Berry and Rowdy were healthy again. Grandpa advised Jay to befriend Jimbo so they will listen to him. Jay kindly approached the monkeys and offered Jimbo an apple. Jimbo decided to also give Jay something. So, he offered him a can of sour mash. Jay knew the stuff was nasty and politely refused the offer, which enraged Jimbo. Realizing that he had no choice, he reluctantly took the sour mash and the taste was enough to make him sick. Then, the bad taste left and Jay decided to take another can of sour mash. Soon, both Rowdy and he were drunk and fell asleep. When they woke up, Jay found out that his britches were stolen. He returned home so ill and unsteady that he fell unconscious the moment he was put in bed. Once again, he received the “Red Cross Treatment.”  When Grandpa heard about this, he declared that they needed to go to the library to find some useful information on catching the monkeys. This showed that they were determined to the extent that they were ready to cross any limit. They had never gone to a library before, but were sure they would be provided with an answer there.The librarian gave them a book, which said that monkeys love coconuts. However, the whole half-bushel of coconuts were stolen by the monkeys, who returned the britches, beanshooter, and gunny sack.</p>
-<p>Just when Jay was about to lose hope, Daisy found a fairy ring and wished that he got the gun and paint pony. Jay and his parents wished that Daisy would get her leg fixed up. This showed that they all cared about one another. That night, there was a fierce storm which frightened the monkeys so much that they willingly followed Jay Berry to the corn crib. They were provided with a comfortable shelter and plenty of food. Jay Berry receives one hundred fifty-six dollars, which he at first wanted to spend on his pony and rifle. But after taking one look at Daisy’s crippled leg, he made up his mind and financed the surgery to get her leg fixed up. While at town, Daisy used the money she had to buy his brother the rifle he wanted. She gave it to him on the condition that he would never use it to shoot little animals. Grandpa also used the money he saved to buy Jay the paint pony he always desired. The conclusion was that Jay’s self-sacrificing yet rational choice made all of his family happy.</p>
-<p>Jay Berry Lee is the main character of the story.  At the beginning of the novel, he was the happiest boy on Earth  up till he reached fourteen-years old. He had lived an idyllic childhood with his little sister Daisy and his parents. The Berry family were very poor because they were sharecroppers until they moved to Oklahoma when Grandpa offered them free land. Here, Jay discovered a group of monkeys, whose capture could change his whole life. He set out to capture every one of the monkeys and devoted himself to finding ways to catch them. He needed the help of his grandfather, who made traps that might do the job.</p>
-<p>Sadly, none of the traps work and Jay Berry gained nothing but a lot of scratches and painful monkey bites. He was constantly outsmarted by Jimbo, who simply broke every trap with his fingers and laughed rudely at Jay Berry whenever a trap failed. This made Jay more determined to capture them because he had spent all his valuable time in doing it. He does not want to simply give up on something he had worked so hard for. His opportunity finally arrived when the fierce storm struck and he thought that the monkeys must have had a difficult time finding shelter. He found all of them  freezing and soaking wet. They were quivering from the cold and struggled to keep warm. Despite how they harmed him in the past, Jay kindly dried them off and took care of them. No monkey made the effort to bite him Jimbo surprisingly laid his head on Jay’s shoulder. Jay soothingly said that everything would be alright and he would help them. Finally, they willingly followed Jay home and into the corn crib. Later on, Jay was tempted to use the money to achieve his desires but it suddenly hit him that grandpa was secretly asking him to change his mind. Even if he bought the piny, he could never ride it because it reminded himself too much of the crippled leg of Daisy. He decided to use all of the money for Daisy to get a surgery in town, so the crippled leg would heal. He does not regret it, but suddenly it felt lonesome and gloomy at the farm. He was relieved that his efforts had not gone to waste when Mama wrote that the operation was a success and her sister was learning to walk. Jay changed from a boy who was focused on hunting to a boy who cared for animals and learned to place other’s priority higher than his own. This caused him to be the best Challenger student for he persevered through hardships. He thought of problems as challenges that needed to be solved. In this case, he thought of capturing the monkeys as a challenge, since the reward could greatly help him. He analyzed the problem and found the steps to solve it. He used the traps to devise plants that could capture the monkeys. Also, he showed kindness to the monkeys and saved their lives. The life-enhancing values he demonstrated improved his life and others.</p>
-<p>Jimbo was the antagonist in the story. He made sure that all the  other monkeys didn’t get caught in the traps and  worked against Jay Berry during his several attempts. He acted rudely whenever he snatched a two dollar award from Jay and once, he got him drunk. He stole his britches, which was not his. His impudent remarks and cruel actions caused him to be the worst Challenger student. He did not respect others’ rights. Grandpa was a key supporting character and guided Jay Berry throughout the story. He helped design many traps which Jay used. For example, he made a trap with a net and it caught the old goose Gandy. It even caught two little monkeys, but Jimbo freed them during the chaos. Grandpa went as far as going to the library himself to get information. This showed that he really cared about Jay catching the monkeys. He always supported his grandson and helped him through hardships. Daisy is also a supporting character. She always warned Jay to not catch little animals because the Old Man of the Mountains was constantly watching. She was a protector of wildlife and disliked how boys captured poor animals just for the fun of it. Even though she was annoying sometimes, she cared greatly for her brother. She nursed him when he was bitten and when he was drunk. Also, she wished that her brother finally received the rifle and pony he so long wanted. This showed that she loved her brother and helped him achieve true happiness. One example was when she used the money she saved to purchase the rifle.From these characters I learned that I should persevere through challenges and be optimistic.</p>
-<p>The main theme of the story is that anyone can achieve his or her goals as long as he or she sets their mind to it and does not give up. Throughout the course of the novel, Jay Berry did this by demonstrating the value of perseverance, courage, and kindness. When he faced failure after failure, he still pursued his goals and was determined. For example, he asked for the help of his grandfather and they created new traps to catch the monkeys. The net actually worked, though Jimbo freed the monkeys in the end. They made several attempts and finally Jay persuaded the gang of monkeys to follow him into the corn crib, where they would be provided with a comfortable home and plentiful food.He showed rationality when he thought about what would happen to the monkeys during the storm. He knew that these monkeys did not know how to react to this fierce storm and this was an ideal opportunity for him. This was how he got the monkeys to willingly follow him. Jay Berry was also very kind. One example was when he dried off the pitiful monkeys, who were freezing. His act of kindness allowed Jimbo to realize that he could trust Jay, who was just trying to help them. This taught me that a kind act would also help you in the end.</p>
-<p>My favorite part of the story was when Jay Berry first discovered the tree full of monkeys. It was from here that he learned about the reward and was determined to capture them. He showed many values in his attempts and achieved true satisfaction in the end. My least favorite part was when he had to depart with his beloved pony. Even though he knew that he had done a good deed and his sister would no longer be a cripple, it broke his heart to acknowledge the fact that Dolly and he would be separated. Though, of course, he met Dolly again when his grandfather bought it using the money he saved. Yes, I would recommend this book to a friend because it taught how people could achieve their goals by putting their mind into it and persevering through challenges.</p>
-
       
     </div>
 

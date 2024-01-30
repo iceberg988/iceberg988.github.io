@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">274</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">275</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">274</span>
+          <span class="site-state-item-count">275</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,142 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/glusterfs-a-distributed-file-syste/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/glusterfs-a-distributed-file-syste/" class="post-title-link" itemprop="url">GlusterFS - A distributed file syste</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-02-27 08:00:00" itemprop="dateCreated datePublished" datetime="2021-02-27T08:00:00-08:00">2021-02-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="What-is-Gluster"><a href="#What-is-Gluster" class="headerlink" title="What is Gluster?"></a>What is Gluster?</h2><p><a target="_blank" rel="noopener" href="https://docs.gluster.org/en/latest/Administrator-Guide/GlusterFS-Introduction/">Gluster</a> is a scalable, distributed file system that aggregates disk storage resources from multiple servers into a single global namespace.</p>
+<p>Advantages</p>
+<ul>
+<li>Scales to several petabytes</li>
+<li>Handles thousands of clients</li>
+<li>POSIX compatible</li>
+<li>Uses commodity hardware</li>
+<li>Can use any ondisk filesystem that supports extended attributes</li>
+<li>Accessible using industry standard protocols like NFS and SMB</li>
+<li>Provides replication, quotas, geo-replication, snapshots and bitrot detection</li>
+<li>Allows optimization for different workloads</li>
+<li>Open Source</li>
+</ul>
+<h2 id="Installation-and-configuration"><a href="#Installation-and-configuration" class="headerlink" title="Installation and configuration"></a>Installation and configuration</h2><ol>
+<li><p>To install gluster and start gluster service:</p>
+<p> [root@centos83-1 ~]# cat &#x2F;etc&#x2F;centos-release<br> CentOS Linux release 8.3.2011</p>
+<p> [root@centos83-1 ~]# systemctl stop firewalld<br> [root@centos83-1 ~]# systemctl disable firewalld</p>
+<p> [root@centos83-1 ~]# yum install -y centos-release-gluster<br> [root@centos83-1 ~]# yum install -y glusterfs-server<br> [root@centos83-1 ~]# rpm -qa |grep gluster<br> glusterfs-cli-8.3-1.el8.x86_64<br> libvirt-daemon-driver-storage-gluster-6.0.0-28.module_el8.3.0+555+a55c8938.x86_64<br> glusterfs-client-xlators-8.3-1.el8.x86_64<br> qemu-kvm-block-gluster-4.2.0-34.module_el8.3.0+555+a55c8938.x86_64<br> libglusterd0-8.3-1.el8.x86_64<br> glusterfs-8.3-1.el8.x86_64<br> pcp-pmda-gluster-5.1.1-3.el8.x86_64<br> glusterfs-fuse-8.3-1.el8.x86_64<br> centos-release-gluster8-1.0-1.el8.noarch<br> libglusterfs0-8.3-1.el8.x86_64<br> glusterfs-server-8.3-1.el8.x86_64</p>
+<p> [root@centos83-1 ~]# systemctl enable glusterd<br> [root@centos83-1 ~]# systemctl restart glusterd</p>
+<p> [root@centos83-1 ~]# systemctl status glusterd<br>  glusterd.service - GlusterFS, a clustered file-system server<br>  Loaded: loaded (&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;glusterd.service; enabled; vendor preset: enabled)<br>  Active: active (running) since Tue 2021-01-05 17:28:42 PST; 1 months 22 days ago<br>   Docs: man:glusterd(8)<br>  Main PID: 1420 (glusterd)<br>  Tasks: 26 (limit: 409792)<br>  Memory: 152.3M<br>  CGroup: &#x2F;system.slice&#x2F;glusterd.service</p>
+</li>
+<li><p>To form a trusted storage pool with the second server:</p>
+<p> [root@centos83-1 ~]# gluster peer probe centos83-2<br> [root@centos83-1 ~]# gluster peer status<br> Number of Peers: 1</p>
+<p> Hostname: centos83-2<br> Uuid: b07d3d6e-4d6e-42a9-ad21-018223843fd5<br> State: Peer in Cluster (Connected)</p>
+</li>
+<li><p>To create brick on the first server:</p>
+<p> [root@centos83-1 ~]# lsblk | egrep “NAME|sdb”<br> NAME               MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT<br> sdb                  8:16   0    1T  0 disk</p>
+<p> [root@centos83-1 ~]# pvcreate &#x2F;dev&#x2F;sdb<br> [root@centos83-1 ~]# vgcreate vg_bricks &#x2F;dev&#x2F;sdb<br> [root@centos83-1 ~]# lvcreate -L 800g -n gfslv1 vg_bricks<br> [root@centos83-1 ~]# mkfs.xfs &#x2F;dev&#x2F;vg_bricks&#x2F;gfslv1<br> [root@centos83-1 ~]# mkdir -p &#x2F;bricks&#x2F;vm1_brick1<br> [root@centos83-1 ~]# vim &#x2F;etc&#x2F;fstab<br> &#x2F;dev&#x2F;vg_bricks&#x2F;gfslv1 &#x2F;bricks&#x2F;vm1_brick1        xfs     defaults        0 0<br> [root@centos83-1 ~]# mount -a<br> [root@centos83-1 ~]# df -h |grep gfs<br> &#x2F;dev&#x2F;mapper&#x2F;vg_bricks-gfslv1  800G  5.7G  794G   1% &#x2F;bricks&#x2F;vm1_brick1</p>
+</li>
+<li><p>To create brick on the second server:</p>
+<p> [root@centos83-2 ~]# lsblk | egrep “NAME|sdb”<br> NAME               MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT<br> sdb                  8:16   0    1T  0 disk</p>
+<p> [root@centos83-2 ~]# pvcreate &#x2F;dev&#x2F;sdb<br> [root@centos83-2 ~]# vgcreate vg_bricks &#x2F;dev&#x2F;sdb<br> [root@centos83-2 ~]# lvcreate -L 800g -n gfslv1 vg_bricks<br> [root@centos83-2 ~]# mkfs.xfs &#x2F;dev&#x2F;vg_bricks&#x2F;gfslv1<br> [root@centos83-2 ~]# mkdir -p &#x2F;bricks&#x2F;vm2_brick1<br> [root@centos83-2 ~]# vim &#x2F;etc&#x2F;fstab<br> &#x2F;dev&#x2F;vg_bricks&#x2F;gfslv1 &#x2F;bricks&#x2F;vm2_brick1        xfs     defaults        0 0<br> [root@centos83-2 ~]# mount -a<br> [root@centos83-2 ~]# df -h |grep gfs<br> &#x2F;dev&#x2F;mapper&#x2F;vg_bricks-gfslv1  800G  5.7G  794G   1% &#x2F;bricks&#x2F;vm2_brick1</p>
+</li>
+<li><p>To create distributed volume with the two bricks which are created on the two nodes:</p>
+<p> [root@centos83-1 ~]# gluster volume create gv0 centos83-1:&#x2F;bricks&#x2F;vm1_brick1&#x2F;gv0 centos83-2:&#x2F;bricks&#x2F;vm2_brick1&#x2F;gv0<br> [root@centos83-1 ~]# gluster volume start gv0</p>
+</li>
+<li><p>To verify the volume status:</p>
+<p> [root@centos83-1 ~]#  gluster volume info gv0</p>
+<p> Volume Name: gv0<br> Type: Distribute<br> Volume ID: ee08d16a-f940-4ec2-aba8-5f1fcfe41bd4<br> Status: Started<br> Snapshot Count: 0<br> Number of Bricks: 2<br> Transport-type: tcp<br> Bricks:<br> Brick1: centos83-1:&#x2F;bricks&#x2F;vm1_brick1&#x2F;gv0<br> Brick2: centos83-2:&#x2F;bricks&#x2F;vm2_brick1&#x2F;gv0<br> Options Reconfigured:<br> storage.fips-mode-rchecksum: on<br> transport.address-family: inet<br> nfs.disable: on</p>
+</li>
+<li><p>To mount the distributed volume on one of the servers(treat it as client for simple demonstration):</p>
+<p> [root@centos83-1 ~]# mkdir &#x2F;testmnt<br> [root@centos83-1 ~]# mount -t glusterfs centos83-2:&#x2F;gv0 &#x2F;testmnt<br> [root@centos83-1 ~]# df -h | grep testmnt<br> centos83-2:&#x2F;gv0               1.6T   28G  1.6T   2% &#x2F;testmnt</p>
+</li>
+</ol>
+<p>As shown above, the usable storage size is the sum of the brick size from two nodes.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.gluster.org/en/latest/Administrator-Guide/GlusterFS-Introduction/">https://docs.gluster.org/en/latest/Administrator-Guide/GlusterFS-Introduction/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1926,100 +2062,6 @@ void *vmalloc(unsigned long size)
 <li><a target="_blank" rel="noopener" href="https://www.oreilly.com/library/view/linux-device-drivers/0596005903/ch08.html">https://www.oreilly.com/library/view/linux-device-drivers/0596005903/ch08.html</a></li>
 <li><a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/source/include/linux/slab.h#L538">https://elixir.bootlin.com/linux/latest/source/include/linux/slab.h#L538</a></li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/cooking-masters/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/cooking-masters/" class="post-title-link" itemprop="url">Cooking Masters</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-01-16 07:49:00" itemprop="dateCreated datePublished" datetime="2021-01-16T07:49:00-08:00">2021-01-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>It was my most regrettable decision ever. I was playing with Alex, who was my next door neighbor and my best friend in fourth grade. Suddenly, Alex said: “You know what, I think it’s time for us to compare our cooking skills now that I practiced my recipes for two years now.”  I did not know what to say. I knew Alex was teasing me. He had enrolled for a master cooking class and practiced for two years already. I was only a home cook, and I never thought about entering a cooking competition. I wanted to decline the offer but that would show that I was afraid. I did not like people calling me a loser so I foolishly accepted the challenge. We decided we were going to hold the cooking contest in my school’s cafeteria.</p>
-<p>When I told my parents about the contest, they said that I should cook something really fancy so it will increase my chance of winning. I got really stressed then. I only knew one type of dish which was a burger. I knew how to make many kinds of burgers but nothing else. I decided to go online to search up some recipes for other foods. I bought the ingredients and started to try new recipes. But none of them tasted better than my masterpiece burger.</p>
-<p>I wondered if I was doing something wrong. The recipes were more complicated so they should taste better. But they didn’t. I told my mom that I did not think the new dishes tasted any better than my burger. She said that I should be patient and practice more. I disagreed with her. I only had a few days to practice and mastering new recipes would take me weeks. I decided to continue with my burger. I was best at making that so it should have the highest chance of winning the contest. I created new kinds of burgers everyday from then on and tasted each of them to see if they were the best I could make.</p>
-<p>Then, on the day before the contest, my mom asked me what dish I prepared. When I told her I was going to make a burger, she advised me that next time I should make a more complicated recipe. “A tasty recipe matters on how delicious it is, not how fancy or complicated it is.” I said. Even if many people think a burger would not stand a chance against a chocolate cake, I refused to change my topic.</p>
-<p>Finally, the day of the competition arrived. I entered the stadium and put my ingredients on the right side of the table. I felt the tension in the kitchen. Alex was there and he was sitting on the left side of the table. When he saw that I had only a few ingredients needed to make my dish, he asked me what I was going to cook. A confident smile grew on his face when I told him I was going to make a smash burger. He told me I could forfeit if I was scared. I stared at him. I knew what he was going for. But it was not so easy to make me give up. Seeing that I would not back up, Alex had no choice but to start a cooking fight with me. Then the competition began. I first carefully spread some butter on the brioche buns. Then I toasted the buns. I took out the ground beef and rolled it into a patty. Meanwhile, Alex was making a chocolate cake. I wondered if the judge would like salty or sweet food better. While I was thinking, the judge said that we had thirty minutes left. I continued to make my Bacon King smash burger.</p>
-<p>I could feel my heart beating fast. I shakily put the patty into the pan and fried them. I then put the juicy meat on the toasted bun. Alex was watching me the whole time. He was already done baking his cake. I felt a thousand pairs of eyes looking at me. There was no time to be nervous. I put the butter lettuce on the meat and assembled the burger.</p>
-<p>Alex looked toward me. “It is no use trying to act tough. A loser will always remain a loser,” he said. But I ignored his words.</p>
-<p>Then we presented our finished results to the judge. He first took a bite out of the chocolate cake. He said that the sweetness of the chocolate cake mixed with the sourness of the strawberry on top was perfect. Then he ate my burger. He did not say anything. Cold sweat fell on my face. The whole room was so quiet that you could hear a pin drop on the ground.</p>
-<p>I gulped. Did the judge dislike my burger? That was when I saw him take another bite out of the burger. After that, he looked at Alex and me. “Well?” said Alex impatiently. “Who won?” The judge stood up. He said it was very hard to decide which recipe was tastier than the other. Though he equally liked the two foods, he said that my burger had the perfect attributes a burger should have. I grinned because I knew I won the contest.</p>
-<p>If I had made a fancy unfamiliar recipe, I may have never won this contest. I learnt that we should always play to our strengths and do what we are good at.</p>
 
       
     </div>

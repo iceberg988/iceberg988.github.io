@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">274</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">275</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">274</span>
+          <span class="site-state-item-count">275</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,139 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/raid-redundant-array-of-inexpensive-disks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/raid-redundant-array-of-inexpensive-disks/" class="post-title-link" itemprop="url">RAID - Redundant Array of Inexpensive Disks</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-31 07:00:00" itemprop="dateCreated datePublished" datetime="2021-07-31T07:00:00-07:00">2021-07-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>RAID stands for Redundant Array of Inexpensive (Independent) Disks.</p>
+<p>On most situations you will be using one of the following four levels of RAIDs.</p>
+<ul>
+<li>RAID 0</li>
+<li>RAID 1</li>
+<li>RAID 5(6)</li>
+<li>RAID 10 (also known as RAID 1+0)</li>
+</ul>
+<h2 id="RAID-0"><a href="#RAID-0" class="headerlink" title="RAID 0"></a>RAID 0</h2><p><img src="/images/raid0.svg" alt="Image"></p>
+<p>Following are the key points to remember for RAID level 0.</p>
+<ul>
+<li>Minimum 2 disks.</li>
+<li>Excellent performance (as blocks are striped).</li>
+<li>No redundancy (no mirror, no parity).</li>
+<li>Don’t use this for any critical system.</li>
+</ul>
+<h2 id="RAID-1"><a href="#RAID-1" class="headerlink" title="RAID 1"></a>RAID 1</h2><p><img src="/images/raid1.svg" alt="Image"></p>
+<p>Following are the key points to remember for RAID level 1.</p>
+<ul>
+<li>Minimum 2 disks.</li>
+<li>Good performance (no striping. no parity).</li>
+<li>Excellent redundancy (as blocks are mirrored).</li>
+</ul>
+<h2 id="RAID-5-6"><a href="#RAID-5-6" class="headerlink" title="RAID 5(6)"></a>RAID 5(6)</h2><p><img src="/images/raid5.svg" alt="Image"></p>
+<p>Following are the key points to remember for RAID level 5.</p>
+<ul>
+<li>Minimum 3 disks.</li>
+<li>Good performance (as blocks are striped).</li>
+<li>Good redundancy (distributed parity).</li>
+<li>Best cost-effective option providing both performance and redundancy. Use this for DB that is heavily read oriented. Write operations will be slow.</li>
+</ul>
+<p>RAID6 allows two disks failure while RAID5 allows only one disk failure.</p>
+<h2 id="RAID-10"><a href="#RAID-10" class="headerlink" title="RAID 10"></a>RAID 10</h2><p><img src="/images/raid10.svg" alt="Image"></p>
+<p>Following are the key points to remember for RAID level 10.</p>
+<ul>
+<li>Minimum 4 disks.</li>
+<li>This is also called as “stripe of mirrors”</li>
+<li>Excellent redundancy (as blocks are mirrored)</li>
+<li>Excellent performance (as blocks are striped)</li>
+<li>If you can afford the dollar, this is the BEST option for any mission critical applications (especially databases).</li>
+</ul>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.prepressure.com/library/technology/raid">https://www.prepressure.com/library/technology/raid</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.thegeekstuff.com/2010/08/raid-levels-tutorial/">https://www.thegeekstuff.com/2010/08/raid-levels-tutorial/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1196,120 +1329,6 @@ ulimit -aS
 <p>Spin locks are often used as low-level primitives to implement other types of locks. Depending on the system architecture, they can be implemented efficiently using test- and-set instructions. Although efficient, they can lead to wasting CPU resources: while a thread is spinning and waiting for a lock to become available, the CPU can’t do anything else. This is why spin locks should be held only for short periods of time.</p>
 <h2 id="Barriers"><a href="#Barriers" class="headerlink" title="Barriers"></a>Barriers</h2><p>Barriers are a synchronization mechanism that can be used to coordinate multiple threads working in parallel. A barrier allows each thread to wait until all cooperating threads have reached the same point, and then continue executing from there. We’ve already seen one form of barrier—the pthread_join function acts as a barrier to allow one thread to wait until another thread exits.</p>
 <p>Barrier objects are more general than this, however. They allow an arbitrary number of threads to wait until all of the threads have completed processing, but the threads don’t have to exit. They can continue working after all threads have reached the barrier.</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li>Advanced Programming in the UNIX Environment</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/interprocess-communication-ipc/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/interprocess-communication-ipc/" class="post-title-link" itemprop="url">Interprocess communication(IPC)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-10 07:00:00" itemprop="dateCreated datePublished" datetime="2021-04-10T07:00:00-07:00">2021-04-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Pipes"><a href="#Pipes" class="headerlink" title="Pipes"></a>Pipes</h2><p>Pipes are the oldest form of UNIX System IPC and are provided by all UNIX systems. Pipes have two limitations.</p>
-<ol>
-<li>Historically, they have been half duplex (i.e., data flows in only one direction). Some systems now provide full-duplex pipes, but for maximum portability, we should never assume that this is the case.</li>
-<li>Pipes can be used only between processes that have a common ancestor. Normally, a pipe is created by a process, that process calls fork, and the pipe is used between the parent and the child.</li>
-</ol>
-<p>FIFOs get around the second limitation, and UNIX domain sockets get around both limitations.</p>
-<h2 id="FIFOs"><a href="#FIFOs" class="headerlink" title="FIFOs"></a>FIFOs</h2><p>FIFOs are sometimes called named pipes. Unnamed pipes can be used only between related processes when a common ancestor has created the pipe. With FIFOs, however, unrelated processes can exchange data.</p>
-<p>Creating a FIFO is similar to creating a file. Indeed, the pathname for a FIFO exists in the file system.</p>
-<h2 id="Message-Queues"><a href="#Message-Queues" class="headerlink" title="Message Queues"></a>Message Queues</h2><p>A message queue is a linked list of messages stored within the kernel and identified by a message queue identifier. We’ll call the message queue just a queue and its identifier a queue ID.</p>
-<p>A new queue is created or an existing queue opened by msgget. New messages are added to the end of a queue by msgsnd. Every message has a positive long integer type field, a non-negative length, and the actual data bytes (corresponding to the length), all of which are specified to msgsnd when the message is added to a queue. Messages are fetched from a queue by msgrcv. We don’t have to fetch the messages in a first-in, first-out order. Instead, we can fetch messages based on their type field.</p>
-<h2 id="Semaphores"><a href="#Semaphores" class="headerlink" title="Semaphores"></a>Semaphores</h2><p>A semaphore isn’t a form of IPC similar to the others that we’ve described (pipes, FIFOs, and message queues). A semaphore is a counter used to provide access to a shared data object for multiple processes.</p>
-<p>To obtain a shared resource, a process needs to do the following:</p>
-<ol>
-<li>Test the semaphore that controls the resource.</li>
-<li>If the value of the semaphore is positive, the process can use the resource. In this case, the process decrements the semaphore value by 1, indicating that it has used one unit of the resource.</li>
-<li>Otherwise, if the value of the semaphore is 0, the process goes to sleep until the semaphore value is greater than 0. When the process wakes up, it returns to step 1.</li>
-</ol>
-<p>When a process is done with a shared resource that is controlled by a semaphore, the semaphore value is incremented by 1. If any other processes are asleep, waiting for the semaphore, they are awakened.</p>
-<p>To implement semaphores correctly, the test of a semaphore’s value and the decrementing of this value must be an atomic operation. For this reason, semaphores are normally implemented inside the kernel.</p>
-<h2 id="Shared-Memory"><a href="#Shared-Memory" class="headerlink" title="Shared Memory"></a>Shared Memory</h2><p>Shared memory allows two or more processes to share a given region of memory. This is the fastest form of IPC, because the data does not need to be copied between the client and the server. The only trick in using shared memory is synchronizing access to a given region among multiple processes. If the server is placing data into a shared memory region, the client shouldn’t try to access the data until the server is done. Often, semaphores are used to synchronize shared memory access. But record locking or mutexes can also be used.</p>
-<h2 id="Network-IPC-Sockets"><a href="#Network-IPC-Sockets" class="headerlink" title="Network IPC: Sockets"></a>Network IPC: Sockets</h2><p>The socket network IPC interface can be used by processes to communicate with other processes, regardless of where they are running, on the same machine or on different machines. Indeed, this was one of the design goals of the socket interface. The same interfaces can be used for both intermachine communication and intramachine communication.</p>
-<p>A socket is an abstraction of a communication endpoint. Just as they would use file descriptors to access files, applications use socket descriptors to access sockets. Socket descriptors are implemented as file descriptors in the UNIX System. Indeed, many of the functions that deal with file descriptors, such as read and write, will work with a socket descriptor.</p>
-<p>Normally, the recv functions will block when no data is immediately available. Similarly, the send functions will block when there is not enough room in the socket’s output queue to send the message. This behavior changes when the socket is in nonblocking mode.</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li>Advanced Programming in the UNIX Environment</li>
 </ul>
