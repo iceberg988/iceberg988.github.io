@@ -24938,12 +24938,12 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
 <p>To calculate the <strong>disk utilization</strong>:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">busy = 100.0 * blkio.ticks / deltams; /* percentage! */</span><br></pre></td></tr></table></figure>
 
-<p>With above implementaion, there are actually two traps when to use them to identify disk bottleneck.</p>
+<h2 id="Two-traps-in-iostat"><a href="#Two-traps-in-iostat" class="headerlink" title="Two traps in iostat"></a>Two traps in iostat</h2><p>With above implementaion, there are actually two traps when to use them to identify disk bottleneck.</p>
 <ul>
 <li><strong>svctm</strong> - average I&#x2F;O service time(ms)</li>
 <li><strong>%util</strong> - disk utilization</li>
 </ul>
-<h2 id="Two-traps-in-iostat"><a href="#Two-traps-in-iostat" class="headerlink" title="Two traps in iostat"></a>Two traps in iostat</h2><p>Let’s try to increase the fio numjobs from 1 to 4.</p>
+<p>Let’s try to increase the fio numjobs from 1 to 4.</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ fio --ioengine=libaio --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --iodepth=128 --direct=1 --group_reporting -time_based --runtime=60 --numjobs=4 --name=fiojob1 --filename=/dev/nvme1n1</span><br><span class="line">write: io=3798.2MB, bw=64817KB/s, iops=16204, runt= 60004msec</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Device: rrqm/s wrqm/s r/s w/s     rkB/s wkB/s   avgrq-sz avgqu-sz await r_await w_await svctm %util</span><br><span class="line">nvme1n1 0      0      0   16001.6 0     64006.4 8        50.15    3.13  0       3.13    0.06  100</span><br></pre></td></tr></table></figure>
