@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="iostat is a Linux I&#x2F;O performance monitoring utility. It’s very commonly used to analyze device utilization. &#x2F;proc&#x2F;diskstatsThe statistics fields in iostat are calculated based on the I">
+    <meta name="description" content="iostat is a Linux I&#x2F;O performance monitoring utility. It’s very commonly used to analyze device utilization.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="The complete explanation for await, svctm and %util in iostat">
 <meta property="og:url" content="https://www.flamingbytes.com/blog/ultimate-explanation-for-iostat/index.html">
 <meta property="og:site_name" content="FlamingBytes">
-<meta property="og:description" content="iostat is a Linux I&#x2F;O performance monitoring utility. It’s very commonly used to analyze device utilization. &#x2F;proc&#x2F;diskstatsThe statistics fields in iostat are calculated based on the I">
+<meta property="og:description" content="iostat is a Linux I&#x2F;O performance monitoring utility. It’s very commonly used to analyze device utilization.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-01-29T23:28:42.000Z">
-<meta property="article:modified_time" content="2024-01-30T05:41:38.000Z">
+<meta property="article:modified_time" content="2024-01-30T05:46:52.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="Observability">
 <meta name="twitter:card" content="summary">
@@ -289,7 +289,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2024-01-29 15:28:42 / Modified: 21:41:38" itemprop="dateCreated datePublished" datetime="2024-01-29T15:28:42-08:00">2024-01-29</time>
+      <time title="Created: 2024-01-29 15:28:42 / Modified: 21:46:52" itemprop="dateCreated datePublished" datetime="2024-01-29T15:28:42-08:00">2024-01-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -321,7 +321,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><strong>iostat</strong> is a Linux I&#x2F;O performance monitoring utility. It’s very commonly used to analyze device utilization.</p>
+    <div class="post-body" itemprop="articleBody"><p><strong>iostat</strong> is a Linux I&#x2F;O performance monitoring utility. It’s very commonly used to analyze device utilization. <span id="more"></span></p>
 <h2 id="proc-diskstats"><a href="#proc-diskstats" class="headerlink" title="&#x2F;proc&#x2F;diskstats"></a>&#x2F;proc&#x2F;diskstats</h2><p>The statistics fields in iostat are calculated based on the I&#x2F;O statistics of block devices in &#x2F;proc&#x2F;diskstats.</p>
 <p>Each line in the &#x2F;proc&#x2F;diskstats file contains the following 14 fields. More fields are added in kernel 4.18 and later.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1  major number</span><br><span class="line">2  minor number</span><br><span class="line">3  device name</span><br><span class="line">4  reads completed successfully</span><br><span class="line">5  reads merged</span><br><span class="line">6  sectors read</span><br><span class="line">7  time spent reading (ms)</span><br><span class="line">8  writes completed</span><br><span class="line">9  writes merged</span><br><span class="line">10  sectors written</span><br><span class="line">11  time spent writing (ms)</span><br><span class="line">12  I/Os currently in progress</span><br><span class="line">13  time spent doing I/Os (ms)</span><br><span class="line">14  weighted time spent doing I/Os (ms)</span><br></pre></td></tr></table></figure>

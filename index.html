@@ -239,7 +239,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2024-01-29 15:28:42 / Modified: 21:41:38" itemprop="dateCreated datePublished" datetime="2024-01-29T15:28:42-08:00">2024-01-29</time>
+      <time title="Created: 2024-01-29 15:28:42 / Modified: 21:46:52" itemprop="dateCreated datePublished" datetime="2024-01-29T15:28:42-08:00">2024-01-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -265,71 +265,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><strong>iostat</strong> is a Linux I&#x2F;O performance monitoring utility. It’s very commonly used to analyze device utilization.</p>
-<h2 id="proc-diskstats"><a href="#proc-diskstats" class="headerlink" title="&#x2F;proc&#x2F;diskstats"></a>&#x2F;proc&#x2F;diskstats</h2><p>The statistics fields in iostat are calculated based on the I&#x2F;O statistics of block devices in &#x2F;proc&#x2F;diskstats.</p>
-<p>Each line in the &#x2F;proc&#x2F;diskstats file contains the following 14 fields. More fields are added in kernel 4.18 and later.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1  major number</span><br><span class="line">2  minor number</span><br><span class="line">3  device name</span><br><span class="line">4  reads completed successfully</span><br><span class="line">5  reads merged</span><br><span class="line">6  sectors read</span><br><span class="line">7  time spent reading (ms)</span><br><span class="line">8  writes completed</span><br><span class="line">9  writes merged</span><br><span class="line">10  sectors written</span><br><span class="line">11  time spent writing (ms)</span><br><span class="line">12  I/Os currently in progress</span><br><span class="line">13  time spent doing I/Os (ms)</span><br><span class="line">14  weighted time spent doing I/Os (ms)</span><br></pre></td></tr></table></figure>
-
-<p>We will need to know these statistics later when we learn how iostat calculates its fields.</p>
-<h2 id="iostat"><a href="#iostat" class="headerlink" title="iostat"></a>iostat</h2><p>Now, let’s use fio load generator to benchamrk a AWS EBS gp3 volume and examine the iostat report.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ fio --ioengine=libaio --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --iodepth=128 --direct=1 --group_reporting -time_based --runtime=60 --numjobs=1 --name=fiojob1 --filename=/dev/nvme1n1</span><br><span class="line">write: io=2555.8MB, bw=43615KB/s, iops=10903, runt= 60004msec</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Device: rrqm/s wrqm/s r/s w/s   rkB/s wkB/s avgrq-sz avgqu-sz await r_await w_await svctm %util</span><br><span class="line">nvme1n1 0      0      0   10993 0     43972 8        30.13    2.74  0       2.74    0.09  100</span><br></pre></td></tr></table></figure>
-
-<p>As we can see above, it achieves 10903 iops and the disk is 100% utilized.</p>
-<p>You may naturally conclude that the disk runs into bottleneck since it’s 100% busy. Is this really true? Before we answer this question, let’s firstly understand how iostat computes the statistics fields.</p>
-<h2 id="How-are-the-iostat-fields-calculated"><a href="#How-are-the-iostat-fields-calculated" class="headerlink" title="How are the iostat fields calculated?"></a>How are the iostat fields calculated?</h2><p>Since the basic fields, such as r&#x2F;s and w&#x2F;s, are very straightforward, we will mainly focus on the following three extended fields because they are commonly used to identify the disk bottlenck.</p>
-<ul>
-<li>await</li>
-<li>svctm</li>
-<li>%util</li>
-</ul>
-<p>From iostat source code, to calcualte the <strong>total number of read and write IOs</strong>:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">n_ios  = blkio.rd_ios + blkio.wr_ios;</span><br></pre></td></tr></table></figure>
-
-<p>To calculate the <strong>total amount of time(ms) waiting in queue</strong>:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">n_ticks = blkio.rd_ticks + blkio.wr_ticks;</span><br></pre></td></tr></table></figure>
-
-<p>To calculate the <strong>average I&#x2F;O wait time(ms)</strong>:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wait = n_ios ? n_ticks / n_ios : 0.0;</span><br></pre></td></tr></table></figure>
-
-<p>To calcualte the <strong>average I&#x2F;O service time(ms)</strong>:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svc_t = n_ios ? blkio.ticks / n_ios : 0.0;</span><br></pre></td></tr></table></figure>
-
-<p>Note: the blkio.ticks is calculated based on the field 13 “time spent doing I&#x2F;Os (ms)” in &#x2F;proc&#x2F;diskstats.</p>
-<p>To calculate the <strong>disk utilization</strong>:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">busy = 100.0 * blkio.ticks / deltams; /* percentage! */</span><br></pre></td></tr></table></figure>
-
-<p>With above implementaion, there are actually two traps when to use them to identify disk bottleneck.</p>
-<ul>
-<li><strong>svctm</strong> - average I&#x2F;O service time(ms)</li>
-<li><strong>%util</strong> - disk utilization</li>
-</ul>
-<h2 id="Two-traps-in-iostat"><a href="#Two-traps-in-iostat" class="headerlink" title="Two traps in iostat"></a>Two traps in iostat</h2><p>Let’s try to increase the fio numjobs from 1 to 4.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ fio --ioengine=libaio --blocksize=4k --readwrite=write --filesize=10G --end_fsync=1 --iodepth=128 --direct=1 --group_reporting -time_based --runtime=60 --numjobs=4 --name=fiojob1 --filename=/dev/nvme1n1</span><br><span class="line">write: io=3798.2MB, bw=64817KB/s, iops=16204, runt= 60004msec</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Device: rrqm/s wrqm/s r/s w/s     rkB/s wkB/s   avgrq-sz avgqu-sz await r_await w_await svctm %util</span><br><span class="line">nvme1n1 0      0      0   16001.6 0     64006.4 8        50.15    3.13  0       3.13    0.06  100</span><br></pre></td></tr></table></figure>
-
-<p>Comparing the 1 fio job and 4 jobs runs:</p>
-<ul>
-<li>The w&#x2F;s increases from 10903 to 16001 even though the disk utilization is 100% for the two runs. It means, with one job run, the disk is not fully saturated yet.</li>
-<li>The average I&#x2F;O service time(svctm) reduces from 0.09 to 0.06.</li>
-</ul>
-<p>Literally, the disk could respond the request in 0.09ms under ligher load, and 0.06ms under heavier load. This seems unlikely and it’s not what iostat supposes to tell us on the average disk service time.</p>
-<p>And from iostat man page, you may see this warning.</p>
-<blockquote>
-<p>svctm<br>    The average service time (in milliseconds) for I&#x2F;O requests that were issued to the device. Warning! Do not trust this field any more.  This field will be removed in a future sysstat version.</p>
-</blockquote>
-<p>For the traditional spining harddisk, the I&#x2F;O has to be serialized due to the nature of disk head movement from one disk platter location to another. That means only one I&#x2F;O can be serviced at once. In such case, the svctm can reflect how fast each I&#x2F;O is responded.</p>
-<p>For the modern SSD disk, it won’t be true any more because the disk can respond to multiple IOs at once. Even if it’s 100% utilized, it just means during that period, the disk is busy responding I&#x2F;O requests. It doesn’t always mean the disk is already saturated.</p>
-<p>In order to idenitfy if the disk is completely saturated(peaked), the only way is to offer more work to do in parallel. In the above example, by increasing fio numjobs from 1 to 4, the w&#x2F;s is peaked at 16001 which is align with the specfied iops for the EBS gp3 volume.</p>
-<p>In a word, both the svctm and %util fields in iostat are misleading for the modern SSD storage system. They should be used with extra care. </p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/Documentation/iostats.txt">I&#x2F;O statistics fields</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/Documentation/ABI/testing/procfs-diskstats">&#x2F;proc&#x2F;diskstats</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/i4oolish/iostat/blob/master/iostat.c#L219">iostat.c</a></li>
-</ul>
-
+          <p><strong>iostat</strong> is a Linux I&#x2F;O performance monitoring utility. It’s very commonly used to analyze device utilization.
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/ultimate-explanation-for-iostat/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
