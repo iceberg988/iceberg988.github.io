@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">275</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">277</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">275</span>
+          <span class="site-state-item-count">277</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,268 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/network-concepts-you-should-know/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/network-concepts-you-should-know/" class="post-title-link" itemprop="url">Network concepts you should know</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-02-13 08:00:00" itemprop="dateCreated datePublished" datetime="2022-02-13T08:00:00-08:00">2022-02-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="IP-address"><a href="#IP-address" class="headerlink" title="IP address"></a>IP address</h2><p>Networking is about one computer sending a message to another computer. This message is called packet in the IP world. It is just like a postcard in the postal service. The postal service can take a postcard addressed to someone and deliver it. Similarly, it needs to provide a network address when a computer to ask the network to deliver a packet to another computer. The network address is called IP address.</p>
+<p>An Internet Protocol address is a numerical label such as 192.0.2.1 that is connected to a computer network that uses the Internet Protocol for communication. An IP address serves two main functions: network interface identification and location addressing. Internet Protocol version 4 (IPv4) defines an IP address as a 32-bit number. However, because of the growth of the Internet and the depletion of available IPv4 addresses, a new version of IP (IPv6) uses 128 bits for the IP address. <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/IP_address">Source</a></p>
+<h2 id="Network-Routing"><a href="#Network-Routing" class="headerlink" title="Network Routing"></a>Network Routing</h2><p>In order for a souce computer to deliver the addressed packet to the destination computer, it needs to understand the IP address similar to how the postal service understands a mailing address. For example, if the destination address is in the same postal code as sender’s, the mail probably never leaves the same neighbourhood. But if the destination mailing address is in a different postal code, the postal service has to leverage some mechanism to get to the destination. Network routing is very similar. If a packet is sent from 192.168.0.2 to 192.168.0.5, it is likely the two computers are close to each other and the routing is simple, probably just a single hop to get to the target computer. However, if a packet is sent from 192.168.1.2 to 7.7.0.5, it probably requires many hops across complicated network.</p>
+<h2 id="Network-Port"><a href="#Network-Port" class="headerlink" title="Network Port"></a>Network Port</h2><p>On a postcard, the name of recipient is usually written. It is because there might be more than one person living at a particular mailing address. In the computer world, there may be many processes on a computer to use the network. The packet can only be sent to the target computer if all we have is a network address. There is no way to decide which process should receive the packet. This is solved by the use of a network port. It’s usually represented with the form of <em>ip:port</em>, for example, 7.7.0.5:80.</p>
+<h2 id="Transmission-Control-Protocol-TCP"><a href="#Transmission-Control-Protocol-TCP" class="headerlink" title="Transmission Control Protocol(TCP)"></a>Transmission Control Protocol(TCP)</h2><p>TCP is a layer on top of the Internet Protocol(IP) but they are often used together as “TCP&#x2F;IP”.</p>
+<p>Similar to the postal service, networking protocols also set an upper limit to how many bytes can be sent in a single IP packet. TCP can establish a connection to a particular port on the target computer and the desired data can be sent with multiple packets while each packet has a upper limit. TCP will ensure all the data arrives at the destination in the proper order by chopping it up into individually numbered IP packets. In the case of packet loss in transit, it can be resent. TCP also has mechanisms to notice if packets are not getting through for an extended period of time and notifying you of a “broken” connection.</p>
+<p>TCP provides reliable, ordered, and error-checked delivery of a stream of octets (bytes) between applications running on hosts communicating via an IP network. Major internet applications such as the World Wide Web, email, remote administration, and file transfer rely on TCP, which is part of the Transport Layer of the TCP&#x2F;IP suite. SSL&#x2F;TLS often runs on top of TCP. TCP is connection-oriented, and a connection between client and server is established before data can be sent. The server must be listening (passive open) for connection requests from clients before a connection is established. Three-way handshake (active open), retransmission, and error detection adds to reliability but lengthens latency. Applications that do not require reliable data stream service may use the User Datagram Protocol (UDP), which provides a connectionless datagram service that prioritizes time over reliability. TCP employs network congestion avoidance. However, there are vulnerabilities to TCP, including denial of service, connection hijacking, TCP veto, and reset attack. <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol">Source</a></p>
+<h2 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h2><p>In computer networking, the User Datagram Protocol (UDP) is one of the core members of the Internet protocol suite. With UDP, computer applications can send messages, in this case referred to as datagrams, to other hosts on an Internet Protocol (IP) network. Prior communications are not required in order to set up communication channels or data paths. UDP uses a simple connectionless communication model with a minimum of protocol mechanisms. UDP provides checksums for data integrity, and port numbers for addressing different functions at the source and destination of the datagram. It has no handshaking dialogues, and thus exposes the user’s program to any unreliability of the underlying network; there is no guarantee of delivery, ordering, or duplicate protection. If error-correction facilities are needed at the network interface level, an application may instead use Transmission Control Protocol (TCP) or Stream Control Transmission Protocol (SCTP) which are designed for this purpose. UDP is suitable for purposes where error checking and correction are either not necessary or are performed in the application; UDP avoids the overhead of such processing in the protocol stack. Time-sensitive applications often use UDP because dropping packets is preferable to waiting for packets delayed due to retransmission, which may not be an option in a real-time system. The protocol was designed by David P. Reed in 1980 and formally defined in RFC 768. <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/User_Datagram_Protocol">Source</a></p>
+<h2 id="Domain-Name-System-DNS"><a href="#Domain-Name-System-DNS" class="headerlink" title="Domain Name System(DNS)"></a>Domain Name System(DNS)</h2><p>The destination computer can be addressed with IP in network. However, it’s hard to remember the IP address directly for a user. When the computer and network are upgraded over time, it’s likely to assign a different IP address to a computer. The same destination computer would be unaccessible with the old IP address. Thus, a “phone book” called Domain Name System(DNS) is used to solve these issues.</p>
+<p>The <strong>dig</strong> utility can be used to query DNS. In the follow example, the domain name <em>google.com</em> is eventually translated to the IP address <em>142.250.191.46</em>.</p>
+<pre><code>$ dig google.com
+[..]
+;; QUESTION SECTION:
+;google.com.			IN	A
+
+;; ANSWER SECTION:
+google.com.		222	IN	A	142.250.191.46
+[..]
+</code></pre>
+<h2 id="Hypertext-Transfer-Protocol-HTTP"><a href="#Hypertext-Transfer-Protocol-HTTP" class="headerlink" title="Hypertext Transfer Protocol(HTTP)"></a>Hypertext Transfer Protocol(HTTP)</h2><p>The Hypertext Transfer Protocol is an application layer protocol in the Internet protocol suite model for distributed, collaborative, hypermedia information systems. HTTP is the foundation of data communication for the World Wide Web, where hypertext documents include hyperlinks to other resources that the user can easily access, for example by a mouse click or by tapping the screen in a web browser. <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol">Source</a></p>
+<p>When we type a web address, such as <em><a target="_blank" rel="noopener" href="http://example.com/hello">http://example.com/hello</a></em>, into a web browser. Firstly, the browser consults DNS to translate the domain name into a IP address. Then, the web browser establishes a TCP connection to the translated IP address of the web server on port 80 which is the default “well known” port for the HTTP. Once a connection is established, the web browser send a GET message to the server to ask for a particular resource. The server will reply with an OK message and the requested content.</p>
+<p><strong>curl</strong> is a commonly used CLI tool that you can use to issue GET requests.</p>
+<pre><code>$ curl -v http://7.7.0.2/hello
+* About to connect() to 7.7.0.2 port 80 (#0)
+*   Trying 7.7.0.2...
+* Connected to 7.7.0.2 (7.7.0.2) port 80 (#0)
+&gt; GET /hello HTTP/1.1
+&gt; User-Agent: curl/7.29.0
+&gt; Host: 7.7.0.2
+&gt; Accept: */*
+&gt; 
+&lt; HTTP/1.1 200 OK
+&lt; Server: nginx/1.17.10
+&lt; Date: Sun, 13 Mar 2022 01:50:19 GMT
+&lt; Content-Type: text/html; charset=utf-8
+&lt; Content-Length: 15
+&lt; Connection: keep-alive
+&lt; 
+* Connection #0 to host 7.7.0.2 left intact
+Hello world
+</code></pre>
+<p>Here we use curl utility to issue a simple GET request. In this case, we don’t have DNS setup. We issue the GET request to the target server with IP address directly. It establishes a TCP connection on default port 80 of that address. Then it sends a GET message for the resource <em>&#x2F;hello</em>. Finally, a response of <em>200 OK</em> is received, along with the content <em>Hello world</em>.</p>
+<p>In the example output, there are additional lines in both the request and response which look like <em>Name: Value</em>. These are called <strong>headers</strong> which convey additional information about the request and response. For example, the request contains header Accept: <em>&#x2F;</em> which means the client can accept the response in any format. In the response, we see the header <em>Content-Type: text&#x2F;html; charset&#x3D;utf-8</em>, which is the server telling the client the body of response is just a text.</p>
+<h2 id="OSI-layer-architecture"><a href="#OSI-layer-architecture" class="headerlink" title="OSI layer architecture"></a>OSI layer architecture</h2><p><img src="/images/osi-layer-arch.png" alt="Image"></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/OSI_model">Source</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/database-concepts-you-should-know/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/database-concepts-you-should-know/" class="post-title-link" itemprop="url">Database concepts you should know</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-02-12 08:00:00" itemprop="dateCreated datePublished" datetime="2022-02-12T08:00:00-08:00">2022-02-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="SQL-vs-NoSQL"><a href="#SQL-vs-NoSQL" class="headerlink" title="SQL vs. NoSQL"></a>SQL vs. NoSQL</h2><p><img src="/images/sql-vs-nosql.png" alt="Image"></p>
+<p><a target="_blank" rel="noopener" href="https://www.mongodb.com/nosql-explained/nosql-vs-sql">Source</a></p>
+<p><strong>Benefits of NoSQL databases</strong></p>
+<p>NoSQL databases offer many benefits over relational databases. NoSQL databases have flexible data models, scale horizontally, have incredibly fast queries, and are easy for developers to work with.</p>
+<ul>
+<li>Flexible data models</li>
+</ul>
+<p>NoSQL databases typically have very flexible schemas. A flexible schema allows you to easily make changes to your database as requirements change. You can iterate quickly and continuously integrate new application features to provide value to your users faster.</p>
+<ul>
+<li>Horizontal scaling</li>
+</ul>
+<p>Most SQL databases require you to scale-up vertically (migrate to a larger, more expensive server) when you exceed the capacity requirements of your current server. Conversely, most NoSQL databases allow you to scale-out horizontally, meaning you can add cheaper, commodity servers whenever you need to.</p>
+<ul>
+<li>Fast queries</li>
+</ul>
+<p>Queries in NoSQL databases can be faster than SQL databases. Why? Data in SQL databases is typically normalized, so queries for a single object or entity require you to join data from multiple tables. As your tables grow in size, the joins can become expensive. However, data in NoSQL databases is typically stored in a way that is optimized for queries. The rule of thumb when you use MongoDB is Data that is accessed together should be stored together. Queries typically do not require joins, so the queries are very fast.</p>
+<ul>
+<li>Easy for developers</li>
+</ul>
+<p>Some NoSQL databases like MongoDB map their data structures to those of popular programming languages. This mapping allows developers to store their data in the same way that they use it in their application code. While it may seem like a trivial advantage, this mapping can allow developers to write less code, leading to faster development time and fewer bugs.</p>
+<p><a target="_blank" rel="noopener" href="https://www.mongodb.com/nosql-explained/nosql-vs-sql">Source</a></p>
+<h2 id="Apache-Cassandra"><a href="#Apache-Cassandra" class="headerlink" title="Apache Cassandra"></a>Apache Cassandra</h2><p>Cassandra is a NoSQL distributed database. By design, NoSQL databases are lightweight, open-source, non-relational, and largely distributed. Counted among their strengths are horizontal scalability, distributed architectures, and a flexible approach to schema definition.</p>
+<p>NoSQL databases enable rapid, ad-hoc organization and analysis of extremely high-volume, disparate data types. That’s become more important in recent years, with the advent of Big Data and the need to rapidly scale databases in the cloud. Cassandra is among the NoSQL databases that have addressed the constraints of previous data management technologies, such as SQL databases.</p>
+<p><img src="/images/apache-cassandra-diagrams.jpeg" alt="Image"></p>
+<p><a target="_blank" rel="noopener" href="https://cassandra.apache.org/_/cassandra-basics.html">Source</a></p>
+<h2 id="ACID-and-CAP-theorem"><a href="#ACID-and-CAP-theorem" class="headerlink" title="ACID and CAP theorem"></a>ACID and CAP theorem</h2><p>A clear explanation can be referenced <a target="_blank" rel="noopener" href="https://medium.com/@pranabj.aec/acid-cap-and-base-cc73dee43f8c">here</a></p>
+<h2 id="Database-Index"><a href="#Database-Index" class="headerlink" title="Database Index"></a>Database Index</h2><p>A database index is a data structure that improves the speed of data retrieval operations on a database table at the cost of additional writes and storage space to maintain the index data structure. Indexes are used to quickly locate data without having to search every row in a database table every time a database table is accessed. Indexes can be created using one or more columns of a database table, providing the basis for both rapid random lookups and efficient access of ordered records.</p>
+<p>An index is a copy of selected columns of data, from a table, that is designed to enable very efficient search. An index normally includes a “key” or direct link to the original row of data from which it was copied, to allow the complete row to be retrieved efficiently. Some databases extend the power of indexing by letting developers create indexes on column values that have been transformed by functions or expressions. For example, an index could be created on upper(last_name), which would only store the upper-case versions of the last_name field in the index. Another option sometimes supported is the use of partial indices, where index entries are created only for those records that satisfy some conditional expression. A further aspect of flexibility is to permit indexing on user-defined functions, as well as expressions formed from an assortment of built-in functions.</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Database_index#:~:text=A%20database%20index%20is%20a,maintain%20the%20index%20data%20structure.">Source</a></p>
+<p><strong>How are indexes created?</strong></p>
+<p>In a database, data is stored in rows which are organized into tables. Each row has a unique key which distinguishes it from all other rows and those keys are stored in an index for quick retrieval.</p>
+<p>Since keys are stored in indexes, each time a new row with a unique key is added, the index is automatically updated. However, sometimes we need to be able to quickly lookup data that is not stored as a key. For example, we may need to quickly lookup customers by telephone number. It would not be a good idea to use a unique constraint because we can have multiple customers with the same phone number. In these cases, we can create our own indexes.</p>
+<p><a target="_blank" rel="noopener" href="https://www.codecademy.com/article/sql-indexes">Source</a></p>
+<h2 id="Sharding"><a href="#Sharding" class="headerlink" title="Sharding"></a>Sharding</h2><p>Sharding is a method of splitting and storing a single logical dataset in multiple databases. By distributing the data among multiple machines, a cluster of database systems can store larger dataset and handle additional requests. Sharding is necessary if a dataset is too large to be stored in a single database. Moreover, many sharding strategies allow additional machines to be added. Sharding allows a database cluster to scale along with its data and traffic growth.</p>
+<p>Sharding is also referred as horizontal partitioning. The distinction of horizontal vs vertical comes from the traditional tabular view of a database. A database can be split vertically — storing different tables &amp; columns in a separate database, or horizontally — storing rows of a same table in multiple database nodes.</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Shard_(database_architecture)">Source1</a><br><a target="_blank" rel="noopener" href="https://medium.com/@jeeyoungk/how-sharding-works-b4dec46b3f6#:~:text=Sharding%20is%20a%20method%20of,stored%20in%20a%20single%20database.">Source2</a></p>
+<h2 id="Amazon-DynamoDB"><a href="#Amazon-DynamoDB" class="headerlink" title="Amazon DynamoDB"></a>Amazon DynamoDB</h2><p>Amazon DynamoDB is a fully managed, serverless, key-value NoSQL database designed to run high-performance applications at any scale. DynamoDB offers built-in security, continuous backups, automated multi-region replication, in-memory caching, and data export tools.</p>
+<p><a target="_blank" rel="noopener" href="https://aws.amazon.com/dynamodb/">Source</a></p>
+<h2 id="SSTable"><a href="#SSTable" class="headerlink" title="SSTable"></a>SSTable</h2><p>Sorted Strings Table (SSTable) is a persistent file format used by Scylla, Apache Cassandra, and other NoSQL databases to take the in-memory data stored in memtables, order it for fast access, and store it on disk in a persistent, ordered, immutable set of files. Immutable means SSTables are never modified. They are later merged into new SSTables or deleted as data is updated.</p>
+<p><img src="/images/sstable-diagram.png" alt="Image"></p>
+<p><a target="_blank" rel="noopener" href="http://distributeddatastore.blogspot.com/2013/08/cassandra-sstable-storage-format.html">Source1</a><br><a target="_blank" rel="noopener" href="https://www.scylladb.com/glossary/sstable/#:~:text=Sorted%20Strings%20Table%20(SSTable)%20is,means%20SSTables%20are%20never%20modified.">Source2</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1275,313 +1537,6 @@ Do you really want to remove active logical volume vg1/thinpool1? [y/n]: y
 <li><a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_logical_volumes/assembly_thinly-provisioned-logical-volumes_configuring-and-managing-logical-volumes">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux&#x2F;8&#x2F;html&#x2F;configuring_and_managing_logical_volumes&#x2F;assembly_thinly-provisioned-logical-volumes_configuring-and-managing-logical-volumes</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.ilsistemista.net/index.php/linux-a-unix/46-lvm-thin-volume-explained.html?start=3">https://www.ilsistemista.net/index.php/linux-a-unix/46-lvm-thin-volume-explained.html?start=3</a></li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/how-to-configure-sar-data-collection-on-rhel8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/how-to-configure-sar-data-collection-on-rhel8/" class="post-title-link" itemprop="url">How to configure SAR data collection on RHEL8</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-01-04 08:00:00" itemprop="dateCreated datePublished" datetime="2022-01-04T08:00:00-08:00">2022-01-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>On RHEL8, it uses systemd instead of cron jobs to manage SAR data collection service.</p>
-<p>Run the following command to check if the SAR data collection is started.</p>
-<pre><code>[root@h04-11 ~]# cat /etc/redhat-release
-Red Hat Enterprise Linux release 8.5 (Ootpa)
-
-[root@h04-11 ~]# systemctl status sysstat-collect.timer
-● sysstat-collect.timer - Run system activity accounting tool every 10 minutes
-   Loaded: loaded (/usr/lib/systemd/system/sysstat-collect.timer; enabled; vendor preset: disabled)
-   Active: inactive (dead)
-  Trigger: n/a
-</code></pre>
-<p>If it’s not started, run the following command to start it.</p>
-<pre><code>[root@h04-11 ~]# systemctl start sysstat-collect.timer
-[root@h04-11 ~]# systemctl status sysstat-collect.timer
-● sysstat-collect.timer - Run system activity accounting tool every 10 minutes
-   Loaded: loaded (/usr/lib/systemd/system/sysstat-collect.timer; enabled; vendor preset: disabled)
-   Active: active (waiting) since Tue 2022-01-04 19:49:54 UTC; 1s ago
-  Trigger: Tue 2022-01-04 19:50:00 UTC; 4s left
-
-Jan 04 19:49:54 h04-11 systemd[1]: Started Run system activity accounting tool every 10 minutes.
-</code></pre>
-<p>Check the sar file existence after a few minutes as below.</p>
-<pre><code>[root@h04-11 ~]# ls -ltr /var/log/sa
-total 0
-[root@h04-11 ~]# date
-Tue Jan  4 19:50:25 UTC 2022
-[root@h04-11 ~]# ls -ltr /var/log/sa
-total 12
--rw-r--r--. 1 root root 11632 Jan  4 19:50 sa04
-</code></pre>
-<p>Check the default interval of SAR data collection as below.</p>
-<pre><code>[root@h04-11 ~]# systemctl cat sysstat-collect.timer
-# /usr/lib/systemd/system/sysstat-collect.timer
-# /usr/lib/systemd/system/sysstat-collect.timer
-# (C) 2014 Tomasz Torcz &lt;tomek@pipebreaker.pl&gt;
-#
-# sysstat-11.7.3 systemd unit file:
-#        Activates activity collector every 10 minutes
-
-[Unit]
-Description=Run system activity accounting tool every 10 minutes
-
-[Timer]
-OnCalendar=*:00/10
-
-[Install]
-WantedBy=sysstat.service
-</code></pre>
-<p>To change the interval of SAR data collection, edit the systemd unit file as below.</p>
-<pre><code>[root@h04-11 ~]# export SYSTEMD_EDITOR=/usr/bin/vi
-[root@h04-11 ~]# systemctl edit sysstat-collect.timer
-</code></pre>
-<p>Add the following to set the desired interval. In this example, we changed it from 10 minutes to 1 minute. The blank “OnCalendar&#x3D;” directive is there to remove the original setting.</p>
-<pre><code>[Unit]
-Description=Run system activity accounting tool every 1 minute
-
-[Timer]
-OnCalendar=
-OnCalendar=*:00/1
-</code></pre>
-<p>Reload systemd service to apply the change.</p>
-<pre><code>[root@h04-11 ~]# systemctl daemon-reload
-
-[root@h04-11 ~]# systemctl cat sysstat-collect.timer
-# /usr/lib/systemd/system/sysstat-collect.timer
-# /usr/lib/systemd/system/sysstat-collect.timer
-# (C) 2014 Tomasz Torcz &lt;tomek@pipebreaker.pl&gt;
-#
-# sysstat-11.7.3 systemd unit file:
-#        Activates activity collector every 10 minutes
-
-[Unit]
-Description=Run system activity accounting tool every 10 minutes
-
-[Timer]
-OnCalendar=*:00/10
-
-[Install]
-WantedBy=sysstat.service
-
-# /etc/systemd/system/sysstat-collect.timer.d/override.conf
-[Unit]
-Description=Run system activity accounting tool every 1 minute
-
-[Timer]
-OnCalendar=
-OnCalendar=*:00/1
-
-[root@h04-11 ~]# cat /etc/systemd/system/sysstat-collect.timer.d/override.conf
-[Unit]
-Description=Run system activity accounting tool every 1 minute
-
-[Timer]
-OnCalendar=
-OnCalendar=*:00/1
-
-[root@h04-11 ~]# systemctl status sysstat-collect.timer
-● sysstat-collect.timer - Run system activity accounting tool every 1 minute
-   Loaded: loaded (/usr/lib/systemd/system/sysstat-collect.timer; enabled; vendor preset: disabled)
-  Drop-In: /etc/systemd/system/sysstat-collect.timer.d
-           └─override.conf
-   Active: active (running) since Tue 2022-01-04 19:49:54 UTC; 27min ago
-  Trigger: n/a
-
-Jan 04 19:49:54 h04-11 systemd[1]: Started Run system activity accounting tool every 10 minutes.
-</code></pre>
-<p>To verify if the interval of SAR data collection is modified successfully, do the following.</p>
-<pre><code>[root@h04-11 ~]# sar -u -f /var/log/sa/sa04
-Linux 4.18.0-348.2.1.el8_5.x86_64 (h04-11) 	01/04/2022 	_x86_64_	(32 CPU)
-
-07:50:18 PM     CPU     %user     %nice   %system   %iowait    %steal     %idle
-08:00:18 PM     all      0.11      0.00      0.13      0.00      0.00     99.76
-08:10:08 PM     all      0.11      0.00      0.13      0.00      0.00     99.75
-08:14:08 PM     all      0.12      0.00      0.13      0.00      0.00     99.74
-08:15:35 PM     all      0.12      0.00      0.13      0.01      0.00     99.73
-08:16:18 PM     all      0.12      0.00      0.14      0.02      0.00     99.72
-08:17:07 PM     all      0.10      0.00      0.13      0.00      0.00     99.77
-08:18:18 PM     all      0.12      0.00      0.13      0.00      0.00     99.75
-Average:        all      0.11      0.00      0.13      0.00      0.00     99.75
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://access.redhat.com/solutions/276533">https://access.redhat.com/solutions/276533</a></li>
-<li><a target="_blank" rel="noopener" href="https://access.redhat.com/solutions/5115491">https://access.redhat.com/solutions/5115491</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/art-water-color/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/art-water-color/" class="post-title-link" itemprop="url">Art - Water Color</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-01-02 08:00:00" itemprop="dateCreated datePublished" datetime="2022-01-02T08:00:00-08:00">2022-01-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><img src="/images/drawing/astronaut.jpg"></p>
-<p><img src="/images/drawing/castleisland.jpg"></p>
-<p><img src="/images/drawing/IMG_20181130_170821.jpg"></p>
-<p><img src="/images/drawing/IMG_20200412_165006.jpg"></p>
-<p><img src="/images/drawing/IMG_20200412_165038.jpg"></p>
-<p><img src="/images/drawing/IMG_0330.jpeg"></p>
-<p><img src="/images/drawing/IMG_0331.jpeg"></p>
-<p><img src="/images/drawing/IMG_0332.jpeg"></p>
-<p><img src="/images/drawing/IMG_0333.jpeg"></p>
-<p><img src="/images/drawing/IMG_0334.jpeg"></p>
-<p><img src="/images/drawing/IMG_0335.jpeg"></p>
 
       
     </div>

@@ -1,3 +1,5 @@
+https://www.flamingbytes.com/blog/how-to-install-Linux-kernel-on-Ubuntu/
+https://www.flamingbytes.com/blog/how-to-use-kubectl-to-manage-k8s-cluster-contexts/
 https://www.flamingbytes.com/blog/ultimate-explanation-for-iostat/
 https://www.flamingbytes.com/blog/a-trap-in-iostat-util/
 https://www.flamingbytes.com/blog/how-to-disable-iomerge-for-Linux-block-device/

@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">275</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">277</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">275</span>
+          <span class="site-state-item-count">277</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,446 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/hash-table-implementation-in-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/hash-table-implementation-in-python/" class="post-title-link" itemprop="url">Hash Table implementation in Python</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-16 02:38:49" itemprop="dateCreated datePublished" datetime="2023-04-16T02:38:49-07:00">2023-04-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>Hash Table is a data structure which maps keys to values for highly efficient data search. It stores data in an array by using a hash function to generate a slot to insert the data value.</p>
+<p>The following are the general steps to insert a key&#x2F;value pair to the Hash Table.</p>
+<ol>
+<li>Compute the key’s hash code with a hash function</li>
+<li>Find the available slot by mapping the hash code to an index of array</li>
+<li>Insert the value to the available slot</li>
+</ol>
+<h2 id="Initial-implementation"><a href="#Initial-implementation" class="headerlink" title="Initial implementation"></a>Initial implementation</h2><p>Create an empty hash table of size 10:</p>
+<pre><code>hash_table = [None] * 10
+</code></pre>
+<p>To create a hash function, we simply return the modulus of the array length. The modulo operator(%) yields the remainder from the division of the key by the length of hash table. This ensures the hash key always falls into the range of [0,len(hash_table)-1]. So a slot in the array can be always retrieved.</p>
+<pre><code>def hash_func(key):
+    return key % len(hash_table)
+</code></pre>
+<p>To insert key&#x2F;value pair to the hash table, we firstly get the hash key and then stores the value to the retrieved slot.</p>
+<pre><code>def insert(key, value):
+    hash_key = hash_func(key)
+    hash_table[hash_key] = value
+</code></pre>
+<p>To test the code, we insert two key&#x2F;value pairs (5,6) and (5,8). Both values are stored in the slot 5 of the array. However, the value 8 replaces the existing value 6 at the same slot(with the same key 5).</p>
+<pre><code>hash_table = [None] * 10
+print(hash_table)
+insert(5,6)
+print(hash_table)
+
+insert(5,8)
+print(hash_table)
+
+# Output:
+# [None, None, None, None, None, None, None, None, None, None]
+# [None, None, None, None, None, 6, None, None, None, None]
+# [None, None, None, None, None, 8, None, None, None, None]
+</code></pre>
+<h2 id="Solve-the-collision"><a href="#Solve-the-collision" class="headerlink" title="Solve the collision"></a>Solve the collision</h2><p>A hash key collision would occur when the multiple keys hit the same slot(index) in the hash table(array).</p>
+<p>There are generally two techniques to resolve a collision:</p>
+<ul>
+<li>Linear probing(open addressing)</li>
+<li>Separate chaining(open hashing)</li>
+</ul>
+<h3 id="Linear-probing"><a href="#Linear-probing" class="headerlink" title="Linear probing"></a>Linear probing</h3><p>In linear probing(aka open addressing), all the entries are stored in the array itself instead of linked list. If the slot to insert entry is already occupied, the next slot will be searched sequentially.</p>
+<pre><code>hash_key = hash_func(key)
+while hash_table[hash_key]:
+    hash_key = (hash_key + 1) % len(hash_table)
+</code></pre>
+<h3 id="Separate-chaining"><a href="#Separate-chaining" class="headerlink" title="Separate chaining"></a>Separate chaining</h3><p>Separate chaining is a very commonly used technique for collision resolution. It is usually implemented with linked list. All the entries will be inserted into a specific linked list.</p>
+<p>In python, we create a hash table as nested list below. Each hash table bucket contains a list to store data entries.</p>
+<pre><code>hash_table = [[] for _ in range(10)] # init with empty list
+</code></pre>
+<p>The same hash function can be used.</p>
+<pre><code>def hash_func(key):
+    return key % len(hash_table)
+</code></pre>
+<p>To insert an entry to the hash table, we simply append it to the list positioned by the hash key.</p>
+<pre><code>def insert(key, value):
+    hash_key = hash_func(key)
+    hash_table[hash_key].append(value)
+</code></pre>
+<p>To test the code, we still insert two key&#x2F;value pairs (5,6) and (5,8). Now, the two values 6 and 8 are stored in the slot 5 of the same list.</p>
+<pre><code>hash_table = [[] for _ in range(10)] # init with empty list
+print(hash_table)
+insert(5,6)
+print(hash_table)
+insert(5,8)
+print(hash_table)
+
+# Output:
+# [[], [], [], [], [], [], [], [], [], []]
+# [[], [], [], [], [], [6], [], [], [], []]
+# [[], [], [], [], [], [6, 8], [], [], [], []]
+</code></pre>
+<h2 id="Final-implementation"><a href="#Final-implementation" class="headerlink" title="Final implementation"></a>Final implementation</h2><p>Now that we know about the hash function and how to resolve hash collision, we can implement the hash table with insert, delete and search functions. We use Python built-in function hash() to generate hash code from an generic object. This allows the hash table to support generic types like integer, string and so on.</p>
+<pre><code>def hash_func(key):
+    hash_key = hash(key)
+    print(&quot;Hash key is &#123;&#125;&quot;.format(hash_key))
+    return hash_key % len(hash_table)
+
+
+def insert(key, value):
+    hash_key = hash_func(key)
+    bucket = hash_table[hash_key]
+
+    # check if the key already exists
+    existed = False
+    for idx, pair in enumerate(bucket):
+        k, v = pair
+        if key == k:
+            existed = True
+            break
+
+    if existed:
+        # update the existing value
+        bucket[idx] = (key, value)
+    else:
+        # add the new key/value pair
+        bucket.append((key, value))
+
+
+def delete(key):
+    hash_key = hash_func(key)
+    bucket = hash_table[hash_key]
+
+    # check if the key already exists
+    existed = False
+    for idx, pair in enumerate(bucket):
+        k, v = pair
+        if key == k:
+            existed = True
+            break
+
+    if existed:
+        # delete the key/value pair
+        del bucket[idx]
+        print(&quot;key &#123;&#125; deleted&quot;.format(key))
+    else:
+        # key does not exist
+        print(&quot;key &#123;&#125; not found&quot;.format(key))
+
+
+def search(key):
+    hash_key = hash_func(key)
+    bucket = hash_table[hash_key]
+
+    # check if the key already exists
+    for idx, pair in enumerate(bucket):
+        k, v = pair
+        if key == k:
+            return v
+
+
+hash_table = [[] for _ in range(10)]  # init with empty list
+print(hash_table)
+insert(5, 6)
+print(hash_table)
+insert(5, 8)
+print(hash_table)
+insert(3, 4)
+print(hash_table)
+insert(9, 999)
+print(hash_table)
+insert(11, 111)
+print(hash_table)
+insert(20, 20)
+print(hash_table)
+insert(1000, 1000)
+print(hash_table)
+print(search(11))
+delete(11)
+insert(&quot;11&quot;, 222)
+print(hash_table)
+insert(&quot;aa&quot;, &quot;val&quot;)
+print(hash_table)
+
+# Output:
+# [[], [], [], [], [], [], [], [], [], []]
+# Hash key is 5
+# [[], [], [], [], [], [(5, 6)], [], [], [], []]
+# Hash key is 5
+# [[], [], [], [], [], [(5, 8)], [], [], [], []]
+# Hash key is 3
+# [[], [], [], [(3, 4)], [], [(5, 8)], [], [], [], []]
+# Hash key is 9
+# [[], [], [], [(3, 4)], [], [(5, 8)], [], [], [], [(9, 999)]]
+# Hash key is 11
+# [[], [(11, 111)], [], [(3, 4)], [], [(5, 8)], [], [], [], [(9, 999)]]
+# Hash key is 20
+#[[(20, 20)], [(11, 111)], [], [(3, 4)], [], [(5, 8)], [], [], [], [(9, 999)]]
+# Hash key is 1000
+# [[(20, 20), (1000, 1000)], [(11, 111)], [], [(3, 4)], [], [(5, 8)], [], [], [], [(9, 999)]]
+# Hash key is 11
+# 111
+# Hash key is 11
+# key 11 deleted
+# Hash key is 3453933796215988004
+# [[(20, 20), (1000, 1000)], [], [], [(3, 4)], [(&#39;11&#39;, 222)], [(5, 8)], [], [], [], [(9, 999)]]
+# Hash key is -185426594550641729
+# [[(20, 20), (1000, 1000)], [(&#39;aa&#39;, &#39;val&#39;)], [], [(3, 4)], [(&#39;11&#39;, 222)], [(5, 8)], [], [], [], [(9, 999)]]
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/implementation-dynamic-array-in-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/implementation-dynamic-array-in-python/" class="post-title-link" itemprop="url">Dynamic array Implementation in Python</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-15 04:27:00" itemprop="dateCreated datePublished" datetime="2023-04-15T04:27:00-07:00">2023-04-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>In languages like Python, array(aka list) is automatially resizable. The array will grow as you append items. You don’t have to resize it manually.</p>
+<p>In some languages like Java, array comes with fixed length. The size is defined when you create it. When you need a data structure with dynamic resizing, you can use ArrayList.</p>
+<p>In this post, we learn to implement the dynamic array in Python. This is to understand how dynamic array works regardless of any programming language.</p>
+<pre><code>class ArrayList:
+    def __init__(self, size=10):
+        self.capacity = size  # max size
+        self.list = [None] * self.capacity
+        self.size = 0  # current size
+
+    def add(self, value):
+        # check if there is enough capacity
+        if self.size &gt;= self.capacity:
+            self._increase_capacity()
+
+        # add value to the list
+        self.list[self.size] = value
+        self.size += 1
+
+        print(&quot;&#123;&#125; is added to list&quot;.format(value))
+
+    def _increase_capacity(self):
+        # double the capacity
+        new_capacity = self.capacity * 2
+
+        # create a new list with new capacity
+        new_list = [None] * new_capacity
+
+        # copy the items from old to new list
+        for i in range(self.capacity):
+            new_list[i] = self.list[i]
+
+        # update new capacity and list
+        self.capacity = new_capacity
+        self.list = new_list
+
+        print(&quot;capacity is doubled to &#123;&#125;&quot;.format(self.capacity))
+
+    def get(self, index):
+        if index &lt; 0 or index &gt;= self.size:
+            raise Exception(&quot;invalid index&quot;)
+
+        return self.list[index]
+
+    def delete(self, index):
+        if index &lt; 0 or index &gt;= self.size:
+            raise Exception(&quot;invalid index&quot;)
+
+        # check if this is the last item to be deleted
+        if index == self.size - 1:
+            self.list[index] = None
+            return
+
+        # shift items left
+        for i in range(index, self.size - 1):
+            self.list[i] = self.list[i + 1]
+
+        # update the last item to None
+        self.list[self.size - 1] = None
+
+        # update the size
+        self.size -= 1
+</code></pre>
+<p>To test the code:</p>
+<pre><code>list1 = ArrayList(5)
+list1.add(1)
+list1.add(2)
+list1.add(3)
+list1.add(4)
+list1.add(5)
+list1.add(6)
+list1.add(7)
+print(list1.list)
+list1.delete(6)
+print(list1.list)
+</code></pre>
+<p>Output:</p>
+<pre><code>1 is added to list
+2 is added to list
+3 is added to list
+4 is added to list
+5 is added to list
+capacity is doubled to 10
+6 is added to list
+7 is added to list
+[1, 2, 3, 4, 5, 6, 7, None, None, None]
+[1, 2, 3, 4, 5, 6, None, None, None, None]
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1755,392 +2195,6 @@ print(&quot;stack size: &#123;&#125;&quot;.format(st.size))
 <p>useradd and usermod - Add new user or change existing users data</p>
 <p>passwd - Create or update passwords for existing users</p>
 <p><a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/linux-commands">https://www.digitalocean.com/community/tutorials/linux-commands</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/upgrade-linux-kernel-on-centos-7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/upgrade-linux-kernel-on-centos-7/" class="post-title-link" itemprop="url">How to upgrade Linux kernel on CentOS 7</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-03-16 12:43:48" itemprop="dateCreated datePublished" datetime="2023-03-16T12:43:48-07:00">2023-03-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-27 12:35:48" itemprop="dateModified" datetime="2024-01-27T12:35:48-08:00">2024-01-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Before-upgrade"><a href="#Before-upgrade" class="headerlink" title="Before upgrade"></a>Before upgrade</h2><pre><code>$ cat /etc/centos-release
-CentOS Linux release 7.4.1708 (Core)
-
-$ uname -r
-3.10.0-693.el7.x86_64
-
-$ cat /boot/grub2/grubenv
-saved_entry=CentOS Linux (3.10.0-693.el7.x86_64) 7 (Core)
-</code></pre>
-<h2 id="Install-the-newer-kernel-package"><a href="#Install-the-newer-kernel-package" class="headerlink" title="Install the newer kernel package"></a>Install the newer kernel package</h2><pre><code>$ rpm -ivh kernel-ml-5.7.12-1.el7.elrepo.x86_64.rpm
-warning: kernel-ml-5.7.12-1.el7.elrepo.x86_64.rpm: Header V4 DSA/SHA1 Signature, key ID baadae52: NOKEY
-Preparing...                          ################################# [100%]
-Updating / installing...
-   1:kernel-ml-5.7.12-1.el7.elrepo    ################################# [100%]
-
-$ rpm -ivh kernel-ml-devel-5.7.12-1.el7.elrepo.x86_64.rpm
-warning: kernel-ml-devel-5.7.12-1.el7.elrepo.x86_64.rpm: Header V4 DSA/SHA1 Signature, key ID baadae52: NOKEY
-Preparing...                          ################################# [100%]
-Updating / installing...
-   1:kernel-ml-devel-5.7.12-1.el7.elre################################# [100%]
-
-$  rpm -qa | grep kernel
-kernel-ml-devel-5.7.12-1.el7.elrepo.x86_64
-kernel-3.10.0-693.el7.x86_64
-kernel-tools-3.10.0-693.el7.x86_64
-kernel-ml-5.7.12-1.el7.elrepo.x86_64
-kernel-tools-libs-3.10.0-693.el7.x86_64
-</code></pre>
-<h2 id="Set-the-default-boot-kernel-entry"><a href="#Set-the-default-boot-kernel-entry" class="headerlink" title="Set the default boot kernel entry"></a>Set the default boot kernel entry</h2><p><strong>Notes:</strong> if &#x2F;etc&#x2F;grub2.cfg does not exist, do next step to rebuild the GRUB2 and come back later after that.</p>
-<pre><code>$ awk -F\&#39; &#39;$1==&quot;menuentry &quot; &#123;print $2&#125;&#39; /etc/grub2.cfg
-CentOS Linux (5.7.12-1.el7.elrepo.x86_64) 7 (Core)
-CentOS Linux (3.10.0-693.el7.x86_64) 7 (Core)
-CentOS Linux (0-rescue-8ef36acf9f544b90bf0621450fe05f75) 7 (Core)
-
-$ grub2-set-default 0 
-$ grep saved /boot/grub2/grubenv
-saved_entry=0
-</code></pre>
-<h2 id="Rebuild-the-GRUB2-configuration"><a href="#Rebuild-the-GRUB2-configuration" class="headerlink" title="Rebuild the GRUB2 configuration"></a>Rebuild the GRUB2 configuration</h2><pre><code>$ grub2-mkconfig -o /boot/grub2/grub.cfg
-Generating grub configuration file ...
-Found linux image: /boot/vmlinuz-5.7.12-1.el7.elrepo.x86_64
-Found initrd image: /boot/initramfs-5.7.12-1.el7.elrepo.x86_64.img
-Found linux image: /boot/vmlinuz-3.10.0-693.el7.x86_64
-Found initrd image: /boot/initramfs-3.10.0-693.el7.x86_64.img
-Found linux image: /boot/vmlinuz-0-rescue-8ef36acf9f544b90bf0621450fe05f75
-Found initrd image: /boot/initramfs-0-rescue-8ef36acf9f544b90bf0621450fe05f75.img
-done
-</code></pre>
-<h2 id="Reboot-the-system"><a href="#Reboot-the-system" class="headerlink" title="Reboot the system"></a>Reboot the system</h2><pre><code>$ reboot
-</code></pre>
-<h2 id="Verify-the-new-kernel-version"><a href="#Verify-the-new-kernel-version" class="headerlink" title="Verify the new kernel version"></a>Verify the new kernel version</h2><pre><code>$ uname -r
-5.7.12-1.el7.elrepo.x86_64
-$ cat /etc/centos-release
-CentOS Linux release 7.4.1708 (Core)
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.golinuxcloud.com/set-default-boot-kernel-version-old-previous-rhel-linux/">https://www.golinuxcloud.com/set-default-boot-kernel-version-old-previous-rhel-linux/</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.tecmint.com/install-upgrade-kernel-version-in-centos-7/">https://www.tecmint.com/install-upgrade-kernel-version-in-centos-7/</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/uninstall-ceph-storage-cluster/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/uninstall-ceph-storage-cluster/" class="post-title-link" itemprop="url">Uninstall ceph storage cluster</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-03-15 12:36:00" itemprop="dateCreated datePublished" datetime="2023-03-15T12:36:00-07:00">2023-03-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Check-the-pools-images-and-OSDs"><a href="#Check-the-pools-images-and-OSDs" class="headerlink" title="Check the pools, images and OSDs"></a>Check the pools, images and OSDs</h2><pre><code>[ceph: root@host1 /]$ ceph osd tree
-ID  CLASS  WEIGHT    TYPE NAME             STATUS  REWEIGHT  PRI-AFF
--1         83.83411  root default
--3         27.94470      host host1
- 0    ssd   3.49309          osd.0             up   1.00000  1.00000
- 1    ssd   3.49309          osd.1             up   1.00000  1.00000
- 2    ssd   3.49309          osd.2             up   1.00000  1.00000
- 3    ssd   3.49309          osd.3             up   1.00000  1.00000
- 4    ssd   3.49309          osd.4             up   1.00000  1.00000
- 5    ssd   3.49309          osd.5             up   1.00000  1.00000
- 6    ssd   3.49309          osd.6             up   1.00000  1.00000
- 7    ssd   3.49309          osd.7             up   1.00000  1.00000
--5         27.94470      host host2
- 8    ssd   3.49309          osd.8             up   1.00000  1.00000
- 9    ssd   3.49309          osd.9             up   1.00000  1.00000
-10    ssd   3.49309          osd.10            up   1.00000  1.00000
-11    ssd   3.49309          osd.11            up   1.00000  1.00000
-12    ssd   3.49309          osd.12            up   1.00000  1.00000
-13    ssd   3.49309          osd.13            up   1.00000  1.00000
-14    ssd   3.49309          osd.14            up   1.00000  1.00000
-15    ssd   3.49309          osd.15            up   1.00000  1.00000
--7         27.94470      host host3
-16    ssd   3.49309          osd.16            up   1.00000  1.00000
-17    ssd   3.49309          osd.17            up   1.00000  1.00000
-18    ssd   3.49309          osd.18            up   1.00000  1.00000
-19    ssd   3.49309          osd.19            up   1.00000  1.00000
-20    ssd   3.49309          osd.20            up   1.00000  1.00000
-21    ssd   3.49309          osd.21            up   1.00000  1.00000
-22    ssd   3.49309          osd.22            up   1.00000  1.00000
-23    ssd   3.49309          osd.23            up   1.00000  1.00000
-
-[ceph: root@host1 /]$ ceph osd lspools
-1 device_health_metrics
-2 datapool
-
-[ceph: root@host1 /]$ rbd showmapped
-id  pool      namespace  image    snap  device
-0   datapool             rbdvol1  -     /dev/rbd0
-1   datapool             rbdvol2  -     /dev/rbd1
-2   datapool             rbdvol3  -     /dev/rbd2
-3   datapool             rbdvol4  -     /dev/rbd3
-</code></pre>
-<h2 id="Remove-the-images-and-pools"><a href="#Remove-the-images-and-pools" class="headerlink" title="Remove the images and pools"></a>Remove the images and pools</h2><pre><code>[ceph: root@host1 /]$ rbd unmap /dev/rbd0
-[ceph: root@host1 /]$ rbd unmap /dev/rbd1
-[ceph: root@host1 /]$ rbd unmap /dev/rbd2
-[ceph: root@host1 /]$ rbd unmap /dev/rbd3
-
-[ceph: root@host1 /]$ rbd showmapped
-
-[ceph: root@host1 /]$ rbd rm datapool/rbdvol1
-Removing image: 100% complete...done.
-[ceph: root@host1 /]$ rbd rm datapool/rbdvol2
-Removing image: 100% complete...done.
-[ceph: root@host1 /]$ rbd rm datapool/rbdvol3
-Removing image: 100% complete...done.
-[ceph: root@host1 /]$ rbd rm datapool/rbdvol4
-Removing image: 100% complete...done.
-
-[ceph: root@host1 /]$ ceph osd pool rm datapool datapool --yes-i-really-really-mean-it
-Error EPERM: pool deletion is disabled; you must first set the mon_allow_pool_delete config option to true before you can destroy a pool
-
-[ceph: root@host1 /]$ ceph tell mon.\* injectargs &#39;--mon-allow-pool-delete=true&#39;
-mon.host1: mon_allow_pool_delete = &#39;true&#39;
-mon.host1: &#123;&#125;
-mon.host3: mon_allow_pool_delete = &#39;true&#39;
-mon.host3: &#123;&#125;
-mon.host2: mon_allow_pool_delete = &#39;true&#39;
-mon.host2: &#123;&#125;
-[ceph: root@host1 /]$ ceph osd pool rm datapool datapool --yes-i-really-really-mean-it
-pool &#39;datapool&#39; removed
-</code></pre>
-<h2 id="Remove-the-OSDs"><a href="#Remove-the-OSDs" class="headerlink" title="Remove the OSDs"></a>Remove the OSDs</h2><pre><code>[ceph: root@host1 /]$ for i in `seq 0 23`
-&gt; do
-&gt; ceph osd down $i &amp;&amp; ceph osd destroy $i --force
-&gt; done
-marked down osd.0.
-destroyed osd.0
-[omitted...]
-
-[ceph: root@host1 /]$  ceph osd tree
-ID  CLASS  WEIGHT    TYPE NAME             STATUS     REWEIGHT  PRI-AFF
--1         83.83411  root default
--3         27.94470      host host1
- 0    ssd   3.49309          osd.0         destroyed   1.00000  1.00000
- 1    ssd   3.49309          osd.1         destroyed   1.00000  1.00000
- 2    ssd   3.49309          osd.2         destroyed   1.00000  1.00000
- 3    ssd   3.49309          osd.3         destroyed   1.00000  1.00000
- 4    ssd   3.49309          osd.4         destroyed   1.00000  1.00000
- 5    ssd   3.49309          osd.5         destroyed   1.00000  1.00000
- 6    ssd   3.49309          osd.6         destroyed   1.00000  1.00000
- 7    ssd   3.49309          osd.7         destroyed   1.00000  1.00000
--5         27.94470      host host2
- 8    ssd   3.49309          osd.8         destroyed   1.00000  1.00000
- 9    ssd   3.49309          osd.9         destroyed   1.00000  1.00000
-10    ssd   3.49309          osd.10        destroyed   1.00000  1.00000
-11    ssd   3.49309          osd.11        destroyed   1.00000  1.00000
-12    ssd   3.49309          osd.12        destroyed   1.00000  1.00000
-13    ssd   3.49309          osd.13        destroyed   1.00000  1.00000
-14    ssd   3.49309          osd.14        destroyed   1.00000  1.00000
-15    ssd   3.49309          osd.15        destroyed   1.00000  1.00000
--7         27.94470      host host3
-16    ssd   3.49309          osd.16        destroyed   1.00000  1.00000
-17    ssd   3.49309          osd.17        destroyed   1.00000  1.00000
-18    ssd   3.49309          osd.18        destroyed   1.00000  1.00000
-19    ssd   3.49309          osd.19        destroyed   1.00000  1.00000
-20    ssd   3.49309          osd.20        destroyed   1.00000  1.00000
-21    ssd   3.49309          osd.21        destroyed   1.00000  1.00000
-22    ssd   3.49309          osd.22        destroyed   1.00000  1.00000
-23    ssd   3.49309          osd.23               up   1.00000  1.00000
-</code></pre>
-<h2 id="Remove-the-cluster-hosts"><a href="#Remove-the-cluster-hosts" class="headerlink" title="Remove the cluster hosts"></a>Remove the cluster hosts</h2><pre><code>[ceph: root@host1 /]$ ceph orch host rm host3
-Removed host &#39;host3&#39;
-[ceph: root@host1 /]$ ceph orch host rm host2
-Removed host &#39;host2&#39;
-[ceph: root@host1 /]$ ceph orch host rm host1
-Removed host &#39;host1&#39;
-</code></pre>
-<h2 id="Check-if-there-is-ceph-daemon-running"><a href="#Check-if-there-is-ceph-daemon-running" class="headerlink" title="Check if there is ceph daemon running"></a>Check if there is ceph daemon running</h2><pre><code>[ceph: root@host1 /]$ ceph orch ps host3
-No daemons reported
-[ceph: root@host1 /]$ ceph orch ps host2
-No daemons reported
-[ceph: root@host1 /]$ ceph orch ps host1
-No daemons reported
-</code></pre>
-<h2 id="Remove-the-ceph-storage-cluster"><a href="#Remove-the-ceph-storage-cluster" class="headerlink" title="Remove the ceph storage cluster"></a>Remove the ceph storage cluster</h2><pre><code>[root@host1 ~]$ cephadm rm-cluster --fsid fec2332e-1b0b-11ec-abbe-ac1f6bc8d268 --force
-[root@host1 ~]$ cephadm ls
-[]
-</code></pre>
-<h2 id="Cleanup-the-ceph-configuration-files"><a href="#Cleanup-the-ceph-configuration-files" class="headerlink" title="Cleanup the ceph configuration files"></a>Cleanup the ceph configuration files</h2><pre><code>[root@host1 ~]$ rm -rf /etc/ceph
-[root@host1 ~]$ rm -rf /var/lib/ce
-ceph/       cephadm/    certmonger/
-[root@host1 ~]$ rm -rf /var/lib/ceph*
-</code></pre>
-<h2 id="Cleanup-the-ceph-block-devices"><a href="#Cleanup-the-ceph-block-devices" class="headerlink" title="Cleanup the ceph block devices"></a>Cleanup the ceph block devices</h2><p>Do the following on each cluster node.</p>
-<pre><code>[root@host1 ~]$ lsblk
-NAME                                                                                                  MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-nvme0n1                                                                                               259:0    0  3.5T  0 disk
-├─nvme0n1p3                                                                                           259:4    0  3.5T  0 part
-│ ├─vgroot-lvswap01                                                                                   253:1    0    4G  0 lvm
-│ └─vgroot-lvroot                                                                                     253:0    0  3.5T  0 lvm  /
-├─nvme0n1p1                                                                                           259:2    0    1G  0 part /boot/efi
-└─nvme0n1p2                                                                                           259:3    0  500M  0 part /boot
-nvme3n1                                                                                               259:6    0  3.5T  0 disk
-└─ceph--ab144c40--73d6--49bc--921b--65025c383bb1-osd--block--2b965e29--b194--4363--8c96--20ab5b97db33 253:3    0  3.5T  0 lvm
-nvme2n1                                                                                               259:5    0  3.5T  0 disk
-└─ceph--b1ffe76d--1043--43a2--848b--6ba117e71a75-osd--block--0d6ff85d--9c49--43a0--98a3--c519fbb20b9c 253:4    0  3.5T  0 lvm
-nvme1n1                                                                                               259:1    0  3.5T  0 disk
-
-[root@host1 ~]$ for i in `seq 2 9`; do dd if=/dev/zero of=/dev/nvme$&#123;i&#125;n1 bs=1M count=1000; done
-[root@host1 ~]$ reboot
-</code></pre>
 
       
     </div>

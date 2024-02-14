@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">275</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">277</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">275</span>
+          <span class="site-state-item-count">277</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,330 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/getting-started-with-elasticsearch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/getting-started-with-elasticsearch/" class="post-title-link" itemprop="url">Getting started with Elasticsearch and Kibana</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-17 12:20:00" itemprop="dateCreated datePublished" datetime="2022-10-17T12:20:00-07:00">2022-10-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Install-elasticsearch"><a href="#Install-elasticsearch" class="headerlink" title="Install elasticsearch"></a>Install elasticsearch</h2><h3 id="Add-user-for-elasticsearch"><a href="#Add-user-for-elasticsearch" class="headerlink" title="Add user for elasticsearch"></a>Add user for elasticsearch</h3><pre><code>[root@vm1 home]# groupadd es
+[root@vm1 home]# useradd es -g es
+[root@vm1 home]# passwd es
+[root@vm1 home]# cd es
+</code></pre>
+<h3 id="Download-elasticsearch"><a href="#Download-elasticsearch" class="headerlink" title="Download elasticsearch"></a>Download elasticsearch</h3><pre><code>[root@vm1 es]# wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.4.3-linux-x86_64.tar.gz
+[root@vm1 es]# tar zxf elasticsearch-8.4.3-linux-x86_64.tar.gz
+[root@vm1 es]# chown -R es:es /home/es
+[root@vm1 es]# su es
+[es@vm1 ~]$ cd elasticsearch-8.4.3/
+</code></pre>
+<h3 id="Start-elasticsearch"><a href="#Start-elasticsearch" class="headerlink" title="Start elasticsearch"></a>Start elasticsearch</h3><pre><code>[es@vm1 elasticsearch-8.4.3]$ bin/elasticsearch
+[...]
+[2022-10-17T17:07:49,984][INFO ][o.e.h.AbstractHttpServerTransport] [vm1] publish_address &#123;127.0.0.1:9200&#125;, bound_addresses &#123;[::]:9200&#125;
+[...]
+
+✅ Elasticsearch security features have been automatically configured!
+✅ Authentication is enabled and cluster connections are encrypted.
+
+ℹ️  Password for the elastic user (reset with `bin/elasticsearch-reset-password -u elastic`):
+  [...]
+
+ℹ️  HTTP CA certificate SHA-256 fingerprint:
+  [...]
+
+ℹ️  Configure Kibana to use this cluster:
+• Run Kibana and click the configuration link in the terminal when Kibana starts.
+• Copy the following enrollment token and paste it into Kibana in your browser (valid for the next 30 minutes):
+  [...]
+
+ℹ️  Configure other nodes to join this cluster:
+• On this node:
+  ⁃ Create an enrollment token with `bin/elasticsearch-create-enrollment-token -s node`.
+  ⁃ Uncomment the transport.host setting at the end of config/elasticsearch.yml.
+  ⁃ Restart Elasticsearch.
+• On other nodes:
+  ⁃ Start Elasticsearch with `bin/elasticsearch --enrollment-token &lt;token&gt;`, using the enrollment token that you generated.
+</code></pre>
+<h3 id="Verify-elasticsearch"><a href="#Verify-elasticsearch" class="headerlink" title="Verify elasticsearch"></a>Verify elasticsearch</h3><pre><code>[root@vm2 es]# curl 10.10.10.1:9200
+curl: (52) Empty reply from server
+</code></pre>
+<p>Modify elastic config file:</p>
+<pre><code>[es@vm1 elasticsearch-8.4.3]$ vim config/elasticsearch.yml
+# By default Elasticsearch is only accessible on localhost. Set a different
+# address here to expose this node on the network:
+#
+#network.host: 192.168.0.1
+network.host: 10.10.10.1
+
+# Enable security features
+xpack.security.enabled: false
+</code></pre>
+<p>Restart elasticsearch process and verify again:</p>
+<pre><code>[root@vm2 es]# curl 10.10.10.1:9200
+&#123;
+  &quot;name&quot; : &quot;vm1&quot;,
+  &quot;cluster_name&quot; : &quot;elasticsearch&quot;,
+  &quot;cluster_uuid&quot; : &quot;ZZ_MBiS5Qi-3RFSdyk_-Kg&quot;,
+  &quot;version&quot; : &#123;
+    &quot;number&quot; : &quot;8.4.3&quot;,
+    &quot;build_flavor&quot; : &quot;default&quot;,
+    &quot;build_type&quot; : &quot;tar&quot;,
+    &quot;build_hash&quot; : &quot;42f05b9372a9a4a470db3b52817899b99a76ee73&quot;,
+    &quot;build_date&quot; : &quot;2022-10-04T07:17:24.662462378Z&quot;,
+    &quot;build_snapshot&quot; : false,
+    &quot;lucene_version&quot; : &quot;9.3.0&quot;,
+    &quot;minimum_wire_compatibility_version&quot; : &quot;7.17.0&quot;,
+    &quot;minimum_index_compatibility_version&quot; : &quot;7.0.0&quot;
+  &#125;,
+  &quot;tagline&quot; : &quot;You Know, for Search&quot;
+&#125;
+</code></pre>
+<h2 id="Install-Kibana"><a href="#Install-Kibana" class="headerlink" title="Install Kibana"></a>Install Kibana</h2><h3 id="Download-Kibana"><a href="#Download-Kibana" class="headerlink" title="Download Kibana"></a>Download Kibana</h3><pre><code>[root@vm2 es]# wget https://artifacts.elastic.co/downloads/kibana/kibana-8.4.3-linux-x86_64.tar.gz
+[root@vm2 es]# tar zxf kibana-8.4.3-linux-x86_64.tar.gz
+[root@vm2 es]# cd kibana-8.4.3/
+[root@vm2 kibana-8.4.3]# chown -R es:es /home/es
+</code></pre>
+<h3 id="Start-Kibana"><a href="#Start-Kibana" class="headerlink" title="Start Kibana"></a>Start Kibana</h3><pre><code>[root@vm2 kibana-8.4.3]# bin/kibana
+Kibana should not be run as root.  Use --allow-root to continue.
+
+[root@vm2 kibana-8.4.3]# su es
+[es@vm2 kibana-8.4.3]$ bin/kibana
+[2022-10-17T17:41:59.539-07:00][INFO ][node] Kibana process configured with roles: [background_tasks, ui]
+[2022-10-17T17:42:06.604-07:00][INFO ][http.server.Preboot] http server running at http://localhost:5601
+[2022-10-17T17:42:06.644-07:00][INFO ][plugins-system.preboot] Setting up [1] plugins: [interactiveSetup]
+[2022-10-17T17:42:06.646-07:00][INFO ][preboot] &quot;interactiveSetup&quot; plugin is holding setup: Validating Elasticsearch connection configuration…
+[2022-10-17T17:42:06.681-07:00][INFO ][root] Holding setup until preboot stage is completed.
+
+i Kibana has not been configured.
+
+Go to http://localhost:5601/?code=263178 to get started.
+</code></pre>
+<p>Allow connections from remote users:</p>
+<pre><code>[root@vm2 kibana-8.4.3]# vim config/kibana.yml
+# To allow connections from remote users, set this parameter to a non-loopback address.
+#server.host: &quot;localhost&quot;
+server.host: &quot;10.10.10.2&quot;
+</code></pre>
+<p>Restart the kibana to reflect the change:</p>
+<pre><code>[root@vm2 kibana-8.4.3]# su es
+[es@vm2 kibana-8.4.3]$ bin/kibana
+[...]
+Go to http://10.10.10.2:5601/?code=293334 to get started.
+</code></pre>
+<h2 id="Connect-Kibana-to-Elasticsearch"><a href="#Connect-Kibana-to-Elasticsearch" class="headerlink" title="Connect Kibana to Elasticsearch"></a>Connect Kibana to Elasticsearch</h2><p>From the Browser, enter “<a target="_blank" rel="noopener" href="http://10.10.10.2:5601/?code=293334">http://10.10.10.2:5601/?code=293334</a>“.</p>
+<p>If you run into the following issue when to connect to elasticsearch server from kibana web UI, you can change the URL from “<a target="_blank" rel="noopener" href="https://10.10.10.1:9200/">https://10.10.10.1:9200</a>“ to “<a target="_blank" rel="noopener" href="http://10.10.10.1:9200/">http://10.10.10.1:9200</a>“ for testing purpose.</p>
+<pre><code>[2022-11-09T10:55:02.691-08:00][ERROR][plugins.interactiveSetup.elasticsearch] Unable to connect to host &quot;https://10.10.10.1:9200&quot;: write EPROTO 139880583923648:error:1408F10B:SSL routines:ssl3_get_record:wrong version number:../deps/openssl/openssl/ssl/record/ssl3_record.c:332:
+</code></pre>
+<h3 id="Use-Dev-Tools-in-Kibana"><a href="#Use-Dev-Tools-in-Kibana" class="headerlink" title="Use Dev Tools in Kibana"></a>Use Dev Tools in Kibana</h3><p><img src="/images/kifana_dev_tools.png" alt="Image"></p>
+<pre><code>GET _cluster/health
+&#123;
+  &quot;cluster_name&quot;: &quot;elasticsearch&quot;,
+  &quot;status&quot;: &quot;green&quot;,
+  &quot;timed_out&quot;: false,
+  &quot;number_of_nodes&quot;: 1,
+  &quot;number_of_data_nodes&quot;: 1,
+  &quot;active_primary_shards&quot;: 10,
+  &quot;active_shards&quot;: 10,
+  &quot;relocating_shards&quot;: 0,
+  &quot;initializing_shards&quot;: 0,
+  &quot;unassigned_shards&quot;: 0,
+  &quot;delayed_unassigned_shards&quot;: 0,
+  &quot;number_of_pending_tasks&quot;: 0,
+  &quot;number_of_in_flight_fetch&quot;: 0,
+  &quot;task_max_waiting_in_queue_millis&quot;: 0,
+  &quot;active_shards_percent_as_number&quot;: 100
+&#125;
+GET _nodes/stats
+&#123;
+  &quot;_nodes&quot;: &#123;
+    &quot;total&quot;: 1,
+    &quot;successful&quot;: 1,
+    &quot;failed&quot;: 0
+  &#125;,
+  &quot;cluster_name&quot;: &quot;elasticsearch&quot;,
+  &quot;nodes&quot;: &#123;
+    [...]
+  &#125;
+&#125;
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.elastic.co/downloads/">https://www.elastic.co/downloads/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/important-settings.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/important-settings.html</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/the-winning-shot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/the-winning-shot/" class="post-title-link" itemprop="url">The Winning Shot</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-16 07:09:00" itemprop="dateCreated datePublished" datetime="2022-10-16T07:09:00-07:00">2022-10-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Anyone can try out for their dream sports team just by signing up. But the real question is, who will be qualified into the winning team?
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/the-winning-shot/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1369,182 +1693,6 @@ READ   - Takes(s): 2517.3, Count: 94554325, OPS: 37561.2, Avg(us): 2131, Min(us)
 <li><a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/pricing/details/managed-disks/">Managed disk pricing</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/azure/virtual-machines/disks-enable-bursting?tabs=azure-powershell">Enable on-demand bursting</a></li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-netstat-to-check-network-package-retransmission/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/using-netstat-to-check-network-package-retransmission/" class="post-title-link" itemprop="url">How to use netstat to check network package retransmission</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-09-02 07:00:00" itemprop="dateCreated datePublished" datetime="2022-09-02T07:00:00-07:00">2022-09-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-27 12:46:16" itemprop="dateModified" datetime="2024-01-27T12:46:16-08:00">2024-01-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">while</span> [ 1 ]; <span class="keyword">do</span> netstat -s | grep <span class="string">&#x27;segments retransmited&#x27;</span> ; <span class="built_in">sleep</span> 1; <span class="keyword">done</span></span><br><span class="line">    2500906 segments retransmited</span><br><span class="line">    2500912 segments retransmited</span><br><span class="line">    2501072 segments retransmited</span><br><span class="line">    2501102 segments retransmited</span><br><span class="line">    2501191 segments retransmited</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/mid-autumn-festival/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/mid-autumn-festival/" class="post-title-link" itemprop="url">Mid-Autumn Festival</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-08-16 06:57:00" itemprop="dateCreated datePublished" datetime="2022-08-16T06:57:00-07:00">2022-08-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Mid-Autumn Festival is a traditional festival in Chinese culture, having its history dating to 3000 years ago. The festival is held on the 15th day of the 8th month of the lunisolar calendar. The Chinese believe that the moon is at its brightest and largest size that night.</p>
-<p>There are multiple legends of the Mid-Autumn Festival, the most popular of them being the story of Hou Yi and Chang’e. The legend says that there once were 10 fiery suns raging in the sky, burning down all the plants and humans. Seeing his people suffering, Hou Yi used his bow to kill 9 of the suns. As a reward, he was given the elixir of immortality, which granted him the ability to live forever. Since he wanted to spend more time with his wife Chang’e, Hou Yi asked her to keep it safe for him. The people asked him to be their master, and he agreed to teach most of them. But one particular greedy disciple Pang Meng wanted the elixir for himself, so one day he pretended to be ill. After Hou Yi left to hunt, Pang Meng went to his house and forced Chang’e to give him the elixir. Since she couldn’t defeat him, Chang’e drank the elixir and was lifted up into the heavens, becoming the moon goddess. After returning, Hou Yi was heartbroken and offered Chang’e some fruit and cakes that she loved to eat. Since then, people have always offered the Moon Goddess fruits and moon cakes to worship the moon.</p>
-<p>There are multiple ways to celebrate the Mid-Autumn Festival. The most representative way is to eat moon cakes, which often have red bean, egg yolk, five kernel, or lotus seed. Other ways include making colorful lanterns,  enjoying fire dragon dances, and worshiping the moon. These ways of celebration are believed to bring good luck.</p>
-<p>In conclusion, the Mid-Autumn festival is a very important and popular festival that you don’t want to miss. It is a time for family reunion and giving gifts that both children and adults enjoy.</p>
 
       
     </div>

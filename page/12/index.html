@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">275</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">277</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">275</span>
+          <span class="site-state-item-count">277</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,289 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/ghost-github/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/ghost-github/" class="post-title-link" itemprop="url">Hosting the Ghost blog on GitHub</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-27 12:07:00" itemprop="dateCreated datePublished" datetime="2022-12-27T12:07:00-08:00">2022-12-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Install-Ghost-locally"><a href="#Install-Ghost-locally" class="headerlink" title="Install Ghost locally"></a>Install Ghost locally</h1><p><a target="_blank" rel="noopener" href="https://pages.github.com/">GitHub Pages</a> is a great solution for hosting static website. If you use the Ghost to manage your website, you can <a target="_blank" rel="noopener" href="https://ghost.org/docs/install/local/">install Ghost locally</a> and convert it to a static website in order to host it on Github.</p>
+<h2 id="Install-Ubuntu-virtual-machine-on-Windows-optional"><a href="#Install-Ubuntu-virtual-machine-on-Windows-optional" class="headerlink" title="Install Ubuntu virtual machine on Windows(optional)"></a>Install Ubuntu virtual machine on Windows(optional)</h2><h2 id="Install-Ghost-CLI"><a href="#Install-Ghost-CLI" class="headerlink" title="Install Ghost-CLI"></a>Install Ghost-CLI</h2><p>Ghost-CLI is a commandline tool to help you get Ghost installed and configured for use, quickly and easily.</p>
+<pre><code>$ npm install ghost-cli@latest -g
+</code></pre>
+<p>Ghost runs as background process and remains running until you stop or restart it. The following are some useful commands:</p>
+<pre><code>ghost help
+ghost ls
+ghost log
+ghost stop
+ghost start
+</code></pre>
+<h2 id="Install-Ghost"><a href="#Install-Ghost" class="headerlink" title="Install Ghost"></a>Install Ghost</h2><pre><code>$ mkdir my-ghost-website
+$ cd my-ghost-website
+$ ghost install local
+</code></pre>
+<p>Once the Ghost is installed you can access the website on <a target="_blank" rel="noopener" href="http://localhost:2368/ghost">http://localhost:2368/ghost</a> for Ghost Admin.</p>
+<h1 id="Generate-the-static-website"><a href="#Generate-the-static-website" class="headerlink" title="Generate the static website"></a>Generate the static website</h1><p>In order to generate the static website, we’ll use the Ghost static site generator. For the Linux and macOS, this tool can be used directly.</p>
+<pre><code>$ sudo npm install -g ghost-static-site-generator
+</code></pre>
+<p>Now, we can push the generated static pages to the Github repository named <strong>username.github.io</strong>.</p>
+<p>To generate the static pages, we can run the following command. The static pages are generated in a folder called <em>static</em>.</p>
+<pre><code>$ gssg --url https://username.github.io
+</code></pre>
+<h1 id="Push-the-static-pages-to-Github"><a href="#Push-the-static-pages-to-Github" class="headerlink" title="Push the static pages to Github"></a>Push the static pages to Github</h1><p>Before pushing the static pages to Github, a repository called <em>username.github.io</em> should be created on Github website.</p>
+<p>The static pages can be pushed to Github repository as below.</p>
+<pre><code>$ cd static
+$ git init .
+$ git remote add origin https://github.com/username/username.github.io.git
+$ git branch -M main
+$ git add .
+$ git commit -m &#39;Init my website&#39;
+$ git push -u origin main
+</code></pre>
+<p>After the push, Github will build and deploy the pages automatically. And the updated website will be available to access in a few minutes.</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://dev.to/bassel/hosting-your-ghost-blog-on-github-pages-for-free-53hl">https://dev.to/bassel/hosting-your-ghost-blog-on-github-pages-for-free-53hl</a></li>
+<li><a target="_blank" rel="noopener" href="https://zzamboni.org/post/hosting-a-ghost-blog-in-github/#:~:text=Install%20and%20run%20Ghost%20locally,static%20website%20to%20GitHub%20Pages">https://zzamboni.org/post/hosting-a-ghost-blog-in-github/#:~:text&#x3D;Install and run Ghost locally,static website to GitHub Pages</a></li>
+<li><a target="_blank" rel="noopener" href="https://ghost.org/docs/reinstall/">https://ghost.org/docs/reinstall/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/deploy-kubernetes-statefulset-with-affinity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/deploy-kubernetes-statefulset-with-affinity/" class="post-title-link" itemprop="url">Deploy kubernetes statefulset with affinity</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-27 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-27T08:00:00-08:00">2022-12-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Here is an example to demonstrate how to assign statefulset and pod to the target worker node.</p>
+<p><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/">affinity</a> helps define which node will be assigned for the pod by using the node labels.</p>
+<pre><code>$ kubectl get nodes -o wide --show-labels
+
+$ kubectl label nodes &lt;node-name&gt; noname.io/fio=true
+
+$ cat statefulset-node-select.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: fiobench
+spec:
+  serviceName: fiobench
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fiobench
+  template:
+    metadata:
+      labels:
+        app: fiobench
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: noname.io/fio
+                operator: In
+                values:
+                - &quot;true&quot;
+      containers:
+      - name: fiobench
+        image: noname/perfbench:fio
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: fiobench-data-1
+          mountPath: /fiodata1
+        - name: fiobench-data-2
+          mountPath: /fiodata2
+        securityContext:
+          privileged: true
+      imagePullSecrets:
+      - name: regcred
+  volumeClaimTemplates:
+  - metadata:
+      name: fiobench-data-1
+    spec:
+      storageClassName: fio-repl-node-select
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1400Gi
+  - metadata:
+      name: fiobench-data-2
+    spec:
+      storageClassName: fio-repl-node-select
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1400Gi
+
+$ kubectl apply -f statefulset-node-select.yaml
+$ kubectl get statefulset
+$ kubectl get pod -o wide
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2130,490 +2413,6 @@ _elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(
 </code></pre>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/cockroachdb/cockroach/blob/master/docs/design.md">https://github.com/cockroachdb/cockroach/blob/master/docs/design.md</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/cgroup-limit-cpu/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/cgroup-limit-cpu/" class="post-title-link" itemprop="url">Using cgroups to limit CPU utilization</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-12-03 12:09:00" itemprop="dateCreated datePublished" datetime="2022-12-03T12:09:00-08:00">2022-12-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Intro-to-cgroups"><a href="#Intro-to-cgroups" class="headerlink" title="Intro to cgroups"></a>Intro to cgroups</h2><p>Cgroups(control groups) make it possible to allocate system resources such as CPU time, memory, disk I&#x2F;O and network bandwidth, or combinations of them,  among a group of tasks(processes) running on a system.</p>
-<p>The following commands output the available subsystems(resource controllers) for the cgroups. Each subsystem has a bunch of tunables to control the resource allocation.</p>
-<pre><code>$ lssubsys -am
-cpuset /sys/fs/cgroup/cpuset
-cpu,cpuacct /sys/fs/cgroup/cpu,cpuacct
-blkio /sys/fs/cgroup/blkio
-memory /sys/fs/cgroup/memory
-devices /sys/fs/cgroup/devices
-freezer /sys/fs/cgroup/freezer
-net_cls,net_prio /sys/fs/cgroup/net_cls,net_prio
-perf_event /sys/fs/cgroup/perf_event
-hugetlb /sys/fs/cgroup/hugetlb
-pids /sys/fs/cgroup/pids
-rdma /sys/fs/cgroup/rdma
-
-$ mount | grep cgroup
-tmpfs on /sys/fs/cgroup type tmpfs (ro,nosuid,nodev,noexec,mode=755)
-cgroup on /sys/fs/cgroup/systemd type cgroup (rw,nosuid,nodev,noexec,relatime,xattr,release_agent=/usr/lib/systemd/systemd-cgroups-agent,name=systemd)
-cgroup on /sys/fs/cgroup/hugetlb type cgroup (rw,nosuid,nodev,noexec,relatime,hugetlb)
-cgroup on /sys/fs/cgroup/cpu,cpuacct type cgroup (rw,nosuid,nodev,noexec,relatime,cpu,cpuacct)
-cgroup on /sys/fs/cgroup/cpuset type cgroup (rw,nosuid,nodev,noexec,relatime,cpuset)
-cgroup on /sys/fs/cgroup/blkio type cgroup (rw,nosuid,nodev,noexec,relatime,blkio)
-cgroup on /sys/fs/cgroup/memory type cgroup (rw,nosuid,nodev,noexec,relatime,memory)
-cgroup on /sys/fs/cgroup/freezer type cgroup (rw,nosuid,nodev,noexec,relatime,freezer)
-cgroup on /sys/fs/cgroup/net_cls,net_prio type cgroup (rw,nosuid,nodev,noexec,relatime,net_cls,net_prio)
-cgroup on /sys/fs/cgroup/pids type cgroup (rw,nosuid,nodev,noexec,relatime,pids)
-cgroup on /sys/fs/cgroup/rdma type cgroup (rw,nosuid,nodev,noexec,relatime,rdma)
-cgroup on /sys/fs/cgroup/perf_event type cgroup (rw,nosuid,nodev,noexec,relatime,perf_event)
-cgroup on /sys/fs/cgroup/devices type cgroup (rw,nosuid,nodev,noexec,relatime,devices)
-</code></pre>
-<h2 id="CPU-subsystem-and-tunables"><a href="#CPU-subsystem-and-tunables" class="headerlink" title="CPU subsystem and tunables"></a>CPU subsystem and tunables</h2><h3 id="Ceiling-enforcement-parameters"><a href="#Ceiling-enforcement-parameters" class="headerlink" title="Ceiling enforcement parameters"></a>Ceiling enforcement parameters</h3><p>cpu.cfs_period_us</p>
-<p>specifies a period of time in microseconds (µs, represented here as “us”) for how regularly a cgroup’s access to CPU resources should be reallocated. If tasks in a cgroup should be able to access a single CPU for 0.2 seconds out of every 1 second, set cpu.cfs_quota_us to 200000 and cpu.cfs_period_us to 1000000. The upper limit of the cpu.cfs_quota_us parameter is 1 second and the lower limit is 1000 microseconds.</p>
-<p>cpu.cfs_quota_us</p>
-<p>specifies the total amount of time in microseconds (µs, represented here as “us”) for which all tasks in a cgroup can run during one period (as defined by cpu.cfs_period_us). As soon as tasks in a cgroup use up all the time specified by the quota, they are throttled for the remainder of the time specified by the period and not allowed to run until the next period. If tasks in a cgroup should be able to access a single CPU for 0.2 seconds out of every 1 second, set cpu.cfs_quota_us to 200000 and cpu.cfs_period_us to 1000000. Note that the quota and period parameters operate on a CPU basis. To allow a process to fully utilize two CPUs, for example, set cpu.cfs_quota_us to 200000 and cpu.cfs_period_us to 100000.</p>
-<p>Setting the value in cpu.cfs_quota_us to -1 indicates that the cgroup does not adhere to any CPU time restrictions. This is also the default value for every cgroup (except the root cgroup).</p>
-<h3 id="Relative-shares-parameter"><a href="#Relative-shares-parameter" class="headerlink" title="Relative shares parameter"></a>Relative shares parameter</h3><p>cpu.shares</p>
-<p>contains an integer value that specifies a relative share of CPU time available to the tasks in a cgroup. For example, tasks in two cgroups that have cpu.shares set to 100 will receive equal CPU time, but tasks in a cgroup that has cpu.shares set to 200 receive twice the CPU time of tasks in a cgroup where cpu.shares is set to 100. The value specified in the cpu.shares file must be 2 or higher.</p>
-<p>Note that shares of CPU time are distributed per all CPU cores on multi-core systems. Even if a cgroup is limited to less than 100% of CPU on a multi-core system, it may use 100% of each individual CPU core.</p>
-<p>Using relative shares to specify CPU access has two implications on resource management that should be considered:</p>
-<p>Because the CFS does not demand equal usage of CPU, it is hard to predict how much CPU time a cgroup will be allowed to utilize. When tasks in one   cgroup are idle and are not using any CPU time, the leftover time is collected in a global pool of unused CPU cycles. Other cgroups are allowed to borrow CPU cycles from this pool.</p>
-<p>The actual amount of CPU time that is available to a cgroup can vary depending on the number of cgroups that exist on the system. If a cgroup has a relative share of 1000 and two other cgroups have a relative share of 500, the first cgroup receives 50% of all CPU time in cases when processes in all cgroups attempt to use 100% of the CPU. However, if another cgroup is added with a relative share of 1000, the first cgroup is only allowed 33% of the CPU (the rest of the cgroups receive 16.5%, 16.5%, and 33% of CPU).</p>
-<h2 id="Using-libcgroup-tools"><a href="#Using-libcgroup-tools" class="headerlink" title="Using libcgroup tools"></a>Using libcgroup tools</h2><p>Install libcgroup package to manage cgroups:</p>
-<pre><code>$ yum install libcgroup libcgroup-tools
-</code></pre>
-<p>List the cgroups:</p>
-<pre><code>$ lscgroup
-hugetlb:/
-cpu,cpuacct:/
-cpuset:/
-blkio:/
-memory:/
-freezer:/
-net_cls,net_prio:/
-pids:/
-rdma:/
-perf_event:/
-devices:/
-devices:/system.slice
-devices:/system.slice/irqbalance.service
-devices:/system.slice/systemd-udevd.service
-devices:/system.slice/polkit.service
-devices:/system.slice/chronyd.service
-devices:/system.slice/auditd.service
-devices:/system.slice/tuned.service
-devices:/system.slice/systemd-journald.service
-devices:/system.slice/sshd.service
-devices:/system.slice/crond.service
-devices:/system.slice/NetworkManager.service
-devices:/system.slice/rsyslog.service
-devices:/system.slice/abrtd.service
-devices:/system.slice/lvm2-lvmetad.service
-devices:/system.slice/postfix.service
-devices:/system.slice/dbus.service
-devices:/system.slice/system-getty.slice
-devices:/system.slice/systemd-logind.service
-devices:/system.slice/abrt-oops.service
-
-$ ls /sys/fs/cgroup
-blkio  cpuacct      cpuset   freezer  memory   net_cls,net_prio  perf_event  rdma
-cpu    cpu,cpuacct  devices  hugetlb  net_cls  net_prio          pids        systemd
-</code></pre>
-<p>Create the cgroup:</p>
-<pre><code>$ cgcreate -g cpu:/cpulimited
-
-$ lscgroup | grep cpulimited
-cpu,cpuacct:/cpulimited
-
-$ ls cpulimited/
-cgroup.clone_children  cpuacct.usage_percpu       cpu.cfs_period_us  cpu.stat
-cgroup.procs           cpuacct.usage_percpu_sys   cpu.cfs_quota_us   notify_on_release
-cpuacct.stat           cpuacct.usage_percpu_user  cpu.rt_period_us   tasks
-cpuacct.usage          cpuacct.usage_sys          cpu.rt_runtime_us
-cpuacct.usage_all      cpuacct.usage_user         cpu.shares
-</code></pre>
-<p>Limit CPU utilization by percentage:</p>
-<pre><code>$ lscpu | grep ^CPU\(s\):
-CPU(s):                96
-
-$ cgset -r cpu.cfs_quota_us=200000 cpulimited
-</code></pre>
-<p>Check the cgroup settings:</p>
-<pre><code>$ cgget -r cpu.cfs_quota_us cpulimited
-cpulimited:
-cpu.cfs_quota_us: 200000
-
-$ cgget -g cpu:cpulimited
-cpulimited:
-cpu.cfs_period_us: 100000
-cpu.stat: nr_periods 2
-    nr_throttled 0
-    throttled_time 0
-cpu.shares: 1024
-cpu.cfs_quota_us: 200000
-cpu.rt_runtime_us: 0
-cpu.rt_period_us: 1000000
-</code></pre>
-<p>Delete the cgroup:</p>
-<pre><code>$ cgdelete cpu,cpuacct:/cpulimited
-</code></pre>
-<h2 id="Verify-the-CPU-utilization-with-fio-workload"><a href="#Verify-the-CPU-utilization-with-fio-workload" class="headerlink" title="Verify the CPU utilization with fio workload"></a>Verify the CPU utilization with fio workload</h2><p>Create a fio job file:</p>
-<pre><code>$ cat burn_cpu.job
-[burn_cpu]
-# Don&#39;t transfer any data, just burn CPU cycles
-ioengine=cpuio
-# Stress the CPU at 100%
-cpuload=100
-# Make 4 clones of the job
-numjobs=4
-</code></pre>
-<p>Run the fio jobs without CPU limit:</p>
-<pre><code>$ cgget -r cpu.cfs_quota_us cpulimited
-cpulimited:
-cpu.cfs_quota_us: -1
-
-$ cgexec -g cpu:cpulimited fio burn_cpu.job
-</code></pre>
-<p>Check the CPU usage:</p>
-<pre><code>$ top
-  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
-13775 root      20   0 1079912   4016   2404 R 100.0  0.0   0:11.65 fio
-13776 root      20   0 1079916   4004   2392 R 100.0  0.0   0:11.65 fio
-13777 root      20   0 1079920   4004   2392 R 100.0  0.0   0:11.65 fio
-13778 root      20   0 1079924   4004   2392 R 100.0  0.0   0:11.65 fio
-</code></pre>
-<p>The CPU utilization is 400% for the 4 fio jobs when there is no CPU limit set. Note that, there is totally 9600% CPU bandwidth available.</p>
-<p>Limit the CPU utilization to 200%:</p>
-<pre><code>$ cgset -r cpu.cfs_quota_us=200000 cpulimited
-
-$ cgget -r cpu.cfs_quota_us cpulimited
-cpulimited:
-cpu.cfs_quota_us: 200000
-</code></pre>
-<p>Run the fio jobs again:</p>
-<pre><code>$ cgexec -g cpu:cpulimited fio burn_cpu.job
-</code></pre>
-<p>Check the CPU usage:</p>
-<pre><code>$ top
-  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
-12908 root      20   0 1079916   3948   2336 R  50.3  0.0   0:06.91 fio
-12909 root      20   0 1079920   3948   2336 R  50.0  0.0   0:06.88 fio
-12910 root      20   0 1079924   3948   2336 R  50.0  0.0   0:06.93 fio
-12907 root      20   0 1079912   3948   2336 R  49.3  0.0   0:06.86 fio
-</code></pre>
-<p>The CPU utilization is 200% for the 4 fio jobs when the CPU utilization is limited to 200%.</p>
-<p>Check the processes are running on which CPU cores:</p>
-<pre><code>$ mpstat -P ALL 5 | awk &#39;&#123;if ($3==&quot;CPU&quot; || $NF&lt;99)print;&#125;&#39;
-
-12:40:32 AM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
-12:40:37 AM  all    2.11    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   97.89
-12:40:37 AM    0   20.52    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   79.48
-12:40:37 AM    1   50.60    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   49.40
-12:40:37 AM    2   50.10    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   49.90
-12:40:37 AM   24   29.74    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   70.26
-12:40:37 AM   87   50.20    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   49.80
-
-12:40:37 AM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
-12:40:42 AM  all    2.11    0.00    0.01    0.00    0.00    0.00    0.00    0.00    0.00   97.88
-12:40:42 AM    0   11.49    0.00    0.20    0.00    0.00    0.00    0.00    0.00    0.00   88.31
-12:40:42 AM    1   50.60    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   49.40
-12:40:42 AM    2   50.30    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   49.70
-12:40:42 AM   24   38.97    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   61.03
-12:40:42 AM   87   49.90    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00   50.10
-</code></pre>
-<p>The 4 fio jobs are running on 5 CPU cores with total utilization of 200%. So, it indicates this method limits the total CPU utilization out of all the CPU cores. However, the number of CPU cores is not limited.</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://docs.kernel.org/admin-guide/cgroup-v1/cgroups.html">https://docs.kernel.org/admin-guide/cgroup-v1/cgroups.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/resource_management_guide/sec-cpu">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux&#x2F;6&#x2F;html&#x2F;resource_management_guide&#x2F;sec-cpu</a></li>
-<li><a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/resource_management_guide/chap-using_libcgroup_tools">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux&#x2F;7&#x2F;html&#x2F;resource_management_guide&#x2F;chap-using_libcgroup_tools</a></li>
-<li><a target="_blank" rel="noopener" href="https://scoutapm.com/blog/restricting-process-cpu-usage-using-nice-cpulimit-and-cgroups">https://scoutapm.com/blog/restricting-process-cpu-usage-using-nice-cpulimit-and-cgroups</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/deploy-cockroachdb-in-kubernetes-cluster/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/deploy-cockroachdb-in-kubernetes-cluster/" class="post-title-link" itemprop="url">Deploy CockroachDB in kubernetes cluster</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-12-03 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-03T08:00:00-08:00">2022-12-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Deploy-Kubernetes-cluster"><a href="#Deploy-Kubernetes-cluster" class="headerlink" title="Deploy Kubernetes cluster"></a>Deploy Kubernetes cluster</h2><pre><code>$ kubectl get nodes
-NAME            STATUS   ROLES    AGE    VERSION
-node0   Ready    &lt;none&gt;   115d   v1.19.2
-node1   Ready    &lt;none&gt;   115d   v1.19.2
-node2   Ready    &lt;none&gt;   115d   v1.19.2
-node3   Ready    master   115d   v1.19.2
-</code></pre>
-<h2 id="Start-CockroachDB-cluster"><a href="#Start-CockroachDB-cluster" class="headerlink" title="Start CockroachDB cluster"></a>Start CockroachDB cluster</h2><p>Start the CockroachDB nodes with a configuration file that has been customized for performance:</p>
-<pre><code>$ curl -O https://raw.githubusercontent.com/cockroachdb/cockroach/master/cloud/kubernetes/performance/cockroachdb-statefulset-insecure.yaml
-
-$ kubectl create -f cockroachdb-statefulset-insecure.yaml
-service/cockroachdb-public created
-service/cockroachdb created
-poddisruptionbudget.policy/cockroachdb-budget created
-statefulset.apps/cockroachdb created
-</code></pre>
-<p>Confirm that three pods are Running successfully. Note that they will not be considered Ready until after the cluster has been initialized:</p>
-<pre><code>$ kubectl get pods
-NAME            READY     STATUS    RESTARTS   AGE
-cockroachdb-0   0/1       Running   0          2m
-cockroachdb-1   0/1       Running   0          2m
-cockroachdb-2   0/1       Running   0          2m
-</code></pre>
-<p>Confirm that the persistent volumes and corresponding claims were created successfully for all three pods:</p>
-<pre><code>$ kubectl get pvc
-NAME                    STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
-datadir-cockroachdb-0   Bound    pvc-ac210538-2a20-4d99-9b5d-c5a03d733b4d   1Ti        RWO            px-repl1       35s
-datadir-cockroachdb-1   Bound    pvc-54f24a59-a063-46bb-9645-d4292eb483a3   1Ti        RWO            px-repl1       25s
-datadir-cockroachdb-2   Bound    pvc-0ebd7fa7-dc36-4c77-ab9d-003d10680f56   1Ti        RWO            px-repl1       15s
-
-$ kubectl get pv
-NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                           STORAGECLASS   REASON   AGE
-pvc-0ebd7fa7-dc36-4c77-ab9d-003d10680f56   1Ti        RWO            Delete           Bound    default/datadir-cockroachdb-2   px-repl1                17s
-pvc-54f24a59-a063-46bb-9645-d4292eb483a3   1Ti        RWO            Delete           Bound    default/datadir-cockroachdb-1   px-repl1                27s
-pvc-ac210538-2a20-4d99-9b5d-c5a03d733b4d   1Ti        RWO            Delete           Bound    default/datadir-cockroachdb-0   px-repl1                27s
-</code></pre>
-<p>Before initialize the CockroachDB cluster, check the network(use ping command) to make sure each host can communicate with each other. Otherwise, you may run into connection failure between cluster nodes.</p>
-<p>In my case, I want to run the cluster over the private network which doesn’t have DNS setup. So, I just add the private IP addresses and Kubernetes qualified hostnames and CockroachDB node names in &#x2F;etc&#x2F;hosts file on each host as below.</p>
-<pre><code>10.0.0.1 ip-10-10-0-1 cockroachdb-0.cockroachdb
-10.0.0.2 ip-10-10-0-2 cockroachdb-1.cockroachdb
-10.0.0.3 ip-10-10-0-3 cockroachdb-2.cockroachdb
-</code></pre>
-<p>Use the provided cluster-init.yaml file to perform a one-time initialization that joins the CockroachDB nodes into a single cluster:</p>
-<pre><code>$ kubectl create \
--f https://raw.githubusercontent.com/cockroachdb/cockroach/master/cloud/kubernetes/cluster-init.yaml
-</code></pre>
-<p>Confirm that cluster initialization has completed successfully. The job should be considered successful and the Kubernetes pods should soon be considered Ready:</p>
-<pre><code>$ kubectl get job cluster-init
-NAME           COMPLETIONS   DURATION   AGE
-cluster-init   1/1           7s         27s
-kubectl get pods
-NAME                 READY   STATUS      RESTARTS   AGE
-cluster-init-cqf8l   0/1     Completed   0          56s
-cockroachdb-0        1/1     Running     0          7m51s
-cockroachdb-1        1/1     Running     0          7m51s
-cockroachdb-2        1/1     Running     0          7m51s
-</code></pre>
-<h2 id="Use-the-built-in-SQL-client"><a href="#Use-the-built-in-SQL-client" class="headerlink" title="Use the built-in SQL client"></a>Use the built-in SQL client</h2><pre><code>$ kubectl run cockroachdb -it --image=cockroachdb/cockroach:v22.1.7 --rm --restart=Never -- sql --insecure --host=cockroachdb-public
-
-root@cockroachdb-public:26257/defaultdb&gt; show databases;
-  database_name | owner | primary_region | regions | survival_goal
-----------------+-------+----------------+---------+----------------
-  defaultdb     | root  | NULL           | &#123;&#125;      | NULL
-  postgres      | root  | NULL           | &#123;&#125;      | NULL
-  system        | node  | NULL           | &#123;&#125;      | NULL
-(3 rows)
-
-
-Time: 5ms total (execution 4ms / network 1ms)
-</code></pre>
-<h2 id="Run-TPC-C-workload-on-the-CockroachDB-cluster"><a href="#Run-TPC-C-workload-on-the-CockroachDB-cluster" class="headerlink" title="Run TPC-C workload on the CockroachDB cluster"></a>Run TPC-C workload on the CockroachDB cluster</h2><pre><code>$ kubectl run cockroachdb -it --image=cockroachdb/cockroach:v22.1.7 --rm --restart=Never -- bash
-[root@cockroachdb cockroach]# cockroach node ls --insecure --host=cockroachdb-public
-  id
-------
-   1
-   2
-   3
-(3 rows)
-
-[root@cockroachdb cockroach]# cockroach workload init tpcc &quot;postgresql://root@cockroachdb-public:26257?sslmode=disable&quot; --warehouses 10 --drop
-I220922 19:48:15.543311 1 workload/workloadsql/dataload.go:146  [-] 1  imported warehouse (0s, 10 rows)
-I220922 19:48:15.580634 1 workload/workloadsql/dataload.go:146  [-] 2  imported district (0s, 100 rows)
-I220922 19:48:20.098986 1 workload/workloadsql/dataload.go:146  [-] 3  imported customer (5s, 300000 rows)
-I220922 19:48:21.601978 1 workload/workloadsql/dataload.go:146  [-] 4  imported history (2s, 300000 rows)
-I220922 19:48:24.317881 1 workload/workloadsql/dataload.go:146  [-] 5  imported order (3s, 300000 rows)
-I220922 19:48:24.540100 1 workload/workloadsql/dataload.go:146  [-] 6  imported new_order (0s, 90000 rows)
-I220922 19:48:24.998829 1 workload/workloadsql/dataload.go:146  [-] 7  imported item (0s, 100000 rows)
-I220922 19:48:34.737491 1 workload/workloadsql/dataload.go:146  [-] 8  imported stock (10s, 1000000 rows)
-I220922 19:48:49.030366 1 workload/workloadsql/dataload.go:146  [-] 9  imported order_line (14s, 3001222 rows)
-
-[root@cockroachdb cockroach]# cockroach sql --insecure --database tpcc --host=cockroachdb-public:26257 -e &#39;show tables&#39;
-  schema_name | table_name | type  | owner | estimated_row_count | locality
---------------+------------+-------+-------+---------------------+-----------
-  public      | customer   | table | root  |              300000 | NULL
-  public      | district   | table | root  |                 100 | NULL
-  public      | history    | table | root  |              300000 | NULL
-  public      | item       | table | root  |              100000 | NULL
-  public      | new_order  | table | root  |               90000 | NULL
-  public      | order      | table | root  |              300000 | NULL
-  public      | order_line | table | root  |             3001222 | NULL
-  public      | stock      | table | root  |             1000000 | NULL
-  public      | warehouse  | table | root  |                  10 | NULL
-(9 rows)
-
-[root@cockroachdb cockroach]# cockroach workload run tpcc --warehouses=10 --ramp=10s --duration=20s postgres://root@cockroachdb-public:26257?sslmode=disable
-I220922 19:52:41.633625 1 workload/cli/run.go:414  [-] 1  creating load generator...
-Initializing 20 connections...
-Initializing 0 idle connections...
-Initializing 100 workers and preparing statements...
-I220922 19:52:51.646000 1 workload/cli/run.go:445  [-] 2  creating load generator... done (took 10.012371773s)
-
-_elapsed_______tpmC____efc__avg(ms)__p50(ms)__p90(ms)__p95(ms)__p99(ms)_pMax(ms)
-   20.0s      153.0 119.0%     38.2     44.0     48.2     48.2     50.3     52.4
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/docs/v22.1/deploy-cockroachdb-with-kubernetes-insecure">https://www.cockroachlabs.com/docs/v22.1/deploy-cockroachdb-with-kubernetes-insecure</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/docs/stable/kubernetes-performance.html">https://www.cockroachlabs.com/docs/stable/kubernetes-performance.html</a></li>
 </ul>
 
       

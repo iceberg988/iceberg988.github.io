@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">275</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">277</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">275</span>
+          <span class="site-state-item-count">277</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,246 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/how-to-install-bcc-on-ubuntu-22-04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/how-to-install-bcc-on-ubuntu-22-04/" class="post-title-link" itemprop="url">How to install BCC on Ubuntu 22.04</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-02-14 14:54:00" itemprop="dateCreated datePublished" datetime="2023-02-14T14:54:00-08:00">2023-02-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>To build the toolchain from source, one needs:</strong></p>
+<p>LLVM 3.7.1 or newer, compiled with BPF support (default&#x3D;on)</p>
+<p>Clang, built from the same tree as LLVM</p>
+<p>cmake (&gt;&#x3D;3.1), gcc (&gt;&#x3D;4.7), flex, bison</p>
+<p>LuaJIT, if you want Lua support</p>
+<pre><code>root@ubuntu:~# cat /etc/*release
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=22.04
+DISTRIB_CODENAME=jammy
+DISTRIB_DESCRIPTION=&quot;Ubuntu 22.04.1 LTS&quot;
+PRETTY_NAME=&quot;Ubuntu 22.04.1 LTS&quot;
+NAME=&quot;Ubuntu&quot;
+VERSION_ID=&quot;22.04&quot;
+VERSION=&quot;22.04.1 LTS (Jammy Jellyfish)&quot;
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL=&quot;https://www.ubuntu.com/&quot;
+SUPPORT_URL=&quot;https://help.ubuntu.com/&quot;
+BUG_REPORT_URL=&quot;https://bugs.launchpad.net/ubuntu/&quot;
+PRIVACY_POLICY_URL=&quot;https://www.ubuntu.com/legal/terms-and-policies/privacy-policy&quot;
+UBUNTU_CODENAME=jammy
+root@ubuntu:~# uname -r
+5.15.0-60-generic
+</code></pre>
+<h2 id="Install-build-dependencies"><a href="#Install-build-dependencies" class="headerlink" title="Install build dependencies"></a>Install build dependencies</h2><pre><code># For Jammy (22.04)
+root@ubuntu:~# apt install -y bison build-essential cmake flex git libedit-dev \
+libllvm14 llvm-14-dev libclang-14-dev python3 zlib1g-dev libelf-dev libfl-dev python3-distutils
+</code></pre>
+<h2 id="Install-and-compile-BCC"><a href="#Install-and-compile-BCC" class="headerlink" title="Install and compile BCC"></a>Install and compile BCC</h2><pre><code>root@ubuntu:~# git clone https://github.com/iovisor/bcc.git
+root@ubuntu:~# mkdir bcc/build; cd bcc/build
+root@ubuntu:~# cmake ..
+root@ubuntu:~# make
+root@ubuntu:~# make install
+root@ubuntu:~# cmake -DPYTHON_CMD=python3 .. # build python3 binding
+root@ubuntu:~# pushd src/python/
+root@ubuntu:~# make
+root@ubuntu:~# make install
+root@ubuntu:~# popd
+</code></pre>
+<h2 id="A-first-look-at-BCC"><a href="#A-first-look-at-BCC" class="headerlink" title="A first look at BCC"></a>A first look at BCC</h2><pre><code>root@ubuntu:~# biolatency 
+Tracing block device I/O... Hit Ctrl-C to end.
+^C
+     usecs               : count     distribution
+     0 -&gt; 1          : 0        |                                        |
+     2 -&gt; 3          : 0        |                                        |
+     4 -&gt; 7          : 0        |                                        |
+     8 -&gt; 15         : 0        |                                        |
+     16 -&gt; 31        : 0        |                                        |
+     32 -&gt; 63        : 0        |                                        |
+     64 -&gt; 127       : 0        |                                        |
+     128 -&gt; 255      : 1        |****************************************|
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/iovisor/bcc/blob/master/INSTALL.md#ubuntu---source">https://github.com/iovisor/bcc/blob/master/INSTALL.md#ubuntu---source</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/ycsb-benchmark-on-postgresql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/ycsb-benchmark-on-postgresql/" class="post-title-link" itemprop="url">YCSB benchmark on PostgreSQL</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-02-14 13:20:50" itemprop="dateCreated datePublished" datetime="2023-02-14T13:20:50-08:00">2023-02-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          go-ycsb is a Go port of YCSB. It fully supports all YCSB generators and the Core workload so we can do the basic CRUD benchmarks with Go.
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/ycsb-benchmark-on-postgresql/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1019,430 +1259,6 @@ p &#x3D; ggplot(df1, aes(x&#x3D;start_date, y&#x3D;covid_19_deaths, group&#x3D;1
 </ul>
 <pre><code>
 </code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/analysis-us-quartely-covid-data-from-cdc/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/analysis-us-quartely-covid-data-from-cdc/" class="post-title-link" itemprop="url">Using R to analyze the quarterly US COVID data</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-01-10 13:02:33" itemprop="dateCreated datePublished" datetime="2023-01-10T13:02:33-08:00">2023-01-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h2><p>Based on the overall death data and COVID realated death data since 2019, we want to study the impact trend of COVID to the overall pupulation death of US in these years.</p>
-<h2 id="Download-the-data"><a href="#Download-the-data" class="headerlink" title="Download the data"></a>Download the data</h2><p>We will use NCHS(National Center for Health Statistics) as our data source.</p>
-<p>Visit <a target="_blank" rel="noopener" href="https://data.cdc.gov/browse?category=NCHS&amp;sortBy=last_modified">https://data.cdc.gov/browse?category=NCHS&sortBy=last_modified</a>, and search <code>VSRR Quarterly</code>, we will find the data we are intrested in.</p>
-<p><a target="_blank" rel="noopener" href="https://data.cdc.gov/NCHS/NCHS-VSRR-Quarterly-provisional-estimates-for-sele/489q-934x">https://data.cdc.gov/NCHS/NCHS-VSRR-Quarterly-provisional-estimates-for-sele/489q-934x</a></p>
-<p>In this page, we can export data into csv file as <code>NCHS_-_VSRR_Quarterly_provisional_estimates_for_selected_indicators_of_mortality.csv</code></p>
-<h2 id="Take-a-quick-look-at-the-data"><a href="#Take-a-quick-look-at-the-data" class="headerlink" title="Take a quick look at the data"></a>Take a quick look at the data</h2><p>To load the data:</p>
-<pre><code># If &quot;readr&quot; not installed, run install.packages(&quot;readr&quot;) to install it
-library(&quot;readr&quot;)
-df &lt;- readr::read_csv(file.path(getwd(), &quot;NCHS_-_VSRR_Quarterly_provisional_estimates_for_selected_indicators_of_mortality.csv&quot;), col_names = TRUE)   
-</code></pre>
-<p>To check the first few lines:</p>
-<pre><code>&gt; head(df)
-# A tibble: 6 × 69
-  Year a…¹ Time …² Cause…³ Rate …⁴ Unit  Overa…⁵ Rate …⁶ Rate …⁷ Rate …⁸ Rate …⁹
-  &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1 2019 Q1  12 mon… All ca… Age-ad… Deat…   712.    600.    844.       NA      NA
-2 2019 Q1  12 mon… Alzhei… Age-ad… Deat…    29.6    33.1    23.8      NA      NA
-3 2019 Q1  12 mon… COVID-… Age-ad… Deat…    NA      NA      NA        NA      NA
-4 2019 Q1  12 mon… Cancer  Age-ad… Deat…   148.    128.    175.       NA      NA
-5 2019 Q1  12 mon… Chroni… Age-ad… Deat…    11       7.7    14.7      NA      NA
-6 2019 Q1  12 mon… Chroni… Age-ad… Deat…    38.5    35.7    42.4      NA      NA
-# … with 59 more variables: `Rate Age 15-24` &lt;dbl&gt;, `Rate Age 25-34` &lt;dbl&gt;,
-#   `Rate Age 35-44` &lt;dbl&gt;, `Rate Age 45-54` &lt;dbl&gt;, `Rate Age 55-64` &lt;dbl&gt;,
-#   `Rate 65-74` &lt;dbl&gt;, `Rate Age 75-84` &lt;dbl&gt;, `Rate Age 85 plus` &lt;dbl&gt;,
-#   `Rate Alaska` &lt;dbl&gt;, `Rate Alabama` &lt;dbl&gt;, `Rate Arkansas` &lt;dbl&gt;,
-#   `Rate Arizona` &lt;dbl&gt;, `Rate California` &lt;dbl&gt;, `Rate Colorado` &lt;dbl&gt;,
-#   `Rate Connecticut` &lt;dbl&gt;, `Rate District of Columbia` &lt;dbl&gt;,
-#   `Rate Delaware` &lt;dbl&gt;, `Rate Florida` &lt;dbl&gt;, `Rate Georgia` &lt;dbl&gt;, …
-# ℹ Use `colnames()` to see all variable names   
-</code></pre>
-<p>To get a summary:</p>
-<pre><code>summary(df)
- Year and Quarter   Time Period        Cause of Death      Rate Type        
- Length:1232        Length:1232        Length:1232        Length:1232       
- Class :character   Class :character   Class :character   Class :character  
- Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-
-     Unit            Overall Rate     Rate Sex Female   Rate Sex Male    
- Length:1232        Min.   :   1.20   Min.   :   0.60   Min.   :   1.90  
- Class :character   1st Qu.:  11.40   1st Qu.:   6.95   1st Qu.:  13.20  
- Mode  :character   Median :  17.00   Median :  14.80   Median :  23.50  
-                    Mean   :  80.51   Mean   :  70.56   Mean   :  91.63  
-                    3rd Qu.:  50.60   3rd Qu.:  49.92   3rd Qu.:  65.42  
-                    Max.   :1142.30   Max.   :1067.00   Max.   :1219.90  
-                    NA&#39;s   :44        NA&#39;s   :44        NA&#39;s   :44       
-  ...
-</code></pre>
-<p>To get glimpse from columns point of view:</p>
-<pre><code>&gt; library(&quot;dplyr&quot;)
-&gt; glimpse(df)
-Rows: 1,232
-Columns: 69
-$ `Year and Quarter`          &lt;chr&gt; &quot;2019 Q1&quot;, &quot;2019 Q1&quot;, &quot;2019 Q1&quot;, &quot;2019 Q1&quot;…
-$ `Time Period`               &lt;chr&gt; &quot;12 months ending with quarter&quot;, &quot;12 month…
-$ `Cause of Death`            &lt;chr&gt; &quot;All causes&quot;, &quot;Alzheimer disease&quot;, &quot;COVID-…
-$ `Rate Type`                 &lt;chr&gt; &quot;Age-adjusted&quot;, &quot;Age-adjusted&quot;, &quot;Age-adjus…
-$ Unit                        &lt;chr&gt; &quot;Deaths per 100,000&quot;, &quot;Deaths per 100,000&quot;…
-$ `Overall Rate`              &lt;dbl&gt; 712.2, 29.6, NA, 148.1, 11.0, 38.5, 21.3, …
-$ `Rate Sex Female`           &lt;dbl&gt; 600.3, 33.1, NA, 127.9, 7.7, 35.7, 16.8, 1…
-$ `Rate Sex Male`             &lt;dbl&gt; 843.7, 23.8, NA, 175.4, 14.7, 42.4, 26.9, …
-$ `Rate Age 1-4`              &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ `Rate Age 5-14`             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ `Rate Age 15-24`            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ `Rate Age 25-34`            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ `Rate Age 35-44`            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ `Rate Age 45-54`            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ `Rate Age 55-64`            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ `Rate 65-74`                &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ `Rate Age 75-84`            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-...
-</code></pre>
-<h2 id="Clear-the-columns-name"><a href="#Clear-the-columns-name" class="headerlink" title="Clear the columns name"></a>Clear the columns name</h2><p>As we can see, the column names has space, it may cause some trouble while refering it in R, it’s a common sugestion to convert space to “_” before doing any R o&#x2F;p.</p>
-<p>A good thing is , there is a R package can help us on it.</p>
-<pre><code>&gt; library(&quot;janitor&quot;)
-&gt; df &lt;- clean_names(df)
-!&gt; glimpse(df)
- Rows: 1,232
- Columns: 69
- $ year_and_quarter          &lt;chr&gt; &quot;2019 Q1&quot;, &quot;2019 Q1&quot;, &quot;2019 Q1&quot;, &quot;2019 Q1&quot;, …
- $ time_period               &lt;chr&gt; &quot;12 months ending with quarter&quot;, &quot;12 months …
- $ cause_of_death            &lt;chr&gt; &quot;All causes&quot;, &quot;Alzheimer disease&quot;, &quot;COVID-19…
- $ rate_type                 &lt;chr&gt; &quot;Age-adjusted&quot;, &quot;Age-adjusted&quot;, &quot;Age-adjuste…
- $ unit                      &lt;chr&gt; &quot;Deaths per 100,000&quot;, &quot;Deaths per 100,000&quot;, …
- $ overall_rate              &lt;dbl&gt; 712.2, 29.6, NA, 148.1, 11.0, 38.5, 21.3, 20…
- $ rate_sex_female           &lt;dbl&gt; 600.3, 33.1, NA, 127.9, 7.7, 35.7, 16.8, 13.…
- $ rate_sex_male             &lt;dbl&gt; 843.7, 23.8, NA, 175.4, 14.7, 42.4, 26.9, 27…
- $ rate_age_1_4              &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
-</code></pre>
-<p>As you can see, while we run <code>glimpse(df)</code>, the colum name has been changed from “Year and Quarter” to “year_and_quarter”.</p>
-<h2 id="Filter-and-select"><a href="#Filter-and-select" class="headerlink" title="Filter and select"></a>Filter and select</h2><p>The raw data has so many columns and rows, but we just want to focus on those cols&#x2F;rows we really have intrest.</p>
-<p>We can use <code>filter</code>(applying on rows) and <code>select</code>(applying on columns) in such condition.</p>
-<pre><code>&gt; df1 &lt;- df %&gt;%
-      filter(time_period == &quot;3-month period&quot; &amp; rate_type == &quot;Crude&quot; &amp; cause_of_death %in% c(&quot;All causes&quot;, &quot;COVID-19&quot;)) %&gt;%
-      select(year_and_quarter, cause_of_death, overall_rate)
-&gt; print(df1,n=50)
- # A tibble: 28 × 3
-    year_and_quarter cause_of_death overall_rate
-    &lt;chr&gt;            &lt;chr&gt;                 &lt;dbl&gt;
-  1 2019 Q1          All causes            910
-  2 2019 Q1          COVID-19               NA
-  3 2019 Q2          All causes            851.
-  4 2019 Q2          COVID-19               NA
-  5 2019 Q3          All causes            827.
-  6 2019 Q3          COVID-19               NA
-  7 2019 Q4          All causes            891.
-  8 2019 Q4          COVID-19               NA
-  9 2020 Q1          All causes            945.
- 10 2020 Q1          COVID-19                8.2
- 11 2020 Q2          All causes           1035.
- 12 2020 Q2          COVID-19              137.
- 13 2020 Q3          All causes            985.
- 14 2020 Q3          COVID-19               87.3
- 15 2020 Q4          All causes           1142.
- 16 2020 Q4          COVID-19              193.
- 17 2021 Q1          All causes           1116
- 18 2021 Q1          COVID-19              191.
- 19 2021 Q2          All causes            915.
- 20 2021 Q2          COVID-19               42.4
- 21 2021 Q3          All causes           1051.
- 22 2021 Q3          COVID-19              138.
- 23 2021 Q4          All causes           1092.
- 24 2021 Q4          COVID-19              131.
- 25 2022 Q1          All causes           1116
- 26 2022 Q1          COVID-19              150.
- 27 2022 Q2          All causes            899.
- 28 2022 Q2          COVID-19               17.6
-</code></pre>
-<p><code>%&gt;%</code> looks strange, it’s just like <code>| (pipe)</code> in linux shell command.</p>
-<pre><code>df1 &lt;- df %&gt;%
-    filter(time_period == &quot;3-month period&quot; &amp; rate_type == &quot;Crude&quot; &amp; cause_of_death %in% c(&quot;All causes&quot;, &quot;COVID-19&quot;)) %&gt;%
-    select(year_and_quarter, cause_of_death, overall_rate)
-</code></pre>
-<p>It means only keep those rows which meet those condition of <code>filter</code>, and those columns which meet condition of <code>select</code>.</p>
-<h2 id="Deal-with-NA-value"><a href="#Deal-with-NA-value" class="headerlink" title="Deal with NA value"></a>Deal with NA value</h2><p>As you can see, in “overall_rate” column, there are few “NA” values, in this context it means 0, so we may want to convert it as 0 for future’s process.</p>
-<p>We can do it like as below.</p>
-<pre><code> &gt; df1 &lt;- df1 %&gt;%
-     mutate_at(c(&quot;overall_rate&quot;), ~coalesce(.,0))
-</code></pre>
-<p>It means , we want to convert all NA to 0 in “overall_rate” column.</p>
-<p>Now, let’s check the df1 again, we can see all NA has been changed to 0.</p>
-<pre><code>!+ &gt; df1
- # A tibble: 28 × 3
-    year_and_quarter cause_of_death overall_rate
-    &lt;chr&gt;            &lt;chr&gt;                 &lt;dbl&gt;
-  1 2019 Q1          All causes            910
-  2 2019 Q1          COVID-19                0
-  3 2019 Q2          All causes            851.
-  4 2019 Q2          COVID-19                0
-  5 2019 Q3          All causes            827.
-  6 2019 Q3          COVID-19                0
-  7 2019 Q4          All causes            891.
-  8 2019 Q4          COVID-19                0
-  9 2020 Q1          All causes            945.
- 10 2020 Q1          COVID-19                8.2
- # … with 18 more rows
-</code></pre>
-<h2 id="Draw-diagram-for-the-whole-US-data"><a href="#Draw-diagram-for-the-whole-US-data" class="headerlink" title="Draw diagram for the whole US data"></a>Draw diagram for the whole US data</h2><p>To draw a diagram directly:</p>
-<pre><code>&gt; ggplot(df1, aes(fill=cause_of_death, x=year_and_quarter, y=overall_rate)) +
-    geom_bar(position=&quot;stack&quot;, stat=&quot;identity&quot;) +
-    geom_col() +
-    geom_smooth(aes(group=cause_of_death)) +
-    scale_y_continuous(breaks=seq(0,1500,100))
-    theme_bw()
-</code></pre>
-<p>To save the diagram in a file:</p>
-<pre><code>library(sjPlot)
-p = ggplot(df1, aes(fill=cause_of_death, x=year_and_quarter, y=overall_rate)) +
-    geom_bar(position=&quot;stack&quot;, stat=&quot;identity&quot;) +
-    geom_col() +
-    geom_smooth(aes(group=cause_of_death)) +
-    scale_y_continuous(breaks=seq(0,1500,100)) +
-    theme_bw()
-
-save_plot(&quot;covid_plot.svg&quot;, fig = p, width=30, height=20)
-</code></pre>
-<p>The diagram looks like below.<br><img src="/images/2023/01/image-1.png"></p>
-<h2 id="Draw-diagram-for-California-data"><a href="#Draw-diagram-for-California-data" class="headerlink" title="Draw diagram for California data"></a>Draw diagram for California data</h2><p>Do you want to try it by yourself?</p>
-<h2 id="Create-Calculate-a-new-column-for-covid-ratio"><a href="#Create-Calculate-a-new-column-for-covid-ratio" class="headerlink" title="Create&#x2F;Calculate a new column for covid ratio"></a>Create&#x2F;Calculate a new column for covid ratio</h2><p>Somehow, we want to get to know the trend for covid ratio.</p>
-<ul>
-<li><p>covid_ratio &#x3D; overall_rate_of_covid &#x2F; overall_rate_of_all_causes</p>
-<p>  covid_death_rate &lt;- df1 %&gt;%<br>  filter(cause_of_death &#x3D;&#x3D; “COVID-19”) %&gt;%<br>  select(“overall_rate”)<br>  all_causes_rate &lt;- df1 %&gt;%<br>  filter(cause_of_death &#x3D;&#x3D; “All causes”) %&gt;%<br>  select(overall_rate)<br>  covid_ratio &lt;- covid_death_rate &#x2F; all_causes_rate</p>
-<p>  df_ratio &lt;- df1 %&gt;%<br>  filter(cause_of_death &#x3D;&#x3D; “All causes”) %&gt;%<br>  select(year_and_quarter)<br>  df_ratio[“covid_ratio”] &#x3D; covid_ratio</p>
-<blockquote>
-<p>print(df_ratio)<br>  A tibble: 14 × 2<br>     year_and_quarter covid_ratio<br>     <chr>                  <dbl><br>   1 2019 Q1              0<br>   2 2019 Q2              0<br>   3 2019 Q3              0<br>   4 2019 Q4              0<br>   5 2020 Q1              0.00868<br>   6 2020 Q2              0.132<br>   7 2020 Q3              0.0886<br>   8 2020 Q4              0.169<br>   9 2021 Q1              0.171<br>  10 2021 Q2              0.0463<br>  11 2021 Q3              0.131<br>  12 2021 Q4              0.120<br>  13 2022 Q1              0.134<br>  14 2022 Q2              0.0196</p>
-</blockquote>
-</li>
-</ul>
-<h2 id="Draw-diagram-for-covid-ratio"><a href="#Draw-diagram-for-covid-ratio" class="headerlink" title="Draw diagram for covid ratio"></a>Draw diagram for covid ratio</h2><p>Do you want to try it by yourself?</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/getting-started-with-r/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/getting-started-with-r/" class="post-title-link" itemprop="url">Getting started with R</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-01-08 12:42:00" itemprop="dateCreated datePublished" datetime="2023-01-08T12:42:00-08:00">2023-01-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><p>The simplest way is to use Homebrew:</p>
-<pre><code>$ brew install r
-</code></pre>
-<p>Another way is to download installation package from <a target="_blank" rel="noopener" href="https://cloud.r-project.org/">https://cloud.r-project.org/</a></p>
-<h2 id="“Hello-world”-of-R"><a href="#“Hello-world”-of-R" class="headerlink" title="“Hello world” of R"></a>“Hello world” of R</h2><h3 id="Run-it-from-R-console"><a href="#Run-it-from-R-console" class="headerlink" title="Run it from R console"></a>Run it from R console</h3><p>Command <code>R</code> will start a R console, and you can run R code inside R console.</p>
-<pre><code>(base) ➜  benchling git:(b_test_pr) ✗ R
-
-R version 4.2.2 (2022-10-31) -- &quot;Innocent and Trusting&quot;
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin20 (64-bit)
-
-...
-&gt; print(&quot;hello,world&quot;)
-[1] &quot;hello,world&quot;
-</code></pre>
-<h3 id="Run-it-from-terminal"><a href="#Run-it-from-terminal" class="headerlink" title="Run it from terminal"></a>Run it from terminal</h3><p><code>Rscript</code> is a binary front-end to R, for use in scripting applications, see <a target="_blank" rel="noopener" href="https://linux.die.net/man/1/rscript">https://linux.die.net/man/1/rscript</a> for more detail.</p>
-<pre><code>(base) ➜  R git:(b_test_pr) ✗ cat hello.R
-print(&quot;hello,world&quot;)
-(base) ➜  R git:(b_test_pr) ✗ Rscript hello.R
-[1] &quot;hello,world&quot;
-</code></pre>
-<h2 id="Install-commonly-used-packages"><a href="#Install-commonly-used-packages" class="headerlink" title="Install commonly used packages"></a>Install commonly used packages</h2><p>R installation package comes along with a lot of useful packages, besides that, there are a lot of useful packages available from <a target="_blank" rel="noopener" href="https://cran.r-project.org/web/packages/">CRAN</a>.</p>
-<p>Here are top 10 most important packages in R for data science.</p>
-<ul>
-<li>ggplot2</li>
-<li>data.table</li>
-<li>dplyr</li>
-<li>tidyr</li>
-<li>Shiny</li>
-<li>plotly</li>
-<li>knitr</li>
-<li>mlr3</li>
-</ul>
-<p>To install those packages from CRAN, we can just simiply follow below steps.</p>
-<ul>
-<li>Start R console</li>
-<li>Call “install.packages(XXX)”</li>
-</ul>
-<p>Here is an example:</p>
-<pre><code>&gt; install.packages(&quot;mlr3&quot;)
---- Please select a CRAN mirror for use in this session ---
-Secure CRAN mirrors
-
- 1: 0-Cloud [https]
- 2: Australia (Canberra) [https]
- 3: Australia (Melbourne 1) [https]
- ....
- Selection: 1
-also installing the dependencies ‘globals’, ‘listenv’, ‘PRROC’, ‘future’, ‘future.apply’, ‘lgr’, ‘mlbench’, ‘mlr3measures’, ‘mlr3misc’, ‘parallelly’, ‘palmerpenguins’, ‘paradox’
-
-trying URL &#39;https://cloud.r-project.org/bin/macosx/big-sur-arm64/contrib/4.2/globals_0.16.2.tgz&#39;
-...
-&gt;&gt; library(mlr3)
-&gt; ?mlr3
-</code></pre>
-<p>As above, after installation completes, we can try to run <code>library(&lt;package name&gt;)</code> to verify, and run <code>?&lt;package name&gt;</code> to see its document.</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.w3schools.com/r/r_get_started.asp">https://www.w3schools.com/r/r_get_started.asp</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.datacamp.com/tutorial/top-ten-most-important-packages-in-r-for-data-science">https://www.datacamp.com/tutorial/top-ten-most-important-packages-in-r-for-data-science</a></li>
-</ul>
 
       
     </div>

@@ -24976,4 +24976,83 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
         <tag>Observability</tag>
       </tags>
   </entry>
+  <entry>
+    <title>How to upgrade Linux kernel on Ubuntu</title>
+    <url>/blog/how-to-install-Linux-kernel-on-Ubuntu/</url>
+    <content><![CDATA[<h2 id="Method-1-Use-System-Update-Process-Automatic-Procedure"><a href="#Method-1-Use-System-Update-Process-Automatic-Procedure" class="headerlink" title="Method 1: Use System Update Process (Automatic Procedure)"></a>Method 1: Use System Update Process (Automatic Procedure)</h2><ol>
+<li><p>Update System Packages</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt update</span><br></pre></td></tr></table></figure>
+
+<p>This command retrieves information about the latest available package versions from the repositories configured on the system.</p>
+</li>
+<li><p>Run the upgrade</p>
+<p>Run the following command to upgrade the installed packages, including the kernel, to the latest versions available in the repositories:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt upgrade</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="Method-2-Manually-Update-the-Kernel-Advanced-Procedure"><a href="#Method-2-Manually-Update-the-Kernel-Advanced-Procedure" class="headerlink" title="Method 2: Manually Update the Kernel (Advanced Procedure)"></a>Method 2: Manually Update the Kernel (Advanced Procedure)</h2><p>There’s another procedure for selecting and installing a new kernel using Mainline. This will take some risk from the untested kernel in mainline.</p>
+<ol>
+<li><p>Add the PPA maintained by cappelikan to the list of software sources or repositories</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo add-apt-repository ppa:cappelikan/ppa</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Refresh the database</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt update</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Install Mainline utility</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt install mainline</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Launch Mainline utility</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="variable">$sudo</span> mainline</span><br><span class="line">mainline 1.4.9</span><br><span class="line"></span><br><span class="line">Mainline Kernels 1.4.9 - install kernel packages from https://kernel.ubuntu.com/mainline/</span><br><span class="line"></span><br><span class="line">Syntax: mainline &lt;<span class="built_in">command</span>&gt; [options]</span><br><span class="line"></span><br><span class="line">Commands</span><br><span class="line"></span><br><span class="line">  check               Check <span class="keyword">for</span> kernel updates</span><br><span class="line">  notify              Check <span class="keyword">for</span> kernel updates and send a desktop notification</span><br><span class="line">  list                List the available kernels</span><br><span class="line">  list-installed      List the installed kernels</span><br><span class="line">  install-latest      Install the latest mainline kernel</span><br><span class="line">  install-minor       Install the latest mainline kernel without going to a new major version</span><br><span class="line">  install &lt;names&gt;     Install the specified kernels(1)(2)</span><br><span class="line">  uninstall &lt;names&gt;   Uninstall the specified kernels(1)(2)</span><br><span class="line">  uninstall-old       Uninstall all but the highest installed version(2)</span><br><span class="line">  download &lt;names&gt;    Download the specified kernels(1)</span><br><span class="line">  lock &lt;names&gt;        Lock the specified kernels(1)</span><br><span class="line">  unlock &lt;names&gt;      Unlock the specified kernels(1)</span><br><span class="line">  delete-cache        Delete the cached info about available kernels</span><br><span class="line">  write-config        Write the given include/exclude &amp; previous-majors options to the config file</span><br><span class="line">  <span class="built_in">help</span>                This <span class="built_in">help</span></span><br><span class="line"></span><br><span class="line">Options</span><br><span class="line"></span><br><span class="line">  --include-rc        Include release-candidate and unstable releases</span><br><span class="line">  --exclude-rc        Exclude release-candidate and unstable releases</span><br><span class="line">  --include-flavors   Include flavors other than <span class="string">&quot;generic&quot;</span></span><br><span class="line">  --exclude-flavors   Exclude flavors other than <span class="string">&quot;generic&quot;</span></span><br><span class="line">  --include-invalid   Include failed/incomplete builds</span><br><span class="line">  --exclude-invalid   Exclude failed/incomplete builds</span><br><span class="line">  --previous-majors <span class="comment"># Include # (or &quot;all&quot; or &quot;none&quot;) previous major versions</span></span><br><span class="line">  --include-all       Short <span class="keyword">for</span> <span class="string">&quot;--include-rc --include-flavors --include-invalid --previous-majors all&quot;</span></span><br><span class="line">  --exclude-all       Short <span class="keyword">for</span> <span class="string">&quot;--exclude-rc --exclude-flavors --exclude-invalid --previous-majors none&quot;</span></span><br><span class="line">  -n|--dry-run        Don<span class="string">&#x27;t actually install or uninstall</span></span><br><span class="line"><span class="string">  -v|--verbose [#]    Set verbosity level to #, or increment by 1</span></span><br><span class="line"><span class="string">  --pause             Pause and require keypress before exiting</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Notes</span></span><br><span class="line"><span class="string">(1) One or more version strings taken from the output of &quot;list&quot;</span></span><br><span class="line"><span class="string">    comma, pipe, colon, or space separated. (space requires quotes or backslashes)</span></span><br><span class="line"><span class="string">(2) Locked kernels and the currently running kernel are ignored</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">mainline: done</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>List the installed kernel versions</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo mainline list-installed</span><br><span class="line">mainline 1.4.9</span><br><span class="line">Installed Kernels:</span><br><span class="line">linux-image-5.15.0-94-generic</span><br><span class="line">linux-image-6.5.0-17-generic</span><br><span class="line">linux-image-generic</span><br><span class="line">linux-image-generic-hwe-22.04</span><br><span class="line">mainline: <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>List the available kernel versions</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo mainline list</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Install the kernel</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo mainline install 6.3</span><br><span class="line"></span><br><span class="line">$ sudo mainline list-installed</span><br><span class="line">mainline 1.4.9</span><br><span class="line">Installed Kernels:</span><br><span class="line">linux-image-5.15.0-94-generic</span><br><span class="line">linux-image-6.5.0-17-generic</span><br><span class="line">linux-image-generic</span><br><span class="line">linux-image-generic-hwe-22.04</span><br><span class="line">linux-image-unsigned-5.7.12-050712-generic</span><br><span class="line">linux-image-unsigned-6.3.0-060300-generic</span><br><span class="line">mainline: <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Boot system with newly installed kernel</p>
+<p>Reboot the system and hold the Shift key or Esc key, depending on the Linux distribution.</p>
+<p><img src="/images/ubuntu-install-1.png"></p>
+<p>Select Advanced options for Ubuntu and choose the kernel to boot up.</p>
+<p><img src="/images/ubuntu-install-2.png"></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Tech</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Kernel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>How to use kubectl to manage kubernetes cluster contexts</title>
+    <url>/blog/how-to-use-kubectl-to-manage-k8s-cluster-contexts/</url>
+    <content><![CDATA[<h2 id="Kubernetes-context"><a href="#Kubernetes-context" class="headerlink" title="Kubernetes context"></a>Kubernetes context</h2><p>A context in kubernetes is used to group access parameters under a convenient name. Each context has three parameters: cluster, namespace, and user. By default, the <a href="https://www.flamingbytes.com/blog/using-kubeconfig-to-configure-access-to-remote-kubernetes-cluster/">kubectl</a> command-line tool uses parameters from the current context to communicate with the cluster.</p>
+<p>In this article, we will learn how to use kubectl to manage the cluster contexts and access the different clusters.</p>
+<p><strong>To list all the cluster contexts:</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl config get-contexts </span><br><span class="line">  CURRENT                                          NAME                                             CLUSTER       AUTHINFO      NAMESPACE</span><br><span class="line">* arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-1   arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-1   arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-1</span><br></pre></td></tr></table></figure>
+
+<p><strong>To get the current cluster context:</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl config current-context</span><br><span class="line">arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-1</span><br></pre></td></tr></table></figure>
+
+<p><strong>To add and switch to a different cluster context:</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ aws eks update-kubeconfig --name cluster-2 --region us-west-2</span><br><span class="line">Added new context arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-2 to /Users/cluster/.kube/config</span><br><span class="line"></span><br><span class="line">$ kubectl config get-contexts </span><br><span class="line">  CURRENT                                          NAME                                             CLUSTER       AUTHINFO      NAMESPACE</span><br><span class="line">  arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-1   arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-1   arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-1</span><br><span class="line">* arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-2   arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-2   arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-2</span><br></pre></td></tr></table></figure>
+
+<p><strong>To switch to an existing cluster context:</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl config use-context arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-1</span><br><span class="line">Switched to context <span class="string">&quot;arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-1&quot;</span>.</span><br><span class="line"></span><br><span class="line">$ kubectl config get-contexts </span><br><span class="line">  CURRENT                                           NAME                                              CLUSTER       AUTHINFO      NAMESPACE*</span><br><span class="line">* arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-1   arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-1   arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-1</span><br><span class="line">  arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-2   arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-2   arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-2</span><br></pre></td></tr></table></figure>
+
+<p><strong>To delete an cluster context:</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl config delete-context arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-2</span><br><span class="line"></span><br><span class="line">$ kubectl config get-contexts </span><br><span class="line">  CURRENT                                           NAME                                              CLUSTER       AUTHINFO      NAMESPACE</span><br><span class="line">* arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-1   arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-1   arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-1</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Tech</category>
+        <category>Big Data</category>
+      </categories>
+      <tags>
+        <tag>Kubernetes</tag>
+      </tags>
+  </entry>
 </search>
