@@ -28,7 +28,7 @@
 <meta property="og:description" content="Kubernetes contextA context in kubernetes is used to group access parameters under a convenient name. Each context has three parameters: cluster, namespace, and user. By default, the kubectl command-l">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-02-10T18:51:16.000Z">
-<meta property="article:modified_time" content="2024-02-14T03:15:16.000Z">
+<meta property="article:modified_time" content="2024-02-14T05:35:50.000Z">
 <meta property="article:author" content="relentlesstorm">
 <meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
@@ -295,7 +295,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-02-13 19:15:16" itemprop="dateModified" datetime="2024-02-13T19:15:16-08:00">2024-02-13</time>
+      <time title="Modified: 2024-02-13 21:35:50" itemprop="dateModified" datetime="2024-02-13T21:35:50-08:00">2024-02-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -327,7 +327,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h2 id="Kubernetes-context"><a href="#Kubernetes-context" class="headerlink" title="Kubernetes context"></a>Kubernetes context</h2><p>A context in kubernetes is used to group access parameters under a convenient name. Each context has three parameters: cluster, namespace, and user. By default, the <a href="https://www.flamingbytes.com/blog/using-kubeconfig-to-configure-access-to-remote-kubernetes-cluster/">kubectl</a> command-line tool uses parameters from the current context to communicate with the cluster.</p>
+    <div class="post-body" itemprop="articleBody"><h2 id="Kubernetes-context"><a href="#Kubernetes-context" class="headerlink" title="Kubernetes context"></a>Kubernetes context</h2><p>A context in kubernetes is used to group access parameters under a convenient name. Each context has three parameters: cluster, namespace, and user. By default, the <a href="https://www.flamingbytes.com/blog/using-kubeconfig-to-configure-access-to-remote-kubernetes-cluster/">kubectl</a> command-line tool uses parameters from the current context to communicate with the cluster. <span id="more"></span></p>
 <p>In this article, we will learn how to use kubectl to manage the cluster contexts and access the different clusters.</p>
 <p><strong>To list all the cluster contexts:</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl config get-contexts </span><br><span class="line">  CURRENT                                          NAME                                             CLUSTER       AUTHINFO      NAMESPACE</span><br><span class="line">* arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-1   arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-1   arn:aws:eks:us-west-2:xxxxxx:cluster/cluster-1</span><br></pre></td></tr></table></figure>
