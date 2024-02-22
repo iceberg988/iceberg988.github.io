@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">277</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">279</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-count">279</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,380 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/deploy-application-with-kubernetes-statefulset/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/deploy-application-with-kubernetes-statefulset/" class="post-title-link" itemprop="url">Deploy application with kubernetes statefulset</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-29 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-29T08:00:00-08:00">2022-12-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>StatefulSet is the workload API object used to manage stateful applications.</p>
+<p>Like a Deployment, a StatefulSet manages Pods that are based on an identical container spec. Unlike a Deployment, a StatefulSet maintains a sticky identity for each of their Pods. These pods are created from the same spec, but are not interchangeable: each has a persistent identifier that it maintains across any rescheduling.</p>
+<p>If you want to use storage volumes to provide persistence for your workload, you can use a StatefulSet as part of the solution. Although individual Pods in a StatefulSet are susceptible to failure, the persistent Pod identifiers make it easier to match existing volumes to the new Pods that replace any that have failed.</p>
+<p><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/">Source</a></p>
+<p>The example below demonstrates the components of a StatefulSet.</p>
+<pre><code>$ cat perfbench-statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: perfbench
+spec:
+  serviceName: perfbench
+  replicas: 1
+  selector:
+    matchLabels:
+      app: perfbench
+  template:
+    metadata:
+      labels:
+        app: perfbench
+    spec:
+      containers:
+      - name: perfbench
+        image: noname/perfbench:latest
+        volumeMounts:
+        - name: perfbench-data
+          mountPath: /perfdata
+        - name: perfbench-log
+          mountPath: /perflog
+        securityContext:
+          privileged: true
+  volumeClaimTemplates:
+  - metadata:
+      name: perfbench-data
+    spec:
+      storageClassName: &lt;storage-class&gt;
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 20Gi
+  - metadata:
+      name: perfbench-log
+    spec:
+      storageClassName: &lt;storage-class&gt;
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+</code></pre>
+<p>The statefulset can be created as below.</p>
+<pre><code>$ kubectl apply -f perfbench-statefulset.yaml
+</code></pre>
+<p>In case of any failure to create the statefulset, you can check the events with the following commands.</p>
+<pre><code>$ kubectl describe pod perfbench-0
+Name:         perfbench-0
+Namespace:    default
+Priority:     0
+Node:         &lt;hostname&gt;/&lt;ip-address&gt;
+Start Time:   Sat, 26 Feb 2022 06:22:27 +0000
+Labels:       app=perfbench
+              controller-revision-hash=perfbench-7657fb8779
+              statefulset.kubernetes.io/pod-name=perfbench-0
+Annotations:  cni.projectcalico.org/containerID: c8569d9a3f01f546ca92fb2d0cba98d4d971933e53ab83373ed34c91040d92bc
+              cni.projectcalico.org/podIP: 192.168.201.145/32
+              cni.projectcalico.org/podIPs: 192.168.201.145/32
+Status:       Running
+IP:           192.168.201.145
+IPs:
+  IP:           192.168.201.145
+Controlled By:  StatefulSet/perfbench
+Containers:
+  perfbench:
+    Container ID:   docker://b6a2c838837395c1c85913d4735e3167d3cea6b5ed3ade276584461d643eaee5
+    Image:          noname/perfbench:latest
+    Image ID:       docker-pullable://&lt;noname/perfbench@sha256:5460e3c04ea972afcde3db092b514919867f87974d012f046c538ac816c7aaae
+    Port:           &lt;none&gt;
+    Host Port:      &lt;none&gt;
+    State:          Running
+      Started:      Sat, 26 Feb 2022 06:22:35 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    &lt;none&gt;
+    Mounts:
+      /perfdata from perfbench-data (rw)
+      /perflog from perfbench-log (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-x8qhw (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  perfbench-data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  perfbench-data-perfbench-0
+    ReadOnly:   false
+  perfbench-log:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  perfbench-log-perfbench-0
+    ReadOnly:   false
+  kube-api-access-x8qhw:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       &lt;nil&gt;
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              &lt;none&gt;
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason            Age                From               Message
+  ----     ------            ----               ----               -------
+  Warning  FailedScheduling  20s (x2 over 21s)  default-scheduler  0/3 nodes are available: 3 pod has unbound immediate PersistentVolumeClaims.
+  Normal   Scheduled         18s                default-scheduler  Successfully assigned default/perfbench-0 to &lt;hostname&gt;
+  Normal   Pulling           16s                kubelet            Pulling image &quot;&lt;noname/perfbench:latest&quot;
+  Normal   Pulled            11s                kubelet            Successfully pulled image &quot;&lt;noname/perfbench:latest&quot; in 4.368378217s
+  Normal   Created           10s                kubelet            Created container perfbench
+  Normal   Started           10s                kubelet            Started container perfbench
+</code></pre>
+<p>You can check the pod status and login to the pod container as below.</p>
+<pre><code>$ kubectl get pod
+NAME         READY   STATUS    RESTARTS   AGE
+perfbench-0   1/1     Running   0          3m44s
+
+$ kubectl exec -it perfbench-0 -- bash
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">https://kubernetes.io/docs/concepts/workloads/controllers/deployment/</a></li>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/">https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/</a></li>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/storage/storage-classes/">https://kubernetes.io/docs/concepts/storage/storage-classes/</a></li>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/containers/images/">https://kubernetes.io/docs/concepts/containers/images/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/keep-a-docker-container-running-and-not-exiting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/keep-a-docker-container-running-and-not-exiting/" class="post-title-link" itemprop="url">Keep a docker container running and not exiting</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-28 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-28T08:00:00-08:00">2022-12-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>In the kubernetes environment, we can keep a container(pod) alive and avoid it exits immediately after starting.</p>
+<h1 id="Method-one"><a href="#Method-one" class="headerlink" title="Method one"></a>Method one</h1><p>1.<br>Use a long-time-run command in Dockerfile</p>
+<pre><code>CMD [&quot;sh&quot;, &quot;-c&quot;, &quot;tail -f /dev/null&quot;]
+</code></pre>
+<p>or</p>
+<pre><code>CMD [&quot;sh&quot;, &quot;-c&quot;, &quot;sleep infinity&quot;]
+</code></pre>
+<p>2.<br>Build the docker image and push to docker repository</p>
+<p>3.<br>Launch the container</p>
+<pre><code>$ kubectl run mycontainer -it --image=&lt;docker-image-name&gt;
+</code></pre>
+<h1 id="Method-two"><a href="#Method-two" class="headerlink" title="Method two"></a>Method two</h1><p>When to deploy an application with kubernetes statefulset, we also can add it to the statefulset yaml file instead of adding it to the docker image through Dockerfile.</p>
+<pre><code>$ cat myapp.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: myapp
+spec:
+  serviceName: myapp
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: noname/myapp:latest
+        command: [&quot;sh&quot;, &quot;-c&quot;, &quot;tail -f /dev/null&quot;]
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: myapp-data
+          mountPath: /data
+        - name: myapp-log
+          mountPath: /log
+        securityContext:
+          privileged: true
+  volumeClaimTemplates:
+  - metadata:
+      name: myapp-data
+    spec:
+      storageClassName: &lt;storage-class&gt;
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 20Gi
+  - metadata:
+      name: myapp-log
+    spec:
+      storageClassName: &lt;storage-class&gt;
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+
+$ kubectl apply -f myapp.yaml          
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1804,615 +2178,6 @@ nvme3n1           0.00     0.20    0.00 8190.40     0.00 32762.40     8.00     0
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://docs.kernel.org/admin-guide/cgroup-v1/blkio-controller.html">https://docs.kernel.org/admin-guide/cgroup-v1/blkio-controller.html</a></li>
 <li><a target="_blank" rel="noopener" href="https://andrestc.com/post/cgroups-io/">https://andrestc.com/post/cgroups-io/</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/cgroups-limit-memory/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/cgroups-limit-memory/" class="post-title-link" itemprop="url">Using cgroups to limit Memory usage</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-12-04 13:08:00" itemprop="dateCreated datePublished" datetime="2022-12-04T13:08:00-08:00">2022-12-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>The memory controller isolates the memory behaviour of a group of tasks from the rest of the system.</p>
-<pre><code>$ mount | egrep &quot;/cgroup |/memory&quot;
-tmpfs on /sys/fs/cgroup type tmpfs (ro,nosuid,nodev,noexec,mode=755)
-cgroup on /sys/fs/cgroup/memory type cgroup (rw,nosuid,nodev,noexec,relatime,memory)
-
-$ lssubsys -am | grep memory
-memory /sys/fs/cgroup/memory
-</code></pre>
-<p>In this post, we will learn how to use the following control files to limit and monitor memory usage for the user tasks.</p>
-<ul>
-<li>memory.usage_in_bytes - show current usage for memory</li>
-<li>memory.limit_in_bytes - set&#x2F;show limit of memory usage</li>
-</ul>
-<h2 id="Create-memory-control-group"><a href="#Create-memory-control-group" class="headerlink" title="Create memory control group"></a>Create memory control group</h2><p>Install libcgroup package to manage cgroups:</p>
-<pre><code>$ yum install libcgroup libcgroup-tools
-</code></pre>
-<p>Create memory control group:</p>
-<pre><code>$ cgcreate -g memory:/memlimited
-$ lscgroup | grep memory
-memory:/
-memory:/memlimited
-
-$ ls /sys/fs/cgroup/memory/memlimited/
-cgroup.clone_children           memory.kmem.slabinfo                memory.memsw.failcnt             memory.soft_limit_in_bytes
-cgroup.event_control            memory.kmem.tcp.failcnt             memory.memsw.limit_in_bytes      memory.stat
-cgroup.procs                    memory.kmem.tcp.limit_in_bytes      memory.memsw.max_usage_in_bytes  memory.swappiness
-memory.failcnt                  memory.kmem.tcp.max_usage_in_bytes  memory.memsw.usage_in_bytes      memory.usage_in_bytes
-memory.force_empty              memory.kmem.tcp.usage_in_bytes      memory.move_charge_at_immigrate  memory.use_hierarchy
-memory.kmem.failcnt             memory.kmem.usage_in_bytes          memory.numa_stat                 notify_on_release
-memory.kmem.limit_in_bytes      memory.limit_in_bytes               memory.oom_control               tasks
-memory.kmem.max_usage_in_bytes  memory.max_usage_in_bytes           memory.pressure_level
-</code></pre>
-<h2 id="Limit-the-memory-usage"><a href="#Limit-the-memory-usage" class="headerlink" title="Limit the memory usage"></a>Limit the memory usage</h2><h3 id="Using-control-files-directly"><a href="#Using-control-files-directly" class="headerlink" title="Using control files directly"></a>Using control files directly</h3><pre><code>$ echo 32G &gt; /sys/fs/cgroup/memory/memlimited/memory.limit_in_bytes
-$ cat /sys/fs/cgroup/memory/memlimited/memory.limit_in_bytes
-34359738368
-</code></pre>
-<h3 id="Using-libcgroup-tools"><a href="#Using-libcgroup-tools" class="headerlink" title="Using libcgroup tools"></a>Using libcgroup tools</h3><p>Limit the memory usage:</p>
-<pre><code>$ cgset -r memory.limit_in_bytes=32G memlimited
-$ cgget -r memory.limit_in_bytes memlimited
-memlimited:
-memory.limit_in_bytes: 34359738368
-</code></pre>
-<h2 id="Verify-the-memory-usage"><a href="#Verify-the-memory-usage" class="headerlink" title="Verify the memory usage"></a>Verify the memory usage</h2><h3 id="Unlimit-the-memory-usage"><a href="#Unlimit-the-memory-usage" class="headerlink" title="Unlimit the memory usage"></a>Unlimit the memory usage</h3><pre><code>$ cgset -r memory.limit_in_bytes=-1 memlimited
-$ cgget -r memory.limit_in_bytes memlimited
-memlimited:
-memory.limit_in_bytes: 9223372036854771712
-</code></pre>
-<p>Use fio to write 50G data:</p>
-<pre><code>$ echo 3 &gt; /proc/sys/vm/drop_caches
-$ cgexec -g memory:memlimited fio --blocksize=64k --ioengine=libaio --readwrite=write --filesize=50G --group_reporting --direct=0 --iodepth=128 --end_fsync=1 --name=job1 --filename=/mnt/fio.dat
-</code></pre>
-<p>Verify the memory usage is unlimited:</p>
-<pre><code>$ while true; do cat /sys/fs/cgroup/memory/memlimited/memory.usage_in_bytes; sleep 5; done
-14143488
-14143488
-819499008
-13288558592
-25772953600
-38258790400
-50776608768
-55638511616
-55638429696
-55638478848
-55638528000
-55638577152
-55210229760
-55210229760
-^C
-</code></pre>
-<h3 id="Limit-the-memory-usage-to-32GB"><a href="#Limit-the-memory-usage-to-32GB" class="headerlink" title="Limit the memory usage to 32GB"></a>Limit the memory usage to 32GB</h3><pre><code>$ cgset -r memory.limit_in_bytes=32G memlimited
-$ cgget -r memory.limit_in_bytes memlimited
-memlimited:
-memory.limit_in_bytes: 34359738368
-</code></pre>
-<p>Use fio to write 50G data:</p>
-<pre><code>$ echo 3 &gt; /proc/sys/vm/drop_caches
-$ cgexec -g memory:memlimited fio --blocksize=64k --ioengine=libaio --readwrite=write --filesize=50G --group_reporting --direct=0 --iodepth=128 --end_fsync=1 --name=job1 --filename=/mnt/fio.dat
-</code></pre>
-<p>Verify the memory usage is limited to 32GB:</p>
-<pre><code>$ while true; do cat /sys/fs/cgroup/memory/memlimited/memory.usage_in_bytes; sleep 5; done
-9134080
-6819614720
-18048208896
-29089763328
-34359726080
-34359672832
-34359607296
-34359717888
-34359635968
-34359619584
-34280120320
-34280120320
-^C
-</code></pre>
-<p>From vmstat output, the cache usage is limited to 32GB. There is also swapping out activity due the memory pressure.</p>
-<pre><code>$ vmstat 5 -t
-procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu----- -----timestamp-----
- r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st                 UTC
- 0  0      0 1053891776    968 142992    0    0     0    30    0    0  0  0 100  0  0 2022-12-23 22:04:30
- 2  0      0 1045755200    968 8266836    0    0  1697     0 3789  727  2  1 98  0  0 2022-12-23 22:04:35
- 1  0      0 1034800320    976 19222628    0    0     0     2 1770  575  0  1 99  0  0 2022-12-23 22:04:40
- 1  0      0 1024034304    984 29988256    0    0     0 163843 2999  780  0  1 99  0  0 2022-12-23 22:04:45
- 1  1      0 1020353664    992 33665560    0    0     0 985500 8317 2414  0  1 98  0  0 2022-12-23 22:04:50
- 1  1 317440 1020354112   1000 33666764    0 63474     3 1518376 18524 2604  0  1 98  1  0 2022-12-23 22:04:55
- 1  1 340480 1020353472   1008 33666660    0 4571     0 1602014 15377 2381  0  1 98  1  0 2022-12-23 22:05:00
- 2  0 340480 1020355904   1016 33667212   39    0    39 1632866 22166 70618  0  1 98  0  0 2022-12-23 22:05:05
- 1  0 340480 1020356032   1020 33667228    0    0     0 1861355 27437 108029  0  1 99  0  0 2022-12-23 22:05:10
- 2  0 340480 1020356224   1024 33667236    0    0     0 1874438 28732 111364  0  1 98  0  0 2022-12-23 22:05:15
- 0  0    512 1020432704   1024 33599516  212    0   550 915429 13644 56805  0  1 99  0  0 2022-12-23 22:05:20
- 0  0    512 1020432960   1028 33599516    0    0     3     4  165  149  0  0 100  0  0 2022-12-23 22:05:25
-^C
-</code></pre>
-<h3 id="Limit-the-memory-usage-for-the-tasks-in-the-current-bash"><a href="#Limit-the-memory-usage-for-the-tasks-in-the-current-bash" class="headerlink" title="Limit the memory usage for the tasks in the current bash"></a>Limit the memory usage for the tasks in the current bash</h3><pre><code>$ cat /sys/fs/cgroup/memory/memlimited/tasks
-$ echo $$ &gt; /sys/fs/cgroup/memory/memlimited/tasks
-$ cat /sys/fs/cgroup/memory/memlimited/tasks
-27875
-28889
-
-$ ps -ef | egrep &quot;27875|29023&quot; | grep -v grep
-root     27875 27873  0 21:11 pts/0    00:00:17 -bash
-root     29026 27875  0 22:11 pts/0    00:00:00 ps -ef
-</code></pre>
-<p>Use fio to write 50G data:</p>
-<pre><code>$ fio --blocksize=64k --ioengine=libaio --readwrite=write --filesize=50G --group_reporting --direct=0 --iodepth=128 --end_fsync=1 --name=job1 --filename=/mnt/fio.dat
-</code></pre>
-<p>Verify the memory usage is limited to 32GB:</p>
-<pre><code>$ while true; do cat /sys/fs/cgroup/memory/memlimited/memory.usage_in_bytes; sleep 5; done
-22835200
-22835200
-22835200
-10150678528
-21453983744
-32693850112
-34359607296
-34359607296
-34359738368
-34359730176
-34359730176
-34359660544
-34280062976
-^C
-
-
-$ vmstat 5 -t
-procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu----- -----timestamp-----
- r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st                 UTC
- 0  0    512 1053886784   1004 144860    0    0     0    31    0    0  0  0 100  0  0 2022-12-23 22:09:17
- 0  0    512 1053886528   1004 144824    0    0     0     0  143  148  0  0 100  0  0 2022-12-23 22:09:22
- 1  0    512 1050907776   1004 3109688    0    0  1660     3 2690  566  1  0 98  0  0 2022-12-23 22:09:27
- 1  0    512 1039836288   1012 14180528    0    0     0     2 1699  508  0  1 99  0  0 2022-12-23 22:09:32
- 1  0    512 1028822720   1020 25194536    0    0     0     2 1625  494  0  1 99  0  0 2022-12-23 22:09:37
- 1  1    512 1020348800   1028 33665604    0    0     0 385026 4478 1313  0  1 99  0  0 2022-12-23 22:09:42
- 1  1  46080 1020340224   1036 33676796    0 9090     0 1563114 13781 2301  0  1 98  1  0 2022-12-23 22:09:47
- 1  1 340480 1020338688   1044 33676544    0 58904     0 1557223 19212 2580  0  1 98  1  0 2022-12-23 22:09:52
- 1  1 340480 1020337792   1052 33676376   33    0    33 1481028 14133 5776  0  1 98  1  0 2022-12-23 22:09:57
- 1  0 340480 1020342208   1056 33676396    0    0   184 1877767 27447 114955  0  1 98  0  0 2022-12-23 22:10:02
- 1  1 340480 1020341056   1056 33677100    0    0     0 1817494 27635 101675  0  1 98  0  0 2022-12-23 22:10:07
- 1  0 195144 1020350208   1060 33676988   83    0    83 1872111 27068 113280  0  1 98  0  0 2022-12-23 22:10:12
-^C
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://docs.kernel.org/admin-guide/cgroup-v1/memory.html">https://docs.kernel.org/admin-guide/cgroup-v1/memory.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://engineering.linkedin.com/blog/2016/08/don_t-let-linux-control-groups-uncontrolled">https://engineering.linkedin.com/blog/2016/08/don_t-let-linux-control-groups-uncontrolled</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/cockroachdb-performance-benchmarking/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/cockroachdb-performance-benchmarking/" class="post-title-link" itemprop="url">CockroachDB performance benchmarking</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-12-04 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-04T08:00:00-08:00">2022-12-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="CockroachDB-key-concepts"><a href="#CockroachDB-key-concepts" class="headerlink" title="CockroachDB key concepts"></a>CockroachDB key concepts</h2><p>Range -	CockroachDB stores all user data (tables, indexes, etc.) and almost all system data in a giant sorted map of key-value pairs. This keyspace is divided into “ranges”, contiguous chunks of the keyspace, so that every key can always be found in a single range.</p>
-<p>From a SQL perspective, a table and its secondary indexes initially map to a single range, where each key-value pair in the range represents a single row in the table (also called the primary index because the table is sorted by the primary key) or a single row in a secondary index. As soon as that range reaches 512 MiB in size, it splits into two ranges. This process continues for these new ranges as the table and its indexes continue growing.</p>
-<pre><code>[root@host1 ~]# tail -f /var/log/cockroachdb_logs/cockroach.log
-I220908 17:54:02.220498 5523606 kv/kvserver/pkg/kv/kvserver/replica_command.go:420 ⋮ [n1,split,s1,r499/1:‹/Table/113/1/4&#123;394/6…-693/6…&#125;›] 1700  initiating a split of this range at key ‹/Table/113/1/4402/59627› [r501] (‹512 MiB above threshold size 512 MiB›)‹›
-</code></pre>
-<p>Replica -	CockroachDB replicates each range (3 times by default) and stores each replica on a different node.</p>
-<p>Refer to <a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/docs/stable/architecture/reads-and-writes-overview.html#cockroachdb-architecture-terms">here</a> for more.</p>
-<p><img src="/images/cockroachdb-arch-terms.png" alt="Image"></p>
-<h2 id="Production-checklist"><a href="#Production-checklist" class="headerlink" title="Production checklist"></a>Production checklist</h2><p>Check <a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/docs/stable/recommended-production-settings.html">here</a> for the important recommendations for production deployments of CockroachDB. The following only lists some of the recommended settings.</p>
-<h3 id="Memory"><a href="#Memory" class="headerlink" title="Memory"></a>Memory</h3><ul>
-<li>Disable Linux memory swapping. Over-allocating memory on production machines can lead to unexpected performance issues when pages have to be read back into memory.</li>
-<li>For production deployments, set –cache to 25% or higher. Avoid setting –cache and –max-sql-memory to a combined value of more than 75% of a machine’s total RAM. Doing so increases the risk of memory-related failures.</li>
-</ul>
-<h3 id="Storage"><a href="#Storage" class="headerlink" title="Storage"></a>Storage</h3><ul>
-<li>The maximum recommended storage capacity per node is 2.5 TiB, regardless of the number of vCPUs.</li>
-<li>Use dedicated volumes for the CockroachDB store. Do not share the store volume with any other I&#x2F;O activity.</li>
-<li>Store CockroachDB log files in a separate volume from the main data store so that logging is not impacted by I&#x2F;O throttling.</li>
-<li>The recommended Linux filesystems are ext4 and XFS.</li>
-</ul>
-<h3 id="Disk-I-O"><a href="#Disk-I-O" class="headerlink" title="Disk I&#x2F;O"></a>Disk I&#x2F;O</h3><ul>
-<li>Use sysbench to benchmark IOPS on your cluster. If IOPS decrease, add more nodes to your cluster to increase IOPS.</li>
-<li>Do not use LVM in the I&#x2F;O path. Dynamically resizing CockroachDB store volumes can result in significant performance degradation. Using LVM snapshots in lieu of CockroachDB backup and restore is also not supported.</li>
-<li>The optimal configuration for striping more than one device is RAID 10. RAID 0 and 1 are also acceptable from a performance perspective.</li>
-</ul>
-<h3 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h3><p>When starting a node, two main flags are used to control its network connections:</p>
-<ul>
-<li>–listen-addr determines which address(es) to listen on for connections from other nodes and clients.</li>
-<li>–advertise-addr determines which address to tell other nodes to use.</li>
-</ul>
-<p><img src="/images/cockroachdb-network.png" alt="Image"></p>
-<h3 id="Load-balancing"><a href="#Load-balancing" class="headerlink" title="Load balancing"></a>Load balancing</h3><p>Each CockroachDB node is an equally suitable SQL gateway to a cluster, but to ensure client performance and reliability, it’s important to use load balancing:</p>
-<ul>
-<li>Performance: Load balancers spread client traffic across nodes. This prevents any one node from being overwhelmed by requests and improves overall cluster performance (queries per second).</li>
-<li>Reliability: Load balancers decouple client health from the health of a single CockroachDB node. To ensure that traffic is not directed to failed nodes or nodes that are not ready to receive requests, load balancers should use CockroachDB’s readiness health check.</li>
-</ul>
-<h3 id="Cache-and-SQL-memory-size"><a href="#Cache-and-SQL-memory-size" class="headerlink" title="Cache and SQL memory size"></a>Cache and SQL memory size</h3><p>CockroachDB manages its own memory caches, independently of the operating system. These are configured via the –cache and –max-sql-memory flags.</p>
-<p>Each node has a default cache size of 128MiB that is passively consumed. The default was chosen to facilitate development and testing, where users are likely to run multiple CockroachDB nodes on a single machine. Increasing the cache size will generally improve the node’s read performance.</p>
-<p>Each node has a default SQL memory size of 25%. This memory is used as-needed by active operations to store temporary data for SQL queries.</p>
-<ul>
-<li>Increasing a node’s cache size will improve the node’s read performance.</li>
-<li>Increasing a node’s SQL memory size will increase the number of simultaneous client connections it allows, as well as the node’s capacity for in-memory processing of rows when using ORDER BY, GROUP BY, DISTINCT, joins, and window functions.</li>
-</ul>
-<p>You can check cache size and SQL memory pool size in the log. In the following example output, it matches with the specified 25% cache and SQL memory size setting.</p>
-<pre><code>$ vim cockroach.log
-I220905 17:49:33.671304 1 server/config.go:487 ⋮ [n?] 6  system total memory: 1008 GiB
-I220905 17:49:33.671318 1 server/config.go:489 ⋮ [n?] 7  server configuration:
-I220905 17:49:33.671318 1 server/config.go:489 ⋮ [n?] 7 +‹max offset             500000000›
-I220905 17:49:33.671318 1 server/config.go:489 ⋮ [n?] 7 +‹cache size             252 GiB›
-I220905 17:49:33.671318 1 server/config.go:489 ⋮ [n?] 7 +‹SQL memory pool size   252 GiB›
-</code></pre>
-<h2 id="CockroachDB-workloads"><a href="#CockroachDB-workloads" class="headerlink" title="CockroachDB workloads"></a>CockroachDB workloads</h2><p><img src="/images/rockroachdb_workloads.png" alt="Image"></p>
-<h3 id="bank-workload"><a href="#bank-workload" class="headerlink" title="bank workload"></a>bank workload</h3><pre><code>$ cockroach workload init bank &#39;postgresql://root@host1:26257?sslmode=disable&#39;
-I220831 23:52:14.593170 1 workload/workloadsql/dataload.go:146  [-] 1  imported bank (0s, 1000 rows)
-I220831 23:52:14.609421 1 workload/workloadsql/workloadsql.go:136  [-] 2  starting 9 splits
-
-
-$ cockroach workload run bank --duration=1m &#39;postgresql://root@host1:26257?sslmode=disable&#39;
-I220831 23:52:55.378492 1 workload/cli/run.go:414  [-] 1  creating load generator...
-I220831 23:52:55.380594 1 workload/cli/run.go:445  [-] 2  creating load generator... done (took 2.103665ms)
-_elapsed___errors__ops/sec(inst)___ops/sec(cum)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)
-    1.0s        0         2929.8         2936.4      3.0     15.2     50.3    234.9 transfer
-    2.0s        0         3387.3         3161.8      3.4     13.6     23.1     54.5 transfer
-    3.0s        0         2755.2         3026.3      3.9     13.6     23.1    302.0 transfer
-    4.0s        0         3295.5         3093.6      3.3     13.6     33.6    469.8 transfer
-    5.0s        0         3536.5         3182.2      3.5     12.1     18.9     35.7 transfer
-    6.0s        0         3558.1         3244.8      3.5     11.0     21.0     39.8 transfer
-    7.0s        0         3566.9         3290.8      3.7     11.0     17.8     39.8 transfer
-    8.0s        0         3317.6         3294.2      3.7     12.6     24.1     62.9 transfer
-    9.0s        0         2992.9         3260.7      4.1     14.7     22.0     39.8 transfer
-   10.0s        0         3628.2         3297.4      3.5     11.5     19.9     39.8 transfer
-   11.0s        0         3604.5         3325.3      3.5     11.5     17.8     37.7 transfer
-   12.0s        0         3668.4         3353.9      3.5     11.0     17.8     31.5 transfer
-   13.0s        0         3485.9         3364.1      3.7     11.5     18.9     31.5 transfer
-   14.0s        0         3377.9         3365.1      3.7     12.6     21.0     56.6 transfer
-   15.0s        0         3084.4         3346.3      4.1     13.6     21.0     92.3 transfer
-   16.0s        0         3650.1         3365.3      3.4     11.5     17.8     44.0 transfer
-   17.0s        0         3662.7         3382.8      3.5     11.5     17.8     37.7 transfer
-   18.0s        0         3461.8         3387.2      3.7     11.0     19.9    159.4 transfer
-   19.0s        0         3426.3         3389.3      3.7     12.1     19.9     41.9 transfer
-   20.0s        0         3196.0         3379.6      3.9     13.1     19.9     35.7 transfer
-&lt;omitted..&gt;
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
-   60.0s        0         206551         3442.5      4.6      3.7     12.1     19.9    469.8  transfer
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__result
-   60.0s        0         206551         3442.5      4.6      3.7     12.1     19.9    469.8
-</code></pre>
-<h3 id="TPC-C-workload"><a href="#TPC-C-workload" class="headerlink" title="TPC-C workload"></a>TPC-C workload</h3><blockquote>
-<p>–warehouses</p>
-<blockquote>
-<p>The number of warehouses for loading initial data, at approximately 200 MB per warehouse.</p>
-<p>Applicable commands: init or run</p>
-<p>Default: 1</p>
-</blockquote>
-</blockquote>
-<blockquote>
-<p>–workers</p>
-<blockquote>
-<p>The number of concurrent workers.</p>
-<p>Applicable commands: init or run</p>
-<p>Default: –warehouses * 10</p>
-</blockquote>
-</blockquote>
-<p>The number os wareshouses can be specified by “–warehouses” option. By default, only one warehouse is created.</p>
-<pre><code>$ cockroach workload init tpcc &#39;postgresql://root@host1:26257?sslmode=disable&#39;
-Error: failed insert into warehouse: pq: duplicate key value violates unique constraint &quot;warehouse_pkey&quot;
-
-$ cockroach workload init tpcc &#39;postgresql://root@host1:26257?sslmode=disable&#39; --drop
-I220901 00:32:56.365593 1 workload/workloadsql/dataload.go:146  [-] 1  imported warehouse (0s, 1 rows)
-I220901 00:32:56.372727 1 workload/workloadsql/dataload.go:146  [-] 2  imported district (0s, 10 rows)
-I220901 00:32:57.034349 1 workload/workloadsql/dataload.go:146  [-] 3  imported customer (1s, 30000 rows)
-I220901 00:32:57.248382 1 workload/workloadsql/dataload.go:146  [-] 4  imported history (0s, 30000 rows)
-I220901 00:32:57.462320 1 workload/workloadsql/dataload.go:146  [-] 5  imported order (0s, 30000 rows)
-I220901 00:32:57.490476 1 workload/workloadsql/dataload.go:146  [-] 6  imported new_order (0s, 9000 rows)
-I220901 00:32:57.921658 1 workload/workloadsql/dataload.go:146  [-] 7  imported item (0s, 100000 rows)
-I220901 00:32:59.267268 1 workload/workloadsql/dataload.go:146  [-] 8  imported stock (1s, 100000 rows)
-I220901 00:33:00.916392 1 workload/workloadsql/dataload.go:146  [-] 9  imported order_line (2s, 300343 rows)
-
-
-$ cockroach workload run tpcc --duration=10m &#39;postgresql://root@host1:26257?sslmode=disable&#39;
-I220901 00:34:17.147411 1 workload/cli/run.go:414  [-] 1  creating load generator...
-Initializing 2 connections...
-Initializing 0 idle connections...
-Initializing 10 workers and preparing statements...
-I220901 00:34:17.151817 1 workload/cli/run.go:445  [-] 2  creating load generator... done (took 4.411152ms)
-&lt;omitted..&gt;
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
-  600.0s        0             12            0.0     32.6     31.5     44.0     44.0     44.0  delivery
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
-  600.0s        0            120            0.2     17.9     17.8     26.2     41.9     54.5  newOrder
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
-  600.0s        0             13            0.0      6.7      5.8     14.2     15.2     15.2  orderStatus
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
-  600.0s        0            131            0.2     10.8     11.0     14.7     24.1     29.4  payment
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
-  600.0s        0             13            0.0     10.8     10.5     15.7     15.7     15.7  stockLevel
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__result
-  600.0s        0            289            0.5     14.4     13.1     28.3     41.9     54.5
-Audit check 9.2.1.7: SKIP: not enough delivery transactions to be statistically significant
-Audit check 9.2.2.5.1: SKIP: not enough orders to be statistically significant
-Audit check 9.2.2.5.2: SKIP: not enough orders to be statistically significant
-Audit check 9.2.2.5.5: SKIP: not enough payments to be statistically significant
-Audit check 9.2.2.5.6: SKIP: not enough order status transactions to be statistically significant
-Audit check 9.2.2.5.3: PASS
-Audit check 9.2.2.5.4: PASS
-
-_elapsed_______tpmC____efc__avg(ms)__p50(ms)__p90(ms)__p95(ms)__p99(ms)_pMax(ms)
-  600.0s       12.0  93.3%     17.9     17.8     23.1     26.2     41.9     54.5
-</code></pre>
-<h3 id="YCSB-workload"><a href="#YCSB-workload" class="headerlink" title="YCSB workload"></a>YCSB workload</h3><pre><code>$ cockroach workload init ycsb &#39;postgresql://root@host1:26257?sslmode=disable&#39;
-I220831 23:57:53.909658 1 workload/workloadsql/dataload.go:146  [-] 1  imported usertable (2s, 10000 rows)
-
-
-$ cockroach workload run ycsb --duration=10m &#39;postgresql://root@host1:26257?sslmode=disable&#39;
-I220831 23:58:24.410319 1 workload/cli/run.go:414  [-] 1  creating load generator...
-I220831 23:58:24.427528 1 workload/cli/run.go:445  [-] 2  creating load generator... done (took 17.212701ms)
-_elapsed___errors__ops/sec(inst)___ops/sec(cum)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)
-    1.0s        0        11011.5        11243.7      1.1      2.4      3.8     11.0 read
-    1.0s        0          581.7          593.9      3.0      5.5      7.3     12.6 update
-    2.0s        0        12105.1        11674.4      1.1      1.8      3.4     10.0 read
-    2.0s        0          636.9          615.4      2.8      3.9      6.6     11.0 update
-    3.0s        0        11590.6        11646.5      1.1      2.0      4.5     14.2 read
-    3.0s        0          607.1          612.7      2.8      6.0      9.4     12.1 update
-    4.0s        0        11813.5        11688.2      1.1      1.9      3.5     13.1 read
-    4.0s        0          622.0          615.0      2.8      4.5      7.6     13.6 update
-    5.0s        0        11959.5        11742.5      1.1      2.0      3.3      8.1 read
-    5.0s        0          607.0          613.4      2.6      4.7      7.1     12.1 update
-    6.0s        0        12186.2        11816.5      1.0      1.8      3.5     12.6 read
-    6.0s        0          638.0          617.5      2.6      4.1     10.0     16.8 update
-    7.0s        0        11815.8        11816.3      1.1      2.0      3.7      8.4 read
-    7.0s        0          646.0          621.6      2.8      4.7      6.8      9.4 update
-    8.0s        0        11850.8        11820.6      1.1      2.0      3.3      7.6 read
-    8.0s        0          617.9          621.1      2.8      4.5      6.6      9.4 update
-    9.0s        0        11713.5        11808.7      1.1      2.0      3.9     11.0 read
-    9.0s        0          609.1          619.8      2.8      4.5      7.6     11.5 update
-   10.0s        0        11949.6        11822.8      1.1      2.0      3.3     13.1 read
-   10.0s        0          622.0          620.0      2.8      4.2      6.0      8.4 update
-
-&lt;omitted..&gt;
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
-  600.0s        0        8576709        14294.5      1.0      1.0      1.6      2.9     62.9  read
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__total
-  600.0s        0         451026          751.7      2.5      2.5      3.8      6.6     27.3  update
-
-_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__result
-  600.0s        0        9027735        15046.2      1.1      1.0      2.2      3.5     62.9
-</code></pre>
-<h2 id="Restart-CockroachDB-cluster"><a href="#Restart-CockroachDB-cluster" class="headerlink" title="Restart CockroachDB cluster"></a>Restart CockroachDB cluster</h2><ol>
-<li><p>Stop the process on each node</p>
-<p> $ ps -ef | grep cock | grep -v grep<br> root     12217     1 99 Sep06 ?        2-20:28:09 cockroach start –log-dir&#x3D;&#x2F;var&#x2F;log&#x2F;cockroachdb_logs –store&#x3D;&#x2F;mnt&#x2F;cockroachdb_mnt1 –insecure –advertise-addr&#x3D;host1 –join&#x3D;host1,host2,host3 –cache&#x3D;.25 –max-sql-memory&#x3D;.25</p>
-<p> $ kill -9 12217<br> $ ps -ef | grep cock | grep -v grep</p>
-</li>
-<li><p>Start the process on each node</p>
-<p> $ cockroach start –store&#x3D;&#x2F;mnt&#x2F;cockroanchdb_mnt1 –insecure –advertise-addr&#x3D;host1 –join&#x3D;host1,host2,host3 –cache&#x3D;.25 -max-sql-memory&#x3D;.25 –background</p>
-</li>
-</ol>
-<h2 id="CockroachDB-commands"><a href="#CockroachDB-commands" class="headerlink" title="CockroachDB commands"></a>CockroachDB commands</h2><p>List node IDs:</p>
-<pre><code>$ cockroach node ls --insecure
-  id
-------
-   1
-   2
-   3
-(3 rows)
-</code></pre>
-<p>Show node status:</p>
-<pre><code>$ cockroach node status --insecure
-  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live
------+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+----------
-   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-03 16:24:12.001861 | 2022-09-03 22:23:09.022236 |          | true         | true
-   2 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-03 16:24:12.04249  | 2022-09-03 22:23:09.048582 |          | true         | true
-   3 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-03 16:24:12.390521 | 2022-09-03 22:23:09.402081 |          | true         | true
-(3 rows)
-</code></pre>
-<p>Show status and range&#x2F;replica details:</p>
-<pre><code>$ cockroach node status --ranges --insecure
-  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live | replicas_leaders | replicas_leaseholders | ranges | ranges_unavailable | ranges_underreplicated
------+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+---------
-   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-03 16:24:12.001861 | 2022-09-03 22:23:36.022463 |          | true         | true    |         306 |                   306 |    941 |                  0 |                      0
-   2 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-03 16:24:12.04249  | 2022-09-03 22:23:36.048508 |          | true         | true    |              310 |                   310 |    941 |                  0 |                      0
-   3 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-03 16:24:12.390521 | 2022-09-03 22:23:36.40421  |          | true         | true    |              325 |                   325 |    941 |                  0 |                      0
-(3 rows)
-</code></pre>
-<p>Show status and disk usage details:</p>
-<pre><code>$ cockroach node status --stats --insecure
-  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live |  live_bytes  |  key_bytes  | value_bytes  | intent_bytes | system_bytes
------+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+---------+--------------+-------------+--------------+--------------+---------------
-   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-03 16:24:12.001861 | 2022-09-03 22:23:45.022008 |          | true         | true    | 246665681135 | 47930398573 | 220956161393 |        40331 |       812555
-   2 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-03 16:24:12.04249  | 2022-09-03 22:23:45.048777 |          | true         | true    | 246665683880 | 47930401894 | 220956192532 |        28025 |       817028
-   3 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-03 16:24:12.390521 | 2022-09-03 22:23:45.40156  |          | true         | true    | 246666008478 | 47930560065 | 220957658233 |        74382 |       741028
-(3 rows)
-</code></pre>
-<p>Show status and decommissioning details for active and inactive nodes:</p>
-<pre><code>$ cockroach node status --decommission --insecure
-  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live | gossiped_replicas | is_decommissioning | membership | is_draining
------+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+---------
-   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-03 16:24:12.001861 | 2022-09-03 22:24:03.043432 |          | true         | true    |               941 | false              | active     | false
-   2 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-03 16:24:12.04249  | 2022-09-03 22:24:03.048948 |          | true         | true    |               941 | false              | active     | false
-   3 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-03 16:24:12.390521 | 2022-09-03 22:24:03.401953 |          | true         | true    |               941 | false              | active     | false
-(3 rows)
-</code></pre>
-<p>Show complete status details for active and inactive nodes:</p>
-<pre><code>$ cockroach node status --all --insecure
-  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live | replicas_leaders | replicas_leaseholders | ranges | ranges_unavailable | ranges_underreplicated |  live_bytes  |  key_bytes  | value_bytes  | intent_bytes | system_bytes | gossiped_replicas | is_decommissioning | membership | is_draining
------+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+---------
-   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-03 16:24:12.001861 | 2022-09-03 22:24:07.539077 |          |         true |    true |              306 |                   306 |    942 |                  0 |                      0 | 246677946612 | 47939212836 | 221027696131 |        81398 |       722359 |        941        |              false |   active   |    false
-   2 | host2:26257 | host2:26257 | v22.1.6 | 2022-09-03 16:24:12.04249  | 2022-09-03 22:24:07.548886 |          |         true |    true |              311 |                   311 |    942 |                  0 |                      0 | 246677952989 | 47939228198 | 221027812276 |        67816 |       731258 |        941        |              false |   active   |    false
-   3 | host3:26257 | host3:26257 | v22.1.6 | 2022-09-03 16:24:12.390521 | 2022-09-03 22:24:07.901765 |          |         true |    true |              325 |                   325 |    942 |                  0 |                      0 | 246678252011 | 47939394591 | 221029217819 |        55249 |       869542 |        941        |              false |   active   |    false
-(3 rows)
-</code></pre>
-<p>Show status details for a specific node:</p>
-<pre><code>$ cockroach node status 1 --insecure
-  id |       address       |     sql_address     |  build  |         started_at         |         updated_at         | locality | is_available | is_live
------+---------------------+---------------------+---------+----------------------------+----------------------------+----------+--------------+----------
-   1 | host1:26257 | host1:26257 | v22.1.6 | 2022-09-03 16:24:12.001861 | 2022-09-03 22:24:30.044382 |          | true         | true
-(1 row)
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/cockroachdb/cockroach/blob/master/docs/design.md">https://github.com/cockroachdb/cockroach/blob/master/docs/design.md</a></li>
 </ul>
 
       

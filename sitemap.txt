@@ -1,3 +1,5 @@
+https://www.flamingbytes.com/blog/how-to-set-custom-login-banner-message-in-linux/
+https://www.flamingbytes.com/blog/wipe-signature-from-a-device/
 https://www.flamingbytes.com/blog/how-to-install-Linux-kernel-on-Ubuntu/
 https://www.flamingbytes.com/blog/how-to-use-kubectl-to-manage-k8s-cluster-contexts/
 https://www.flamingbytes.com/blog/ultimate-explanation-for-iostat/

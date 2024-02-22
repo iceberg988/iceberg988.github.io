@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">277</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">279</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-count">279</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,352 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/stack-implementation-in-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/stack-implementation-in-python/" class="post-title-link" itemprop="url">Stack implementation in Python</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-04-04 06:53:00" itemprop="dateCreated datePublished" datetime="2023-04-04T06:53:00-07:00">2023-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="What-is-stack"><a href="#What-is-stack" class="headerlink" title="What is stack"></a>What is stack</h2><p>Stack is a linear data structure in which the items are in a Last-In-First-Out(LIFO)manner.</p>
+<p>The stack may include the following key functions.</p>
+<ul>
+<li>push() - add an item to the top of the stack</li>
+<li>pop() - remove the item at the top</li>
+<li>size() - return the number of items in stack</li>
+<li>peek() - return the item from top of the stack</li>
+<li>is_empty() - check if the stack is empty</li>
+</ul>
+<h2 id="How-to-implement"><a href="#How-to-implement" class="headerlink" title="How to implement"></a>How to implement</h2><p>There are various ways to implement a stack in Python. In this post, we will learn how to implement it with the following ways.</p>
+<ul>
+<li>list</li>
+<li>collections.deque</li>
+<li>queue.LifoQueue</li>
+<li>linked list</li>
+</ul>
+<h3 id="using-list"><a href="#using-list" class="headerlink" title="using list"></a>using list</h3><p>In Python, list is like dynamic array. The items in list are stored contiguously in memory. Thus, the random access to list is as fast as array. However, as it grows bigger than the allocated memory it currently holds, it needs to have more memory allocation to increase the capacity dynamically. In such case, the stack append call could take longer time.</p>
+<pre><code>st = []
+st.append(1)
+st.append(2)
+st.append(3)
+print(&quot;stack size: &#123;&#125;&quot;.format(len(st)))
+print(st.pop())
+print(st.pop())
+print(st.pop())
+print(&quot;stack size: &#123;&#125;&quot;.format(len(st)))
+</code></pre>
+<h3 id="Using-deque"><a href="#Using-deque" class="headerlink" title="Using deque"></a>Using deque</h3><p>deque is pronounced “deck” and stands for “double-ended queue”. It is built upon a doubly linked list which allows insert&#x2F;remove nodes from both ends with constant time(O(1)). Deque is the prefered method to implement a stack in Python. Note that deque is not thread-safe.</p>
+<pre><code>from collections import deque
+
+st = deque()
+st.append(1)
+st.append(2)
+st.append(3)
+print(&quot;stack size: &#123;&#125;&quot;.format(len(st)))
+print(st.pop())
+print(st.pop())
+print(st.pop())
+print(&quot;stack size: &#123;&#125;&quot;.format(len(st)))
+</code></pre>
+<h3 id="Using-LifoQueue"><a href="#Using-LifoQueue" class="headerlink" title="Using LifoQueue"></a>Using LifoQueue</h3><p>If you need multi-threading, you can use queue.LifoQueue module. However, it comes at a performance cost to achieve the thread-safety.</p>
+<pre><code>from queue import LifoQueue
+
+st = LifoQueue()
+st.put(1)
+st.put(2)
+st.put(3)
+print(&quot;stack size: &#123;&#125;&quot;.format(st.qsize()))
+print(st.get())
+print(st.get())
+print(st.get())
+print(&quot;stack size: &#123;&#125;&quot;.format(st.qsize()))
+</code></pre>
+<h3 id="Using-linked-list"><a href="#Using-linked-list" class="headerlink" title="Using linked list"></a>Using linked list</h3><p>You also can implement your own stack with the linked list data structure.</p>
+<pre><code>class Node:
+    def __init__(self, val):
+        self.val = val
+        self.next = None
+
+
+class Stack:
+    def __init__(self):
+        self.top = None
+        self.size = 0
+
+    def get_size(self):
+        return self.size
+
+    def is_empty(self):
+        return self.size == 0
+
+    def push(self, val):
+        n = Node(val)
+        if self.top == None:
+            self.top = n
+        else:
+            n.next = self.top
+            self.top = n
+
+        self.size += 1
+
+    def pop(self):
+        if self.is_empty():
+            raise Exception(&quot;empty stack&quot;)
+
+        val = self.top.val
+        self.top = self.top.next
+        self.size -= 1
+        return val
+
+    def peek(self):
+        if self.is_empty():
+            raise Exception(&quot;empty stack&quot;)
+
+        return self.top.val
+
+    def __str__(self):
+        curr = self.top
+        st_str = &quot;&quot;
+        while curr:
+            st_str += str(curr.val) + &quot;-&gt;&quot;
+            curr = curr.next
+        return st_str[:-2]
+
+
+st = Stack()
+st.push(1)
+st.push(2)
+st.push(3)
+print(&quot;Stack: &#123;&#125;&quot;.format(st))
+print(&quot;stack size: &#123;&#125;&quot;.format(st.size))
+print(&quot;stack top: &#123;&#125;&quot;.format(st.peek()))
+print(st.pop())
+print(st.pop())
+print(st.pop())
+print(&quot;stack size: &#123;&#125;&quot;.format(st.size))
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/top-50-linux-commands-you-should-know/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/top-50-linux-commands-you-should-know/" class="post-title-link" itemprop="url">Top 50 Linux Commands You should Know</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-03-27 11:18:00" itemprop="dateCreated datePublished" datetime="2023-03-27T11:18:00-07:00">2023-03-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="aa"><a href="#aa" class="headerlink" title="aa"></a>aa</h2><ol>
+<li>ls - The most frequently used command in Linux to list directories</li>
+<li>pwd - Print working directory command in Linux</li>
+<li>cd - Linux command to navigate through directories</li>
+</ol>
+<p>mkdir - Command used to create directories in Linux</p>
+<p>mv - Move or rename files in Linux</p>
+<p>cp - Similar usage as mv but for copying files in Linux</p>
+<p>rm - Delete files or directories</p>
+<p>touch - Create blank&#x2F;empty files</p>
+<p>ln - Create symbolic links (shortcuts) to other files</p>
+<p>cat - Display file contents on the terminal</p>
+<p>clear - Clear the terminal display</p>
+<p>echo - Print any text that follows the command</p>
+<p>less - Linux command to display paged outputs in the terminal</p>
+<p>man - Access manual pages for all Linux commands</p>
+<p>uname - Linux command to get basic information about the OS</p>
+<p>whoami - Get the active username</p>
+<p>tar - Command to extract and compress files in Linux</p>
+<p>grep - Search for a string within an output</p>
+<p>head - Return the specified number of lines from the top</p>
+<p>tail - Return the specified number of lines from the bottom</p>
+<p>diff - Find the difference between two files</p>
+<p>cmp - Allows you to check if two files are identical</p>
+<p>comm - Combines the functionality of diff and cmp</p>
+<p>sort - Linux command to sort the content of a file while outputting</p>
+<p>export - Export environment variables in Linux</p>
+<p>zip - Zip files in Linux</p>
+<p>unzip - Unzip files in Linux</p>
+<p>ssh - Secure Shell command in Linux</p>
+<p>service - Linux command to start and stop services</p>
+<p>ps - Display active processes</p>
+<p>kill and killall - Kill active processes by process ID or name</p>
+<p>df - Display disk filesystem information</p>
+<p>mount - Mount file systems in Linux</p>
+<p>chmod - Command to change file permissions</p>
+<p>chown - Command for granting ownership of files or folders</p>
+<p>ifconfig - Display network interfaces and IP addresses</p>
+<p>traceroute - Trace all the network hops to reach the destination</p>
+<p>wget - Direct download files from the internet</p>
+<p>ufw - Firewall command</p>
+<p>iptables - Base firewall for all other firewall utilities to interface with</p>
+<p>apt, pacman, yum, rpm - Package managers depending on the distro</p>
+<p>sudo - Command to escalate privileges in Linux</p>
+<p>cal - View a command-line calendar</p>
+<p>alias - Create custom shortcuts for your regularly used commands</p>
+<p>dd - Majorly used for creating bootable USB sticks</p>
+<p>whereis - Locate the binary, source, and manual pages for a command</p>
+<p>whatis - Find what a command is used for</p>
+<p>top - View active processes live with their system usage</p>
+<p>useradd and usermod - Add new user or change existing users data</p>
+<p>passwd - Create or update passwords for existing users</p>
+<p><a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/linux-commands">https://www.digitalocean.com/community/tutorials/linux-commands</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1551,198 +1897,6 @@ usecs           : count     distribution
 <p><img src="/images/BPF.png" alt="Image"></p>
 <p>The BPF program is run in the kernel for each event. It fetches the block I&#x2F;O latency which is saved into a BPF map histogram. In the user space, the BPF map histogram can be read and printed out.</p>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/introduction-to-bpf-performance-tools/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/introduction-to-bpf-performance-tools/" class="post-title-link" itemprop="url">Introduction to BPF performance tools</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-02-22 09:37:00" itemprop="dateCreated datePublished" datetime="2023-02-22T09:37:00-08:00">2023-02-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          BPF stands for Berkeley Packet Filter, which was firstly developed to improve the performance of packet capture tools. It was rewritten later and turned into a general-purpose execution engine including the creation of performance analysis tools.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/introduction-to-bpf-performance-tools/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/getting-started-with-bpftrace/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/getting-started-with-bpftrace/" class="post-title-link" itemprop="url">Getting started with bpftrace</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-02-22 05:08:00" itemprop="dateCreated datePublished" datetime="2023-02-22T05:08:00-08:00">2023-02-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          bpftrace is a high-level tracing language for Linux enhanced Berkeley Packet Filter (eBPF) available in recent Linux kernels (4.x).
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/getting-started-with-bpftrace/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 

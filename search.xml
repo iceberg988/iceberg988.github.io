@@ -25057,4 +25057,54 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
         <tag>Kubernetes</tag>
       </tags>
   </entry>
+  <entry>
+    <title>How to set custom login banner message in linux</title>
+    <url>/blog/how-to-set-custom-login-banner-message-in-linux/</url>
+    <content><![CDATA[<p>SSH banner messages are necessary when you want to display a warning for users when they access a server over SSH. <span id="more"></span></p>
+<p>Let’s see how to set a custom SSH warning banner.</p>
+<h2 id="Configure-SSH-Warning-Banner"><a href="#Configure-SSH-Warning-Banner" class="headerlink" title="Configure SSH Warning Banner"></a>Configure SSH Warning Banner</h2><p>Specify the banner message file in &#x2F;etc&#x2F;ssh&#x2F;sshd_config SSH configuration:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo vim /etc/ssh/sshd_config</span><br><span class="line"><span class="comment"># no default banner path</span></span><br><span class="line"><span class="comment">#Banner none</span></span><br><span class="line">Banner /etc/banner</span><br></pre></td></tr></table></figure>
+
+<h2 id="Create-the-SSH-Banner-message-file"><a href="#Create-the-SSH-Banner-message-file" class="headerlink" title="Create the SSH Banner message file"></a>Create the SSH Banner message file</h2><p>Create a new banner message file as specified in &#x2F;etc&#x2F;ssh&#x2F;sshd_config:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo vim /etc/banner</span><br><span class="line">-------------------------</span><br><span class="line">Authorized access only</span><br><span class="line">-------------------------</span><br></pre></td></tr></table></figure>
+
+<h2 id="Verify-the-banner-message"><a href="#Verify-the-banner-message" class="headerlink" title="Verify the banner message"></a>Verify the banner message</h2><p>To apply the changes, restart the SSH service:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo systemctl restart sshd</span><br></pre></td></tr></table></figure>
+
+<p>To test out the banner, login to the system over ssh:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh root@test-vm1</span><br><span class="line">-------------------------</span><br><span class="line">Authorized access only</span><br><span class="line">-------------------------</span><br><span class="line">root@test-vm1<span class="string">&#x27;s password:</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Setting-a-MOTD-Banner"><a href="#Setting-a-MOTD-Banner" class="headerlink" title="Setting a MOTD Banner"></a>Setting a MOTD Banner</h2><p>If you wish to set a MOTD (Message Of The Day) banner right after login, edit the &#x2F;etc&#x2F;motd file.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo vim /etc/motd</span><br><span class="line">                                                                 <span class="comment">#####</span></span><br><span class="line">                                                                <span class="comment">#######</span></span><br><span class="line">                   @                                            <span class="comment">##O#O##</span></span><br><span class="line">  <span class="comment">######          @@#                                           #VVVVV#</span></span><br><span class="line">    <span class="comment">##             #                                          ##  VVV  ##</span></span><br><span class="line">    <span class="comment">##         @@@   ### ####   ###    ###  ##### ######     #          ##</span></span><br><span class="line">    <span class="comment">##        @  @#   ###    ##  ##     ##    ###  ##       #            ##</span></span><br><span class="line">    <span class="comment">##       @   @#   ##     ##  ##     ##      ###         #            ###</span></span><br><span class="line">    <span class="comment">##          @@#   ##     ##  ##     ##      ###        QQ#           ##Q</span></span><br><span class="line">    <span class="comment">##       # @@#    ##     ##  ##     ##     ## ##     QQQQQQ#       #QQQQQQ</span></span><br><span class="line">    <span class="comment">##      ## @@# #  ##     ##  ###   ###    ##   ##    QQQQQQQ#     #QQQQQQQ</span></span><br><span class="line">  <span class="comment">############  ###  ####   ####   #### ### ##### ######   QQQQQ#######QQQQQ</span></span><br></pre></td></tr></table></figure>
+
+<p>The MOTD will be displayed next time you log in to the system.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh root@test-vm1</span><br><span class="line">-------------------------</span><br><span class="line">Authorized access only</span><br><span class="line">-------------------------</span><br><span class="line">root@test-vm1<span class="string">&#x27;s password:</span></span><br><span class="line"><span class="string">                                                                 #####</span></span><br><span class="line"><span class="string">                                                                #######</span></span><br><span class="line"><span class="string">                   @                                            ##O#O##</span></span><br><span class="line"><span class="string">  ######          @@#                                           #VVVVV#</span></span><br><span class="line"><span class="string">    ##             #                                          ##  VVV  ##</span></span><br><span class="line"><span class="string">    ##         @@@   ### ####   ###    ###  ##### ######     #          ##</span></span><br><span class="line"><span class="string">    ##        @  @#   ###    ##  ##     ##    ###  ##       #            ##</span></span><br><span class="line"><span class="string">    ##       @   @#   ##     ##  ##     ##      ###         #            ###</span></span><br><span class="line"><span class="string">    ##          @@#   ##     ##  ##     ##      ###        QQ#           ##Q</span></span><br><span class="line"><span class="string">    ##       # @@#    ##     ##  ##     ##     ## ##     QQQQQQ#       #QQQQQQ</span></span><br><span class="line"><span class="string">    ##      ## @@# #  ##     ##  ###   ###    ##   ##    QQQQQQQ#     #QQQQQQQ</span></span><br><span class="line"><span class="string">  ############  ###  ####   ####   #### ### ##### ######   QQQQQ#######QQQQQ</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Tech</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Administration</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Wipe signature from a device</title>
+    <url>/blog/wipe-signature-from-a-device/</url>
+    <content><![CDATA[<p><strong>wipefs</strong> can erase filesystem, raid or partition-table signatures (magic strings) from the specified device to make the signatures invisible for libblkid.</p>
+<blockquote>
+<p>-a, –all<br>      Erase all available signatures.  The set of erased signatures can be restricted with the -t list option.</p>
+</blockquote>
+<blockquote>
+<p>-f, –force<br>      Force erasure, even if the filesystem is mounted.  This is required in order to erase the partition table on a block device.</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wipefs -a /dev/nvme0n1</span><br><span class="line">/dev/nvme0n1: 2 bytes were erased at offset 0x00000438 (ext4): 53 ef</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Tech</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Administration</tag>
+      </tags>
+  </entry>
 </search>

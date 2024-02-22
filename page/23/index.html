@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">277</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">279</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-count">279</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,362 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/iouring-a-modern-asynchronous-i-o-interface-for-linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/iouring-a-modern-asynchronous-i-o-interface-for-linux/" class="post-title-link" itemprop="url">Iouring - A modern asynchronous I/O interface for Linux</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-04 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-04T07:00:00-07:00">2021-08-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>The Linux kernel has had asynchronous I&#x2F;O since version 2.5, but it was seen as difficult to use and inefficient.</p>
+<p>io_uring (previously known as aioring) is a Linux kernel system call interface for storage device asynchronous I&#x2F;O operations addressing performance issues with similar interfaces provided by functions like read()&#x2F;write() or aio_read()&#x2F;aio_write() etc. for operations on data accessed by file descriptors.</p>
+<p>It was primarily developed by Jens Axboe at Facebook.</p>
+<p>Internally it works by creating two buffers dubbed as “queue rings” (circular buffers) for storage of submission and completion of I&#x2F;O requests (for storage devices, submission queue (SQ) and completion queue (CQ) respectively). Keeping these buffers shared between the kernel and application helps to boost the I&#x2F;O performance by eliminating the need to issue extra and expensive system calls to copy these buffers between the two.According to the io_uring design paper, the SQ buffer is writable only by consumer application, and CQ - by kernel.</p>
+<p>The API provided by liburing library for userspace (applications) can be used to interact with the kernel interface more easily.</p>
+<p>Both kernel interface and library were adapted in Linux 5.1 kernel version.</p>
+<p><img src="/images/iouring.png" alt="Image"></p>
+<p>Credit to: Donald Hunter (A visual representation of the io_uring submission and completion queues)</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://developers.redhat.com/articles/2023/04/12/why-you-should-use-iouring-network-io#:~:text=The%20main%20benefit%20of%20io_uring,file%20and%20network%20I%2FO.">Why you should use io_uring for network I&#x2F;O</a></li>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/pdf/10.1145/3534056.3534945">https://dl.acm.org/doi/pdf/10.1145/3534056.3534945</a></li>
+<li><a target="_blank" rel="noopener" href="https://kernel-recipes.org/en/2019/talks/faster-io-through-io_uring/">https://kernel-recipes.org/en/2019/talks/faster-io-through-io_uring&#x2F;</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Io_uring">https://en.wikipedia.org/wiki/Io_uring</a></li>
+<li><a target="_blank" rel="noopener" href="https://kernel.dk/io_uring.pdf">https://kernel.dk/io_uring.pdf</a></li>
+<li><a target="_blank" rel="noopener" href="https://developers.mattermost.com/blog/hands-on-iouring-go/">https://developers.mattermost.com/blog/hands-on-iouring-go/</a></li>
+<li><a target="_blank" rel="noopener" href="https://lwn.net/Articles/810414/">https://lwn.net/Articles/810414/</a></li>
+<li><a target="_blank" rel="noopener" href="https://lwn.net/Articles/776703/">https://lwn.net/Articles/776703/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/btrfs-a-modern-copy-on-write-cow-filesystem-for-linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/btrfs-a-modern-copy-on-write-cow-filesystem-for-linux/" class="post-title-link" itemprop="url">btrfs - A modern copy on write(CoW) filesystem for Linux</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-03 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-03T07:00:00-07:00">2021-08-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>btrfs is a modern copy on write (CoW) filesystem for Linux aimed at implementing advanced features while also focusing on fault tolerance, repair and easy administration. Its main features and benefits are:</p>
+<ul>
+<li>Snapshots which do not make the full copy of files</li>
+<li>RAID - support for software-based RAID 0, RAID 1, RAID 10</li>
+<li>Self-healing - checksums for data and metadata, automatic detection of silent data corruptions</li>
+</ul>
+<p>Development of Btrfs started in 2007. Since that time, Btrfs is a part of the Linux kernel and is under active development.</p>
+<h2 id="Copy-on-Write-CoW"><a href="#Copy-on-Write-CoW" class="headerlink" title="Copy on Write (CoW)"></a>Copy on Write (CoW)</h2><ul>
+<li><p>The CoW operation is used on all writes to the filesystem (unless turned off, see below).</p>
+</li>
+<li><p>This makes it much easier to implement lazy copies, where the copy is initially just a reference to the original, but as the copy (or the original) is changed, the two versions diverge from each other in the expected way.</p>
+</li>
+<li><p>If you just write a file that didn’t exist before, then the data is written to empty space, and some of the metadata blocks that make up the filesystem are CoWed. In a “normal” filesystem, if you then go back and overwrite a piece of that file, then the piece you’re writing is put directly over the data it is replacing. In a CoW filesystem, the new data is written to a piece of free space on the disk, and only then is the file’s metadata changed to refer to the new data. At that point, the old data that was replaced can be freed up because nothing points to it any more.</p>
+</li>
+<li><p>If you make a snapshot (or a cp –reflink&#x3D;always) of a piece of data, you end up with two files that both reference the same data. If you modify one of those files, the CoW operation I described above still happens: the new data is written elsewhere, and the file’s metadata is updated to point at it, but the original data is kept, because it’s still referenced by the other file.</p>
+</li>
+<li><p>This leads to fragmentation in heavily updated-in-place files like VM images and database stores.</p>
+</li>
+<li><p>Note that this happens even if the data is not shared, because data is stored in segments, and only the newly updated part of a segment is subject to CoW.</p>
+</li>
+<li><p>If you mount the filesystem with nodatacow, or use chattr +C on the file, then it only does the CoW operation for data if there’s more than one copy referenced.</p>
+</li>
+<li><p>Some people insist that Btrfs does “Redirect-on-write” rather than “Copy-on-write” because Btrfs is based on a scheme for redirect-based updates of B-trees by Ohad Rodeh, and because understanding the code is easier with that mindset.</p>
+</li>
+</ul>
+<h2 id="Filesystem-creation"><a href="#Filesystem-creation" class="headerlink" title="Filesystem creation"></a>Filesystem creation</h2><p>A Btrfs filesystem can be created on top of many devices, and more devices can be added after the FS has been created.</p>
+<p>By default, metadata will be mirrored across two devices and data will be striped across all of the devices present. This is equivalent to mkfs.btrfs -m raid1 -d raid0.</p>
+<p>If only one device is present, metadata will be duplicated on that one device. For HDD mkfs.btrfs -m dup -d single, for SSD (or non-rotational device) mkfs.btrfs -m single -d single.</p>
+<p>mkfs.btrfs will accept more than one device on the command line. It has options to control the RAID configuration for data (-d) and metadata (-m). Valid choices are raid0, raid1, raid10, raid5, raid6, single and dup. The option -m single means that no duplication is done, which may be desired when using hardware RAID.</p>
+<pre><code># Create a filesystem across four drives (metadata mirrored, linear data allocation)
+$ mkfs.btrfs -d single /dev/sdb /dev/sdc /dev/sdd /dev/sde
+
+# Stripe the data without mirroring, metadata are mirrored
+$ mkfs.btrfs -d raid0 /dev/sdb /dev/sdc
+
+# Use raid10 for both data and metadata
+$ mkfs.btrfs -m raid10 -d raid10 /dev/sdb /dev/sdc /dev/sdd /dev/sde
+
+# Don&#39;t duplicate metadata on a single drive (default on single SSDs)
+$ mkfs.btrfs -m single /dev/sdb
+</code></pre>
+<p>Once you create a multi-device filesystem, you can use any device in the FS for the mount command. The btrfs file system size is the total size of the devices to create it.</p>
+<pre><code>$ mkfs.btrfs /dev/sdb /dev/sdc /dev/sde
+$ mount /dev/sde /mnt
+$ df -h
+</code></pre>
+<p>The following commands can be used to check filesystem usage.</p>
+<pre><code>$ btrfs filesystem show
+$ btrfs filesystem df -h /mnt
+$ btrfs filesystem usage /mnt
+</code></pre>
+<h2 id="Filesystem-deletion"><a href="#Filesystem-deletion" class="headerlink" title="Filesystem deletion"></a>Filesystem deletion</h2><pre><code>$ umount -f /mnt
+$ wipefs --all -t btrfs /dev/sdb /dev/sdc /dev/sde
+$ btrfs filesystem show
+</code></pre>
+<h2 id="Subvolumes-and-snapshots"><a href="#Subvolumes-and-snapshots" class="headerlink" title="Subvolumes and snapshots"></a>Subvolumes and snapshots</h2><p>Creating subvolumes and snapshots are the commonly used operations for btrfs.</p>
+<p>Create btrfs filesystem with two disks:</p>
+<pre><code>$ mkfs.btrfs -d raid0 /dev/sdd /dev/sdf
+btrfs-progs v4.9.1
+See http://btrfs.wiki.kernel.org for more information.
+
+Label:              (null)
+UUID:               6a154e4e-61d4-474e-9839-50d1fcd50bbb
+Node size:          16384
+Sector size:        4096
+Filesystem size:    1.75TiB
+Block group profiles:
+  Data:             RAID0             2.00GiB
+  Metadata:         RAID1             1.00GiB
+  System:           RAID1             8.00MiB
+SSD detected:       yes
+Incompat features:  extref, skinny-metadata
+Number of devices:  2
+Devices:
+   ID        SIZE  PATH
+    1   894.25GiB  /dev/sdd
+    2   894.25GiB  /dev/sdf
+
+$ mkdir /mnt/pool1
+$ mount -t btrfs /dev/sdd /mnt/pool1
+$ df -h  | egrep &quot;Filesystem|pool1&quot;
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/sdd                   1.8T  4.3M  1.8T   1% /mnt/pool1
+$ ls -la /mnt/pool1
+total 16
+drwxr-xr-x  1 root root  0 Mar 22 21:19 .
+drwxr-xr-x. 7 root root 69 Mar 22 21:20 ..
+</code></pre>
+<p>Create a subvolume:</p>
+<pre><code>$ btrfs subvolume create /mnt/pool1/subvol1
+Create subvolume &#39;/mnt/pool1/subvol1&#39;
+
+$ mkdir /mnt/testbtrfs
+$ mount -t btrfs -o subvol=subvol1 /dev/sdd /mnt/testbtrfs
+
+$ ls -la /mnt/pool1
+total 16
+drwxr-xr-x  1 root root 14 Mar 22 21:19 .
+drwxr-xr-x. 8 root root 86 Mar 22 21:22 ..
+drwxr-xr-x  1 root root  0 Mar 22 21:21 subvol1
+
+$ ls -la /mnt/pool1/subvol1/
+total 16
+drwxr-xr-x 1 root root  0 Mar 22 21:21 .
+drwxr-xr-x 1 root root 14 Mar 22 21:19 ..
+
+$ ls -la /mnt/testbtrfs
+total 0
+drwxr-xr-x  1 root root  0 Mar 22 21:21 .
+drwxr-xr-x. 8 root root 86 Mar 22 21:22 ..
+</code></pre>
+<p>Create snapshot of the subvolume:</p>
+<pre><code>$ btrfs subvolume snapshot
+btrfs subvolume snapshot: too few arguments
+usage: btrfs subvolume snapshot [-r] [-i &lt;qgroupid&gt;] &lt;source&gt; &lt;dest&gt;|[&lt;dest&gt;/]&lt;name&gt;
+
+    Create a snapshot of the subvolume
+
+    Create a writable/readonly snapshot of the subvolume &lt;source&gt; with
+    the name &lt;name&gt; in the &lt;dest&gt; directory.  If only &lt;dest&gt; is given,
+    the subvolume will be named the basename of &lt;source&gt;.
+
+    -r             create a readonly snapshot
+    -i &lt;qgroupid&gt;  add the newly created snapshot to a qgroup. This
+                   option can be given multiple times.
+
+$ btrfs subvolume snapshot /mnt/pool1/subvol1 /mnt/pool1/subvol1/subvol1-snap
+Create a snapshot of &#39;/mnt/pool1/subvol1&#39; in &#39;/mnt/pool1/subvol1/subvol1-snap&#39;
+
+$ ls -la /mnt/pool1/subvol1/
+total 16
+drwxr-xr-x 1 root root 24 Mar 22 21:26 .
+drwxr-xr-x 1 root root 14 Mar 22 21:19 ..
+drwxr-xr-x 1 root root  0 Mar 22 21:21 subvol1-snap
+
+$ ls -la /mnt/pool1/subvol1/subvol1-snap/
+total 0
+drwxr-xr-x 1 root root  0 Mar 22 21:21 .
+drwxr-xr-x 1 root root 24 Mar 22 21:26 ..
+
+$ ls -la /mnt/testbtrfs/
+total 0
+drwxr-xr-x  1 root root 24 Mar 22 21:26 .
+drwxr-xr-x. 8 root root 86 Mar 22 21:22 ..
+drwxr-xr-x  1 root root  0 Mar 22 21:21 subvol1-snap
+
+$ ls -la /mnt/testbtrfs/subvol1-snap/
+total 0
+drwxr-xr-x 1 root root  0 Mar 22 21:21 .
+drwxr-xr-x 1 root root 24 Mar 22 21:26 ..
+</code></pre>
+<p>List the subvoluems and snapshots:</p>
+<pre><code>$  btrfs subvolume list /mnt/pool1
+ID 258 gen 10 top level 5 path subvol1
+ID 259 gen 9 top level 258 path subvol1/subvol1-snap
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://btrfs.wiki.kernel.org/index.php/Main_Page">https://btrfs.wiki.kernel.org/index.php/Main_Page</a></li>
+<li><a target="_blank" rel="noopener" href="https://btrfs.wiki.kernel.org/index.php/SysadminGuide">https://btrfs.wiki.kernel.org/index.php/SysadminGuide</a></li>
+<li><a target="_blank" rel="noopener" href="http://marc.merlins.org/perso/btrfs/post_2014-05-21_My-Btrfs-Talk-at-Linuxcon-JP-2014.html">http://marc.merlins.org/perso/btrfs/post_2014-05-21_My-Btrfs-Talk-at-Linuxcon-JP-2014.html</a></li>
+<li><a target="_blank" rel="noopener" href="http://marc.merlins.org/linux/talks/Btrfs-LC2014-JP/Btrfs.pdf">http://marc.merlins.org/linux/talks/Btrfs-LC2014-JP/Btrfs.pdf</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1214,247 +1570,6 @@ $ docker inspect 1cd20ecd897d | grep RootDir
 <p>LACP is a mechanism for exchanging port and system information to create and maintain LAG bundles. The LAG bundle distributes MAC clients across the link layer interface and collects traffic from the links to present to the MAC clients of the LAG bundle.</p>
 <p>LACP identifies the MAC address of the Ethernet link that has the highest port priority and is of the lowest value, and it assigns that MAC address to the LAG bundle.</p>
 <p>This bonding mode requires a switch that supports IEEE 802.3ad dynamic links.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/enable-ssh-passwordless-login/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/enable-ssh-passwordless-login/" class="post-title-link" itemprop="url">Enable ssh passwordless login for large amount of servers</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-18 07:00:00" itemprop="dateCreated datePublished" datetime="2021-04-18T07:00:00-07:00">2021-04-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Install-sshpass-package"><a href="#Install-sshpass-package" class="headerlink" title="Install sshpass package"></a>Install sshpass package</h2><p>To install sshpass package on the source server from which to enable ssh passwordless login to remote servers:</p>
-<pre><code>-bash-4.2# rpm -ivh sshpass-1.06-1.el7.x86_64.rpm
-</code></pre>
-<h2 id="Enable-ssh-passwordless-login-to-remote-servers"><a href="#Enable-ssh-passwordless-login-to-remote-servers" class="headerlink" title="Enable ssh passwordless login to remote servers"></a>Enable ssh passwordless login to remote servers</h2><p>To enable ssh passwordless login to a large amount of remote servers, we can use the following command to automate without needs of providing password for each server.</p>
-<pre><code>-bash-4.2# for n in `seq 0 239`
-do
-    sshpass -p &quot;password&quot; ssh-copy-id -i /root/.ssh/id_rsa.pub -o StrictHostKeyChecking=no Client-hostname$n
-done
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/tuning-kernel-parameters-in-docker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/tuning-kernel-parameters-in-docker/" class="post-title-link" itemprop="url">Tuning kernel parameters in Docker</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-17 07:00:00" itemprop="dateCreated datePublished" datetime="2021-04-17T07:00:00-07:00">2021-04-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Configure namespaced kernel parameters(sysctl) at runtime</p>
-<p>The –sysctl sets namespaced kernel parameters (sysctls) in the container. For example, to turn on IP forwarding in the containers network namespace, run this command:</p>
-<pre><code>$ docker run --sysctl net.ipv4.ip_forward=1 someimage
-</code></pre>
-<p><strong>Note</strong></p>
-<p>Not all sysctls are namespaced. Docker does not support changing sysctls inside of a container that also modify the host system. As the kernel evolves we expect to see more sysctls become namespaced.</p>
-<p><strong>CURRENTLY SUPPORTED SYSCTLS</strong></p>
-<p>IPC Namespace:</p>
-<ul>
-<li>kernel.msgmax, kernel.msgmnb, kernel.msgmni, kernel.sem, kernel.shmall, kernel.shmmax, kernel.shmmni, kernel.shm_rmid_forced.</li>
-<li>Sysctls beginning with fs.mqueue.*</li>
-<li>If you use the –ipc&#x3D;host option these sysctls are not allowed.</li>
-</ul>
-<p>Network Namespace:</p>
-<ul>
-<li>Sysctls beginning with net.*</li>
-<li>If you use the –network&#x3D;host option using these sysctls are not allowed.</li>
-</ul>
-<h1 id="Hard-and-soft-ulimit-settings"><a href="#Hard-and-soft-ulimit-settings" class="headerlink" title="Hard and soft ulimit settings"></a>Hard and soft ulimit settings</h1><p>There are two types of ulimit settings:</p>
-<ul>
-<li>The hard limit is the maximum value that is allowed for the soft limit. Any changes to the hard limit require root access.</li>
-<li>The soft limit is the value that Linux uses to limit the system resources for running processes. The soft limit cannot be greater than the hard limit.</li>
-</ul>
-<h2 id="Updating-hard-and-soft-ulimit-settings-in-Linux"><a href="#Updating-hard-and-soft-ulimit-settings-in-Linux" class="headerlink" title="Updating hard and soft ulimit settings in Linux"></a>Updating hard and soft ulimit settings in Linux</h2><pre><code>To change the open files value on your operating system:
-On RHEL and CentOS, edit the /etc/security/limits.d/91-nofile.conf file as shown in the following example:
-@streamsadmin - nofile open-files-value
-On SLES, edit the /etc/security/limits.conf file as shown in the following example:
-@streamsadmin - nofile open-files-value
-
-To change the max user processes value on your operating system:
-On RHEL and CentOS, edit the /etc/security/limits.d/90-nproc.conf file as shown in the following example:
-@streamsadmin hard nproc max-user-processes-value
-@streamsadmin soft nproc max-user-processes-value
-On SLES, edit the /etc/security/limits.conf file as shown in the following example:
-@streamsadmin hard nproc max-user-processes-value
-@streamsadmin soft nproc max-user-processes-value
-
-To set the hard stack and soft stack values, add the following lines to the /etc/security/limits.conf file:
-@streamsadmin hard stack unlimited 
-@streamsadmin soft stack 20480
-
-Use the following ulimit commands to verify the updated settings:
-To verify the updated hard limit, enter the following command:
-ulimit -aH
-To verify the updated soft limit, enter the following command:
-ulimit -aS
-</code></pre>
-<h2 id="Set-ulimits-in-container-–ulimit"><a href="#Set-ulimits-in-container-–ulimit" class="headerlink" title="Set ulimits in container (–ulimit)"></a>Set ulimits in container (–ulimit)</h2><p>Since setting ulimit settings in a container requires extra privileges not available in the default container, you can set these using the –ulimit flag. –ulimit is specified with a soft and hard limit as such: &#x3D;[:], for example:</p>
-<pre><code>$ docker run --ulimit nofile=1024:1024 --rm debian sh -c &quot;ulimit -n&quot;
-1024
-</code></pre>
-<p><strong>Note</strong></p>
-<p>If you do not provide a hard limit, the soft limit is used for both values. If no ulimits are set, they are inherited from the default ulimits set on the daemon. The as option is disabled now. In other words, the following script is not supported:</p>
-<pre><code>$ docker run -it --ulimit as=1024 fedora /bin/bash
-</code></pre>
-<p>The values are sent to the appropriate syscall as they are set. Docker doesn’t perform any byte conversion. Take this into account when setting the values.</p>
 
       
     </div>

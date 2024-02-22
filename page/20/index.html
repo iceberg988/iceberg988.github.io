@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">277</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">279</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-count">279</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,235 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/concepts-you-should-know/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/concepts-you-should-know/" class="post-title-link" itemprop="url">Concepts you should know</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-02-15 08:00:00" itemprop="dateCreated datePublished" datetime="2022-02-15T08:00:00-08:00">2022-02-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Data-structure"><a href="#Data-structure" class="headerlink" title="Data structure"></a>Data structure</h1><h2 id="Bloom-filter"><a href="#Bloom-filter" class="headerlink" title="Bloom filter"></a>Bloom filter</h2><p>A Bloom filter is a space-efficient probabilistic data structure that is used to test whether an element is a member of a set. For example, checking availability of username is set membership problem, where the set is the list of all registered username. The price we pay for efficiency is that it is probabilistic in nature that means, there might be some False Positive results. False positive means, it might tell that given username is already taken but actually it’s not.</p>
+<p><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/bloom-filters-introduction-and-python-implementation/">Source1</a><br><a target="_blank" rel="noopener" href="https://llimllib.github.io/bloomfilter-tutorial/">Source2</a></p>
+<h2 id="Merkle-tree"><a href="#Merkle-tree" class="headerlink" title="Merkle tree"></a>Merkle tree</h2><p>In cryptography and computer science, a hash tree or Merkle tree is a tree in which every “leaf” (node) is labelled with the cryptographic hash of a data block, and every node that is not a leaf (called a branch, inner node, or inode) is labelled with the cryptographic hash of the labels of its child nodes. A hash tree allows efficient and secure verification of the contents of a large data structure. A hash tree is a generalization of a hash list and a hash chain.</p>
+<p>Demonstrating that a leaf node is a part of a given binary hash tree requires computing a number of hashes proportional to the logarithm of the number of leaf nodes in the tree. Conversely, in a hash list, the number is proportional to the number of leaf nodes itself. A Merkle tree is therefore an efficient example of a cryptographic commitment scheme, in which the root of the tree is seen as a commitment and leaf nodes may be revealed and proven to be part of the original commitment.</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Merkle_tree">Source</a></p>
+<h2 id="Vector-Clock"><a href="#Vector-Clock" class="headerlink" title="Vector Clock"></a>Vector Clock</h2><p>A vector clock is a data structure used for determining the partial ordering of events in a distributed system and detecting causality violations. Just as in Lamport timestamps, inter-process messages contain the state of the sending process’s logical clock. A vector clock of a system of N processes is an array&#x2F;vector of N logical clocks, one clock per process; a local “largest possible values” copy of the global clock-array is kept in each process.</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Vector_clock">Source</a></p>
+<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><h2 id="Daemon"><a href="#Daemon" class="headerlink" title="Daemon"></a>Daemon</h2><p>In multitasking computer operating systems, a daemon is a computer program that runs as a background process, rather than being under the direct control of an interactive user. Traditionally, the process names of a daemon end with the letter d, for clarification that the process is in fact a daemon, and for differentiation between a daemon and a normal computer program. For example, syslogd is a daemon that implements system logging facility, and sshd is a daemon that serves incoming SSH connections.</p>
+<p>In a Unix environment, the parent process of a daemon is often, but not always, the init process. A daemon is usually created either by a process forking a child process and then immediately exiting, thus causing init to adopt the child process, or by the init process directly launching the daemon. In addition, a daemon launched by forking and exiting typically must perform other operations, such as dissociating the process from any controlling terminal (tty). Such procedures are often implemented in various convenience routines such as daemon(3) in Unix.</p>
+<p>Systems often start daemons at boot time that will respond to network requests, hardware activity, or other programs by performing some task. Daemons such as cron may also perform defined tasks at scheduled times.</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Daemon_(computing)">Source</a></p>
+<h2 id="SSH"><a href="#SSH" class="headerlink" title="SSH"></a>SSH</h2><p>The Secure Shell Protocol (SSH) is a cryptographic network protocol for operating network services securely over an unsecured network.[2] Its most notable applications are remote login and command-line execution.</p>
+<p>SSH applications are based on a client–server architecture, connecting an SSH client instance with an SSH server.[3] SSH operates as a layered protocol suite comprising three principal hierarchical components: the transport layer provides server authentication, confidentiality, and integrity; the user authentication protocol validates the user to the server; and the connection protocol multiplexes the encrypted tunnel into multiple logical communication channels.</p>
+<p>SSH was designed on Unix-like operating systems, as a replacement for Telnet and for unsecured remote Unix shell protocols, such as the Berkeley Remote Shell (rsh) and the related rlogin and rexec protocols, which all use insecure, plaintext transmission of authentication tokens.</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Secure_Shell">Source</a></p>
+<h2 id="Telnet"><a href="#Telnet" class="headerlink" title="Telnet"></a>Telnet</h2><p>Telnet is an application protocol used on the Internet or local area network to provide a bidirectional interactive text-oriented communication facility using a virtual terminal connection. User data is interspersed in-band with Telnet control information in an 8-bit byte oriented data connection over the Transmission Control Protocol (TCP).</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Telnet">Source</a></p>
+<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="Chaos-Engineering"><a href="#Chaos-Engineering" class="headerlink" title="Chaos Engineering"></a>Chaos Engineering</h2><p>Chaos engineering is the discipline of experimenting on a software system in production in order to build confidence in the system’s capability to withstand turbulent and unexpected conditions.</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Chaos_engineering#:~:text=Chaos%20engineering%20is%20the%20discipline,withstand%20turbulent%20and%20unexpected%20conditions.">Source</a></p>
+<h2 id="Serialization"><a href="#Serialization" class="headerlink" title="Serialization"></a>Serialization</h2><p>In computing, serialization is the process of translating a data structure or object state into a format that can be stored (for example, in a file or memory data buffer) or transmitted (for example, over a computer network) and reconstructed later (possibly in a different computer environment).When the resulting series of bits is reread according to the serialization format, it can be used to create a semantically identical clone of the original object. For many complex objects, such as those that make extensive use of references, this process is not straightforward. Serialization of object-oriented objects does not include any of their associated methods with which they were previously linked.</p>
+<p>This process of serializing an object is also called marshalling an object in some situations.The opposite operation, extracting a data structure from a series of bytes, is deserialization, (also called unserialization or unmarshalling).</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Serialization">Source</a></p>
+<h2 id="Callback-functions"><a href="#Callback-functions" class="headerlink" title="Callback functions"></a>Callback functions</h2><p>In computer programming, a callback, also known as a “call-after” function, is any reference to executable code that is passed as an argument to other code; that other code is expected to call back (execute) the code at a given time. This execution may be immediate as in a synchronous callback, or it might happen at a later point in time as in an asynchronous callback. Programming languages support callbacks in different ways, often implementing them with subroutines, lambda expressions, blocks, or function pointers.</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Callback_(computer_programming)">Source</a></p>
+<h2 id="Consistent-Hashing"><a href="#Consistent-Hashing" class="headerlink" title="Consistent Hashing"></a>Consistent Hashing</h2><p>In computer science, consistent hashing is a special kind of hashing technique such that when a hash table is resized, only n&#x2F;m keys need to be remapped on average where n is the number of keys and m is the number of slots. In contrast, in most traditional hash tables, a change in the number of array slots causes nearly all keys to be remapped because the mapping between the keys and the slots is defined by a modular operation.</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Consistent_hashing">Source</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/storage-concepts-you-should-know/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/storage-concepts-you-should-know/" class="post-title-link" itemprop="url">Storage concepts you should know</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-02-14 08:00:00" itemprop="dateCreated datePublished" datetime="2022-02-14T08:00:00-08:00">2022-02-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Object-Storage"><a href="#Object-Storage" class="headerlink" title="Object Storage"></a>Object Storage</h2><p>Object storage, also known as object-based storage, is a strategy that manages and manipulates data storage as distinct units, called objects. These objects are kept in a single storehouse and are not ingrained in files inside other folders. Instead, object storage combines the pieces of data that make up a file, adds all its relevant metadata to that file, and attaches a custom identifier.</p>
+<p>Object storage adds comprehensive metadata to the file, eliminating the tiered file structure used in file storage, and places everything into a flat address space, called a storage pool. This metadata is key to the success of object storage in that it provides deep analysis of the use and function of data in the storage pool.</p>
+<p><strong>Object storage vs. file storage vs. block storage</strong></p>
+<p>Object storage takes each piece of data and designates it as an object. Data is kept in separate storehouses versus files in folders and is bundled with associated metadata and a unique identifier to form a storage pool.</p>
+<p>File storage stores data as a single piece of information in a folder to help organize it among other data. This is also called hierarchical storage, imitating the way that paper files are stored. When you need access to data, your computer system needs to know the path to find it.</p>
+<p>Block storage takes a file apart into singular blocks of data and then stores these blocks as separate pieces of data. Each piece of data has a different address, so they don’t need to be stored in a file structure.</p>
+<p><strong>Benefits of object storage</strong></p>
+<p>Now that we’ve described what object storage is, what are its benefits?</p>
+<ul>
+<li>Greater data analytics. Object storage is driven by metadata, and with this level of classification for every piece of data, the opportunity for analysis is far greater.</li>
+<li>Infinite scalability. Keep adding data, forever. There’s no limit.</li>
+</ul>
+<p>Faster data retrieval. Due to the categorization structure of object storage, and the lack of folder hierarchy, you can retrieve your data much faster.</p>
+<ul>
+<li>Reduction in cost. Due to the scale-out nature of object storage, it’s less costly to store all your data.</li>
+<li>Optimization of resources. Because object storage does not have a filing hierarchy, and the metadata is completely customizable, there are far fewer limitations than with file or block storage.</li>
+</ul>
+<p><strong>Object storage use cases</strong></p>
+<p>There are multiple use cases for object storage. For example, it can assist you in the following ways:</p>
+<ul>
+<li>Deliver rich media. Define workflows by leveraging industry-leading solutions for managing unstructured data. Reduce your costs for globally distributed rich media.</li>
+<li>Manage distributed content. Optimize the value of your data throughout its lifecycle and deliver competitive storage services.</li>
+<li>Embrace the Internet of Things (IoT). Manage machine-to-machine data efficiently, support artificial intelligence and analytics, and compress the cost and time of the design process.</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.netapp.com/data-storage/storagegrid/what-is-object-storage/">Source</a></p>
+<h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><p>Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache, and message broker. Redis provides data structures such as strings, hashes, lists, sets, sorted sets with range queries, bitmaps, hyperloglogs, geospatial indexes, and streams. Redis has built-in replication, Lua scripting, LRU eviction, transactions, and different levels of on-disk persistence, and provides high availability via Redis Sentinel and automatic partitioning with Redis Cluster.</p>
+<p><a target="_blank" rel="noopener" href="https://redis.io/">Source</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1171,373 +1400,6 @@ Model name:            Intel(R) Xeon(R) CPU E5-2630 v3 @ 2.40GHz
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/install-git-from-source/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/install-git-from-source/" class="post-title-link" itemprop="url">Install git from source</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-01-08 04:01:00" itemprop="dateCreated datePublished" datetime="2022-01-08T04:01:00-08:00">2022-01-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <pre><code>$ wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.38.1.tar.xz
-$ tar xvf git-2.38.1.tar.xz
-$ cd git-2.38.1/
-$ make configure
-$ ./configure --prefix=/usr/local
-$ make install
-$ git --version
-git version 2.38.1
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://mirrors.edge.kernel.org/pub/software/scm/git/">https://mirrors.edge.kernel.org/pub/software/scm/git/</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/understanding-thin-provisioning-volume-and-snapshot/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/understanding-thin-provisioning-volume-and-snapshot/" class="post-title-link" itemprop="url">Understanding thin provisioning volume and snapshot</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-01-06 08:00:00" itemprop="dateCreated datePublished" datetime="2022-01-06T08:00:00-08:00">2022-01-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Thin-provisioning-volume"><a href="#Thin-provisioning-volume" class="headerlink" title="Thin provisioning volume"></a>Thin provisioning volume</h2><p>Logical volume can be thinly provisioned. It allows storage administrator to overcommit the physical storage. In other words, it’s possible to create a logical volume which is larger than the available extents.</p>
-<h2 id="Create-thin-provisioning-volume"><a href="#Create-thin-provisioning-volume" class="headerlink" title="Create thin provisioning volume"></a>Create thin provisioning volume</h2><p>In the following example, we create a 500GiB thin pool and 100GiB volume.</p>
-<pre><code>$ vgcreate vg1 /dev/nvme0n1
-  Physical volume &quot;/dev/nvme0n1&quot; successfully created.
-  Volume group &quot;vg1&quot; successfully created
-
-$ vgs
-  VG     #PV #LV #SN Attr   VSize   VFree
-  centos   1   3   0 wz--n- 893.05g      0
-  vg1      1   0   0 wz--n- 931.51g 931.51g
-
-$ lvcreate -L 500G --thinpool thinpool1 vg1
-  Thin pool volume with chunk size 256.00 KiB can address at most 63.25 TiB of data.
-  Logical volume &quot;thinpool1&quot; created.
-
-$ lvs
-  LV        VG     Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
-  home      centos -wi-ao---- 839.05g
-  root      centos -wi-ao----  50.00g
-  swap      centos -wi-ao----   4.00g
-  thinpool1 vg1    twi-a-tz-- 500.00g             0.00   10.41
-
-$ lvs -ao name,size,stripesize,chunksize,metadata_percent
-  LV                LSize   Stripe Chunk   Meta%
-  home              839.05g     0       0
-  root               50.00g     0       0
-  swap                4.00g     0       0
-  [lvol0_pmspare]   128.00m     0       0
-  thinpool1         500.00g     0  256.00k 10.41
-  [thinpool1_tdata] 500.00g     0       0
-  [thinpool1_tmeta] 128.00m     0       
-  
-$ lvcreate -V 100G --thin -n thinvol1 vg1/thinpool1
-  Logical volume &quot;thinvol1&quot; created.
-
-$ lvs
-  LV        VG     Attr       LSize   Pool      Origin Data%  Meta%  Move Log Cpy%Sync Convert
-  home      centos -wi-ao---- 839.05g
-  root      centos -wi-ao----  50.00g
-  swap      centos -wi-ao----   4.00g
-  thinpool1 vg1    twi-aotz-- 500.00g                  0.00   10.42
-  thinvol1  vg1    Vwi-a-tz-- 100.00g thinpool1        0.00
-</code></pre>
-<h2 id="Thin-pool-volume-chunk-size"><a href="#Thin-pool-volume-chunk-size" class="headerlink" title="Thin pool volume chunk size"></a>Thin pool volume chunk size</h2><p>By default, lvm2 starts with 64KiB chunk size and increase its value when the resulting size of the thin pool metadata device grows above 128MiB.</p>
-<p>In the previous example, the 500GiB thin pool results in 256KiB chunk size. In the following example, the 100MiB thin pool results in 64KiB chunk size.</p>
-<pre><code>$ lvcreate  -L 100M --thinpool thinpool2 vg1
-  Thin pool volume with chunk size 64.00 KiB can address at most 15.81 TiB of data.
-  Logical volume &quot;thinpool2&quot; created.
-
-$ lvs -ao name,size,stripesize,chunksize,metadata_percent
-  LV                LSize   Stripe Chunk   Meta%
-  home              839.05g     0       0
-  root               50.00g     0       0
-  swap                4.00g     0       0
-  [lvol0_pmspare]   128.00m     0       0
-  thinpool1         500.00g     0  256.00k 10.42
-  [thinpool1_tdata] 500.00g     0       0
-  [thinpool1_tmeta] 128.00m     0       0
-  thinpool2         100.00m     0   64.00k 10.84
-  [thinpool2_tdata] 100.00m     0       0
-  [thinpool2_tmeta]   4.00m     0       0
-  thinvol1          100.00g     0       0  
-</code></pre>
-<p>The “-c” option can be used to specify the desired chunk size if needed.</p>
-<pre><code>$ lvcreate -c 128k -L 100M --thinpool thinpool3 vg1
-  Thin pool volume with chunk size 128.00 KiB can address at most 31.62 TiB of data.
-  Logical volume &quot;thinpool3&quot; created.
-
-$ lvs -ao name,size,stripesize,chunksize,metadata_percent
-  LV                LSize   Stripe Chunk   Meta%
-  home              839.05g     0       0
-  root               50.00g     0       0
-  swap                4.00g     0       0
-  [lvol0_pmspare]   128.00m     0       0
-  thinpool1         500.00g     0  256.00k 10.42
-  [thinpool1_tdata] 500.00g     0       0
-  [thinpool1_tmeta] 128.00m     0       0
-  thinpool2         100.00m     0   64.00k 10.84
-  [thinpool2_tdata] 100.00m     0       0
-  [thinpool2_tmeta]   4.00m     0       0
-  thinpool3         100.00m     0  128.00k 10.84
-  [thinpool3_tdata] 100.00m     0       0
-  [thinpool3_tmeta]   4.00m     0       0
-  thinvol1          100.00g     0       0
-</code></pre>
-<p>Use the following criteria for using the chunk size:</p>
-<ul>
-<li>A smaller chunk size requires more metadata and hinders performance, but provides better space utilization with snapshots.</li>
-<li>A bigger chunk size requires less metadata manipulation, but makes the snapshot less space efficient.</li>
-</ul>
-<h2 id="Normal-snapshot-volume"><a href="#Normal-snapshot-volume" class="headerlink" title="Normal snapshot volume"></a>Normal snapshot volume</h2><p>The LVM snapshot provides the ability to create a virtual image of device at a point in time without a service interruption.</p>
-<p>When the original data block is overwritten after snapshot is taken, the original data needs to be copied to the snapshot volume. This will introduce copy-on-write overhead whenever the original block is overwritten. The state of original data can be reconstructed with the snapshot.</p>
-<h2 id="Thinly-provisioned-snapshot-volume"><a href="#Thinly-provisioned-snapshot-volume" class="headerlink" title="Thinly-provisioned snapshot volume"></a>Thinly-provisioned snapshot volume</h2><p>Unlike normal snapshot volume, the thin snapshot and volume are all about metadata. When the volume is snapshot, its metadata are copied for the thin snapshot volume use. As the metadata of the volume is changed, the snapshot volume still addresses the original data blocks. The new data will be written to new blocks. In other words, overwrites actually write the data to new blocks. Thus, the original data blocks can be still addressed by snapshot volume metadata after the data change.</p>
-<h2 id="Create-the-snapshot-volume"><a href="#Create-the-snapshot-volume" class="headerlink" title="Create the snapshot volume"></a>Create the snapshot volume</h2><pre><code>$ lvcreate -s -L 100G -n thinvol1-snap /dev/vg1/thinvol1
-  Logical volume &quot;thinvol1-snap&quot; created.
-
-$ ls /dev/vg1
-thinpool2  thinpool3   thinvol1  thinvol1-snap
-
-$ lvs
-  LV            VG     Attr       LSize   Pool      Origin   Data%  Meta%  Move Log Cpy%Sync Convert
-  home          centos -wi-ao---- 839.05g
-  root          centos -wi-ao----  50.00g
-  swap          centos -wi-ao----   4.00g
-  thinpool1     vg1    twi-aotz-- 500.00g                    0.00   10.42
-  thinpool2     vg1    twi-a-tz-- 100.00m                    0.00   10.84
-  thinpool3     vg1    twi-a-tz-- 100.00g                    0.00   10.43
-  thinvol1      vg1    owi-a-tz-- 100.00g thinpool1          0.00
-  thinvol1-snap vg1    swi-a-s--- 100.00g           thinvol1 0.00
-
-$ lvs -ao name,size,stripesize,chunksize,metadata_percent
-  LV                LSize   Stripe Chunk   Meta%
-  home              839.05g     0       0
-  root               50.00g     0       0
-  swap                4.00g     0       0
-  [lvol0_pmspare]   128.00m     0       0
-  thinpool1         500.00g     0  256.00k 10.42
-  [thinpool1_tdata] 500.00g     0       0
-  [thinpool1_tmeta] 128.00m     0       0
-  thinpool2         100.00m     0   64.00k 10.84
-  [thinpool2_tdata] 100.00m     0       0
-  [thinpool2_tmeta]   4.00m     0       0
-  thinpool3         100.00m     0  128.00k 10.84
-  [thinpool3_tdata] 100.00m     0       0
-  [thinpool3_tmeta]   4.00m     0       0
-  thinvol1          100.00g     0       0
-  thinvol1-snap     100.00g     0    4.00k
-</code></pre>
-<p>The chunk size of snapshot volume can be specified with “-c” option.</p>
-<pre><code>$ lvcreate -s -c 128k -L 100G -n thinvol1-snap2 /dev/vg1/thinvol1
-  Logical volume &quot;thinvol1-snap2&quot; created.
-
-$ lvs -ao name,size,stripesize,chunksize,metadata_percent
-  LV                LSize   Stripe Chunk   Meta%
-  home              839.05g     0       0
-  root               50.00g     0       0
-  swap                4.00g     0       0
-  [lvol0_pmspare]   128.00m     0       0
-  thinpool1         500.00g     0  256.00k 10.42
-  [thinpool1_tdata] 500.00g     0       0
-  [thinpool1_tmeta] 128.00m     0       0
-  thinpool2         100.00m     0   64.00k 10.84
-  [thinpool2_tdata] 100.00m     0       0
-  [thinpool2_tmeta]   4.00m     0       0
-  thinpool3         100.00m     0  128.00k 10.84
-  [thinpool3_tdata] 100.00m     0       0
-  [thinpool3_tmeta]   4.00m     0       0
-  thinvol1          100.00g     0       0
-  thinvol1-snap     100.00g     0    4.00k
-  thinvol1-snap2    100.00g     0  128.00k
-</code></pre>
-<h2 id="Remove-the-snaphost-volume"><a href="#Remove-the-snaphost-volume" class="headerlink" title="Remove the snaphost volume"></a>Remove the snaphost volume</h2><pre><code>$ lvremove /dev/vg1/thinvol1-snap
-Do you really want to remove active logical volume vg1/thinvol1-snap? [y/n]: y
-  Logical volume &quot;thinvol1-snap&quot; successfully removed
-$ lvremove /dev/vg1/thinvol1-snap2
-Do you really want to remove active logical volume vg1/thinvol1-snap2? [y/n]: y
-  Logical volume &quot;thinvol1-snap2&quot; successfully removed
-
-$ lvs
-  LV        VG     Attr       LSize   Pool      Origin Data%  Meta%  Move Log Cpy%Sync Convert
-  home      centos -wi-ao---- 839.05g
-  root      centos -wi-ao----  50.00g
-  swap      centos -wi-ao----   4.00g
-  thinpool1 vg1    twi-aotz-- 500.00g                  0.00   10.42
-  thinpool2 vg1    twi-a-tz-- 100.00m                  0.00   10.84
-  thinpool3 vg1    twi-a-tz-- 100.00g                  0.00   10.43
-  thinvol1  vg1    Vwi-a-tz-- 100.00g thinpool1        0.00
-</code></pre>
-<h2 id="Remove-the-volume-and-pool"><a href="#Remove-the-volume-and-pool" class="headerlink" title="Remove the volume and pool"></a>Remove the volume and pool</h2><pre><code>$ lvremove /dev/vg1/thinvol1 -f
-  Logical volume &quot;thinvol1&quot; successfully removed
-
-$ lvremove /dev/vg1/thinpool1
-Do you really want to remove active logical volume vg1/thinpool1? [y/n]: y
-  Logical volume &quot;thinpool1&quot; successfully removed  
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_logical_volumes/assembly_thinly-provisioned-logical-volumes_configuring-and-managing-logical-volumes">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux&#x2F;8&#x2F;html&#x2F;configuring_and_managing_logical_volumes&#x2F;assembly_thinly-provisioned-logical-volumes_configuring-and-managing-logical-volumes</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.ilsistemista.net/index.php/linux-a-unix/46-lvm-thin-volume-explained.html?start=3">https://www.ilsistemista.net/index.php/linux-a-unix/46-lvm-thin-volume-explained.html?start=3</a></li>
-</ul>
-
       
     </div>
 

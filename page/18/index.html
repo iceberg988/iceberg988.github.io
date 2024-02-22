@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">277</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">279</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">277</span>
+          <span class="site-state-item-count">279</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,257 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/how-to-deploy-mysql-and-phpmyadmin-with-docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/how-to-deploy-mysql-and-phpmyadmin-with-docker/" class="post-title-link" itemprop="url">How to deploy MySQL and phpMyAdmin with Docker</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-12 07:00:00" itemprop="dateCreated datePublished" datetime="2022-04-12T07:00:00-07:00">2022-04-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Create-the-MySQL-docker-container"><a href="#Create-the-MySQL-docker-container" class="headerlink" title="Create the MySQL docker container"></a>Create the MySQL docker container</h2><pre><code>$ docker pull mysql/mysql-server:5.7
+$ docker run -d --name=mysqldb -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=perfdb -v /var/lib/osd/mounts/mysql_data:/var/lib/mysql -p 3306:3306 mysql/mysql-server:5.7
+$ docker logs mysqldb
+$ docker ps -a
+CONTAINER ID   IMAGE                    COMMAND                  CREATED          STATUS                    PORTS                                                  NAMES
+ff380903d3a0   mysql/mysql-server:5.7   &quot;/entrypoint.sh mysq…&quot;   34 seconds ago   Up 34 seconds (healthy)   0.0.0.0:3306-&gt;3306/tcp, :::3306-&gt;3306/tcp, 33060/tcp   mysqldb
+</code></pre>
+<p>Note:</p>
+<ul>
+<li>The option -e passes a value to the container environment variable.</li>
+<li>The variable MYSQL_ROOT_HOST&#x3D;% creates a root user with permission to login from any IP address.</li>
+<li>The variable MYSQL_ROOT_PASSWORD creates the root password of MySQL. If not provided, a random password will be generated.</li>
+</ul>
+<h2 id="Create-MySQL-database-and-restore-from-a-db-backup-if-exists"><a href="#Create-MySQL-database-and-restore-from-a-db-backup-if-exists" class="headerlink" title="Create MySQL database and restore from a db backup(if exists)"></a>Create MySQL database and restore from a db backup(if exists)</h2><pre><code>$ docker exec -it mysqldb bash
+
+bash-4.2# mysql -V
+mysql  Ver 14.14 Distrib 5.7.37, for Linux (x86_64) using  EditLine wrapper
+
+bash-4.2# mysql -u root -p
+
+mysql&gt; show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| perfdb             |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql&gt; SELECT user,authentication_string,plugin,host FROM mysql.user;
++---------------+-------------------------------------------+-----------------------+-----------+
+| user          | authentication_string                     | plugin                | host      |
++---------------+-------------------------------------------+-----------------------+-----------+
+| root          | *2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19 | mysql_native_password | localhost |
+| mysql.session | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE | mysql_native_password | localhost |
+| mysql.sys     | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE | mysql_native_password | localhost |
+| healthchecker | *36C82179AFA394C4B9655005DD2E482D30A4BDF7 | mysql_native_password | localhost |
+| root          | *2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19 | mysql_native_password | %         |
++---------------+-------------------------------------------+-----------------------+-----------+
+5 rows in set (0.01 sec)
+
+bash-4.2# mysql -u root -p perfdb &lt; /var/lib/mysql/perfdb_dump_20220412_121339.sql
+bash-4.4# ls -ltr /var/lib/mysql
+
+mysql&gt; use mydb;
+mysql&gt; show tables
+mysql&gt; SELECT table_schema &quot;DB Name&quot;, ROUND(SUM(data_length + index_length) / 1024 / 1024, 1) &quot;DB Size in MB&quot;  FROM information_schema.tables  GROUP BY table_schema;
+</code></pre>
+<h2 id="Create-the-phpMyAdmin-docker-container"><a href="#Create-the-phpMyAdmin-docker-container" class="headerlink" title="Create the phpMyAdmin docker container"></a>Create the phpMyAdmin docker container</h2><pre><code>$ docker pull phpmyadmin/phpmyadmin:latest
+$ docker run --name phpadmin -d --link mysqldb:db -p 8080:80 phpmyadmin/phpmyadmin
+</code></pre>
+<p>Note:</p>
+<ul>
+<li>The option –link provides access to another container running in the host. In our case, the container <em>mysqldb</em> created in previous step is linked and the resource accessed is the MySQL <em>db</em>.</li>
+<li>The option -p provides mapping between the host port(8080) and the container port(80, which is used by the apache server for the phpMyAdmin web application in the container).</li>
+</ul>
+<h2 id="Check-the-docker-images-and-containers"><a href="#Check-the-docker-images-and-containers" class="headerlink" title="Check the docker images and containers"></a>Check the docker images and containers</h2><pre><code>$ docker images
+REPOSITORY                    TAG       IMAGE ID       CREATED        SIZE
+phpmyadmin/phpmyadmin         latest    5682e7556577   2 months ago   524MB
+mysql/mysql-server            5.7       b3eaae317eb2   2 months ago   390MB
+
+$ docker ps -a
+CONTAINER ID   IMAGE                    COMMAND                  CREATED          STATUS                   PORTS                                                  NAMES
+a19c6406ffff   phpmyadmin/phpmyadmin    &quot;/docker-entrypoint.…&quot;   38 seconds ago   Up 38 seconds            0.0.0.0:8080-&gt;80/tcp, :::8080-&gt;80/tcp                  phpadmin
+ff380903d3a0   mysql/mysql-server:5.7   &quot;/entrypoint.sh mysq…&quot;   5 minutes ago    Up 5 minutes (healthy)   0.0.0.0:3306-&gt;3306/tcp, :::3306-&gt;3306/tcp, 33060/tcp   mysqldb
+</code></pre>
+<h2 id="Access-the-phpMyAdmin-from-browser"><a href="#Access-the-phpMyAdmin-from-browser" class="headerlink" title="Access the phpMyAdmin from browser"></a>Access the phpMyAdmin from browser</h2><p><img src="/images/phpmyadmin.png" alt="Image"></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/r/mysql/mysql-server/">https://hub.docker.com/r/mysql/mysql-server/</a></li>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/r/phpmyadmin/phpmyadmin/">https://hub.docker.com/r/phpmyadmin/phpmyadmin/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/what-is-performance-engineering/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/what-is-performance-engineering/" class="post-title-link" itemprop="url">What is Performance Engineering</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-08 07:00:00" itemprop="dateCreated datePublished" datetime="2022-04-08T07:00:00-07:00">2022-04-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="/images/perfeng.png" alt="Image"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1810,291 +2061,6 @@ Disk stats (read/write):
 <li>Sharding the data tier if needed</li>
 <li>Decouple the components to increase throughput(e.g. message queue)</li>
 <li>Add tools to improve ease of use</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/set-in-golang/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/set-in-golang/" class="post-title-link" itemprop="url">Set in golang</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-03-12 08:00:00" itemprop="dateCreated datePublished" datetime="2022-03-12T08:00:00-08:00">2022-03-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Go does not have set by default but there is way to imitate it in Go.</p>
-<p>The following is an example code piece to create “set” in Go by setting a map with empty values.</p>
-<pre><code>$ cat test.go
-package main
-
-import (
-    &quot;fmt&quot;
-)
-
-// Main function
-func main() &#123;
-    set := make(map[string]struct&#123;&#125;)
-    set[&quot;cat&quot;] = struct&#123;&#125;&#123;&#125;
-    set[&quot;dog&quot;] = struct&#123;&#125;&#123;&#125;
-    set[&quot;rabbit&quot;] = struct&#123;&#125;&#123;&#125;
-
-    if _, ok := set[&quot;rabbit&quot;]; ok &#123;
-        fmt.Println(&quot;rabbit exists&quot;)
-    &#125;
-
-    delete(set,&quot;rabbit&quot;)
-
-    if _, ok := set[&quot;rabbit&quot;]; ok &#123;
-        fmt.Println(&quot;exist&quot;)
-    &#125;else&#123;
-        fmt.Println(&quot;rabbit doesn&#39;t exist&quot;)
-    &#125;
-&#125;
-
-$ go run test.go
-rabbit exists
-rabbit doesn&#39;t exist
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/must-read-books-and-articles-for-software-and-performance-engineering/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/must-read-books-and-articles-for-software-and-performance-engineering/" class="post-title-link" itemprop="url">Must-read books and articles for Software and Performance Engineering</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-03-11 08:00:00" itemprop="dateCreated datePublished" datetime="2022-03-11T08:00:00-08:00">2022-03-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Books"><a href="#Books" class="headerlink" title="Books"></a>Books</h2><ul>
-<li><p><a target="_blank" rel="noopener" href="https://www-cs-faculty.stanford.edu/~knuth/taocp.html">The Art of Computer Programming</a></p>
-</li>
-<li><p>Understanding the Linux Kernel, 3rd Edition</p>
-</li>
-<li><p>Linux Device Drivers, 3rd Edition</p>
-</li>
-<li><p>Designing Data-Intensive Applications: The Big Ideas Behind Reliable, Scalable, and Maintainable Systems, 1st Edition</p>
-</li>
-<li><p>Building Microservices: Designing Fine-Grained Systems 1st Edition</p>
-</li>
-<li><p>Site Reliability Engineering: How Google Runs Production Systems 1st Editio</p>
-</li>
-<li><p>Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation (Addison-Wesley Signature Series (Fowler)) 1st Edition</p>
-</li>
-<li><p>Big Data: Principles and best practices of scalable realtime data systems</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://read.amazon.com/kp/embed?asin=B0090J3SYW&amp;preview=newtab&amp;linkCode=kpe&amp;ref_=cm_sw_r_kb_dp_RT3P75JR498J1QZ0D7KG">NoSQL Distilled: A Brief Guide to the Emerging World of Polyglot Persistence</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.amazon.com/Professional-NoSQL-Shashank-Tiwari/dp/047094224X/ref=rvi_sccl_4/134-3241400-7217441?pd_rd_w=ZVltv&amp;pf_rd_p=f5690a4d-f2bb-45d9-9d1b-736fee412437&amp;pf_rd_r=GD4HR5BQVYJYBDHMWEGH&amp;pd_rd_r=19ada9b3-5a1c-46d2-a51e-fe3adf0f9f2c&amp;pd_rd_wg=8IpYZ&amp;pd_rd_i=047094224X&amp;psc=1">Professional NoSQL 1st Edition</a></p>
-</li>
-<li><p>Kubernetes: Up and Running: Dive into the Future of Infrastructure 2nd Edition</p>
-</li>
-<li><p>Kubernetes in Action 1st Edition</p>
-</li>
-<li><p>Systems Performance, 2nd Edition</p>
-</li>
-<li><p>BPF Performance Tools</p>
-</li>
-<li><p>Understanding Software Dynamics</p>
-</li>
-</ul>
-<h2 id="Papers"><a href="#Papers" class="headerlink" title="Papers"></a>Papers</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1707.08514">Analyzing IO Amplification in Linux File Systems</a></li>
-<li><a target="_blank" rel="noopener" href="https://courses.cs.duke.edu/fall13/compsci590.4/838-CloudPapers/ycsb.pdf">Benchmarking Cloud Serving Systems with YCSB</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.researchgate.net/publication/262177144_BTRFS_The_linux_B-tree_filesystem">BTRFS: The linux B-tree filesystem</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.usenix.org/system/files/login/articles/login_spring16_02_tarasov.pdf">Filebench: A Flexible Framework for File System Benchmarking</a></li>
-<li><a target="_blank" rel="noopener" href="https://sakisk.me/files/copy-on-write-based-file-systems.pdf">Copy On Write Based File Systems Performance Analysis And Implementation</a></li>
-<li><a target="_blank" rel="noopener" href="https://static.googleusercontent.com/media/research.google.com/en//archive/gfs-sosp2003.pdf">The Google File System</a></li>
-<li><a target="_blank" rel="noopener" href="https://static.googleusercontent.com/media/research.google.com/en//archive/mapreduce-osdi04.pdf">MapReduce: Simplified Data Processing on Large Clusters</a></li>
-<li><a target="_blank" rel="noopener" href="https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf">Bigtable: A Distributed Storage System for Structured Data</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf">Dynamo: Amazon’s Highly Available Key-value Store</a></li>
-<li><a target="_blank" rel="noopener" href="https://patentimages.storage.googleapis.com/d0/f6/e1/2600fa22db7db0/US8190610.pdf">Google patent: MapReduce for distributed database processing</a></li>
-</ul>
-<h2 id="Blogs"><a href="#Blogs" class="headerlink" title="Blogs"></a>Blogs</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://sites.google.com/site/swperfengg/">Google performance engineering</a></li>
-<li><a target="_blank" rel="noopener" href="https://engineering.fb.com/tag/performance/">Facebook performance engineering</a></li>
-<li><a target="_blank" rel="noopener" href="https://netflixtechblog.com/tagged/performance">Netflix performance engineering</a></li>
-<li><a target="_blank" rel="noopener" href="https://engineering.linkedin.com/blog/topic/performance">Linkedin performance engineering</a></li>
-</ul>
-<h2 id="Articles"><a href="#Articles" class="headerlink" title="Articles"></a>Articles</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://engineering.linkedin.com/performance/who-moved-my-99th-percentile-latency">Who moved my 99th percentile latency?</a></li>
-<li><a target="_blank" rel="noopener" href="https://engineering.fb.com/2009/04/30/core-data/needle-in-a-haystack-efficient-storage-of-billions-of-photos/#:~:text=Storing%20photos%20as%20needles%20in,in%20an%20in%2Dmemory%20index.">Needle in a haystack: efficient storage of billions of photos</a></li>
-</ul>
-<h2 id="Benchmark-Tools"><a href="#Benchmark-Tools" class="headerlink" title="Benchmark Tools"></a>Benchmark Tools</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/filebench/filebench">Filebench</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/brianfrankcooper/YCSB/wiki">YCSB</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.spec.org/storage2020/">SPECstorage Solution 2020</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/10/pgbench.html">pgbench</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/akopytov/sysbench">sysbench</a></li>
-<li><a target="_blank" rel="noopener" href="https://wiki.lustre.org/VDBench">vdbench</a></li>
-<li><a target="_blank" rel="noopener" href="https://fio.readthedocs.io/en/latest/fio_doc.html">fio</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/axboe/fio">fio source</a></li>
-<li><a target="_blank" rel="noopener" href="https://tobert.github.io/post/2014-04-17-fio-output-explained.html">fio output explained</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.iozone.org/">iozone</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/ukontainer/sqlite-bench">sqlite-bench</a></li>
-<li><a target="_blank" rel="noopener" href="https://oss.oracle.com/~mason/compilebench/">Compilebench</a></li>
-<li><a target="_blank" rel="noopener" href="https://openbenchmarking.org/test/pts/fs-mark">FS-Mark</a></li>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Bonnie%2B%2B">Bonnie++</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.brendangregg.com/ActiveBenchmarking/bonnie++.html">Active Benchmarking: Bonnie++</a></li>
-</ul>
-<h2 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/html/latest/filesystems/index.html">Filesystems in the Linux kernel</a></li>
-<li><a target="_blank" rel="noopener" href="https://btrfs.wiki.kernel.org/index.php/Main_Page">Btrfs Wiki</a></li>
-<li><a target="_blank" rel="noopener" href="https://btrfs.wiki.kernel.org/index.php/Btrfs_design">Btrfs design</a></li>
 </ul>
 
       
