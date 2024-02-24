@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">279</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">280</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">279</span>
+          <span class="site-state-item-count">280</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,108 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-node-selector-to-assign-virtual-mahcines-to-a-node/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/using-node-selector-to-assign-virtual-mahcines-to-a-node/" class="post-title-link" itemprop="url">How to use node selector to assign virtual machines to a node</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-12-30 08:00:00" itemprop="dateCreated datePublished" datetime="2022-12-30T08:00:00-08:00">2022-12-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-27 12:47:16" itemprop="dateModified" datetime="2024-01-27T12:47:16-08:00">2024-01-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>In some circumstances, we want to control which node the virtual machine or pod deploys to. The <strong>node selector</strong> can be used to assign virtual machine or pod to a node.</p>
+<h2 id="Add-label-to-a-node"><a href="#Add-label-to-a-node" class="headerlink" title="Add label to a node"></a>Add label to a node</h2><p>The label can be added to a node from either command line or openshift web console.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ oc get nodes</span><br><span class="line">NAME                   STATUS                     ROLES    AGE   VERSION</span><br><span class="line">master1   Ready                      master   46h   v1.20.11+63f841a</span><br><span class="line">master2   Ready                      master   46h   v1.20.11+63f841a</span><br><span class="line">master3   Ready                      master   46h   v1.20.11+63f841a</span><br><span class="line">worker1    Ready                      worker   45h   v1.20.11+63f841a</span><br><span class="line">worker2    Ready                      worker   45h   v1.20.11+63f841a</span><br><span class="line">worker3    Ready,SchedulingDisabled   worker   45h   v1.20.11+63f841a</span><br><span class="line"></span><br><span class="line">$ oc label nodes worker1 worker-node-name=w1</span><br><span class="line"></span><br><span class="line">$ oc describe node worker1 | grep worker-node-name</span><br><span class="line">                    worker-node-name=w1</span><br><span class="line"></span><br><span class="line">$ oc get nodes --show-labels</span><br><span class="line">NAME       STATUS                     ROLES    AGE   VERSION            LABELS</span><br><span class="line">worker1    Ready                      worker   45h   v1.20.11+63f841a   &lt;omitted..&gt;worker-node-name=w1</span><br><span class="line">&lt;omitted..&gt;</span><br></pre></td></tr></table></figure>
+
+<p>This can also be done through openshift web console by clicking the “edit labels” option on a node.</p>
+<p><img src="/images/edit-labels.png" alt="Image"></p>
+<h2 id="Add-a-nodeSelector-field-to-the-virtual-machine"><a href="#Add-a-nodeSelector-field-to-the-virtual-machine" class="headerlink" title="Add a nodeSelector field to the virtual machine"></a>Add a nodeSelector field to the virtual machine</h2><p>A node selector can be added through openshift web console.</p>
+<p><img src="/images/node-selector-1.png" alt="Image"></p>
+<p><img src="/images/nodeselector.png" alt="Image"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ oc describe vm vm1</span><br><span class="line">    Spec:</span><br><span class="line">      Node Selector:</span><br><span class="line">        Worker - Node - Name:            w1</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/">https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1997,187 +2099,6 @@ testdb=&gt; show tables from testdb;
 <li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/blog/postgresql-vs-cockroachdb/">https://www.cockroachlabs.com/blog/postgresql-vs-cockroachdb/</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/blog/unpacking-competitive-benchmarks/">https://www.cockroachlabs.com/blog/unpacking-competitive-benchmarks/</a></li>
 <li><a target="_blank" rel="noopener" href="https://blog.purestorage.com/purely-informational/how-to-benchmark-mysql-performance/">https://blog.purestorage.com/purely-informational/how-to-benchmark-mysql-performance/</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/cgroups-limit-io/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/cgroups-limit-io/" class="post-title-link" itemprop="url">Using cgroups to limit block device bandwidth</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-12-05 13:11:00" itemprop="dateCreated datePublished" datetime="2022-12-05T13:11:00-08:00">2022-12-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>The block I&#x2F;O controller specifies upper IO rate limits on devices.</p>
-<pre><code>$ mount | egrep &quot;/cgroup |/blkio&quot;
-tmpfs on /sys/fs/cgroup type tmpfs (ro,nosuid,nodev,noexec,mode=755)
-cgroup on /sys/fs/cgroup/blkio type cgroup (rw,nosuid,nodev,noexec,relatime,blkio)
-
-$ lscgroup  | grep blkio
-blkio:/
-</code></pre>
-<p>In this post, we will learn how to use the following control files to limit block device bandwidth for the user tasks.</p>
-<ul>
-<li>blkio.throttle.read_bps_device - Specifies upper limit on READ rate from the device. IO rate is specified in bytes per second. Rules are per device.</li>
-<li>blkio.throttle.read_iops_device - Specifies upper limit on READ rate from the device. IO rate is specified in IO per second. Rules are per device.</li>
-<li>blkio.throttle.write_bps_device - Specifies upper limit on WRITE rate to the device. IO rate is specified in bytes per second. Rules are per device.</li>
-<li>blkio.throttle.write_iops_device - Specifies upper limit on WRITE rate to the device. IO rate is specified in io per second. Rules are per device.</li>
-</ul>
-<h2 id="Create-blkio-control-group"><a href="#Create-blkio-control-group" class="headerlink" title="Create blkio control group"></a>Create blkio control group</h2><p>Install libcgroup package to manage cgroups:</p>
-<pre><code>$ yum install libcgroup libcgroup-tools
-</code></pre>
-<p>Create blkio control group:</p>
-<pre><code>$ cgcreate -g blkio:/blkiolimited
-
-$ lscgroup | grep blkio
-blkio:/
-blkio:/blkiolimited
-
-$ ls /sys/fs/cgroup/blkio/blkiolimited/
-blkio.bfq.io_service_bytes            blkio.bfq.weight                 blkio.throttle.io_service_bytes_recursive  blkio.throttle.read_iops_device   cgroup.procs
-blkio.bfq.io_service_bytes_recursive  blkio.bfq.weight_device          blkio.throttle.io_serviced                 blkio.throttle.write_bps_device   notify_on_release
-blkio.bfq.io_serviced                 blkio.reset_stats                blkio.throttle.io_serviced_recursive       blkio.throttle.write_iops_device  tasks
-blkio.bfq.io_serviced_recursive       blkio.throttle.io_service_bytes  blkio.throttle.read_bps_device             cgroup.clone_children
-</code></pre>
-<h2 id="Limit-the-block-device-bandwidth"><a href="#Limit-the-block-device-bandwidth" class="headerlink" title="Limit the block device bandwidth"></a>Limit the block device bandwidth</h2><h3 id="Limit-block-device-bandwidth-for-root-group"><a href="#Limit-block-device-bandwidth-for-root-group" class="headerlink" title="Limit block device bandwidth for root group"></a>Limit block device bandwidth for root group</h3><p>To specify a bandwidth rate on particular device for root group, we can use the policy format as “major:minor bytes_per_second”.</p>
-<p>The following example puts a bandwidth limit of 1MB&#x2F;s on writes for root group on device having major&#x2F;minor number 259:12.</p>
-<pre><code>$ ls -la /dev/ | grep &quot;nvme3n1&quot;
-brw-rw----   1 root disk    259,  12 Dec 23 21:44 nvme3n1
-
-$ echo &quot;259:12  1048576&quot; &gt; /sys/fs/cgroup/blkio/blkio.throttle.write_bps_device
-</code></pre>
-<h3 id="Limit-block-device-bandwidth-for-user-defined-group"><a href="#Limit-block-device-bandwidth-for-user-defined-group" class="headerlink" title="Limit block device bandwidth for user defined group"></a>Limit block device bandwidth for user defined group</h3><p>The following examples specifies the IOPS limit on the device 259:12 for the user defined cgroups “blkio:&#x2F;blkiolimited”.</p>
-<p>Use control files to specify the limit directly:</p>
-<pre><code>$ cat /sys/fs/cgroup/blkio/blkiolimited/blkio.throttle.write_iops_device
-$ echo &quot;259:12  8192&quot; &gt; /sys/fs/cgroup/blkio/blkiolimited/blkio.throttle.write_iops_device
-$ cat /sys/fs/cgroup/blkio/blkiolimited/blkio.throttle.write_iops_device
-259:12 8192
-</code></pre>
-<p>Use libcgroup tools to specify the limit:</p>
-<pre><code>$ cgset -r blkio.throttle.write_iops_device=&quot;259:12 8192&quot; blkiolimited
-$ cgget -r blkio.throttle.write_iops_device blkiolimited
-blkiolimited:
-blkio.throttle.write_iops_device: 259:12 8192
-</code></pre>
-<h2 id="Verify-the-disk-bandwidth-usage"><a href="#Verify-the-disk-bandwidth-usage" class="headerlink" title="Verify the disk bandwidth usage"></a>Verify the disk bandwidth usage</h2><h3 id="Use-fio-to-write-50G-data-on-root-group-unlimited-bandwidth"><a href="#Use-fio-to-write-50G-data-on-root-group-unlimited-bandwidth" class="headerlink" title="Use fio to write 50G data on root group(unlimited bandwidth)"></a>Use fio to write 50G data on root group(unlimited bandwidth)</h3><pre><code>$ fio --blocksize=4k --ioengine=libaio --readwrite=randwrite --filesize=50G --group_reporting --direct=1 --iodepth=128 --end_fsync=1 --name=job1 --filename=/mnt/fio.dat
-
-
-$ iostat -ktdx 5 | grep &quot;nvme3n1&quot;
-Device:         rrqm/s   wrqm/s     r/s     w/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await r_await w_await  svctm  %util
-nvme3n1           0.00     0.05    0.00    8.02     0.01   508.54   126.83     0.06    7.80    0.08    7.80   0.04   0.03
-nvme3n1           0.00     0.00    0.00 133828.60     0.00 535314.40     8.00     1.18    0.01    0.00    0.01   0.00  55.64
-nvme3n1           0.00     0.20    0.00 246289.20     0.00 985157.60     8.00     2.21    0.01    0.00    0.01   0.00 100.04
-nvme3n1           0.00     0.20    0.00 246518.80     0.00 986076.80     8.00     2.23    0.01    0.00    0.01   0.00 100.04
-nvme3n1           0.00     0.20    0.00 244115.60     0.00 976462.40     8.00     2.24    0.01    0.00    0.01   0.00 100.00
-nvme3n1           0.00     0.20    0.00 240184.00     0.00 960736.80     8.00     2.23    0.01    0.00    0.01   0.00 100.04
-nvme3n1           0.00     0.20    0.00 250391.60     0.00 1001567.20     8.00     2.41    0.01    0.00    0.01   0.00 100.04
-nvme3n1           0.00     0.20    0.00 262449.60     0.00 1049799.20     8.00     2.53    0.01    0.00    0.01   0.00 100.00
-nvme3n1           0.00     0.20    0.00 252171.20     0.00 1008685.60     8.00     2.30    0.01    0.00    0.01   0.00 100.00
-nvme3n1           0.00     0.20    0.00 236467.60     0.00 945872.00     8.00     2.16    0.01    0.00    0.01   0.00 100.00
-nvme3n1           0.00     0.20    0.00 255060.80     0.00 1020244.00     8.00    17.04    0.07    0.00    0.07   0.00 100.00
-nvme3n1           0.00     0.20    0.00 235199.60     0.00 940798.40     8.00    44.76    0.19    0.00    0.19   0.00 100.00
-nvme3n1           0.00     0.20    0.00 18768.00     0.00 75072.80     8.00     5.81    0.31    0.00    0.31   0.00   8.40
-nvme3n1           0.00     0.00    0.00    0.00     0.00     0.00     0.00     0.00    0.00    0.00    0.00   0.00   0.00
-^C
-</code></pre>
-<h3 id="Use-fio-to-write-50G-data-on-user-defined-group-limited-bandwidth"><a href="#Use-fio-to-write-50G-data-on-user-defined-group-limited-bandwidth" class="headerlink" title="Use fio to write 50G data on user defined group(limited bandwidth)"></a>Use fio to write 50G data on user defined group(limited bandwidth)</h3><pre><code>$ cgget -r blkio.throttle.write_iops_device blkiolimited
-blkiolimited:
-blkio.throttle.write_iops_device: 259:12 8192
-
-$ cgexec -g blkio:blkiolimited fio --blocksize=4k --ioengine=libaio --readwrite=randwrite --filesize=50G --group_reporting --direct=1 --iodepth=128 --end_fsync=1 --name=job1 --filename=/mnt/fio.dat
-
-
-$ iostat -ktdx 5 | grep &quot;nvme3n1&quot;
-nvme3n1           0.00     0.05    0.00   24.54     0.01   574.51    46.82     0.06    2.57    0.08    2.57   0.01   0.04
-nvme3n1           0.00     0.00    0.00 3112.20     0.00 12448.80     8.00     0.04    0.01    0.00    0.01   0.01   4.60
-nvme3n1           0.00     0.20    0.00 8190.40     0.00 32762.40     8.00     0.11    0.01    0.00    0.01   0.01  11.92
-nvme3n1           0.00     0.20    0.00 8190.40     0.00 32762.40     8.00     0.12    0.01    0.00    0.01   0.01  12.02
-nvme3n1           0.00     0.20    0.00 8190.40     0.00 32762.40     8.00     0.12    0.01    0.00    0.01   0.01  12.22
-nvme3n1           0.00     0.20    0.00 8190.40     0.00 32762.40     8.00     0.12    0.01    0.00    0.01   0.01  12.10
-nvme3n1           0.00     0.20    0.00 8190.40     0.00 32762.40     8.00     0.12    0.01    0.00    0.01   0.02  12.36
-^C
-</code></pre>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://docs.kernel.org/admin-guide/cgroup-v1/blkio-controller.html">https://docs.kernel.org/admin-guide/cgroup-v1/blkio-controller.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://andrestc.com/post/cgroups-io/">https://andrestc.com/post/cgroups-io/</a></li>
 </ul>
 
       

@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">279</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">280</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">279</span>
+          <span class="site-state-item-count">280</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,104 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/run-pgbench-on-postgresql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/run-pgbench-on-postgresql/" class="post-title-link" itemprop="url">Run pgbench on PostgreSQL</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-05-23 12:19:00" itemprop="dateCreated datePublished" datetime="2023-05-23T12:19:00-07:00">2023-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Install-PostgreSQL"><a href="#Install-PostgreSQL" class="headerlink" title="Install PostgreSQL"></a>Install PostgreSQL</h2><p>Refer to this <a href="https://www.flamingbytes.com/blog/getting-started-with-postgresql/">post</a> to install PostgreSQL.</p>
+<h2 id="Intro-to-pgbench"><a href="#Intro-to-pgbench" class="headerlink" title="Intro to pgbench"></a>Intro to pgbench</h2><p><a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/current/pgbench.html">pgbench</a> is a simple program for running benchmark tests on PostgreSQL. It runs the same sequence of SQL commands over and over, possibly in multiple concurrent database sessions, and then calculates the average transaction rate (transactions per second). By default, pgbench tests a scenario that is loosely based on TPC-B, involving five SELECT, UPDATE, and INSERT commands per transaction. However, it is easy to test other cases by writing your own transaction script files.</p>
+<p>Available built-in scripts are: tpcb-like, simple-update and select-only.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/run-pgbench-on-postgresql/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1442,203 +1540,6 @@ print(test_list_6)
 # Time complexity: O(n*logn)
 # Space complexity: O(1)
 </code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/shadow-copy-and-deep-copy-in-python/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/shadow-copy-and-deep-copy-in-python/" class="post-title-link" itemprop="url">Shadow copy and deep copy in Python</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-04-21 04:49:20" itemprop="dateCreated datePublished" datetime="2023-04-21T04:49:20-07:00">2023-04-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>In this post, we’ll try to understand the difference between shadow copy and deep copy in Python. We study the copy behavior with list data structure in Python.</p>
-<h2 id="Problem-statement"><a href="#Problem-statement" class="headerlink" title="Problem statement"></a>Problem statement</h2><p>Assuming we have the following list:</p>
-<pre><code>test_list = [1, 2, [3, 6], 4, 5]
-</code></pre>
-<p>We want to create a duplicate list so that we can modify the contents independently without affecting the original list.</p>
-<pre><code>test_list_clone = [1, 2, [3, 6], 4, 5]
-test_list_clone[0] = 11
-test_list_clone[2].append(11)
-print(test_list)
-print(test_list_clone)
-</code></pre>
-<p>The expected output should be:</p>
-<p>[1, 2, [3, 6], 4, 5]</p>
-<p>[11, 2, [3, 6, 11], 4, 5]</p>
-<p>How should we copy the original list?</p>
-<h2 id="Duplicate-reference"><a href="#Duplicate-reference" class="headerlink" title="Duplicate reference"></a>Duplicate reference</h2><p>It’s not uncommon that you may want to copy the list as below.</p>
-<pre><code>test_list_clone = test_list
-test_list_clone[0] = 11
-test_list_clone[2].append(11)
-print(test_list)
-print(test_list_clone)
-</code></pre>
-<p>Output:</p>
-<p>[11, 2, [3, 6, 11], 4, 5]</p>
-<p>[11, 2, [3, 6, 11], 4, 5]</p>
-<p>This doesn’t work since it simply stores the list reference to another variable. When the duplciate list is modified, the original list is also modified.</p>
-<h2 id="Copy-list-by-brute-force"><a href="#Copy-list-by-brute-force" class="headerlink" title="Copy list by brute force"></a>Copy list by brute force</h2><p>In this solution, we append each item in the original list to the duplicate list by using a list comprehensions(a short form of for loop).</p>
-<pre><code>test_list_clone = [item for item in test_list]
-test_list_clone[0] = 22
-test_list_clone[2][-1] = 22
-print(test_list)
-print(test_list_clone)
-</code></pre>
-<p>Output:</p>
-<p>[11, 2, [3, 6, 22], 4, 5]</p>
-<p>[22, 2, [3, 6, 22], 4, 5]</p>
-<p>This works partially but not for the nested list. This is because it only duplicates the outer list. But the inner list is still duplicated as a reference of original object. That’s why the number 22 is appended to both the duplciate list and original list.</p>
-<h2 id="Copy-list-with-slice"><a href="#Copy-list-with-slice" class="headerlink" title="Copy list with slice"></a>Copy list with slice</h2><p>We can get a subset of the list with slice in Python. The colon means to get the whole copy as original. Again, this only duplicates the outer list.</p>
-<pre><code>test_list_clone = test_list[:]
-test_list_clone[0] = 33
-test_list_clone[2][-1] = 33
-print(test_list)
-print(test_list_clone)
-</code></pre>
-<p>Output:</p>
-<p>[11, 2, [3, 6, 33], 4, 5]</p>
-<p>[33, 2, [3, 6, 33], 4, 5]</p>
-<h2 id="Copy-list-with-list-constructor"><a href="#Copy-list-with-list-constructor" class="headerlink" title="Copy list with list constructor"></a>Copy list with list constructor</h2><p>A more readable form might be using list constructor to duplciate the list. But it has the same issue without deep copy of inner list.</p>
-<pre><code>test_list_clone = list(test_list)
-test_list_clone[0] = 44
-test_list_clone[2][-1] = 44
-print(test_list)
-print(test_list_clone)
-</code></pre>
-<p>Output:</p>
-<p>[11, 2, [3, 6, 44], 4, 5]</p>
-<p>[44, 2, [3, 6, 44], 4, 5]</p>
-<h2 id="Copy-list-with-starred-expression"><a href="#Copy-list-with-starred-expression" class="headerlink" title="Copy list with starred expression"></a>Copy list with starred expression</h2><p>Another way is to use starred expression to duplciate the list.</p>
-<pre><code>test_list_clone = [*test_list]
-test_list_clone[0] = 55
-test_list_clone[2][-1] = 55
-print(test_list)
-print(test_list_clone)
-</code></pre>
-<p>Output:</p>
-<p>[11, 2, [3, 6, 55], 4, 5]</p>
-<p>[55, 2, [3, 6, 55], 4, 5]</p>
-<h2 id="Copy-list-with-copy-function-python-3-3"><a href="#Copy-list-with-copy-function-python-3-3" class="headerlink" title="Copy list with copy function, python 3.3+"></a>Copy list with copy function, python 3.3+</h2><p>In Python 3.3+, a copy function of the list is available. But it doesn’t do the deep copy either.</p>
-<pre><code>test_list_clone = test_list.copy()
-test_list_clone[0] = 66
-test_list_clone[2][-1] = 66
-print(test_list)
-print(test_list_clone)
-</code></pre>
-<p>Output:</p>
-<p>[11, 2, [3, 6, 66], 4, 5]</p>
-<p>[66, 2, [3, 6, 66], 4, 5]</p>
-<h2 id="Copy-list-with-multiplication"><a href="#Copy-list-with-multiplication" class="headerlink" title="Copy list with multiplication"></a>Copy list with multiplication</h2><p>A tricky way to duplciate the list is to use multiplication style.</p>
-<pre><code>test_list_clone = test_list * 1
-test_list_clone[0] = 77
-test_list_clone[2][-1] = 77
-print(test_list)
-print(test_list_clone)
-</code></pre>
-<p>Output:</p>
-<p>[11, 2, [3, 6, 77], 4, 5]</p>
-<p>[77, 2, [3, 6, 77], 4, 5]</p>
-<h2 id="Copy-list-with-copy-package"><a href="#Copy-list-with-copy-package" class="headerlink" title="Copy list with copy package"></a>Copy list with copy package</h2><p>Fortunately, a copy package is built in Python to do the shadow copy and deep copy for us.</p>
-<h3 id="Shadow-copy"><a href="#Shadow-copy" class="headerlink" title="Shadow copy"></a>Shadow copy</h3><pre><code>import copy
-
-test_list_clone = copy.copy(test_list)
-test_list_clone[0] = 88
-test_list_clone[2][-1] = 88
-print(test_list)
-print(test_list_clone)
-</code></pre>
-<p>Output:</p>
-<p>[11, 2, [3, 6, 88], 4, 5]</p>
-<p>[88, 2, [3, 6, 88], 4, 5]</p>
-<h3 id="Deep-copy"><a href="#Deep-copy" class="headerlink" title="Deep copy"></a>Deep copy</h3><pre><code>test_list_clone = copy.deepcopy(test_list)
-test_list_clone[0] = 99
-test_list_clone[2][-1] = 99
-print(test_list)
-print(test_list_clone)
-</code></pre>
-<p>Output:</p>
-<p>[11, 2, [3, 6, 88], 4, 5]</p>
-<p>[99, 2, [3, 6, 99], 4, 5]</p>
-<p>Finally, we got a way to do the deep copy for the nested list. Now, the nested list is modified without affecting the original list content.</p>
 
       
     </div>

@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">279</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">280</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">279</span>
+          <span class="site-state-item-count">280</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,114 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-ftrace-to-analyze-latency-of-the-kernel-module-function/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/using-ftrace-to-analyze-latency-of-the-kernel-module-function/" class="post-title-link" itemprop="url">How to use ftrace to analyze latency of the kernel module function</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-07-14 07:00:00" itemprop="dateCreated datePublished" datetime="2022-07-14T07:00:00-07:00">2022-07-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-27 12:40:16" itemprop="dateModified" datetime="2024-01-27T12:40:16-08:00">2024-01-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>In this example, we study the latency of the function “nfsd_vfs_write” from kernel module “nfsd”.</p>
+<h2 id="ftrace-configuration"><a href="#ftrace-configuration" class="headerlink" title="ftrace configuration"></a>ftrace configuration</h2><p>The following ftrace options are used in this example. There are 8 nfsd processes to be traced.</p>
+<ul>
+<li>current_tracer:  function_graph</li>
+<li>pids: 3591 3592 3593 3594 3595 3596 3597 3598</li>
+<li>filters: nfsd_vfs_write [nfsd]</li>
+</ul>
+<h2 id="ftrace-result"><a href="#ftrace-result" class="headerlink" title="ftrace result"></a>ftrace result</h2><p>From the following trace result, it helps understand the call time of the function “nfsd_vfs_write”. This can be very helpful if we need to analyze the function latency in the kernel module.</p>
+<pre><code>$ cat ftrace.out | grep nfsd_vfs_write | grep &quot;nfsd_vfs_write \[nfsd\]();&quot; | head -5
+  1)  ! 185.011 us  |  nfsd_vfs_write [nfsd]();
+  2)  ! 161.237 us  |  nfsd_vfs_write [nfsd]();
+  3)  ! 200.954 us  |  nfsd_vfs_write [nfsd]();
+  4)  ! 255.285 us  |  nfsd_vfs_write [nfsd]();
+  5)  ! 171.537 us  |  nfsd_vfs_write [nfsd]();
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/Documentation/trace/ftrace.txt">https://www.kernel.org/doc/Documentation/trace/ftrace.txt</a></li>
+<li><a target="_blank" rel="noopener" href="https://lwn.net/Articles/365835/">https://lwn.net/Articles/365835/</a></li>
+<li><a target="_blank" rel="noopener" href="https://lwn.net/Articles/366796/">https://lwn.net/Articles/366796/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1439,98 +1547,6 @@ $ perf script | ./stackcollapse-perf.pl | ./flamegraph.pl &gt; perf16.svg
 <li><a target="_blank" rel="noopener" href="https://queue.acm.org/detail.cfm?id=2927301">https://queue.acm.org/detail.cfm?id=2927301</a></li>
 </ul>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/justice-over-loyalty/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/justice-over-loyalty/" class="post-title-link" itemprop="url">Justice over Loyalty</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-05-16 06:55:00" itemprop="dateCreated datePublished" datetime="2022-05-16T06:55:00-07:00">2022-05-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Young-Author/" itemprop="url" rel="index"><span itemprop="name">Young Author</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Regulus Aurelius woke up to the clanging of weapons and fierce battle cries of Roman elite soldiers during their practice session for the oncoming battles. Things weren’t going well for Rome when General Hannibal Barca of Carthage stormed into the Italian Peninsula with a raging army of 26000 troops, 6000 horses, and war elephants. Regulus, unlike the fearful Roman citizens, faced a continuous dilemma. Part of him was a loyal Roman general who wanted to defeat Carthage. The other part of him was loyal to Carthage, his homeland. Sometimes, a faint smile tugged at his mouth when frantic Roman scouts reported the losses they suffered.
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/justice-over-loyalty/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 

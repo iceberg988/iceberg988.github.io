@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">279</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">280</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">279</span>
+          <span class="site-state-item-count">280</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,187 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/useful-tools-to-analyze-network-latency/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/useful-tools-to-analyze-network-latency/" class="post-title-link" itemprop="url">Five simple tools that helps analyze network latency in Linux</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-13 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-13T07:00:00-07:00">2021-08-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-27 12:37:56" itemprop="dateModified" datetime="2024-01-27T12:37:56-08:00">2024-01-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h2><p>Ping is one of the most basic commands in network management, verifying network connectivity through the roundtrip times taken by the ICMP protocol packets sent to a target host.</p>
+<p>ping - send ICMP ECHO_REQUEST to network hosts</p>
+<ul>
+<li>-c count</li>
+</ul>
+<p>Stop after sending <em>count</em> ECHO_REQUEST packets. With deadline option, ping waits for count ECHO_REPLY packets, until the timeout expires.</p>
+<ul>
+<li>-i interval</li>
+</ul>
+<p>Wait interval seconds between sending each packet. The default is to wait for one  second  between each packet normally, or not to wait in flood mode. Only super-user may set interval to values less 0.2 seconds.</p>
+<pre><code>$ ping 10.10.1.17 -c 1000 -i 0.010
+PING 10.10.1.17 (10.10.1.17) 56(84) bytes of data.
+64 bytes from 10.10.1.17: icmp_seq=1 ttl=64 time=0.176 ms
+64 bytes from 10.10.1.17: icmp_seq=2 ttl=64 time=0.173 ms
+&lt;omitted...&gt;
+64 bytes from 10.10.1.17: icmp_seq=999 ttl=64 time=0.197 ms
+64 bytes from 10.10.1.17: icmp_seq=1000 ttl=64 time=0.195 ms
+
+--- 10.10.1.17 ping statistics ---
+1000 packets transmitted, 1000 received, 0% packet loss, time 10992ms
+rtt min/avg/max/mdev = 0.096/0.173/0.210/0.025 ms
+</code></pre>
+<p>Round-trip time (RTT) is the duration, measured in milliseconds, from when the source server sends a request to when it receives a response from a target server. It’s a key performance metric to measure network latency.</p>
+<p>Actual round trip time can be influenced by:</p>
+<ul>
+<li>Distance – The length a signal has to travel correlates with the time taken for a request to reach a server.</li>
+<li>Transmission medium – The medium used to route a signal (e.g., copper wire, fiber optic cables) can impact how quickly a request is received by a server and routed back to a user.</li>
+<li>Number of network hops – Intermediate routers or servers take time to process a signal, increasing RTT. The more hops a signal has to travel through, the higher the RTT.</li>
+<li>Traffic levels – RTT typically increases when a network is congested with high levels of traffic. Conversely, low traffic times can result in decreased RTT.</li>
+<li>Server response time – The time taken for a target server to respond to a request depends on its processing capacity, the number of requests being handled and the nature of the request (i.e., how much server-side work is required). A longer server response time increases RTT.</li>
+</ul>
+<h2 id="traceroute"><a href="#traceroute" class="headerlink" title="traceroute"></a>traceroute</h2><p>A traceroute displays the path that the signal took as it traveled around the Internet to the website. It also displays times which are the response times that occurred at each stop along the route. If there is a connection problem or latency connecting to a site, it will show up in these times. You will be able to identify which of the stops (also called ‘hops’) along the route is the culprit.</p>
+<pre><code>$ for i in `seq 1 5`; do traceroute 10.10.1.17;sleep 3; done
+traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
+ 1  10.10.1.17 (10.10.1.17)  0.181 ms  0.086 ms  0.084 ms
+traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
+ 1  10.10.1.17 (10.10.1.17)  0.179 ms  0.087 ms  0.081 ms
+traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
+ 1  10.10.1.17 (10.10.1.17)  0.175 ms  0.087 ms  0.081 ms
+traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
+ 1  10.10.1.17 (10.10.1.17)  0.183 ms  0.073 ms  0.081 ms
+traceroute to 10.10.1.17 (10.10.1.17), 30 hops max, 60 byte packets
+ 1  10.10.1.17 (10.10.1.17)  0.177 ms  0.080 ms  0.081 ms
+</code></pre>
+<p>-<br>Hop Number – the first column is simply the number of the hop along the route.</p>
+<p>-<br>RTT Columns – The last three columns display the round trip time (RTT) for the packet to reach that point and return. It is listed in milliseconds. There are three columns because the traceroute sends three separate signal packets. This is to display consistency in the route.</p>
+<h2 id="netperf"><a href="#netperf" class="headerlink" title="netperf"></a>netperf</h2><p>Netperf is a benchmark that can be used to measure the performance of many different types of networking. It provides tests for both unidirectional throughput, and end-to-end latency. The environments currently measureable by netperf include:</p>
+<ul>
+<li><p>TCP and UDP via BSD Sockets for both IPv4 and IPv6</p>
+</li>
+<li><p>DLPI</p>
+</li>
+<li><p>Unix Domain Sockets</p>
+</li>
+<li><p>SCTP for both IPv4 and IPv6</p>
+<p>  netperf -h</p>
+<p>  Usage: netperf [global options] – [test options]</p>
+<p>  Global options:<br>  -a send,recv      Set the local send,recv buffer alignment<br>  -A send,recv      Set the remote send,recv buffer alignment<br>  -B brandstr       Specify a string to be emitted with brief output<br>  -c [cpu_rate]     Report local CPU usage<br>  -C [cpu_rate]     Report remote CPU usage<br>  -d                Increase debugging output<br>  -D [secs,units] * Display interim results at least every secs seconds<br>                    using units as the initial guess for units per second<br>  -f G|M|K|g|m|k    Set the output units<br>  -F fill_file      Pre-fill buffers with data from fill_file<br>  -h                Display this text<br>  -H name|ip,fam *  Specify the target machine and&#x2F;or local ip and family<br>  -i max,min        Specify the max and min number of iterations (15,1)<br>  -I lvl[,intvl]    Specify confidence level (95 or 99) (99)<br>                    and confidence interval in percentage (10)<br>  -j                Keep additional timing statistics<br>  -l testlen        Specify test duration (&gt;0 secs) (&lt;0 bytes|trans)<br>  -L name|ip,fam *  Specify the local ip|name and address family<br>  -o send,recv      Set the local send,recv buffer offsets<br>  -O send,recv      Set the remote send,recv buffer offset<br>  -n numcpu         Set the number of processors for CPU util<br>  -N                Establish no control connection, do ‘send’ side only<br>  -p port,lport*    Specify netserver port number and&#x2F;or local port<br>  -P 0|1            Donot&#x2F;Do display test headers<br>  -r                Allow confidence to be hit on result only<br>  -s seconds        Wait seconds between test setup and test start<br>  -S                Set SO_KEEPALIVE on the data connection<br>  -t testname       Specify test to perform<br>  -T lcpu,rcpu      Request netperf&#x2F;netserver be bound to local&#x2F;remote cpu<br>  -v verbosity      Specify the verbosity level<br>  -W send,recv      Set the number of send,recv buffers<br>  -v level          Set the verbosity level (default 1, min 0)<br>  -V                Display the netperf version and exit<br>  For those options taking two parms, at least one must be specified;<br>  specifying one value without a comma will set both parms to that<br>  value, specifying a value with a leading comma will set just the second<br>  parm, a value with a trailing comma will set just the first. To set<br>  each parm to unique values, specify both and separate them with a<br>  comma.</p>
+<ul>
+<li>For these options taking two parms, specifying one value with no comma<br>  will only set the first parms and will leave the second at the default<br>  value. To set the second value it must be preceded with a comma or be a<br>  comma-separated pair. This is to retain previous netperf behaviour.</li>
+</ul>
+<p>  $ wget -O netperf-2.5.0.tar.gz -c <a target="_blank" rel="noopener" href="https://codeload.github.com/HewlettPackard/netperf/tar.gz/netperf-2.5.0">https://codeload.github.com/HewlettPackard/netperf/tar.gz/netperf-2.5.0</a><br>  $ tar xf netperf-2.5.0.tar.gz &amp;&amp; cd netperf-netperf-2.5.0<br>  $ .&#x2F;configure &amp;&amp; make &amp;&amp; make install</p>
+<p>  [<a href="mailto:&#x72;&#x6f;&#x6f;&#x74;&#x40;&#49;&#48;&#46;&#48;&#46;&#48;&#x2e;&#49;&#x37;">&#x72;&#x6f;&#x6f;&#x74;&#x40;&#49;&#48;&#46;&#48;&#46;&#48;&#x2e;&#49;&#x37;</a>]$ netserver -D<br>  [<a href="mailto:&#114;&#x6f;&#x6f;&#116;&#x40;&#49;&#48;&#46;&#48;&#x2e;&#x30;&#x2e;&#49;&#x36;">&#114;&#x6f;&#x6f;&#116;&#x40;&#49;&#48;&#46;&#48;&#x2e;&#x30;&#x2e;&#49;&#x36;</a>]$ netperf -H 10.10.1.17 -l -1000000 -t TCP_RR -w 10ms -b 1 -v 2 – -O min_latency,mean_latency,max_latency,stddev_latency,transaction_rate<br>  Packet rate control is not compiled in.<br>  Packet burst size is not compiled in.<br>  MIGRATED TCP REQUEST&#x2F;RESPONSE TEST from 0.0.0.0 (0.0.0.0) port 0 AF_INET to 10.10.1.17 (10.10.1.17) port 0 AF_INET : first burst 0<br>  Minimum      Mean         Maximum      Stddev       Transaction<br>  Latency      Latency      Latency      Latency      Rate<br>  Microseconds Microseconds Microseconds Microseconds Tran&#x2F;s</p>
+<p>  63           84.92        2980         7.86         11740.092</p>
+</li>
+</ul>
+<h2 id="iperf"><a href="#iperf" class="headerlink" title="iperf"></a>iperf</h2><p>iPerf3 is a tool for active measurements of the maximum achievable bandwidth on IP networks. It supports tuning of various parameters related to timing, buffers and protocols (TCP, UDP, SCTP with IPv4 and IPv6). For each test it reports the bandwidth, loss, and other parameters.</p>
+<h2 id="lldp"><a href="#lldp" class="headerlink" title="lldp"></a>lldp</h2><p>LLDP (Link Layer Discovery Protocol) can be essential in the situations of complex network-server infrastructure configurations and it’s extremely helpful in case there is no direct access to our setup but we need to determine what network ports on the switches are our servers NIC cards connected to.</p>
+<p>Below example shows how to install and enable LLDP Daemon on CentOS and check what are the corresponding neighbor ports connected to the server network cards.</p>
+<pre><code>$ yum install lldpd
+$ systemctl --now enable lldpd
+  
+$ lldpcli show neighbors
+-------------------------------------------------------------------------------
+LLDP neighbors:
+-------------------------------------------------------------------------------
+Interface:    enp6s0f1, via: LLDP, RID: 1, Time: 0 day, 00:01:29
+  Chassis:
+    ChassisID:    mac 00:1c:73:82:07:ee
+    SysName:      xx-ay-01.06.09
+    SysDescr:     Arista Networks EOS version 4.16.6M running on an Arista Networks Lab-71x-28
+    MgmtIP:       10.0.254.9
+    Capability:   Bridge, on
+    Capability:   Router, on
+  Port:
+    PortID:       ifname Ethernet17
+    TTL:          120
+-------------------------------------------------------------------------------
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://hewlettpackard.github.io/netperf/">https://hewlettpackard.github.io/netperf/</a></li>
+<li><a target="_blank" rel="noopener" href="https://iperf.fr/">https://iperf.fr/</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1463,114 +1644,6 @@ $ docker inspect 1cd20ecd897d | grep RootDir
 </ol>
 <p>We use nsenter to get the stack trace of the target process in contaienr namespace.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">$ man nsenter</span><br><span class="line">   </span><br><span class="line">NAME</span><br><span class="line">       nsenter - run program with namespaces of other processes</span><br><span class="line">    </span><br><span class="line">SYNOPSIS</span><br><span class="line">       nsenter [options] [program [arguments]]</span><br><span class="line">    </span><br><span class="line">DESCRIPTION</span><br><span class="line">       Enters the namespaces of one or more other processes and then executes the specified program.  Enterable namespaces are:</span><br><span class="line">    </span><br><span class="line">       mount namespace</span><br><span class="line">              Mounting  and  unmounting  filesystems  will  not affect the rest of the system (CLONE_NEWNS flag), except for filesystems which are explicitly marked as</span><br><span class="line">              shared (with mount --make-shared; see /proc/self/mountinfo for the shared flag).</span><br><span class="line">    </span><br><span class="line">       UTS namespace</span><br><span class="line">              Setting hostname or domainname will not affect the rest of the system.  (CLONE_NEWUTS flag)</span><br><span class="line">    </span><br><span class="line">       IPC namespace</span><br><span class="line">              The process will have an independent namespace for System V message queues, semaphore sets and shared memory segments.  (CLONE_NEWIPC flag)</span><br><span class="line">    </span><br><span class="line">       network namespace</span><br><span class="line">              The process will have independent IPv4 and IPv6 stacks, IP routing tables, firewall rules, the /proc/net and  /sys/class/net  directory  trees,  sockets,</span><br><span class="line">              etc.  (CLONE_NEWNET flag)</span><br><span class="line">    </span><br><span class="line">       PID namespace</span><br><span class="line">              Children  will have a set of PID to process mappings separate from the nsenter process (CLONE_NEWPID flag).  nsenter will fork by default if changing the</span><br><span class="line">              PID namespace, so that the new program and its children share the same PID namespace and are visible to each other.  If --no-fork is used, the  new  pro‐</span><br><span class="line">              gram will be exec&#x27;ed without forking.</span><br><span class="line">    </span><br><span class="line">       user namespace</span><br><span class="line">              The process will have a distinct set of UIDs, GIDs and capabilities.  (CLONE_NEWUSER flag)</span><br><span class="line">    </span><br><span class="line">       See clone(2) for the exact semantics of the flags.</span><br><span class="line">    </span><br><span class="line">       If program is not given, then ``$&#123;SHELL&#125;&#x27;&#x27; is run (default: /bin/sh).</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/network-bonding/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/network-bonding/" class="post-title-link" itemprop="url">Network bonding</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-19 07:00:00" itemprop="dateCreated datePublished" datetime="2021-04-19T07:00:00-07:00">2021-04-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Network bonding enables the combination of two or more network interfaces into a single-bonded (logical) interface, which increases the bandwidth and provides redundancy. If a specific network interface card (NIC) experiences a problem, communications are not affected significantly as long as the other slave NICs remain active.</p>
-<h2 id="Bonding-modes-supported-by-RHEL-and-CentOS-operating-systems"><a href="#Bonding-modes-supported-by-RHEL-and-CentOS-operating-systems" class="headerlink" title="Bonding modes supported by RHEL and CentOS operating systems"></a>Bonding modes supported by RHEL and CentOS operating systems</h2><p>The behavior of the bonded interfaces depends on the mode that is selected. RHEL supports the following common bonding modes:</p>
-<ul>
-<li>Mode 0 (balance-rr): This mode is also known as round-robin mode. Packets are sequentially transmitted and received through each interface one by one. This mode provides load balancing functionality.</li>
-<li>Mode 1 (active-backup): This mode has only one interface set to active, while all other interfaces are in the backup state. If the active interface fails, a backup interface replaces it as the only active interface in the bond. The media access control (MAC) address of the bond interface in mode 1 is visible on only one port (the network adapter), which prevents confusion for the switch. Mode 1 provides fault tolerance.</li>
-<li>Mode 2 (balance-xor): The source MAC address uses exclusive or (XOR) logic with the destination MAC address. This calculation ensures that the same slave interface is selected for each destination MAC address. Mode 2 provides fault tolerance and load balancing.</li>
-<li>Mode 3 (broadcast): All transmissions are sent to all the slaves. This mode provides fault tolerance.</li>
-<li>Mode 4 (802.3ad): This mode creates aggregation groups that share the same speed and duplex settings, and it requires a switch that supports an IEEE 802.3ad dynamic link. Mode 4 uses all interfaces in the active aggregation group. For example, you can aggregate three 1 GB per second (GBPS) ports into a 3 GBPS trunk port. This is equivalent to having one interface with 3 GBPS speed. It provides fault tolerance and load balancing.</li>
-<li>Mode 5 (balance-tlb): This mode ensures that the outgoing traffic distribution is set according to the load on each interface and that the current interface receives all the incoming traffic. If the assigned interface fails to receive traffic, another interface is assigned to the receiving role. It provides fault tolerance and load balancing.</li>
-<li>Mode 6 (balance-alb): This mode is supported only in x86 environments. The receiving packets are load balanced through Address Resolution Protocol (ARP) negotiation. This mode provides fault tolerance and load balancing.</li>
-</ul>
-<h2 id="IEEE-802-3ad-Link-Aggregation-Policy-and-LACP"><a href="#IEEE-802-3ad-Link-Aggregation-Policy-and-LACP" class="headerlink" title="IEEE 802.3ad Link Aggregation Policy and LACP"></a>IEEE 802.3ad Link Aggregation Policy and LACP</h2><p>Before we explore LACP configuration, we should understand the IEEE 802.3ad link aggregation policy and LACP bonding, which allows us to aggregate multiple ports into a single group. This process combines the bandwidth into a single connection.</p>
-<p>IEEE 802.3ad link aggregation enables us to group Ethernet interfaces at the physical layer to form a single link layer interface, also known as a link aggregation group (LAG) or bundle.</p>
-<p>Some users require more bandwidth in their network than a single fast Ethernet link can provide. Using IEEE 802.3ad link aggregation in this situation provides increased port density and bandwidth at a lower cost.</p>
-<p>For example, if you need 2 GBPS bandwidth to transmit data and have only 1 GBPS Fast Ethernet links installed on your system, creating a LAG bundle containing two 1 GBPS Fast Ethernet links is more cost-effective than purchasing a single 2 GBPS Ethernet link.</p>
-<p>The following diagram illustrates the IEEE 802.3ad link aggregation policy:</p>
-<p><img src="/images/lacp.png" alt="Image"></p>
-<p>LACP is a mechanism for exchanging port and system information to create and maintain LAG bundles. The LAG bundle distributes MAC clients across the link layer interface and collects traffic from the links to present to the MAC clients of the LAG bundle.</p>
-<p>LACP identifies the MAC address of the Ethernet link that has the highest port priority and is of the lowest value, and it assigns that MAC address to the LAG bundle.</p>
-<p>This bonding mode requires a switch that supports IEEE 802.3ad dynamic links.</p>
-
       
     </div>
 

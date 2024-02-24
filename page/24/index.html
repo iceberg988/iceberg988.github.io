@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">279</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">280</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">279</span>
+          <span class="site-state-item-count">280</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -200,6 +200,114 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/network-bonding/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/network-bonding/" class="post-title-link" itemprop="url">Network bonding</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-19 07:00:00" itemprop="dateCreated datePublished" datetime="2021-04-19T07:00:00-07:00">2021-04-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Network bonding enables the combination of two or more network interfaces into a single-bonded (logical) interface, which increases the bandwidth and provides redundancy. If a specific network interface card (NIC) experiences a problem, communications are not affected significantly as long as the other slave NICs remain active.</p>
+<h2 id="Bonding-modes-supported-by-RHEL-and-CentOS-operating-systems"><a href="#Bonding-modes-supported-by-RHEL-and-CentOS-operating-systems" class="headerlink" title="Bonding modes supported by RHEL and CentOS operating systems"></a>Bonding modes supported by RHEL and CentOS operating systems</h2><p>The behavior of the bonded interfaces depends on the mode that is selected. RHEL supports the following common bonding modes:</p>
+<ul>
+<li>Mode 0 (balance-rr): This mode is also known as round-robin mode. Packets are sequentially transmitted and received through each interface one by one. This mode provides load balancing functionality.</li>
+<li>Mode 1 (active-backup): This mode has only one interface set to active, while all other interfaces are in the backup state. If the active interface fails, a backup interface replaces it as the only active interface in the bond. The media access control (MAC) address of the bond interface in mode 1 is visible on only one port (the network adapter), which prevents confusion for the switch. Mode 1 provides fault tolerance.</li>
+<li>Mode 2 (balance-xor): The source MAC address uses exclusive or (XOR) logic with the destination MAC address. This calculation ensures that the same slave interface is selected for each destination MAC address. Mode 2 provides fault tolerance and load balancing.</li>
+<li>Mode 3 (broadcast): All transmissions are sent to all the slaves. This mode provides fault tolerance.</li>
+<li>Mode 4 (802.3ad): This mode creates aggregation groups that share the same speed and duplex settings, and it requires a switch that supports an IEEE 802.3ad dynamic link. Mode 4 uses all interfaces in the active aggregation group. For example, you can aggregate three 1 GB per second (GBPS) ports into a 3 GBPS trunk port. This is equivalent to having one interface with 3 GBPS speed. It provides fault tolerance and load balancing.</li>
+<li>Mode 5 (balance-tlb): This mode ensures that the outgoing traffic distribution is set according to the load on each interface and that the current interface receives all the incoming traffic. If the assigned interface fails to receive traffic, another interface is assigned to the receiving role. It provides fault tolerance and load balancing.</li>
+<li>Mode 6 (balance-alb): This mode is supported only in x86 environments. The receiving packets are load balanced through Address Resolution Protocol (ARP) negotiation. This mode provides fault tolerance and load balancing.</li>
+</ul>
+<h2 id="IEEE-802-3ad-Link-Aggregation-Policy-and-LACP"><a href="#IEEE-802-3ad-Link-Aggregation-Policy-and-LACP" class="headerlink" title="IEEE 802.3ad Link Aggregation Policy and LACP"></a>IEEE 802.3ad Link Aggregation Policy and LACP</h2><p>Before we explore LACP configuration, we should understand the IEEE 802.3ad link aggregation policy and LACP bonding, which allows us to aggregate multiple ports into a single group. This process combines the bandwidth into a single connection.</p>
+<p>IEEE 802.3ad link aggregation enables us to group Ethernet interfaces at the physical layer to form a single link layer interface, also known as a link aggregation group (LAG) or bundle.</p>
+<p>Some users require more bandwidth in their network than a single fast Ethernet link can provide. Using IEEE 802.3ad link aggregation in this situation provides increased port density and bandwidth at a lower cost.</p>
+<p>For example, if you need 2 GBPS bandwidth to transmit data and have only 1 GBPS Fast Ethernet links installed on your system, creating a LAG bundle containing two 1 GBPS Fast Ethernet links is more cost-effective than purchasing a single 2 GBPS Ethernet link.</p>
+<p>The following diagram illustrates the IEEE 802.3ad link aggregation policy:</p>
+<p><img src="/images/lacp.png" alt="Image"></p>
+<p>LACP is a mechanism for exchanging port and system information to create and maintain LAG bundles. The LAG bundle distributes MAC clients across the link layer interface and collects traffic from the links to present to the MAC clients of the LAG bundle.</p>
+<p>LACP identifies the MAC address of the Ethernet link that has the highest port priority and is of the lowest value, and it assigns that MAC address to the LAG bundle.</p>
+<p>This bonding mode requires a switch that supports IEEE 802.3ad dynamic links.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1328,219 +1436,6 @@ Q2C               0.000093453   0.001658297   0.005098018          86
 <p>If the file is being extended or storage is allocated, data synchronous I&#x2F;O must write the inode change before returning to the application. This case eliminates the performance advantage of data synchronous I&#x2F;O.</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://sort.veritas.com/public/documents/sf/5.0/aix/html/fs_admin/ag_ch_interface_fs4.html">https://sort.veritas.com/public/documents/sf/5.0/aix/html/fs_admin&#x2F;ag_ch_interface_fs4.html</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/network-ring-buffer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/network-ring-buffer/" class="post-title-link" itemprop="url">Network ring buffer</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-03-04 08:00:00" itemprop="dateCreated datePublished" datetime="2021-03-04T08:00:00-08:00">2021-03-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Receive ring buffers are shared between the device driver and NIC. The card assigns a transmit (TX) and receive (RX) ring buffer. As the name implies, the ring buffer is a circular buffer where an overflow simply overwrites existing data. It should be noted that there are two ways to move data from the NIC to the kernel, hardware interrupts and software interrupts, also called SoftIRQs.</p>
-<p>The RX ring buffer is used to store incoming packets until they can be processed by the device driver. The device driver drains the RX ring, typically via SoftIRQs, which puts the incoming packets into a kernel data structure called an sk_buff or “skb” to begin its journey through the kernel and up to the application which owns the relevant socket. The TX ring buffer is used to hold outgoing packets which are destined for the wire.</p>
-<p>These ring buffers reside at the bottom of the stack and are a crucial point at which packet drop can occur, which in turn will adversely affect network performance.</p>
-<p>You can increase the size of the Ethernet device RX ring buffer if the packet drop rate causes applications to report:</p>
-<ul>
-<li>a loss of data</li>
-<li>cluster fence</li>
-<li>slow performance</li>
-<li>timeouts</li>
-<li>failed backups</li>
-</ul>
-<h2 id="Interrupts-and-Interrupt-Handlers"><a href="#Interrupts-and-Interrupt-Handlers" class="headerlink" title="Interrupts and Interrupt Handlers"></a>Interrupts and Interrupt Handlers</h2><p>Interrupts from the hardware are known as “top-half” interrupts. When a NIC receives incoming data, it copies the data into kernel buffers using DMA. The NIC notifies the kernel of this data by raising a hard interrupt. These interrupts are processed by interrupt handlers which do minimal work, as they have already interrupted another task and cannot be interrupted themselves. Hard interrupts can be expensive in terms of CPU usage, especially when holding kernel locks. The hard interrupt handler then leaves the majority of packet reception to a software interrupt, or SoftIRQ, process which can be scheduled more fairly.</p>
-<p>Hard interrupts can be seen in &#x2F;proc&#x2F;interrupts where each queue has an interrupt vector in the 1st column assigned to it. These are initialized when the system boots or when the NIC device driver module is loaded. Each RX and TX queue is assigned a unique vector, which informs the interrupt handler as to which NIC&#x2F;queue the interrupt is coming from. The columns represent the number of incoming interrupts as a counter value:</p>
-<pre><code>$ egrep “CPU0|eth2” /proc/interrupts
- CPU0 CPU1 CPU2 CPU3 CPU4 CPU5
- 105: 141606 0 0 0 0 0 IR-PCI-MSI-edge eth2-rx-0
- 106: 0 141091 0 0 0 0 IR-PCI-MSI-edge eth2-rx-1
- 107: 2 0 163785 0 0 0 IR-PCI-MSI-edge eth2-rx-2
- 108: 3 0 0 194370 0 0 IR-PCI-MSI-edge eth2-rx-3
- 109: 0 0 0 0 0 0 IR-PCI-MSI-edge eth2-tx
-</code></pre>
-<h2 id="SoftIRQs"><a href="#SoftIRQs" class="headerlink" title="SoftIRQs"></a>SoftIRQs</h2><p>Also known as “bottom-half” interrupts, software interrupt requests (SoftIRQs) are kernel routines which are scheduled to run at a time when other tasks will not be interrupted. The SoftIRQ’s purpose is to drain the network adapter receive ring buffers. These routines run in the form of ksoftirqd&#x2F;cpu-number processes and call driver-specific code functions. They can be seen in process monitoring tools such as ps and top.</p>
-<p>The following call stack, read from the bottom up, is an example of a SoftIRQ polling a Mellanox card. The functions marked [mlx4_en] are the Mellanox polling routines in the mlx4_en.ko driver kernel module, called by the kernel’s generic polling routines such as net_rx_action. After moving from the driver to the kernel, the traffic being received will then move up to the socket, ready for the application to consume:</p>
-<pre><code> mlx4_en_complete_rx_desc [mlx4_en]
- mlx4_en_process_rx_cq [mlx4_en]
- mlx4_en_poll_rx_cq [mlx4_en]
- net_rx_action
- __do_softirq
- run_ksoftirqd
- smpboot_thread_fn
- kthread
- kernel_thread_starter
- kernel_thread_starter
- 1 lock held by ksoftirqd
-</code></pre>
-<p>SoftIRQs can be monitored as follows. Each column represents a CPU:</p>
-<pre><code>$ watch -n1 grep RX /proc/softirqs
-$ watch -n1 grep TX /proc/softirqs
-</code></pre>
-<h2 id="Displaying-the-number-of-dropped-packets"><a href="#Displaying-the-number-of-dropped-packets" class="headerlink" title="Displaying the number of dropped packets"></a>Displaying the number of dropped packets</h2><p>The ethtool utility enables administrators to query, configure, or control network driver settings.</p>
-<p>The exhaustion of the RX ring buffer causes an increment in the counters, such as “discard” or “drop” in the output of ethtool -S interface_name. The discarded packets indicate that the available buffer is filling up faster than the kernel can process the packets.</p>
-<p>To display drop counters for the enp1s0 interface, enter:</p>
-<pre><code>$ ethtool -S enp1s0
-</code></pre>
-<h2 id="Increasing-the-RX-ring-buffer-to-reduce-a-high-packet-drop-rate"><a href="#Increasing-the-RX-ring-buffer-to-reduce-a-high-packet-drop-rate" class="headerlink" title="Increasing the RX ring buffer to reduce a high packet drop rate"></a>Increasing the RX ring buffer to reduce a high packet drop rate</h2><p>The ethtool utility helps to increase the RX buffer to reduce a high packet drop rate.</p>
-<ol>
-<li><p>To view the maximum RX ring buffer size:</p>
-<p> $ ethtool -g nic0<br> Ring parameters for nic0:<br> Pre-set maximums:<br> RX:             4078<br> RX Mini:        0<br> RX Jumbo:       0<br> TX:             4078<br> Current hardware settings:<br> RX:             2048<br> RX Mini:        0<br> RX Jumbo:       0<br> TX:             2048</p>
-</li>
-<li><p>If the values in the Pre-set maximums section are higher than in the Current hardware settings section, increase RX ring buffer:</p>
-</li>
-</ol>
-<ul>
-<li><p>To temporary change the RX ring buffer of the nic0 device to 4078, enter:</p>
-<p>  $ ethtool -G nic0 rx 4078</p>
-</li>
-<li><p>To permanently change the RX ring buffer create a NetworkManager dispatcher script.</p>
-</li>
-</ul>
-<h2 id="Understanding-the-maximum-RX-TX-ring-buffer"><a href="#Understanding-the-maximum-RX-TX-ring-buffer" class="headerlink" title="Understanding the maximum RX&#x2F;TX ring buffer"></a>Understanding the maximum RX&#x2F;TX ring buffer</h2><p>From <a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/source/include/linux/ethtool.h">ethtool</a> source code, we can find the following function which is used by command “ethtool -g [nic]”</p>
-<pre><code>* @get_ringparam: Report ring sizes
-</code></pre>
-<p>For different NIC vender, the <a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/C/ident/get_ringparam">driver</a> may be implemented differently.</p>
-<p>In this example, the NIC driver is bnx2x.</p>
-<pre><code>$ ethtool -i nic0
-driver: bnx2x
-</code></pre>
-<p>So, we can check the <a target="_blank" rel="noopener" href="https://elixir.bootlin.com/linux/latest/source/drivers/net/ethernet/broadcom/bnx2x/bnx2x_ethtool.c#L3677">source code</a> as below.</p>
-<pre><code>static void bnx2x_get_ringparam(struct net_device *dev,
-                struct ethtool_ringparam *ering)
-&#123;
-    struct bnx2x *bp = netdev_priv(dev);
-
-    ering-&gt;rx_max_pending = MAX_RX_AVAIL;
-
-    /* If size isn&#39;t already set, we give an estimation of the number
-     * of buffers we&#39;ll have. We&#39;re neglecting some possible conditions
-     * [we couldn&#39;t know for certain at this point if number of queues
-     * might shrink] but the number would be correct for the likely
-     * scenario.
-     */
-    if (bp-&gt;rx_ring_size)
-        ering-&gt;rx_pending = bp-&gt;rx_ring_size;
-    else if (BNX2X_NUM_RX_QUEUES(bp))
-        ering-&gt;rx_pending = MAX_RX_AVAIL / BNX2X_NUM_RX_QUEUES(bp);
-    else
-        ering-&gt;rx_pending = MAX_RX_AVAIL;
-
-    ering-&gt;tx_max_pending = IS_MF_FCOE_AFEX(bp) ? 0 : MAX_TX_AVAIL;
-    ering-&gt;tx_pending = bp-&gt;tx_ring_size;
-&#125;
-</code></pre>
-<p>MAX_RX_AVAIL is the place to define the maximum RX ring buffer. We can further check the formula as below.</p>
-<pre><code>#define MAX_RX_AVAIL		(MAX_RX_DESC_CNT * NUM_RX_RINGS - 2)
-
-#define NUM_RX_RINGS		8
-
-#define MAX_RX_DESC_CNT		(RX_DESC_CNT - NEXT_PAGE_RX_DESC_CNT)
-#define RX_DESC_CNT		(BCM_PAGE_SIZE / sizeof(struct eth_rx_bd))
-#define NEXT_PAGE_RX_DESC_CNT	2
-
-#define BCM_PAGE_SIZE		(1 &lt;&lt; BCM_PAGE_SHIFT)
-#define BCM_PAGE_SHIFT		12
-
-/*
- * The eth Rx Buffer Descriptor
- */
-struct eth_rx_bd &#123;
-    __le32 addr_lo;
-    __le32 addr_hi;
-&#125;;
-</code></pre>
-<p>So, based on the formula above, we can calculate the maximum RX ring buffer as below.</p>
-<pre><code>rx_max = MAX_RX_AVAIL 
-       = MAX_RX_DESC_CNT * NUM_RX_RINGS - 2
-       = (RX_DESC_CNT - NEXT_PAGE_RX_DESC_CNT) * NUM_RX_RINGS - 2
-       = ((BCM_PAGE_SIZE / sizeof(struct eth_rx_bd)) - 2) * 8 - 2
-       = (((1 &lt;&lt; BCM_PAGE_SHIFT) / sizeof(struct eth_rx_bd)) - 2) * 8 - 2
-       = ((4096 / 8 ) - 2) * 8 - 2
-       = 4078
-</code></pre>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://access.redhat.com/sites/default/files/attachments/20150325_network_performance_tuning.pdf">Red Hat Enterprise Linux Network Performance Tuning Guide</a></li>
-<li><a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/monitoring-and-tuning-the-rx-ring-buffer_configuring-and-managing-networking">MONITORING AND TUNING THE RX RING BUFFER</a></li>
 </ul>
 
       
