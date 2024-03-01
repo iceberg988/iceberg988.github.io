@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">280</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">105</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">281</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">280</span>
+          <span class="site-state-item-count">281</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-count">105</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,111 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/using-gstack-for-docker-container-process/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/using-gstack-for-docker-container-process/" class="post-title-link" itemprop="url">How to use gstack for docker container process</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-27 07:00:00" itemprop="dateCreated datePublished" datetime="2021-04-27T07:00:00-07:00">2021-04-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-27 12:40:24" itemprop="dateModified" datetime="2024-01-27T12:40:24-08:00">2024-01-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Big-Data/" itemprop="url" rel="index"><span itemprop="name">Big Data</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>In a Docker container environment, we won’t get a valid stack trace directly on the container host as below.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$  ps -ef |grep smbd</span><br><span class="line">root     171118 167977  0 Apr22 ?        00:00:02 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root     171166 171118  0 Apr22 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root     171168 171118  0 Apr22 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root     171208 171118  0 Apr22 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root     190574 186140  0 15:01 pts/3    00:00:00 grep --color=auto smbd</span><br><span class="line">    </span><br><span class="line">$  gstack 171118</span><br><span class="line">#0  0x00007fb66768afb3 in ?? () from /lib64/libc.so.6</span><br><span class="line">#1  0x00007fb667b70f1b in ?? ()</span><br><span class="line">#2  0x0000000000000060 in ?? ()</span><br><span class="line">#3  0x00007fb668a92f5c in ?? ()</span><br><span class="line">#4  0x0000000000000000 in ?? () </span><br></pre></td></tr></table></figure>
+
+
+<p>To print the stack trace for a process running inside container, we can do the following.</p>
+<ol>
+<li><p>Get the process id inside container</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec -it iNfcP_9-0-1 bash</span><br><span class="line">bash-4.2# ps -ef | grep smbd</span><br><span class="line">root       1864      1  0 Apr22 ?        00:00:02 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root       1908   1864  0 Apr22 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root       1910   1864  0 Apr22 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root       1950   1864  0 Apr22 ?        00:00:00 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">root     177346 177338  0 15:02 ?        00:00:00 grep smbd </span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>Get the container instance pid</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ /bin/docker inspect --format &#x27;\&#123;\&#123; .State.Pid &#125;&#125;&#x27; e2590333640e</span><br><span class="line">167977</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Print stack trace with gstack as below</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$  /bin/nsenter -Z -m -n -p -t 167977 /bin/gstack 1864</span><br><span class="line">#0  0x00007fb66768afb3 in __epoll_wait_nocancel () from /lib64/libc.so.6</span><br><span class="line">#1  0x00007fb667b70f1b in epoll_event_loop_once () from /lib64/libtevent.so.0</span><br><span class="line">#2  0x00007fb667b6f057 in std_event_loop_once () from /lib64/libtevent.so.0</span><br><span class="line">#3  0x00007fb667b6a25d in _tevent_loop_once () from /lib64/libtevent.so.0</span><br><span class="line">#4  0x00007fb667b6a4bb in tevent_common_loop_wait () from /lib64/libtevent.so.0</span><br><span class="line">#5  0x00007fb667b6eff7 in std_event_loop_wait () from /lib64/libtevent.so.0</span><br><span class="line">#6  0x00005588a9175a98 in main ()</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>We use nsenter to get the stack trace of the target process in contaienr namespace.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">$ man nsenter</span><br><span class="line">   </span><br><span class="line">NAME</span><br><span class="line">       nsenter - run program with namespaces of other processes</span><br><span class="line">    </span><br><span class="line">SYNOPSIS</span><br><span class="line">       nsenter [options] [program [arguments]]</span><br><span class="line">    </span><br><span class="line">DESCRIPTION</span><br><span class="line">       Enters the namespaces of one or more other processes and then executes the specified program.  Enterable namespaces are:</span><br><span class="line">    </span><br><span class="line">       mount namespace</span><br><span class="line">              Mounting  and  unmounting  filesystems  will  not affect the rest of the system (CLONE_NEWNS flag), except for filesystems which are explicitly marked as</span><br><span class="line">              shared (with mount --make-shared; see /proc/self/mountinfo for the shared flag).</span><br><span class="line">    </span><br><span class="line">       UTS namespace</span><br><span class="line">              Setting hostname or domainname will not affect the rest of the system.  (CLONE_NEWUTS flag)</span><br><span class="line">    </span><br><span class="line">       IPC namespace</span><br><span class="line">              The process will have an independent namespace for System V message queues, semaphore sets and shared memory segments.  (CLONE_NEWIPC flag)</span><br><span class="line">    </span><br><span class="line">       network namespace</span><br><span class="line">              The process will have independent IPv4 and IPv6 stacks, IP routing tables, firewall rules, the /proc/net and  /sys/class/net  directory  trees,  sockets,</span><br><span class="line">              etc.  (CLONE_NEWNET flag)</span><br><span class="line">    </span><br><span class="line">       PID namespace</span><br><span class="line">              Children  will have a set of PID to process mappings separate from the nsenter process (CLONE_NEWPID flag).  nsenter will fork by default if changing the</span><br><span class="line">              PID namespace, so that the new program and its children share the same PID namespace and are visible to each other.  If --no-fork is used, the  new  pro‐</span><br><span class="line">              gram will be exec&#x27;ed without forking.</span><br><span class="line">    </span><br><span class="line">       user namespace</span><br><span class="line">              The process will have a distinct set of UIDs, GIDs and capabilities.  (CLONE_NEWUSER flag)</span><br><span class="line">    </span><br><span class="line">       See clone(2) for the exact semantics of the flags.</span><br><span class="line">    </span><br><span class="line">       If program is not given, then ``$&#123;SHELL&#125;&#x27;&#x27; is run (default: /bin/sh).</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1342,121 +1447,8 @@ Q2C               0.000093453   0.001658297   0.005098018          86
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/buffered-and-direct-io/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/buffered-and-direct-io/" class="post-title-link" itemprop="url">Buffered and Direct IO</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-03-09 08:00:00" itemprop="dateCreated datePublished" datetime="2021-03-09T08:00:00-08:00">2021-03-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Buffered-and-Direct-I-O"><a href="#Buffered-and-Direct-I-O" class="headerlink" title="Buffered and Direct I&#x2F;O"></a>Buffered and Direct I&#x2F;O</h2><p>The VxFS responds with read-ahead for sequential read I&#x2F;O. This results in buffered I&#x2F;O. The data is prefetched and retained in buffers, in anticipation of application asking for it. The data buffers are commonly referred to as the VxFS buffer cache. This is the default VxFS behavior.</p>
-<p>Direct I&#x2F;O, on the other hand, does not buffer the data when the I&#x2F;O to the underlying device is completed. This saves system resources like memory and CPU usage. Direct I&#x2F;O is possible only when alignment and sizing criteria are satisfied.</p>
-<p>All the supported platforms have a VxFS buffer cache. Each platform also has either a page cache, (aix&#x2F;solaris&#x2F;linux) or its own buffer cache (HP-UX). These caches are commonly known as the file system caches.</p>
-<p>Direct I&#x2F;O does not use these caches. The memory used for direct I&#x2F;O is discarded after the I&#x2F;O is complete, and is therefore not buffered.</p>
-<h2 id="Direct-I-O"><a href="#Direct-I-O" class="headerlink" title="Direct I&#x2F;O"></a>Direct I&#x2F;O</h2><p>Direct I&#x2F;O is an unbuffered form of I&#x2F;O. If the VX_DIRECT advisory is set, the user is requesting direct data transfer between the disk and the user-supplied buffer for reads and writes. This bypasses the kernel buffering of data, and reduces the CPU overhead associated with I&#x2F;O by eliminating the data copy between the kernel buffer and the user’s buffer. This also avoids taking up space in the buffer cache that might be better used for something else. The direct I&#x2F;O feature can provide significant performance gains for some applications.</p>
-<p>The direct I&#x2F;O and VX_DIRECT advisories are maintained on a per-file-descriptor basis.</p>
-<h2 id="Direct-I-O-requirements"><a href="#Direct-I-O-requirements" class="headerlink" title="Direct I&#x2F;O requirements"></a>Direct I&#x2F;O requirements</h2><p>For an I&#x2F;O operation to be performed as direct I&#x2F;O, it must meet certain alignment criteria. The alignment constraints are usually determined by the disk driver, the disk controller, and the system memory management hardware and software.</p>
-<p>The requirements for direct I&#x2F;O are as follows:</p>
-<p>The starting file offset must be aligned to a 512-byte boundary.</p>
-<p>The ending file offset must be aligned to a 512-byte boundary, or the length must be a multiple of 512 bytes.</p>
-<p>The memory buffer must start on an 8-byte boundary.</p>
-<h2 id="Direct-I-O-vs-synchronous-I-O"><a href="#Direct-I-O-vs-synchronous-I-O" class="headerlink" title="Direct I&#x2F;O vs. synchronous I&#x2F;O"></a>Direct I&#x2F;O vs. synchronous I&#x2F;O</h2><p>Because direct I&#x2F;O maintains the same data integrity as synchronous I&#x2F;O, it can be used in many applications that currently use synchronous I&#x2F;O. If a direct I&#x2F;O request does not allocate storage or extend the file, the inode is not immediately written.</p>
-<h2 id="Direct-I-O-CPU-overhead"><a href="#Direct-I-O-CPU-overhead" class="headerlink" title="Direct I&#x2F;O CPU overhead"></a>Direct I&#x2F;O CPU overhead</h2><p>The CPU cost of direct I&#x2F;O is about the same as a raw disk transfer. For sequential I&#x2F;O to very large files, using direct I&#x2F;O with large transfer sizes can provide the same speed as buffered I&#x2F;O with much less CPU overhead.</p>
-<p>If the file is being extended or storage is being allocated, direct I&#x2F;O must write the inode change before returning to the application. This eliminates some of the performance advantages of direct I&#x2F;O.</p>
-<h2 id="Discovered-Direct-I-O"><a href="#Discovered-Direct-I-O" class="headerlink" title="Discovered Direct I&#x2F;O"></a>Discovered Direct I&#x2F;O</h2><p>Discovered Direct I&#x2F;O is a file system tunable you can set using the vxtunefs command. When the file system gets an I&#x2F;O request larger than the discovered_direct_iosz, it tries to use direct I&#x2F;O on the request. For large I&#x2F;O sizes, Discovered Direct I&#x2F;O can perform much better than buffered I&#x2F;O.</p>
-<p>Discovered Direct I&#x2F;O behavior is similar to direct I&#x2F;O and has the same alignment constraints, except writes that allocate storage or extend the file size do not require writing the inode changes before returning to the application.</p>
-<h2 id="Unbuffered-I-O"><a href="#Unbuffered-I-O" class="headerlink" title="Unbuffered I&#x2F;O"></a>Unbuffered I&#x2F;O</h2><p>If the VX_UNBUFFERED advisory is set, I&#x2F;O behavior is the same as direct I&#x2F;O with the VX_DIRECT advisory set, so the alignment constraints that apply to direct I&#x2F;O also apply to unbuffered I&#x2F;O. For unbuffered I&#x2F;O, however, if the file is being extended, or storage is being allocated to the file, inode changes are not updated synchronously before the write returns to the user. The VX_UNBUFFERED advisory is maintained on a per-file-descriptor basis.</p>
-<p>For information on how to set the discovered_direct_iosz, see Tuning I&#x2F;O.</p>
-<h2 id="Data-synchronous-I-O"><a href="#Data-synchronous-I-O" class="headerlink" title="Data synchronous I&#x2F;O"></a>Data synchronous I&#x2F;O</h2><p>If the VX_DSYNC advisory is set, the user is requesting data synchronous I&#x2F;O. In synchronous I&#x2F;O, the data is written, and the inode is written with updated times and (if necessary) an increased file size. In data synchronous I&#x2F;O, the data is transferred to disk synchronously before the write returns to the user. If the file is not extended by the write, the times are updated in memory, and the call returns to the user. If the file is extended by the operation, the inode is written before the write returns.</p>
-<p>The direct I&#x2F;O and VX_DSYNC advisories are maintained on a per-file-descriptor basis.</p>
-<h2 id="Data-synchronous-I-O-vs-synchronous-I-O"><a href="#Data-synchronous-I-O-vs-synchronous-I-O" class="headerlink" title="Data synchronous I&#x2F;O vs. synchronous I&#x2F;O"></a>Data synchronous I&#x2F;O vs. synchronous I&#x2F;O</h2><p>Like direct I&#x2F;O, the data synchronous I&#x2F;O feature can provide significant application performance gains. Because data synchronous I&#x2F;O maintains the same data integrity as synchronous I&#x2F;O, it can be used in many applications that currently use synchronous I&#x2F;O. If the data synchronous I&#x2F;O does not allocate storage or extend the file, the inode is not immediately written. The data synchronous I&#x2F;O does not have any alignment constraints, so applications that find it difficult to meet the alignment constraints of direct I&#x2F;O should use data synchronous I&#x2F;O.</p>
-<p>If the file is being extended or storage is allocated, data synchronous I&#x2F;O must write the inode change before returning to the application. This case eliminates the performance advantage of data synchronous I&#x2F;O.</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://sort.veritas.com/public/documents/sf/5.0/aix/html/fs_admin/ag_ch_interface_fs4.html">https://sort.veritas.com/public/documents/sf/5.0/aix/html/fs_admin&#x2F;ag_ch_interface_fs4.html</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/23/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/25/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/23/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/25/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

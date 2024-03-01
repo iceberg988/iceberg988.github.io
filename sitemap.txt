@@ -1,3 +1,4 @@
+https://www.flamingbytes.com/blog/iscsiadm/
 https://www.flamingbytes.com/blog/perf-tuning-with-tuned-and-tuned-adm-in-Redhat-and-CentOS/
 https://www.flamingbytes.com/blog/how-to-set-custom-login-banner-message-in-linux/
 https://www.flamingbytes.com/blog/wipe-signature-from-a-device/
@@ -386,6 +387,7 @@ https://www.flamingbytes.com/tags/Two-pointers/
 https://www.flamingbytes.com/tags/PostMark/
 https://www.flamingbytes.com/tags/Phoronix-test-suite/
 https://www.flamingbytes.com/tags/AKS/
+https://www.flamingbytes.com/tags/iSCSI/
 https://www.flamingbytes.com/categories/Young-Author/
 https://www.flamingbytes.com/categories/Tech/
 https://www.flamingbytes.com/categories/Tech/Benchmarking/

@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">280</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">105</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">281</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">280</span>
+          <span class="site-state-item-count">281</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-count">105</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,245 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/how-to-uninstall-ceph-storage-cluster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/how-to-uninstall-ceph-storage-cluster/" class="post-title-link" itemprop="url">How to uninstall ceph storage cluster</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-10-14 07:00:00" itemprop="dateCreated datePublished" datetime="2021-10-14T07:00:00-07:00">2021-10-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Cloud-Storage/" itemprop="url" rel="index"><span itemprop="name">Cloud Storage</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Check-the-pools-images-and-OSDs"><a href="#Check-the-pools-images-and-OSDs" class="headerlink" title="Check the pools, images and OSDs"></a>Check the pools, images and OSDs</h2><pre><code>[ceph: root@host1 /]$ ceph osd tree
+ID  CLASS  WEIGHT    TYPE NAME             STATUS  REWEIGHT  PRI-AFF
+-1         83.83411  root default
+-3         27.94470      host host1
+ 0    ssd   3.49309          osd.0             up   1.00000  1.00000
+ 1    ssd   3.49309          osd.1             up   1.00000  1.00000
+ 2    ssd   3.49309          osd.2             up   1.00000  1.00000
+ 3    ssd   3.49309          osd.3             up   1.00000  1.00000
+ 4    ssd   3.49309          osd.4             up   1.00000  1.00000
+ 5    ssd   3.49309          osd.5             up   1.00000  1.00000
+ 6    ssd   3.49309          osd.6             up   1.00000  1.00000
+ 7    ssd   3.49309          osd.7             up   1.00000  1.00000
+-5         27.94470      host host2
+ 8    ssd   3.49309          osd.8             up   1.00000  1.00000
+ 9    ssd   3.49309          osd.9             up   1.00000  1.00000
+10    ssd   3.49309          osd.10            up   1.00000  1.00000
+11    ssd   3.49309          osd.11            up   1.00000  1.00000
+12    ssd   3.49309          osd.12            up   1.00000  1.00000
+13    ssd   3.49309          osd.13            up   1.00000  1.00000
+14    ssd   3.49309          osd.14            up   1.00000  1.00000
+15    ssd   3.49309          osd.15            up   1.00000  1.00000
+-7         27.94470      host host3
+16    ssd   3.49309          osd.16            up   1.00000  1.00000
+17    ssd   3.49309          osd.17            up   1.00000  1.00000
+18    ssd   3.49309          osd.18            up   1.00000  1.00000
+19    ssd   3.49309          osd.19            up   1.00000  1.00000
+20    ssd   3.49309          osd.20            up   1.00000  1.00000
+21    ssd   3.49309          osd.21            up   1.00000  1.00000
+22    ssd   3.49309          osd.22            up   1.00000  1.00000
+23    ssd   3.49309          osd.23            up   1.00000  1.00000
+
+[ceph: root@host1 /]$ ceph osd lspools
+1 device_health_metrics
+2 datapool
+
+[ceph: root@host1 /]$ rbd showmapped
+id  pool      namespace  image    snap  device
+0   datapool             rbdvol1  -     /dev/rbd0
+1   datapool             rbdvol2  -     /dev/rbd1
+2   datapool             rbdvol3  -     /dev/rbd2
+3   datapool             rbdvol4  -     /dev/rbd3
+</code></pre>
+<h2 id="Remove-the-images-and-pools"><a href="#Remove-the-images-and-pools" class="headerlink" title="Remove the images and pools"></a>Remove the images and pools</h2><pre><code>[ceph: root@host1 /]$ rbd unmap /dev/rbd0
+[ceph: root@host1 /]$ rbd unmap /dev/rbd1
+[ceph: root@host1 /]$ rbd unmap /dev/rbd2
+[ceph: root@host1 /]$ rbd unmap /dev/rbd3
+
+[ceph: root@host1 /]$ rbd showmapped
+
+[ceph: root@host1 /]$ rbd rm datapool/rbdvol1
+Removing image: 100% complete...done.
+[ceph: root@host1 /]$ rbd rm datapool/rbdvol2
+Removing image: 100% complete...done.
+[ceph: root@host1 /]$ rbd rm datapool/rbdvol3
+Removing image: 100% complete...done.
+[ceph: root@host1 /]$ rbd rm datapool/rbdvol4
+Removing image: 100% complete...done.
+
+[ceph: root@host1 /]$ ceph osd pool rm datapool datapool --yes-i-really-really-mean-it
+Error EPERM: pool deletion is disabled; you must first set the mon_allow_pool_delete config option to true before you can destroy a pool
+
+[ceph: root@host1 /]$ ceph tell mon.\* injectargs &#39;--mon-allow-pool-delete=true&#39;
+mon.host1: mon_allow_pool_delete = &#39;true&#39;
+mon.host1: &#123;&#125;
+mon.host3: mon_allow_pool_delete = &#39;true&#39;
+mon.host3: &#123;&#125;
+mon.host2: mon_allow_pool_delete = &#39;true&#39;
+mon.host2: &#123;&#125;
+[ceph: root@host1 /]$ ceph osd pool rm datapool datapool --yes-i-really-really-mean-it
+pool &#39;datapool&#39; removed
+</code></pre>
+<h2 id="Remove-the-OSDs"><a href="#Remove-the-OSDs" class="headerlink" title="Remove the OSDs"></a>Remove the OSDs</h2><pre><code>[ceph: root@host1 /]$ for i in `seq 0 23`
+&gt; do
+&gt; ceph osd down $i &amp;&amp; ceph osd destroy $i --force
+&gt; done
+marked down osd.0.
+destroyed osd.0
+[omitted...]
+
+[ceph: root@host1 /]$  ceph osd tree
+ID  CLASS  WEIGHT    TYPE NAME             STATUS     REWEIGHT  PRI-AFF
+-1         83.83411  root default
+-3         27.94470      host host1
+ 0    ssd   3.49309          osd.0         destroyed   1.00000  1.00000
+ 1    ssd   3.49309          osd.1         destroyed   1.00000  1.00000
+ 2    ssd   3.49309          osd.2         destroyed   1.00000  1.00000
+ 3    ssd   3.49309          osd.3         destroyed   1.00000  1.00000
+ 4    ssd   3.49309          osd.4         destroyed   1.00000  1.00000
+ 5    ssd   3.49309          osd.5         destroyed   1.00000  1.00000
+ 6    ssd   3.49309          osd.6         destroyed   1.00000  1.00000
+ 7    ssd   3.49309          osd.7         destroyed   1.00000  1.00000
+-5         27.94470      host host2
+ 8    ssd   3.49309          osd.8         destroyed   1.00000  1.00000
+ 9    ssd   3.49309          osd.9         destroyed   1.00000  1.00000
+10    ssd   3.49309          osd.10        destroyed   1.00000  1.00000
+11    ssd   3.49309          osd.11        destroyed   1.00000  1.00000
+12    ssd   3.49309          osd.12        destroyed   1.00000  1.00000
+13    ssd   3.49309          osd.13        destroyed   1.00000  1.00000
+14    ssd   3.49309          osd.14        destroyed   1.00000  1.00000
+15    ssd   3.49309          osd.15        destroyed   1.00000  1.00000
+-7         27.94470      host host3
+16    ssd   3.49309          osd.16        destroyed   1.00000  1.00000
+17    ssd   3.49309          osd.17        destroyed   1.00000  1.00000
+18    ssd   3.49309          osd.18        destroyed   1.00000  1.00000
+19    ssd   3.49309          osd.19        destroyed   1.00000  1.00000
+20    ssd   3.49309          osd.20        destroyed   1.00000  1.00000
+21    ssd   3.49309          osd.21        destroyed   1.00000  1.00000
+22    ssd   3.49309          osd.22        destroyed   1.00000  1.00000
+23    ssd   3.49309          osd.23               up   1.00000  1.00000
+</code></pre>
+<h2 id="Remove-the-cluster-hosts"><a href="#Remove-the-cluster-hosts" class="headerlink" title="Remove the cluster hosts"></a>Remove the cluster hosts</h2><pre><code>[ceph: root@host1 /]$ ceph orch host rm host3
+Removed host &#39;host3&#39;
+[ceph: root@host1 /]$ ceph orch host rm host2
+Removed host &#39;host2&#39;
+[ceph: root@host1 /]$ ceph orch host rm host1
+Removed host &#39;host1&#39;
+</code></pre>
+<h2 id="Check-if-there-is-ceph-daemon-running"><a href="#Check-if-there-is-ceph-daemon-running" class="headerlink" title="Check if there is ceph daemon running"></a>Check if there is ceph daemon running</h2><pre><code>[ceph: root@host1 /]$ ceph orch ps host3
+No daemons reported
+[ceph: root@host1 /]$ ceph orch ps host2
+No daemons reported
+[ceph: root@host1 /]$ ceph orch ps host1
+No daemons reported
+</code></pre>
+<h2 id="Remove-the-ceph-storage-cluster"><a href="#Remove-the-ceph-storage-cluster" class="headerlink" title="Remove the ceph storage cluster"></a>Remove the ceph storage cluster</h2><pre><code>[root@host1 ~]$ cephadm rm-cluster --fsid fec2332e-1b0b-11ec-abbe-ac1f6bc8d268 --force
+[root@host1 ~]$ cephadm ls
+[]
+</code></pre>
+<h2 id="Cleanup-the-ceph-configuration-files"><a href="#Cleanup-the-ceph-configuration-files" class="headerlink" title="Cleanup the ceph configuration files"></a>Cleanup the ceph configuration files</h2><pre><code>[root@host1 ~]$ rm -rf /etc/ceph
+[root@host1 ~]$ rm -rf /var/lib/ce
+ceph/       cephadm/    certmonger/
+[root@host1 ~]$ rm -rf /var/lib/ceph*
+</code></pre>
+<h2 id="Cleanup-the-ceph-block-devices"><a href="#Cleanup-the-ceph-block-devices" class="headerlink" title="Cleanup the ceph block devices"></a>Cleanup the ceph block devices</h2><p>Do the following on each cluster node.</p>
+<pre><code>[root@host1 ~]$ lsblk
+NAME                                                                                                  MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+nvme0n1                                                                                               259:0    0  3.5T  0 disk
+├─nvme0n1p3                                                                                           259:4    0  3.5T  0 part
+│ ├─vgroot-lvswap01                                                                                   253:1    0    4G  0 lvm
+│ └─vgroot-lvroot                                                                                     253:0    0  3.5T  0 lvm  /
+├─nvme0n1p1                                                                                           259:2    0    1G  0 part /boot/efi
+└─nvme0n1p2                                                                                           259:3    0  500M  0 part /boot
+nvme3n1                                                                                               259:6    0  3.5T  0 disk
+└─ceph--ab144c40--73d6--49bc--921b--65025c383bb1-osd--block--2b965e29--b194--4363--8c96--20ab5b97db33 253:3    0  3.5T  0 lvm
+nvme2n1                                                                                               259:5    0  3.5T  0 disk
+└─ceph--b1ffe76d--1043--43a2--848b--6ba117e71a75-osd--block--0d6ff85d--9c49--43a0--98a3--c519fbb20b9c 253:4    0  3.5T  0 lvm
+nvme1n1                                                                                               259:1    0  3.5T  0 disk
+
+[root@host1 ~]$ for i in `seq 2 9`; do dd if=/dev/zero of=/dev/nvme$&#123;i&#125;n1 bs=1M count=1000; done
+[root@host1 ~]$ reboot
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2896,145 +3135,8 @@ id  pool      namespace  image    snap  device
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/capture-and-analyze-network-packets-with-tcpdump/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/capture-and-analyze-network-packets-with-tcpdump/" class="post-title-link" itemprop="url">Capture and analyze network packets with tcpdump</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-08-20 07:00:00" itemprop="dateCreated datePublished" datetime="2021-08-20T07:00:00-07:00">2021-08-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Capture-packets-with-tcpdump"><a href="#Capture-packets-with-tcpdump" class="headerlink" title="Capture packets with tcpdump"></a>Capture packets with tcpdump</h2><p>In this example, we only capture 1000 packets(-c1000) and use IP addresses and ports(-nn) for easier analysis. The raw packets are written to file “tcpdump.1000” for further analsis.</p>
-<pre><code>$ tcpdump -i eth5 -c1000 -nn -w tcpdump.1000
-</code></pre>
-<h2 id="View-the-packets-data"><a href="#View-the-packets-data" class="headerlink" title="View the packets data"></a>View the packets data</h2><p>We can use tcpdump to view the packets directly.</p>
-<pre><code>$ tcpdump -nn -r tcpdump.1000 | more
-
-reading from file tcpdump.1000, link-type EN10MB (Ethernet)
-
-22:42:10.018758 IP 192.168.1.18.980 &gt; 192.168.1.16.2049: Flags [P.], seq 1:16545, ack 72, win 501, options [nop,nop,TS val 4292822374 ecr 2230894482], length 16544: NFS request xid 2912663971 16540 getattr fh 0,0/22
-22:42:10.018895 IP 192.168.1.16.2049 &gt; 192.168.1.18.980: Flags [.], ack 16545, win 9508, options [nop,nop,TS val 2230894483 ecr 4292822374], length 0
-22:42:10.021125 IP 192.168.1.16.2049 &gt; 192.168.1.18.980: Flags [P.], seq 72:144, ack 16545, win 9596, options [nop,nop,TS val 2230894485 ecr 4292822374], length 72: NFS reply xid 781957539 reply ok 68
-
-
-22:42:10.021400 IP 192.168.1.18.980 &gt; 192.168.1.16.2049: Flags [P.], seq 16545:33089, ack 144, win 501, options [nop,nop,TS val 4292822377 ecr 2230894485], length 16544: NFS request xid 2929441187 16540 getattr fh 0,0/22
-22:42:10.021536 IP 192.168.1.16.2049 &gt; 192.168.1.18.980: Flags [.], ack 33089, win 9508, options [nop,nop,TS val 2230894485 ecr 4292822377], length 0
-22:42:10.023219 ARP, Request who-has 70.0.69.235 tell 70.0.193.122, length 46
-22:42:10.023558 IP 192.168.1.16.2049 &gt; 192.168.1.18.980: Flags [P.], seq 144:216, ack 33089, win 9596, options [nop,nop,TS val 2230894487 ecr 4292822377], length 72: NFS reply xid 798734755 reply ok 68
-
-
-22:42:10.023844 IP 192.168.1.18.980 &gt; 192.168.1.16.2049: Flags [P.], seq 33089:49633, ack 216, win 501, options [nop,nop,TS val 4292822379 ecr 2230894487], length 16544: NFS request xid 2946218403 16540 getattr fh 0,0/22
-22:42:10.023962 IP 192.168.1.16.2049 &gt; 192.168.1.18.980: Flags [.], ack 49633, win 9508, options [nop,nop,TS val 2230894488 ecr 4292822379], length 0
-22:42:10.025962 IP 192.168.1.16.2049 &gt; 192.168.1.18.980: Flags [P.], seq 216:288, ack 49633, win 9596, options [nop,nop,TS val 2230894490 ecr 4292822379], length 72: NFS reply xid 815511971 reply ok 68
-
-&lt;omitted...&gt;
-</code></pre>
-<p>We also can view the data with wireshark GUI. We can use the filter to only display the data we are interested in. In this case, we only display the data related the ip address “192.168.1.18”. The wireshare can be installed on the desktop and open the captured packets data file.</p>
-<p><img src="/images/tcpdump-wireshark.png" alt="Image"></p>
-<h2 id="Understand-the-tcpdump-output"><a href="#Understand-the-tcpdump-output" class="headerlink" title="Understand the tcpdump output"></a>Understand the tcpdump output</h2><ul>
-<li><p>The first field, <strong>22:42:10.021125</strong>, represents the timestamp of the captured packet.</p>
-</li>
-<li><p>The next field, <strong>IP</strong>, represents the network layer protocol, in this case, IPv4.</p>
-</li>
-<li><p>The next field, <strong>192.168.1.16.2049 &gt; 192.168.1.18.980</strong>, is the source and destination IP address and port.</p>
-</li>
-<li><p>The next field, <strong>Flags [P.]</strong>, represents the TCP flags. The typical values for this field include the following.</p>
-</li>
-</ul>
-<p><img src="/images/tcpdump-tcp-flags.png" alt="Image"></p>
-<ul>
-<li><p>The next field, <strong>seq 72:144</strong>, is the sequence number of the data contained in the packet.  It means the packet contains bytes 72 to 144.</p>
-</li>
-<li><p>The next field, <strong>ack 16545</strong>, is the Ack number. For the side of receiving data, this field represents the next expected byte of data. In this case, the Ack number for the next expected packet would be 16545.</p>
-</li>
-<li><p>The next field, <strong>win 9596</strong>, is the window size. It represents the number of bytes available in the receiving buffer.</p>
-</li>
-<li><p>Followed by a field, <strong>length 72</strong>, which represents the length in bytes of the data.</p>
-</li>
-</ul>
-<p>In the above example, the data are sending from 192.168.1.18 to 192.168.1.16. The average packet size is 16k which is sent over NFSv4.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/21/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><span class="page-number current">22</span><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/23/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/21/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><span class="page-number current">22</span><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/23/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

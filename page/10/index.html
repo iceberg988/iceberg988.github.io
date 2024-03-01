@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">280</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">105</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">281</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">280</span>
+          <span class="site-state-item-count">281</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-count">105</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,111 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/flame-graph-and-stack-trace-visualization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/flame-graph-and-stack-trace-visualization/" class="post-title-link" itemprop="url">Flame Graph and stack trace visualization</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-02-24 13:19:00" itemprop="dateCreated datePublished" datetime="2023-02-24T13:19:00-08:00">2023-02-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>A stack trace is series of functions which show the code path. With the Linux perf(1) tool, the stack samples are summarized as call tree. With the BCC profile(8) tool, the unique stack trace shows as a count. Both tools are very useful when there are only a few call stacks on-CPU. However, when the profiling result includes a huge number of stacks, looking through pages of stack output would not be that easy. Flame graphs were invented to solve this problem.</p>
+<p>The following is a synthetic example for easier explanation of Flame Graph.</p>
+<p><img src="/images/FlameGraph.png" alt="Image"></p>
+<p>From this Flame Graph, three call stacks are included:</p>
+<ul>
+<li>func-a -&gt; func-b</li>
+<li>func-a -&gt; func-b -&gt; func-c</li>
+<li>func-a -&gt; func-b -&gt; func-d -&gt; func-e</li>
+</ul>
+<p>From left to right, it’s an alphabetical sort of function frames. Each box represents a function in the stack(aka “stack frame”). The width of the box reflects the presence in the profile.</p>
+<p>From bottom to top, it represents the code flow.</p>
+<p>The Flame Graph shows the CPU samples, which means the top edge represents the functions running on-CPU. The other function below the top edge are never sampled on-CPU directly.</p>
+<p>In the above example Flame Graph, the func-c was directly on-CPU for 70% of the time, func-b was on-CPU for 20% of time, and func-e was on-CPU for 10% of the time during sampling.</p>
+<p>Even though the functions below the top edge are not directly on-CPU durng sampling, it still helps determine the function ancestry.</p>
+<p>So, to read a Flame Graph, we can look for the widest towers and understand them first since they consume much CPU cycles during sampling.</p>
+<p>The following is a real example of Flame Graph.</p>
+<p><img src="/images/Gregg4.svg" alt="Image"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1123,115 +1228,8 @@ Tracing block device I/O... Hit Ctrl-C to end.
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/fio-direct-i-o-error-with-1k-blocksize/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/fio-direct-i-o-error-with-1k-blocksize/" class="post-title-link" itemprop="url">fio direct I/O error with 1k blocksize</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-01-23 14:39:00" itemprop="dateCreated datePublished" datetime="2023-01-23T14:39:00-08:00">2023-01-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Benchmarking/" itemprop="url" rel="index"><span itemprop="name">Benchmarking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>When to run fio write with small blocksize(e.g. 1k), the following error is seen.</p>
-<pre><code>$ fio --blocksize=1k --ioengine=libaio --readwrite=randwrite --filesize=2G --group_reporting --direct=1 --iodepth=128 --randrepeat=1 --end_fsync=1 --
-name=job1 --numjobs=1 --filename=/mnt/fiomnt/fio.dat
-job1: (g=0): rw=randwrite, bs=(R) 1024B-1024B, (W) 1024B-1024B, (T) 1024B-1024B, ioengine=libaio, iodepth=128
-fio-3.7
-Starting 1 process
-fio: io_u error on file /mnt/fiomnt/fio.dat: Invalid argument: write offset=129521664, buflen=1024
-fio: io_u error on file /mnt/fiomnt/fio.dat: Invalid argument: write offset=1589760000, buflen=1024
-fio: pid=93922, err=22/file:io_u.c:1747, func=io_u error, error=Invalid argument
-job1: (groupid=0, jobs=1): err=22 (file:io_u.c:1747, func=io_u error, error=Invalid argument): pid=93922: Wed Jan 25 00:42:00 2023
-cpu : usr=0.00%, sys=0.00%, ctx=1, majf=0, minf=14
-IO depths : 1=0.8%, 2=1.6%, 4=3.1%, 8=6.2%, 16=12.5%, 32=25.0%, &amp;gt;=64=50.8%
-submit : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &amp;gt;=64=0.0%
-complete : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &amp;gt;=64=0.0%
-issued rwts: total=0,128,0,0 short=0,0,0,0 dropped=0,0,0,0
-latency : target=0, window=0, percentile=100.00%, depth=128
-</code></pre>
-<p><strong>Cause:</strong></p>
-<p>For direct I&#x2F;O,  the I&#x2F;O size has to be multiple of filesystem&#x2F;block device blocksize. In this case, the filesystem blocksize is 4k which can not be well aligned with the requested I&#x2F;O size(1k). To fix this, the filesystem blocksize should be less than or equal to 1k.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/11/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/11/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.flamingbytes.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Linux Recommended Settings for Pure Storage FlashArrayApplying Queue Settings with udev and Maximum IO Size Settings: 123456789101112131415161718root@vm1:~# cat &#x2F;lib&#x2F;udev&#x2F;rules.d&#x2F;99-pure-storage.rules">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to configure PureStorage FlashArray over iSCSI in Ubuntu Linux">
+<meta property="og:url" content="https://www.flamingbytes.com/blog/iscsiadm/index.html">
+<meta property="og:site_name" content="FlamingBytes">
+<meta property="og:description" content="Linux Recommended Settings for Pure Storage FlashArrayApplying Queue Settings with udev and Maximum IO Size Settings: 123456789101112131415161718root@vm1:~# cat &#x2F;lib&#x2F;udev&#x2F;rules.d&#x2F;99-pure-storage.rules">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.flamingbytes.com/images/iscsi-create-host.png">
+<meta property="og:image" content="https://www.flamingbytes.com/images/iscsi-iqns.png">
+<meta property="og:image" content="https://www.flamingbytes.com/images/iscsi-create-volumes.png">
+<meta property="og:image" content="https://www.flamingbytes.com/images/iscsi-connect-volumes.png">
+<meta property="article:published_time" content="2024-02-28T19:40:14.000Z">
+<meta property="article:modified_time" content="2024-03-01T05:34:24.000Z">
+<meta property="article:author" content="relentlesstorm">
+<meta property="article:tag" content="iSCSI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.flamingbytes.com/images/iscsi-create-host.png">
+
+
+<link rel="canonical" href="https://www.flamingbytes.com/blog/iscsiadm/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.flamingbytes.com/blog/iscsiadm/","path":"blog/iscsiadm/","title":"How to configure PureStorage FlashArray over iSCSI in Ubuntu Linux"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>How to configure PureStorage FlashArray over iSCSI in Ubuntu Linux | FlamingBytes</title>
+  
+
+
+
+
+
+
+
+<!-- Google Adsense-->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8578408127828851"
+     crossorigin="anonymous"></script>
+
+<!-- Google tag (gtag.js) for analytics-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8PQ47L2H0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-B8PQ47L2H0');
+</script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FlamingBytes</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">105</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">281</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-Recommended-Settings-for-Pure-Storage-FlashArray"><span class="nav-number">1.</span> <span class="nav-text">Linux Recommended Settings for Pure Storage FlashArray</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Get-initiator-name-on-host"><span class="nav-number">2.</span> <span class="nav-text">Get initiator name on host</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-host-in-FlashArray"><span class="nav-number">3.</span> <span class="nav-text">Create host in FlashArray</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configure-iSCSI-IQNs-in-FlashArray"><span class="nav-number">4.</span> <span class="nav-text">Configure iSCSI IQNs in FlashArray</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-volume-and-connect-to-host-in-FlashArray"><span class="nav-number">5.</span> <span class="nav-text">Create volume and connect to host in FlashArray</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-iscsi-initiator-utils-package"><span class="nav-number">6.</span> <span class="nav-text">Install iscsi-initiator-utils package</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Discover-paths-and-list-the-target-ports"><span class="nav-number">7.</span> <span class="nav-text">Discover paths and list the target ports</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scan-the-volumes-on-host-automatically-after-reboot"><span class="nav-number">8.</span> <span class="nav-text">Scan the volumes on host automatically after reboot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Other-commands"><span class="nav-number">9.</span> <span class="nav-text">Other commands</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="relentlesstorm"
+      src="/images/logo/FlamingBytes-icon-64x64-1.png">
+  <p class="site-author-name" itemprop="name">relentlesstorm</p>
+  <div class="site-description" itemprop="description">Stay hungry, stay foolish</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">281</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">105</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:relentlesstorm@gmail.com" title="E-Mail → mailto:relentlesstorm@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/access-a-sharedv4-volume-outside-of-a-portwrox-cluster/" rel="bookmark">
+        <time class="popular-posts-time">2022-04-20</time>
+        <br>
+      Access a sharedv4 volume outside of a Portwrox cluster
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/using-aws-cli-to-manage-ebs-volumes/" rel="bookmark">
+        <time class="popular-posts-time">2023-03-04</time>
+        <br>
+      How to use AWS CLI to manage EBS volumes
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/data-volume-unit/" rel="bookmark">
+        <time class="popular-posts-time">2022-02-01</time>
+        <br>
+      Data volume unit
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/understanding-thin-provisioning-volume-and-snapshot/" rel="bookmark">
+        <time class="popular-posts-time">2022-01-06</time>
+        <br>
+      Understanding thin provisioning volume and snapshot
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/what-is-performance-engineering/" rel="bookmark">
+        <time class="popular-posts-time">2022-04-08</time>
+        <br>
+      What is Performance Engineering
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/iscsiadm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="How to configure PureStorage FlashArray over iSCSI in Ubuntu Linux | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          How to configure PureStorage FlashArray over iSCSI in Ubuntu Linux
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-02-28 11:40:14" itemprop="dateCreated datePublished" datetime="2024-02-28T11:40:14-08:00">2024-02-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-02-29 21:34:24" itemprop="dateModified" datetime="2024-02-29T21:34:24-08:00">2024-02-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Linux-Recommended-Settings-for-Pure-Storage-FlashArray"><a href="#Linux-Recommended-Settings-for-Pure-Storage-FlashArray" class="headerlink" title="Linux Recommended Settings for Pure Storage FlashArray"></a>Linux Recommended Settings for Pure Storage FlashArray</h2><p><strong>Applying Queue Settings with udev and Maximum IO Size Settings:</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">root@vm1:~<span class="comment"># cat /lib/udev/rules.d/99-pure-storage.rules</span></span><br><span class="line"><span class="comment"># Recommended settings for Pure Storage FlashArray.</span></span><br><span class="line"><span class="comment"># Use none scheduler for high-performance solid-state storage for SCSI devices</span></span><br><span class="line">ACTION==<span class="string">&quot;add|change&quot;</span>, KERNEL==<span class="string">&quot;sd*[!0-9]&quot;</span>, SUBSYSTEM==<span class="string">&quot;block&quot;</span>, ENV&#123;ID_VENDOR&#125;==<span class="string">&quot;PURE&quot;</span>, ATTR&#123;queue/scheduler&#125;=<span class="string">&quot;none&quot;</span></span><br><span class="line">ACTION==<span class="string">&quot;add|change&quot;</span>, KERNEL==<span class="string">&quot;dm-[0-9]*&quot;</span>, SUBSYSTEM==<span class="string">&quot;block&quot;</span>, ENV&#123;DM_NAME&#125;==<span class="string">&quot;3624a937*&quot;</span>, ATTR&#123;queue/scheduler&#125;=<span class="string">&quot;none&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Reduce CPU overhead due to entropy collection</span></span><br><span class="line">ACTION==<span class="string">&quot;add|change&quot;</span>, KERNEL==<span class="string">&quot;sd*[!0-9]&quot;</span>, SUBSYSTEM==<span class="string">&quot;block&quot;</span>, ENV&#123;ID_VENDOR&#125;==<span class="string">&quot;PURE&quot;</span>, ATTR&#123;queue/add_random&#125;=<span class="string">&quot;0&quot;</span></span><br><span class="line">ACTION==<span class="string">&quot;add|change&quot;</span>, KERNEL==<span class="string">&quot;dm-[0-9]*&quot;</span>, SUBSYSTEM==<span class="string">&quot;block&quot;</span>, ENV&#123;DM_NAME&#125;==<span class="string">&quot;3624a937*&quot;</span>, ATTR&#123;queue/add_random&#125;=<span class="string">&quot;0&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Spread CPU load by redirecting completions to originating CPU</span></span><br><span class="line">ACTION==<span class="string">&quot;add|change&quot;</span>, KERNEL==<span class="string">&quot;sd*[!0-9]&quot;</span>, SUBSYSTEM==<span class="string">&quot;block&quot;</span>, ENV&#123;ID_VENDOR&#125;==<span class="string">&quot;PURE&quot;</span>, ATTR&#123;queue/rq_affinity&#125;=<span class="string">&quot;2&quot;</span></span><br><span class="line">ACTION==<span class="string">&quot;add|change&quot;</span>, KERNEL==<span class="string">&quot;dm-[0-9]*&quot;</span>, SUBSYSTEM==<span class="string">&quot;block&quot;</span>, ENV&#123;DM_NAME&#125;==<span class="string">&quot;3624a937*&quot;</span>, ATTR&#123;queue/rq_affinity&#125;=<span class="string">&quot;2&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Set the HBA timeout to 60 seconds</span></span><br><span class="line">ACTION==<span class="string">&quot;add|change&quot;</span>, KERNEL==<span class="string">&quot;sd*[!0-9]&quot;</span>, SUBSYSTEM==<span class="string">&quot;block&quot;</span>, ENV&#123;ID_VENDOR&#125;==<span class="string">&quot;PURE&quot;</span>, ATTR&#123;device/timeout&#125;=<span class="string">&quot;60&quot;</span></span><br><span class="line"></span><br><span class="line">ACTION==<span class="string">&quot;add|change&quot;</span>, KERNEL==<span class="string">&quot;sd*[!0-9]&quot;</span>, SUBSYSTEM==<span class="string">&quot;block&quot;</span>, ENV&#123;ID_VENDOR&#125;==<span class="string">&quot;PURE&quot;</span>, ATTR&#123;queue/max_sectors_kb&#125;=<span class="string">&quot;4096&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Recommended DM-Multipath Settings:</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">root@vm1:~<span class="comment"># cat /etc/multipath.conf</span></span><br><span class="line">defaults &#123;</span><br><span class="line">        polling_interval       10</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">devices &#123;</span><br><span class="line">    device &#123;</span><br><span class="line">        vendor                      <span class="string">&quot;NVME&quot;</span></span><br><span class="line">        product                     <span class="string">&quot;Pure Storage FlashArray&quot;</span></span><br><span class="line">        path_selector               <span class="string">&quot;queue-length 0&quot;</span></span><br><span class="line">        path_grouping_policy        group_by_prio</span><br><span class="line">        prio                        ana</span><br><span class="line">        failback                    immediate</span><br><span class="line">        fast_io_fail_tmo            10</span><br><span class="line">        user_friendly_names         no</span><br><span class="line">        no_path_retry               0</span><br><span class="line">        features                    0</span><br><span class="line">        dev_loss_tmo                60</span><br><span class="line">    &#125;</span><br><span class="line">    device &#123;</span><br><span class="line">        vendor                   <span class="string">&quot;PURE&quot;</span></span><br><span class="line">        product                  <span class="string">&quot;FlashArray&quot;</span></span><br><span class="line">        path_selector            <span class="string">&quot;service-time 0&quot;</span></span><br><span class="line">        hardware_handler         <span class="string">&quot;1 alua&quot;</span></span><br><span class="line">        path_grouping_policy     group_by_prio</span><br><span class="line">        prio                     alua</span><br><span class="line">        failback                 immediate</span><br><span class="line">        path_checker             tur</span><br><span class="line">        fast_io_fail_tmo         10</span><br><span class="line">        user_friendly_names      no</span><br><span class="line">        no_path_retry            0</span><br><span class="line">        features                 0</span><br><span class="line">        dev_loss_tmo             600</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Refer to <a target="_blank" rel="noopener" href="https://support.purestorage.com/Solutions/Linux/Linux_Reference/Linux_Recommended_Settings">here</a> for more detail.</p>
+<p><strong>Check multipath service status:</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@vm1:~<span class="comment"># systemctl status multipathd</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Get-initiator-name-on-host"><a href="#Get-initiator-name-on-host" class="headerlink" title="Get initiator name on host"></a>Get initiator name on host</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@vm1:~<span class="comment"># cat /etc/iscsi/initiatorname.iscsi</span></span><br><span class="line">InitiatorName=iqn.2005-03.org.open-iscsi:aaaaaaaa</span><br></pre></td></tr></table></figure>
+
+<h2 id="Create-host-in-FlashArray"><a href="#Create-host-in-FlashArray" class="headerlink" title="Create host in FlashArray"></a>Create host in FlashArray</h2><p>Create a host entry in FlashArray in order to connect volumes:</p>
+<p><img src="/images/iscsi-create-host.png"></p>
+<h2 id="Configure-iSCSI-IQNs-in-FlashArray"><a href="#Configure-iSCSI-IQNs-in-FlashArray" class="headerlink" title="Configure iSCSI IQNs in FlashArray"></a>Configure iSCSI IQNs in FlashArray</h2><p>Set the iSCSI IQNs under the host ports with the above InitiatorName:</p>
+<p><img src="/images/iscsi-iqns.png"></p>
+<h2 id="Create-volume-and-connect-to-host-in-FlashArray"><a href="#Create-volume-and-connect-to-host-in-FlashArray" class="headerlink" title="Create volume and connect to host in FlashArray"></a>Create volume and connect to host in FlashArray</h2><p>Create multiple volumes in FlashArray:</p>
+<p><img src="/images/iscsi-create-volumes.png"></p>
+<p>Connect volumes to a host:</p>
+<p><img src="/images/iscsi-connect-volumes.png"></p>
+<h2 id="Install-iscsi-initiator-utils-package"><a href="#Install-iscsi-initiator-utils-package" class="headerlink" title="Install iscsi-initiator-utils package"></a>Install iscsi-initiator-utils package</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root@vm1:~<span class="comment"># apt install iscsi-initiator-utils</span></span><br><span class="line"></span><br><span class="line">root@vm1:~<span class="comment"># iscsiadm --help</span></span><br><span class="line">iscsiadm -m discoverydb [ -hV ] [ -d debug_level ] [-P printlevel] [ -t <span class="built_in">type</span> -p ip:port -I ifaceN ... [ -Dl ] ] | [ [ -p ip:port -t <span class="built_in">type</span>] [ -o operation ] [ -n name ] [ -v value ] [ -lD ] ]</span><br><span class="line">iscsiadm -m discovery [ -hV ] [ -d debug_level ] [-P printlevel] [ -t <span class="built_in">type</span> -p ip:port -I ifaceN ... [ -l ] ] | [ [ -p ip:port ] [ -l | -D ] ]</span><br><span class="line">iscsiadm -m node [ -hV ] [ -d debug_level ] [ -P printlevel ] [ -L all,manual,automatic ] [ -U all,manual,automatic ] [ -S ] [ [ -T targetname -p ip:port -I ifaceN ] [ -l | -u | -R | -s] ] [ [ -o  operation  ] [ -n name ] [ -v value ] ]</span><br><span class="line">iscsiadm -m session [ -hV ] [ -d debug_level ] [ -P  printlevel] [ -r sessionid | sysfsdir [ -R | -u | -s ] [ -o operation ] [ -n name ] [ -v value ] ]</span><br><span class="line">iscsiadm -m iface [ -hV ] [ -d debug_level ] [ -P printlevel ] [ -I ifacename | -H hostno|MAC ] [ [ -o  operation  ] [ -n name ] [ -v value ] ] [ -C ping [ -a ip ] [ -b packetsize ] [ -c count ] [ -i interval ] ]</span><br><span class="line">iscsiadm -m fw [ -d debug_level ] [ -l ]</span><br><span class="line">iscsiadm -m host [ -P printlevel ] [ -H hostno|MAC ] [ [ -C chap [ -x chap_tbl_idx ] ] | [ -C flashnode [ -A portal_type ] [ -x flashnode_idx ] ] | [ -C stats ] ] [ [ -o operation ] [ -n name ] [ -v value ] ]</span><br><span class="line">iscsiadm -k priority</span><br></pre></td></tr></table></figure>
+
+<h2 id="Discover-paths-and-list-the-target-ports"><a href="#Discover-paths-and-list-the-target-ports" class="headerlink" title="Discover paths and list the target ports"></a>Discover paths and list the target ports</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root@vm1:~<span class="comment"># iscsiadm -m discovery -t st -p 10.10.10.15</span></span><br><span class="line">10.10.10.59:3260,119 iqn.2010-06.com.purestorage:flasharray.xxxxxxxx</span><br><span class="line">10.10.10.16:3260,119 iqn.2010-06.com.purestorage:flasharray.xxxxxxxx</span><br><span class="line">10.10.10.58:3260,119 iqn.2010-06.com.purestorage:flasharray.xxxxxxxx</span><br><span class="line">10.10.10.15:3260,119 iqn.2010-06.com.purestorage:flasharray.xxxxxxxx</span><br><span class="line"></span><br><span class="line">root@vm1:~<span class="comment"># iscsiadm -m node</span></span><br><span class="line">10.10.10.59:3260,119 iqn.2010-06.com.purestorage:flasharray.xxxxxxxx</span><br><span class="line">10.10.10.16:3260,119 iqn.2010-06.com.purestorage:flasharray.xxxxxxxx</span><br><span class="line">10.10.10.15:3260,119 iqn.2010-06.com.purestorage:flasharray.xxxxxxxx</span><br><span class="line">10.10.10.58:3260,119 iqn.2010-06.com.purestorage:flasharray.xxxxxxxx</span><br></pre></td></tr></table></figure>
+
+<h2 id="Scan-the-volumes-on-host-automatically-after-reboot"><a href="#Scan-the-volumes-on-host-automatically-after-reboot" class="headerlink" title="Scan the volumes on host automatically after reboot"></a>Scan the volumes on host automatically after reboot</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">root@vm1:~<span class="comment"># multipath -ll</span></span><br><span class="line"></span><br><span class="line">root@vm1:~<span class="comment"># iscsiadm -m node --target iqn.2010-06.com.purestorage:flasharray.xxxxxxxx --op update -n node.startup -v automatic</span></span><br><span class="line"></span><br><span class="line">root@vm1:~<span class="comment"># multipath -ll</span></span><br><span class="line"></span><br><span class="line">root@vm1:~<span class="comment"># reboot</span></span><br><span class="line"></span><br><span class="line">root@vm1:~<span class="comment"># multipath -ll</span></span><br><span class="line">3624a93702e5c57e44f014def0001dd2f dm-5 PURE,FlashArray</span><br><span class="line">size=250G features=<span class="string">&#x27;0&#x27;</span> hwhandler=<span class="string">&#x27;1 alua&#x27;</span> wp=rw</span><br><span class="line">`-+- policy=<span class="string">&#x27;service-time 0&#x27;</span> prio=50 status=active</span><br><span class="line">  |- 18:0:0:3 sdk     8:160  active ready running</span><br><span class="line">  |- 16:0:0:3 sdc     8:32   active ready running</span><br><span class="line">  |- 19:0:0:3 sdl     8:176  active ready running</span><br><span class="line">  `- 17:0:0:3 sdf     8:80   active ready running</span><br></pre></td></tr></table></figure>
+
+<h2 id="Other-commands"><a href="#Other-commands" class="headerlink" title="Other commands"></a>Other commands</h2><p>Login to the iscsi target port manually:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@vm1:~<span class="comment"># iscsiadm -m node --targetname iqn.2010-06.com.purestorage:flasharray.xxxxxxxx –login</span></span><br></pre></td></tr></table></figure>
+
+<p>Scan the volume manually:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 1&gt;/sys/class/block/sda/device/rescan</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iSCSI/" rel="tag"><i class="fa fa-tag"></i> iSCSI</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/perf-tuning-with-tuned-and-tuned-adm-in-Redhat-and-CentOS/" rel="prev" title="Performance tuning with tuned and tuned-adm in Redhat and CentOS">
+                  <i class="fa fa-angle-left"></i> Performance tuning with tuned and tuned-adm in Redhat and CentOS
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">relentlesstorm</span>
+  </div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

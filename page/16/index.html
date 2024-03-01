@@ -99,7 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">104</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">280</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">10</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">105</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">281</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -164,7 +164,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">280</span>
+          <span class="site-state-item-count">281</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -175,7 +175,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-count">105</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -200,6 +200,197 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/getting-started-with-systemtap-for-linux-system-profiling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
+      <meta itemprop="name" content="relentlesstorm">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlamingBytes">
+      <meta itemprop="description" content="Stay hungry, stay foolish">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | FlamingBytes">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/getting-started-with-systemtap-for-linux-system-profiling/" class="post-title-link" itemprop="url">Getting started with systemtap for Linux system profiling</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-07-15 07:00:00" itemprop="dateCreated datePublished" datetime="2022-07-15T07:00:00-07:00">2022-07-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Intro-to-SystemTap"><a href="#Intro-to-SystemTap" class="headerlink" title="Intro to SystemTap"></a>Intro to SystemTap</h2><p>SystemTap is a tracing and probing tool that allows users to study and monitor the activities of the operating system (particularly, the kernel) in fine detail. It provides information similar to the output of tools like netstat, ps, top, and iostat; however, SystemTap is designed to provide more filtering and analysis options for collected information.</p>
+<p>SystemTap can be used by system administrators as a performance monitoring tool for Red Hat Enterprise Linux 5 or later. It is most useful when other similar tools cannot precisely pinpoint a bottleneck in the system, thus requiring a deep analysis of system activity. In the same manner, application developers can also use SystemTap to monitor, in fine detail, how their application behaves within the Linux system.</p>
+<p>SystemTap was originally developed to provide functionality for Red Hat Enterprise Linux similar to previous Linux probing tools such as dprobes and the Linux Trace Toolkit. SystemTap aims to supplement the existing suite of Linux monitoring tools by providing users with the infrastructure to track kernel activity. In addition, SystemTap combines this capability with two attributes:</p>
+<ul>
+<li>Flexibility: SystemTap’s framework allows users to develop simple scripts for investigating and monitoring a wide variety of kernel functions, system calls, and other events that occur in kernel space. With this, SystemTap is not so much a tool as it is a system that allows you to develop your own kernel-specific forensic and monitoring tools.</li>
+<li>Ease-of-Use: as mentioned earlier, SystemTap allows users to probe kernel-space events without having to resort to the lengthy instrument, recompile, install, and reboot the kernel process.</li>
+</ul>
+<h2 id="Understanding-how-SystemTap-works"><a href="#Understanding-how-SystemTap-works" class="headerlink" title="Understanding how SystemTap works"></a>Understanding how SystemTap works</h2><p>SystemTap allows users to write and reuse simple scripts to deeply examine the activities of a running Linux system. These scripts can be designed to extract data, filter it, and summarize it quickly (and safely), enabling the diagnosis of complex performance (or even functional) problems.</p>
+<p>The essential idea behind a SystemTap script is to name events, and to give them handlers. When SystemTap runs the script, SystemTap monitors for the event; once the event occurs, the Linux kernel then runs the handler as a quick sub-routine and then resumes its normal operation.</p>
+<p>There are several kinds of events; entering or exiting a function, timer expiration, session termination, etc. A handler is a series of script language statements that specify the work to be done whenever the event occurs. This work normally includes extracting data from the event context, storing them into internal variables, and printing results.</p>
+<h2 id="Setting-up-SystemTap-and-its-required-kernel-packages"><a href="#Setting-up-SystemTap-and-its-required-kernel-packages" class="headerlink" title="Setting up SystemTap and its required kernel packages"></a>Setting up SystemTap and its required kernel packages</h2><p>To deploy SystemTap, SystemTap packages along with the corresponding set of -devel, -debuginfo and -debuginfo-common-arch packages for the kernel need to be installed. To use SystemTap on more than one kernel where a system has multiple kernels installed, install the -devel and -debuginfo packages for each of those kernel versions.</p>
+<p>SystemTap needs information about the kernel in order to place instrumentation in it (probe it). This information, which allows SystemTap to generate the code for the instrumentation, is contained in the matching kernel-devel, kernel-debuginfo, and kernel-debuginfo-common-arch packages.</p>
+<p>To install SystemTap packages:</p>
+<pre><code>[root@host1 ~]# cat /etc/centos-release
+CentOS Linux release 7.9.2009 (Core)
+[root@host1 ~]# uname -r
+3.10.0-1160.el7.x86_64
+
+[root@host1 ~]# yum install -y systemtap systemtap-runtime
+
+[root@host1 ~]# rpm -qa | grep systemtap
+systemtap-runtime-4.0-13.el7.x86_64
+systemtap-devel-4.0-13.el7.x86_64
+systemtap-4.0-13.el7.x86_64
+systemtap-client-4.0-13.el7.x86_64
+</code></pre>
+<p>To install devel and debuginfo packages in CentOS(set to enabled&#x3D;1):</p>
+<pre><code>[root@host1 ~]# vim /etc/yum.repos.d/CentOS-Debuginfo.repo
+[base-debuginfo]
+name=CentOS-7 - Debuginfo
+baseurl=http://debuginfo.centos.org/7/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-Debug-7
+enabled=1
+
+[root@host1 ~]# yum install -y kernel-devel-$(uname -r) \
+&gt; kernel-debuginfo-$(uname -r) \
+&gt; kernel-debuginfo-common-$(uname -m)-$(uname -r)
+
+[root@host1 ~]# rpm -qa | grep debuginfo
+kernel-debuginfo-common-x86_64-3.10.0-1160.el7.x86_64
+kernel-debuginfo-3.10.0-1160.el7.x86_64
+</code></pre>
+<p>The devel package was not installed successfully since it’s not available in the existing CentOS repository. It might be fixed by adding the expected repository for yum installation. The devel package is required by SystemTap otherwise the following error is seen.</p>
+<pre><code>[root@host1 ~]# stap -v -e &#39;probe vfs.read &#123;printf(&quot;read performed\n&quot;); exit()&#125;&#39;
+Checking &quot;/lib/modules/3.10.0-1160.el7.x86_64/build/.config&quot; failed with error: No such file or directory
+Incorrect version or missing kernel-devel package, use: yum install kernel-devel-3.10.0-1160.el7.x86_64
+</code></pre>
+<p>Here we just install it directly from the downloaded format as below.</p>
+<pre><code>[root@host1 ~]# wget https://rpmfind.net/linux/centos/7.9.2009/os/x86_64/Packages/kernel-devel-3.10.0-1160.el7.x86_64.rpm
+
+[root@host1 ~]# rpm -ivh kernel-devel-3.10.0-1160.el7.x86_64.rpm
+
+[root@host1 ~]# rpm -qa | grep kernel | grep  3.10.0
+kernel-devel-3.10.0-1160.el7.x86_64
+kernel-tools-libs-3.10.0-1160.el7.x86_64
+kernel-tools-3.10.0-1160.el7.x86_64
+kernel-debuginfo-common-x86_64-3.10.0-1160.el7.x86_64
+kernel-debuginfo-3.10.0-1160.el7.x86_64
+kernel-headers-3.10.0-1160.59.1.el7.x86_64
+kernel-3.10.0-1160.el7.x86_64
+</code></pre>
+<p>To verify the SystemTap setup again:</p>
+<pre><code>[root@host1 ~]# stap -v -e &#39;probe vfs.read &#123;printf(&quot;read performed\n&quot;); exit()&#125;&#39;
+Pass 1: parsed user script and 474 library scripts using 271960virt/69264res/3504shr/65852data kb, in 640usr/30sys/672real ms.
+Pass 2: analyzed script: 1 probe, 1 function, 7 embeds, 0 globals using 439304virt/232180res/4884shr/233196data kb, in 2180usr/950sys/2977real ms.
+Pass 3: translated to C into &quot;/tmp/stap6kYO8U/stap_cc0f60b74db3020f09599659b9758c89_2771_src.c&quot; using 439304virt/232436res/5140shr/233196data kb, in 10usr/50sys/67real ms.
+Pass 4: compiled C into &quot;stap_cc0f60b74db3020f09599659b9758c89_2771.ko&quot; in 8040usr/1720sys/9477real ms.
+Pass 5: starting run.
+read performed
+Pass 5: run completed in 30usr/90sys/442real ms.
+</code></pre>
+<h2 id="SystemTap-scripts"><a href="#SystemTap-scripts" class="headerlink" title="SystemTap scripts"></a>SystemTap scripts</h2><p>For the most part, SystemTap scripts are the foundation of each SystemTap session. SystemTap scripts instruct SystemTap on what type of information to collect, and what to do once that information is collected. SystemTap scripts are made up of two components: events and handlers. Once a SystemTap session is underway, SystemTap monitors the operating system for the specified events and executes the handlers as they occur.</p>
+<p>SystemTap scripts allow insertion of the instrumentation code without recompilation of the code and allows more flexibility with regard to handlers. Events serve as the triggers for handlers to run; handlers can be specified to record specified data and print it in a certain manner.</p>
+<p>SystemTap scripts use the .stp file extension and contains probes written in the following format:</p>
+<pre><code>probe event &#123;statements&#125;
+</code></pre>
+<p>Systemtap allows you to write functions to factor out code to be used by a number of probes. Thus, rather than repeatedly writing the same series of statements in multiple probes, you can just place the instructions in a function, as in:</p>
+<pre><code>function function_name(arguments)&#123;statements&#125;
+probe event &#123;function_name(arguments)&#125;
+</code></pre>
+<p>The statements in function_name are executed when the probe for event executes. The arguments are optional values passed into the function.</p>
+<h2 id="Running-SystemTap-Scripts"><a href="#Running-SystemTap-Scripts" class="headerlink" title="Running SystemTap Scripts"></a>Running SystemTap Scripts</h2><p>SystemTap scripts are run through the command stap. stap can run SystemTap scripts from the standard input or from a file.</p>
+<p>We have seen how to run SystemTap from the standard input when we tried to verify the installation in previous section.</p>
+<p>We can also run it from a file as below.</p>
+<pre><code>[root@host1 ~]# cat runfromfile.stp
+probe vfs.read &#123;
+    printf(&quot;read performed\n&quot;);
+    exit()
+&#125;
+
+[root@host1 ~]# stap runfromfile.stp
+read performed
+</code></pre>
+<p>At this point, we know what is SystemTap and how to deploy it. We will explore more meaningful usage of it in future posts.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://sourceware.org/systemtap/SystemTap_Beginners_Guide/">https://sourceware.org/systemtap/SystemTap_Beginners_Guide&#x2F;</a></li>
+<li><a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html-single/systemtap_beginners_guide/index#introduction">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux&#x2F;7&#x2F;html-single&#x2F;systemtap_beginners_guide&#x2F;index#introduction</a></li>
+<li><a target="_blank" rel="noopener" href="https://pkgs.org/download/kernel">https://pkgs.org/download/kernel</a></li>
+<li><a target="_blank" rel="noopener" href="https://pkgs.org/download/kernel-devel">https://pkgs.org/download/kernel-devel</a></li>
+<li><a target="_blank" rel="noopener" href="https://linux.cc.iitk.ac.in/mirror/centos/elrepo/kernel/el7/x86_64/RPMS/">https://linux.cc.iitk.ac.in/mirror/centos/elrepo/kernel/el7/x86_64&#x2F;RPMS&#x2F;</a></li>
+<li><a target="_blank" rel="noopener" href="https://rpmfind.net/linux/rpm2html/search.php?query=kernel-devel">https://rpmfind.net/linux/rpm2html/search.php?query=kernel-devel</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1461,111 +1652,8 @@ $ journalctl -lfu ntpd*
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.flamingbytes.com/blog/flame-graph-a-visualization-for-profiling-and-debugging/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/logo/FlamingBytes-icon-64x64-1.png">
-      <meta itemprop="name" content="relentlesstorm">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlamingBytes">
-      <meta itemprop="description" content="Stay hungry, stay foolish">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | FlamingBytes">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/flame-graph-a-visualization-for-profiling-and-debugging/" class="post-title-link" itemprop="url">Flame graph - A visualization for profiling and debugging</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-05-19 07:00:00" itemprop="dateCreated datePublished" datetime="2022-05-19T07:00:00-07:00">2022-05-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-22 11:28:20" itemprop="dateModified" datetime="2023-10-22T11:28:20-07:00">2023-10-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/" itemprop="url" rel="index"><span itemprop="name">Tech</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Tech/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Flame graphs can be generated from the output of many different software profilers, including profiles for different resources and event types. The <a target="_blank" rel="noopener" href="https://queue.acm.org/detail.cfm?id=2927301">article</a> written by Brendan Gregg describes how the flame graph works.</p>
-<p>We can start to work with the flame graph by following commands.</p>
-<pre><code>$ yum install git
-$ git clone --depth 1 https://github.com/brendangregg/FlameGraph
-$ cp result-15082021-201302/perf.data FlameGraph/
-$ cd FlameGraph/
- 
-$ perf record -p $pids -a -g -- sleep 30
-$ perf script | ./stackcollapse-perf.pl | ./flamegraph.pl &gt; perf16.svg
-</code></pre>
-<p><img src="/images/Gregg4.svg" alt="Image"></p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://www.brendangregg.com/flamegraphs.html">https://www.brendangregg.com/flamegraphs.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://queue.acm.org/detail.cfm?id=2927301">https://queue.acm.org/detail.cfm?id=2927301</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/15/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/17/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/15/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/17/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
