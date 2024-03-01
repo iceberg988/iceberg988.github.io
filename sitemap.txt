@@ -388,6 +388,7 @@ https://www.flamingbytes.com/tags/PostMark/
 https://www.flamingbytes.com/tags/Phoronix-test-suite/
 https://www.flamingbytes.com/tags/AKS/
 https://www.flamingbytes.com/tags/iSCSI/
+https://www.flamingbytes.com/tags/FlashArray/
 https://www.flamingbytes.com/categories/Young-Author/
 https://www.flamingbytes.com/categories/Tech/
 https://www.flamingbytes.com/categories/Tech/Benchmarking/

@@ -25181,6 +25181,7 @@ READ   - Takes(s): 848.8, Count: 93786269, OPS: 110492.3, Avg(us): 5899, Min(us)
       </categories>
       <tags>
         <tag>iSCSI</tag>
+        <tag>FlashArray</tag>
       </tags>
   </entry>
 </search>
